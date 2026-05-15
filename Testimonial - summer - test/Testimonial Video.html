@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Athletes Acceleration · Testimonial · 3 directions</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Caveat:wght@500;700&family=Fraunces:ital,opsz,wght@0,9..144,400..800;1,9..144,400..800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #ece8e0;
+    --bg-2: #f5f1e8;
+    --ink: #1a1814;
+    --mute: #7a6f60;
+    --rule: rgba(26,24,20,0.12);
+    --accent: #c4391f;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+  body {
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    min-height: 100vh;
+    background:
+      radial-gradient(80% 50% at 20% 0%, #f5f1e8 0%, transparent 60%),
+      radial-gradient(80% 50% at 80% 100%, #e8e2d5 0%, transparent 60%),
+      var(--bg);
+  }
+  kbd {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    background: rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 4px;
+    padding: 1px 6px;
+    color: var(--ink);
+  }
+
+  /* PAGE LAYOUT ────────────────────────────── */
+  .page {
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 56px 48px 80px;
+  }
+  .page-header { margin-bottom: 48px; }
+  .masthead-eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+  }
+  .page-header h1 {
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: 56px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0 0 20px;
+    max-width: 26ch;
+    text-wrap: balance;
+  }
+  .subhead {
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--mute);
+    max-width: 64ch;
+    margin: 0;
+  }
+  .legend {
+    margin-top: 28px;
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    color: var(--mute);
+    letter-spacing: 0.04em;
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 8px; }
+
+  /* GRID ────────────────────────────────────── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+  }
+  @media (max-width: 1400px) {
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+    .page-header h1 { font-size: 50px; }
+  }
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; gap: 40px; }
+    .page { padding: 36px 24px; }
+    .page-header h1 { font-size: 36px; }
+  }
+
+  /* CARD ────────────────────────────────────── */
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 4px;
+  }
+  .card-id {
+    width: 32px; height: 32px;
+    border: 1.5px solid var(--accent);
+    color: var(--accent);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "JetBrains Mono", monospace;
+    font-weight: 600;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .card-text { flex: 1; min-width: 0; }
+  .card-name {
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .card-tag {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--mute);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .focus-btn {
+    width: 32px; height: 32px;
+    border: 1px solid rgba(0,0,0,0.15);
+    background: rgba(255,255,255,0.4);
+    border-radius: 8px;
+    color: var(--ink);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 120ms, transform 120ms;
+  }
+  .focus-btn:hover { background: rgba(255,255,255,0.9); transform: scale(1.05); }
+
+  .card-frame {
+    /* 9:16 box, fixed aspect — Stage auto-scales into this */
+    aspect-ratio: 9 / 16;
+    width: 100%;
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.6) inset,
+      0 24px 60px -20px rgba(0,0,0,0.35),
+      0 0 0 1px rgba(0,0,0,0.08);
+  }
+
+  .card-desc {
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--mute);
+    max-width: 36ch;
+  }
+
+  /* FOOTER */
+  .page-footer {
+    margin-top: 60px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--mute);
+    max-width: 90ch;
+  }
+  .page-footer em {
+    font-family: "Fraunces", serif;
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  /* FOCUS OVERLAY */
+  .focus-overlay {
+    position: fixed; inset: 0;
+    background: rgba(15, 13, 10, 0.92);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    display: flex; flex-direction: column;
+    padding: 24px;
+    animation: fadein 180ms ease-out;
+  }
+  @keyframes fadein { from { opacity: 0 } to { opacity: 1 } }
+  .focus-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 8px 18px;
+    color: #f1ebe1;
+  }
+  .focus-label {
+    font-family: "Fraunces", serif;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .focus-id {
+    width: 30px; height: 30px;
+    border: 1.5px solid #c4391f;
+    color: #c4391f;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .focus-close {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #f1ebe1;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .focus-close:hover { background: rgba(255,255,255,0.16); }
+  .focus-close kbd { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.18); color: #f1ebe1; }
+  .focus-stage {
+    flex: 1;
+    aspect-ratio: 9 / 16;
+    margin: 0 auto;
+    max-height: calc(100vh - 100px);
+    width: auto;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  }
+</style>
+
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="animations.jsx"></script>
+<script type="text/babel" src="variation-a.jsx"></script>
+<script type="text/babel" src="variation-b.jsx"></script>
+<script type="text/babel" src="variation-c.jsx"></script>
+<script type="text/babel" src="variation-d.jsx"></script>
+<script type="text/babel" src="variation-e.jsx"></script>
+<script type="text/babel" src="variation-f.jsx"></script>
+<script type="text/babel" src="variation-g.jsx"></script>
+<script type="text/babel" src="variation-h.jsx"></script>
+<script type="text/babel" src="app.jsx"></script>
+
+</body>
+</html>
