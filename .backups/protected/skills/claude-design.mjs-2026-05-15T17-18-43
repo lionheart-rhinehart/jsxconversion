@@ -385,7 +385,8 @@ ${fontsHead}
 export { detectVariationGlobal, readStageProps };
 
 function relativeToProject(absPath, projectDir) {
-  // Use path.relative so Windows backslash separators are handled, then
-  // normalize to forward slashes for the URL the static server expects.
-  return relative(projectDir, absPath).split(sep).join("/");
+  const rel = absPath.startsWith(projectDir + "/")
+    ? absPath.slice(projectDir.length + 1)
+    : absPath;
+  return rel;
 }

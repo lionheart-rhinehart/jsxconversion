@@ -97,36 +97,20 @@ export function detectFontsInSource(src) {
   return [...fonts];
 }
 
-// Parse a shipped Google Fonts <link> URL into the families it covers,
-// keeping the per-family axis spec verbatim. The axis spec is critical:
-// it tells Google Fonts whether to serve a variable font (axis ranges
-// with ".." syntax, e.g. "opsz,wght@0,9..144,400..800") or static
-// instances at named weight/style tuples. Stripping it forces a
-// default static request, which silently downgrades variable fonts like
-// Fraunces — at large display sizes the rendered glyph metrics no
-// longer match the design preview.
-//
-// Returns: [{ family: string, axisSpec: string|null }]
-//   axisSpec includes the leading ":" if present, or is null for bare
-//   family references like "Anton" or "Archivo Black".
+// Parse the families covered by a shipped Google Fonts <link> URL.
+// Returns an array of family names exactly as referenced.
 export function familiesInGoogleFontsUrl(url) {
   if (!url) return [];
-  const out = [];
+  const families = [];
   const re = /[?&]family=([^&]+)/g;
   let m;
   while ((m = re.exec(url)) !== null) {
     const raw = decodeURIComponent(m[1]);
-    const colon = raw.indexOf(":");
-    if (colon === -1) {
-      out.push({ family: raw.replace(/\+/g, " "), axisSpec: null });
-    } else {
-      out.push({
-        family: raw.slice(0, colon).replace(/\+/g, " "),
-        axisSpec: raw.slice(colon), // includes the leading ":"
-      });
-    }
+    // Strip the axis spec — "Fraunces:ital,opsz,wght@0,9..144,400..800" → "Fraunces"
+    const family = raw.split(":")[0].replace(/\+/g, " ");
+    families.push(family);
   }
-  return out;
+  return families;
 }
 
 // Extract the first <link> to fonts.googleapis.com from an HTML file.
@@ -196,18 +180,12 @@ function buildFaceCssFromDir(family, dir) {
   return blocks.join("\n\n");
 }
 
-async function fetchGoogleFontsCss(family, axisSpec) {
+async function fetchGoogleFontsCss(family) {
   const param = family.replace(/\s+/g, "+");
-  // When the shipped design's HTML <link> already carries an axis spec,
-  // pass it through verbatim. This is the only way to ask Google Fonts
-  // for the variable font (e.g. Fraunces opsz axis) instead of static
-  // instances pinned to default opsz, and also the only way to get
-  // exact weights for families with non-default available weights
-  // (e.g. Caveat only ships 400/500/700).
-  const spec = axisSpec ||
-    ":ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,700";
+  // Request a broad weight + italic range so designs that use multiple
+  // weights resolve. Google ignores axes the family doesn't support.
   const url =
-    `https://fonts.googleapis.com/css2?family=${param}${spec}&display=swap`;
+    `https://fonts.googleapis.com/css2?family=${param}:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,700&display=swap`;
   const res = await fetch(url, { headers: { "User-Agent": UA } });
   if (res.status === 400) {
     // Try plain (some families have no axis: Anton, Archivo Black).
@@ -242,8 +220,8 @@ async function downloadBinary(url, destPath) {
   writeFileSync(destPath, buf);
 }
 
-async function downloadFromGoogleFonts(family, axisSpec) {
-  const r = await fetchGoogleFontsCss(family, axisSpec);
+async function downloadFromGoogleFonts(family) {
+  const r = await fetchGoogleFontsCss(family);
   if (!r.ok) return { ok: false, reason: r.reason };
   if (!isGenuineGoogleFontsResponse(r.css)) {
     return { ok: false, reason: "google-fonts-served-substitute" };
@@ -312,16 +290,14 @@ function absolutizeFontCss(css, dir) {
  */
 export async function preflightFonts({ projectDir, jsxFiles, shippedHtmlPath }) {
   let shippedFontsUrl = null;
-  // family-lowercase → axisSpec (or null for bare-family entries).
-  // Membership doubles as the "is this covered by shipped link?" check.
-  const coveredAxes = new Map();
+  let covered = new Set();
   if (shippedHtmlPath && existsSync(shippedHtmlPath)) {
     const html = readFileSync(shippedHtmlPath, "utf8");
     shippedFontsUrl = findGoogleFontsLink(html);
     if (shippedFontsUrl) {
-      for (const { family, axisSpec } of familiesInGoogleFontsUrl(shippedFontsUrl)) {
-        coveredAxes.set(family.toLowerCase(), axisSpec);
-      }
+      covered = new Set(
+        familiesInGoogleFontsUrl(shippedFontsUrl).map((f) => f.toLowerCase()),
+      );
     }
   }
 
@@ -343,8 +319,7 @@ export async function preflightFonts({ projectDir, jsxFiles, shippedHtmlPath }) 
     // verify Google's TLS chain inside this container, and a
     // partially-loaded font would silently fall back to a system
     // typeface — exactly the substitution we're trying to prevent.
-    if (coveredAxes.has(family.toLowerCase())) {
-      const axisSpec = coveredAxes.get(family.toLowerCase());
+    if (covered.has(family.toLowerCase())) {
       const cached = findCachedFontDir(family);
       if (cached) {
         extraBlocks.push(
@@ -356,7 +331,7 @@ export async function preflightFonts({ projectDir, jsxFiles, shippedHtmlPath }) 
       }
       let downloaded;
       try {
-        downloaded = await downloadFromGoogleFonts(family, axisSpec);
+        downloaded = await downloadFromGoogleFonts(family);
       } catch (e) {
         downloaded = { ok: false, reason: `network-error: ${e.message}` };
       }

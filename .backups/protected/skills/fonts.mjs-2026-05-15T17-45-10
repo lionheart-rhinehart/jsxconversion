@@ -242,8 +242,8 @@ async function downloadBinary(url, destPath) {
   writeFileSync(destPath, buf);
 }
 
-async function downloadFromGoogleFonts(family, axisSpec) {
-  const r = await fetchGoogleFontsCss(family, axisSpec);
+async function downloadFromGoogleFonts(family) {
+  const r = await fetchGoogleFontsCss(family);
   if (!r.ok) return { ok: false, reason: r.reason };
   if (!isGenuineGoogleFontsResponse(r.css)) {
     return { ok: false, reason: "google-fonts-served-substitute" };
@@ -312,16 +312,14 @@ function absolutizeFontCss(css, dir) {
  */
 export async function preflightFonts({ projectDir, jsxFiles, shippedHtmlPath }) {
   let shippedFontsUrl = null;
-  // family-lowercase → axisSpec (or null for bare-family entries).
-  // Membership doubles as the "is this covered by shipped link?" check.
-  const coveredAxes = new Map();
+  let covered = new Set();
   if (shippedHtmlPath && existsSync(shippedHtmlPath)) {
     const html = readFileSync(shippedHtmlPath, "utf8");
     shippedFontsUrl = findGoogleFontsLink(html);
     if (shippedFontsUrl) {
-      for (const { family, axisSpec } of familiesInGoogleFontsUrl(shippedFontsUrl)) {
-        coveredAxes.set(family.toLowerCase(), axisSpec);
-      }
+      covered = new Set(
+        familiesInGoogleFontsUrl(shippedFontsUrl).map((f) => f.toLowerCase()),
+      );
     }
   }
 
@@ -343,8 +341,7 @@ export async function preflightFonts({ projectDir, jsxFiles, shippedHtmlPath }) 
     // verify Google's TLS chain inside this container, and a
     // partially-loaded font would silently fall back to a system
     // typeface — exactly the substitution we're trying to prevent.
-    if (coveredAxes.has(family.toLowerCase())) {
-      const axisSpec = coveredAxes.get(family.toLowerCase());
+    if (covered.has(family.toLowerCase())) {
       const cached = findCachedFontDir(family);
       if (cached) {
         extraBlocks.push(
@@ -356,7 +353,7 @@ export async function preflightFonts({ projectDir, jsxFiles, shippedHtmlPath }) 
       }
       let downloaded;
       try {
-        downloaded = await downloadFromGoogleFonts(family, axisSpec);
+        downloaded = await downloadFromGoogleFonts(family);
       } catch (e) {
         downloaded = { ok: false, reason: `network-error: ${e.message}` };
       }

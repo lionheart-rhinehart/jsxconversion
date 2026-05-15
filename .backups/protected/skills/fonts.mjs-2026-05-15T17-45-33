@@ -343,8 +343,7 @@ export async function preflightFonts({ projectDir, jsxFiles, shippedHtmlPath }) 
     // verify Google's TLS chain inside this container, and a
     // partially-loaded font would silently fall back to a system
     // typeface — exactly the substitution we're trying to prevent.
-    if (coveredAxes.has(family.toLowerCase())) {
-      const axisSpec = coveredAxes.get(family.toLowerCase());
+    if (covered.has(family.toLowerCase())) {
       const cached = findCachedFontDir(family);
       if (cached) {
         extraBlocks.push(
@@ -356,7 +355,7 @@ export async function preflightFonts({ projectDir, jsxFiles, shippedHtmlPath }) 
       }
       let downloaded;
       try {
-        downloaded = await downloadFromGoogleFonts(family, axisSpec);
+        downloaded = await downloadFromGoogleFonts(family);
       } catch (e) {
         downloaded = { ok: false, reason: `network-error: ${e.message}` };
       }
