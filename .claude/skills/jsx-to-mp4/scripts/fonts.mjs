@@ -1,87 +1,218 @@
-// Font policy: never silently fall back to a system font.
-// 1. Scan the JSX for `fontFamily: '<list>'` declarations.
-// 2. For each primary (non-generic) font, ensure fonts/<slug>/font.css +
-//    .ttf files exist on disk. If missing, fetch from Google Fonts and
-//    cache locally.
-// 3. Emit a combined @font-face stylesheet the renderer can <link> into
-//    the page so Chromium loads the exact glyphs the design was authored
-//    against.
+// Font preflight — strict, no substitution.
+//
+// For a render to start, every fontFamily referenced in the JSX must be
+// resolvable to a real font binary. Resolution order:
+//
+//   1. Shipped fonts inside the project folder
+//        <projectDir>/fonts/<Family_Name>/  (font.css + .ttf/.woff2)
+//        <projectDir>/assets/fonts/<Family_Name>/
+//   2. Local repo-level cache: <repoRoot>/fonts/<Family_Name>/
+//   3. Google Fonts — only when the response is the genuine article
+//      (URLs under fonts.gstatic.com/s/, not the /l/font substitute
+//      path which is what Google returns for licensed names like
+//      "Helvetica Neue").
+//
+// If none of the above resolves, this module throws. The renderer must
+// not produce an MP4 with the wrong typography.
 
-import { readFileSync, existsSync, mkdirSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import {
+  readFileSync,
+  existsSync,
+  mkdirSync,
+  writeFileSync,
+  readdirSync,
+  statSync,
+} from "node:fs";
+import { dirname, join, resolve, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const SKILL_ROOT = resolve(__dirname, "..");
-const PROJECT_ROOT = resolve(SKILL_ROOT, "../../..");
-const FONTS_DIR = join(PROJECT_ROOT, "fonts");
+const REPO_ROOT = resolve(SKILL_ROOT, "../../..");
+const REPO_FONTS_DIR = join(REPO_ROOT, "fonts");
 
 const CSS_GENERIC = new Set([
-  "sans-serif",
-  "serif",
-  "monospace",
-  "cursive",
-  "fantasy",
-  "system-ui",
-  "ui-sans-serif",
-  "ui-serif",
-  "ui-monospace",
-  "ui-rounded",
-  "math",
-  "emoji",
-  "fangsong",
-  "inherit",
-  "initial",
-  "unset",
-  "revert",
+  "sans-serif", "serif", "monospace", "cursive", "fantasy",
+  "system-ui", "ui-sans-serif", "ui-serif", "ui-monospace", "ui-rounded",
+  "math", "emoji", "fangsong",
+  "inherit", "initial", "unset", "revert",
 ]);
 
-// User-Agent that triggers Google Fonts to serve TTF (broader Chromium
-// compatibility than woff2 served to modern UAs, and unambiguous to parse).
-const LEGACY_UA =
-  "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.0.0 Safari/537.36";
+// Modern Chromium UA is required: Google Fonts only returns the genuine
+// fonts.gstatic.com/s/<slug>/<version>/<file>.woff2 URLs to UAs that
+// support woff2. Legacy UAs (Chrome 30 et al.) get everything routed
+// through fonts.gstatic.com/l/font?kit=... regardless of whether the
+// family is real or a licensed substitute, which makes substitution
+// detection impossible.
+const UA =
+  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
 
-export function detectFonts(src) {
-  const fonts = new Set();
-  // Match the outer string; allow nested quote characters of the other style
-  // (`'Anton, "Archivo Black", sans-serif'` is a common pattern).
-  const re = /fontFamily\s*:\s*(['"`])((?:(?!\1).)*)\1/g;
-  let m;
-  while ((m = re.exec(src)) !== null) {
-    const list = m[2];
-    for (const raw of list.split(",")) {
-      const name = raw.trim().replace(/^["']|["']$/g, "");
-      if (!name) continue;
-      if (CSS_GENERIC.has(name.toLowerCase())) continue;
-      // Vendor-prefixed system fonts (-apple-system, -webkit-pictograph, etc.)
-      // are OS-supplied and never live on Google Fonts.
-      if (name.startsWith("-")) continue;
-      // BlinkMacSystemFont is a Chromium system-font keyword, not a Google Font.
-      if (name.toLowerCase() === "blinkmacsystemfont") continue;
-      fonts.add(name);
-    }
-  }
-  return [...fonts];
-}
+const FONT_FILE_RE = /\.(ttf|otf|woff2|woff)$/i;
 
 function slug(name) {
   return name.replace(/\s+/g, "_");
 }
 
-async function fetchGoogleFontsCss(familyParam) {
-  // family=Anton:wght@400;700 — caller passes the exact param value
-  const url = `https://fonts.googleapis.com/css2?family=${familyParam}&display=swap`;
-  const res = await fetch(url, { headers: { "User-Agent": LEGACY_UA } });
-  if (!res.ok) {
-    throw new Error(
-      `Google Fonts CSS fetch failed for "${familyParam}": ${res.status} ${res.statusText}`,
-    );
+// Pull every fontFamily string literal out of a JSX source. Anything that
+// isn't a literal (template strings with ${}, identifier references) is
+// skipped — we can't statically resolve dynamic values.
+export function detectFontsInSource(src) {
+  const fonts = new Set();
+  // Capture font names from three patterns:
+  //   1.  style={{ fontFamily: 'Anton, sans-serif' }}     — CSS-in-JS
+  //   2.  <TextSprite font="Caveat">                       — JSX attribute
+  //   3.  font: 'Helvetica Neue, system-ui'                — runtime prop default
+  // The third overlaps with the first when "font" is a style shorthand,
+  // but the design runtime here uses `font` as a Sprite prop carrying a
+  // bare family list, so it's safe to treat it the same way.
+  const patterns = [
+    /fontFamily\s*:\s*(['"`])((?:(?!\1).)*)\1/g,
+    /\bfont\s*=\s*(['"`])((?:(?!\1).)*)\1/g,
+    /\bfont\s*:\s*(['"`])((?:(?!\1).)*)\1/g,
+  ];
+  for (const re of patterns) {
+    let m;
+    while ((m = re.exec(src)) !== null) {
+      const list = m[2];
+      if (list.includes("${")) continue;
+      if (/\b\d+(?:px|em|rem|%)\b/.test(list)) continue;
+      // CSS font-family is a fallback chain — `'A, B, sans-serif'` means
+      // "use A; fall back to B; fall back to sans-serif". Only the
+      // first non-generic, non-system entry is the font we actually
+      // care about resolving. The rest never load if the primary does,
+      // and they're often licensed system fonts (Helvetica Neue,
+      // Segoe Print) intentionally placed as graceful fallbacks for
+      // platforms where the primary isn't available.
+      for (const raw of list.split(",")) {
+        const name = raw.trim().replace(/^["']|["']$/g, "");
+        if (!name) continue;
+        if (CSS_GENERIC.has(name.toLowerCase())) continue;
+        if (name.startsWith("-")) continue;
+        if (name.toLowerCase() === "blinkmacsystemfont") continue;
+        fonts.add(name);
+        break;
+      }
+    }
   }
-  return await res.text();
+  return [...fonts];
+}
+
+// Parse the families covered by a shipped Google Fonts <link> URL.
+// Returns an array of family names exactly as referenced.
+export function familiesInGoogleFontsUrl(url) {
+  if (!url) return [];
+  const families = [];
+  const re = /[?&]family=([^&]+)/g;
+  let m;
+  while ((m = re.exec(url)) !== null) {
+    const raw = decodeURIComponent(m[1]);
+    // Strip the axis spec — "Fraunces:ital,opsz,wght@0,9..144,400..800" → "Fraunces"
+    const family = raw.split(":")[0].replace(/\+/g, " ");
+    families.push(family);
+  }
+  return families;
+}
+
+// Extract the first <link> to fonts.googleapis.com from an HTML file.
+export function findGoogleFontsLink(html) {
+  const m = html.match(
+    /<link[^>]+href=["']([^"']*fonts\.googleapis\.com[^"']+)["'][^>]*>/i,
+  );
+  return m ? m[1] : null;
+}
+
+// Look for a shipped font in <projectDir>/fonts/<Family>/ or
+// <projectDir>/assets/fonts/<Family>/. Returns the resolved directory
+// or null.
+function findShippedFontDir(projectDir, family) {
+  const candidates = [
+    join(projectDir, "fonts", slug(family)),
+    join(projectDir, "fonts", family),
+    join(projectDir, "assets", "fonts", slug(family)),
+    join(projectDir, "assets", "fonts", family),
+  ];
+  for (const c of candidates) {
+    if (existsSync(c) && statSync(c).isDirectory()) {
+      const has = readdirSync(c).some((f) => FONT_FILE_RE.test(f));
+      if (has) return c;
+    }
+  }
+  return null;
+}
+
+function findCachedFontDir(family) {
+  const dir = join(REPO_FONTS_DIR, slug(family));
+  if (!existsSync(dir)) return null;
+  if (!existsSync(join(dir, "font.css"))) return null;
+  return dir;
+}
+
+// Build an @font-face block from a folder of TTF/OTF files. Used for
+// shipped fonts that come with no companion CSS.
+function buildFaceCssFromDir(family, dir) {
+  const files = readdirSync(dir).filter((f) => FONT_FILE_RE.test(f));
+  if (!files.length) return null;
+  const formats = { ttf: "truetype", otf: "opentype", woff: "woff", woff2: "woff2" };
+  const blocks = files.map((f) => {
+    const ext = f.split(".").pop().toLowerCase();
+    const fmt = formats[ext] || "truetype";
+    // Heuristic weight detection from filename (Bold/700/Italic/etc.).
+    const lower = f.toLowerCase();
+    let weight = 400;
+    if (/bold/.test(lower) || /\b700\b/.test(lower)) weight = 700;
+    else if (/black/.test(lower) || /\b900\b/.test(lower)) weight = 900;
+    else if (/light/.test(lower) || /\b300\b/.test(lower)) weight = 300;
+    else if (/medium/.test(lower) || /\b500\b/.test(lower)) weight = 500;
+    const italic = /italic|oblique/.test(lower) ? "italic" : "normal";
+    const full = join(dir, f);
+    const mime = ({ ttf: "font/ttf", otf: "font/otf", woff: "font/woff", woff2: "font/woff2" })[ext] || "font/ttf";
+    const b64 = readFileSync(full).toString("base64");
+    return [
+      "@font-face {",
+      `  font-family: '${family}';`,
+      `  font-style: ${italic};`,
+      `  font-weight: ${weight};`,
+      `  font-display: block;`,
+      `  src: url(data:${mime};base64,${b64}) format('${fmt}');`,
+      "}",
+    ].join("\n");
+  });
+  return blocks.join("\n\n");
+}
+
+async function fetchGoogleFontsCss(family) {
+  const param = family.replace(/\s+/g, "+");
+  // Request a broad weight + italic range so designs that use multiple
+  // weights resolve. Google ignores axes the family doesn't support.
+  const url =
+    `https://fonts.googleapis.com/css2?family=${param}:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,700&display=swap`;
+  const res = await fetch(url, { headers: { "User-Agent": UA } });
+  if (res.status === 400) {
+    // Try plain (some families have no axis: Anton, Archivo Black).
+    const fallback = await fetch(
+      `https://fonts.googleapis.com/css2?family=${param}&display=swap`,
+      { headers: { "User-Agent": UA } },
+    );
+    if (!fallback.ok) return { ok: false, reason: "not-on-google-fonts" };
+    return { ok: true, css: await fallback.text() };
+  }
+  if (!res.ok) return { ok: false, reason: `http-${res.status}` };
+  return { ok: true, css: await res.text() };
+}
+
+// Google's substitution path for licensed names like "Helvetica Neue":
+// it returns a CSS with src URLs under fonts.gstatic.com/l/font?kit=...
+// Real families serve fonts.gstatic.com/s/<slug>/<version>/<file>.
+// If the only URLs we see are /l/font, the family isn't really on
+// Google Fonts and we must not use the substitute.
+function isGenuineGoogleFontsResponse(css) {
+  if (!css) return false;
+  const hasReal = /fonts\.gstatic\.com\/s\//.test(css);
+  return hasReal;
 }
 
 async function downloadBinary(url, destPath) {
-  const res = await fetch(url, { headers: { "User-Agent": LEGACY_UA } });
+  const res = await fetch(url, { headers: { "User-Agent": UA } });
   if (!res.ok) {
     throw new Error(`font binary fetch failed: ${url} -> ${res.status}`);
   }
@@ -89,66 +220,210 @@ async function downloadBinary(url, destPath) {
   writeFileSync(destPath, buf);
 }
 
-// For each font, download all CSS-referenced files and rewrite the
-// @font-face src URLs to point at the local copies.
-export async function ensureFont(name) {
-  const fontDir = join(FONTS_DIR, slug(name));
-  const cssPath = join(fontDir, "font.css");
-  if (existsSync(cssPath)) {
-    return { name, dir: fontDir, css: readFileSync(cssPath, "utf8") };
+async function downloadFromGoogleFonts(family) {
+  const r = await fetchGoogleFontsCss(family);
+  if (!r.ok) return { ok: false, reason: r.reason };
+  if (!isGenuineGoogleFontsResponse(r.css)) {
+    return { ok: false, reason: "google-fonts-served-substitute" };
   }
+  const dir = join(REPO_FONTS_DIR, slug(family));
+  mkdirSync(dir, { recursive: true });
 
-  console.error(`[fonts] downloading "${name}"`);
-  mkdirSync(fontDir, { recursive: true });
-
-  const familyParam = name.replace(/\s+/g, "+");
-  // Request a few common weights so the design has options.
-  const variantParam = `${familyParam}:wght@400;700`;
-  let css;
-  try {
-    css = await fetchGoogleFontsCss(variantParam);
-  } catch {
-    // Some fonts have no weight axis — retry plain.
-    css = await fetchGoogleFontsCss(familyParam);
-  }
-
-  const urlRe = /url\((https:\/\/fonts\.gstatic\.com\/[^)]+)\)/g;
-  let rewritten = css;
+  const urlRe = /url\((https:\/\/fonts\.gstatic\.com\/s\/[^)]+)\)/g;
+  let rewritten = r.css;
   const seen = new Set();
   let m;
-  while ((m = urlRe.exec(css)) !== null) {
+  while ((m = urlRe.exec(r.css)) !== null) {
     const remote = m[1];
     if (seen.has(remote)) continue;
     seen.add(remote);
     const ext = (remote.match(/\.(ttf|woff2|woff|otf)(\?|$)/) || [])[1] || "ttf";
-    const fname = `${slug(name)}_${seen.size}.${ext}`;
-    const dest = join(fontDir, fname);
-    await downloadBinary(remote, dest);
+    const fname = `${slug(family)}_${seen.size}.${ext}`;
+    await downloadBinary(remote, join(dir, fname));
     rewritten = rewritten.split(remote).join(`./${fname}`);
   }
-
-  writeFileSync(cssPath, rewritten);
-  return { name, dir: fontDir, css: rewritten };
+  writeFileSync(join(dir, "font.css"), rewritten);
+  return { ok: true, dir };
 }
 
-// Ensure every detected font is on disk; return a combined stylesheet
-// string (with @font-face src URLs rewritten to absolute file paths) so
-// the caller can write it wherever it needs.
-export async function ensureFontsForFile(jsxPath) {
-  const src = readFileSync(jsxPath, "utf8");
-  const fonts = detectFonts(src);
-  if (fonts.length === 0) return { fonts: [], css: "" };
+const MIME_BY_EXT = {
+  ttf: "font/ttf",
+  otf: "font/otf",
+  woff: "font/woff",
+  woff2: "font/woff2",
+};
 
-  if (!existsSync(FONTS_DIR)) mkdirSync(FONTS_DIR, { recursive: true });
+// Rewrite local "./file.ttf" URLs in a cached font.css to inline data URLs.
+// data: URLs sidestep both filesystem path resolution issues (Chromium
+// won't load file:// from a page served over http://) and the cost of
+// running a route just for font binaries. Font payloads are small
+// (~50KB woff2), so the size impact on the rendered HTML is negligible.
+function absolutizeFontCss(css, dir) {
+  return css.replace(/url\(\.\/([^)]+)\)/g, (_, f) => {
+    const full = join(dir, f);
+    if (!existsSync(full)) return `url(./${f})`;
+    const ext = (f.match(/\.([a-z0-9]+)(\?|$)/i) || [])[1]?.toLowerCase() || "";
+    const mime = MIME_BY_EXT[ext] || "font/ttf";
+    const b64 = readFileSync(full).toString("base64");
+    return `url(data:${mime};base64,${b64})`;
+  });
+}
 
-  const blocks = [];
-  for (const name of fonts) {
-    const { dir, css } = await ensureFont(name);
-    const rewritten = css.replace(/url\(\.\/([^)]+)\)/g, (_, f) =>
-      `url(${join(dir, f)})`,
-    );
-    blocks.push(`/* ${name} */\n${rewritten}`);
+/**
+ * Resolve every font referenced by a Claude Design project.
+ *
+ * @param {object} opts
+ * @param {string} opts.projectDir   Folder that contains the JSX files.
+ * @param {string[]} opts.jsxFiles   Absolute paths to scan for fontFamily.
+ * @param {string|null} opts.shippedHtmlPath  Optional HTML file whose
+ *   Google Fonts <link> already covers some families — we'll reuse that
+ *   URL verbatim and only resolve the families it doesn't cover.
+ *
+ * @returns {Promise<{
+ *   shippedFontsUrl: string|null,
+ *   extraCss: string,
+ *   fonts: {family: string, source: string}[]
+ * }>}
+ *
+ * Throws if any family is unresolvable. The error message names every
+ * missing family and points the user at the project's fonts folder.
+ */
+export async function preflightFonts({ projectDir, jsxFiles, shippedHtmlPath }) {
+  let shippedFontsUrl = null;
+  let covered = new Set();
+  if (shippedHtmlPath && existsSync(shippedHtmlPath)) {
+    const html = readFileSync(shippedHtmlPath, "utf8");
+    shippedFontsUrl = findGoogleFontsLink(html);
+    if (shippedFontsUrl) {
+      covered = new Set(
+        familiesInGoogleFontsUrl(shippedFontsUrl).map((f) => f.toLowerCase()),
+      );
+    }
   }
 
-  return { fonts, css: blocks.join("\n\n") };
+  const referenced = new Set();
+  for (const f of jsxFiles) {
+    if (!existsSync(f)) continue;
+    for (const fam of detectFontsInSource(readFileSync(f, "utf8"))) {
+      referenced.add(fam);
+    }
+  }
+
+  const fontsManifest = [];
+  const extraBlocks = [];
+  const unresolved = [];
+
+  for (const family of referenced) {
+    // Even if the shipped HTML <link> covers the family, fetch it
+    // server-side and inline. Puppeteer's bundled Chromium can't
+    // verify Google's TLS chain inside this container, and a
+    // partially-loaded font would silently fall back to a system
+    // typeface — exactly the substitution we're trying to prevent.
+    if (covered.has(family.toLowerCase())) {
+      const cached = findCachedFontDir(family);
+      if (cached) {
+        extraBlocks.push(
+          `/* ${family} — cached (shipped-html-link source) */\n` +
+          absolutizeFontCss(readFileSync(join(cached, "font.css"), "utf8"), cached),
+        );
+        fontsManifest.push({ family, source: `cache:${cached}` });
+        continue;
+      }
+      let downloaded;
+      try {
+        downloaded = await downloadFromGoogleFonts(family);
+      } catch (e) {
+        downloaded = { ok: false, reason: `network-error: ${e.message}` };
+      }
+      if (downloaded.ok) {
+        const css = readFileSync(join(downloaded.dir, "font.css"), "utf8");
+        extraBlocks.push(
+          `/* ${family} — downloaded (shipped-html-link source) */\n` +
+          absolutizeFontCss(css, downloaded.dir),
+        );
+        fontsManifest.push({ family, source: "google-fonts" });
+        continue;
+      }
+      unresolved.push({ family, reason: `shipped-html-link unresolvable: ${downloaded.reason}` });
+      continue;
+    }
+
+    // 1. Project-shipped fonts folder.
+    const shippedDir = findShippedFontDir(projectDir, family);
+    if (shippedDir) {
+      const cssFile = join(shippedDir, "font.css");
+      if (existsSync(cssFile)) {
+        extraBlocks.push(
+          `/* ${family} — project-shipped */\n` +
+          absolutizeFontCss(readFileSync(cssFile, "utf8"), shippedDir),
+        );
+      } else {
+        const built = buildFaceCssFromDir(family, shippedDir);
+        if (built) extraBlocks.push(`/* ${family} — project-shipped */\n${built}`);
+      }
+      fontsManifest.push({ family, source: `project:${shippedDir}` });
+      continue;
+    }
+
+    // 2. Local repo cache.
+    const cached = findCachedFontDir(family);
+    if (cached) {
+      extraBlocks.push(
+        `/* ${family} — cached */\n` +
+        absolutizeFontCss(readFileSync(join(cached, "font.css"), "utf8"), cached),
+      );
+      fontsManifest.push({ family, source: `cache:${cached}` });
+      continue;
+    }
+
+    // 3. Google Fonts (only if genuine).
+    let downloaded;
+    try {
+      downloaded = await downloadFromGoogleFonts(family);
+    } catch (e) {
+      downloaded = { ok: false, reason: `network-error: ${e.message}` };
+    }
+    if (downloaded.ok) {
+      const css = readFileSync(join(downloaded.dir, "font.css"), "utf8");
+      extraBlocks.push(
+        `/* ${family} — downloaded from Google Fonts */\n` +
+        absolutizeFontCss(css, downloaded.dir),
+      );
+      fontsManifest.push({ family, source: "google-fonts" });
+      continue;
+    }
+
+    unresolved.push({ family, reason: downloaded.reason });
+  }
+
+  if (unresolved.length > 0) {
+    const lines = unresolved
+      .map((u) => `  - "${u.family}" (${u.reason})`)
+      .join("\n");
+    const targetDir = join(projectDir, "fonts");
+    throw new Error(
+      `Font preflight failed. The following font(s) referenced by the design are not available and substitution is not allowed:\n${lines}\n\n` +
+      `To proceed, drop the real font files into:\n  ${targetDir}/<Family Name>/\n` +
+      `for each missing family. Accepted formats: .ttf, .otf, .woff, .woff2. ` +
+      `An optional font.css in that folder is used verbatim; otherwise @font-face rules are inferred from the filenames.`,
+    );
+  }
+
+  return {
+    shippedFontsUrl,
+    extraCss: extraBlocks.join("\n\n"),
+    fonts: fontsManifest,
+  };
+}
+
+// Backwards-compat shim: the older render path still calls this for
+// single-file renders that don't have a project folder. Internally
+// delegates to preflightFonts with no shipped HTML.
+export async function ensureFontsForFile(jsxPath) {
+  const result = await preflightFonts({
+    projectDir: dirname(jsxPath),
+    jsxFiles: [jsxPath],
+    shippedHtmlPath: null,
+  });
+  return { fonts: result.fonts.map((f) => f.family), css: result.extraCss };
 }

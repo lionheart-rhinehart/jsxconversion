@@ -1,0 +1,392 @@
+// Claude Design renderer.
+//
+// Pre-condition: the input JSX file lives inside a project folder that
+// also contains the design tool's own runtime (animations.jsx) and
+// preview HTML. We do NOT re-implement Stage / Sprite / Easing —
+// instead we load the shipped runtime as-is and drive it from the
+// outside by overriding the Stage component's time source.
+//
+// Why this matters: the design tool's preview is the source of truth.
+// Any reimplementation of its runtime drifts on padding, easing,
+// scaling, font metrics, etc. By rendering the same runtime that
+// Claude Design uses to preview, the MP4 matches the preview pixel
+// for pixel.
+
+import { createServer } from "node:http";
+import { createReadStream, existsSync, readFileSync, statSync } from "node:fs";
+import { extname, join, relative, sep } from "node:path";
+import { pathToFileURL } from "node:url";
+
+const MIME = {
+  ".html": "text/html; charset=utf-8",
+  ".js": "application/javascript",
+  ".jsx": "text/babel",
+  ".css": "text/css",
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".webp": "image/webp",
+  ".gif": "image/gif",
+  ".svg": "image/svg+xml",
+  ".ttf": "font/ttf",
+  ".otf": "font/otf",
+  ".woff": "font/woff",
+  ".woff2": "font/woff2",
+  ".json": "application/json",
+};
+
+// Detect the named function in a Claude Design variation file that gets
+// hung off window. Shipped files end with `window.VariationA = VariationA;`.
+function detectVariationGlobal(jsxPath) {
+  const src = readFileSync(jsxPath, "utf8");
+  const m = src.match(/window\.([A-Za-z_$][\w$]*)\s*=\s*[A-Za-z_$][\w$]*\s*;?/);
+  return m ? m[1] : null;
+}
+
+// Pull <Stage> width/height/duration/fps off the variation source so the
+// driver knows what to capture without the user having to repeat them.
+function readStageProps(jsxPath) {
+  const src = readFileSync(jsxPath, "utf8");
+  const m = src.match(/<Stage\s+([^>]*?)>/s);
+  if (!m) return {};
+  const attrs = m[1];
+  const grab = (name) => {
+    const re = new RegExp(`${name}\\s*=\\s*\\{([^}]+)\\}`);
+    const mm = attrs.match(re);
+    if (!mm) return undefined;
+    const expr = mm[1].trim();
+    if (/^[0-9.]+$/.test(expr)) return Number(expr);
+    // Identifier reference like VA_W — look it up anywhere in the source,
+    // including inside multi-declaration consts: `const VA_W = 1080, VA_H = 1920`.
+    if (/^[A-Za-z_$][\w$]*$/.test(expr)) {
+      const dec = src.match(new RegExp(`\\b${expr}\\s*=\\s*([0-9.]+)`));
+      if (dec) return Number(dec[1]);
+    }
+    return undefined;
+  };
+  return {
+    WIDTH: grab("width"),
+    HEIGHT: grab("height"),
+    DURATION_SECONDS: grab("duration"),
+    FPS: grab("fps"),
+  };
+}
+
+function startStaticServer(rootDir) {
+  return new Promise((resolveStart) => {
+    const server = createServer((req, res) => {
+      const urlPath = decodeURIComponent((req.url || "/").split("?")[0]);
+      // Default route: serve the synthesized index.html from /__render/index.html.
+      // Everything else maps under rootDir.
+      const filePath = join(rootDir, urlPath === "/" ? "/__render/index.html" : urlPath);
+      // Path traversal guard.
+      const rel = relative(rootDir, filePath);
+      if (rel.startsWith("..") || rel.split(sep).includes("..")) {
+        res.statusCode = 403; res.end("forbidden"); return;
+      }
+      if (!existsSync(filePath) || !statSync(filePath).isFile()) {
+        res.statusCode = 404; res.end("not found: " + urlPath); return;
+      }
+      res.setHeader("content-type", MIME[extname(filePath).toLowerCase()] || "application/octet-stream");
+      res.setHeader("access-control-allow-origin", "*");
+      createReadStream(filePath).pipe(res);
+    });
+    server.listen(0, "127.0.0.1", () => {
+      const addr = server.address();
+      resolveStart({ server, url: `http://127.0.0.1:${addr.port}` });
+    });
+  });
+}
+
+// The Stage override + deterministic time driver. This runs in the page
+// AFTER animations.jsx (so the original Stage / TimelineContext globals
+// exist) and BEFORE the variation JSX (so variations capture our
+// override in their JSX expressions).
+//
+// We intentionally do NOT touch Sprite / TextSprite / ImageSprite /
+// RectSprite / Easing / interpolate — those are pure and we want them
+// to behave exactly as the shipped runtime defines them.
+const DRIVER_SCRIPT = String.raw`
+(function () {
+  if (typeof Stage === 'undefined' || typeof TimelineContext === 'undefined') {
+    document.body.innerHTML = '<pre style="color:red;padding:20px;font:14px monospace">FATAL: shipped runtime did not expose Stage / TimelineContext as globals. The variation file must be loaded after animations.jsx.</pre>';
+    throw new Error('shipped runtime not detected');
+  }
+  // Capture the original Stage's React reference so children render in
+  // exactly the markup hierarchy the design author wrote.
+  const OriginalStage = Stage;
+
+  // Deterministic Stage: same width/height/background contract, but time
+  // is driven by window.__renderTime instead of requestAnimationFrame.
+  // No playback bar, no auto-scale (we render at native resolution),
+  // no localStorage seek persistence.
+  function DeterministicStage(props) {
+    const { width, height, duration, background, children } = props;
+    const time = window.__renderTime || 0;
+    const value = React.useMemo(
+      () => ({ time, duration, playing: false, setTime: () => {}, setPlaying: () => {} }),
+      [time, duration]
+    );
+    return React.createElement(
+      'div',
+      {
+        style: {
+          position: 'absolute', inset: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          background: '#000', margin: 0, padding: 0,
+        },
+      },
+      React.createElement(
+        'div',
+        {
+          style: {
+            width, height, background,
+            position: 'relative', overflow: 'hidden', flexShrink: 0,
+          },
+        },
+        React.createElement(TimelineContext.Provider, { value }, children)
+      )
+    );
+  }
+  // Replace the global so subsequent <Stage> JSX expressions in
+  // variation files resolve to our deterministic version. Babel's
+  // standalone transform emits "var Stage = ..." at script scope which
+  // is hoisted to window, so re-binding via window.Stage is sufficient.
+  window.Stage = DeterministicStage;
+
+  // Bookkeeping for the Puppeteer driver.
+  window.__renderTime = 0;
+  window.__rerenderCount = 0;
+  window.__setRenderTime = function (t) {
+    window.__renderTime = t;
+    if (window.__rerender) window.__rerender();
+  };
+})();
+`;
+
+// Bootstrap script: mounts the chosen variation once the variation
+// global appears on window. Also installs __rerender so the driver can
+// step time and force a synchronous re-render.
+function bootstrapScript(componentName) {
+  return String.raw`
+(function () {
+  function start() {
+    var Comp = window[${JSON.stringify(componentName)}];
+    if (!Comp) { setTimeout(start, 20); return; }
+    var rootEl = document.getElementById('root');
+    var root = ReactDOM.createRoot(rootEl);
+    window.__rerender = function () {
+      window.__rerenderCount++;
+      root.render(React.createElement(Comp));
+    };
+    window.__rerender();
+    window.__ready = true;
+  }
+  start();
+})();
+`;
+}
+
+export async function renderShippedClaudeDesign({
+  inputPath,
+  projectDir,
+  params,
+  outPath,
+  shippedHtmlPath,
+  shippedFontsUrl,
+  extraCss,
+  encodeFrames,
+  __dirname,
+  PROJECT_ROOT,
+}) {
+  const animationsPath = join(projectDir, "animations.jsx");
+  if (!existsSync(animationsPath)) {
+    throw new Error(
+      `Shipped runtime not found at ${animationsPath}. ` +
+      `Pass a Claude Design variation that ships alongside animations.jsx.`,
+    );
+  }
+
+  const componentName = detectVariationGlobal(inputPath);
+  if (!componentName) {
+    throw new Error(
+      `Variation file does not register a global (window.<Name> = <Name>). ` +
+      `Add that line to ${inputPath}.`,
+    );
+  }
+
+  const inputBasename = inputPath.split(/[\\/]/).pop();
+
+  // Synthesize the render shell HTML. It loads React/ReactDOM/Babel
+  // from local node_modules (no network round-trip), keeps the shipped
+  // Google Fonts <link> if present, adds local @font-face rules for
+  // any other families, then loads the shipped animations.jsx, the
+  // driver shim, the variation, and the bootstrap script in order.
+  const reactSrc = "/__render/react.js";
+  const reactDomSrc = "/__render/react-dom.js";
+  const babelSrc = "/__render/babel.js";
+  const animationsSrc = `/${encodeURIComponent(relativeToProject(animationsPath, projectDir))}`;
+  const variationSrc = `/${encodeURIComponent(inputBasename)}`;
+
+  // Note: we do NOT include the shipped Google Fonts <link> here, even
+  // when shippedFontsUrl is set. preflightFonts has already downloaded
+  // every referenced family server-side and inlined them via extraCss,
+  // so the render page never touches the network. This avoids both the
+  // sandbox TLS errors and silent fallback to system fonts.
+  const fontsHead = extraCss ? `<style>${extraCss}</style>` : "";
+
+  const html = `<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<base href="/">
+<title>render — ${componentName}</title>
+${fontsHead}
+<style>
+  html, body { margin: 0; padding: 0; background: #000; overflow: hidden; }
+  body { width: ${params.WIDTH}px; height: ${params.HEIGHT}px; }
+  #root { position: relative; width: ${params.WIDTH}px; height: ${params.HEIGHT}px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="${reactSrc}"></script>
+<script src="${reactDomSrc}"></script>
+<script src="${babelSrc}"></script>
+<script type="text/babel" data-presets="env,react" src="${animationsSrc}"></script>
+<script type="text/babel" data-presets="env,react">${DRIVER_SCRIPT}</script>
+<script type="text/babel" data-presets="env,react" src="${variationSrc}"></script>
+<script type="text/babel" data-presets="env,react">${bootstrapScript(componentName)}</script>
+</body>
+</html>`;
+
+  // Set up the static server: project files served from projectDir,
+  // plus our synthesized __render/* assets.
+  const { mkdirSync, writeFileSync, copyFileSync, rmSync } = await import("node:fs");
+  const renderDir = join(projectDir, "__render");
+  rmSync(renderDir, { recursive: true, force: true });
+  mkdirSync(renderDir, { recursive: true });
+
+  copyFileSync(
+    join(PROJECT_ROOT, "node_modules/react/umd/react.development.js"),
+    join(renderDir, "react.js"),
+  );
+  copyFileSync(
+    join(PROJECT_ROOT, "node_modules/react-dom/umd/react-dom.development.js"),
+    join(renderDir, "react-dom.js"),
+  );
+  copyFileSync(
+    join(PROJECT_ROOT, "node_modules/@babel/standalone/babel.min.js"),
+    join(renderDir, "babel.js"),
+  );
+  writeFileSync(join(renderDir, "index.html"), html);
+
+  const { server, url } = await startStaticServer(projectDir);
+  let browser;
+  try {
+    const puppeteer = (await import("puppeteer")).default;
+    browser = await puppeteer.launch({
+      headless: true,
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--font-render-hinting=none",
+        "--disable-gpu",
+        `--window-size=${params.WIDTH},${params.HEIGHT}`,
+      ],
+      defaultViewport: {
+        width: params.WIDTH,
+        height: params.HEIGHT,
+        deviceScaleFactor: 1,
+      },
+    });
+    const page = await browser.newPage();
+    page.on("pageerror", (e) => console.error("[page error]", e.message));
+    page.on("console", (msg) => {
+      const t = msg.type();
+      if (t === "error" || t === "warning") {
+        console.error(`[page ${t}] ${msg.text()}`);
+      }
+    });
+
+    await page.goto(url + "/__render/index.html", { waitUntil: "load" });
+    await page.waitForFunction("window.__ready === true", { timeout: 30000 });
+    await page.evaluate(async () => {
+      if (document.fonts && document.fonts.ready) await document.fonts.ready;
+    });
+
+    // Settle layout at t=0 once before recording.
+    await page.evaluate(() => window.__setRenderTime(0));
+    await new Promise((r) => setTimeout(r, 300));
+
+    const totalFrames = Math.round(params.DURATION_SECONDS * params.FPS);
+
+    // Pipe screenshots straight into ffmpeg's stdin rather than buffering
+    // 30s × 30fps = 900 PNGs (~2-3 GB) on disk first. Streaming keeps
+    // memory flat and works in resource-constrained containers.
+    const { spawn } = await import("node:child_process");
+    const ffmpeg = spawn(
+      "ffmpeg",
+      [
+        "-y",
+        "-f", "image2pipe",
+        "-vcodec", "png",
+        "-framerate", String(params.FPS),
+        "-i", "pipe:0",
+        "-c:v", "libx264",
+        "-pix_fmt", "yuv420p",
+        "-movflags", "+faststart",
+        "-preset", "medium",
+        "-crf", "20",
+        outPath,
+      ],
+      { stdio: ["pipe", "inherit", "inherit"] },
+    );
+    const ffmpegDone = new Promise((res, rej) => {
+      ffmpeg.on("exit", (code) =>
+        code === 0 ? res() : rej(new Error(`ffmpeg exited ${code}`)),
+      );
+      ffmpeg.on("error", rej);
+    });
+
+    const writeFrame = (buf) =>
+      new Promise((res, rej) => {
+        if (!ffmpeg.stdin.write(buf)) ffmpeg.stdin.once("drain", res);
+        else res();
+        ffmpeg.stdin.once("error", rej);
+      });
+
+    for (let i = 0; i < totalFrames; i++) {
+      const t = i / params.FPS;
+      await page.evaluate((time) => window.__setRenderTime(time), t);
+      await page.evaluate(
+        () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))),
+      );
+      const png = await page.screenshot({
+        type: "png",
+        omitBackground: false,
+        clip: { x: 0, y: 0, width: params.WIDTH, height: params.HEIGHT },
+      });
+      await writeFrame(png);
+      if (i % params.FPS === 0 || i === totalFrames - 1) {
+        console.error(`[render] frame ${i + 1}/${totalFrames}`);
+      }
+    }
+
+    ffmpeg.stdin.end();
+    await ffmpegDone;
+  } finally {
+    if (browser) await browser.close();
+    server.close();
+  }
+}
+
+export { detectVariationGlobal, readStageProps };
+
+function relativeToProject(absPath, projectDir) {
+  const rel = absPath.startsWith(projectDir + "/")
+    ? absPath.slice(projectDir.length + 1)
+    : absPath;
+  return rel;
+}

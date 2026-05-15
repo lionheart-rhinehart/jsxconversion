@@ -18,7 +18,12 @@ import {
   extractStageProps,
   extractWindowComponentName,
 } from "./classify.mjs";
-import { ensureFontsForFile } from "./fonts.mjs";
+import { preflightFonts, ensureFontsForFile } from "./fonts.mjs";
+import {
+  renderShippedClaudeDesign,
+  detectVariationGlobal,
+  readStageProps,
+} from "./claude-design.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const SKILL_ROOT = resolve(__dirname, "..");
@@ -65,184 +70,19 @@ async function renderRemotion(inputPath, outPath) {
   if (r.status !== 0) throw new Error("remotion render failed");
 }
 
-function copyAssets(inputPath, tmp) {
-  const inputDir = dirname(inputPath);
-  const assetsSrc = join(inputDir, "assets");
-  if (existsSync(assetsSrc)) {
-    cpSync(assetsSrc, join(tmp, "assets"), { recursive: true });
-  }
+import { readdirSync } from "node:fs";
+
+function findShippedHtmlSync(projectDir) {
+  if (!existsSync(projectDir)) return null;
+  const htmlFiles = readdirSync(projectDir).filter((f) => f.toLowerCase().endsWith(".html"));
+  if (!htmlFiles.length) return null;
+  // Prefer a file named like "*video*" or "*preview*" if present.
+  const preferred = htmlFiles.find((f) => /video|preview|index/i.test(f));
+  return join(projectDir, preferred || htmlFiles[0]);
 }
 
-async function bundleClaudeDesign(inputPath, tmp) {
-  // Claude Design files use JSX with `React` as a global, no imports/exports,
-  // and register the component via `window.X = X`. Transform with classic
-  // JSX -> React.createElement and emit as a plain IIFE script (no module
-  // semantics) so top-level declarations live on the same scope as the
-  // runtime globals.
-  const esbuild = await import("esbuild");
-  const userBundle = join(tmp, "user.js");
-  await esbuild.build({
-    entryPoints: [inputPath],
-    bundle: false,
-    outfile: userBundle,
-    format: "iife",
-    loader: { ".jsx": "jsx", ".tsx": "tsx", ".js": "jsx", ".ts": "tsx" },
-    jsx: "transform",
-    jsxFactory: "React.createElement",
-    jsxFragment: "React.Fragment",
-    platform: "browser",
-    target: ["es2020"],
-    logLevel: "warning",
-  });
-  return userBundle;
-}
-
-async function renderClaudeDesign(inputPath, params, outPath, fontsCss) {
-  const tmp = join(
-    PROJECT_ROOT,
-    ".tmp",
-    basename(inputPath, extname(inputPath)),
-  );
-  rmSync(tmp, { recursive: true, force: true });
-  mkdirSync(tmp, { recursive: true });
-
-  copyAssets(inputPath, tmp);
-
-  // React UMD lives at node_modules/react/umd/react.production.min.js
-  const reactUmd = join(
-    PROJECT_ROOT,
-    "node_modules/react/umd/react.production.min.js",
-  );
-  const reactDomUmd = join(
-    PROJECT_ROOT,
-    "node_modules/react-dom/umd/react-dom.production.min.js",
-  );
-  if (!existsSync(reactUmd) || !existsSync(reactDomUmd)) {
-    throw new Error(
-      "React UMD builds missing. Run `npm install` to install react + react-dom.",
-    );
-  }
-  copyFileSync(reactUmd, join(tmp, "react.js"));
-  copyFileSync(reactDomUmd, join(tmp, "react-dom.js"));
-  copyFileSync(RUNTIME_JS, join(tmp, "runtime.js"));
-
-  // Write the preflighted font stylesheet next to the HTML so the page
-  // loads glyphs from disk rather than reaching for a network CDN at
-  // render time.
-  const fontsCssPath = fontsCss ? join(tmp, "fonts.css") : null;
-  if (fontsCssPath) writeFileSync(fontsCssPath, fontsCss);
-
-  await bundleClaudeDesign(inputPath, tmp);
-
-  const componentName = extractWindowComponentName(inputPath);
-  if (!componentName) {
-    throw new Error(
-      "Claude Design file must register the root component via `window.<Name> = <Name>` at the bottom.",
-    );
-  }
-  console.error(`[render] component=${componentName}`);
-
-  const html = join(tmp, "index.html");
-  writeFileSync(
-    html,
-    `<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-${fontsCssPath ? '<link rel="stylesheet" href="./fonts.css">' : ""}
-<style>
-  html, body { margin: 0; padding: 0; background: #000; overflow: hidden; }
-  body { width: ${params.WIDTH}px; height: ${params.HEIGHT}px; }
-  #root { width: ${params.WIDTH}px; height: ${params.HEIGHT}px; }
-</style>
-</head>
-<body>
-<div id="root"></div>
-<script src="./react.js"></script>
-<script src="./react-dom.js"></script>
-<script src="./runtime.js"></script>
-<script src="./user.js"></script>
-<script>
-  (function () {
-    const Comp = window[${JSON.stringify(componentName)}];
-    if (!Comp) {
-      document.body.innerHTML = '<pre style="color:#fff">Component ${componentName} not found on window</pre>';
-      throw new Error('component not found');
-    }
-    const rootEl = document.getElementById('root');
-    const root = ReactDOM.createRoot(rootEl);
-    window.__renderAt = function (t) {
-      window.__setTime(t);
-      root.render(React.createElement(Comp));
-    };
-    window.__ready = true;
-  })();
-</script>
-</body>
-</html>`,
-  );
-
-  const puppeteer = (await import("puppeteer")).default;
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--disable-dev-shm-usage",
-      "--font-render-hinting=none",
-      "--disable-gpu",
-      "--ignore-certificate-errors",
-      `--window-size=${params.WIDTH},${params.HEIGHT}`,
-    ],
-    defaultViewport: {
-      width: params.WIDTH,
-      height: params.HEIGHT,
-      deviceScaleFactor: 1,
-    },
-  });
-  const page = await browser.newPage();
-  page.on("pageerror", (e) => console.error("[page error]", e.message));
-  page.on("console", (msg) => {
-    if (msg.type() === "error" || msg.type() === "warning") {
-      console.error(`[page ${msg.type()}]`, msg.text());
-    }
-  });
-
-  await page.goto(pathToFileURL(html).href, { waitUntil: "load" });
-  await page.waitForFunction("window.__ready === true", { timeout: 15000 });
-
-  // Fonts come from the preflighted local stylesheet (./fonts.css). Wait
-  // for FontFaceSet to settle so the first frame captures correct glyphs.
-  await page.evaluate(async () => {
-    if (document.fonts && document.fonts.ready) {
-      await document.fonts.ready;
-    }
-  });
-
-  // Render at t=0 once so initial layout (and useLayoutEffect-driven autoscale)
-  // settles before the first capture.
-  await page.evaluate(() => window.__renderAt(0));
-  await new Promise((r) => setTimeout(r, 250));
-
-  const totalFrames = Math.round(params.DURATION_SECONDS * params.FPS);
-  const framesDir = join(tmp, "frames");
-  mkdirSync(framesDir, { recursive: true });
-
-  for (let i = 0; i < totalFrames; i++) {
-    const t = i / params.FPS;
-    await page.evaluate((time) => window.__renderAt(time), t);
-    await page.screenshot({
-      path: join(framesDir, `f_${String(i).padStart(6, "0")}.png`),
-      omitBackground: false,
-      clip: { x: 0, y: 0, width: params.WIDTH, height: params.HEIGHT },
-    });
-    if (i % params.FPS === 0 || i === totalFrames - 1) {
-      console.error(`[render] frame ${i + 1}/${totalFrames}`);
-    }
-  }
-
-  await browser.close();
-  await encodeFrames(framesDir, params, outPath);
+function hasShippedRuntime(projectDir) {
+  return existsSync(join(projectDir, "animations.jsx"));
 }
 
 function encodeFrames(framesDir, params, outPath) {
@@ -266,6 +106,126 @@ function encodeFrames(framesDir, params, outPath) {
   });
 }
 
+// ── Fallback path: claude-design file with NO shipped runtime ───────────────
+// Kept for one-off JSX files dropped into examples/ that don't bring a
+// project folder. Uses the in-skill hand-rolled runtime.js.
+
+async function bundleClaudeDesign(inputPath, tmp) {
+  const esbuild = await import("esbuild");
+  const userBundle = join(tmp, "user.js");
+  await esbuild.build({
+    entryPoints: [inputPath],
+    bundle: false,
+    outfile: userBundle,
+    format: "iife",
+    loader: { ".jsx": "jsx", ".tsx": "tsx", ".js": "jsx", ".ts": "tsx" },
+    jsx: "transform",
+    jsxFactory: "React.createElement",
+    jsxFragment: "React.Fragment",
+    platform: "browser",
+    target: ["es2020"],
+    logLevel: "warning",
+  });
+  return userBundle;
+}
+
+function copyAssets(inputPath, tmp) {
+  const inputDir = dirname(inputPath);
+  const assetsSrc = join(inputDir, "assets");
+  if (existsSync(assetsSrc)) {
+    cpSync(assetsSrc, join(tmp, "assets"), { recursive: true });
+  }
+}
+
+async function renderClaudeDesignFallback(inputPath, params, outPath, fontsCss) {
+  const tmp = join(
+    PROJECT_ROOT,
+    ".tmp",
+    basename(inputPath, extname(inputPath)),
+  );
+  rmSync(tmp, { recursive: true, force: true });
+  mkdirSync(tmp, { recursive: true });
+
+  copyAssets(inputPath, tmp);
+
+  const reactUmd = join(PROJECT_ROOT, "node_modules/react/umd/react.production.min.js");
+  const reactDomUmd = join(PROJECT_ROOT, "node_modules/react-dom/umd/react-dom.production.min.js");
+  if (!existsSync(reactUmd) || !existsSync(reactDomUmd)) {
+    throw new Error("React UMD builds missing. Run `npm install`.");
+  }
+  copyFileSync(reactUmd, join(tmp, "react.js"));
+  copyFileSync(reactDomUmd, join(tmp, "react-dom.js"));
+  copyFileSync(RUNTIME_JS, join(tmp, "runtime.js"));
+
+  const fontsCssPath = fontsCss ? join(tmp, "fonts.css") : null;
+  if (fontsCssPath) writeFileSync(fontsCssPath, fontsCss);
+
+  await bundleClaudeDesign(inputPath, tmp);
+
+  const componentName = extractWindowComponentName(inputPath);
+  if (!componentName) {
+    throw new Error("Claude Design file must register `window.<Name> = <Name>` at the bottom.");
+  }
+  console.error(`[render] component=${componentName}`);
+
+  const html = join(tmp, "index.html");
+  writeFileSync(html, `<!doctype html>
+<html><head><meta charset="utf-8">
+${fontsCssPath ? '<link rel="stylesheet" href="./fonts.css">' : ""}
+<style>
+  html, body { margin: 0; padding: 0; background: #000; overflow: hidden; }
+  body { width: ${params.WIDTH}px; height: ${params.HEIGHT}px; }
+  #root { width: ${params.WIDTH}px; height: ${params.HEIGHT}px; }
+</style></head>
+<body><div id="root"></div>
+<script src="./react.js"></script>
+<script src="./react-dom.js"></script>
+<script src="./runtime.js"></script>
+<script src="./user.js"></script>
+<script>
+  (function () {
+    const Comp = window[${JSON.stringify(componentName)}];
+    if (!Comp) throw new Error('component not found');
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    window.__renderAt = function (t) { window.__setTime(t); root.render(React.createElement(Comp)); };
+    window.__ready = true;
+  })();
+</script></body></html>`);
+
+  const puppeteer = (await import("puppeteer")).default;
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage",
+      "--font-render-hinting=none", "--disable-gpu", `--window-size=${params.WIDTH},${params.HEIGHT}`],
+    defaultViewport: { width: params.WIDTH, height: params.HEIGHT, deviceScaleFactor: 1 },
+  });
+  const page = await browser.newPage();
+  page.on("pageerror", (e) => console.error("[page error]", e.message));
+  await page.goto(pathToFileURL(html).href, { waitUntil: "load" });
+  await page.waitForFunction("window.__ready === true", { timeout: 15000 });
+  await page.evaluate(async () => { if (document.fonts && document.fonts.ready) await document.fonts.ready; });
+  await page.evaluate(() => window.__renderAt(0));
+  await new Promise((r) => setTimeout(r, 250));
+
+  const totalFrames = Math.round(params.DURATION_SECONDS * params.FPS);
+  const framesDir = join(tmp, "frames");
+  mkdirSync(framesDir, { recursive: true });
+  for (let i = 0; i < totalFrames; i++) {
+    const t = i / params.FPS;
+    await page.evaluate((time) => window.__renderAt(time), t);
+    await page.screenshot({
+      path: join(framesDir, `f_${String(i).padStart(6, "0")}.png`),
+      omitBackground: false,
+      clip: { x: 0, y: 0, width: params.WIDTH, height: params.HEIGHT },
+    });
+    if (i % params.FPS === 0 || i === totalFrames - 1) console.error(`[render] frame ${i + 1}/${totalFrames}`);
+  }
+  await browser.close();
+  await encodeFrames(framesDir, params, outPath);
+}
+
+// ── Main ─────────────────────────────────────────────────────────────────────
+
 async function main() {
   const inputArg = process.argv[2];
   if (!inputArg) {
@@ -280,51 +240,99 @@ async function main() {
   ensureFfmpeg();
 
   const kind = classify(inputPath);
-  const params = resolveParams(inputPath, kind);
+  const projectDir = dirname(inputPath);
+  const shippedRuntime = kind === "claude-design" && hasShippedRuntime(projectDir);
+  const shippedHtmlPath = shippedRuntime ? findShippedHtmlSync(projectDir) : null;
+
+  // Drop undefined values before spread so defaults survive.
+  const definedOnly = (obj) => Object.fromEntries(
+    Object.entries(obj || {}).filter(([, v]) => v !== undefined),
+  );
+  const params = shippedRuntime
+    ? {
+        ...DEFAULTS,
+        ...definedOnly(readStageProps(inputPath)),
+        ...definedOnly(extractConstants(inputPath)),
+      }
+    : resolveParams(inputPath, kind);
+
   const outDir = ensureOutDir();
   const outPath = join(outDir, basename(inputPath, extname(inputPath)) + ".mp4");
 
-  console.error(`[render] input=${inputPath}`);
-  console.error(`[render] kind=${kind}`);
-  console.error(
-    `[render] params: ${params.WIDTH}x${params.HEIGHT} @ ${params.FPS}fps, ${params.DURATION_SECONDS}s`,
-  );
-  console.error(`[render] output=${outPath}`);
+  // Manifest BEFORE any frame work — visible decision log.
+  console.error("─── render manifest ───");
+  console.error(`  input:           ${inputPath}`);
+  console.error(`  classification:  ${kind}`);
+  console.error(`  runtime:         ${shippedRuntime ? "shipped (animations.jsx)" : "in-skill fallback"}`);
+  console.error(`  shipped html:    ${shippedHtmlPath || "(none)"}`);
+  console.error(`  resolution:      ${params.WIDTH}x${params.HEIGHT} @ ${params.FPS}fps, ${params.DURATION_SECONDS}s`);
+  console.error(`  output:          ${outPath}`);
 
-  // Stage 0: font preflight — never substitute a system font for a missing
-  // design font. If the JSX references custom fonts that aren't already in
-  // fonts/, download them before we touch a renderer.
-  const { fonts, css: fontsCss } = await ensureFontsForFile(inputPath);
-  if (fonts.length) {
-    console.error(`[preflight] fonts ready: ${fonts.join(", ")}`);
+  let fontResult;
+  if (shippedRuntime) {
+    const jsxFiles = [inputPath, join(projectDir, "animations.jsx")];
+    if (existsSync(join(projectDir, "app.jsx"))) jsxFiles.push(join(projectDir, "app.jsx"));
+    fontResult = await preflightFonts({
+      projectDir,
+      jsxFiles,
+      shippedHtmlPath,
+    });
   } else {
-    console.error("[preflight] no custom fonts referenced");
+    const { fonts, css } = await ensureFontsForFile(inputPath);
+    fontResult = {
+      fonts: fonts.map((f) => ({ family: f, source: "legacy" })),
+      shippedFontsUrl: null,
+      extraCss: css,
+    };
   }
+
+  console.error("  fonts:");
+  if (fontResult.fonts.length === 0) {
+    console.error("    (none custom)");
+  } else {
+    for (const f of fontResult.fonts) {
+      console.error(`    - ${f.family}  [${f.source}]`);
+    }
+  }
+  console.error("───────────────────────");
 
   if (kind === "remotion") {
     await renderRemotion(inputPath, outPath);
+  } else if (kind === "claude-design" && shippedRuntime) {
+    await renderShippedClaudeDesign({
+      inputPath,
+      projectDir,
+      params,
+      outPath,
+      shippedHtmlPath,
+      shippedFontsUrl: fontResult.shippedFontsUrl,
+      extraCss: fontResult.extraCss,
+      encodeFrames,
+      __dirname,
+      PROJECT_ROOT,
+    });
   } else if (kind === "claude-design") {
-    await renderClaudeDesign(inputPath, params, outPath, fontsCss);
+    await renderClaudeDesignFallback(inputPath, params, outPath, fontResult.extraCss);
   } else {
     throw new Error(
-      `Renderer for kind=${kind} not implemented yet. Only 'claude-design' and 'remotion' paths are wired up in this version.`,
+      `Renderer for kind=${kind} not implemented. Supported: claude-design, remotion.`,
     );
   }
 
-  console.log(
-    JSON.stringify({
-      output: outPath,
-      kind,
-      width: params.WIDTH,
-      height: params.HEIGHT,
-      fps: params.FPS,
-      duration_seconds: params.DURATION_SECONDS,
-    }),
-  );
+  console.log(JSON.stringify({
+    output: outPath,
+    kind,
+    runtime: shippedRuntime ? "shipped" : "fallback",
+    width: params.WIDTH,
+    height: params.HEIGHT,
+    fps: params.FPS,
+    duration_seconds: params.DURATION_SECONDS,
+    fonts: fontResult.fonts,
+  }));
 }
 
 main().catch((e) => {
   console.error("[render] error:", e.message);
-  console.error(e.stack);
+  if (process.env.DEBUG) console.error(e.stack);
   process.exit(1);
 });
