@@ -1,0 +1,22 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          { "type": "command", "command": "bash .claude/hooks/session-start.sh" }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(npm install*)",
+      "Bash(npm run render*)",
+      "Bash(npx remotion render*)",
+      "Bash(node .claude/skills/jsx-to-mp4/scripts/render.mjs*)",
+      "Bash(ffmpeg -version)",
+      "Bash(ffmpeg *)"
+    ]
+  }
+}

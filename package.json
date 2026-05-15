@@ -1,0 +1,21 @@
+{
+  "name": "jsxconversion",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Convert JSX files (Claude Design output) into MP4 videos for social.",
+  "scripts": {
+    "render": "node .claude/skills/jsx-to-mp4/scripts/render.mjs"
+  },
+  "dependencies": {
+    "esbuild": "^0.24.0",
+    "puppeteer": "^23.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "optionalDependencies": {
+    "@remotion/cli": "^4.0.0",
+    "remotion": "^4.0.0",
+    "framer-motion": "^11.0.0"
+  }
+}
