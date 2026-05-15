@@ -20,6 +20,14 @@
     easeOutCubic: (t) => 1 - Math.pow(1 - t, 3),
     easeInOutCubic: (t) =>
       t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+    easeInQuart: (t) => t * t * t * t,
+    easeOutQuart: (t) => 1 - Math.pow(1 - t, 4),
+    easeInOutQuart: (t) =>
+      t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2,
+    easeInQuint: (t) => t * t * t * t * t,
+    easeOutQuint: (t) => 1 - Math.pow(1 - t, 5),
+    easeInOutQuint: (t) =>
+      t < 0.5 ? 16 * t * t * t * t * t : 1 - Math.pow(-2 * t + 2, 5) / 2,
     easeInExpo: (t) => (t === 0 ? 0 : Math.pow(2, 10 * t - 10)),
     easeOutExpo: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
     easeInOutExpo: (t) => {

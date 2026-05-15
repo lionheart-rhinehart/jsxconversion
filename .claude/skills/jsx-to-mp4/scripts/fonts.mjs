@@ -53,6 +53,11 @@ export function detectFonts(src) {
       const name = raw.trim().replace(/^["']|["']$/g, "");
       if (!name) continue;
       if (CSS_GENERIC.has(name.toLowerCase())) continue;
+      // Vendor-prefixed system fonts (-apple-system, -webkit-pictograph, etc.)
+      // are OS-supplied and never live on Google Fonts.
+      if (name.startsWith("-")) continue;
+      // BlinkMacSystemFont is a Chromium system-font keyword, not a Google Font.
+      if (name.toLowerCase() === "blinkmacsystemfont") continue;
       fonts.add(name);
     }
   }
