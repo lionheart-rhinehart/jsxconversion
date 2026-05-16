@@ -1,0 +1,749 @@
+#!/usr/bin/env node
+// light-deploy.mjs — shared helper for the lightweight commit/deploy slash commands.
+//
+// Driven by /wrapup-light, /deploy-light, /full-deploy-light. Owns all the
+// deterministic work (safety checks, git ops, GitHub PR + merge) so the .md
+// skill files stay short and just orchestrate / report.
+//
+// Output contract: a single JSON object on stdout. Always.
+//   - { ok: true, action: <name>, ... }
+//   - { ok: false, action: <name>, stage: <where>, error: <message>, ... }
+// Diagnostics go to stderr. The .md skill should surface errors to the user
+// verbatim and not try to "work around" them.
+//
+// Usage:
+//   node light-deploy.mjs wrapup [--force] [--lessons]
+//   node light-deploy.mjs deploy [--force] [--no-pull] [--base <branch>]
+//   node light-deploy.mjs full   [--force] [--lessons] [--no-pull] [--base <branch>]
+
+import {
+  existsSync, readFileSync, statSync, readdirSync, writeFileSync,
+} from "node:fs";
+import { spawnSync } from "node:child_process";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+
+// ── Arg parsing ──────────────────────────────────────────────────────────────
+
+const argv = process.argv.slice(2);
+const [subcommand, ...rest] = argv;
+const VALID_SUBS = new Set(["wrapup", "deploy", "full"]);
+
+const flags = new Set();
+const opts = {};
+for (let i = 0; i < rest.length; i++) {
+  const a = rest[i];
+  if (!a.startsWith("--")) continue;
+  const key = a.slice(2);
+  // Options with values: --base <branch>
+  if (key === "base" && i + 1 < rest.length && !rest[i + 1].startsWith("--")) {
+    opts.base = rest[i + 1];
+    i++;
+  } else {
+    flags.add(key);
+  }
+}
+
+if (!VALID_SUBS.has(subcommand)) {
+  process.stdout.write(JSON.stringify({
+    ok: false, action: subcommand || "(none)", stage: "usage",
+    error: "Usage: light-deploy.mjs <wrapup|deploy|full> [flags]",
+  }) + "\n");
+  process.exit(2);
+}
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+class FailError extends Error {
+  constructor(stage, message, extra = {}) {
+    super(message);
+    this.stage = stage;
+    this.extra = extra;
+  }
+}
+function fail(stage, message, extra) { throw new FailError(stage, message, extra); }
+
+function run(cmd, args, opts = {}) {
+  const r = spawnSync(cmd, args, { encoding: "utf8", ...opts });
+  return {
+    stdout: (r.stdout || "").trim(),
+    stderr: (r.stderr || "").trim(),
+    code: r.status ?? -1,
+  };
+}
+
+function note(msg) { process.stderr.write(`[light-deploy] ${msg}\n`); }
+
+function gitRoot() {
+  const r = run("git", ["rev-parse", "--show-toplevel"]);
+  if (r.code !== 0) fail("git-health", "not inside a git repository");
+  return r.stdout;
+}
+function currentBranch(cwd) {
+  return run("git", ["rev-parse", "--abbrev-ref", "HEAD"], { cwd }).stdout;
+}
+
+// ── Patterns ─────────────────────────────────────────────────────────────────
+
+// Copied from ~/.claude/scripts/wrapup.mjs (not exported there).
+const SECRET_PATTERNS = [
+  { name: "OpenAI API Key", pattern: /sk-[a-zA-Z0-9_-]{48,}/ },
+  { name: "OpenAI Project Key", pattern: /sk-proj-[a-zA-Z0-9_-]{48,}/ },
+  { name: "AWS Access Key", pattern: /AKIA[0-9A-Z]{16}/ },
+  { name: "GitHub Token", pattern: /gh[pousr]_[a-zA-Z0-9]{36,}/ },
+  { name: "Private Key", pattern: /-----BEGIN\s+(RSA|DSA|EC|OPENSSH|PGP)?\s*PRIVATE KEY-----/ },
+  { name: "Anthropic API Key", pattern: /sk-ant-[a-zA-Z0-9_-]{40,}/ },
+];
+
+// Filenames that should never be staged regardless of contents.
+const SENSITIVE_FILENAME_PATTERNS = [
+  /(^|\/)\.env(\..+)?$/,
+  /\.key$/i,
+  /\.pem$/i,
+  /(^|\/)credentials\.json$/i,
+  /(^|\/)settings\.local\.json$/i,
+  /(^|\/)secret(s)?\.json$/i,
+  /(^|\/)id_rsa(\.pub)?$/i,
+];
+
+// Only scan these extensions for secrets (skip binaries / large media).
+const SECRET_SCAN_EXTENSIONS = new Set([
+  ".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs",
+  ".json", ".yaml", ".yml", ".env",
+  ".md", ".txt", ".html", ".css",
+  ".sh", ".ps1", ".bat", ".cmd",
+  ".py", ".rb",
+]);
+
+// Files we never scan (would self-match because they CONTAIN the regexes).
+const SECRET_SCAN_SKIPLIST = ["light-deploy.mjs", "wrapup.mjs"];
+
+// ── Safety checks ────────────────────────────────────────────────────────────
+
+function checkGitHealth(repoRoot) {
+  // git-guardian.mjs does deep filesystem checks (.git/config, etc.) that
+  // assume a "regular" repository layout. In a git worktree, .git is a
+  // FILE pointing to the real gitdir, not a directory, and guardian
+  // misreports this as corruption. Detect worktrees and use the
+  // lightweight git-command-based check instead.
+  const dotGit = join(repoRoot, ".git");
+  let isWorktree = false;
+  try { isWorktree = statSync(dotGit).isFile(); } catch {}
+
+  const home = process.env.USERPROFILE || process.env.HOME || "";
+  const guardian = join(home, ".claude", "scripts", "git-guardian.mjs");
+  if (!isWorktree && existsSync(guardian)) {
+    const r = run("node", [guardian, "--check"], { cwd: repoRoot });
+    if (r.code !== 0) fail("git-health", r.stderr || r.stdout || "git-guardian --check failed");
+    return;
+  }
+  // Lightweight check: detached-HEAD + origin remote present.
+  const head = run("git", ["symbolic-ref", "-q", "HEAD"], { cwd: repoRoot });
+  if (head.code !== 0) fail("git-health", "detached HEAD — checkout a branch before committing");
+  const remote = run("git", ["remote", "get-url", "origin"], { cwd: repoRoot });
+  if (remote.code !== 0) fail("git-health", "no origin remote configured");
+}
+
+function listChanges(repoRoot) {
+  const r = run("git", ["status", "--porcelain", "-uall"], { cwd: repoRoot });
+  if (r.code !== 0) fail("git", `git status failed: ${r.stderr}`);
+  return r.stdout.split("\n").filter(Boolean).map((line) => {
+    const status = line.slice(0, 2);
+    let path = line.slice(3).trim();
+    if (path.startsWith('"') && path.endsWith('"')) path = path.slice(1, -1);
+    return { status, path };
+  });
+}
+
+function checkSensitiveFiles(files) {
+  const flagged = files.filter(({ path }) =>
+    SENSITIVE_FILENAME_PATTERNS.some((re) => re.test(path)),
+  ).map((f) => f.path);
+  if (flagged.length && !flags.has("force")) {
+    fail("sensitive-files",
+      `Refusing to stage sensitive files: ${flagged.join(", ")}. ` +
+      `Add to .gitignore (or pass --force to override).`,
+      { files: flagged },
+    );
+  }
+  return flagged;
+}
+
+function checkLargeFiles(repoRoot, files) {
+  const warnings = [];
+  const aborts = [];
+  for (const { path } of files) {
+    const full = join(repoRoot, path);
+    if (!existsSync(full)) continue;
+    let size;
+    try { size = statSync(full).size; } catch { continue; }
+    const mb = size / (1024 * 1024);
+    if (mb > 100) aborts.push({ path, size_mb: Math.round(mb) });
+    else if (mb > 50) warnings.push({ path, size_mb: Math.round(mb) });
+  }
+  if (aborts.length && !flags.has("force")) {
+    fail("large-files",
+      `Files exceed GitHub's 100MB limit: ${
+        aborts.map((f) => `${f.path} (${f.size_mb}MB)`).join(", ")
+      }. Use Git LFS or pass --force.`,
+      { aborts, warnings },
+    );
+  }
+  for (const w of warnings) note(`large file warning: ${w.path} is ${w.size_mb}MB (>50MB)`);
+  return { warnings, aborts };
+}
+
+function fileExt(path) {
+  const i = path.lastIndexOf(".");
+  return i >= 0 ? path.slice(i).toLowerCase() : "";
+}
+function fileBase(path) {
+  return path.replace(/\\/g, "/").split("/").pop();
+}
+
+function scanSecrets(repoRoot, files) {
+  const findings = [];
+  for (const { path } of files) {
+    if (SECRET_SCAN_SKIPLIST.includes(fileBase(path))) continue;
+    if (!SECRET_SCAN_EXTENSIONS.has(fileExt(path))) continue;
+    const full = join(repoRoot, path);
+    if (!existsSync(full)) continue;
+    let stat;
+    try { stat = statSync(full); } catch { continue; }
+    if (!stat.isFile() || stat.size > 5 * 1024 * 1024) continue; // skip files >5MB
+    let content;
+    try { content = readFileSync(full, "utf8"); } catch { continue; }
+    for (const { name, pattern } of SECRET_PATTERNS) {
+      const m = content.match(pattern);
+      if (m) {
+        findings.push({
+          file: path,
+          type: name,
+          snippet: (m[0] || "").slice(0, 24) + "…",
+        });
+      }
+    }
+  }
+  if (findings.length && !flags.has("force")) {
+    fail("secrets",
+      `Possible secrets detected: ${
+        findings.map((f) => `${f.file} (${f.type})`).join(", ")
+      }. Remove and try again (or pass --force).`,
+      { findings },
+    );
+  }
+}
+
+function runZoneVerification(repoRoot) {
+  if (process.platform !== "win32") return; // no-op on non-Windows
+  const ps1 = join(process.env.USERPROFILE || "", ".claude", "scripts", "verify-changes.ps1");
+  if (!existsSync(ps1)) return; // protection system not installed
+  const r = run("powershell", ["-ExecutionPolicy", "Bypass", "-File", ps1], { cwd: repoRoot });
+  // The script exits non-zero only when an unlocked zone has NEW TS errors
+  // against its baseline. Zero = all good (or no unlocked zones).
+  if (r.code !== 0 && !flags.has("force")) {
+    fail("zone-verification",
+      r.stdout || r.stderr || "zone verification failed",
+      { stdout: r.stdout, stderr: r.stderr },
+    );
+  }
+}
+
+// ── Commit message generation ────────────────────────────────────────────────
+
+function generateCommitMessage(repoRoot) {
+  const numstat = run("git", ["diff", "--cached", "--numstat"], { cwd: repoRoot }).stdout;
+  const lines = numstat.split("\n").filter(Boolean);
+
+  const files = lines.map((line) => {
+    const parts = line.split(/\t|\s+/);
+    const adds = parseInt(parts[0], 10) || 0;
+    const dels = parseInt(parts[1], 10) || 0;
+    const path = parts.slice(2).join(" ");
+    return { path, adds, dels };
+  });
+
+  const created = files.filter((f) => f.dels === 0 && f.adds > 0).length;
+  const deleted = files.filter((f) => f.adds === 0 && f.dels === 0).length; // binary deletes show 0 0
+  const total = files.length;
+
+  let title;
+  if (total === 1) {
+    const kind = files[0].dels === 0 ? "Add" : "Update";
+    title = `${kind} ${files[0].path}`;
+  } else if (created === total) {
+    title = `Add ${total} files`;
+  } else {
+    title = `Update ${total} files`;
+  }
+  // Trim long titles
+  if (title.length > 72) title = title.slice(0, 69) + "...";
+
+  const bullets = files.slice(0, 6).map((f) => {
+    const kind = f.adds > 0 && f.dels === 0 ? "new"
+      : f.adds === 0 && f.dels > 0 ? "deleted"
+      : "modified";
+    return `- ${f.path} (${kind})`;
+  });
+  if (files.length > 6) bullets.push(`- ... and ${files.length - 6} more`);
+
+  return [
+    title,
+    "",
+    bullets.join("\n"),
+    "",
+    "Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>",
+  ].join("\n");
+}
+
+// ── .deploy-check.json ───────────────────────────────────────────────────────
+
+function patternToRegex(pattern) {
+  let s = pattern;
+  // Escape regex metacharacters except * and / and ?
+  s = s.replace(/[.+^${}()|[\]\\]/g, "\\$&");
+  // ** handling: with surrounding slashes or bare.
+  s = s.replace(/\*\*\//g, "(?:.+/)?");
+  s = s.replace(/\/\*\*/g, "(?:/.+)?");
+  s = s.replace(/\*\*/g, ".*");
+  // Single * matches non-slash.
+  s = s.replace(/\*/g, "[^/]*");
+  // ? matches single non-slash.
+  s = s.replace(/\?/g, "[^/]");
+  return new RegExp("^" + s + "$");
+}
+
+function walkFiles(dir, base = "", out = []) {
+  let entries;
+  try { entries = readdirSync(dir, { withFileTypes: true }); }
+  catch { return out; }
+  for (const e of entries) {
+    // Skip dotfiles / dot-folders and node_modules
+    if (e.name.startsWith(".") || e.name === "node_modules") continue;
+    const full = join(dir, e.name);
+    const rel = base ? `${base}/${e.name}` : e.name;
+    if (e.isDirectory()) walkFiles(full, rel, out);
+    else if (e.isFile()) out.push({ path: rel, fullPath: full });
+  }
+  return out;
+}
+
+function checkDeployManifest(repoRoot) {
+  const cfgPath = join(repoRoot, ".deploy-check.json");
+  if (!existsSync(cfgPath)) return null; // silent skip
+
+  let config;
+  try { config = JSON.parse(readFileSync(cfgPath, "utf8")); }
+  catch (e) { fail("deploy-check", `.deploy-check.json invalid JSON: ${e.message}`); }
+
+  const patterns = Array.isArray(config.expect_files_in) ? config.expect_files_in : [];
+  const minCount = Number.isFinite(config.min_count) ? config.min_count : 1;
+  const minSize = Number.isFinite(config.min_file_size_bytes) ? config.min_file_size_bytes : 0;
+
+  if (!patterns.length) return { ok: true, skipped: "no expect_files_in patterns" };
+
+  const allFiles = walkFiles(repoRoot);
+  const matched = new Map();
+  for (const pattern of patterns) {
+    const re = patternToRegex(pattern);
+    for (const f of allFiles) {
+      const norm = f.path.replace(/\\/g, "/");
+      if (re.test(norm)) matched.set(f.path, f);
+    }
+  }
+
+  const failures = [];
+  if (matched.size < minCount) {
+    failures.push(`expected ≥${minCount} files matching ${JSON.stringify(patterns)}, found ${matched.size}`);
+  }
+  const undersized = [];
+  for (const f of matched.values()) {
+    let size;
+    try { size = statSync(f.fullPath).size; } catch { continue; }
+    if (size < minSize) undersized.push({ path: f.path, size });
+  }
+  if (undersized.length) {
+    failures.push(
+      `${undersized.length} file(s) below ${minSize} byte min: ` +
+      undersized.map((u) => `${u.path} (${u.size}B)`).join(", "),
+    );
+  }
+  if (failures.length && !flags.has("force")) {
+    fail("deploy-check", failures.join("; "), {
+      matched_count: matched.size,
+      required_count: minCount,
+      undersized,
+    });
+  }
+  return { matched_count: matched.size, required_count: minCount };
+}
+
+// ── System map (auto-generated inventory of user's Claude Code toolkit) ─────
+
+// Pull a one-line description out of a slash-command .md. The convention
+// across these files is an H1 like "# /name — short summary"; fall back
+// to the first non-blank line if the H1 doesn't match.
+function extractMdSummary(filePath) {
+  let content;
+  try { content = readFileSync(filePath, "utf8"); } catch { return ""; }
+  const lines = content.split(/\r?\n/);
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+    if (trimmed.startsWith("# ")) {
+      const heading = trimmed.replace(/^#\s+/, "");
+      const dashIdx = heading.search(/\s[—–-]\s/);
+      return dashIdx >= 0 ? heading.slice(dashIdx + 3).trim() : heading.trim();
+    }
+    // Stop after first content line if no H1 found.
+    return trimmed.replace(/^[#>]+\s*/, "").slice(0, 120);
+  }
+  return "";
+}
+
+// Pull a one-line description out of a helper script's leading comment.
+function extractScriptSummary(filePath) {
+  let content;
+  try { content = readFileSync(filePath, "utf8"); } catch { return ""; }
+  const lines = content.split(/\r?\n/).slice(0, 30);
+  for (const line of lines) {
+    const t = line.trim();
+    if (!t) continue;
+    if (t.startsWith("#!")) continue; // shebang
+    // Match leading // or # comment markers (ignore JSDoc /** */ openers).
+    const m = t.match(/^(?:\/\/|#)\s?(.+)$/);
+    if (m) return m[1].slice(0, 160);
+    return ""; // first non-comment line — give up
+  }
+  return "";
+}
+
+// Pull name + description from a SKILL.md's YAML frontmatter.
+function extractSkillMeta(filePath) {
+  let content;
+  try { content = readFileSync(filePath, "utf8"); } catch { return null; }
+  const fm = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  if (!fm) return null;
+  const block = fm[1];
+  const name = (block.match(/^name:\s*(.+)$/m) || [])[1]?.trim() || "";
+  let description = (block.match(/^description:\s*(.+)$/m) || [])[1]?.trim() || "";
+  // Strip surrounding quotes if any
+  description = description.replace(/^["']|["']$/g, "");
+  // Truncate long descriptions
+  if (description.length > 200) description = description.slice(0, 197) + "…";
+  return { name, description };
+}
+
+function generateSystemMap() {
+  const home = process.env.USERPROFILE || process.env.HOME || "";
+  if (!home) return;
+  const claudeDir = join(home, ".claude");
+  const commandsDir = join(claudeDir, "commands");
+  const scriptsDir = join(claudeDir, "scripts");
+  const skillsDir = join(claudeDir, "skills");
+  const out = join(claudeDir, "SYSTEM-MAP.md");
+
+  const lines = [
+    "# System Map (auto-generated)",
+    "",
+    `> Last updated: ${new Date().toISOString()}`,
+    "> Generator: `~/.claude/scripts/light-deploy.mjs` (called from `/wrapup-light` / `/full-deploy-light`)",
+    "> Do not hand-edit — overwritten on every wrapup.",
+    "",
+  ];
+
+  // Slash commands
+  lines.push("## Slash commands (`~/.claude/commands/`)", "");
+  if (existsSync(commandsDir)) {
+    const cmdFiles = readdirSync(commandsDir)
+      .filter((f) => f.endsWith(".md"))
+      .sort((a, b) => a.localeCompare(b));
+    if (cmdFiles.length) {
+      lines.push("| Command | Summary |", "|---------|---------|");
+      for (const f of cmdFiles) {
+        const name = "/" + f.replace(/\.md$/, "");
+        const summary = extractMdSummary(join(commandsDir, f)) || "—";
+        // Escape pipes for markdown table cells
+        const safeSummary = summary.replace(/\|/g, "\\|");
+        lines.push(`| \`${name}\` | ${safeSummary} |`);
+      }
+    } else {
+      lines.push("_(none)_");
+    }
+  } else {
+    lines.push("_(directory missing)_");
+  }
+  lines.push("");
+
+  // Helper scripts
+  lines.push("## Helper scripts (`~/.claude/scripts/`)", "");
+  if (existsSync(scriptsDir)) {
+    const scriptFiles = readdirSync(scriptsDir)
+      .filter((f) => /\.(mjs|js|cjs|ps1|cmd|sh)$/i.test(f))
+      .sort((a, b) => a.localeCompare(b));
+    if (scriptFiles.length) {
+      lines.push("| Script | Purpose |", "|--------|---------|");
+      for (const f of scriptFiles) {
+        const summary = extractScriptSummary(join(scriptsDir, f)) || "—";
+        const safeSummary = summary.replace(/\|/g, "\\|");
+        lines.push(`| \`${f}\` | ${safeSummary} |`);
+      }
+    } else {
+      lines.push("_(none)_");
+    }
+  } else {
+    lines.push("_(directory missing)_");
+  }
+  lines.push("");
+
+  // Full skills
+  lines.push("## Full skills (`~/.claude/skills/`)", "");
+  if (existsSync(skillsDir)) {
+    let entries;
+    try { entries = readdirSync(skillsDir, { withFileTypes: true }); }
+    catch { entries = []; }
+    const skillDirs = entries
+      .filter((e) => e.isDirectory())
+      .map((e) => e.name)
+      .sort((a, b) => a.localeCompare(b));
+    if (skillDirs.length) {
+      lines.push("| Skill | When to use |", "|-------|-------------|");
+      for (const d of skillDirs) {
+        const skillMd = join(skillsDir, d, "SKILL.md");
+        const meta = extractSkillMeta(skillMd);
+        const name = meta?.name || d;
+        const desc = meta?.description || "—";
+        const safeDesc = desc.replace(/\|/g, "\\|").replace(/\r?\n/g, " ");
+        lines.push(`| \`${name}\` | ${safeDesc} |`);
+      }
+    } else {
+      lines.push("_(none)_");
+    }
+  } else {
+    lines.push("_(directory missing)_");
+  }
+  lines.push("");
+
+  writeFileSync(out, lines.join("\n"));
+}
+
+// ── Subcommand: wrapup ───────────────────────────────────────────────────────
+
+function doWrapup() {
+  const repoRoot = gitRoot();
+
+  checkGitHealth(repoRoot);
+
+  const changes = listChanges(repoRoot);
+  if (!changes.length) {
+    return { no_changes: true, message: "nothing to commit", lessons_prompt: false };
+  }
+
+  checkSensitiveFiles(changes);
+  checkLargeFiles(repoRoot, changes);
+
+  // Stage everything
+  const addR = run("git", ["add", "-A"], { cwd: repoRoot });
+  if (addR.code !== 0) fail("stage", addR.stderr || "git add failed");
+
+  // Secret-scan the staged set
+  const stagedR = run("git", ["diff", "--cached", "--name-only"], { cwd: repoRoot });
+  const stagedFiles = stagedR.stdout.split("\n").filter(Boolean).map((p) => ({ path: p }));
+  scanSecrets(repoRoot, stagedFiles);
+
+  // Zone verification (Windows + protection system installed; otherwise no-op)
+  runZoneVerification(repoRoot);
+
+  const msg = generateCommitMessage(repoRoot);
+  const commitR = run("git", ["commit", "-m", msg], { cwd: repoRoot });
+  if (commitR.code !== 0) {
+    fail("commit", commitR.stderr || commitR.stdout || "git commit failed");
+  }
+  const sha = run("git", ["rev-parse", "--short", "HEAD"], { cwd: repoRoot }).stdout;
+
+  // Regenerate the user-global system map (best-effort, non-fatal).
+  try { generateSystemMap(); } catch (e) { note(`system-map regen failed: ${e.message}`); }
+
+  return {
+    no_changes: false,
+    commit_sha: sha,
+    branch: currentBranch(repoRoot),
+    files_committed: stagedFiles.length,
+    lessons_prompt: !flags.has("no-lessons"),
+  };
+}
+
+// ── Subcommand: deploy ───────────────────────────────────────────────────────
+
+function doDeploy(opts = {}) {
+  const repoRoot = gitRoot();
+  const branch = currentBranch(repoRoot);
+
+  checkGitHealth(repoRoot);
+
+  if (!opts.skipDirtyCheck) {
+    const status = run("git", ["status", "--porcelain"], { cwd: repoRoot }).stdout;
+    if (status) {
+      fail("dirty-tree",
+        "Uncommitted changes present. Run /wrapup-light first or use /full-deploy-light.",
+        { status_short: status },
+      );
+    }
+  }
+
+  const deployCheck = checkDeployManifest(repoRoot);
+
+  // Detect base branch (override via --base or auto via remote)
+  let baseBranch = opts.base;
+  if (!baseBranch) {
+    const remoteBranches = run("git", ["ls-remote", "--heads", "origin"], { cwd: repoRoot }).stdout;
+    const hasMain = /\trefs\/heads\/main$/m.test(remoteBranches);
+    const hasMaster = /\trefs\/heads\/master$/m.test(remoteBranches);
+    baseBranch = hasMain ? "main" : hasMaster ? "master" : "main";
+  }
+
+  // Pull-before-push (skip on base branch and with --no-pull)
+  if (!flags.has("no-pull") && branch !== baseBranch) {
+    const upstreamCheck = run("git", ["rev-parse", "--abbrev-ref", `${branch}@{upstream}`], { cwd: repoRoot });
+    if (upstreamCheck.code === 0) {
+      const pull = run("git", ["pull", "--rebase", "origin", branch], { cwd: repoRoot });
+      if (pull.code !== 0) {
+        fail("pull",
+          `Pull --rebase failed: ${pull.stderr || pull.stdout}. Resolve conflicts manually.`,
+        );
+      }
+    }
+    // If no upstream yet (new branch), skip pull silently.
+  }
+
+  // Push
+  const push = run("git", ["push", "-u", "origin", branch], { cwd: repoRoot });
+  if (push.code !== 0) fail("push", push.stderr || push.stdout || "git push failed");
+
+  // Direct-to-base case: just a push, no PR
+  if (branch === baseBranch) {
+    return {
+      pushed: true,
+      branch,
+      base_branch: baseBranch,
+      pr: "skipped (committed directly to base branch)",
+      deploy_check: deployCheck,
+    };
+  }
+
+  // Commits ahead of base?
+  const aheadR = run("git", ["log", `${baseBranch}..HEAD`, "--oneline"], { cwd: repoRoot });
+  const aheadLines = aheadR.stdout.split("\n").filter(Boolean);
+  if (aheadLines.length === 0) {
+    return {
+      pushed: true,
+      branch,
+      base_branch: baseBranch,
+      pr: "skipped (branch has no commits ahead of base)",
+      deploy_check: deployCheck,
+    };
+  }
+
+  const prTitle = aheadLines.length === 1
+    ? aheadLines[0].split(" ").slice(1).join(" ").slice(0, 70)
+    : `${aheadLines.length} commits from ${branch}`;
+
+  const prBody = [
+    "## Commits",
+    "",
+    aheadLines.map((l) => `- ${l}`).join("\n"),
+    "",
+    "🤖 Generated via /deploy-light",
+  ].join("\n");
+
+  const prCreate = run("gh", [
+    "pr", "create",
+    "--title", prTitle,
+    "--body", prBody,
+    "--base", baseBranch,
+  ], { cwd: repoRoot });
+  if (prCreate.code !== 0) {
+    fail("pr-create", prCreate.stderr || prCreate.stdout || "gh pr create failed");
+  }
+  const prUrl = prCreate.stdout.split("\n").find((l) => l.startsWith("https://")) || prCreate.stdout.trim();
+  const prNumMatch = prUrl.match(/\/pull\/(\d+)/);
+  if (!prNumMatch) fail("pr-parse", `could not extract PR number from gh output: ${prCreate.stdout}`);
+  const prNum = prNumMatch[1];
+
+  // Squash-merge — gh may exit non-zero on local-cleanup errors even when
+  // GitHub-side merge succeeded (worktree case). So we don't trust the
+  // exit code; we double-check via gh pr view.
+  const merge = run("gh", ["pr", "merge", prNum, "--squash", "--delete-branch"], { cwd: repoRoot });
+  const view = run("gh", ["pr", "view", prNum, "--json", "state,mergedAt,mergeCommit"], { cwd: repoRoot });
+  let merged = false, mergeSha = null;
+  if (view.code === 0) {
+    try {
+      const data = JSON.parse(view.stdout);
+      merged = data.state === "MERGED";
+      mergeSha = data.mergeCommit?.oid ? String(data.mergeCommit.oid).slice(0, 7) : null;
+    } catch { /* fall through */ }
+  }
+  if (!merged) {
+    fail("merge", merge.stderr || merge.stdout || "PR did not reach MERGED state");
+  }
+
+  // Confirm remote branch deletion (gh --delete-branch may have been skipped).
+  const remoteCheck = run("git", ["ls-remote", "--heads", "origin", branch], { cwd: repoRoot }).stdout;
+  let branchDeleted = true;
+  if (remoteCheck) {
+    const del = run("git", ["push", "origin", "--delete", branch], { cwd: repoRoot });
+    if (del.code !== 0) branchDeleted = false;
+  }
+
+  return {
+    pushed: true,
+    branch,
+    base_branch: baseBranch,
+    pr_url: prUrl,
+    pr_number: Number(prNum),
+    merge_sha: mergeSha,
+    branch_deleted: branchDeleted,
+    deploy_check: deployCheck,
+  };
+}
+
+// ── Subcommand: full ─────────────────────────────────────────────────────────
+
+function doFull() {
+  const wrapup = doWrapup();
+  // Run the deploy half regardless of whether wrapup made a new commit.
+  // If wrapup was a no-op, there may still be local commits ahead of base
+  // that need pushing/PR'ing — the deploy step checks that internally.
+  const deploy = doDeploy({ skipDirtyCheck: true, base: opts.base });
+  return { wrapup, deploy };
+}
+
+// ── Dispatch ─────────────────────────────────────────────────────────────────
+
+try {
+  let payload;
+  if (subcommand === "wrapup") payload = doWrapup();
+  else if (subcommand === "deploy") payload = doDeploy({ base: opts.base });
+  else if (subcommand === "full") payload = doFull();
+  process.stdout.write(JSON.stringify({ ok: true, action: subcommand, ...payload }) + "\n");
+  process.exit(0);
+} catch (e) {
+  if (e instanceof FailError) {
+    process.stdout.write(JSON.stringify({
+      ok: false,
+      action: subcommand,
+      stage: e.stage,
+      error: e.message,
+      ...e.extra,
+    }) + "\n");
+    process.exit(1);
+  }
+  process.stdout.write(JSON.stringify({
+    ok: false,
+    action: subcommand,
+    stage: "unexpected",
+    error: e.message,
+    stack: e.stack,
+  }) + "\n");
+  process.exit(2);
+}
