@@ -1,0 +1,115 @@
+# /full-deploy-light — Commit + push + merge in one shot (small projects)
+
+The all-in-one "ship it" command for small projects. Combines `/wrapup-light`
+(safety checks + commit) and `/deploy-light` (push + PR + squash-merge)
+into a single invocation. Use this when you're done with a chunk of work
+and want it on the base branch as fast as possible without ceremony.
+
+If the tree is clean (no uncommitted changes), it still runs the deploy
+half — useful when you have local commits that haven't been pushed yet.
+
+If you ship a `.deploy-check.json` at the repo root, it's verified before
+the push (catches "render exited 0 but produced no MP4" style silent
+failures). If you don't ship one, the check skips silently.
+
+This is the heaviest of the three "-light" commands — but still much
+lighter than the framework `/wrapup` + `/remote-deploy` pipeline.
+
+## Usage
+
+- `/full-deploy-light` — default. Safety checks, commit, prompt for a lesson, push, PR, squash-merge.
+- `/full-deploy-light --no-lessons` — skip the lessons prompt only.
+- `/full-deploy-light --base <branch>` — override base branch (e.g. `--base develop`).
+- `/full-deploy-light --no-pull` — skip pre-push rebase.
+- `/full-deploy-light --force` — bypass safety check failures (use sparingly).
+
+## What this skill will NOT do
+
+- Run tests (none assumed)
+- Update workflow logs, build orders, Content Library
+- Sync to High Level Vibing
+- Deploy to Vercel (use the heavy `/remote-deploy` for that)
+
+## Process
+
+### Step 1: Run the helper script
+
+```bash
+node ~/.claude/scripts/light-deploy.mjs full [flags...]
+```
+
+Pass through whichever flags the user supplied (`--lessons`, `--base`,
+`--no-pull`, `--force`).
+
+The script runs the wrapup half (safety checks + commit), then the deploy
+half (push + PR + merge), and prints a single JSON object on stdout.
+
+### Step 2: Interpret the JSON
+
+The success payload has two nested blocks: `wrapup` and `deploy`. Both
+will be present on success.
+
+```json
+{
+  "ok": true,
+  "action": "full",
+  "wrapup": { "no_changes": false, "commit_sha": "abc1234", "files_committed": 5, "lessons_prompt": false },
+  "deploy": { "pushed": true, "branch": "...", "pr_url": "...", "pr_number": 7, "merge_sha": "d1d3d5e", "branch_deleted": true }
+}
+```
+
+Report a compact summary:
+
+> "Committed `abc1234` (5 files) and merged [PR #7](url) — `d1d3d5e`."
+
+If `wrapup.no_changes: true` (the tree was already clean), the wrapup half
+was effectively a no-op and the deploy half handled any existing local
+commits. Report accordingly:
+
+> "Tree was clean. Pushed and merged [PR #7](url) — `d1d3d5e`."
+
+If `deploy.pr` is `"skipped (on base branch)"` or
+`"skipped (no commits ahead of base)"`, report that the push happened but
+no PR was needed.
+
+On **failure** (`ok: false`):
+
+- The `stage` tells you which half failed — wrapup stages
+  (`sensitive-files`, `secrets`, `large-files`, `zone-verification`,
+  `commit`) or deploy stages (`dirty-tree`, `deploy-check`, `pull`,
+  `push`, `pr-create`, `merge`).
+- Surface the `error` field verbatim. Do NOT retry automatically.
+
+### Step 3: Lessons-learned prompt (only if `wrapup.lessons_prompt: true`)
+
+Only when the user passed `--lessons`. Follow the same flow as
+`/wrapup-light`:
+
+1. `AskUserQuestion`: "One-line lesson from this session? Pick 'Skip' to write nothing."
+2. If user picks "Write a lesson," capture the next message as the lesson.
+3. Append to `<project-root>/LESSONS.md` as `YYYY-MM-DD | <lesson>`.
+
+### Step 4: Done
+
+One-line summary. The PR URL is the most useful thing to surface.
+
+## Error decoder (combined wrapup + deploy stages)
+
+| `stage` | Where it failed | Action |
+|---------|----------------|--------|
+| `git-health` | Both halves use it | Surface verbatim |
+| `sensitive-files` | Wrapup | Add to `.gitignore` or `--force` |
+| `large-files` | Wrapup | Use Git LFS or `--force` |
+| `secrets` | Wrapup | Remove the secret, then re-run |
+| `zone-verification` | Wrapup (Windows + protection installed) | Fix TS errors |
+| `commit` | Wrapup | Surface the git error |
+| `deploy-check` | Deploy | Check the listed missing/undersized files |
+| `pull` | Deploy | Resolve rebase conflicts manually |
+| `push` | Deploy | Usually permissions or upstream conflict |
+| `pr-create` | Deploy | `gh auth login`, ensure repo is on GitHub |
+| `merge` | Deploy | Check branch protections, required reviews |
+
+## Related commands
+
+- `/wrapup-light` — just the commit half
+- `/deploy-light` — just the push + merge half (requires pre-existing commit)

@@ -1,0 +1,141 @@
+# Global Claude Code Instructions
+
+These capabilities are available in ALL projects.
+
+---
+
+## Email (Resend MCP) - DEFAULT
+
+**I can send emails directly.** Always use `mcp__resend__send-email` unless user specifies Gmail.
+
+- **Default sender:** cody@genesissportsperformance.com
+- **Always send HTML + plain text** for better formatting
+- **Supports:** HTML styling, tables, colored sections, CC, BCC, scheduling
+- **Just say:** "send an email to X" or "email this to Y" and I'll do it
+- **HTML preference:** Structure emails with headers, tables, callout boxes for engagement
+
+---
+
+## Contacts
+
+**When user says "send to [name]", look up the email in `~/.claude/contacts.json`.**
+
+### Quick Reference
+| Name | Email | Role |
+|------|-------|------|
+| Cody | lionheartrhinehart@gmail.com | Owner |
+| Graham | graham@genesissportsperformance.com | Genesis Team |
+| Devon | devon@genesissportsperformance.com | Genesis Team |
+| Hannah | support@genesissportsperformance.com | Genesis Support |
+| Casey | casey@genesissportsperformance.com | Genesis Team |
+| Doug | dougspurling1@gmail.com | Spurling Fitness |
+| Josh | josh@spurlingfitness.com | Spurling Fitness |
+| Fred | getleanwithfred@gmail.com | Client |
+| Will | wmatthiessen@gmail.com | Client |
+| Greg | greg@impoweredfitness.com | Impowered Fitness |
+| Jeremy | jeremy@lpcsoccer.com | LPC Soccer |
+| Jeff | jeff@adapttraining.com | Adapt Training |
+| Zach | info@ispfortworth.com | ISP Fort Worth |
+| Stephen | linz@wisconsinsportsperformance.com | Wisconsin SP |
+
+**Full contact list:** See `~/.claude/contacts.json` for all contacts with aliases.
+
+---
+
+## Gmail (Gmail MCP)
+
+I can read and search Gmail via `mcp__gmail__*` tools:
+- Search emails by query
+- Read email content
+- List labels and filters
+- Send emails via Gmail (alternative to Resend)
+
+---
+
+## Image Generation (Nano Banana MCP)
+
+I can generate, edit, and compose images via `mcp__nano-banana__*` tools.
+
+---
+
+## Google Drive & Slides (Google Drive MCP)
+
+I can create and manage Google Slides presentations via `mcp__google-drive__*` tools.
+
+---
+
+## Protected Folders
+
+Some folders require explicit permission before editing. Check `~/.claude/protected-folders.json` for the current list.
+
+**Before editing a protected folder:**
+1. **STOP** - Do not attempt the edit
+2. **ASK** - Explain what you need to change and why
+3. **WAIT** - User runs `unlock-folder` to approve
+4. **PROCEED** - Only after approval
+
+**Managing protected folders:**
+- `/protect-folder add path/` - Add protection
+- `/protect-folder remove path/` - Remove protection
+- `/protect-folder list` - View protected folders
+
+**Currently protected:**
+- `.claude/` - Settings, rules, configurations
+- `skills/` - Skill definitions
+- `lazy-mcp-preload/config/` - MCP proxy configuration
+
+---
+
+## Website HTML for Dashboard Upload (MANDATORY)
+
+**TRIGGER:** Any time you create HTML files that will be uploaded to Marketing Director, a dashboard, or any platform that can't access local files.
+
+### Why This Matters
+HTML files with local image paths like `<img src="images/logo.png">` will show BROKEN IMAGES when uploaded. The dashboard can't access your local files. Images MUST be embedded as base64 data URIs.
+
+### The Rule
+**NEVER deliver an HTML file for dashboard upload without embedding images first.**
+
+### Workflow (Follow EXACTLY)
+
+#### Step 1: Create HTML
+Create the HTML file with local image references as normal. This is your "source" file.
+
+#### Step 2: Embed Images (MANDATORY)
+Run the embedding script:
+```bash
+node ~/.claude/scripts/embed-images-in-html.js "path/to/website.html"
+```
+
+This creates `website-embedded.html` with all images converted to base64.
+
+#### Step 3: Verify (ALL must be true)
+Before delivering, confirm:
+- [ ] Script completed without errors
+- [ ] "Images embedded: X" where X > 0 (if HTML has images)
+- [ ] "Failed: 0" - NO failures allowed
+- [ ] Output file ends in `-embedded.html`
+
+#### Step 4: Deliver ONLY the Embedded Version
+Give the user the `-embedded.html` file path. NEVER the original.
+
+### If User Asks for HTML Before Embedding
+**STOP.** Say: "Let me embed the images first so they display correctly when uploaded."
+Then complete the embedding workflow before delivering.
+
+### Prohibited Actions
+- ❌ Delivering `.html` files (without `-embedded` suffix) for dashboard upload
+- ❌ Skipping the embedding step "to save time"
+- ❌ Delivering if any images failed to embed
+- ❌ Assuming "it will probably work" without running the script
+
+### Quick Reference
+| File Type | Purpose | Deliver for Dashboard? |
+|-----------|---------|------------------------|
+| `website.html` | Source file | ❌ NEVER |
+| `website-embedded.html` | Dashboard-ready | ✅ YES |
+
+### Script Location
+`~/.claude/scripts/embed-images-in-html.js`
+
+If script doesn't exist, create it first (code available in WIREFRAME-PROJECT-READY handoffs).
