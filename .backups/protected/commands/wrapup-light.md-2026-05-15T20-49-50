@@ -1,0 +1,102 @@
+# /wrapup-light — Commit locally (small projects, no ceremony)
+
+Lightweight session-end commit for small projects. Runs the essential safety
+checks (sensitive-file guard, secret scan, large-file detection, zone
+verification, git health), generates a commit message from the diff, and
+commits locally. **Does NOT push.** Use `/deploy-light` to push, or
+`/full-deploy-light` to commit + push + merge in one shot.
+
+This is the **light** counterpart to `/wrapup`. Reach for the heavy version
+when you're in a framework project with tests, workflow logs, Content
+Library deploys, HLV sync, or feature build-orders. Reach for this when
+you're in a small one-off project (rendered assets, scratch repo, simple
+tool) and just want to save your work safely without ceremony.
+
+## Usage
+
+- `/wrapup-light` — default. Commit locally with all safety checks.
+- `/wrapup-light --lessons` — also prompt for a one-line lesson to append to project `LESSONS.md`.
+- `/wrapup-light --force` — skip safety check failures (use sparingly; the checks exist for a reason).
+
+## What this skill will NOT do
+
+- Run tests (no test suite assumed)
+- Update workflow logs, build orders, Content Library, frontmatter validation
+- Sync commands/skills to High Level Vibing
+- Push to remote (use `/deploy-light`)
+- Deploy to Vercel (use the heavy `/remote-deploy` if you need that)
+
+## Process
+
+### Step 1: Run the helper script
+
+```bash
+node ~/.claude/scripts/light-deploy.mjs wrapup [--lessons] [--force]
+```
+
+Pass through whichever flags the user supplied. The script handles all the
+deterministic work and prints **a single JSON object** to stdout on either
+success or failure. Read it.
+
+### Step 2: Interpret the JSON
+
+On **success** (`ok: true`):
+
+- If `no_changes: true` — report "Nothing to commit. Tree is clean." to the
+  user. Stop. Do NOT call AskUserQuestion or do anything further.
+- Otherwise — report the commit SHA and file count succinctly. Example:
+  "Committed `abc1234` — 5 files."
+
+On **failure** (`ok: false`):
+
+- Surface the `error` field **verbatim** to the user. Include the `stage`
+  field so they know which check tripped (e.g. "stage: sensitive-files",
+  "stage: secrets", "stage: large-files", "stage: zone-verification").
+- Do NOT attempt to "work around" the failure by retrying with different
+  flags. If the user wants to override, they'll re-invoke with `--force`.
+
+### Step 3: Lessons-learned prompt (only if `lessons_prompt: true` in the JSON)
+
+This only fires when the user passed `--lessons`. If they didn't, skip
+this step entirely — no prompt.
+
+1. Use the `AskUserQuestion` tool to ask:
+   > "One-line lesson from this session worth saving? (e.g. 'X broke because
+   > Y, fix is Z'). Pick 'Skip' to write nothing."
+   - Options: "Write a lesson", "Skip"
+2. If they pick "Write a lesson," ask via a second `AskUserQuestion` with a
+   single open-ended option for the lesson text (or just have them type it
+   in the next turn).
+3. Append to `<project-root>/LESSONS.md` in this format:
+   ```
+   YYYY-MM-DD | <one-line lesson>
+   ```
+   If `LESSONS.md` does not exist yet, create it with this header:
+   ```
+   # Lessons Learned
+
+   One-line entries. Newest at the bottom.
+
+   ```
+
+### Step 4: Done
+
+Do not summarize what you committed (the user can read the diff). One line
+status update — commit SHA + file count — is enough.
+
+## Error decoder (for quick reference)
+
+| `stage` field | What happened | What to suggest |
+|---------------|---------------|-----------------|
+| `git-health` | Detached HEAD / no origin / corrupt git | Surface verbatim; do not auto-fix |
+| `sensitive-files` | A staged file matches `.env`, `*.key`, etc. | Add to `.gitignore`, or `--force` if intentional |
+| `large-files` | A file exceeds 100MB (GitHub's hard limit) | Use Git LFS, or `--force` (will fail to push) |
+| `secrets` | A regex matched a possible API key | Remove the secret, or `--force` (dangerous) |
+| `zone-verification` | An unlocked protection zone has new TS errors | Fix TS errors, then re-run |
+| `commit` | `git commit` itself failed | Surface the underlying git error verbatim |
+
+## Related commands
+
+- `/deploy-light` — push + open PR + squash-merge (no commit)
+- `/full-deploy-light` — commit + push + merge in one shot
+- `/wrapup` — the heavyweight framework version (tests, HLV sync, etc.)
