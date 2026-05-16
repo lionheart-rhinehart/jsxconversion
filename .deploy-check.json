@@ -1,0 +1,6 @@
+{
+  "_comment": "Pre-deploy validation for /deploy-light and /full-deploy-light. Verifies that rendered MP4s exist and are not 0-byte stubs. Catches the 'render exited 0 but produced no output' case.",
+  "expect_files_in": ["summer/**/*.mp4"],
+  "min_count": 8,
+  "min_file_size_bytes": 100000
+}
