@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Andromeda 1 / Noblesville Meta Campaign — 3 Creatives</title>
+<link rel="stylesheet" href="aa-tokens.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200">
+<style>
+  html,body { margin: 0; padding: 0; background: var(--aa-ink-950); color: var(--aa-white); }
+  body {
+    font-family: var(--font-body);
+    min-height: 100vh;
+    background:
+      radial-gradient(ellipse at 80% -10%, rgba(196,20,29,0.18), transparent 50%),
+      radial-gradient(ellipse at 0% 100%, rgba(196,20,29,0.06), transparent 40%),
+      var(--aa-ink-950);
+  }
+  .wrap { max-width: 1440px; margin: 0 auto; padding: 56px 48px 96px; }
+
+  header.brand { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+  .brand-left { display: flex; align-items: center; gap: 16px; }
+  .brand-left img { height: 56px; width: auto; display: block; }
+  .brand-left .stack { line-height: 1; }
+  .brand-left .stack .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.16em; color: var(--aa-red-500);
+    text-transform: uppercase; font-weight: 600;
+  }
+  .brand-left .stack .name {
+    font-family: var(--font-display);
+    font-size: 24px; letter-spacing: -0.005em; color: var(--aa-white);
+    text-transform: uppercase; margin-top: 6px;
+  }
+  .brand-right {
+    display: flex; gap: 24px; align-items: center;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em;
+    color: var(--aa-ink-400); text-transform: uppercase;
+  }
+  .brand-right span.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--aa-red); display: inline-block; margin-right: 6px; animation: pulse 1.6s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .hero { margin-top: 64px; max-width: 1200px; }
+  .hero .codecomment {
+    font-family: var(--font-mono); color: var(--aa-red-500);
+    font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+    font-weight: 500;
+  }
+  .hero .codecomment::before { content: "// "; opacity: 0.6; }
+  .hero h1 {
+    font-family: var(--font-display); text-transform: uppercase;
+    font-size: clamp(56px, 8vw, 116px); line-height: 0.86;
+    margin: 20px 0 0; color: var(--aa-white); letter-spacing: -0.01em;
+  }
+  .hero h1 .red { color: var(--aa-red-500); }
+  .hero h1 .out { color: transparent; -webkit-text-stroke: 2px var(--aa-white); }
+  .hero .lede {
+    margin-top: 28px; max-width: 760px; color: var(--aa-ink-300);
+    font-size: 18px; line-height: 1.55;
+  }
+
+  .meta-strip {
+    margin-top: 56px; display: grid;
+    grid-template-columns: repeat(4, minmax(0,1fr)); gap: 0;
+    border-top: 1px solid var(--aa-ink-800);
+    border-bottom: 1px solid var(--aa-ink-800);
+  }
+  .meta-cell { padding: 20px 24px; border-right: 1px solid var(--aa-ink-800); }
+  .meta-cell:last-child { border-right: 0; }
+  .meta-cell .k {
+    font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.16em;
+    color: var(--aa-ink-500); text-transform: uppercase;
+  }
+  .meta-cell .v {
+    font-family: var(--font-display); text-transform: uppercase;
+    font-size: 28px; color: var(--aa-white); margin-top: 8px;
+  }
+  .meta-cell .v.mono {
+    font-family: var(--font-mono); font-size: 22px; font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .meta-cell .v .accent { color: var(--aa-red-500); }
+
+  h2.section {
+    font-family: var(--font-display); text-transform: uppercase;
+    font-size: 44px; margin: 80px 0 28px; color: var(--aa-white); letter-spacing: -0.005em;
+  }
+  h2.section .red { color: var(--aa-red-500); }
+
+  .cards {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px;
+  }
+
+  a.card {
+    display: flex; flex-direction: column; text-decoration: none;
+    color: inherit; background: var(--aa-ink-900); border: 1px solid var(--aa-ink-800);
+    border-radius: 8px; overflow: hidden; transition: transform 200ms var(--ease-out), border-color 200ms;
+  }
+  a.card:hover { transform: translateY(-2px); border-color: var(--aa-red-700); }
+
+  .card .thumb {
+    position: relative; aspect-ratio: 9 / 16; background: var(--aa-ink-950);
+    overflow: hidden;
+  }
+  .card .thumb img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    filter: saturate(0.88) contrast(1.05) brightness(0.85);
+  }
+  .card .thumb::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,11,13,0) 30%, rgba(10,11,13,0.95) 100%);
+  }
+  .card .thumb-overlay {
+    position: absolute; inset: 0; z-index: 2;
+    padding: 24px; display: flex; flex-direction: column; justify-content: space-between;
+    color: var(--aa-white);
+  }
+  .card .thumb-overlay .topline {
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em;
+    color: var(--aa-white); text-transform: uppercase; font-weight: 600;
+  }
+  .card .thumb-overlay .topline .left { background: rgba(0,0,0,0.6); padding: 6px 10px; border: 1px solid rgba(255,255,255,0.2); border-radius: 2px; }
+  .card .thumb-overlay .topline .right { background: var(--aa-red); padding: 6px 10px; border-radius: 2px; }
+  .card .thumb-overlay .bigtitle {
+    font-family: var(--font-display); text-transform: uppercase;
+    font-size: 56px; line-height: 0.88; letter-spacing: -0.01em;
+  }
+  .card .thumb-overlay .bigtitle .red { color: var(--aa-red-400); }
+  .card .thumb-overlay .bigtitle .out { color: transparent; -webkit-text-stroke: 1.5px var(--aa-white); }
+
+  .card .body {
+    padding: 22px 24px 26px; display: flex; flex-direction: column; gap: 14px;
+    border-top: 1px solid var(--aa-ink-800);
+  }
+  .card .body .label {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em;
+    color: var(--aa-red-500); text-transform: uppercase;
+  }
+  .card .body .label::before { content: "// "; opacity: 0.6; }
+  .card .body h3 {
+    font-family: var(--font-body); font-weight: 700; font-size: 19px;
+    line-height: 1.3; margin: 0; color: var(--aa-white);
+    text-transform: none; letter-spacing: -0.01em;
+  }
+  .card .body p {
+    margin: 0; color: var(--aa-ink-400); font-size: 14px; line-height: 1.55;
+  }
+  .card .body .open {
+    margin-top: 4px; display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em;
+    color: var(--aa-red-500); text-transform: uppercase; font-weight: 600;
+  }
+  .card .body .open .material-symbols-rounded { font-size: 18px; }
+
+  .notes {
+    margin-top: 80px; padding: 28px 32px; border: 1px solid var(--aa-ink-800);
+    border-radius: 8px; background: var(--aa-ink-900);
+    display: grid; grid-template-columns: 220px 1fr; gap: 32px; align-items: flex-start;
+  }
+  .notes .k {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em;
+    color: var(--aa-red-500); text-transform: uppercase; font-weight: 600;
+  }
+  .notes .k::before { content: "// "; opacity: 0.6; }
+  .notes .v { color: var(--aa-ink-300); font-size: 14.5px; line-height: 1.65; }
+  .notes .v ul { padding-left: 18px; margin: 8px 0 0; }
+  .notes .v li { margin-bottom: 6px; }
+  .notes .v strong { color: var(--aa-white); }
+
+  @media (max-width: 1100px) {
+    .cards { grid-template-columns: 1fr; }
+    .meta-strip { grid-template-columns: 1fr 1fr; }
+    .meta-cell:nth-child(2) { border-right: 0; }
+    .notes { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="brand">
+    <div class="brand-left">
+      <img src="assets/logo.png" alt="Athletes Acceleration">
+      <div class="stack">
+        <div class="eyebrow">Athletes Acceleration · Noblesville</div>
+        <div class="name">The Velocity Code · Campaign 01</div>
+      </div>
+    </div>
+    <div class="brand-right">
+      <div><span class="dot"></span>3 Creatives · 9:16</div>
+      <div>Andromeda 1 / Test</div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="codecomment">Meta Campaign · Noblesville Test</div>
+    <h1>
+      Three videos.<br>
+      <span class="red">One rule.</span> <span class="out">Train fast.</span><br>
+      Be fast.
+    </h1>
+    <p class="lede">
+      Three 9:16 motion-design spots for paid Meta — each one a different angle on the same
+      argument. Concept A speaks coach-to-camera. B turns the velocity tracker into the
+      whole frame. C lets a parent and athlete say what we won't. Open any card to scrub
+      the timeline.
+    </p>
+  </section>
+
+  <div class="meta-strip">
+    <div class="meta-cell">
+      <div class="k">Format</div>
+      <div class="v">9:16 · 1080×1920</div>
+    </div>
+    <div class="meta-cell">
+      <div class="k">Length</div>
+      <div class="v mono">:42 · :44 · :48</div>
+    </div>
+    <div class="meta-cell">
+      <div class="k">Placement</div>
+      <div class="v">Reels · Stories · TikTok</div>
+    </div>
+    <div class="meta-cell">
+      <div class="k">CTA</div>
+      <div class="v"><span class="accent">Book</span> Free Assessment</div>
+    </div>
+  </div>
+
+  <h2 class="section">Pick a <span class="red">concept.</span></h2>
+
+  <div class="cards">
+
+    <a class="card" href="creative-a.html">
+      <div class="thumb">
+        <img src="assets/coach-clap.jpg" alt="">
+        <div class="thumb-overlay">
+          <div class="topline">
+            <span class="left">A · :42</span>
+            <span class="right">● REC</span>
+          </div>
+          <div class="bigtitle">
+            The<br>
+            <span class="red">Rule.</span>
+          </div>
+        </div>
+      </div>
+      <div class="body">
+        <div class="label">Coach to Camera</div>
+        <h3>Direct address from the head coach with cinema-doc treatment.</h3>
+        <p>Broadcast-style timecode burn-in, letterbox subtitles, REC indicator. Pull-quotes from the coach set in stacked condensed display. m/s readout drops rep-by-rep in the lower corner.</p>
+        <span class="open">Open creative <span class="material-symbols-rounded">arrow_forward</span></span>
+      </div>
+    </a>
+
+    <a class="card" href="creative-b.html">
+      <div class="thumb">
+        <img src="assets/photo-squat.jpg" alt="">
+        <div class="thumb-overlay">
+          <div class="topline">
+            <span class="left">B · :44</span>
+            <span class="right">DATA</span>
+          </div>
+          <div class="bigtitle">
+            Watch<br>
+            the <span class="red">number.</span>
+          </div>
+        </div>
+      </div>
+      <div class="body">
+        <div class="label">Tech Demo</div>
+        <h3>The velocity tracker takes over the entire frame.</h3>
+        <p>Full instrument cluster: live m/s gauge, sparkline of the set, rep counter, drop-zone bar. Photo confined to one tile. Numbers are the protagonist. Drop alarm at rep four.</p>
+        <span class="open">Open creative <span class="material-symbols-rounded">arrow_forward</span></span>
+      </div>
+    </a>
+
+    <a class="card" href="creative-c.html">
+      <div class="thumb">
+        <img src="assets/photo-group-coaching.jpg" alt="">
+        <div class="thumb-overlay">
+          <div class="topline">
+            <span class="left">C · :48</span>
+            <span class="right">TESTIMONIAL</span>
+          </div>
+          <div class="bigtitle">
+            <span class="out">Three.</span><br>
+            <span class="red">One.</span>
+          </div>
+        </div>
+      </div>
+      <div class="body">
+        <div class="label">Parent + Athlete</div>
+        <h3>Editorial magazine layout. Quotes do the talking.</h3>
+        <p>Page-flip transitions between parent voice, athlete voice, and the answer. Bylines as lower-thirds. Comparison grid for "three other places." The 0.15s improvement gets a typographic kicker.</p>
+        <span class="open">Open creative <span class="material-symbols-rounded">arrow_forward</span></span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="notes">
+    <div class="k">Notes for review</div>
+    <div class="v">
+      <ul>
+        <li><strong>Tweaks toggle</strong> in each video unlocks a bolder visual variant for that concept — same script, different aesthetic.</li>
+        <li>Each spot uses <strong>real photography</strong> from the Noblesville / Genesis-Carmel asset library as stand-ins for the live shoot. The velocity-tracker HUD is a graphic overlay (no real tracker on file yet).</li>
+        <li>Playback: <strong>spacebar</strong> to play/pause, <strong>← →</strong> to step (shift for 1s), <strong>0</strong> to reset. The scrubber persists position across reloads.</li>
+        <li>End cards land on <strong>"Book a Free Athletic Assessment"</strong> with the +1 mph / +3" / 90-day guarantee.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+#!/usr/bin/env node
+// Idempotent patcher for Claude-Design `animations.jsx` files.
+//
+// Adds previewing niceties that aren't in the stock starter:
+//   • click anywhere on the canvas to toggle play/pause
+//   • cursor: pointer + tooltip on the canvas
+//
+// Safe to run multiple times — looks for a sentinel marker before patching.
+// Exits 0 whether it patched or was already patched.
+//
+// Usage:
+//   node patch-jsx-design.mjs [folder]
+// Defaults to current working directory.
+
+import { readFile, writeFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+
+const root = path.resolve(process.argv[2] || process.cwd());
+const target = path.join(root, 'animations.jsx');
+
+if (!existsSync(target)) {
+  console.log(`[patch-jsx-design] no animations.jsx in ${root} — skipping.`);
+  process.exit(0);
+}
+
+const SENTINEL = 'jsx-design-patched: click-to-pause';
+let src = await readFile(target, 'utf8');
+
+if (src.includes(SENTINEL)) {
+  console.log('[patch-jsx-design] already patched — no changes.');
+  process.exit(0);
+}
+
+// Find: <div\n  ref={canvasRef}\n  style={{ ...
+const canvasRe = /<div(\s+)ref=\{canvasRef\}(\s+)style=\{\{/;
+const m = canvasRe.exec(src);
+if (!m) {
+  console.error('[patch-jsx-design] could not locate `<div ref={canvasRef} style={{…}}>` in animations.jsx');
+  console.error('  Leaving file unchanged. The starter shape may have changed; patch script needs an update.');
+  process.exit(1);
+}
+
+const before = src.slice(0, m.index);
+const after = src.slice(m.index + m[0].length);
+const styleClose = after.indexOf('}}');
+if (styleClose === -1) {
+  console.error('[patch-jsx-design] could not find end of style prop on canvas div');
+  process.exit(1);
+}
+
+const styleInner = after.slice(0, styleClose);
+const restAfterStyle = after.slice(styleClose);
+const cursorAddition = /cursor\s*:/.test(styleInner) ? '' : "cursor: 'pointer',\n            ";
+
+const patched =
+  before +
+  `<div${m[1]}ref={canvasRef}${m[2]}` +
+  `onClick={() => setPlaying(p => !p)}${m[2]}` +
+  `title="Click to play/pause (space)"${m[2]}` +
+  `style={{` +
+  styleInner +
+  cursorAddition +
+  restAfterStyle;
+
+// Sentinel goes at the top so re-runs are no-ops.
+const header = `// ${SENTINEL}\n`;
+const out = header + patched;
+
+await writeFile(target, out, 'utf8');
+console.log(`[patch-jsx-design] patched ${target}`);
+console.log('  + click-to-pause on canvas');
+console.log('  + cursor:pointer on canvas');

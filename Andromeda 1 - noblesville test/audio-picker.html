@@ -1,0 +1,928 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Audio Picker · Andromeda 1</title>
+<link rel="stylesheet" href="aa-tokens.css">
+<style>
+  html,body { margin:0; padding:0; background: var(--aa-ink-950); color: var(--aa-white); }
+  body {
+    font-family: var(--font-body);
+    min-height:100vh;
+    background:
+      radial-gradient(ellipse at 80% -10%, rgba(196,20,29,0.18), transparent 50%),
+      radial-gradient(ellipse at 0% 100%, rgba(196,20,29,0.06), transparent 40%),
+      var(--aa-ink-950);
+  }
+  .wrap { max-width:1400px; margin:0 auto; padding:40px 32px 80px; }
+
+  header.brand { display:flex; align-items:center; justify-content:space-between; gap:32px; margin-bottom:32px; }
+  .brand-left .eyebrow {
+    font-family: var(--font-mono); font-size:11px; letter-spacing:0.16em;
+    color: var(--aa-red-500); text-transform:uppercase; font-weight:600;
+  }
+  .brand-left .name {
+    font-family: var(--font-display); font-size:32px;
+    color: var(--aa-white); text-transform:uppercase;
+    letter-spacing:-0.005em; margin-top:4px;
+  }
+  .brand-right a {
+    font-family: var(--font-mono); font-size:11px; letter-spacing:0.14em;
+    color: rgba(255,255,255,0.55); text-decoration:none; text-transform:uppercase;
+    padding:6px 10px; border:1px solid rgba(255,255,255,0.2); border-radius:2px;
+  }
+  .brand-right a:hover { color: var(--aa-white); }
+
+  .intro {
+    font-size:14px; line-height:1.6; color: var(--aa-ink-300);
+    max-width: 900px; margin-bottom: 32px;
+  }
+  .intro code {
+    font-family: var(--font-mono); background: var(--aa-ink-800);
+    padding: 1px 6px; border-radius: 3px; color: var(--aa-red-500); font-size: 13px;
+  }
+  .intro b { color: var(--aa-white); }
+
+  .tracks { display:flex; flex-direction:column; gap:32px; }
+
+  .track {
+    background: var(--aa-ink-900);
+    border: 1px solid var(--aa-ink-800);
+    border-radius: 8px;
+    padding: 24px 28px 28px;
+  }
+  .track header {
+    display:flex; justify-content:space-between; align-items:flex-start; gap:24px;
+    margin-bottom: 16px;
+  }
+  .track .meta .creative {
+    font-family: var(--font-mono); font-size:11px; letter-spacing:0.16em;
+    color: var(--aa-red-500); text-transform:uppercase; font-weight:600;
+  }
+  .track .meta .title {
+    font-family: var(--font-display); font-size:26px;
+    color: var(--aa-white); text-transform:uppercase;
+    letter-spacing:-0.005em; margin-top:6px;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 10px;
+    position: relative;
+  }
+  .track .meta .title:hover { color: var(--aa-red-400); }
+  .track .meta .title .chev {
+    font-size: 16px; color: var(--aa-ink-400);
+    transition: transform 200ms;
+  }
+  .track .meta .title:hover .chev { color: var(--aa-red-500); }
+  .track .meta .title.open .chev { transform: rotate(180deg); }
+  .track .meta .file {
+    font-family: var(--font-mono); font-size:12px;
+    color: var(--aa-ink-400); margin-top:6px;
+  }
+
+  /* Track-picker dropdown */
+  .track-dropdown {
+    position: absolute; top: 100%; left: 0; z-index: 50;
+    margin-top: 6px;
+    min-width: 380px; max-height: 360px;
+    overflow-y: auto;
+    background: var(--aa-ink-900);
+    border: 1px solid var(--aa-ink-700);
+    border-radius: 6px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+    padding: 4px 0;
+  }
+  .track-dropdown .dd-header {
+    padding: 8px 14px;
+    font-family: var(--font-mono); font-size: 10px;
+    color: var(--aa-ink-400); letter-spacing: 0.16em;
+    text-transform: uppercase; font-weight: 600;
+    border-bottom: 1px solid var(--aa-ink-800);
+  }
+  .track-dropdown .dd-item {
+    padding: 8px 14px;
+    font-family: var(--font-body); font-size: 13px;
+    color: var(--aa-ink-200);
+    cursor: pointer; user-select: none;
+    text-transform: none; letter-spacing: 0;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .track-dropdown .dd-item:hover { background: var(--aa-ink-800); color: var(--aa-white); }
+  .track-dropdown .dd-item.selected { color: var(--aa-red-400); font-weight: 600; }
+  .track-dropdown .dd-item.in-project::before {
+    content: '✓'; color: var(--aa-success); font-weight: 700; font-size: 11px;
+    width: 14px; flex-shrink: 0;
+  }
+  .track-dropdown .dd-item:not(.in-project)::before {
+    content: '+'; color: var(--aa-ink-500); font-size: 13px;
+    width: 14px; flex-shrink: 0;
+  }
+  .track .duration {
+    font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+    font-size:14px; color: var(--aa-ink-400);
+    white-space:nowrap;
+  }
+
+  /* Body grid: waveform+controls on left, video preview on right */
+  .track .body {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 24px;
+  }
+  @media (max-width: 1100px) {
+    .track .body { grid-template-columns: 1fr; }
+  }
+
+  /* Waveform */
+  .wave-wrap {
+    position: relative;
+    background: #000;
+    border: 1px solid var(--aa-ink-800);
+    border-radius: 4px;
+    height: 140px;
+    user-select: none;
+    overflow: hidden;
+    cursor: grab;
+  }
+  .wave-wrap.dragging { cursor: grabbing; }
+  .wave-wrap canvas {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    display: block;
+    pointer-events: none; /* let mousedown go to .wave-wrap parent */
+  }
+  .wave-loading {
+    position: absolute; inset: 0;
+    display:flex; align-items:center; justify-content:center;
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.18em; color: var(--aa-ink-400);
+    text-transform: uppercase; pointer-events:none;
+  }
+  .wave-time-readout {
+    position: absolute; bottom: 6px; right: 8px; z-index:3;
+    font-family: var(--font-mono); font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    font-variant-numeric: tabular-nums;
+    background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 2px;
+    pointer-events:none;
+  }
+
+  /* Controls row */
+  .controls {
+    display:flex; align-items:center; gap:10px; flex-wrap: wrap;
+    margin-top: 14px;
+  }
+  .btn {
+    font-family: var(--font-mono); font-size:11px; letter-spacing:0.14em;
+    background: var(--aa-ink-800); color: var(--aa-white);
+    border:1px solid var(--aa-ink-700);
+    padding:8px 14px; border-radius:3px; cursor:pointer;
+    text-transform:uppercase; font-weight:600;
+  }
+  .btn:hover { background: var(--aa-ink-700); border-color: var(--aa-ink-600); }
+  .btn.primary { background: var(--aa-red-600); border-color: var(--aa-red-700); }
+  .btn.primary:hover { background: var(--aa-red-500); }
+  .btn:disabled { opacity:0.4; cursor: not-allowed; }
+  .play-btn {
+    width: 38px; height: 38px; padding: 0;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-size: 16px;
+  }
+  .scrub-step { padding: 6px 10px; }
+
+  .markers {
+    margin-top: 14px; padding: 12px 14px;
+    background: rgba(0,0,0,0.3); border: 1px solid var(--aa-ink-800);
+    border-radius: 6px;
+    display:grid; grid-template-columns: 1fr 1fr; gap: 12px 24px;
+    align-items:center;
+  }
+  .markers .label {
+    font-family: var(--font-mono); font-size:10px; letter-spacing:0.16em;
+    color: var(--aa-ink-400); text-transform:uppercase;
+  }
+  .markers .value {
+    font-family: var(--font-mono); font-size:17px; font-weight:700;
+    color: var(--aa-white); font-variant-numeric: tabular-nums;
+    letter-spacing:-0.01em; margin-top:2px;
+  }
+  .markers .value.unset { color: var(--aa-ink-500); font-weight:400; font-size:13px; font-style:italic; }
+  .markers .value .red { color: var(--aa-red-500); }
+  .markers .vol-row { grid-column: 1 / -1; display:flex; align-items:center; gap:14px; }
+  .markers .vol-row input[type=range] {
+    flex:1; max-width: 320px; accent-color: var(--aa-red-500);
+    height: 4px;
+  }
+  .markers .vol-row .vol-val {
+    font-family: var(--font-mono); font-size:15px; font-weight:700;
+    color: var(--aa-white); font-variant-numeric: tabular-nums;
+    min-width: 56px;
+  }
+  .markers .vol-row .vol-pct {
+    font-family: var(--font-mono); font-size:11px;
+    color: var(--aa-ink-400); letter-spacing:0.1em;
+  }
+
+  .snippet {
+    margin-top: 14px; padding: 12px 14px;
+    background:#000; border: 1px solid var(--aa-ink-800); border-radius:6px;
+    font-family: var(--font-mono); font-size:12px; color: var(--aa-ink-200);
+    overflow-x: auto; white-space: nowrap;
+    display:flex; align-items:center; gap:12px;
+  }
+  .snippet .code { flex: 1; min-width: 0; overflow-x: auto; }
+  .snippet .accent { color: var(--aa-red-500); }
+  .snippet .copy {
+    background: var(--aa-ink-700); color:var(--aa-white);
+    border:1px solid var(--aa-ink-600); padding: 4px 12px;
+    border-radius:3px; font-size:10px; cursor:pointer; letter-spacing:0.14em;
+    text-transform:uppercase; font-weight:600;
+    white-space: nowrap;
+  }
+  .snippet .copy:hover { background: var(--aa-red-600); border-color: var(--aa-red-700); }
+  .snippet .copy.copied { background: var(--aa-success); border-color: var(--aa-success); }
+
+  /* Video preview pane */
+  .video-pane {
+    background:#000;
+    border: 1px solid var(--aa-ink-800);
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .video-pane .vp-header {
+    padding: 10px 14px;
+    background: var(--aa-ink-800);
+    border-bottom: 1px solid var(--aa-ink-700);
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  }
+  .video-pane .vp-title {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em;
+    color: var(--aa-ink-300); text-transform: uppercase; font-weight: 600;
+  }
+  .video-pane .vp-reload {
+    background: var(--aa-red-600); color: var(--aa-white);
+    border: none; padding: 5px 10px; border-radius: 2px;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase; font-weight: 700; cursor: pointer;
+  }
+  .video-pane .vp-reload:hover { background: var(--aa-red-500); }
+  .video-pane .vp-iframe-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9/16;
+    background: #000;
+  }
+  .video-pane iframe {
+    position: absolute; inset:0;
+    width:100%; height:100%;
+    border: 0;
+  }
+  .video-pane .vp-placeholder {
+    position:absolute; inset:0;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    gap: 12px;
+    font-family: var(--font-mono); font-size:11px;
+    color: var(--aa-ink-400); letter-spacing: 0.14em;
+    text-transform: uppercase; text-align: center; padding: 16px;
+  }
+  .video-pane .vp-placeholder .hint { color: var(--aa-ink-500); font-size: 10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="brand">
+    <div class="brand-left">
+      <div class="eyebrow">Andromeda 1 · Noblesville</div>
+      <div class="name">Audio Start-Point Picker · v2</div>
+    </div>
+    <div class="brand-right">
+      <a href="index.html">← Back to campaign</a>
+    </div>
+  </header>
+
+  <div class="intro">
+    <b>Pick a music start point and verify it against the actual video.</b>
+    Drag anywhere on the waveform to seek. Use the play button to scrub by ear.
+    When you find the moment the music should drop, click <code>Mark start</code>.
+    Then click <code>Preview in video →</code> to load the creative with that exact
+    <code>startAt</code> applied. The video plays the same way it will render — same animations,
+    same beats — so you can see whether the chosen drop hits the right visual cue. Once it feels right,
+    copy the snippet and paste back to me.
+  </div>
+
+  <div class="tracks" id="tracks"></div>
+</div>
+
+<script>
+  // ── Track configuration ─────────────────────────────────────────────────
+  // To reuse this picker in another project: edit this array.
+  const TRACKS = [
+    {
+      id: 'a',
+      creative: 'Creative A · The Rule',
+      title: 'Captain Joz — Unstoppable',
+      file: 'audio/unstoppable.mp3',
+      videoFile: 'creative-a.html',
+      initial: 14.67,
+      volume: 0.75, fadeIn: 1.2, fadeOut: 1.8,
+    },
+    {
+      id: 'b',
+      creative: 'Creative B · Watch What Happens',
+      title: 'Sport Gaming Cyberpunk — Dark Star',
+      file: 'audio/dark-star.mp3',
+      videoFile: 'creative-b.html',
+      initial: 0.00,
+      volume: 0.7, fadeIn: 1.0, fadeOut: 1.8,
+    },
+    {
+      id: 'c',
+      creative: 'Creative C · Three Other Places',
+      title: 'WEARETHEGOOD — Bora (Instrumental)',
+      file: 'audio/bora-instrumental.mp3',
+      videoFile: 'creative-c.html',
+      initial: 0.00,
+      volume: 0.65, fadeIn: 1.5, fadeOut: 2.0,
+    },
+  ];
+
+  // ── Track-library dropdown (click on title → pick a different track) ────
+  let LIBRARY = { library: [], in_project_audio: [], library_path: '' };
+  async function loadLibrary() {
+    try {
+      const r = await fetch('/api/library');
+      LIBRARY = await r.json();
+    } catch (e) { console.warn('library fetch failed:', e); }
+  }
+  function prettyTrackName(filename) {
+    return filename.replace(/\.[a-zA-Z0-9]+$/, '');
+  }
+
+  function openTrackPicker(t, anchor) {
+    closeAllDropdowns();
+    anchor.classList.add('open');
+    const dd = document.createElement('div');
+    dd.className = 'track-dropdown';
+    dd.dataset.dropdown = '1';
+    const currentName = t.file.replace(/^audio\//, '');
+    const inProjectSet = new Set(LIBRARY.in_project_audio || []);
+    const items = (LIBRARY.library || []).map((name) => {
+      const isSelected = name === currentName;
+      const inProject = inProjectSet.has(name);
+      return `<div class="dd-item ${isSelected ? 'selected' : ''} ${inProject ? 'in-project' : ''}" data-name="${name.replace(/"/g, '&quot;')}">${prettyTrackName(name)}</div>`;
+    }).join('');
+    dd.innerHTML = `
+      <div class="dd-header">${LIBRARY.library.length} tracks · ✓ already in project · + will copy on select</div>
+      ${items || '<div class="dd-item" style="font-style:italic;opacity:0.6">No audio files found in library</div>'}
+    `;
+    anchor.appendChild(dd);
+    dd.addEventListener('click', async (e) => {
+      const item = e.target.closest('.dd-item[data-name]');
+      if (!item) return;
+      e.stopPropagation();
+      const name = item.dataset.name;
+      await selectLibraryTrack(t, name);
+      closeAllDropdowns();
+    });
+  }
+  function closeAllDropdowns() {
+    document.querySelectorAll('[data-dropdown]').forEach(d => d.remove());
+    document.querySelectorAll('.title.open').forEach(el => el.classList.remove('open'));
+  }
+  document.addEventListener('click', (e) => {
+    // Close on outside click
+    if (!e.target.closest('.title') && !e.target.closest('[data-dropdown]')) {
+      closeAllDropdowns();
+    }
+  });
+
+  async function selectLibraryTrack(t, name) {
+    // 1) Ensure the file is in the project's audio/ folder (copy if needed)
+    let newPath;
+    try {
+      const r = await fetch('/api/use-library-track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name }),
+      });
+      const j = await r.json();
+      if (!j.ok) throw new Error('server refused');
+      newPath = j.path;
+      if (j.copied) LIBRARY.in_project_audio = [...(LIBRARY.in_project_audio || []), name];
+    } catch (e) {
+      alert('Failed to import track: ' + e.message);
+      return;
+    }
+    // 2) Update track config
+    t.file = newPath;
+    t.title = prettyTrackName(name);
+    t.markedStart = null; // mark is bound to old track; reset
+    // 3) Update UI
+    document.getElementById('title-text-' + t.id).textContent = t.title;
+    document.getElementById('file-' + t.id).textContent = t.file;
+    document.getElementById('dur-' + t.id).textContent = 'decoding…';
+    // 4) Swap audio src and rebuild waveform
+    const audio = document.getElementById('audio-' + t.id);
+    audio.pause();
+    audio.src = newPath;
+    audio.load();
+    rebuildWaveform(t);
+    // 5) Update snippet
+    updateMarkUI(t);
+    // 6) Reset iframe preview
+    const iframe = document.getElementById('vp-iframe-' + t.id);
+    if (iframe && iframe.style.display !== 'none') {
+      iframe.style.display = 'none';
+      const ph = document.getElementById('vp-ph-' + t.id);
+      if (ph) ph.style.display = '';
+      const prevBtn = document.querySelector(`[data-act="preview"][data-id="${t.id}"]`);
+      if (prevBtn) prevBtn.textContent = 'Preview in video →';
+    }
+  }
+
+  function rebuildWaveform(t) {
+    const waveCanvas = document.getElementById('wave-' + t.id);
+    const overlayCanvas = document.getElementById('overlay-' + t.id);
+    const loadingEl = document.getElementById('loading-' + t.id);
+    loadingEl.style.display = '';
+    loadingEl.textContent = 'Decoding waveform…';
+    const ctx = waveCanvas.getContext('2d');
+    ctx.clearRect(0, 0, waveCanvas.width, waveCanvas.height);
+    const octx = overlayCanvas.getContext('2d');
+    octx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+    loadWaveform(t.file, 1200).then(({ peaks }) => {
+      loadingEl.style.display = 'none';
+      drawWaveform(waveCanvas, peaks);
+    }).catch((err) => {
+      loadingEl.textContent = 'Could not decode: ' + err.message;
+    });
+  }
+
+  // ── Cross-iframe sync helpers ───────────────────────────────────────────
+  // The audio-picker is the source of truth: when its <audio> plays or pauses
+  // we forward the state into the matching creative iframe so the video pane
+  // pauses/resumes together. The iframe also broadcasts its own state changes
+  // back so manual clicks inside the video don't desync the picker audio.
+  function postToIframe(id, msg) {
+    const iframe = document.getElementById('vp-iframe-' + id);
+    if (!iframe || !iframe.contentWindow || iframe.style.display === 'none') return;
+    try { iframe.contentWindow.postMessage(msg, '*'); } catch (_) {}
+  }
+  window.addEventListener('message', (e) => {
+    const d = e.data;
+    if (!d || d.type !== 'stage-state' || typeof d.playing !== 'boolean') return;
+    // Find which iframe sent it by matching source window
+    for (const t of TRACKS) {
+      const iframe = document.getElementById('vp-iframe-' + t.id);
+      if (!iframe || iframe.contentWindow !== e.source) continue;
+      const audio = document.getElementById('audio-' + t.id);
+      if (!audio) return;
+      if (d.playing && audio.paused) {
+        audio.play().catch(() => {});
+      } else if (!d.playing && !audio.paused) {
+        audio.pause();
+      }
+      return;
+    }
+  });
+
+  // ── Helpers ─────────────────────────────────────────────────────────────
+  function fmtTime(t) {
+    if (!isFinite(t)) return '0:00.00';
+    const m = Math.floor(t / 60);
+    const s = (t - m * 60).toFixed(2).padStart(5, '0');
+    return `${m}:${s}`;
+  }
+
+  function snippetFor(t) {
+    const start = (t.markedStart ?? t.initial).toFixed(2);
+    return `<MusicSync src="${t.file}" startAt={${start}} volume={${t.volume}} fadeIn={${t.fadeIn}} fadeOut={${t.fadeOut}}/>`;
+  }
+
+  // ── Waveform decoding (cached per session) ──────────────────────────────
+  const waveformCache = {};
+  let audioCtx = null;
+  function getAudioCtx() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return audioCtx;
+  }
+  async function loadWaveform(url, targetPeaks) {
+    const cacheKey = url + ':' + targetPeaks;
+    if (waveformCache[cacheKey]) return waveformCache[cacheKey];
+
+    // Try server-side pre-decoded peaks first (fast path — JSON read).
+    const baseName = url.split('/').pop().split('?')[0];
+    try {
+      const r = await fetch('/peaks/' + encodeURIComponent(baseName) + '.json');
+      if (r.ok) {
+        const data = await r.json();
+        if (Array.isArray(data.peaks) && data.peaks.length > 0) {
+          const peaks = new Float32Array(data.peaks);
+          const result = { peaks, duration: data.duration, fromCache: true };
+          waveformCache[cacheKey] = result;
+          return result;
+        }
+      }
+    } catch (_) {}
+
+    // Fall back to in-browser Web Audio decode (slow path).
+    const resp = await fetch(url);
+    const buf = await resp.arrayBuffer();
+    const ctx = getAudioCtx();
+    const decoded = await ctx.decodeAudioData(buf);
+    const channel = decoded.getChannelData(0);
+    const blockSize = Math.floor(channel.length / targetPeaks);
+    const peaks = new Float32Array(targetPeaks);
+    for (let i = 0; i < targetPeaks; i++) {
+      let max = 0;
+      const start = i * blockSize;
+      const end = Math.min(start + blockSize, channel.length);
+      for (let j = start; j < end; j++) {
+        const v = Math.abs(channel[j]);
+        if (v > max) max = v;
+      }
+      peaks[i] = max;
+    }
+    const result = { peaks, duration: decoded.duration, fromCache: false };
+    waveformCache[cacheKey] = result;
+
+    // Post back to the server so future loads use the cached version.
+    try {
+      fetch('/api/save-peaks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: baseName,
+          peaks: Array.from(peaks).map(v => Math.round(v * 10000) / 10000),
+          duration: decoded.duration,
+        }),
+      }).catch(() => {});
+    } catch (_) {}
+
+    return result;
+  }
+
+  function drawWaveform(canvas, peaks) {
+    const dpr = window.devicePixelRatio || 1;
+    const W = canvas.clientWidth;
+    const H = canvas.clientHeight;
+    canvas.width = Math.floor(W * dpr);
+    canvas.height = Math.floor(H * dpr);
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+    ctx.clearRect(0, 0, W, H);
+
+    // Center axis
+    ctx.fillStyle = 'rgba(255,255,255,0.08)';
+    ctx.fillRect(0, H / 2, W, 1);
+
+    // Bars
+    const samplesPerPixel = peaks.length / W;
+    for (let x = 0; x < W; x++) {
+      const i = Math.floor(x * samplesPerPixel);
+      const peak = peaks[i] || 0;
+      const h = Math.max(1, peak * H * 0.92);
+      ctx.fillStyle = '#c4141d';
+      ctx.fillRect(x, (H - h) / 2, 1, h);
+    }
+  }
+
+  function drawOverlay(overlay, duration, currentTime, markedStart) {
+    const dpr = window.devicePixelRatio || 1;
+    const W = overlay.clientWidth;
+    const H = overlay.clientHeight;
+    overlay.width = Math.floor(W * dpr);
+    overlay.height = Math.floor(H * dpr);
+    const ctx = overlay.getContext('2d');
+    ctx.scale(dpr, dpr);
+    ctx.clearRect(0, 0, W, H);
+
+    // Marked start (chrome dashed, taller than playhead)
+    if (markedStart != null && duration) {
+      const mx = (markedStart / duration) * W;
+      ctx.strokeStyle = '#e6e7e9';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 4]);
+      ctx.beginPath();
+      ctx.moveTo(mx, 0); ctx.lineTo(mx, H);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      // Label
+      ctx.fillStyle = '#e6e7e9';
+      ctx.font = '11px JetBrains Mono, monospace';
+      ctx.fillText('MARK', Math.min(mx + 4, W - 36), 12);
+    }
+
+    // Playhead (solid white, with handle dot at top for grabability)
+    if (duration) {
+      const px = (currentTime / duration) * W;
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(px, 0); ctx.lineTo(px, H);
+      ctx.stroke();
+      // Handle dot
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(px, 6, 4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  // ── Per-track UI ────────────────────────────────────────────────────────
+  function buildTrackUI(t) {
+    const card = document.createElement('div');
+    card.className = 'track';
+    card.innerHTML = `
+      <header>
+        <div class="meta">
+          <div class="creative">${t.creative}</div>
+          <div class="title" data-act="open-picker" data-id="${t.id}" id="title-${t.id}">
+            <span id="title-text-${t.id}">${t.title}</span>
+            <span class="chev">▾</span>
+          </div>
+          <div class="file" id="file-${t.id}">${t.file}</div>
+        </div>
+        <div class="duration" id="dur-${t.id}">decoding…</div>
+      </header>
+      <div class="body">
+        <div class="left">
+          <div class="wave-wrap" id="wavewrap-${t.id}">
+            <canvas id="wave-${t.id}"></canvas>
+            <canvas id="overlay-${t.id}"></canvas>
+            <div class="wave-loading" id="loading-${t.id}">Decoding waveform…</div>
+            <div class="wave-time-readout" id="time-${t.id}">0:00.00</div>
+          </div>
+          <audio id="audio-${t.id}" src="${t.file}" preload="auto"></audio>
+          <div class="controls">
+            <button class="btn play-btn" data-act="playpause" data-id="${t.id}" id="pb-${t.id}">▶</button>
+            <button class="btn scrub-step" data-act="step" data-id="${t.id}" data-dt="-1">−1s</button>
+            <button class="btn scrub-step" data-act="step" data-id="${t.id}" data-dt="-0.1">−0.1s</button>
+            <button class="btn scrub-step" data-act="step" data-id="${t.id}" data-dt="0.1">+0.1s</button>
+            <button class="btn scrub-step" data-act="step" data-id="${t.id}" data-dt="1">+1s</button>
+            <span style="flex:1"></span>
+            <button class="btn" data-act="seek-mark" data-id="${t.id}">Jump to mark</button>
+            <button class="btn primary" data-act="mark" data-id="${t.id}">Mark start here</button>
+            <button class="btn" data-act="reset" data-id="${t.id}">Clear</button>
+          </div>
+          <div class="markers">
+            <div>
+              <div class="label">Live playhead</div>
+              <div class="value" id="live-${t.id}">0:00.00</div>
+            </div>
+            <div>
+              <div class="label">Marked start (startAt)</div>
+              <div class="value" id="mark-${t.id}"></div>
+            </div>
+            <div class="vol-row">
+              <div class="label" style="min-width:60px">Volume</div>
+              <input type="range" min="0" max="1" step="0.05" value="${t.volume}" id="vol-${t.id}">
+              <span class="vol-val" id="vol-val-${t.id}">${t.volume.toFixed(2)}</span>
+              <span class="vol-pct" id="vol-pct-${t.id}">${Math.round(t.volume * 100)}%</span>
+            </div>
+          </div>
+          <div class="snippet">
+            <span class="code" id="snip-${t.id}"></span>
+            <button class="copy" data-act="copy" data-id="${t.id}">Copy</button>
+          </div>
+        </div>
+        <div class="video-pane">
+          <div class="vp-header">
+            <span class="vp-title">Video preview</span>
+            <button class="vp-reload" data-act="preview" data-id="${t.id}">Preview in video →</button>
+          </div>
+          <div class="vp-iframe-wrap">
+            <div class="vp-placeholder" id="vp-ph-${t.id}">
+              <div>Click <b>Preview in video</b><br/>to load ${t.videoFile}<br/>with the marked startAt</div>
+              <div class="hint">It will play the actual creative<br/>with <code>?musicStartAt=&lt;mark&gt;</code></div>
+            </div>
+            <iframe id="vp-iframe-${t.id}" src="about:blank" allow="autoplay" style="display:none"></iframe>
+          </div>
+        </div>
+      </div>
+    `;
+    return card;
+  }
+
+  function updateMarkUI(t) {
+    const markEl = document.getElementById('mark-' + t.id);
+    const start = t.markedStart ?? t.initial;
+    if (t.markedStart != null) {
+      markEl.className = 'value';
+      markEl.innerHTML = `<span class="red">${t.markedStart.toFixed(2)}s</span>  ·  ${fmtTime(t.markedStart)}`;
+    } else if (t.initial > 0) {
+      markEl.className = 'value';
+      markEl.innerHTML = `${t.initial.toFixed(2)}s  ·  ${fmtTime(t.initial)}  <span style="opacity:0.55">(current JSX value)</span>`;
+    } else {
+      markEl.className = 'value unset';
+      markEl.textContent = 'not set — using 0';
+    }
+
+    // Snippet
+    const snip = document.getElementById('snip-' + t.id);
+    snip.innerHTML = snippetFor(t).replace(/(startAt|src|volume|fadeIn|fadeOut)/g, '<span class="accent">$1</span>');
+  }
+
+  function setupTrack(t) {
+    const audio = document.getElementById('audio-' + t.id);
+    const waveCanvas = document.getElementById('wave-' + t.id);
+    const overlayCanvas = document.getElementById('overlay-' + t.id);
+    const waveWrap = document.getElementById('wavewrap-' + t.id);
+    const liveEl = document.getElementById('live-' + t.id);
+    const timeReadout = document.getElementById('time-' + t.id);
+    const durEl = document.getElementById('dur-' + t.id);
+    const loadingEl = document.getElementById('loading-' + t.id);
+    const pbBtn = document.getElementById('pb-' + t.id);
+
+    let duration = 0;
+    let waveformReady = false;
+
+    audio.addEventListener('loadedmetadata', () => {
+      duration = audio.duration;
+      durEl.textContent = fmtTime(duration) + ' · total';
+      // If there's an initial value and no user mark yet, pre-seek
+      if (t.markedStart == null && t.initial > 0) {
+        try { audio.currentTime = t.initial; } catch (_) {}
+      }
+      redrawOverlay();
+    });
+    audio.addEventListener('play', () => {
+      pbBtn.textContent = '⏸';
+      postToIframe(t.id, { type: 'stage-play' });
+    });
+    audio.addEventListener('pause', () => {
+      pbBtn.textContent = '▶';
+      postToIframe(t.id, { type: 'stage-pause' });
+    });
+    audio.addEventListener('timeupdate', () => {
+      liveEl.textContent = fmtTime(audio.currentTime);
+      timeReadout.textContent = fmtTime(audio.currentTime);
+      redrawOverlay();
+    });
+    audio.addEventListener('seeked', () => {
+      liveEl.textContent = fmtTime(audio.currentTime);
+      timeReadout.textContent = fmtTime(audio.currentTime);
+      redrawOverlay();
+    });
+
+    function redrawOverlay() {
+      if (!waveformReady || !duration) return;
+      drawOverlay(overlayCanvas, duration, audio.currentTime, t.markedStart);
+    }
+
+    // Drag-to-seek — classic mousedown + document-listeners pattern.
+    // We attach mousemove/mouseup to *document* during drag so the pointer
+    // can leave the waveform area without ending the drag, and so the actual
+    // click target (could be either overlapping canvas) doesn't matter.
+    function clientXToTime(clientX) {
+      const rect = waveWrap.getBoundingClientRect();
+      const x = Math.max(0, Math.min(rect.width, clientX - rect.left));
+      return duration ? (x / rect.width) * duration : 0;
+    }
+    function seekTo(target) {
+      if (!duration || !isFinite(target)) return;
+      try { audio.currentTime = Math.max(0, Math.min(duration, target)); } catch (_) {}
+    }
+    function onWaveDown(e) {
+      if (!duration) return;
+      if (e.button !== undefined && e.button !== 0) return; // left-click only
+      e.preventDefault();
+      waveWrap.classList.add('dragging');
+      seekTo(clientXToTime(e.clientX));
+      const onMove = (ev) => { seekTo(clientXToTime(ev.clientX)); };
+      const onUp = () => {
+        waveWrap.classList.remove('dragging');
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    }
+    function onWaveTouch(e) {
+      if (!duration || !e.touches[0]) return;
+      e.preventDefault();
+      waveWrap.classList.add('dragging');
+      seekTo(clientXToTime(e.touches[0].clientX));
+      const onMove = (ev) => { if (ev.touches[0]) seekTo(clientXToTime(ev.touches[0].clientX)); };
+      const onEnd = () => {
+        waveWrap.classList.remove('dragging');
+        document.removeEventListener('touchmove', onMove);
+        document.removeEventListener('touchend', onEnd);
+        document.removeEventListener('touchcancel', onEnd);
+      };
+      document.addEventListener('touchmove', onMove, { passive: false });
+      document.addEventListener('touchend', onEnd);
+      document.addEventListener('touchcancel', onEnd);
+    }
+    waveWrap.addEventListener('mousedown', onWaveDown);
+    waveWrap.addEventListener('touchstart', onWaveTouch, { passive: false });
+
+    // Volume slider
+    const volSlider = document.getElementById('vol-' + t.id);
+    const volVal = document.getElementById('vol-val-' + t.id);
+    const volPct = document.getElementById('vol-pct-' + t.id);
+    audio.volume = t.volume; // initialize
+    volSlider.addEventListener('input', () => {
+      const v = parseFloat(volSlider.value);
+      t.volume = v;
+      audio.volume = v;
+      volVal.textContent = v.toFixed(2);
+      volPct.textContent = Math.round(v * 100) + '%';
+      updateMarkUI(t); // regenerate snippet with new volume
+    });
+
+    // Load + draw waveform
+    loadWaveform(t.file, 1200).then(({ peaks, duration: d }) => {
+      waveformReady = true;
+      loadingEl.style.display = 'none';
+      drawWaveform(waveCanvas, peaks);
+      // Defer overlay until duration is set on the audio element too
+      if (!duration && d) duration = d;
+      redrawOverlay();
+    }).catch((err) => {
+      loadingEl.textContent = 'Could not decode: ' + err.message;
+      console.error('[picker] waveform decode failed for ' + t.file, err);
+    });
+
+    // Window resize → re-render
+    let resizeT;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeT);
+      resizeT = setTimeout(() => {
+        if (waveformReady) {
+          loadWaveform(t.file, Math.max(300, Math.floor(waveWrap.clientWidth)))
+            .then(({ peaks }) => { drawWaveform(waveCanvas, peaks); redrawOverlay(); });
+        }
+      }, 200);
+    });
+
+    updateMarkUI(t);
+  }
+
+  // ── Top-level events ────────────────────────────────────────────────────
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-act]');
+    if (!btn) return;
+    const id = btn.dataset.id;
+    const t = TRACKS.find(x => x.id === id);
+    if (!t) return;
+    const audio = document.getElementById('audio-' + id);
+    const act = btn.dataset.act;
+
+    if (act === 'playpause') {
+      if (audio.paused) audio.play().catch(err => console.warn('audio.play() rejected:', err.message));
+      else audio.pause();
+    } else if (act === 'step') {
+      const dt = parseFloat(btn.dataset.dt);
+      try { audio.currentTime = Math.max(0, Math.min(audio.duration || 9999, audio.currentTime + dt)); } catch (_) {}
+    } else if (act === 'mark') {
+      t.markedStart = audio.currentTime;
+      updateMarkUI(t);
+    } else if (act === 'reset') {
+      t.markedStart = null;
+      updateMarkUI(t);
+    } else if (act === 'seek-mark') {
+      const target = t.markedStart ?? t.initial;
+      try { audio.currentTime = target; } catch (_) {}
+    } else if (act === 'copy') {
+      navigator.clipboard.writeText(snippetFor(t)).then(() => {
+        btn.textContent = 'Copied!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+      });
+    } else if (act === 'open-picker') {
+      const anchor = document.getElementById('title-' + id);
+      const alreadyOpen = anchor.querySelector('[data-dropdown]');
+      if (alreadyOpen) { closeAllDropdowns(); return; }
+      e.stopPropagation();
+      openTrackPicker(t, anchor);
+    } else if (act === 'preview') {
+      const ph = document.getElementById('vp-ph-' + id);
+      const iframe = document.getElementById('vp-iframe-' + id);
+      const start = t.markedStart ?? t.initial;
+      // Cache-bust so the override always takes effect on reload.
+      // musicMute=1 silences the iframe's <MusicSync> so it doesn't fight
+      // the picker's own <audio> element — the picker is the audio source,
+      // iframe is the video source.
+      iframe.src = `${t.videoFile}?musicStartAt=${start.toFixed(2)}&musicVolume=${t.volume.toFixed(2)}&musicMute=1&t=${Date.now()}`;
+      iframe.style.display = 'block';
+      ph.style.display = 'none';
+      btn.textContent = 'Reload preview ↻';
+    }
+  });
+
+  // ── Bootstrap ───────────────────────────────────────────────────────────
+  async function render() {
+    await loadLibrary();
+    const root = document.getElementById('tracks');
+    root.innerHTML = '';
+    TRACKS.forEach(t => {
+      root.appendChild(buildTrackUI(t));
+      setupTrack(t);
+    });
+  }
+  render();
+</script>
+</body>
+</html>

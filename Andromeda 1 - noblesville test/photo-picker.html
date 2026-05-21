@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Photo Picker — Coach Explain Scene</title>
+<link rel="stylesheet" href="aa-tokens.css">
+<style>
+  html, body { margin: 0; padding: 0; background: var(--aa-ink-950); color: var(--aa-white); }
+  body { font-family: var(--font-body); }
+  .wrap { max-width: 1480px; margin: 0 auto; padding: 40px 32px 96px; }
+
+  header {
+    margin-bottom: 32px;
+    padding-bottom: 24px; border-bottom: 1px solid var(--aa-ink-800);
+  }
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em;
+    color: var(--aa-red-500); text-transform: uppercase; font-weight: 600;
+  }
+  .eyebrow::before { content: "// "; opacity: 0.6; }
+  h1 {
+    font-family: var(--font-display); text-transform: uppercase;
+    font-size: 56px; line-height: 0.9; letter-spacing: -0.005em;
+    margin: 14px 0 0;
+  }
+  h1 .red { color: var(--aa-red-500); }
+  .lede {
+    margin-top: 18px; max-width: 720px;
+    color: var(--aa-ink-300); font-size: 16px; line-height: 1.55;
+  }
+  .lede strong { color: var(--aa-white); }
+  .legend {
+    margin-top: 22px; display: flex; gap: 16px; flex-wrap: wrap;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em;
+    color: var(--aa-ink-400); text-transform: uppercase;
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 8px; }
+  .legend .swatch { width: 12px; height: 12px; border-radius: 2px; }
+
+  .sect {
+    margin: 48px 0 16px;
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-top: 1px solid var(--aa-ink-800); padding-top: 28px;
+  }
+  .sect h2 {
+    font-family: var(--font-display); text-transform: uppercase;
+    font-size: 28px; letter-spacing: -0.005em; margin: 0;
+  }
+  .sect .ct {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em;
+    color: var(--aa-ink-400); text-transform: uppercase;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+  }
+
+  figure {
+    margin: 0;
+    position: relative;
+    background: var(--aa-ink-900);
+    border: 1px solid var(--aa-ink-800);
+    border-radius: 4px; overflow: hidden;
+    aspect-ratio: 3/4;
+  }
+  figure.used { border-color: var(--aa-red-600); }
+  figure.banned { opacity: 0.4; }
+  figure img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  figure .name {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(180deg, transparent, rgba(10,11,13,0.92));
+    padding: 28px 12px 10px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em;
+    color: var(--aa-white); text-transform: uppercase; font-weight: 600;
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  figure .name .label { color: rgba(255,255,255,0.9); }
+  figure .name .id { color: var(--aa-red-400); }
+  figure .badge {
+    position: absolute; top: 8px; left: 8px;
+    padding: 4px 8px; border-radius: 2px;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em;
+    font-weight: 700; text-transform: uppercase;
+  }
+  figure.used .badge { background: var(--aa-red-600); color: white; }
+  figure.banned .badge { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); border: 1px solid var(--aa-ink-700); }
+
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+    figure .name { font-size: 9px; padding: 18px 8px 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Photo picker · Creative B</div>
+    <h1>Pick the <span class="red">coach-explain</span> shot.</h1>
+    <p class="lede">
+      The scene at <strong>~30s in Creative B</strong> is the "why we end the set" moment.
+      Below is every unused sprinting / running / coaching action shot in the upload library.
+      <strong>Tell me the ID</strong> (red text at bottom of each tile) and I'll wire it in.
+    </p>
+    <div class="legend">
+      <span><span class="swatch" style="background:var(--aa-red-600)"></span>Currently in use</span>
+      <span><span class="swatch" style="background:rgba(255,255,255,0.15);border:1px solid var(--aa-ink-700)"></span>Previously used / avoid</span>
+      <span><span class="swatch" style="background:transparent;border:1px solid var(--aa-ink-700)"></span>Available</span>
+    </div>
+  </header>
+
+  <div class="sect"><h2>Sprinting</h2><div class="ct">16 frames</div></div>
+  <div class="grid" id="g-sprint"></div>
+
+  <div class="sect"><h2>Running / Conditioning</h2><div class="ct">8 frames</div></div>
+  <div class="grid" id="g-run"></div>
+
+  <div class="sect"><h2>Coaching · Group action</h2><div class="ct">7 frames</div></div>
+  <div class="grid" id="g-coach"></div>
+</div>
+
+<script>
+// id → { src, label, state }
+const PHOTOS = {
+  // Sprinting
+  'sprint-001': { src: 'picker/dsc-08770.jpg', label: 'ShredMill incline', state: 'used' },
+  'sprint-002': { src: 'picker/sprint-male.jpg', label: 'Sprint · male · turf', state: 'banned' },
+  'sprint-003': { src: 'picker/sprint-mixed.jpg', label: 'Sprint · mixed · turf', state: 'banned' },
+  'sprint-004': { src: 'picker/sprint-mixed-2.jpg', label: 'Sprint · mixed pair · turf', state: 'avail' },
+  'sprint-005': { src: 'picker/sprint-mixed-mixed.jpg', label: 'Sprint · mixed lane · turf', state: 'avail' },
+  'sprint-006': { src: 'picker/sprint-female.jpg', label: 'Sprint · female · red jacket', state: 'avail' },
+  'sprint-007': { src: 'picker/dsc-04185.jpg', label: 'Sled · push', state: 'avail' },
+  'sprint-008': { src: 'picker/dsc-04197.jpg', label: 'Sled · push 2', state: 'avail' },
+  'sprint-009': { src: 'picker/dsc-04199.jpg', label: 'Sled · push 3', state: 'avail' },
+  'sprint-010': { src: 'picker/dsc-04252.jpg', label: 'Acceleration · stance', state: 'avail' },
+  'sprint-011': { src: 'picker/dsc-04259.jpg', label: 'Acceleration · drive', state: 'avail' },
+  'sprint-012': { src: 'picker/dsc-04335.jpg', label: 'Drive · close-up', state: 'avail' },
+  'sprint-013': { src: 'picker/dsc-08747.jpg', label: 'Treadmill · low angle', state: 'avail' },
+  'sprint-014': { src: 'picker/dsc-08810.jpg', label: 'Treadmill · mid', state: 'avail' },
+  'sprint-015': { src: 'picker/dsc-08963.jpg', label: 'Treadmill · grit', state: 'avail' },
+  'sprint-016': { src: 'picker/dsc-09089.jpg', label: 'Treadmill · finish', state: 'avail' },
+  // Running / conditioning
+  'run-001': { src: 'picker/dsc-07009.jpg', label: 'Running · turf', state: 'avail' },
+  'run-002': { src: 'picker/dsc-07017.jpg', label: 'Running · lane', state: 'avail' },
+  'run-003': { src: 'picker/dsc-07036.jpg', label: 'Conditioning · push', state: 'avail' },
+  'run-004': { src: 'picker/dsc-07041.jpg', label: 'Conditioning · sled drive', state: 'avail' },
+  'run-005': { src: 'picker/dsc-07112.jpg', label: 'Running · group', state: 'avail' },
+  'run-006': { src: 'picker/dsc-07115.jpg', label: 'Running · finish line', state: 'avail' },
+  'run-007': { src: 'picker/dsc-08889.jpg', label: 'Sled · low-rep', state: 'avail' },
+  'run-008': { src: 'picker/dsc-08998.jpg', label: 'Sled · two-athlete', state: 'avail' },
+  // Coaching / group action
+  'coach-001': { src: 'picker/dsc-06815.jpg', label: 'Coach · plyo demo', state: 'avail' },
+  'coach-002': { src: 'picker/dsc-06843.jpg', label: 'Coach · spotting', state: 'avail' },
+  'coach-003': { src: 'picker/dsc-06848.jpg', label: 'Coach · cues', state: 'avail' },
+  'coach-004': { src: 'picker/dsc-06870.jpg', label: 'Coach · group cue', state: 'avail' },
+  'coach-005': { src: 'picker/dsc-06900.jpg', label: 'Coach · clap (used in A)', state: 'banned' },
+  'coach-006': { src: 'picker/dsc-06927.jpg', label: 'Coach · positioning', state: 'avail' },
+  'coach-007': { src: 'picker/dsc-06971.jpg', label: 'Coach · debrief', state: 'avail' },
+};
+
+const groups = {
+  'g-sprint': Object.keys(PHOTOS).filter(k => k.startsWith('sprint-')),
+  'g-run': Object.keys(PHOTOS).filter(k => k.startsWith('run-')),
+  'g-coach': Object.keys(PHOTOS).filter(k => k.startsWith('coach-')),
+};
+
+for (const [containerId, ids] of Object.entries(groups)) {
+  const container = document.getElementById(containerId);
+  for (const id of ids) {
+    const p = PHOTOS[id];
+    const fig = document.createElement('figure');
+    fig.className = p.state === 'used' ? 'used' : p.state === 'banned' ? 'banned' : '';
+    const badge = p.state === 'used' ? '<div class="badge">In use</div>'
+      : p.state === 'banned' ? '<div class="badge">Used / Skip</div>' : '';
+    fig.innerHTML = `
+      ${badge}
+      <img src="${p.src}" alt="" loading="lazy">
+      <div class="name">
+        <span class="label">${p.label}</span>
+        <span class="id">${id}</span>
+      </div>
+    `;
+    container.appendChild(fig);
+  }
+}
+</script>
+</body>
+</html>
