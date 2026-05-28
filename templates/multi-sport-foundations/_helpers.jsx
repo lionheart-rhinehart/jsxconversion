@@ -351,6 +351,84 @@ export function Frame({ width, height, background = INK_950, children }) {
   );
 }
 
+// ── FixedDesign: render array of design primitives from config ─────────────
+// Used so the editor + JSX renderer share one source of truth for the
+// non-editable design layer (callout boxes, logos, separators, decorative
+// shapes). Each entry has a `type` and shape-specific props.
+export function FixedDesign({ items = [] }) {
+  return (
+    <>
+      {items.map((it, i) => {
+        const key = it.id || `fixed-${i}`;
+        if (it.type === "rect") {
+          return (
+            <div
+              key={key}
+              style={{
+                position: "absolute",
+                left: it.x,
+                top: it.y,
+                width: it.width,
+                height: it.height,
+                background: it.fill,
+                borderRadius: it.borderRadius || 0,
+                boxShadow: it.shadow,
+                opacity: it.opacity ?? 1,
+              }}
+            />
+          );
+        }
+        if (it.type === "image") {
+          return (
+            <img
+              key={key}
+              src={it.src}
+              alt=""
+              style={{
+                position: "absolute",
+                left: it.x,
+                top: it.y,
+                width: it.width,
+                height: it.height,
+                objectFit: it.objectFit || "contain",
+                opacity: it.opacity ?? 1,
+              }}
+            />
+          );
+        }
+        if (it.type === "circle") {
+          const sz = it.size || it.width || 24;
+          return (
+            <div
+              key={key}
+              style={{
+                position: "absolute",
+                left: it.x,
+                top: it.y,
+                width: sz,
+                height: sz,
+                background: it.fill,
+                borderRadius: sz / 2,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: it.color || WHITE,
+                fontSize: sz * 0.65,
+                fontWeight: 700,
+                lineHeight: 1,
+                opacity: it.opacity ?? 1,
+              }}
+            >
+              {it.label || ""}
+            </div>
+          );
+        }
+        return null;
+      })}
+    </>
+  );
+}
+
 // ── DarkProtectionGradient: subtle dark wash for text legibility on photos ─
 export function DarkProtectionGradient({
   topAlpha = 0.25,

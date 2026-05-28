@@ -1,0 +1,92 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/photo-coach-action.jpg",
+    "type": "image",
+    "offsetX": -20,
+    "offsetY": 0,
+    "scale": 1,
+    "videoStartTime": 0,
+    "videoEndTime": null,
+    "crop": {
+      "x": 485,
+      "y": 0,
+      "width": 1181,
+      "height": 1978
+    }
+  },
+  "fixedDesign": [
+    {
+      "id": "callout_box",
+      "type": "rect",
+      "x": 130,
+      "y": 680,
+      "width": 820,
+      "height": 590,
+      "fill": "rgba(15, 17, 21, 0.96)",
+      "borderRadius": 36,
+      "shadow": "0 20px 60px rgba(0,0,0,0.5)"
+    },
+    {
+      "id": "brand_logo",
+      "type": "image",
+      "x": 170,
+      "y": 730,
+      "width": 90,
+      "height": 90,
+      "src": "./assets/aa-logo.png"
+    },
+    {
+      "id": "verified_check",
+      "type": "circle",
+      "x": 530,
+      "y": 762,
+      "size": 28,
+      "fill": "#c4141d",
+      "label": "✓"
+    },
+    {
+      "id": "separator",
+      "type": "rect",
+      "x": 180,
+      "y": 880,
+      "width": 720,
+      "height": 2,
+      "fill": "#c4141d",
+      "opacity": 0.85
+    }
+  ],
+  "elements": [
+    {
+      "id": "brand_row",
+      "label": "Brand name + verified + handle",
+      "x": 275,
+      "y": 760,
+      "text": "Athletes Acceleration\n@athletesacceleration",
+      "fontSize": 30,
+      "fontFamily": "Geist",
+      "color": "#ffffff"
+    },
+    {
+      "id": "title",
+      "label": "Title",
+      "x": 180,
+      "y": 940,
+      "text": "{{TITLE}}",
+      "fontSize": 56,
+      "fontFamily": "Anton",
+      "color": "#ffffff"
+    },
+    {
+      "id": "microscript",
+      "label": "Microscript",
+      "x": 180,
+      "y": 1080,
+      "text": "{{MICRO-SCRIPTS}}",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "color": "#ffffff"
+    }
+  ]
+}
