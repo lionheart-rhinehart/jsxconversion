@@ -1,0 +1,77 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/comic-burst-bg.png",
+    "type": "image",
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1,
+    "videoStartTime": 0,
+    "videoEndTime": null
+  },
+  "fixedDesign": [
+    {
+      "id": "bottom_banner",
+      "type": "rect",
+      "x": 0, "y": 1700, "width": 1080, "height": 220,
+      "fill": "#c4141d"
+    }
+  ],
+  "elements": [
+    {
+      "id": "hook_line_1",
+      "label": "Hook line 1",
+      "x": 230, "y": 140,
+      "text": "NEW",
+      "fontSize": 220,
+      "fontFamily": "Anton",
+      "color": "#0a0b0d"
+    },
+    {
+      "id": "hook_line_2",
+      "label": "Hook line 2",
+      "x": 200, "y": 410,
+      "text": "9 AM",
+      "fontSize": 220,
+      "fontFamily": "Anton",
+      "color": "#0a0b0d"
+    },
+    {
+      "id": "hook_line_3",
+      "label": "Hook line 3",
+      "x": 100, "y": 680,
+      "text": "SATURDAY",
+      "fontSize": 200,
+      "fontFamily": "Anton",
+      "color": "#0a0b0d"
+    },
+    {
+      "id": "hook_line_4",
+      "label": "Hook line 4",
+      "x": 230, "y": 920,
+      "text": "CLASS!",
+      "fontSize": 240,
+      "fontFamily": "Anton",
+      "color": "#0a0b0d"
+    },
+    {
+      "id": "program_name",
+      "label": "Program name (in banner)",
+      "x": 175, "y": 1760,
+      "text": "FOUNDATIONAL YOUTH PROGRAM",
+      "fontSize": 42,
+      "fontFamily": "Anton",
+      "color": "#ffffff"
+    },
+    {
+      "id": "microscript",
+      "label": "Microscript (in banner)",
+      "x": 340, "y": 1830,
+      "text": "{{MICRO - SCRIPTS}}",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "color": "#ffffff"
+    }
+  ]
+}

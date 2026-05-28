@@ -333,6 +333,52 @@ export function CityHeadline({
   return <>{items}</>;
 }
 
+// ── ForegroundMedia: transparent-cutout subject layered on top ────────────
+// Use for compositions where a subject (athlete cutout) sits IN FRONT of
+// other design elements (city text, etc.). Same positioning model as MediaSlot.
+// Optional — only renders if path is provided.
+//
+// blendMode option lets you composite a non-alpha image with a black
+// background as if it were transparent. "screen" makes pure black invisible.
+// Useful for Canva-extracted PNGs that lack alpha (color-type 2 RGB).
+export function ForegroundMedia({
+  path,
+  offsetX = 0,
+  offsetY = 0,
+  scale = 1,
+  width = 1080,
+  height = 1920,
+  blendMode = "normal",
+}) {
+  if (!path) return null;
+  const isVideo = /\.(mp4|webm|mov|m4v)$/i.test(path);
+  const onLoad = (el) => {
+    if (!el) return;
+    const nW = isVideo ? el.videoWidth : el.naturalWidth;
+    const nH = isVideo ? el.videoHeight : el.naturalHeight;
+    if (!nW) return;
+    const baseScale = (height / nH) * scale;
+    el.style.position = "absolute";
+    el.style.width = nW * baseScale + "px";
+    el.style.height = nH * baseScale + "px";
+    el.style.left = (width - nW * baseScale) / 2 + offsetX + "px";
+    el.style.top = (height - nH * baseScale) / 2 + offsetY + "px";
+    if (blendMode && blendMode !== "normal") {
+      el.style.mixBlendMode = blendMode;
+    }
+  };
+  if (isVideo) {
+    return (
+      <video
+        src={path}
+        autoPlay muted playsInline loop preload="auto"
+        ref={(el) => el && el.addEventListener("loadeddata", () => onLoad(el), { once: true })}
+      />
+    );
+  }
+  return <img src={path} alt="" onLoad={(e) => onLoad(e.target)} ref={(el) => el && el.complete && onLoad(el)} />;
+}
+
 // ── Frame: outer 1080×1920 container, optional bg color ────────────────────
 export function Frame({ width, height, background = INK_950, children }) {
   return (

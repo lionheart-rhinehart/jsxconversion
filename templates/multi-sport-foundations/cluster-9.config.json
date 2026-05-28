@@ -1,0 +1,47 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/cluster-9-bg.jpg",
+    "type": "image",
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1,
+    "videoStartTime": 0,
+    "videoEndTime": null
+  },
+  "foregroundMedia": {
+    "path": "",
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1,
+    "blendMode": "normal"
+  },
+  "fixedDesign": [],
+  "elements": [],
+  "_notes": {
+    "scaffoldedAt": "2026-05-28T20:08:17.157Z",
+    "sourceSvg": "./templates/multi-sport-foundations/canva-overlays/cluster - 9.svg",
+    "skippedImages": [
+      {
+        "index": 0,
+        "rendered": "1451×960",
+        "pos": "(-185,0)",
+        "maskId": null
+      },
+      {
+        "index": 3,
+        "rendered": "111×1232",
+        "pos": "(1,2)",
+        "maskId": "9172b639ff"
+      },
+      {
+        "index": 2,
+        "rendered": "798×72",
+        "pos": "(0,1)",
+        "maskId": "283b37f532"
+      }
+    ],
+    "skippedRects": 2
+  }
+}

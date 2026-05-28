@@ -1,0 +1,95 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/cluster-8-bg.jpg",
+    "type": "image",
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1,
+    "videoStartTime": 0,
+    "videoEndTime": null
+  },
+  "foregroundMedia": {
+    "path": "./assets/cluster-8-foreground.png",
+    "offsetX": 0,
+    "offsetY": 200,
+    "scale": 1.4,
+    "blendMode": "normal",
+    "note": "True-alpha RGBA cutout — composited from Canva photo + SVG mask via scripts/extract-cutout.mjs. Subject is fully opaque; background is fully transparent."
+  },
+  "fixedDesign": [
+    {
+      "id": "red_tint",
+      "type": "rect",
+      "x": 0, "y": 0, "width": 1080, "height": 1920,
+      "fill": "rgba(196, 20, 29, 0.65)"
+    },
+    {
+      "id": "bottom_band",
+      "type": "rect",
+      "x": 0, "y": 1580, "width": 1080, "height": 340,
+      "fill": "rgba(196, 20, 29, 0.85)"
+    }
+  ],
+  "elements": [
+    {
+      "id": "city_1",
+      "label": "City row 1 (solid)",
+      "x": 130, "y": 60,
+      "text": "PORTLAND",
+      "fontSize": 220,
+      "fontFamily": "Anton",
+      "color": "#ffffff"
+    },
+    {
+      "id": "city_2",
+      "label": "City row 2 (outlined)",
+      "x": 130, "y": 330,
+      "text": "PORTLAND",
+      "fontSize": 220,
+      "fontFamily": "Anton",
+      "color": "transparent",
+      "strokeWidth": 4,
+      "strokeColor": "#ffffff"
+    },
+    {
+      "id": "city_3",
+      "label": "City row 3 (outlined)",
+      "x": 130, "y": 600,
+      "text": "PORTLAND",
+      "fontSize": 220,
+      "fontFamily": "Anton",
+      "color": "transparent",
+      "strokeWidth": 4,
+      "strokeColor": "#ffffff"
+    },
+    {
+      "id": "attention",
+      "label": "ATTENTION:",
+      "x": 360, "y": 1620,
+      "text": "ATTENTION:",
+      "fontSize": 56,
+      "fontFamily": "Anton",
+      "color": "#ffffff"
+    },
+    {
+      "id": "subhead",
+      "label": "Subhead",
+      "x": 180, "y": 1700,
+      "text": "PARENTS OF YOUTH ATHLETES",
+      "fontSize": 56,
+      "fontFamily": "Anton",
+      "color": "#ffffff"
+    },
+    {
+      "id": "microscript",
+      "label": "Microscript",
+      "x": 360, "y": 1830,
+      "text": "{{MICRO - SCRIPTS}}",
+      "fontSize": 30,
+      "fontFamily": "JetBrains Mono",
+      "color": "#ffffff"
+    }
+  ]
+}
