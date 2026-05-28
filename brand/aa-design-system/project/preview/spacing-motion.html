@@ -1,0 +1,15 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css"></head><body style="padding:28px 32px">
+    <p class="card-label">Motion · durations + easing</p>
+    <style>
+      @keyframes slide-out { 0%{transform:translateX(0)} 50%{transform:translateX(120px)} 100%{transform:translateX(0)} }
+      .mb { width:18px; height:18px; background:var(--aa-red-600); border-radius:3px; animation: slide-out 2.4s var(--ease-out) infinite; }
+      .ms { animation-timing-function: var(--ease-snap); }
+      .mi { animation-timing-function: var(--ease-in); }
+    </style>
+    <div style="display:flex; flex-direction:column; gap:14px; margin-top:14px; font-family:var(--font-mono); font-size:12px; color:var(--fg-2)">
+      <div class="row"><div style="width:96px">ease-out</div><div class="mb"></div></div>
+      <div class="row"><div style="width:96px">ease-snap</div><div class="mb ms"></div></div>
+      <div class="row"><div style="width:96px">ease-in</div><div class="mb mi"></div></div>
+    </div>
+    <p style="font-size:12px; color:var(--fg-3); margin-top:14px; font-family:var(--font-mono)">--dur-fast 120 ms · --dur-base 200 ms · --dur-slow 360 ms · No bounce / no overshoot.</p>
+  </body></html>

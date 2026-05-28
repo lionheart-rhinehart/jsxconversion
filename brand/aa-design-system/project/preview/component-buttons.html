@@ -1,0 +1,26 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css"></head><body style="padding:28px 32px">
+    <p class="card-label">Buttons</p>
+    <style>
+      .btn { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-body); font-weight:500; font-size:15px; padding:14px 22px; border-radius:var(--r-md); border:0; cursor:pointer; transition: all var(--dur-base) var(--ease-out); }
+      .btn .material-symbols-rounded { font-size:18px; }
+      .btn-primary { background:var(--aa-red-600); color:#fff; }
+      .btn-primary:hover { background:var(--aa-red-700); transform: translateY(-1px); box-shadow: var(--shadow-red); }
+      .btn-dark { background:var(--aa-ink-950); color:#fff; }
+      .btn-dark:hover { background:var(--aa-ink-800); }
+      .btn-outline { background:transparent; color:var(--fg-1); border:1.5px solid var(--border-strong); }
+      .btn-outline:hover { background:var(--aa-ink-950); color:#fff; }
+      .btn-ghost { background:transparent; color:var(--aa-red-600); padding-left:0; padding-right:0; }
+      .btn-ghost:hover { color:var(--aa-red-700); }
+    </style>
+    <div style="display:flex; gap:12px; margin-top:14px; flex-wrap:wrap">
+      <button class="btn btn-primary">Book Assessment <span class="material-symbols-rounded">arrow_forward</span></button>
+      <button class="btn btn-dark">View Schedules</button>
+      <button class="btn btn-outline">Find a Location</button>
+      <button class="btn btn-ghost">Learn more <span class="material-symbols-rounded">arrow_forward</span></button>
+    </div>
+    <div style="display:flex; gap:12px; margin-top:14px; flex-wrap:wrap">
+      <button class="btn btn-primary" style="padding:10px 16px; font-size:13px"><span class="material-symbols-rounded" style="font-size:16px">event</span>Book</button>
+      <button class="btn btn-outline" style="padding:10px 16px; font-size:13px">Cancel</button>
+      <button class="btn btn-primary" disabled style="padding:14px 22px; opacity:0.4; cursor:not-allowed">Submitting...</button>
+    </div>
+  </body></html>

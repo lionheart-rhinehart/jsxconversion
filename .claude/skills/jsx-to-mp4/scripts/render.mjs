@@ -24,6 +24,7 @@ import {
   detectVariationGlobal,
   readStageProps,
 } from "./claude-design.mjs";
+import { renderStaticReact } from "./static-react.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const SKILL_ROOT = resolve(__dirname, "..");
@@ -237,9 +238,9 @@ async function main() {
     console.error(`[render] input not found: ${inputPath}`);
     process.exit(1);
   }
-  ensureFfmpeg();
-
   const kind = classify(inputPath);
+  // ffmpeg is only needed for video output paths
+  if (kind !== "static") ensureFfmpeg();
   const projectDir = dirname(inputPath);
   const shippedRuntime = kind === "claude-design" && hasShippedRuntime(projectDir);
   const shippedHtmlPath = shippedRuntime ? findShippedHtmlSync(projectDir) : null;
@@ -257,7 +258,8 @@ async function main() {
     : resolveParams(inputPath, kind);
 
   const outDir = ensureOutDir();
-  const outPath = join(outDir, basename(inputPath, extname(inputPath)) + ".mp4");
+  const outExt = kind === "static" ? ".png" : ".mp4";
+  const outPath = join(outDir, basename(inputPath, extname(inputPath)) + outExt);
 
   // Manifest BEFORE any frame work — visible decision log.
   console.error("─── render manifest ───");
@@ -313,9 +315,21 @@ async function main() {
     });
   } else if (kind === "claude-design") {
     await renderClaudeDesignFallback(inputPath, params, outPath, fontResult.extraCss);
+  } else if (kind === "static") {
+    await renderStaticReact({
+      inputPath,
+      params,
+      outPath,
+      extraCss: fontResult.extraCss,
+      PROJECT_ROOT,
+    });
+  } else if (kind === "animated") {
+    throw new Error(
+      `Renderer for kind=animated not implemented yet. For now, author as claude-design (with <Stage>) or static (no animation hints).`,
+    );
   } else {
     throw new Error(
-      `Renderer for kind=${kind} not implemented. Supported: claude-design, remotion.`,
+      `Renderer for kind=${kind} not implemented. Supported: claude-design, remotion, static.`,
     );
   }
 

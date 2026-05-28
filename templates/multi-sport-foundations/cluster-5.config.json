@@ -1,0 +1,83 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/photo-coach-action.jpg",
+    "type": "image",
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1,
+    "videoStartTime": 0,
+    "videoEndTime": null,
+    "crop": {
+      "x": 974,
+      "y": 0,
+      "width": 1177,
+      "height": 1899
+    }
+  },
+  "elements": [
+    {
+      "id": "brand_callout",
+      "label": "Brand callout",
+      "x": 336,
+      "y": 764,
+      "text": "ATHLETES-ACCELERATION",
+      "fontSize": 70,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "logoOffsetW": 96
+    },
+    {
+      "id": "headline_top",
+      "label": "FOUNDATIONAL",
+      "x": 58,
+      "y": 981,
+      "text": "FOUNDATIONAL",
+      "fontSize": 175,
+      "fontFamily": "Anton",
+      "color": "#ffffff"
+    },
+    {
+      "id": "headline_sub",
+      "label": "YOUTH / PROGRAM",
+      "x": 668,
+      "y": 1194,
+      "text": "YOUTH\nPROGRAM",
+      "fontSize": 82,
+      "fontFamily": "Anton",
+      "color": "#ffffff"
+    },
+    {
+      "id": "microscript",
+      "label": "Microscript",
+      "x": 432,
+      "y": 1457,
+      "text": "{{MICRO - SCRIPTS}}",
+      "fontSize": 46,
+      "fontFamily": "JetBrains Mono",
+      "color": "#ffffff"
+    },
+    {
+      "id": "cta",
+      "label": "CTA",
+      "x": 50,
+      "y": 1700,
+      "text": "Join now, information at:",
+      "fontSize": 42,
+      "fontFamily": "Geist",
+      "color": "#ffffff"
+    },
+    {
+      "id": "handle",
+      "label": "Brand handle",
+      "x": 50,
+      "y": 1780,
+      "text": "@athletesacceleration",
+      "fontSize": 40,
+      "fontFamily": "Geist",
+      "color": "#ffffff",
+      "logoOffsetW": 66
+    }
+  ]
+}

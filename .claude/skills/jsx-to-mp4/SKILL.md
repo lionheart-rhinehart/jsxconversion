@@ -3,7 +3,7 @@ name: jsx-to-mp4
 description: Convert a JSX/TSX React component file into an MP4 video suitable for social posting. Detects Remotion vs Claude Design vs animated React vs static, reads per-file render params, runs the matching renderer, and writes to ./out/<name>.mp4. Trigger when the user hands you a .jsx or .tsx file and asks for an MP4, video, render, or social post.
 ---
 
-# JSX → MP4 conversion
+# JSX → MP4 or PNG conversion
 
 ## The one command
 
@@ -15,6 +15,22 @@ That's it. The renderer is responsible for everything: classification,
 font preflight, runtime selection, frame capture, encoding, and
 failure handling. Do not pre-process the JSX, substitute fonts, or
 skip preflight steps — they live in `render.mjs` for a reason.
+
+## Two output modes
+
+The renderer decides MP4 vs PNG based on the JSX:
+
+| Kind | Detected by | Output |
+|---|---|---|
+| `claude-design` | `<Stage>` / `<Sprite>` / `useTime` | MP4 (video, frame loop) |
+| `remotion` | `<Composition>` / `useCurrentFrame` | MP4 (via npx remotion render) |
+| `static` | none of the above, no animation hints | **PNG** (one screenshot) |
+| `animated` | `framer-motion`, `@keyframes`, `requestAnimationFrame`, etc. | Not implemented — author as claude-design instead |
+
+For ad statics (single-frame creatives), write a plain React component
+with `export default function MyAd() { return <div>...</div>; }`. No
+`<Stage>`, no animation hints. The renderer classifies it as `static`
+and writes `out/<name>.png`.
 
 If the render fails it exits non-zero with a clear message naming what
 went wrong. Pass the error back to the user verbatim. Do not "work
@@ -94,7 +110,9 @@ In priority order:
 | `Font preflight failed: ... not available` | A primary font isn't on Google Fonts and isn't shipped in the project | Drop the .ttf into `<projectDir>/fonts/<Family Name>/` |
 | `Shipped runtime not found` | Variation pointed at but `animations.jsx` missing | Re-export the full Claude Design folder |
 | `Variation file does not register a global` | Missing `window.X = X` at file bottom | Add the line |
-| `ffmpeg not found` | Missing system dep | `apt install ffmpeg` (or run `.claude/hooks/session-start.sh`) |
+| `ffmpeg not found` | Missing system dep (video output only) | `apt install ffmpeg` (or run `.claude/hooks/session-start.sh`). Not required for `kind=static` PNG output. |
+| `Template must "export default" a component.` | Static React file has no default export | Add `export default MyComponent` at the bottom |
+| `Renderer for kind=animated not implemented yet` | JSX has animation hints but no Stage/Composition | Either remove the animation hints (becomes `static`) or wrap in `<Stage>` (becomes `claude-design`) |
 
 ## Hand-off
 

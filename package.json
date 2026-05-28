@@ -1,9 +1,9 @@
 {
-  "name": "jsxconversion",
+  "name": "aa-creative-engine",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Convert JSX files (Claude Design output) into MP4 videos for social.",
+  "description": "Athletes Acceleration creative engine — generates branded ad videos and statics from JSX templates.",
   "scripts": {
     "render": "node .claude/skills/jsx-to-mp4/scripts/render.mjs"
   },

@@ -1,0 +1,9 @@
+/* Geist (variable) — shipped from Athletes Acceleration design system kit. */
+@font-face {
+  font-family: 'Geist';
+  src: url('Geist-Variable.ttf') format('truetype-variations'),
+       url('Geist-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}

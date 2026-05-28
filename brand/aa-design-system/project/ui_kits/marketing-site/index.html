@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Athletes Acceleration · Marketing Site UI Kit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200&display=block" />
+  <link rel="stylesheet" href="kit.css" />
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="components.jsx"></script>
+  <script type="text/babel" src="sections.jsx"></script>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    function BookingModal({ open, onClose }) {
+      const [step, setStep] = useState(0);
+      const [form, setForm] = useState({ name: '', age: '', sport: '', location: 'Carmel, IN' });
+      const update = patch => setForm(f => ({ ...f, ...patch }));
+      if (!open) return null;
+      return (
+        <div onClick={onClose} style={{
+          position:'fixed', inset:0, zIndex:100, background:'rgba(10,11,13,0.7)',
+          backdropFilter:'blur(8px)', display:'flex', alignItems:'center', justifyContent:'center', padding:'24px'
+        }}>
+          <div onClick={e=>e.stopPropagation()} style={{
+            background:'#fff', borderRadius:'12px', boxShadow:'var(--shadow-4)',
+            maxWidth:'520px', width:'100%', padding:'32px', position:'relative'
+          }}>
+            <button onClick={onClose} style={{
+              position:'absolute', top:16, right:16, background:'transparent', border:0,
+              width:36, height:36, borderRadius:'999px', cursor:'pointer', display:'flex',
+              alignItems:'center', justifyContent:'center'
+            }}>
+              <Icon name="close" />
+            </button>
+
+            {step === 0 && (
+              <>
+                <Eyebrow>Step 1 of 2</Eyebrow>
+                <h3 style={{fontFamily:'var(--font-display)', textTransform:'uppercase', fontSize:32, lineHeight:0.95, margin:'8px 0 24px'}}>
+                  Tell Us About<br/>Your <span style={{color:'var(--aa-red-600)'}}>Athlete.</span>
+                </h3>
+                <div style={{display:'flex', flexDirection:'column', gap:16}}>
+                  <div>
+                    <label style={{display:'block', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.08em', textTransform:'uppercase', color:'var(--fg-3)', fontWeight:600, marginBottom:6}}>Athlete's name</label>
+                    <input value={form.name} onChange={e=>update({name:e.target.value})} placeholder="First and last name" style={{width:'100%', height:48, padding:'0 16px', border:'1.5px solid var(--border-2)', borderRadius:4, fontSize:15}} />
+                  </div>
+                  <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:12}}>
+                    <div>
+                      <label style={{display:'block', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.08em', textTransform:'uppercase', color:'var(--fg-3)', fontWeight:600, marginBottom:6}}>Age</label>
+                      <input value={form.age} onChange={e=>update({age:e.target.value})} placeholder="12" inputMode="numeric" style={{width:'100%', height:48, padding:'0 16px', border:'1.5px solid var(--border-2)', borderRadius:4, fontSize:15}} />
+                    </div>
+                    <div>
+                      <label style={{display:'block', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.08em', textTransform:'uppercase', color:'var(--fg-3)', fontWeight:600, marginBottom:6}}>Primary sport</label>
+                      <input value={form.sport} onChange={e=>update({sport:e.target.value})} placeholder="Soccer, basketball..." style={{width:'100%', height:48, padding:'0 16px', border:'1.5px solid var(--border-2)', borderRadius:4, fontSize:15}} />
+                    </div>
+                  </div>
+                </div>
+                <div style={{display:'flex', justifyContent:'flex-end', marginTop:24}}>
+                  <Button variant="primary" iconRight="arrow_forward" onClick={()=>setStep(1)}>Continue</Button>
+                </div>
+              </>
+            )}
+
+            {step === 1 && (
+              <>
+                <Eyebrow>Step 2 of 2</Eyebrow>
+                <h3 style={{fontFamily:'var(--font-display)', textTransform:'uppercase', fontSize:32, lineHeight:0.95, margin:'8px 0 24px'}}>
+                  Pick A<br/><span style={{color:'var(--aa-red-600)'}}>Facility.</span>
+                </h3>
+                <div style={{display:'flex', flexDirection:'column', gap:8}}>
+                  {['Carmel, IN','Indianapolis, IN','Noblesville, IN','Westfield, IN','Milford, OH'].map(loc => (
+                    <label key={loc} style={{
+                      display:'flex', alignItems:'center', gap:12, padding:'14px 16px',
+                      border:`1.5px solid ${form.location===loc?'var(--aa-red-600)':'var(--border-2)'}`,
+                      borderRadius:6, cursor:'pointer',
+                      background: form.location===loc ? 'var(--aa-red-50)' : '#fff'
+                    }}>
+                      <input type="radio" name="loc" checked={form.location===loc} onChange={()=>update({location:loc})} style={{accentColor:'var(--aa-red-600)'}}/>
+                      <Icon name="location_on" fill style={{color:'var(--aa-red-600)'}} />
+                      <span style={{fontWeight:600}}>{loc}</span>
+                    </label>
+                  ))}
+                </div>
+                <div style={{display:'flex', justifyContent:'space-between', marginTop:24}}>
+                  <Button variant="outline" icon="arrow_back" onClick={()=>setStep(0)}>Back</Button>
+                  <Button variant="primary" iconRight="check" onClick={()=>setStep(2)}>Book Assessment</Button>
+                </div>
+              </>
+            )}
+
+            {step === 2 && (
+              <div style={{textAlign:'center', padding:'16px 0'}}>
+                <div style={{width:64, height:64, margin:'0 auto 16px', borderRadius:'999px', background:'var(--aa-red-50)', display:'flex', alignItems:'center', justifyContent:'center'}}>
+                  <Icon name="check" fill style={{fontSize:36, color:'var(--aa-red-600)'}} />
+                </div>
+                <h3 style={{fontFamily:'var(--font-display)', textTransform:'uppercase', fontSize:32, lineHeight:0.95, margin:'8px 0 12px'}}>
+                  You're <span style={{color:'var(--aa-red-600)'}}>In.</span>
+                </h3>
+                <p style={{color:'var(--fg-2)', fontSize:15, maxWidth:'40ch', margin:'0 auto 24px'}}>
+                  We'll reach out within 24 hours to lock in {form.name || 'your athlete'}'s baseline assessment at {form.location}.
+                </p>
+                <Button variant="dark" onClick={onClose}>Close</Button>
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    function App() {
+      const [bookOpen, setBookOpen] = useState(false);
+      const onBook = () => setBookOpen(true);
+      return (
+        <>
+          <NavBar onBook={onBook} />
+          <Hero onBook={onBook} />
+          <Pillars />
+          <Programs />
+          <Method onBook={onBook} />
+          <Testimonials />
+          <Guarantee />
+          <LocationFinder />
+          <FinalCTA onBook={onBook} />
+          <Footer />
+          <BookingModal open={bookOpen} onClose={() => setBookOpen(false)} />
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

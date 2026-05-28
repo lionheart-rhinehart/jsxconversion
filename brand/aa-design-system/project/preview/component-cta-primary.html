@@ -1,0 +1,17 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css"></head><body style="padding:28px 32px">
+    <p class="card-label">Primary CTA · the workhorse</p>
+    <style>
+      .cta-row { display:flex; flex-direction:column; gap:10px; margin-top:18px }
+      .cta-state { display:flex; align-items:center; gap:14px; font-family:var(--font-mono); font-size:11px; color:var(--fg-3) }
+      .cta-state b { color:var(--fg-2); width:64px }
+      .cta { display:inline-flex; align-items:center; gap:10px; padding:16px 26px; background:var(--aa-red-600); color:#fff; border-radius:6px; border:0; font-family:var(--font-body); font-weight:500; font-size:16px; transition: all 200ms var(--ease-out) }
+      .cta .material-symbols-rounded { font-size:20px; transition: transform 200ms var(--ease-out) }
+      .cta:hover { background:var(--aa-red-700); transform:translateY(-1px); box-shadow: var(--shadow-red) }
+      .cta:hover .material-symbols-rounded { transform: translateX(3px) }
+    </style>
+    <div class="cta-row">
+      <div class="cta-state"><b>default</b><button class="cta">Book Your Free Assessment <span class="material-symbols-rounded">arrow_forward</span></button></div>
+      <div class="cta-state"><b>hover</b><button class="cta" style="background:var(--aa-red-700); transform:translateY(-1px); box-shadow:var(--shadow-red)">Book Your Free Assessment <span class="material-symbols-rounded" style="transform:translateX(3px)">arrow_forward</span></button></div>
+      <div class="cta-state"><b>press</b><button class="cta" style="background:var(--aa-red-800); transform:translateY(0) scale(0.99)">Book Your Free Assessment <span class="material-symbols-rounded">arrow_forward</span></button></div>
+    </div>
+  </body></html>
