@@ -1,15 +1,13 @@
 // ============================================================================
-//  CLUSTER 8 — City headline (PORTLAND ×3) with red-tint photo
+//  CLUSTER-10 — auto-scaffolded from cluster - 10.svg
 // ============================================================================
-//  Thin, data-driven shell. All layers (bg photo, red tint, bottom band, the
-//  three city rows, foreground cutout, attention/subhead/microscript) live in
-//  cluster-8.config.json and render through the generic z-ordered LayerStack.
-//  cluster-8 interleaves text around the cutout via explicit per-item `z`
-//  (city rows z 20-22 BEHIND the cutout z 50; bottom-band text z 60-62 in
-//  front). Edit everything in the position editor at localhost:5173/#cluster-8.
+//  Thin, data-driven shell. All layers live in cluster-10.config.json and
+//  render through the generic z-ordered LayerStack. Refine via the position
+//  editor at http://localhost:5173/#cluster-10 (add text, drag positions, tune
+//  media/foreground offset/scale/crop, reorder layers).
 // ============================================================================
 
-import config from "./cluster-8.config.json";
+import config from "./cluster-10.config.json";
 import { LayerStack } from "./_helpers.jsx";
 
 export const WIDTH = config.width;
@@ -21,10 +19,11 @@ export const HEIGHT = config.height;
 const _FONT_PREFLIGHT = {
   display: { fontFamily: "'Anton', 'Oswald', sans-serif" },
   mono: { fontFamily: "'JetBrains Mono', ui-monospace, monospace" },
+  body: { fontFamily: "'Geist', sans-serif" },
 };
 
-function Cluster8() {
+function Cluster10() {
   return <LayerStack config={config} />;
 }
 
-export default Cluster8;
+export default Cluster10;

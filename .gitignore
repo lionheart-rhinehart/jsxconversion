@@ -1,5 +1,8 @@
 node_modules/
-out/
+out/*
+# The position editor is source, not a rendered artifact — keep it tracked.
+# (Use out/* above, not out/, so this subdirectory can be re-included.)
+!out/editor/
 .tmp/
 *.log
 .DS_Store

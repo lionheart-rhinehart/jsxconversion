@@ -397,6 +397,76 @@ export function Frame({ width, height, background = INK_950, children }) {
   );
 }
 
+// ── renderDesignItem: render ONE design primitive (rect/image/circle) ──────
+// Extracted from FixedDesign so a single shape can be rendered standalone by
+// LayerStack (which interleaves shapes with text/media/foreground by z-order).
+export function renderDesignItem(it, key) {
+  if (it.type === "rect") {
+    return (
+      <div
+        key={key}
+        style={{
+          position: "absolute",
+          left: it.x,
+          top: it.y,
+          width: it.width,
+          height: it.height,
+          background: it.fill,
+          borderRadius: it.borderRadius || 0,
+          boxShadow: it.shadow,
+          opacity: it.opacity ?? 1,
+        }}
+      />
+    );
+  }
+  if (it.type === "image") {
+    return (
+      <img
+        key={key}
+        src={it.src}
+        alt=""
+        style={{
+          position: "absolute",
+          left: it.x,
+          top: it.y,
+          width: it.width,
+          height: it.height,
+          objectFit: it.objectFit || "contain",
+          opacity: it.opacity ?? 1,
+        }}
+      />
+    );
+  }
+  if (it.type === "circle") {
+    const sz = it.size || it.width || 24;
+    return (
+      <div
+        key={key}
+        style={{
+          position: "absolute",
+          left: it.x,
+          top: it.y,
+          width: sz,
+          height: sz,
+          background: it.fill,
+          borderRadius: sz / 2,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: it.color || WHITE,
+          fontSize: sz * 0.65,
+          fontWeight: 700,
+          lineHeight: 1,
+          opacity: it.opacity ?? 1,
+        }}
+      >
+        {it.label || ""}
+      </div>
+    );
+  }
+  return null;
+}
+
 // ── FixedDesign: render array of design primitives from config ─────────────
 // Used so the editor + JSX renderer share one source of truth for the
 // non-editable design layer (callout boxes, logos, separators, decorative
@@ -404,74 +474,114 @@ export function Frame({ width, height, background = INK_950, children }) {
 export function FixedDesign({ items = [] }) {
   return (
     <>
-      {items.map((it, i) => {
-        const key = it.id || `fixed-${i}`;
-        if (it.type === "rect") {
+      {items.map((it, i) => renderDesignItem(it, it.id || `fixed-${i}`))}
+    </>
+  );
+}
+
+// ── renderTextLayer: render ONE editable text element from config ──────────
+// Replicates the per-template elStyle() helpers (cluster-8/cluster-10) so the
+// renderer + editor share one source of truth for text styling. All style
+// extras (lineHeight/letterSpacing/textTransform/fontWeight/whiteSpace) live on
+// the element so different templates need no hand-written elStyle variants.
+export function renderTextLayer(el, key) {
+  const style = {
+    position: "absolute",
+    left: el.x,
+    top: el.y,
+    fontSize: el.fontSize,
+    fontFamily: el.fontFamily ? `'${el.fontFamily}', sans-serif` : undefined,
+    color: el.color,
+  };
+  if (el.strokeWidth) {
+    style.WebkitTextStroke = `${el.strokeWidth}px ${el.strokeColor || WHITE}`;
+  }
+  if (el.lineHeight != null) style.lineHeight = el.lineHeight;
+  if (el.letterSpacing != null) style.letterSpacing = el.letterSpacing;
+  if (el.textTransform != null) style.textTransform = el.textTransform;
+  if (el.fontWeight != null) style.fontWeight = el.fontWeight;
+  if (el.whiteSpace != null) style.whiteSpace = el.whiteSpace;
+  return (
+    <div key={key} style={style}>
+      {el.text}
+    </div>
+  );
+}
+
+// ── LayerStack: unified, z-ordered renderer for an entire template config ──
+// Collects every drawable (media, fixedDesign shapes, text elements,
+// foreground cutout) into one list, assigns a default z by category when an
+// item has no explicit `z`, stable-sorts by effective z (insertion index as
+// tiebreaker), and paints in that order (DOM order = paint order — no CSS
+// z-index needed, mirroring how the renderer composites today).
+//
+// Default z bands (used ONLY when an item omits `z`, so legacy configs render
+// pixel-identically): media 0, fixedDesign 10+index, elements 20+index,
+// foreground 100. Templates that interleave layers (e.g. cluster-8 splits its
+// city text behind the cutout and its bottom-band text in front) set explicit
+// `z` per item to express that order.
+export function LayerStack({ config }) {
+  const W = config.width || 1080;
+  const H = config.height || 1920;
+  const layers = [];
+
+  const media = config.media || {};
+  if (media.path) {
+    layers.push({ kind: "media", z: media.z != null ? media.z : 0, i: layers.length, data: media });
+  }
+  (config.fixedDesign || []).forEach((it, idx) => {
+    layers.push({ kind: "shape", z: it.z != null ? it.z : 10 + idx, i: layers.length, data: it });
+  });
+  (config.elements || []).forEach((el, idx) => {
+    layers.push({ kind: "text", z: el.z != null ? el.z : 20 + idx, i: layers.length, data: el });
+  });
+  const fg = config.foregroundMedia || {};
+  if (fg.path) {
+    layers.push({ kind: "foreground", z: fg.z != null ? fg.z : 100, i: layers.length, data: fg });
+  }
+
+  layers.sort((a, b) => (a.z - b.z) || (a.i - b.i));
+
+  return (
+    <Frame width={W} height={H} background={INK_950}>
+      {layers.map((layer, idx) => {
+        const d = layer.data;
+        const key = d.id || `${layer.kind}-${idx}`;
+        if (layer.kind === "media") {
           return (
-            <div
+            <MediaSlot
               key={key}
-              style={{
-                position: "absolute",
-                left: it.x,
-                top: it.y,
-                width: it.width,
-                height: it.height,
-                background: it.fill,
-                borderRadius: it.borderRadius || 0,
-                boxShadow: it.shadow,
-                opacity: it.opacity ?? 1,
-              }}
+              path={d.path}
+              offsetX={d.offsetX || 0}
+              offsetY={d.offsetY || 0}
+              scale={d.scale || 1}
+              videoStartTime={d.videoStartTime || 0}
+              crop={d.crop}
+              objectFit={d.objectFit}
+              width={W}
+              height={H}
             />
           );
         }
-        if (it.type === "image") {
+        if (layer.kind === "shape") return renderDesignItem(d, key);
+        if (layer.kind === "text") return renderTextLayer(d, key);
+        if (layer.kind === "foreground") {
           return (
-            <img
+            <ForegroundMedia
               key={key}
-              src={it.src}
-              alt=""
-              style={{
-                position: "absolute",
-                left: it.x,
-                top: it.y,
-                width: it.width,
-                height: it.height,
-                objectFit: it.objectFit || "contain",
-                opacity: it.opacity ?? 1,
-              }}
+              path={d.path}
+              offsetX={d.offsetX || 0}
+              offsetY={d.offsetY || 0}
+              scale={d.scale || 1}
+              blendMode={d.blendMode || "normal"}
+              width={W}
+              height={H}
             />
-          );
-        }
-        if (it.type === "circle") {
-          const sz = it.size || it.width || 24;
-          return (
-            <div
-              key={key}
-              style={{
-                position: "absolute",
-                left: it.x,
-                top: it.y,
-                width: sz,
-                height: sz,
-                background: it.fill,
-                borderRadius: sz / 2,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: it.color || WHITE,
-                fontSize: sz * 0.65,
-                fontWeight: 700,
-                lineHeight: 1,
-                opacity: it.opacity ?? 1,
-              }}
-            >
-              {it.label || ""}
-            </div>
           );
         }
         return null;
       })}
-    </>
+    </Frame>
   );
 }
 

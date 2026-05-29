@@ -1,0 +1,53 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/cluster-10-bg.jpg",
+    "type": "image",
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1,
+    "videoStartTime": 0,
+    "videoEndTime": null
+  },
+  "foregroundMedia": {
+    "path": "./assets/cluster-10-foreground.png",
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1,
+    "blendMode": "normal"
+  },
+  "fixedDesign": [],
+  "elements": [],
+  "_notes": {
+    "scaffoldedAt": "2026-05-28T20:15:15.530Z",
+    "sourceSvg": "./templates/multi-sport-foundations/canva-overlays/cluster - 10.svg",
+    "skippedImages": [
+      {
+        "index": 1,
+        "rendered": "2133×2133",
+        "pos": "(-527,-213)",
+        "maskId": "b584de20da"
+      },
+      {
+        "index": 5,
+        "rendered": "1133×2015",
+        "pos": "(0,0)",
+        "maskId": "3366dd58df"
+      },
+      {
+        "index": 2,
+        "rendered": "-925×-442",
+        "pos": "(926,442)",
+        "maskId": "f10fc6a988"
+      },
+      {
+        "index": 3,
+        "rendered": "0×0",
+        "pos": "(1030,83)",
+        "maskId": "a2dadf1213"
+      }
+    ],
+    "skippedRects": 2
+  }
+}
