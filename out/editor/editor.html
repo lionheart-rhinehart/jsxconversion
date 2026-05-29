@@ -1578,6 +1578,30 @@
       $('propStrokeColor').value = el.strokeColor != null ? el.strokeColor : '';
     }
 
+    // ---- Shape opacity ("see-through") helpers ----
+    // A color filter's transparency lives in the ALPHA of its rgba() fill (the
+    // 0.65 in "rgba(196,20,29,0.65)"), NOT in a separate opacity property. So the
+    // opacity control reads/writes that alpha when the fill is rgb/rgba, and falls
+    // back to the CSS `opacity` property for hex/gradient fills. Returns 0..1.
+    const RGBA_RE = /^\s*rgba?\(\s*([0-9.]+)\s*,\s*([0-9.]+)\s*,\s*([0-9.]+)\s*(?:,\s*([0-9.]+)\s*)?\)\s*$/i;
+    function getShapeOpacity(shape) {
+      const m = typeof shape.fill === 'string' ? shape.fill.match(RGBA_RE) : null;
+      if (m) return m[4] != null ? Math.max(0, Math.min(1, parseFloat(m[4]))) : 1;
+      return shape.opacity != null ? Math.max(0, Math.min(1, shape.opacity)) : 1;
+    }
+    // Sets see-through to `a` (0..1). For rgb/rgba fills, rewrites the fill alpha
+    // (single source of truth, so the render matches); otherwise sets `opacity`.
+    function setShapeOpacity(shape, a) {
+      a = Math.round(Math.max(0, Math.min(1, a)) * 100) / 100;
+      const m = typeof shape.fill === 'string' ? shape.fill.match(RGBA_RE) : null;
+      if (m) {
+        shape.fill = `rgba(${m[1]}, ${m[2]}, ${m[3]}, ${a})`;
+      } else {
+        shape.opacity = a;
+      }
+      return a;
+    }
+
     // Build the shape props panel dynamically by type, then live-bind inputs.
     // The input handler only re-renders the STAGE (not the panel) so the field
     // the user is typing in keeps focus.
@@ -1590,14 +1614,27 @@
       const fields = [num('x', 'x'), num('y', 'y')];
       if (shape.type === 'rect') {
         fields.push(num('width', 'width'), num('height', 'height'), txt('fill', 'fill'),
-          num('radius', 'borderRadius'), num('opacity', 'opacity'));
+          num('radius', 'borderRadius'));
       } else if (shape.type === 'circle') {
         fields.push(num('size', 'size'), txt('fill', 'fill'), txt('color', 'color'),
-          txt('label', 'label'), num('opacity', 'opacity'));
+          txt('label', 'label'));
       } else if (shape.type === 'image') {
         fields.push(num('width', 'width'), num('height', 'height'), txt('src', 'src'),
-          txt('objectFit', 'objectFit'), num('opacity', 'opacity'));
+          txt('objectFit', 'objectFit'));
       }
+      // Opacity ("see-through") stepper. − / + adjust in 5% steps; for an rgba
+      // fill this edits the fill alpha (the real knob). Keyboard +/- does the
+      // same when the shape is selected.
+      const opPct = Math.round(getShapeOpacity(shape) * 100);
+      fields.push(
+        '<div class="field"><label>opacity (see-through)</label>' +
+        '<div style="display:flex;align-items:center;gap:6px">' +
+        '<button type="button" id="opDec" title="more see-through (−)" style="width:30px;cursor:pointer">−</button>' +
+        '<input type="number" id="opInput" min="0" max="100" step="5" value="' + opPct + '" style="width:64px" />' +
+        '<span style="opacity:.6">%</span>' +
+        '<button type="button" id="opInc" title="more solid (+)" style="width:30px;cursor:pointer">+</button>' +
+        '</div></div>'
+      );
       const f = $('shapeFields');
       f.innerHTML = fields.join('');
       f.querySelectorAll('input[data-skey]').forEach((inp) => {
@@ -1611,6 +1648,25 @@
           shape[key] = v;
           renderStage();
         });
+      });
+      // Wire the opacity stepper (separate from the generic data-skey inputs).
+      const syncFillField = () => {
+        const fi = f.querySelector('input[data-skey="fill"]');
+        if (fi) fi.value = shape.fill;
+      };
+      const commitOp = (a) => {
+        const na = setShapeOpacity(shape, a);
+        syncFillField();
+        renderStage();
+        setStatus(shape.id + ' opacity = ' + Math.round(na * 100) + '%');
+        return na;
+      };
+      $('opDec').onclick = () => { $('opInput').value = Math.round(commitOp(getShapeOpacity(shape) - 0.05) * 100); };
+      $('opInc').onclick = () => { $('opInput').value = Math.round(commitOp(getShapeOpacity(shape) + 0.05) * 100); };
+      $('opInput').addEventListener('input', () => {
+        const pct = parseFloat($('opInput').value);
+        if (isNaN(pct)) return;
+        commitOp(pct / 100); // don't rewrite the input's value mid-type
       });
     }
 
@@ -1691,15 +1747,23 @@
         setStatus('Moved ' + el.id + ' to (' + el.x + ', ' + el.y + ')');
       }
 
-      // + / - → font size
+      // + / -  →  shape see-through (opacity) when a fixedDesign shape is
+      //            selected, else text font size.
       if (state.selectedId && (e.key === '+' || e.key === '=' || e.key === '-' || e.key === '_')) {
+        const dir = (e.key === '+' || e.key === '=') ? 1 : -1;
+        const shape = (state.config.fixedDesign || []).find(s => s.id === state.selectedId);
+        if (shape) {
+          const na = setShapeOpacity(shape, getShapeOpacity(shape) + dir * 0.05);
+          renderStage();
+          selectElement(shape.id); // re-render props so the % field updates
+          setStatus(shape.id + ' opacity = ' + Math.round(na * 100) + '%');
+          return;
+        }
         const el = state.config.elements.find(el => el.id === state.selectedId);
         if (!el || !el.fontSize) return;
-        const step = (e.key === '+' || e.key === '=') ? 2 : -2;
-        el.fontSize = Math.max(8, el.fontSize + step);
+        el.fontSize = Math.max(8, el.fontSize + dir * 2);
         renderStage(); // need to re-render to reflect new size in preview
-        // After re-render, re-select
-        selectElement(el.id);
+        selectElement(el.id); // After re-render, re-select
         setStatus(el.id + ' fontSize = ' + el.fontSize);
       }
     });

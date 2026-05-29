@@ -341,6 +341,12 @@ export function CityHeadline({
 // blendMode option lets you composite a non-alpha image with a black
 // background as if it were transparent. "screen" makes pure black invisible.
 // Useful for Canva-extracted PNGs that lack alpha (color-type 2 RGB).
+// tint option overlays a flat color clipped to the cutout's own alpha (a
+// mask-image of the same source), composited with `tintBlend` (default
+// "multiply") against the subject beneath it. This reproduces the Canva
+// "photo over solid red" wash on the subject itself, while leaving transparent
+// areas untouched. Inert when `tint` is absent → single <img>/<video>, so
+// templates that don't set it render byte-identically.
 export function ForegroundMedia({
   path,
   offsetX = 0,
@@ -349,6 +355,8 @@ export function ForegroundMedia({
   width = 1080,
   height = 1920,
   blendMode = "normal",
+  tint = null,
+  tintBlend = "multiply",
 }) {
   if (!path) return null;
   const isVideo = /\.(mp4|webm|mov|m4v)$/i.test(path);
@@ -358,25 +366,57 @@ export function ForegroundMedia({
     const nH = isVideo ? el.videoHeight : el.naturalHeight;
     if (!nW) return;
     const baseScale = (height / nH) * scale;
+    const w = nW * baseScale;
+    const h = nH * baseScale;
+    const left = (width - w) / 2 + offsetX;
+    const top = (height - h) / 2 + offsetY;
     el.style.position = "absolute";
-    el.style.width = nW * baseScale + "px";
-    el.style.height = nH * baseScale + "px";
-    el.style.left = (width - nW * baseScale) / 2 + offsetX + "px";
-    el.style.top = (height - nH * baseScale) / 2 + offsetY + "px";
+    el.style.width = w + "px";
+    el.style.height = h + "px";
+    el.style.left = left + "px";
+    el.style.top = top + "px";
     if (blendMode && blendMode !== "normal") {
       el.style.mixBlendMode = blendMode;
     }
+    // Size + place the tint overlay to exactly cover the media box, masked by
+    // the source's alpha so only the subject is tinted.
+    if (tint) {
+      const ov = el.parentElement && el.parentElement.querySelector("[data-fg-tint]");
+      if (ov) {
+        ov.style.position = "absolute";
+        ov.style.width = w + "px";
+        ov.style.height = h + "px";
+        ov.style.left = left + "px";
+        ov.style.top = top + "px";
+        ov.style.background = tint;
+        ov.style.mixBlendMode = tintBlend;
+        ov.style.pointerEvents = "none";
+        const maskUrl = `url("${path}")`;
+        ov.style.webkitMaskImage = maskUrl;
+        ov.style.maskImage = maskUrl;
+        ov.style.webkitMaskSize = "100% 100%";
+        ov.style.maskSize = "100% 100%";
+        ov.style.webkitMaskRepeat = "no-repeat";
+        ov.style.maskRepeat = "no-repeat";
+      }
+    }
   };
-  if (isVideo) {
-    return (
-      <video
-        src={path}
-        autoPlay muted playsInline loop preload="auto"
-        ref={(el) => el && el.addEventListener("loadeddata", () => onLoad(el), { once: true })}
-      />
-    );
-  }
-  return <img src={path} alt="" onLoad={(e) => onLoad(e.target)} ref={(el) => el && el.complete && onLoad(el)} />;
+  const media = isVideo ? (
+    <video
+      src={path}
+      autoPlay muted playsInline loop preload="auto"
+      ref={(el) => el && el.addEventListener("loadeddata", () => onLoad(el), { once: true })}
+    />
+  ) : (
+    <img src={path} alt="" onLoad={(e) => onLoad(e.target)} ref={(el) => el && el.complete && onLoad(el)} />
+  );
+  if (!tint) return media;
+  return (
+    <div style={{ display: "contents" }}>
+      {media}
+      <div data-fg-tint aria-hidden="true" style={{ position: "absolute" }} />
+    </div>
+  );
 }
 
 // ── Frame: outer 1080×1920 container, optional bg color ────────────────────
@@ -402,22 +442,23 @@ export function Frame({ width, height, background = INK_950, children }) {
 // LayerStack (which interleaves shapes with text/media/foreground by z-order).
 export function renderDesignItem(it, key) {
   if (it.type === "rect") {
-    return (
-      <div
-        key={key}
-        style={{
-          position: "absolute",
-          left: it.x,
-          top: it.y,
-          width: it.width,
-          height: it.height,
-          background: it.fill,
-          borderRadius: it.borderRadius || 0,
-          boxShadow: it.shadow,
-          opacity: it.opacity ?? 1,
-        }}
-      />
-    );
+    const rectStyle = {
+      position: "absolute",
+      left: it.x,
+      top: it.y,
+      width: it.width,
+      height: it.height,
+      background: it.fill,
+      borderRadius: it.borderRadius || 0,
+      boxShadow: it.shadow,
+      opacity: it.opacity ?? 1,
+    };
+    // Optional compositing: a tint/overlay rect can blend with the layers
+    // beneath it (e.g. "multiply" deepens a photo to a rich, detail-preserving
+    // wash instead of an alpha haze). Inert when absent → no effect on rects
+    // that don't set it.
+    if (it.blendMode && it.blendMode !== "normal") rectStyle.mixBlendMode = it.blendMode;
+    return <div key={key} style={rectStyle} />;
   }
   if (it.type === "image") {
     return (
@@ -500,6 +541,7 @@ export function renderTextLayer(el, key) {
   if (el.letterSpacing != null) style.letterSpacing = el.letterSpacing;
   if (el.textTransform != null) style.textTransform = el.textTransform;
   if (el.fontWeight != null) style.fontWeight = el.fontWeight;
+  if (el.fontStyle != null) style.fontStyle = el.fontStyle;
   if (el.whiteSpace != null) style.whiteSpace = el.whiteSpace;
   return (
     <div key={key} style={style}>
@@ -574,6 +616,8 @@ export function LayerStack({ config }) {
               offsetY={d.offsetY || 0}
               scale={d.scale || 1}
               blendMode={d.blendMode || "normal"}
+              tint={d.tint || null}
+              tintBlend={d.tintBlend || "multiply"}
               width={W}
               height={H}
             />

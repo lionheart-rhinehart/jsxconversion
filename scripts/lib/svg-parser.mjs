@@ -21,6 +21,46 @@ import { resolve } from "node:path";
 export const VIEWBOX_TO_PX = 1080 / 810;
 
 // ---------------------------------------------------------------------------
+// Color helpers — used to tell an achromatic background bleed (white/black/gray)
+// apart from a CHROMATIC full-frame tint (a brand-color filter that must be
+// preserved, not dropped). See extractBodyRects.
+// ---------------------------------------------------------------------------
+/**
+ * Parse a #rgb / #rrggbb / #rrggbbaa hex string into {r,g,b}. Returns null for
+ * anything it can't parse (named colors, gradients, etc.).
+ * @param {string} str
+ * @returns {{r:number,g:number,b:number}|null}
+ */
+export function parseHexColor(str) {
+  if (!str || typeof str !== "string") return null;
+  let s = str.trim().replace(/^#/, "");
+  if (s.length === 3) s = s.split("").map((c) => c + c).join("");
+  if (s.length === 8) s = s.slice(0, 6); // ignore alpha
+  if (s.length !== 6 || /[^0-9a-fA-F]/.test(s)) return null;
+  return {
+    r: parseInt(s.slice(0, 2), 16),
+    g: parseInt(s.slice(2, 4), 16),
+    b: parseInt(s.slice(4, 6), 16),
+  };
+}
+
+/**
+ * True if a hex color is achromatic — i.e. white, black, or gray (low chroma).
+ * Unparseable colors return false (treated as chromatic) so we err toward
+ * SURFACING a rect rather than silently dropping it as bleed.
+ * @param {string} str
+ * @param {number} chromaThreshold — max(R,G,B) − min(R,G,B) at/below which a
+ *   color counts as achromatic. Default 28 covers white/black/grays while
+ *   leaving brand red (#ed1c24, chroma ≈ 209) firmly chromatic.
+ * @returns {boolean}
+ */
+export function isAchromaticHex(str, chromaThreshold = 28) {
+  const c = parseHexColor(str);
+  if (!c) return false;
+  return Math.max(c.r, c.g, c.b) - Math.min(c.r, c.g, c.b) <= chromaThreshold;
+}
+
+// ---------------------------------------------------------------------------
 // decodeImageDims — read width/height from raw PNG or JPEG bytes
 // ---------------------------------------------------------------------------
 // Canva's SVG embeds images with only `width=` attribute (no height).
@@ -196,13 +236,24 @@ export function extractBodyImages(body) {
 // extractBodyRects
 // ---------------------------------------------------------------------------
 /**
- * Extract <rect fill="#..."> elements from the body. Skips bleed rects
- * (Canva's full-coverage white/black background rects with negative position).
+ * Extract <rect fill="#..."> elements from the body, classifying each as a
+ * background bleed (drop), a full-frame color tint (preserve — design-critical),
+ * or a normal design rect.
+ *
+ * Why the tint distinction matters: Canva builds a "red filter" look by laying a
+ * SOLID full-frame brand-color rect (e.g. #ed1c24) *behind* a semi-transparent
+ * photo, so the color bleeds through and tints the whole image. Geometrically
+ * that rect is identical to the white background-bleed rect — both blanket the
+ * frame. Classifying on geometry alone (the old behaviour) dropped BOTH as
+ * "bleed", silently discarding the filter (this is exactly how cluster-8a lost
+ * its red wash). We now split on COLOR: a full-frame achromatic rect is bleed;
+ * a full-frame chromatic rect is a tint and must be reproduced (as a
+ * semi-transparent overlay over the photo in the opaque-layer model).
  *
  * @param {string} body
  * @returns {Array<{
  *   x: number, y: number, width: number, height: number,
- *   fill: string, opacity: number, isBleed: boolean
+ *   fill: string, opacity: number, isBleed: boolean, isTint: boolean
  * }>}
  */
 export function extractBodyRects(body) {
@@ -219,10 +270,14 @@ export function extractBodyRects(body) {
     const opacity = parseFloat((attrs.match(/\bfill-opacity="([0-9.]+)"/) || [])[1] || "1");
     if (!fill) continue;
 
-    // Bleed-rect detection: Canva's full-coverage rects sit at negative x/y
-    // and extend past the viewBox. They cover EVERYTHING — we don't want them
-    // in the design layer because they'd wipe out the photo.
-    const isBleed = x < 0 && y < 0 && w > 810 && h > 1400;
+    // Does this rect blanket essentially the whole 810×1440 viewBox? Both
+    // background bleeds and full-frame tints are oversized relative to it.
+    const coversFrame = w >= 810 * 0.9 && h >= 1440 * 0.9;
+    const achromatic = isAchromaticHex(fill);
+    // Full-frame + achromatic (white/black/gray) = background bleed → drop.
+    const isBleed = coversFrame && achromatic;
+    // Full-frame + chromatic (brand color) = TINT / color filter → preserve.
+    const isTint = coversFrame && !achromatic;
 
     out.push({
       x: Math.round(x * VIEWBOX_TO_PX),
@@ -232,6 +287,7 @@ export function extractBodyRects(body) {
       fill,
       opacity,
       isBleed,
+      isTint,
     });
   }
   return out;

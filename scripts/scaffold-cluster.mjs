@@ -18,6 +18,12 @@
 //    - Foreground  = largest masked body image >= 400×400 px (cover-fit candidate)
 //    - Decorative  = remaining body images (noted in config._notes, not extracted)
 //    - FixedDesign = body <rect> elements with fills (excluding bleed rects)
+//    - Tint        = a full-frame CHROMATIC rect (e.g. brand red #ed1c24). Canva
+//                    lays it behind a semi-transparent photo so the color bleeds
+//                    through. Preserved as a semi-transparent overlay (tag
+//                    brand_tint, alpha 0.45 placeholder — TUNE with sample-fill).
+//                    NOT dropped as bleed (achromatic white/black full-frame rects
+//                    still are).
 // ============================================================================
 
 import { writeFileSync, existsSync, mkdirSync } from "node:fs";
@@ -30,6 +36,7 @@ import {
   compositeImageWithMask,
   writeImageData,
   resolveClusterSvgPath,
+  parseHexColor,
 } from "./lib/svg-parser.mjs";
 
 const PROJECT_ROOT = resolve(".");
@@ -93,7 +100,11 @@ allImages.forEach((img) => {
 });
 console.log(`\nFound ${allRects.length} body rect(s):`);
 allRects.forEach((r, i) => {
-  const note = r.isBleed ? "[BLEED — skipped]" : "";
+  const note = r.isBleed
+    ? "[BLEED — skipped]"
+    : r.isTint
+      ? "[⚠ TINT — full-frame color filter, emitted as semi-transparent overlay]"
+      : "";
   console.log(
     `  #${i}  ${r.width}×${r.height} @(${r.x},${r.y})  fill=${r.fill}  ${note}`,
   );
@@ -122,7 +133,11 @@ console.log(`  Foreground cutout: ${useForeground ? `#${foregroundCandidate.inde
 console.log(`  Other images (noted but not extracted): ${otherImages.length}`);
 
 const designRects = allRects.filter((r) => !r.isBleed);
+const tintRects = designRects.filter((r) => r.isTint);
 console.log(`  fixedDesign rects: ${designRects.length} (skipped ${allRects.length - designRects.length} bleed)`);
+if (tintRects.length > 0) {
+  console.log(`  ⚠ ${tintRects.length} full-frame color tint(s) preserved as semi-transparent overlay(s) — TUNE alpha with sample-fill.mjs`);
+}
 
 // ---------------------------------------------------------------------------
 // Build config
@@ -152,17 +167,39 @@ const config = {
     blendMode: "normal",
     z: 100,
   },
-  fixedDesign: designRects.map((r, i) => ({
-    id: `rect_${i}`,
-    type: "rect",
-    x: r.x,
-    y: r.y,
-    width: r.width,
-    height: r.height,
-    fill: r.fill,
-    opacity: r.opacity,
-    z: 10 + i,
-  })),
+  fixedDesign: designRects.map((r, i) => {
+    if (r.isTint) {
+      // Full-frame color filter. In Canva this solid rect sits BEHIND a
+      // semi-transparent photo so the color bleeds through. An opaque rect here
+      // would hide the photo — instead reproduce it as a semi-transparent
+      // overlay ABOVE the background (low z, below text/foreground). The 0.45
+      // alpha is a starting point; TUNE it against the original with
+      // scripts/sample-fill.mjs (see config._notes.tints).
+      const rgb = parseHexColor(r.fill) || { r: 196, g: 20, b: 29 };
+      return {
+        id: `brand_tint_${i}`,
+        tag: "brand_tint",
+        type: "rect",
+        x: 0,
+        y: 0,
+        width: 1080,
+        height: 1920,
+        fill: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.45)`,
+        z: 5,
+      };
+    }
+    return {
+      id: `rect_${i}`,
+      type: "rect",
+      x: r.x,
+      y: r.y,
+      width: r.width,
+      height: r.height,
+      fill: r.fill,
+      opacity: r.opacity,
+      z: 10 + i,
+    };
+  }),
   elements: [], // user/agent adds text zones via editor
   _notes: {
     scaffoldedAt: new Date().toISOString(),
@@ -174,6 +211,21 @@ const config = {
       maskId: i.maskId || null,
     })),
     skippedRects: allRects.length - designRects.length,
+    tints:
+      tintRects.length > 0
+        ? {
+            count: tintRects.length,
+            note:
+              "Full-frame color filter(s) detected in the source SVG and emitted " +
+              "as semi-transparent overlay(s) (tag: brand_tint, alpha 0.45 placeholder). " +
+              "TUNE the alpha against the original render: " +
+              "node scripts/sample-fill.mjs out/compare/" +
+              `${normalizedId}-original.png --rect <clean-bg-region> ` +
+              "then compare to your render and adjust the rgba alpha. Keep z below " +
+              "any foreground cutout / headline so only the background is tinted.",
+            sourceFills: tintRects.map((r) => r.fill),
+          }
+        : undefined,
   },
 };
 

@@ -1,0 +1,109 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/cluster-2a-bg.jpg",
+    "type": "image",
+    "tag": "bg_photo",
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1,
+    "videoStartTime": 0,
+    "videoEndTime": null,
+    "z": 0,
+    "crop": {
+      "x": 1383,
+      "y": 0,
+      "width": 1548,
+      "height": 2752
+    }
+  },
+  "fixedDesign": [
+    {
+      "id": "red_block",
+      "tag": "brand_block",
+      "type": "rect",
+      "x": 0,
+      "y": 1290,
+      "width": 1080,
+      "height": 630,
+      "fill": "linear-gradient(180deg, #120102 0%, #1c0304 14%, #260506 29%, #340608 43%, #45080a 57%, #5a0b0e 71%, #740e12 86%, #941116 100%)",
+      "z": 10
+    },
+    {
+      "id": "logo",
+      "tag": "logo",
+      "type": "image",
+      "src": "./assets/cluster-2a-logo.png",
+      "x": 250,
+      "y": 1330,
+      "width": 580,
+      "height": 115,
+      "objectFit": "contain",
+      "z": 30
+    }
+  ],
+  "elements": [
+    {
+      "id": "headline_top",
+      "tag": "title_top",
+      "label": "Headline line 1",
+      "x": 92,
+      "y": 1456,
+      "text": "FOUNDATIONAL",
+      "fontSize": 122,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "z": 31,
+      "lineHeight": 0.92,
+      "letterSpacing": "-0.02em",
+      "textTransform": "uppercase"
+    },
+    {
+      "id": "headline_mid",
+      "tag": "title_mid",
+      "label": "Headline line 2 (red)",
+      "x": 388,
+      "y": 1548,
+      "text": "YOUTH",
+      "fontSize": 132,
+      "fontFamily": "Anton",
+      "color": "#ee1119",
+      "z": 33,
+      "lineHeight": 0.9,
+      "letterSpacing": "-0.01em",
+      "fontStyle": "italic",
+      "textTransform": "uppercase"
+    },
+    {
+      "id": "headline_bot",
+      "tag": "title_bot",
+      "label": "Headline line 3",
+      "x": 300,
+      "y": 1648,
+      "text": "PROGRAM",
+      "fontSize": 122,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "z": 32,
+      "lineHeight": 0.92,
+      "letterSpacing": "-0.02em",
+      "textTransform": "uppercase"
+    },
+    {
+      "id": "microscript",
+      "tag": "microscript",
+      "label": "Microscript",
+      "x": 360,
+      "y": 1788,
+      "text": "{{MICRO - SCRIPTS}}",
+      "fontSize": 30,
+      "fontFamily": "JetBrains Mono",
+      "color": "#ffffff",
+      "z": 40,
+      "fontWeight": 600,
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase"
+    }
+  ]
+}
