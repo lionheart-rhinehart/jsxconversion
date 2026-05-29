@@ -1,0 +1,131 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "text_cell",
+      "tag": "panel",
+      "label": "Dark text cell (top-left)",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 540,
+      "height": 960,
+      "fill": "#0a0b0d",
+      "z": 2
+    },
+    {
+      "id": "photo_tr",
+      "tag": "photo",
+      "label": "Photo — top right",
+      "type": "image",
+      "src": "./assets/photo-lifting.jpg",
+      "x": 540,
+      "y": 0,
+      "width": 540,
+      "height": 960,
+      "objectFit": "cover",
+      "z": 3
+    },
+    {
+      "id": "photo_bl",
+      "tag": "photo",
+      "label": "Photo — bottom left",
+      "type": "image",
+      "src": "./assets/photo-medball.jpg",
+      "x": 0,
+      "y": 960,
+      "width": 540,
+      "height": 960,
+      "objectFit": "cover",
+      "z": 4
+    },
+    {
+      "id": "photo_br",
+      "tag": "photo",
+      "label": "Photo — bottom right",
+      "type": "image",
+      "src": "./assets/photo-jump-male.jpg",
+      "x": 540,
+      "y": 960,
+      "width": 540,
+      "height": 960,
+      "objectFit": "cover",
+      "z": 5
+    },
+    {
+      "id": "dot_grid",
+      "tag": "decoration",
+      "label": "Dot grid",
+      "type": "rect",
+      "x": 32,
+      "y": 32,
+      "width": 90,
+      "height": 36,
+      "fill": "radial-gradient(circle, #ffffff 2px, transparent 2.5px)",
+      "backgroundSize": "12px 12px",
+      "opacity": 0.65,
+      "z": 10
+    },
+    {
+      "id": "brand_logo",
+      "tag": "logo",
+      "label": "Brand logo",
+      "type": "image",
+      "src": "./assets/aa-logo.png",
+      "x": 32,
+      "y": 886,
+      "width": 42,
+      "height": 42,
+      "objectFit": "contain",
+      "z": 11
+    }
+  ],
+  "elements": [
+    {
+      "id": "headline",
+      "tag": "headline",
+      "label": "Headline stack (FOUNDATIONAL / YOUTH / PROGRAM)",
+      "x": 32,
+      "y": 104,
+      "text": "FOUNDATIONAL\nYOUTH\nPROGRAM",
+      "fontSize": 96,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 1.08,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "whiteSpace": "pre-line",
+      "z": 20
+    },
+    {
+      "id": "microscript",
+      "tag": "microscript",
+      "label": "Microscript",
+      "x": 32,
+      "y": 447,
+      "text": "{{MICRO - SCRIPTS}}",
+      "fontSize": 22,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 600,
+      "color": "#ffffff",
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "z": 21
+    },
+    {
+      "id": "brand_name",
+      "tag": "brand_name",
+      "label": "Brand name",
+      "x": 86,
+      "y": 896,
+      "text": "ATHLETES-ACCELERATION",
+      "fontSize": 26,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "z": 22
+    }
+  ]
+}

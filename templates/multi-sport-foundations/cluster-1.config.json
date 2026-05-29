@@ -1,0 +1,109 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/hero-sprint-male.jpg",
+    "type": "image",
+    "tag": "bg_photo",
+    "offsetX": 0,
+    "offsetY": 480,
+    "scale": 1,
+    "videoStartTime": 0,
+    "videoEndTime": null,
+    "z": 0,
+    "note": "offsetY 480 reproduces the original objectPosition 'center 25%' (50 - 480/19.2 = 25%)."
+  },
+  "fixedDesign": [
+    {
+      "id": "protect_gradient",
+      "tag": "protect_gradient",
+      "label": "Dark protection wash",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.3) 0%, rgba(10,11,13,0) 18%, rgba(10,11,13,0) 82%, rgba(10,11,13,0.4) 100%)",
+      "z": 5
+    },
+    {
+      "id": "bottom_strip",
+      "tag": "accent_strip",
+      "label": "Bottom red strip",
+      "type": "rect",
+      "x": 0,
+      "y": 1890,
+      "width": 1080,
+      "height": 30,
+      "fill": "#c4141d",
+      "z": 15
+    }
+  ],
+  "elements": [
+    {
+      "id": "headline_top",
+      "tag": "headline",
+      "label": "FOUNDATIONAL (arched, glow)",
+      "x": 0,
+      "y": 110,
+      "width": 1080,
+      "text": "FOUNDATIONAL",
+      "fontSize": 158,
+      "arch": 1.5,
+      "glow": true,
+      "color": "#ffffff",
+      "z": 20
+    },
+    {
+      "id": "headline_bot",
+      "tag": "headline",
+      "label": "PROGRAM (arched low, glow)",
+      "x": 0,
+      "y": 1240,
+      "width": 1080,
+      "text": "PROGRAM",
+      "fontSize": 210,
+      "arch": "low",
+      "glow": true,
+      "color": "#ffffff",
+      "z": 30
+    },
+    {
+      "id": "headline_mid",
+      "tag": "headline_accent",
+      "label": "YOUTH (red, skewed)",
+      "x": 0,
+      "y": 1180,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "YOUTH",
+      "fontSize": 140,
+      "fontFamily": "Anton",
+      "color": "#c4141d",
+      "lineHeight": 0.88,
+      "letterSpacing": "-0.02em",
+      "textTransform": "uppercase",
+      "transform": "skewX(-8deg)",
+      "filter": "drop-shadow(0 4px 14px rgba(0,0,0,0.7))",
+      "z": 40
+    },
+    {
+      "id": "microscript",
+      "tag": "microscript",
+      "label": "Microscript",
+      "x": 60,
+      "y": 1628,
+      "width": 960,
+      "textAlign": "center",
+      "text": "{{MICRO - SCRIPTS}}",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 600,
+      "color": "#ffffff",
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 10px rgba(0,0,0,0.85), 0 0 18px rgba(0,0,0,0.5)",
+      "z": 50
+    }
+  ]
+}

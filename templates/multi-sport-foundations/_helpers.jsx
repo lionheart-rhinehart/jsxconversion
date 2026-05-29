@@ -458,6 +458,12 @@ export function renderDesignItem(it, key) {
     // wash instead of an alpha haze). Inert when absent → no effect on rects
     // that don't set it.
     if (it.blendMode && it.blendMode !== "normal") rectStyle.mixBlendMode = it.blendMode;
+    // Optional tiled/patterned fill (e.g. a radial-gradient dot grid). When the
+    // fill is a repeating gradient, backgroundSize controls the tile and
+    // backgroundRepeat the tiling. Set AFTER `background` so the longhand wins
+    // over the shorthand's implicit size reset. Inert when absent.
+    if (it.backgroundSize) rectStyle.backgroundSize = it.backgroundSize;
+    if (it.backgroundRepeat) rectStyle.backgroundRepeat = it.backgroundRepeat;
     return <div key={key} style={rectStyle} />;
   }
   if (it.type === "image") {
@@ -473,6 +479,8 @@ export function renderDesignItem(it, key) {
           width: it.width,
           height: it.height,
           objectFit: it.objectFit || "contain",
+          objectPosition: it.objectPosition || undefined,
+          display: "block",
           opacity: it.opacity ?? 1,
         }}
       />
@@ -526,6 +534,37 @@ export function FixedDesign({ items = [] }) {
 // extras (lineHeight/letterSpacing/textTransform/fontWeight/whiteSpace) live on
 // the element so different templates need no hand-written elStyle variants.
 export function renderTextLayer(el, key) {
+  // ── Arched display text ──────────────────────────────────────────────────
+  // When `arch` is present (numeric depth or preset name) the element renders
+  // through ArchedHeadline (curved baseline via SVG textPath) inside an
+  // absolutely-positioned, full-width wrapper. `glow` adds the red drop-shadow.
+  // Inert for every existing config (none set `arch`) → no render change.
+  if (el.arch != null) {
+    const archWidth = el.width || 1080;
+    return (
+      <div
+        key={key}
+        style={{
+          position: "absolute",
+          left: el.x,
+          top: el.y,
+          width: archWidth,
+          overflow: "visible",
+          transform: el.transform || undefined,
+        }}
+      >
+        <ArchedHeadline
+          text={el.text}
+          width={archWidth}
+          color={el.color || WHITE}
+          fontSize={el.fontSize || 160}
+          arch={el.arch}
+          glow={!!el.glow}
+          letterSpacing={el.letterSpacing != null ? el.letterSpacing : "-0.01em"}
+        />
+      </div>
+    );
+  }
   const style = {
     position: "absolute",
     left: el.x,
@@ -534,6 +573,11 @@ export function renderTextLayer(el, key) {
     fontFamily: el.fontFamily ? `'${el.fontFamily}', sans-serif` : undefined,
     color: el.color,
   };
+  // Optional box + alignment so a single text layer can span the frame and
+  // center/right-align (matches the old full-width `left:0;right:0;textAlign`
+  // headlines). Absent → element keeps its left-anchored auto width.
+  if (el.width != null) style.width = el.width;
+  if (el.textAlign != null) style.textAlign = el.textAlign;
   if (el.strokeWidth) {
     style.WebkitTextStroke = `${el.strokeWidth}px ${el.strokeColor || WHITE}`;
   }
@@ -543,6 +587,11 @@ export function renderTextLayer(el, key) {
   if (el.fontWeight != null) style.fontWeight = el.fontWeight;
   if (el.fontStyle != null) style.fontStyle = el.fontStyle;
   if (el.whiteSpace != null) style.whiteSpace = el.whiteSpace;
+  // Optional visual extras: drop-shadow/glow (`filter`), text shadow, and a
+  // skew/scale `transform`. All inert when absent → existing configs unchanged.
+  if (el.textShadow != null) style.textShadow = el.textShadow;
+  if (el.filter != null) style.filter = el.filter;
+  if (el.transform != null) style.transform = el.transform;
   return (
     <div key={key} style={style}>
       {el.text}
