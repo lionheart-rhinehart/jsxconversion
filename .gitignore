@@ -4,6 +4,9 @@ out/*
 # (Use out/* above, not out/, so this subdirectory can be re-included.)
 !out/editor/
 .tmp/
+# Filled template variants are generated scratch (data → render proof), not source.
+templates/**/*.fill.config.json
+templates/**/*.fill.jsx
 *.log
 .DS_Store
 __render/

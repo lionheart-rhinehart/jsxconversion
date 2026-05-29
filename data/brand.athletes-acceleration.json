@@ -1,0 +1,13 @@
+{
+  "_comment": "Brand kit for Athletes Acceleration. Keys under `tags` map a layer's field name (its `tag`) to the value that replaces the layer's content at fill time. Built incrementally — add tags as templates surface them. Campaign/location overlays (data/campaign.*.json, data/location.*.json) override these per launch.",
+  "brand": "Athletes Acceleration",
+  "tags": {
+    "city": "FORT WAYNE",
+    "guarantee": "+1 MPH SPEED, +3\" VERTICAL, 90 DAYS, OR TRAINING IS FREE",
+    "attention": "ATTENTION:",
+    "subhead": "PARENTS OF YOUTH ATHLETES",
+    "microscript": "AGES 8-18 · FORT WAYNE, IN",
+    "url": "athletesacceleration.com",
+    "phone": "(260) 555-0199"
+  }
+}

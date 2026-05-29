@@ -4,6 +4,7 @@
   "media": {
     "path": "./assets/cluster-8-bg.jpg",
     "type": "image",
+    "tag": "bg_photo",
     "offsetX": 0,
     "offsetY": 0,
     "scale": 1,
@@ -19,9 +20,10 @@
   },
   "foregroundMedia": {
     "path": "./assets/cluster-8-foreground.png",
-    "offsetX": -119,
-    "offsetY": 63,
-    "scale": 1.1999999999999997,
+    "tag": "talent_photo",
+    "offsetX": -143,
+    "offsetY": 224,
+    "scale": 1.2999999999999998,
     "blendMode": "normal",
     "z": 50,
     "note": "True-alpha RGBA cutout — composited from Canva photo + SVG mask via scripts/extract-cutout.mjs. Subject is fully opaque; background is fully transparent."
@@ -29,6 +31,7 @@
   "fixedDesign": [
     {
       "id": "red_tint",
+      "tag": "brand_tint",
       "type": "rect",
       "x": 0,
       "y": 0,
@@ -41,6 +44,7 @@
   "elements": [
     {
       "id": "city_1",
+      "tag": "city",
       "label": "City row 1 (solid)",
       "x": 160,
       "y": 290,
@@ -55,6 +59,7 @@
     },
     {
       "id": "city_2",
+      "tag": "city",
       "label": "City row 2 (outlined)",
       "x": 143,
       "y": 709,
@@ -71,6 +76,7 @@
     },
     {
       "id": "city_3",
+      "tag": "city",
       "label": "City row 3 (outlined)",
       "x": 140,
       "y": 1165,
@@ -87,6 +93,7 @@
     },
     {
       "id": "attention",
+      "tag": "attention",
       "label": "ATTENTION:",
       "x": 356,
       "y": 1593,
@@ -101,6 +108,7 @@
     },
     {
       "id": "subhead",
+      "tag": "subhead",
       "label": "Subhead",
       "x": 79,
       "y": 1700,
@@ -115,6 +123,7 @@
     },
     {
       "id": "microscript",
+      "tag": "microscript",
       "label": "Microscript",
       "x": 360,
       "y": 1830,

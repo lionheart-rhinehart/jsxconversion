@@ -314,7 +314,7 @@
     .add-row button { flex: 1; font-size: 11px; padding: 5px 6px; }
     .element-list li { flex-direction: column; align-items: stretch; gap: 4px; }
     .lyr-head { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
-    .lyr-name { display: flex; align-items: center; gap: 6px; min-width: 0; }
+    .lyr-name { display: flex; align-items: center; gap: 6px; min-width: 0; flex: 1; }
     .lyr-name .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .lyr-chip {
       font-size: 8px; text-transform: uppercase; letter-spacing: 0.06em;
@@ -330,6 +330,20 @@
       border-radius: 3px; min-width: 22px;
     }
     .lyr-controls button.danger { color: #ff6b6b; }
+    /* Inline-editable field name — the PRIMARY thing on the row. Styled as an
+       obvious text field (persistent faint border) so it reads as editable, not
+       as static text. The type tag sits AFTER it as a secondary qualifier. */
+    .lyr-tag {
+      flex: 1; min-width: 0; font-size: 12px; font-weight: 600;
+      font-family: ui-monospace, Menlo, monospace;
+      background: var(--panel); border: 1px solid var(--border);
+      color: var(--fg); border-radius: 4px; padding: 2px 6px;
+    }
+    .lyr-tag:hover { border-color: #3a4150; }
+    .lyr-tag:focus { border-color: var(--red); background: #0e1013; outline: none; }
+    .lyr-tag::placeholder { color: var(--muted); font-weight: 400; }
+    /* Type tag (TEXT / BG / FG / RECT) — what KIND of layer this is. */
+    .lyr-chip { order: 2; }
 
     aside {
       background: var(--panel);
@@ -438,6 +452,27 @@
           <button id="addRectBtn">+ Rect</button>
         </div>
         <ul class="element-list" id="elementList"></ul>
+        <!-- Standard field-name dictionary. Suggestions only — any value is allowed.
+             The fill step reads whatever tags exist in a config; it does NOT depend
+             on this list. -->
+        <datalist id="fieldTagList">
+          <option value="city"></option>
+          <option value="guarantee"></option>
+          <option value="brand_color"></option>
+          <option value="brand_tint"></option>
+          <option value="logo"></option>
+          <option value="address"></option>
+          <option value="location"></option>
+          <option value="phone"></option>
+          <option value="url"></option>
+          <option value="title"></option>
+          <option value="attention"></option>
+          <option value="subhead"></option>
+          <option value="microscript"></option>
+          <option value="cta"></option>
+          <option value="bg_photo"></option>
+          <option value="talent_photo"></option>
+        </datalist>
       </div>
 
       <div class="panel-block" id="propsPanel" style="display: none;">
@@ -759,7 +794,7 @@
     function addText() {
       const W = state.config.width || 1080, H = state.config.height || 1920;
       const el = {
-        id: nextId('text'), label: 'New text',
+        id: nextId('text'), label: 'New text', tag: 'new_text',
         x: Math.round(W / 2 - 150), y: Math.round(H / 2),
         text: 'NEW TEXT', fontSize: 88, fontFamily: 'Anton', color: '#ffffff',
         z: topZ(), letterSpacing: '-0.01em', textTransform: 'uppercase',
@@ -1382,9 +1417,26 @@
       return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
     function layerLabel(layer) {
-      if (layer.kind === 'media') return 'Background';
-      if (layer.kind === 'foreground') return 'Foreground';
-      return layer.data.label || layer.data.text || layer.id;
+      if (layer.kind === 'media') return layer.data.tag || 'Background';
+      if (layer.kind === 'foreground') return layer.data.tag || 'Foreground';
+      return layer.data.tag || layer.data.label || layer.data.text || layer.id;
+    }
+    // Slugify a human string into a clean field-name key: "City row 1" -> "city_row_1",
+    // "{{MICRO - SCRIPTS}}" -> "micro_scripts", "ATTENTION:" -> "attention".
+    function slugifyTag(s) {
+      return String(s || '')
+        .toLowerCase()
+        .replace(/[{}]/g, '')
+        .replace(/[^a-z0-9]+/g, '_')
+        .replace(/^_+|_+$/g, '');
+    }
+    // The field name shown in the Layers row when a layer has no explicit `tag`.
+    // Defaults to "what's in the block" (label, then text), per the naming model.
+    // Deterministic, so an untagged layer shows the same default across reloads.
+    function deriveTagDefault(layer) {
+      if (layer.kind === 'media') return 'bg_photo';
+      if (layer.kind === 'foreground') return 'talent_photo';
+      return slugifyTag(layer.data.label || layer.data.text) || layer.id;
     }
     function layerChip(layer) {
       if (layer.kind === 'media') return 'bg';
@@ -1409,8 +1461,31 @@
         head.className = 'lyr-head';
         const nameWrap = document.createElement('div');
         nameWrap.className = 'lyr-name';
-        nameWrap.innerHTML = '<span class="lyr-chip">' + escapeHtml(layerChip(layer)) +
-          '</span><span class="nm">' + escapeHtml(layerLabel(layer)) + '</span>';
+        const chip = document.createElement('span');
+        chip.className = 'lyr-chip';
+        chip.textContent = layerChip(layer);
+        nameWrap.appendChild(chip);
+        // Inline-editable field name (the layer's semantic `tag`). This is the
+        // primary naming surface. Editing it ONLY renames the data binding — it
+        // never touches the layer's styling, content, or geometry. Multiple
+        // layers may share one name (e.g. three city rows) and keep distinct looks.
+        const tagInp = document.createElement('input');
+        tagInp.className = 'lyr-tag';
+        tagInp.type = 'text';
+        tagInp.setAttribute('list', 'fieldTagList');
+        tagInp.value = layer.data.tag != null ? layer.data.tag : deriveTagDefault(layer);
+        tagInp.placeholder = deriveTagDefault(layer);
+        tagInp.title = 'Field name — the data slot this layer binds to';
+        // Interacting with the input must not select the row, start a drag, or
+        // rebuild the list (any of which would steal focus mid-edit).
+        ['mousedown', 'click', 'dblclick'].forEach((ev) =>
+          tagInp.addEventListener(ev, (e) => e.stopPropagation()));
+        tagInp.addEventListener('input', () => {
+          const v = tagInp.value.trim();
+          if (v) layer.data.tag = v; else delete layer.data.tag;
+          // Persisted on next Save. Deliberately no re-render here (keeps focus).
+        });
+        nameWrap.appendChild(tagInp);
         const zc = document.createElement('span');
         zc.className = 'lyr-z';
         zc.textContent = 'z' + layer.z;
