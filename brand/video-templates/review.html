@@ -67,6 +67,8 @@
   .tref { font-family: var(--font-mono, monospace); font-size: 10px; color: var(--aa-ink-500, #6b7280); letter-spacing: 0.06em; }
   .flags { display: flex; gap: 5px; flex-wrap: wrap; }
   .flag { font-family: var(--font-mono, monospace); font-size: 9px; letter-spacing: 0.08em; padding: 2px 6px; background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.4); color: #fbbf24; text-transform: uppercase; }
+  .rerender { font-family: var(--font-mono, monospace); font-size: 10px; letter-spacing: 0.06em; color: #f59e0b; text-transform: uppercase; display: flex; align-items: center; gap: 5px; }
+  .rerender::before { content: "●"; font-size: 8px; }
   .note { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); color: #fff; font-family: var(--font-mono, monospace); font-size: 11px; padding: 7px 9px; resize: vertical; min-height: 34px; }
   .note:focus { outline: none; border-color: var(--aa-red-600, #c4141d); }
   .actions { display: flex; gap: 6px; }
@@ -171,14 +173,27 @@ function pass(a) {
   return a.format === FILTER;
 }
 
+// Show the rendered media whenever it EXISTS, decoupled from review status.
+// (Bug: flipping status to "changes" used to hide the creative because preview
+// was gated on status === "rendered". The output file doesn't disappear when a
+// reviewer asks for changes — so neither should the preview.)
 function previewHTML(a) {
-  if (a.status === "rendered" && a.output) {
-    const src = (API ? API : "") + (a.output.startsWith("/") ? a.output : "/" + a.output);
-    if (/\.mp4$/i.test(a.output)) return `<video src="${src}" muted loop autoplay playsinline></video>`;
+  const media = a.output || a.thumb;
+  if (media) {
+    const src = (API ? API : "") + (media.startsWith("/") ? media : "/" + media);
+    if (/\.mp4$/i.test(media)) return `<video src="${src}" muted loop autoplay playsinline></video>`;
     return `<img src="${src}" alt="">`; // png/jpg/gif
   }
   // N1 guard: never set an empty/null media src.
   return `<div class="ph"><div class="fmt">${fmtLabel(a.format)}</div><div class="sub">not rendered yet</div></div>`;
+}
+
+// An asset whose hand edits are newer than its last render needs a re-render to
+// reflect them. Routes stamp editedAt; the runner stamps renderedAt.
+function needsRerender(a) {
+  if (!a.editedAt) return false;
+  if (!a.renderedAt) return true;
+  return new Date(a.editedAt).getTime() > new Date(a.renderedAt).getTime();
 }
 
 function cardHTML(a) {
@@ -201,6 +216,7 @@ function cardHTML(a) {
       ${a.visual ? `<div class="vis">${a.visual.replace(/</g, "&lt;")}</div>` : ""}
       ${tref}
       ${flags ? `<div class="flags">${flags}</div>` : ""}
+      ${needsRerender(a) ? `<div class="rerender">edited — re-render needed</div>` : ""}
       <textarea class="note" placeholder="notes…">${a.notes || ""}</textarea>
       <div class="actions">
         <button class="act approve ${a.status === "approved" ? "on" : ""}" data-act="approve">Approve</button>
