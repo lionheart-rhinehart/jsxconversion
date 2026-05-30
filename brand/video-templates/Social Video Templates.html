@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>AA · Social Video Templates</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="assets/aa-tokens.css"/>
+<style>
+  html, body { margin: 0; padding: 0; background: #0a0b0d; color: #f6f7f9; min-height: 100vh; font-family: var(--font-body); }
+  body { overflow: hidden; }
+
+  /* Each artboard is a black stage. The Stage component fills its parent. */
+  .video-frame {
+    position: relative;
+    width: 100%; height: 100%;
+    background: #0a0b0d;
+  }
+
+  /* The design-canvas section title uses display type */
+  /* DCSection renders its own title; we only theme it via CSS overrides */
+
+  /* Caption strip inside each artboard so people know what it is */
+  .video-caption {
+    position: absolute;
+    left: 12px; bottom: 56px;
+    z-index: 5;
+    padding: 8px 10px;
+    background: rgba(10,11,13,0.7);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #c2c6cd;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="animations.jsx"></script>
+<script type="text/babel" src="design-canvas.jsx"></script>
+
+<script type="text/babel" src="templates/pr-alert.jsx"></script>
+<script type="text/babel" src="templates/countdown.jsx"></script>
+<script type="text/babel" src="templates/athlete-spotlight.jsx"></script>
+<script type="text/babel" src="templates/stat-reveal.jsx"></script>
+<script type="text/babel" src="templates/quote-card.jsx"></script>
+<script type="text/babel" src="templates/hype-intro.jsx"></script>
+
+<script type="text/babel" src="templates/workout-of-week.jsx"></script>
+<script type="text/babel" src="templates/drill-howto.jsx"></script>
+<script type="text/babel" src="templates/before-after.jsx"></script>
+<script type="text/babel" src="templates/story-poll.jsx"></script>
+<script type="text/babel" src="templates/coach-lower-thirds.jsx"></script>
+<script type="text/babel" src="templates/logo-sting.jsx"></script>
+
+<script type="text/babel" src="templates/schedule-drop.jsx"></script>
+<script type="text/babel" src="templates/drill-of-day.jsx"></script>
+<script type="text/babel" src="templates/meet-coach.jsx"></script>
+<script type="text/babel" src="templates/open-house.jsx"></script>
+<script type="text/babel" src="templates/pricing-tiers.jsx"></script>
+<script type="text/babel" src="templates/results-recap.jsx"></script>
+<script type="text/babel" src="templates/camp-announce.jsx"></script>
+<script type="text/babel" src="templates/year-in-review.jsx"></script>
+
+<script type="text/babel">
+const { DesignCanvas, DCSection, DCArtboard } = window;
+
+// Wraps a Stage with a caption strip showing duration + native dimensions.
+function VideoTemplate({ stageW, stageH, dur, persistKey, children, caption }) {
+  return (
+    <div className="video-frame" data-screen-label={persistKey}>
+      <Stage
+        width={stageW}
+        height={stageH}
+        duration={dur}
+        background="#0a0b0d"
+        persistKey={persistKey}
+        autoplay
+        loop
+      >
+        {children}
+      </Stage>
+      <div className="video-caption">{caption}</div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <DesignCanvas>
+      <DCSection
+        id="reels"
+        title="REELS · TIKTOK · SHORTS"
+        subtitle="9:16 vertical · 1080×1920 · designed for phone-first social feeds"
+      >
+        <DCArtboard id="pr-alert" label="PR ALERT · celebrate a new record" width={360} height={684}>
+          <VideoTemplate stageW={1080} stageH={1920} dur={6} persistKey="aa-pr-alert"
+            caption="9:16 · 1080×1920 · 6s LOOP">
+            <PRAlertReel/>
+          </VideoTemplate>
+        </DCArtboard>
+
+        <DCArtboard id="countdown" label="COUNTDOWN · grand opening · events" width={360} height={684}>
+          <VideoTemplate stageW={1080} stageH={1920} dur={7} persistKey="aa-countdown"
+            caption="9:16 · 1080×1920 · 7s LOOP">
+            <CountdownReel/>
+          </VideoTemplate>
+        </DCArtboard>
+
+        <DCArtboard id="spotlight" label="ATHLETE SPOTLIGHT · 90-day gains" width={360} height={684}>
+          <VideoTemplate stageW={1080} stageH={1920} dur={8} persistKey="aa-spotlight"
+            caption="9:16 · 1080×1920 · 8s LOOP">
+            <AthleteSpotlightReel/>
+          </VideoTemplate>
+        </DCArtboard>
+
+        <DCArtboard id="workout" label="WORKOUT OF THE WEEK · programming preview" width={360} height={684}>
+          <VideoTemplate stageW={1080} stageH={1920} dur={8} persistKey="aa-workout"
+            caption="9:16 · 1080×1920 · 8s LOOP">
+            <WorkoutOfWeekReel/>
+          </VideoTemplate>
+        </DCArtboard>
+
+        <DCArtboard id="drill-howto" label="DRILL HOW-TO · teach technique" width={360} height={684}>
+          <VideoTemplate stageW={1080} stageH={1920} dur={8} persistKey="aa-drill-howto"
+            caption="9:16 · 1080×1920 · 8s LOOP">
+            <DrillHowToReel/>
+          </VideoTemplate>
+        </DCArtboard>
+
+        <DCArtboard id="before-after" label="BEFORE / AFTER · 90-day transformation" width={360} height={684}>
+          <VideoTemplate stageW={1080} stageH={1920} dur={6} persistKey="aa-before-after"
+            caption="9:16 · 1080×1920 · 6s LOOP">
+            <BeforeAfterReel/>
+          </VideoTemplate>
+        </DCArtboard>
+
+        <DCArtboard id="story-poll" label="STORY POLL · engagement driver" width={360} height={684}>
+          <VideoTemplate stageW={1080} stageH={1920} dur={7} persistKey="aa-story-poll"
+            caption="9:16 · 1080×1920 · 7s LOOP">
+            <StoryPollReel/>
+          </VideoTemplate>
+        </DCArtboard>
+
+        <DCArtboard id="schedule" label="SCHEDULE DROP · this week's classes" width={360} height={684}>
+          <VideoTemplate stageW={1080} stageH={1920} dur={7} persistKey="aa-schedule"
+            caption="9:16 · 1080×1920 · 7s LOOP">
+            <ScheduleDropReel/>
+          </VideoTemplate>
+        </DCArtboard>
+
+        <DCArtboard id="drill-of-day" label="DRILL OF THE DAY · single-drill focus" width={360} height={684}>
+          <VideoTemplate stageW={1080} stageH={1920} dur={7} persistKey="aa-drill-of-day"
+            caption="9:16 · 1080×1920 · 7s LOOP">
+            <DrillOfDayReel/>
+          </VideoTemplate>
+        </DCArtboard>
+
+        <DCArtboard id="meet-coach" label="MEET THE COACH · staff intro" width={360} height={684}>
+          <VideoTemplate stageW={1080} stageH={1920} dur={8} persistKey="aa-meet-coach"
+            caption="9:16 · 1080×1920 · 8s LOOP">
+            <MeetCoachReel/>
+          </VideoTemplate>
+        </DCArtboard>
+
+        <DCArtboard id="open-house" label="OPEN HOUSE · grand opening" width={360} height={684}>
+          <VideoTemplate stageW={1080} stageH={1920} dur={7} persistKey="aa-open-house"
+            caption="9:16 · 1080×1920 · 7s LOOP">
+            <OpenHouseReel/>
+          </VideoTemplate>
+        </DCArtboard>
+
+        <DCArtboard id="pricing" label="PRICING TIERS · packages reel" width={360} height={684}>
+          <VideoTemplate stageW={1080} stageH={1920} dur={8} persistKey="aa-pricing"
+            caption="9:16 · 1080×1920 · 8s LOOP">
+            <PricingTiersReel/>
+          </VideoTemplate>
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection
+        id="feed"
+        title="FEED POSTS"
+        subtitle="1:1 square · 1080×1080 · for Instagram feed, Facebook, LinkedIn"
+      >
+        <DCArtboard id="stat-reveal" label="STAT REVEAL · brand anchor post" width={540} height={584}>
+          <VideoTemplate stageW={1080} stageH={1080} dur={6} persistKey="aa-stat-reveal"
+            caption="1:1 · 1080×1080 · 6s LOOP">
+            <StatRevealSquare/>
+          </VideoTemplate>
+        </DCArtboard>
+
+        <DCArtboard id="quote-card" label="PARENT QUOTE · testimonial" width={540} height={584}>
+          <VideoTemplate stageW={1080} stageH={1080} dur={7} persistKey="aa-quote-card"
+            caption="1:1 · 1080×1080 · 7s LOOP">
+            <QuoteCardSquare/>
+          </VideoTemplate>
+        </DCArtboard>
+
+        <DCArtboard id="results" label="RESULTS RECAP · weekend scoreboard" width={540} height={584}>
+          <VideoTemplate stageW={1080} stageH={1080} dur={7} persistKey="aa-results"
+            caption="1:1 · 1080×1080 · 7s LOOP">
+            <ResultsRecapSquare/>
+          </VideoTemplate>
+        </DCArtboard>
+
+        <DCArtboard id="camp" label="CAMP ANNOUNCEMENT · registration push" width={540} height={584}>
+          <VideoTemplate stageW={1080} stageH={1080} dur={7} persistKey="aa-camp"
+            caption="1:1 · 1080×1080 · 7s LOOP">
+            <CampAnnounceSquare/>
+          </VideoTemplate>
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection
+        id="horizontal"
+        title="HORIZONTAL · YOUTUBE / WEB HERO"
+        subtitle="16:9 · 1920×1080 · channel intros, video bumpers, looping web heroes"
+      >
+        <DCArtboard id="hype-intro" label="HYPE INTRO · brand sting" width={800} height={494}>
+          <VideoTemplate stageW={1920} stageH={1080} dur={5} persistKey="aa-hype-intro"
+            caption="16:9 · 1920×1080 · 5s LOOP">
+            <HypeIntro/>
+          </VideoTemplate>
+        </DCArtboard>
+
+        <DCArtboard id="coach-lower-thirds" label="COACH LOWER-THIRDS · overlay on raw footage" width={800} height={494}>
+          <VideoTemplate stageW={1920} stageH={1080} dur={6} persistKey="aa-coach-lt"
+            caption="16:9 · 1920×1080 · 6s LOOP">
+            <CoachLowerThirds/>
+          </VideoTemplate>
+        </DCArtboard>
+
+        <DCArtboard id="logo-sting" label="LOGO STING · video outro · 3s" width={800} height={494}>
+          <VideoTemplate stageW={1920} stageH={1080} dur={3} persistKey="aa-logo-sting"
+            caption="16:9 · 1920×1080 · 3s LOOP">
+            <LogoSting/>
+          </VideoTemplate>
+        </DCArtboard>
+
+        <DCArtboard id="year-review" label="YEAR IN REVIEW · aggregate stats" width={800} height={494}>
+          <VideoTemplate stageW={1920} stageH={1080} dur={8} persistKey="aa-year-review"
+            caption="16:9 · 1920×1080 · 8s LOOP">
+            <YearInReviewHorizontal/>
+          </VideoTemplate>
+        </DCArtboard>
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

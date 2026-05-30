@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>AA · Elements Library</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="assets/aa-tokens.css"/>
+<style>
+  html, body { margin: 0; padding: 0; background: #0a0b0d; color: #f6f7f9; font-family: var(--font-body); min-height: 100vh; }
+  * { box-sizing: border-box; }
+  .page { max-width: 1320px; margin: 0 auto; padding: 48px 32px 96px; }
+
+  .topbar {
+    display: flex; align-items: center; gap: 16px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .topbar img { width: 56px; height: 56px; object-fit: contain; }
+  .topbar .wordmark {
+    font-family: var(--font-display);
+    font-size: 36px; line-height: 0.9;
+    color: #fff;
+  }
+  .topbar .wordmark span { color: var(--aa-red-600); }
+  .topbar .right {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--aa-ink-400);
+    letter-spacing: 0.14em;
+  }
+  .topbar a {
+    margin-left: 16px;
+    padding: 8px 14px;
+    border: 1px solid rgba(255,255,255,0.18);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .topbar a:hover { background: var(--aa-red-600); border-color: var(--aa-red-600); }
+
+  .title-block { padding: 56px 0 32px; }
+  .title-block .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--aa-red-600);
+    letter-spacing: 0.18em;
+    margin-bottom: 16px;
+  }
+  .title-block h1 {
+    font-family: var(--font-display);
+    font-size: 120px;
+    line-height: 0.85;
+    color: #fff;
+    letter-spacing: -0.005em;
+    margin: 0;
+  }
+  .title-block h1 .accent { color: var(--aa-red-600); }
+  .title-block .lead {
+    margin-top: 28px;
+    max-width: 760px;
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--aa-ink-300);
+  }
+
+  section.group { padding-top: 72px; }
+  .group-header {
+    display: flex; align-items: baseline; gap: 24px;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .group-header .num {
+    font-family: var(--font-display);
+    font-size: 64px;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--aa-red-600);
+    line-height: 0.85;
+    font-variant-numeric: tabular-nums;
+  }
+  .group-header .title {
+    font-family: var(--font-display);
+    font-size: 56px; color: #fff; line-height: 0.9;
+  }
+  .group-header .meta {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--aa-ink-400);
+    letter-spacing: 0.12em;
+    text-align: right;
+  }
+  .group-header .meta .count { color: var(--aa-red-600); font-weight: 700; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 28px;
+  }
+  .el-card {
+    background: #0a0b0d;
+    border: 1px solid rgba(255,255,255,0.08);
+    overflow: hidden;
+  }
+  .el-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background: #15171a;
+    overflow: hidden;
+  }
+  .el-info {
+    padding: 16px 18px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .el-info .name-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 8px;
+    gap: 12px;
+  }
+  .el-info .name {
+    font-family: var(--font-display);
+    font-size: 22px; color: #fff;
+  }
+  .el-info .id {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--aa-red-600);
+    letter-spacing: 0.12em;
+    padding: 3px 7px;
+    background: rgba(196,20,29,0.12);
+    border: 1px solid rgba(196,20,29,0.3);
+    white-space: nowrap;
+  }
+  .el-info .desc {
+    font-size: 13px;
+    color: var(--aa-ink-300);
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  .el-info .props {
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .el-info .prop {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--aa-ink-400);
+    padding: 3px 7px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    letter-spacing: 0.06em;
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="animations.jsx"></script>
+
+<script type="text/babel" src="elements/velocity-meter.jsx"></script>
+<script type="text/babel" src="elements/sprint-trace.jsx"></script>
+<script type="text/babel" src="elements/scoreboard.jsx"></script>
+<script type="text/babel" src="elements/calendar-fill.jsx"></script>
+<script type="text/babel" src="elements/slot-roll.jsx"></script>
+<script type="text/babel" src="elements/live-poll.jsx"></script>
+<script type="text/babel" src="elements/caption-bars.jsx"></script>
+<script type="text/babel" src="elements/audio-waveform.jsx"></script>
+<script type="text/babel" src="elements/anatomy-callouts.jsx"></script>
+<script type="text/babel" src="elements/leaderboard.jsx"></script>
+<script type="text/babel" src="elements/trajectory-arc.jsx"></script>
+<script type="text/babel" src="elements/tier-list.jsx"></script>
+<script type="text/babel" src="elements/hr-zones.jsx"></script>
+<script type="text/babel" src="elements/comic-panels.jsx"></script>
+<script type="text/babel" src="elements/stopwatch.jsx"></script>
+<script type="text/babel" src="elements/bracket.jsx"></script>
+<script type="text/babel" src="elements/comparison-slider.jsx"></script>
+<script type="text/babel" src="elements/radar-chart.jsx"></script>
+<script type="text/babel" src="elements/star-rating.jsx"></script>
+<script type="text/babel" src="elements/macro-ring.jsx"></script>
+<script type="text/babel" src="elements/confetti-burst.jsx"></script>
+<script type="text/babel" src="elements/streak-flame.jsx"></script>
+
+<script type="text/babel">
+const { Stage } = window;
+
+// Each entry: meta + Component + a duration the demo loops at + optional demoProps.
+const ELEMENTS = [
+  { meta: window.VELOCITY_METER_META, Comp: window.VelocityMeter, dur: 4, props: { value: 0.92, max: 1.2, label: 'BAR SPEED', unit: 'm/s', target: 0.8 } },
+  { meta: window.SPRINT_TRACE_META,   Comp: window.SprintTrace,   dur: 5, props: { peakSpeed: 21.4, peakAt: 28, distance: 40, unit: 'MPH', label: 'SPRINT SPEED' } },
+  { meta: window.SCOREBOARD_META,     Comp: window.Scoreboard,    dur: 4, props: { home: 'HOME', away: 'AWAY', homeFinal: 34, awayFinal: 21, period: 'FINAL', clock: '00:00' } },
+  { meta: window.CALENDAR_FILL_META,  Comp: window.CalendarFill,  dur: 5, props: { total: 30, label: 'DAY', streakLabel: '🔥 STREAK', missDays: [] } },
+  { meta: window.SLOT_ROLL_META,      Comp: window.SlotRoll,      dur: 5, props: {} },
+  { meta: window.LIVE_POLL_META,      Comp: window.LivePoll,      dur: 4, props: {} },
+  { meta: window.CAPTION_BARS_META,   Comp: window.CaptionBars,   dur: 4, props: {} },
+  { meta: window.AUDIO_WAVEFORM_META, Comp: window.AudioWaveform, dur: 4, props: { barCount: 36, color: '#c4141d', label: '// VOICEOVER', frequency: 1.0 } },
+  { meta: window.ANATOMY_CALLOUTS_META, Comp: window.AnatomyCallouts, dur: 5, props: {} },
+  { meta: window.LEADERBOARD_META,    Comp: window.Leaderboard,    dur: 5, props: {} },
+  { meta: window.TRAJECTORY_ARC_META, Comp: window.TrajectoryArc,  dur: 4, props: {} },
+  { meta: window.TIER_LIST_META,      Comp: window.TierList,       dur: 5, props: {} },
+  { meta: window.HR_ZONES_META,       Comp: window.HRZones,        dur: 4, props: {} },
+  { meta: window.COMIC_PANELS_META,   Comp: window.ComicPanels,    dur: 4, props: {} },
+  { meta: window.STOPWATCH_META,      Comp: window.Stopwatch,      dur: 4, props: {} },
+  { meta: window.BRACKET_META,         Comp: window.Bracket,         dur: 5, props: {} },
+  { meta: window.COMPARISON_SLIDER_META, Comp: window.ComparisonSlider, dur: 4, props: {} },
+  { meta: window.RADAR_CHART_META,     Comp: window.RadarChart,      dur: 4, props: {} },
+  { meta: window.STAR_RATING_META,     Comp: (p) => <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><window.StarRating {...p}/></div>, dur: 3, props: { rating: 4.5, size: 92 } },
+  { meta: window.MACRO_RING_META,      Comp: (p) => <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><window.MacroRing {...p}/></div>, dur: 4, props: { protein: 42, carbs: 58, fat: 16, calories: 580, size: 300 } },
+  { meta: window.CONFETTI_BURST_META,  Comp: (p) => <window.ConfettiBurst {...p}/>, dur: 4, props: { count: 44, fieldW: 640, fieldH: 400, burstAt: 0.2 } },
+  { meta: window.STREAK_FLAME_META,    Comp: (p) => <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><window.StreakFlame {...p}/></div>, dur: 4, props: { days: 100, label: 'DAY STREAK', size: 300 } },
+];
+
+// Group elements by category
+function groupBy(arr, fn) {
+  const m = {};
+  for (const x of arr) {
+    const k = fn(x);
+    if (!m[k]) m[k] = [];
+    m[k].push(x);
+  }
+  return m;
+}
+
+function ElementCard({ entry }) {
+  const { meta, Comp, dur, props } = entry;
+  return (
+    <div className="el-card">
+      <div className="el-stage">
+        <Stage width={640} height={400} duration={dur} background="#15171a" persistKey={`el-${meta.id}`} autoplay loop>
+          <Comp {...props}/>
+        </Stage>
+      </div>
+      <div className="el-info">
+        <div className="name-row">
+          <div className="name">{meta.name}</div>
+          <div className="id">{meta.id}</div>
+        </div>
+        <div className="desc">{meta.description}</div>
+        <div className="props">
+          {meta.props.map((p) => <div key={p} className="prop">{p}</div>)}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const groups = groupBy(ELEMENTS, (e) => e.meta.category);
+  const order = ['Data Viz', 'Sports Visual', 'Counter', 'Engagement', 'Cinematic', 'Layout'];
+  const sortedGroups = order.filter((g) => groups[g]).concat(Object.keys(groups).filter((g) => !order.includes(g)));
+
+  let groupNum = 0;
+  return (
+    <div className="page">
+      <div className="topbar">
+        <img src="assets/logo.png" alt="AA"/>
+        <div className="wordmark">ATHLETES <span>ACCELERATION</span></div>
+        <div className="right">// ELEMENTS LIBRARY · v1</div>
+        <a href="Video Templates Gallery.html">← TEMPLATES</a>
+      </div>
+
+      <div className="title-block">
+        <div className="eyebrow">// SIGNATURE COMPONENTS</div>
+        <h1>{ELEMENTS.length} REUSABLE<br/><span className="accent">SCROLL-STOPPERS.</span></h1>
+        <p className="lead">
+          The unique animated elements that make each template feel custom. Mix any of
+          these into any template by name — velocity meters, sprint traces, live polls,
+          slot rolls, scoreboards. Each is a self-contained component that animates,
+          accepts props, and inherits brand styling.
+        </p>
+      </div>
+
+      {sortedGroups.map((cat) => {
+        groupNum++;
+        const items = groups[cat];
+        return (
+          <section className="group" key={cat}>
+            <div className="group-header">
+              <div className="num">{String(groupNum).padStart(2, '0')}</div>
+              <div className="title">{cat.toUpperCase()}</div>
+              <div className="meta">
+                <div><span className="count">{items.length}</span> ELEMENT{items.length === 1 ? '' : 'S'}</div>
+              </div>
+            </div>
+            <div className="grid">
+              {items.map((e) => <ElementCard key={e.meta.id} entry={e}/>)}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
