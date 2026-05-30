@@ -1,15 +1,17 @@
 // ============================================================================
-//  CLUSTER 9 — ATTENTION, PARENTS OF YOUTH ATHLETES (two-photo / red strip)
+//  CLUSTER 12 — PARENTS IN PORTLAND (speech bubble over watermarked photo)
 // ============================================================================
-//  Thin, data-driven shell. Two stacked photos (lacrosse top, basketball
-//  bottom) fill the frame. A translucent red strip runs up the left edge with
-//  ATTENTION stacked one letter per line in white. A two-tone translucent red
-//  band crosses the middle holding PARENTS OF YOUTH ATHLETES + a mono
-//  microscript. All layers live in cluster-9.config.json and render through the
-//  z-ordered LayerStack. Edit at localhost:5173/#cluster-9.
+//  Thin, data-driven shell. A darkened, desaturated track photo sits at the
+//  back, overlaid with a live microscript field tiled down the whole frame as
+//  a watermark (the `repeat` text layer — one tagged field, so a fill rewrites
+//  every row at once). A green speech bubble (black border + down-left tail)
+//  floats center frame with a soft white glow behind the PARENTS IN PORTLAND
+//  headline and a small microscript line beneath it. All layers live in
+//  cluster-12.config.json and render through the z-ordered LayerStack. Edit at
+//  localhost:5173/#cluster-12.
 // ============================================================================
 
-import config from "./cluster-9.config.json";
+import config from "./cluster-12.config.json";
 import { LayerStack } from "./_helpers.jsx";
 
 export const WIDTH = config.width;
@@ -20,12 +22,11 @@ export const HEIGHT = config.height;
 // invisible to it, so every font used must appear here verbatim.
 const _FONT_PREFLIGHT = {
   display: { fontFamily: "'Anton', 'Oswald', sans-serif" },
-  body: { fontFamily: "'Geist', sans-serif" },
   mono: { fontFamily: "'JetBrains Mono', ui-monospace, monospace" },
 };
 
-function Cluster9() {
+function Cluster12() {
   return <LayerStack config={config} />;
 }
 
-export default Cluster9;
+export default Cluster12;

@@ -1,53 +1,111 @@
 {
   "width": 1080,
   "height": 1920,
-  "media": {
-    "path": "./assets/cluster-10-bg.jpg",
-    "type": "image",
-    "offsetX": 0,
-    "offsetY": 0,
-    "scale": 1,
-    "videoStartTime": 0,
-    "videoEndTime": null
-  },
-  "foregroundMedia": {
-    "path": "./assets/cluster-10-foreground.png",
-    "offsetX": 0,
-    "offsetY": 0,
-    "scale": 1,
-    "blendMode": "normal"
-  },
-  "fixedDesign": [],
-  "elements": [],
-  "_notes": {
-    "scaffoldedAt": "2026-05-28T20:15:15.530Z",
-    "sourceSvg": "./templates/multi-sport-foundations/canva-overlays/cluster - 10.svg",
-    "skippedImages": [
-      {
-        "index": 1,
-        "rendered": "2133×2133",
-        "pos": "(-527,-213)",
-        "maskId": "b584de20da"
-      },
-      {
-        "index": 5,
-        "rendered": "1133×2015",
-        "pos": "(0,0)",
-        "maskId": "3366dd58df"
-      },
-      {
-        "index": 2,
-        "rendered": "-925×-442",
-        "pos": "(926,442)",
-        "maskId": "f10fc6a988"
-      },
-      {
-        "index": 3,
-        "rendered": "0×0",
-        "pos": "(1030,83)",
-        "maskId": "a2dadf1213"
-      }
-    ],
-    "skippedRects": 2
-  }
+  "fixedDesign": [
+    {
+      "id": "background",
+      "tag": "bg_photo",
+      "label": "Gym scene (full frame)",
+      "type": "image",
+      "src": "./assets/cluster-10-bg.jpg",
+      "x": -897,
+      "y": 0,
+      "width": 2812,
+      "height": 2112,
+      "objectFit": "fill",
+      "z": 0
+    },
+    {
+      "id": "scene_dim",
+      "tag": "brand_dim",
+      "label": "Scene darkening overlay",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "rgba(8,8,12,0.55)",
+      "z": 1
+    },
+    {
+      "id": "glass_panel",
+      "tag": "brand_panel",
+      "label": "Frosted glass panel (rounded)",
+      "type": "rect",
+      "x": 28,
+      "y": 28,
+      "width": 1024,
+      "height": 1864,
+      "fill": "rgba(255,255,255,0.12)",
+      "border": "2px solid rgba(255,255,255,0.42)",
+      "borderRadius": 44,
+      "z": 2
+    },
+    {
+      "id": "athletes",
+      "tag": "talent_photo",
+      "label": "Jumping athlete + coach cutout",
+      "type": "image",
+      "src": "./assets/cluster-10-foreground.png",
+      "x": -866,
+      "y": 313,
+      "width": 2812,
+      "height": 2112,
+      "objectFit": "fill",
+      "z": 3,
+      "opacity": 1
+    }
+  ],
+  "elements": [
+    {
+      "id": "top_heading",
+      "tag": "title",
+      "label": "PARENTS OF YOUTH ATHLETES (top, italic)",
+      "x": 74,
+      "y": 128,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "PARENTS OF YOUTH ATHLETES",
+      "fontSize": 48,
+      "fontFamily": "Geist",
+      "fontWeight": 700,
+      "fontStyle": "italic",
+      "color": "#ffffff",
+      "lineHeight": 1,
+      "letterSpacing": "0.04em",
+      "z": 4
+    },
+    {
+      "id": "microscript",
+      "tag": "microscript",
+      "label": "Microscript line (left)",
+      "x": 68,
+      "y": 688,
+      "text": "{{MICRO - SCRIPTS}}",
+      "fontSize": 28,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 400,
+      "color": "rgba(255,255,255,0.82)",
+      "letterSpacing": "0.02em",
+      "textTransform": "uppercase",
+      "z": 5
+    },
+    {
+      "id": "bottom_title",
+      "tag": "title_2",
+      "label": "Foundational Youth Program (bottom bold)",
+      "x": 41,
+      "y": 1501,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "Foundational Youth Program",
+      "fontSize": 42,
+      "fontFamily": "Geist",
+      "fontWeight": 700,
+      "color": "#ffffff",
+      "lineHeight": 1,
+      "letterSpacing": "0.01em",
+      "z": 6
+    }
+  ]
 }
