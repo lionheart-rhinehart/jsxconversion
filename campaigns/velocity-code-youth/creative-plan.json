@@ -323,10 +323,10 @@
           },
           "audio": null,
           "flags": [],
-          "status": "planned",
+          "status": "rendered",
           "notes": "",
-          "output": null,
-          "thumb": null,
+          "output": "out/campaigns/velocity-code-youth/angle-1-tries-harder/E1.mp4",
+          "thumb": "out/campaigns/velocity-code-youth/angle-1-tries-harder/E1.mp4",
           "knowledgeRefs": [
             "proof:wang-2026"
           ]
@@ -406,10 +406,10 @@
           "flags": [
             "repetition-cap-reached:stat-reveal"
           ],
-          "status": "planned",
+          "status": "rendered",
           "notes": "",
-          "output": null,
-          "thumb": null,
+          "output": "out/campaigns/velocity-code-youth/angle-1-tries-harder/E4.gif",
+          "thumb": "out/campaigns/velocity-code-youth/angle-1-tries-harder/E4.gif",
           "knowledgeRefs": [
             "proof:wang-2026"
           ]
@@ -544,10 +544,10 @@
           "flags": [
             "guarantee-verbatim"
           ],
-          "status": "planned",
+          "status": "rendered",
           "notes": "",
-          "output": null,
-          "thumb": null,
+          "output": "out/campaigns/velocity-code-youth/angle-1-tries-harder/F3.png",
+          "thumb": "out/campaigns/velocity-code-youth/angle-1-tries-harder/F3.png",
           "knowledgeRefs": [
             "offer:performance-contract"
           ]

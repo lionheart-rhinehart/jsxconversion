@@ -163,8 +163,12 @@ async function renderTemplateMotion(asset, angleId, wantGif) {
   data._asset = { id: asset.id, headline: asset.headline, microscript: asset.microscript };
   writeFileSync(dataPath, JSON.stringify(data, null, 2));
 
-  // Wrapper: load the bank template, wrap it in a 9:16 Stage, register a window
-  // global so the renderer's shipped-runtime path mounts it with {data}.
+  // Wrapper: define a Stage-wrapping component that mounts the bank template,
+  // then INLINE the template source so its window.<compName> global actually
+  // exists in the page (the renderer loads animations.jsx + elements/* but NOT
+  // templates/*, so the template must be carried in here). The wrapper's window
+  // global is written FIRST so detectVariationGlobal picks the wrapper (not the
+  // template) as the component to mount — it mounts with {data} from __CONFIG__.
   const W = 1080, H = 1920, D = 8, FPS = 30;
   const wrapperName = `CampWrap_${slug(asset.id).replace(/-/g, "_")}`;
   const wrapper = `// Auto-generated motion wrapper for campaign "${campaign}" asset ${asset.id}.
@@ -176,6 +180,7 @@ const _FONT_PREFLIGHT = {
 };
 function ${wrapperName}({ data }) {
   const Inner = window.${compName};
+  if (!Inner) return null;
   return (
     <Stage width={${W}} height={${H}} duration={${D}} fps={${FPS}} background="#0a0b0d">
       <Inner data={data || {}} />
@@ -183,6 +188,9 @@ function ${wrapperName}({ data }) {
   );
 }
 window.${wrapperName} = ${wrapperName};
+
+// ─── inlined bank template: ${tmpl} ───────────────────────────────────────
+${src}
 `;
   writeFileSync(wrapperPath, wrapper);
 
