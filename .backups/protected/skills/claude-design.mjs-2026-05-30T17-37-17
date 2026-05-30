@@ -298,8 +298,6 @@ ${fontsHead}
 <script src="${babelSrc}"></script>
 <script type="text/babel" data-presets="env,react" src="${animationsSrc}"></script>
 <script type="text/babel" data-presets="env,react">${DRIVER_SCRIPT}</script>
-${depScriptTags}
-${configTag}
 <script type="text/babel" data-presets="env,react" src="${variationSrc}"></script>
 <script type="text/babel" data-presets="env,react">${bootstrapScript(componentName)}</script>
 </body>

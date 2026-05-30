@@ -1,5 +1,14 @@
 # Template-library vision — turn each Claude Design output into a reusable skill
 
+> **⚠️ SUPERSEDED (2026-05-30) by `docs/PROCESS.md` + the `/creative-engine` skill.**
+> The top-level interface is now ONE campaign-aware engine (`/creative-engine` +
+> `creative-plan.json`), not one slash command per template. We KEPT this doc's
+> good bones — typed per-template field contracts (now the bank's `*_SPEC.fields`),
+> a shared render engine, and `window.__CONFIG__` injection — but deferred the
+> per-template `/make-*` skills (they can be thin wrappers over the engine later).
+> Read `docs/PROCESS.md` for the current architecture. The rest of this file is
+> kept for historical context.
+
 **Date:** 2026-05-21
 **Status:** Architecture agreed, sequencing decided. Implementation deferred
 until current Andromeda campaign ships.

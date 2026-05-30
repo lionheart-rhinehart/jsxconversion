@@ -2,6 +2,8 @@
 
 Creative engine for **Athletes Acceleration** (youth sports performance, ages 8–18, locations across IN + OH). Turns JSX templates into branded ad creatives — vertical videos for Reels/Stories/Shorts and static images for feed posts — ready for Meta/Facebook campaigns.
 
+> **Whole-campaign workflow:** the `/creative-engine` skill takes a brand + a full campaign (reverse brief + ad copy + microscripts) and produces a reviewable, then rendered, set of angle-coherent creatives. **`docs/PROCESS.md` is the canonical end-to-end map** — read it before working on campaign intake, planning, the review page, or the render runner.
+
 ## Two outputs, one source
 
 The same JSX template can produce:

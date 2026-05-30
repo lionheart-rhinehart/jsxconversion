@@ -167,10 +167,6 @@ const DRIVER_SCRIPT = String.raw`
 // Bootstrap script: mounts the chosen variation once the variation
 // global appears on window. Also installs __rerender so the driver can
 // step time and force a synchronous re-render.
-// Per-asset data: window.__CONFIG__ (set by an injected <script> before this
-// runs) is passed as the `data` prop, so data-driven templates like
-// review-roundup.jsx render campaign copy instead of their defaults. Templates
-// that ignore `data` are unaffected (React drops unused props).
 function bootstrapScript(componentName) {
   return String.raw`
 (function () {
@@ -179,10 +175,9 @@ function bootstrapScript(componentName) {
     if (!Comp) { setTimeout(start, 20); return; }
     var rootEl = document.getElementById('root');
     var root = ReactDOM.createRoot(rootEl);
-    var data = window.__CONFIG__ || {};
     window.__rerender = function () {
       window.__rerenderCount++;
-      root.render(React.createElement(Comp, { data: data }));
+      root.render(React.createElement(Comp));
     };
     window.__rerender();
     window.__ready = true;
@@ -222,54 +217,16 @@ export async function renderShippedClaudeDesign({
 
   const inputBasename = inputPath.split(/[\\/]/).pop();
 
-  // Optional per-asset data: a sibling "<name>.data.json" next to the input
-  // JSX. The campaign runner writes one per asset so the same bank template
-  // renders different campaign copy. Absent → {} → templates use their own
-  // defaults (identical to pre-injection behavior).
-  const dataPath = inputPath.replace(/\.(jsx|tsx)$/, ".data.json");
-  let configData = {};
-  if (existsSync(dataPath)) {
-    try {
-      configData = JSON.parse(readFileSync(dataPath, "utf8"));
-    } catch (e) {
-      console.error(`[render] warning: could not parse ${dataPath}: ${e.message}`);
-    }
-  }
-
-  // Shared dependency files a bank template may rely on. Claude Design bank
-  // templates (brand/video-templates/templates/*.jsx) reference shared
-  // elements (window.StarRating, etc.) defined in sibling files. animations.jsx
-  // is loaded explicitly below; here we also pull in editing.jsx and every
-  // elements/*.jsx if present, so element-dependent templates don't render
-  // with missing sub-components. Single-file projects (no elements/ dir) add
-  // nothing and behave exactly as before.
-  const depScripts = [];
-  const editingPath = join(projectDir, "editing.jsx");
-  if (existsSync(editingPath)) {
-    depScripts.push(`/${encodeURIComponent(relativeToProject(editingPath, projectDir))}`);
-  }
-  const elementsDir = join(projectDir, "elements");
-  if (existsSync(elementsDir)) {
-    for (const f of readdirSync(elementsDir).filter((n) => /\.(jsx|tsx)$/.test(n)).sort()) {
-      depScripts.push(`/elements/${encodeURIComponent(f)}`);
-    }
-  }
-
   // Synthesize the render shell HTML. It loads React/ReactDOM/Babel
   // from local node_modules (no network round-trip), keeps the shipped
   // Google Fonts <link> if present, adds local @font-face rules for
   // any other families, then loads the shipped animations.jsx, the
-  // driver shim, shared deps (editing.jsx + elements/*), the per-asset
-  // __CONFIG__, the variation, and the bootstrap script in order.
+  // driver shim, the variation, and the bootstrap script in order.
   const reactSrc = "/__render/react.js";
   const reactDomSrc = "/__render/react-dom.js";
   const babelSrc = "/__render/babel.js";
   const animationsSrc = `/${encodeURIComponent(relativeToProject(animationsPath, projectDir))}`;
   const variationSrc = `/${encodeURIComponent(inputBasename)}`;
-  const depScriptTags = depScripts
-    .map((s) => `<script type="text/babel" data-presets="env,react" src="${s}"></script>`)
-    .join("\n");
-  const configTag = `<script>window.__CONFIG__ = ${JSON.stringify(configData)};</script>`;
 
   // Note: we do NOT include the shipped Google Fonts <link> here, even
   // when shippedFontsUrl is set. preflightFonts has already downloaded
@@ -298,8 +255,6 @@ ${fontsHead}
 <script src="${babelSrc}"></script>
 <script type="text/babel" data-presets="env,react" src="${animationsSrc}"></script>
 <script type="text/babel" data-presets="env,react">${DRIVER_SCRIPT}</script>
-${depScriptTags}
-${configTag}
 <script type="text/babel" data-presets="env,react" src="${variationSrc}"></script>
 <script type="text/babel" data-presets="env,react">${bootstrapScript(componentName)}</script>
 </body>

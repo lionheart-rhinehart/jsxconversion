@@ -7,6 +7,10 @@ out/*
 # Filled template variants are generated scratch (data → render proof), not source.
 templates/**/*.fill.config.json
 templates/**/*.fill.jsx
+# Per-cell campaign render variants (from run-campaign.mjs)
+templates/**/*.camp-*
+brand/video-templates/_camp-*
+brand/video-templates/__render/
 *.log
 .DS_Store
 __render/

@@ -32,6 +32,21 @@ const TEMPLATES_DIR = join(PROJECT_ROOT, "templates/multi-sport-foundations");
 const OUT_DIR = join(PROJECT_ROOT, "out");
 const EDITOR_DIR = join(OUT_DIR, "editor");
 const COMPARE_DIR = join(OUT_DIR, "compare");
+const CAMPAIGNS_DIR = join(PROJECT_ROOT, "campaigns");
+
+// First campaign folder that has a creative-plan.json (used when /plan is
+// called without ?campaign=).
+function firstCampaign() {
+  try {
+    return (
+      readdirSync(CAMPAIGNS_DIR).filter((d) =>
+        existsSync(join(CAMPAIGNS_DIR, d, "creative-plan.json")),
+      )[0] || null
+    );
+  } catch (_) {
+    return null;
+  }
+}
 
 const MIME = {
   ".html": "text/html",
@@ -155,6 +170,74 @@ const server = createServer(async (req, res) => {
         stderr: stderr.slice(-2000),
       });
     });
+    return;
+  }
+
+  // ── Campaign review API (consumed by brand/video-templates/review.html) ──
+
+  // GET /campaigns — list campaign folders that have a creative-plan.json
+  if (path === "/campaigns" && req.method === "GET") {
+    let list = [];
+    try {
+      list = readdirSync(CAMPAIGNS_DIR).filter((d) =>
+        existsSync(join(CAMPAIGNS_DIR, d, "creative-plan.json")),
+      );
+    } catch (_) {}
+    sendJson(res, 200, { campaigns: list });
+    return;
+  }
+
+  // GET /plan?campaign=<name> — the creative-plan.json (defaults to the first)
+  if (path === "/plan" && req.method === "GET") {
+    const campaign = url.searchParams.get("campaign") || firstCampaign();
+    if (!campaign) {
+      sendJson(res, 404, { error: "no campaigns with a creative-plan.json" });
+      return;
+    }
+    const p = join(CAMPAIGNS_DIR, campaign, "creative-plan.json");
+    if (!existsSync(p)) {
+      sendJson(res, 404, { error: `no plan for campaign "${campaign}"` });
+      return;
+    }
+    send(res, 200, readFileSync(p, "utf8"));
+    return;
+  }
+
+  // POST /plan/:campaign/:angle/:asset — patch ONE asset. The server is the
+  // single writer of the plan file (atomic read-modify-write) so background
+  // render updates and reviewer edits can't clobber each other.
+  const planPatch = path.match(/^\/plan\/([\w.-]+)\/([\w.-]+)\/([\w.-]+)$/);
+  if (planPatch && req.method === "POST") {
+    const [, campaign, angleId, assetId] = planPatch;
+    const p = join(CAMPAIGNS_DIR, campaign, "creative-plan.json");
+    if (!existsSync(p)) {
+      sendJson(res, 404, { error: `no plan for campaign "${campaign}"` });
+      return;
+    }
+    const body = await readBody(req);
+    let patch;
+    try {
+      patch = JSON.parse(body);
+    } catch (e) {
+      sendJson(res, 400, { error: e.message });
+      return;
+    }
+    const plan = JSON.parse(readFileSync(p, "utf8"));
+    const angle = (plan.angles || []).find((a) => a.id === angleId);
+    if (!angle) {
+      sendJson(res, 404, { error: `angle "${angleId}" not found` });
+      return;
+    }
+    const asset = (angle.assets || []).find((a) => a.id === assetId);
+    if (!asset) {
+      sendJson(res, 404, { error: `asset "${assetId}" not found` });
+      return;
+    }
+    // Only the reviewer-editable fields can be patched this way.
+    const ALLOWED = ["status", "notes", "flags", "headline", "microscript", "output", "thumb"];
+    for (const k of ALLOWED) if (k in patch) asset[k] = patch[k];
+    writeFileSync(p, JSON.stringify(plan, null, 2));
+    sendJson(res, 200, { saved: true, campaign, angle: angleId, asset: assetId });
     return;
   }
 

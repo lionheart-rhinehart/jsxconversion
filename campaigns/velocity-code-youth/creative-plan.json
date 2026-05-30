@@ -1,0 +1,558 @@
+{
+  "schemaVersion": 1,
+  "campaign": "velocity-code-youth",
+  "brand": "athletes-acceleration",
+  "knobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": {
+      "video": 0.6,
+      "gif": 0.15,
+      "static": 0.25
+    },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 3
+  },
+  "angles": [
+    {
+      "id": "angle-1-tries-harder",
+      "name": "My kid tries harder than everyone and still isn't getting faster",
+      "mechanism": "The Last Rep Lie / Slow Code / Speed Erosion",
+      "emotionalJob": "Take the blame off the kid; put it on the training model.",
+      "voice": "Coach Graham, Vulnerable Mentor — 'here's the brutal truth'; names the moment, never scolds.",
+      "assets": [
+        {
+          "id": "A1",
+          "beat": "A — Stop the scroll",
+          "format": "video",
+          "source": "fresh",
+          "template": null,
+          "freshConcept": "kinetic-typography-slowmo",
+          "headline": "SHOWS UP. WORKS HARD. NEVER QUITS. / STILL THE SAME SPEED.",
+          "microscript": "This isn't bad luck. It's physics.",
+          "visual": "explosive sprint start cutting to slow-mo deceleration",
+          "image": {
+            "tag": "bg_clip",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [
+            "needs-clip"
+          ],
+          "status": "planned",
+          "notes": "",
+          "output": null,
+          "thumb": null,
+          "knowledgeRefs": [
+            "hook:V2.2",
+            "hook:V1.3"
+          ]
+        },
+        {
+          "id": "A2",
+          "beat": "A — Stop the scroll",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-1",
+          "templateQuery": "bold headline over photo",
+          "freshConcept": null,
+          "headline": "Your kid's training is working perfectly. The problem is what it's teaching.",
+          "microscript": "THE LAST REP LIE",
+          "visual": "athlete mid-drill, sweat",
+          "image": {
+            "tag": "bg_photo",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "planned",
+          "notes": "",
+          "output": null,
+          "thumb": null,
+          "knowledgeRefs": [
+            "hook:V1.5"
+          ]
+        },
+        {
+          "id": "A3",
+          "beat": "A — Stop the scroll",
+          "format": "gif",
+          "source": "fresh",
+          "template": null,
+          "freshConcept": "typographic-flip-loop",
+          "headline": "GETTING FASTER?  ⇄  OR JUST MORE TIRED?",
+          "microscript": "TRAIN FAST TO BE FAST",
+          "visual": "split loop — explosive sprint vs. hands-on-knees",
+          "image": {
+            "tag": "bg_clip",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "planned",
+          "notes": "",
+          "output": null,
+          "thumb": null,
+          "knowledgeRefs": [
+            "paradox:is-your-kid-getting-faster"
+          ]
+        },
+        {
+          "id": "B1",
+          "beat": "B — Name the moment",
+          "format": "video",
+          "source": "fresh",
+          "template": null,
+          "freshConcept": "coach-voice-slowmo-velocity-readout",
+          "headline": "Every coach says 'two more.' / Here's what those two reps are teaching.",
+          "microscript": "THE LAST REP LIE",
+          "visual": "slow-mo of a rep slowing, velocity readout ticking down",
+          "image": {
+            "tag": "bg_clip",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [
+            "needs-clip"
+          ],
+          "status": "planned",
+          "notes": "",
+          "output": null,
+          "thumb": null,
+          "knowledgeRefs": [
+            "hook:V1.1"
+          ]
+        },
+        {
+          "id": "B2",
+          "beat": "B — Name the moment",
+          "format": "gif",
+          "source": "fresh",
+          "template": null,
+          "freshConcept": "velocity-bar-dataviz-loop",
+          "headline": "1.0 m/s → 0.9 → −10%. SET OVER.",
+          "microscript": "THE 10% RULE",
+          "visual": "clean data viz: a velocity bar dropping past the threshold",
+          "image": {
+            "tag": null,
+            "source": null,
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "planned",
+          "notes": "",
+          "output": null,
+          "thumb": null,
+          "knowledgeRefs": [
+            "ums:velocity-loss-threshold"
+          ]
+        },
+        {
+          "id": "C1",
+          "beat": "C — Reveal the mechanism",
+          "format": "video",
+          "source": "fresh",
+          "template": null,
+          "freshConcept": "terminal-code-aesthetic",
+          "headline": "Tired reps write slow code into the nervous system.",
+          "microscript": "SLOW CODE",
+          "visual": "terminal/code aesthetic over an athlete silhouette",
+          "image": {
+            "tag": "bg_clip",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "planned",
+          "notes": "",
+          "output": null,
+          "thumb": null,
+          "knowledgeRefs": [
+            "metaphor:slow-code"
+          ]
+        },
+        {
+          "id": "C2",
+          "beat": "C — Reveal the mechanism",
+          "format": "video",
+          "source": "fresh",
+          "template": null,
+          "freshConcept": "recording-waveform-overlay",
+          "headline": "Your nervous system records the speed that actually happens. Not the speed you meant.",
+          "microscript": "THE RECORDING",
+          "visual": "sprint footage with an audio-waveform overlay",
+          "image": {
+            "tag": "bg_clip",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "planned",
+          "notes": "",
+          "output": null,
+          "thumb": null,
+          "knowledgeRefs": [
+            "metaphor:recording-device"
+          ]
+        },
+        {
+          "id": "C3",
+          "beat": "C — Reveal the mechanism",
+          "format": "video",
+          "source": "fresh",
+          "template": null,
+          "freshConcept": "erosion-motif",
+          "headline": "Every slow rep makes the next one slower.",
+          "microscript": "SPEED EROSION",
+          "visual": "erosion motif over a timing gate",
+          "image": {
+            "tag": "bg_clip",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "planned",
+          "notes": "",
+          "output": null,
+          "thumb": null,
+          "knowledgeRefs": [
+            "metaphor:speed-erosion",
+            "hook:V2.5"
+          ]
+        },
+        {
+          "id": "C4",
+          "beat": "C — Reveal the mechanism",
+          "format": "static",
+          "source": "fresh",
+          "template": null,
+          "freshConcept": "code-card",
+          "headline": "TIRED REP → SLOW CODE → SLOW ATHLETE",
+          "microscript": "THE VELOCITY CODE™",
+          "visual": "terminal/code card",
+          "image": {
+            "tag": null,
+            "source": null,
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "planned",
+          "notes": "",
+          "output": null,
+          "thumb": null,
+          "knowledgeRefs": [
+            "metaphor:slow-code"
+          ]
+        },
+        {
+          "id": "D1",
+          "beat": "D — Remove the blame",
+          "format": "video",
+          "source": "fresh",
+          "template": null,
+          "freshConcept": "sideline-emotional",
+          "headline": "It's not your kid. It's not their effort. It's the model — and it's the same model every program uses.",
+          "microscript": "YOUR KID ISN'T THE PROBLEM",
+          "visual": "sideline, parent watching",
+          "image": {
+            "tag": "bg_clip",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [
+            "needs-clip"
+          ],
+          "status": "planned",
+          "notes": "",
+          "output": null,
+          "thumb": null,
+          "knowledgeRefs": [
+            "hook:V3.6"
+          ]
+        },
+        {
+          "id": "D2",
+          "beat": "D — Remove the blame",
+          "format": "video",
+          "source": "template",
+          "template": "quote-card",
+          "templateQuery": "spoken quote / statement reel",
+          "freshConcept": null,
+          "headline": "They confuse tired with trained. Your kid isn't behind — they're in the wrong system.",
+          "microscript": "— Coach Graham Wilkerson, CSCS",
+          "visual": "coach + athlete",
+          "image": {
+            "tag": "bg_photo",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "planned",
+          "notes": "",
+          "output": null,
+          "thumb": null,
+          "knowledgeRefs": [
+            "reframe:tired-vs-trained"
+          ]
+        },
+        {
+          "id": "E1",
+          "beat": "E — Prove it",
+          "format": "video",
+          "source": "template",
+          "template": "stat-reveal",
+          "templateQuery": "big-number stat reveal",
+          "freshConcept": null,
+          "headline": "224% more vertical jump. 28% less training stress.",
+          "microscript": "Wang et al., 2026 · Frontiers in Physiology",
+          "visual": "jump mat / clean studio",
+          "image": {
+            "tag": "bg_photo",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "planned",
+          "notes": "",
+          "output": null,
+          "thumb": null,
+          "knowledgeRefs": [
+            "proof:wang-2026"
+          ]
+        },
+        {
+          "id": "E2",
+          "beat": "E — Prove it",
+          "format": "video",
+          "source": "template",
+          "template": "stat-reveal",
+          "templateQuery": "big-number stat reveal (2nd skeleton use)",
+          "freshConcept": null,
+          "headline": "40% fewer reps. 146% more jump.",
+          "microscript": "Pareja-Blanco et al., 2017",
+          "visual": "bar velocity tracker",
+          "image": {
+            "tag": "bg_photo",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "planned",
+          "notes": "",
+          "output": null,
+          "thumb": null,
+          "knowledgeRefs": [
+            "proof:pareja-blanco-2017"
+          ]
+        },
+        {
+          "id": "E3",
+          "beat": "E — Prove it",
+          "format": "video",
+          "source": "template",
+          "template": "coach-lower-thirds",
+          "templateQuery": "talking-head lower-thirds",
+          "freshConcept": null,
+          "headline": "I've watched hundreds of athletes train for months without getting faster. The reason is always the same.",
+          "microscript": "CSCS · trained Zack Martin, Ted Karras, Nick Martin",
+          "visual": "Coach Graham talking head",
+          "image": {
+            "tag": "bg_clip",
+            "source": "client",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [
+            "needs-graham-footage"
+          ],
+          "status": "planned",
+          "notes": "Swap for a [T] proof static if no Graham footage.",
+          "output": null,
+          "thumb": null,
+          "knowledgeRefs": [
+            "speaker:graham",
+            "discovery:V1.9"
+          ]
+        },
+        {
+          "id": "E4",
+          "beat": "E — Prove it",
+          "format": "gif",
+          "source": "template",
+          "template": "stat-reveal",
+          "templateQuery": "number count-up loop (3rd skeleton use — at repetition cap)",
+          "freshConcept": null,
+          "headline": "224%",
+          "microscript": "Velocity-protected training",
+          "visual": "number count-up loop",
+          "image": {
+            "tag": null,
+            "source": null,
+            "ref": null
+          },
+          "audio": null,
+          "flags": [
+            "repetition-cap-reached:stat-reveal"
+          ],
+          "status": "planned",
+          "notes": "",
+          "output": null,
+          "thumb": null,
+          "knowledgeRefs": [
+            "proof:wang-2026"
+          ]
+        },
+        {
+          "id": "E5",
+          "beat": "E — Prove it",
+          "format": "static",
+          "source": "template",
+          "template": null,
+          "templateQuery": "static testimonial card",
+          "freshConcept": null,
+          "headline": "Two years at another facility. One week here, my son said it was the best he'd ever had.",
+          "microscript": "Andy Johnson · 4.9★ · 60+ reviews",
+          "visual": "athlete + star rating",
+          "image": {
+            "tag": "bg_photo",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [
+            "template-unmapped"
+          ],
+          "status": "planned",
+          "notes": "",
+          "output": null,
+          "thumb": null,
+          "knowledgeRefs": [
+            "testimonial:andy-johnson"
+          ]
+        },
+        {
+          "id": "E6",
+          "beat": "E — Prove it",
+          "format": "static",
+          "source": "template",
+          "template": null,
+          "templateQuery": "comparison / checklist card",
+          "freshConcept": null,
+          "headline": "Velocity measured every rep ✓ · Calibrated timing gates ✓ · A measurable guarantee ✓",
+          "microscript": "Ask your coach for the number.",
+          "visual": "checklist vs. typical program",
+          "image": {
+            "tag": null,
+            "source": null,
+            "ref": null
+          },
+          "audio": null,
+          "flags": [
+            "template-unmapped"
+          ],
+          "status": "planned",
+          "notes": "",
+          "output": null,
+          "thumb": null,
+          "knowledgeRefs": [
+            "proof:type-10-comparison"
+          ]
+        },
+        {
+          "id": "F1",
+          "beat": "F — The offer",
+          "format": "video",
+          "source": "template",
+          "template": "logo-sting",
+          "templateQuery": "guarantee / offer reel",
+          "freshConcept": null,
+          "headline": "+1 mph speed, +3\" vertical, 90 days, or training is free.",
+          "microscript": "The Performance Contract",
+          "visual": "athlete + data",
+          "image": {
+            "tag": "bg_photo",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [
+            "guarantee-verbatim"
+          ],
+          "status": "planned",
+          "notes": "Use the brand-verbatim guarantee, never paraphrase.",
+          "output": null,
+          "thumb": null,
+          "knowledgeRefs": [
+            "offer:performance-contract"
+          ]
+        },
+        {
+          "id": "F2",
+          "beat": "F — The offer",
+          "format": "video",
+          "source": "template",
+          "template": "meet-coach",
+          "templateQuery": "CTA / assessment reel",
+          "freshConcept": null,
+          "headline": "Bring your athlete in. See their actual sprint time, jump height, velocity.",
+          "microscript": "Not a sales pitch. A data set.",
+          "visual": "facility, tablet, data",
+          "image": {
+            "tag": "bg_photo",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "planned",
+          "notes": "",
+          "output": null,
+          "thumb": null,
+          "knowledgeRefs": [
+            "offer:free-assessment"
+          ]
+        },
+        {
+          "id": "F3",
+          "beat": "F — The offer",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-12",
+          "templateQuery": "guarantee card",
+          "freshConcept": null,
+          "headline": "+1 mph speed, +3\" vertical, 90 days, or training is free.",
+          "microscript": "Ages 8–12 · Hamilton County, IN",
+          "visual": "guarantee + athlete",
+          "image": {
+            "tag": "bg_photo",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [
+            "guarantee-verbatim"
+          ],
+          "status": "planned",
+          "notes": "",
+          "output": null,
+          "thumb": null,
+          "knowledgeRefs": [
+            "offer:performance-contract"
+          ]
+        }
+      ]
+    }
+  ]
+}

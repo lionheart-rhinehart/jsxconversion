@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>AA · Creative Review</title>
+<link rel="stylesheet" href="assets/aa-tokens.css"/>
+<style>
+  html, body { margin: 0; padding: 0; background: #0a0b0d; color: #f6f7f9; font-family: var(--font-body, system-ui); }
+  * { box-sizing: border-box; }
+  a { color: inherit; }
+
+  .page { max-width: 1320px; margin: 0 auto; padding: 36px 28px 96px; }
+
+  /* Header + dashboard */
+  .top { display: flex; align-items: flex-end; gap: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.08); flex-wrap: wrap; }
+  .top .eyebrow { font-family: var(--font-mono, monospace); font-size: 12px; letter-spacing: 0.18em; color: var(--aa-red-600, #c4141d); text-transform: uppercase; }
+  .top h1 { font-family: var(--font-display, sans-serif); font-size: 52px; line-height: 0.9; margin: 8px 0 0; text-transform: uppercase; }
+  .top h1 .accent { color: var(--aa-red-600, #c4141d); }
+  .dash { margin-left: auto; display: flex; gap: 22px; font-family: var(--font-mono, monospace); }
+  .dash .stat { text-align: right; }
+  .dash .num { font-size: 22px; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
+  .dash .num.warn { color: #f59e0b; }
+  .dash .num.ok { color: #4ade80; }
+  .dash .lbl { font-size: 10px; letter-spacing: 0.12em; color: var(--aa-ink-400, #969ca7); text-transform: uppercase; margin-top: 2px; }
+
+  .controls { display: flex; gap: 8px; margin: 22px 0 8px; flex-wrap: wrap; align-items: center; }
+  .controls .filt { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); color: var(--aa-ink-300, #b8bdc6); font-family: var(--font-mono, monospace); font-size: 11px; letter-spacing: 0.1em; padding: 6px 12px; cursor: pointer; text-transform: uppercase; }
+  .controls .filt.on { background: var(--aa-red-600, #c4141d); border-color: var(--aa-red-600, #c4141d); color: #fff; }
+  .controls .sp { flex: 1; }
+  .controls .meta { font-family: var(--font-mono, monospace); font-size: 11px; color: var(--aa-ink-400, #969ca7); letter-spacing: 0.1em; }
+
+  /* Beat section */
+  .beat { padding-top: 36px; }
+  .beat h2 { font-family: var(--font-display, sans-serif); font-size: 26px; text-transform: uppercase; margin: 0 0 16px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #fff; }
+  .beat h2 .ct { font-family: var(--font-mono, monospace); font-size: 12px; color: var(--aa-ink-400, #969ca7); margin-left: 12px; letter-spacing: 0.12em; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+
+  .card { position: relative; background: #15171a; border: 1px solid rgba(255,255,255,0.08); display: flex; flex-direction: column; }
+  .card.s-approved { border-color: rgba(74,222,128,0.5); }
+  .card.s-changes { border-color: rgba(245,158,11,0.55); }
+  .card.s-rendered { border-color: rgba(196,20,29,0.5); }
+
+  .prev { position: relative; width: 100%; aspect-ratio: 9/16; background: #0a0b0d; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .prev img, .prev video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .prev .ph { text-align: center; padding: 16px; }
+  .prev .ph .fmt { font-family: var(--font-display, sans-serif); font-size: 30px; color: rgba(255,255,255,0.22); letter-spacing: 0.04em; }
+  .prev .ph .sub { font-family: var(--font-mono, monospace); font-size: 10px; color: var(--aa-ink-500, #6b7280); letter-spacing: 0.14em; margin-top: 6px; text-transform: uppercase; }
+
+  .badges { position: absolute; top: 8px; left: 8px; right: 8px; display: flex; gap: 6px; align-items: center; }
+  .b { font-family: var(--font-mono, monospace); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; padding: 3px 7px; text-transform: uppercase; }
+  .b.fmt { background: rgba(10,11,13,0.82); border: 1px solid rgba(255,255,255,0.22); color: #fff; }
+  .b.src { background: rgba(10,11,13,0.82); border: 1px solid rgba(255,255,255,0.22); color: #fff; }
+  .b.src.fresh { border-color: var(--aa-red-600, #c4141d); color: #ff6b6b; }
+  .b.id { margin-left: auto; background: rgba(10,11,13,0.82); border: 1px solid rgba(255,255,255,0.18); color: var(--aa-ink-300, #b8bdc6); }
+  .b.status { position: absolute; bottom: 8px; left: 8px; }
+  .b.status.planned { background: rgba(255,255,255,0.12); color: #d6d9de; }
+  .b.status.changes { background: #f59e0b; color: #1a1205; }
+  .b.status.approved { background: #4ade80; color: #062911; }
+  .b.status.rendered { background: var(--aa-red-600, #c4141d); color: #fff; }
+
+  .body { padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+  .head { font-family: var(--font-display, sans-serif); font-size: 17px; line-height: 1.12; color: #fff; }
+  .micro { font-family: var(--font-mono, monospace); font-size: 10px; letter-spacing: 0.1em; color: var(--aa-red-400, #ff8080); text-transform: uppercase; }
+  .vis { font-size: 12px; color: var(--aa-ink-300, #b8bdc6); line-height: 1.35; }
+  .tref { font-family: var(--font-mono, monospace); font-size: 10px; color: var(--aa-ink-500, #6b7280); letter-spacing: 0.06em; }
+  .flags { display: flex; gap: 5px; flex-wrap: wrap; }
+  .flag { font-family: var(--font-mono, monospace); font-size: 9px; letter-spacing: 0.08em; padding: 2px 6px; background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.4); color: #fbbf24; text-transform: uppercase; }
+  .note { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); color: #fff; font-family: var(--font-mono, monospace); font-size: 11px; padding: 7px 9px; resize: vertical; min-height: 34px; }
+  .note:focus { outline: none; border-color: var(--aa-red-600, #c4141d); }
+  .actions { display: flex; gap: 6px; }
+  .act { flex: 1; font-family: var(--font-mono, monospace); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; padding: 8px; cursor: pointer; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.16); background: rgba(255,255,255,0.04); color: var(--aa-ink-200, #d6d9de); }
+  .act.approve.on { background: #4ade80; border-color: #4ade80; color: #062911; }
+  .act.changes.on { background: #f59e0b; border-color: #f59e0b; color: #1a1205; }
+  .act.edit { flex: 0 0 auto; }
+  .act:hover { border-color: rgba(255,255,255,0.4); }
+
+  .empty { padding: 80px 20px; text-align: center; color: var(--aa-ink-400, #969ca7); font-family: var(--font-mono, monospace); }
+  .err { color: #ff6b6b; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="top">
+    <div>
+      <div class="eyebrow">// Creative Review</div>
+      <h1 id="title">Campaign <span class="accent">Plan</span></h1>
+    </div>
+    <div class="dash" id="dash"></div>
+  </div>
+
+  <div class="controls" id="controls"></div>
+
+  <div id="content"><div class="empty">Loading plan…</div></div>
+</div>
+
+<script>
+// review.html is served by brand/video-templates/serve.mjs (:5599); the data
+// API + render live in editor-server (:5173). Same-origin if you ever serve
+// this from editor-server itself.
+const API = (location.port === "5599" || location.protocol === "file:")
+  ? "http://localhost:5173"
+  : "";
+const EDITOR = "http://localhost:5173"; // position editor for inline tweaks
+
+const qs = new URLSearchParams(location.search);
+const campaignParam = qs.get("campaign") || "";
+
+let PLAN = null;
+let FILTER = "all";
+
+const fmtLabel = (f) => ({ video: "VIDEO", gif: "GIF", static: "STATIC" }[f] || f.toUpperCase());
+
+async function load() {
+  try {
+    const url = API + "/plan" + (campaignParam ? "?campaign=" + encodeURIComponent(campaignParam) : "");
+    const r = await fetch(url);
+    if (!r.ok) throw new Error("plan " + r.status + " — is editor-server running on :5173?");
+    PLAN = await r.json();
+    render();
+  } catch (e) {
+    document.getElementById("content").innerHTML =
+      '<div class="empty err">Could not load plan.<br>' + e.message +
+      '<br><br>Start it with: <b>node scripts/editor-server.mjs</b></div>';
+  }
+}
+
+function allAssets() {
+  const out = [];
+  for (const ang of PLAN.angles || []) for (const a of ang.assets || []) out.push({ ...a, _angle: ang });
+  return out;
+}
+
+function renderDash() {
+  const assets = allAssets();
+  const n = assets.length || 1;
+  const by = (f) => assets.filter((a) => a.format === f).length;
+  const fresh = assets.filter((a) => a.source === "fresh").length;
+  const approved = assets.filter((a) => a.status === "approved").length;
+  const rendered = assets.filter((a) => a.status === "rendered").length;
+  const flags = assets.filter((a) => (a.flags || []).length).length;
+  const ratio = (PLAN.knobs && PLAN.knobs.motionRatio) || { video: 0.6, gif: 0.15, static: 0.25 };
+  const floor = (PLAN.knobs && PLAN.knobs.freshnessFloor) || 0.45;
+  const pct = (x) => Math.round((x / n) * 100);
+  const tgt = (k) => Math.round(ratio[k] * 100);
+  const freshClass = fresh / n >= floor ? "ok" : "warn";
+  const stat = (num, lbl, cls = "") => `<div class="stat"><div class="num ${cls}">${num}</div><div class="lbl">${lbl}</div></div>`;
+  document.getElementById("dash").innerHTML =
+    stat(assets.length, "assets") +
+    stat(`${pct("video")}/${pct("gif")}/${pct("static")}`, `vid/gif/stat · tgt ${tgt("video")}/${tgt("gif")}/${tgt("static")}`) +
+    stat(`${pct("video") === undefined ? 0 : Math.round((fresh / n) * 100)}%`, `fresh · floor ${Math.round(floor * 100)}%`, freshClass) +
+    stat(`${approved + rendered}/${assets.length}`, "approved", approved + rendered === assets.length ? "ok" : "") +
+    stat(flags, "open flags", flags ? "warn" : "ok");
+}
+
+function renderControls() {
+  const filters = ["all", "video", "gif", "static", "fresh", "template", "needs review"];
+  document.getElementById("controls").innerHTML =
+    filters.map((f) => `<button class="filt ${FILTER === f ? "on" : ""}" data-f="${f}">${f}</button>`).join("") +
+    `<span class="sp"></span><span class="meta">campaign: ${PLAN.campaign} · click a creative's EDIT to open the position editor</span>`;
+  document.querySelectorAll(".filt").forEach((b) =>
+    b.addEventListener("click", () => { FILTER = b.dataset.f; render(); }));
+}
+
+function pass(a) {
+  if (FILTER === "all") return true;
+  if (FILTER === "fresh") return a.source === "fresh";
+  if (FILTER === "template") return a.source === "template";
+  if (FILTER === "needs review") return a.status === "planned" || a.status === "changes";
+  return a.format === FILTER;
+}
+
+function previewHTML(a) {
+  if (a.status === "rendered" && a.output) {
+    const src = (API ? API : "") + (a.output.startsWith("/") ? a.output : "/" + a.output);
+    if (/\.mp4$/i.test(a.output)) return `<video src="${src}" muted loop autoplay playsinline></video>`;
+    return `<img src="${src}" alt="">`; // png/jpg/gif
+  }
+  // N1 guard: never set an empty/null media src.
+  return `<div class="ph"><div class="fmt">${fmtLabel(a.format)}</div><div class="sub">not rendered yet</div></div>`;
+}
+
+function cardHTML(a) {
+  const srcBadge = a.source === "fresh"
+    ? `<span class="b src fresh">[F] fresh</span>`
+    : `<span class="b src">[T] ${a.template || a.templateQuery || "template"}</span>`;
+  const flags = (a.flags || []).map((f) => `<span class="flag">${f}</span>`).join("");
+  const tref = a.source === "template" && !a.template && a.templateQuery
+    ? `<div class="tref">→ ${a.templateQuery} (to map)</div>` : "";
+  return `
+  <div class="card s-${a.status}" data-angle="${a._angle.id}" data-asset="${a.id}">
+    <div class="prev">
+      ${previewHTML(a)}
+      <div class="badges"><span class="b fmt">${fmtLabel(a.format)}</span>${srcBadge}<span class="b id">${a.id}</span></div>
+      <span class="b status ${a.status}">${a.status}</span>
+    </div>
+    <div class="body">
+      <div class="head">${(a.headline || "").replace(/</g, "&lt;")}</div>
+      ${a.microscript ? `<div class="micro">${a.microscript.replace(/</g, "&lt;")}</div>` : ""}
+      ${a.visual ? `<div class="vis">${a.visual.replace(/</g, "&lt;")}</div>` : ""}
+      ${tref}
+      ${flags ? `<div class="flags">${flags}</div>` : ""}
+      <textarea class="note" placeholder="notes…">${a.notes || ""}</textarea>
+      <div class="actions">
+        <button class="act approve ${a.status === "approved" ? "on" : ""}" data-act="approve">Approve</button>
+        <button class="act changes ${a.status === "changes" ? "on" : ""}" data-act="changes">Changes</button>
+        <button class="act edit" data-act="edit" title="Open in position editor">Edit</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function render() {
+  renderDash();
+  renderControls();
+  const content = document.getElementById("content");
+  document.getElementById("title").innerHTML =
+    (PLAN.angles && PLAN.angles[0] ? PLAN.angles[0].name : "Campaign") +
+    ` <span class="accent">·</span>`;
+  let html = "";
+  for (const ang of PLAN.angles || []) {
+    const beats = {};
+    for (const a of ang.assets || []) {
+      if (!pass(a)) continue;
+      (beats[a.beat || "—"] = beats[a.beat || "—"] || []).push({ ...a, _angle: ang });
+    }
+    for (const beat of Object.keys(beats)) {
+      html += `<div class="beat"><h2>${beat}<span class="ct">${beats[beat].length}</span></h2><div class="grid">`;
+      html += beats[beat].map(cardHTML).join("");
+      html += `</div></div>`;
+    }
+  }
+  content.innerHTML = html || `<div class="empty">No creatives match this filter.</div>`;
+  wire();
+}
+
+function wire() {
+  document.querySelectorAll(".card").forEach((card) => {
+    const angle = card.dataset.angle, asset = card.dataset.asset;
+    card.querySelector(".note").addEventListener("change", (e) =>
+      patch(angle, asset, { notes: e.target.value }));
+    card.querySelectorAll(".act").forEach((btn) =>
+      btn.addEventListener("click", () => {
+        const act = btn.dataset.act;
+        if (act === "edit") {
+          // Statics map to the position editor by template id (cluster-*).
+          const a = findAsset(angle, asset);
+          if (a && a.template && a.template.startsWith("cluster-")) {
+            window.open(EDITOR + "/#" + a.template, "_blank");
+          } else {
+            alert("Inline editor is wired for cluster-* statics. This asset is " +
+              (a ? a.source + "/" + a.format : "?") + " — video/fresh editing comes with the embed phase.");
+          }
+          return;
+        }
+        const cur = findAsset(angle, asset).status;
+        const next = act === "approve"
+          ? (cur === "approved" ? "planned" : "approved")
+          : (cur === "changes" ? "planned" : "changes");
+        patch(angle, asset, { status: next });
+      }));
+  });
+}
+
+function findAsset(angleId, assetId) {
+  const ang = (PLAN.angles || []).find((a) => a.id === angleId);
+  return ang && (ang.assets || []).find((a) => a.id === assetId);
+}
+
+async function patch(angleId, assetId, fields) {
+  const a = findAsset(angleId, assetId);
+  Object.assign(a, fields); // optimistic
+  render();
+  try {
+    const r = await fetch(`${API}/plan/${PLAN.campaign}/${angleId}/${assetId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(fields),
+    });
+    if (!r.ok) throw new Error(await r.text());
+  } catch (e) {
+    console.error("patch failed", e);
+    alert("Save failed: " + e.message);
+  }
+}
+
+load();
+</script>
+</body>
+</html>
