@@ -151,6 +151,10 @@ export function ArchedHeadline({
   fontSize = 160,
   arch = "med",
   glow = false,
+  shadow = true,
+  stroke = 0,
+  strokeColor,
+  fontWeight = 400,
   letterSpacing = "-0.01em",
 }) {
   const padX = Math.max(20, fontSize * 0.15);
@@ -164,9 +168,20 @@ export function ArchedHeadline({
   const pathD = `M ${padX} ${baselineY} Q ${width / 2} ${peakY} ${width - padX} ${baselineY}`;
   const svgHeight = baselineY + fontSize * 0.4;
   const id = `arc-${text.replace(/[^a-z0-9]/gi, "")}-${arch}`;
+  // `glow` wins; else honor `shadow`. `shadow` may be:
+  //   • a string  → used verbatim as the CSS filter (e.g. a custom
+  //                  "drop-shadow(5px 9px 7px rgba(0,0,0,0.45))" to match a
+  //                  design's pronounced offset shadow), letting one text layer
+  //                  carry the shadow "layer" baked into Canva exports;
+  //   • true (default) → the subtle built-in drop-shadow;
+  //   • false → no shadow (outline-only headlines want a clean line on color).
   const filter = glow
     ? `drop-shadow(0 0 14px ${AA_RED}) drop-shadow(0 4px 14px rgba(0,0,0,0.55))`
-    : "drop-shadow(0 3px 10px rgba(0,0,0,0.45))";
+    : typeof shadow === "string"
+    ? shadow
+    : shadow
+    ? "drop-shadow(0 3px 10px rgba(0,0,0,0.45))"
+    : "none";
   return (
     <svg
       width={width}
@@ -179,11 +194,13 @@ export function ArchedHeadline({
       </defs>
       <text
         fill={color}
+        stroke={stroke ? strokeColor || color : undefined}
+        strokeWidth={stroke || undefined}
         fontFamily={FONT_DISPLAY}
         fontSize={fontSize}
-        fontWeight={400}
+        fontWeight={fontWeight}
         letterSpacing={letterSpacing}
-        style={{ filter, textTransform: "uppercase" }}
+        style={{ filter, textTransform: "uppercase", paintOrder: "stroke" }}
       >
         <textPath href={`#${id}`} startOffset="50%" textAnchor="middle">
           {text}
@@ -458,6 +475,15 @@ export function renderDesignItem(it, key) {
     // wash instead of an alpha haze). Inert when absent → no effect on rects
     // that don't set it.
     if (it.blendMode && it.blendMode !== "normal") rectStyle.mixBlendMode = it.blendMode;
+    // Optional outline-only shapes: a `border` (e.g. "2px solid #ffffff") with a
+    // transparent fill makes the rect a hollow frame — the "album-art" outline of
+    // a player-card UI. Inert when absent → filled rects unaffected.
+    if (it.border) rectStyle.border = it.border;
+    // Optional angled/clipped shapes: a clip-path polygon carves the rect into a
+    // wedge/parallelogram, and transform rotates/skews it. Inert when absent →
+    // existing rectangular shapes are unaffected.
+    if (it.clipPath) rectStyle.clipPath = it.clipPath;
+    if (it.transform) rectStyle.transform = it.transform;
     // Optional tiled/patterned fill (e.g. a radial-gradient dot grid). When the
     // fill is a repeating gradient, backgroundSize controls the tile and
     // backgroundRepeat the tiling. Set AFTER `background` so the longhand wins
@@ -467,24 +493,42 @@ export function renderDesignItem(it, key) {
     return <div key={key} style={rectStyle} />;
   }
   if (it.type === "image") {
-    return (
-      <img
-        key={key}
-        src={it.src}
-        alt=""
-        style={{
-          position: "absolute",
-          left: it.x,
-          top: it.y,
-          width: it.width,
-          height: it.height,
-          objectFit: it.objectFit || "contain",
-          objectPosition: it.objectPosition || undefined,
-          display: "block",
-          opacity: it.opacity ?? 1,
-        }}
-      />
-    );
+    const imgStyle = {
+      position: "absolute",
+      left: it.x,
+      top: it.y,
+      width: it.width,
+      height: it.height,
+      objectFit: it.objectFit || "contain",
+      objectPosition: it.objectPosition || undefined,
+      display: "block",
+      opacity: it.opacity ?? 1,
+    };
+    // Optional photo treatment: CSS filter (grayscale/brightness/contrast/blur)
+    // and blend mode. Inert when absent → existing image layers unaffected.
+    if (it.filter != null) imgStyle.filter = it.filter;
+    if (it.blendMode && it.blendMode !== "normal") imgStyle.mixBlendMode = it.blendMode;
+    // Optional affine transform: a rotated/skewed/scaled cutout (e.g. a Canva
+    // image baked through a transform matrix). transformOrigin defaults to the
+    // top-left so a `matrix(a,b,c,d,e,f)` maps the element's local box exactly
+    // as the source SVG did. Inert when absent → upright images unaffected.
+    //
+    // Optional centered zoom: `scale` (a single number) enlarges/shrinks the
+    // image about its CENTER so a cutout can be fit to the background photo it
+    // sits over (the editor's scroll-wheel zoom writes this). It composes after
+    // an explicit `transform` matrix when both are present. Inert when absent
+    // or 1 → existing image layers unaffected.
+    const transforms = [];
+    if (it.transform) transforms.push(it.transform);
+    if (it.scale != null && it.scale !== 1) transforms.push(`scale(${it.scale})`);
+    if (transforms.length) {
+      imgStyle.transform = transforms.join(" ");
+      // An explicit matrix keeps the top-left origin (so it maps the SVG box);
+      // a pure `scale` zooms about the center so the cutout grows in place.
+      imgStyle.transformOrigin =
+        it.transformOrigin || (it.transform ? "0 0" : "center center");
+    }
+    return <img key={key} src={it.src} alt="" style={imgStyle} />;
   }
   if (it.type === "circle") {
     const sz = it.size || it.width || 24;
@@ -560,6 +604,10 @@ export function renderTextLayer(el, key) {
           fontSize={el.fontSize || 160}
           arch={el.arch}
           glow={!!el.glow}
+          shadow={el.shadow != null ? el.shadow : true}
+          stroke={el.strokeWidth != null ? el.strokeWidth : (el.stroke || 0)}
+          strokeColor={el.strokeColor}
+          fontWeight={el.fontWeight != null ? el.fontWeight : 400}
           letterSpacing={el.letterSpacing != null ? el.letterSpacing : "-0.01em"}
         />
       </div>
@@ -591,10 +639,40 @@ export function renderTextLayer(el, key) {
   // skew/scale `transform`. All inert when absent → existing configs unchanged.
   if (el.textShadow != null) style.textShadow = el.textShadow;
   if (el.filter != null) style.filter = el.filter;
-  if (el.transform != null) style.transform = el.transform;
+  if (el.transform != null) {
+    style.transform = el.transform;
+    if (el.transformOrigin != null) style.transformOrigin = el.transformOrigin;
+  }
+  // Optional photo-filled glyphs: the text becomes a window onto an image via
+  // background-clip:text (the recurring Canva "letters filled with a photo"
+  // look — e.g. a vertical YOUTH showing a gym scene). The fill image is
+  // painted into the glyph shapes and the text color is forced transparent.
+  // `backgroundSize`/`backgroundPosition` tune the crop; both optional. Inert
+  // when absent → solid `color` text unchanged.
+  if (el.imageFill != null) {
+    style.backgroundImage = `url(${el.imageFill})`;
+    style.backgroundSize = el.backgroundSize || "cover";
+    style.backgroundPosition = el.backgroundPosition || "center";
+    style.backgroundRepeat = el.backgroundRepeat || "no-repeat";
+    style.WebkitBackgroundClip = "text";
+    style.backgroundClip = "text";
+    style.WebkitTextFillColor = "transparent";
+    style.color = "transparent";
+  }
+  // Optional tiled/repeated watermark: render the text on `repeat` stacked
+  // lines (joined by newlines) so one data-driven field (e.g. a tagged
+  // microscript) fills the background "all the way down". The fill step still
+  // rewrites `text` to a single value; the repetition happens here at render
+  // time, so the tiled watermark stays a live, fillable field. lineHeight sets
+  // the row pitch. Inert when absent → single-line text unchanged.
+  let content = el.text;
+  if (el.repeat && el.repeat > 1) {
+    content = Array.from({ length: el.repeat }, () => el.text).join("\n");
+    if (el.whiteSpace == null) style.whiteSpace = "pre";
+  }
   return (
     <div key={key} style={style}>
-      {el.text}
+      {content}
     </div>
   );
 }

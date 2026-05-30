@@ -1,15 +1,16 @@
 // ============================================================================
-//  CLUSTER 9 — ATTENTION, PARENTS OF YOUTH ATHLETES (two-photo / red strip)
+//  CLUSTER 14 — FOUNDATIONAL YOUTH PROGRAM (arched knockout over squat photo)
 // ============================================================================
-//  Thin, data-driven shell. Two stacked photos (lacrosse top, basketball
-//  bottom) fill the frame. A translucent red strip runs up the left edge with
-//  ATTENTION stacked one letter per line in white. A two-tone translucent red
-//  band crosses the middle holding PARENTS OF YOUTH ATHLETES + a mono
-//  microscript. All layers live in cluster-9.config.json and render through the
-//  z-ordered LayerStack. Edit at localhost:5173/#cluster-9.
+//  Thin, data-driven shell. A gym back-squat photo fills the frame; the big
+//  display copy wraps a large invisible circle — FOUNDATIONAL arcs across the
+//  top (dome), YOUTH + PROGRAM curve along the bottom (bowl). The arched words
+//  are live SVG-textPath text (ArchedHeadline), so the title stays editable and
+//  fillable rather than baked into the photo. All layers live in
+//  cluster-14.config.json and render through the z-ordered LayerStack. Edit at
+//  localhost:5173/#cluster-14.
 // ============================================================================
 
-import config from "./cluster-9.config.json";
+import config from "./cluster-14.config.json";
 import { LayerStack } from "./_helpers.jsx";
 
 export const WIDTH = config.width;
@@ -20,12 +21,11 @@ export const HEIGHT = config.height;
 // invisible to it, so every font used must appear here verbatim.
 const _FONT_PREFLIGHT = {
   display: { fontFamily: "'Anton', 'Oswald', sans-serif" },
-  body: { fontFamily: "'Geist', sans-serif" },
   mono: { fontFamily: "'JetBrains Mono', ui-monospace, monospace" },
 };
 
-function Cluster9() {
+function Cluster14() {
   return <LayerStack config={config} />;
 }
 
-export default Cluster9;
+export default Cluster14;

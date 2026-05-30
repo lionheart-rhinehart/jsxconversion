@@ -1,15 +1,16 @@
 // ============================================================================
-//  CLUSTER 9 — ATTENTION, PARENTS OF YOUTH ATHLETES (two-photo / red strip)
+//  CLUSTER 13 — FOUNDATIONAL YOUTH PROGRAM (sprinter + green wedge)
 // ============================================================================
-//  Thin, data-driven shell. Two stacked photos (lacrosse top, basketball
-//  bottom) fill the frame. A translucent red strip runs up the left edge with
-//  ATTENTION stacked one letter per line in white. A two-tone translucent red
-//  band crosses the middle holding PARENTS OF YOUTH ATHLETES + a mono
-//  microscript. All layers live in cluster-9.config.json and render through the
-//  z-ordered LayerStack. Edit at localhost:5173/#cluster-9.
+//  Thin, data-driven shell. A field-at-sunset photo sits at the back; an angled
+//  green wedge (clip-path parallelogram) crosses the lower-center behind the
+//  big FOUNDATIONAL / YOUTH / PROGRAM headline. The sprinter cutout sits on top
+//  of the headline (bursting through it), a [TITLE] eyebrow rides the top, and
+//  two microscript lines anchor the bottom. All layers live in
+//  cluster-13.config.json and render through the z-ordered LayerStack. Edit at
+//  localhost:5173/#cluster-13.
 // ============================================================================
 
-import config from "./cluster-9.config.json";
+import config from "./cluster-13.config.json";
 import { LayerStack } from "./_helpers.jsx";
 
 export const WIDTH = config.width;
@@ -20,12 +21,11 @@ export const HEIGHT = config.height;
 // invisible to it, so every font used must appear here verbatim.
 const _FONT_PREFLIGHT = {
   display: { fontFamily: "'Anton', 'Oswald', sans-serif" },
-  body: { fontFamily: "'Geist', sans-serif" },
   mono: { fontFamily: "'JetBrains Mono', ui-monospace, monospace" },
 };
 
-function Cluster9() {
+function Cluster13() {
   return <LayerStack config={config} />;
 }
 
-export default Cluster9;
+export default Cluster13;

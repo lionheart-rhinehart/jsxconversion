@@ -1,15 +1,16 @@
 // ============================================================================
-//  CLUSTER 9 — ATTENTION, PARENTS OF YOUTH ATHLETES (two-photo / red strip)
+//  CLUSTER 11 — ATTENTION / PARENTS OF YOUTH ATHLETES (cutout + red field)
 // ============================================================================
-//  Thin, data-driven shell. Two stacked photos (lacrosse top, basketball
-//  bottom) fill the frame. A translucent red strip runs up the left edge with
-//  ATTENTION stacked one letter per line in white. A two-tone translucent red
-//  band crosses the middle holding PARENTS OF YOUTH ATHLETES + a mono
-//  microscript. All layers live in cluster-9.config.json and render through the
-//  z-ordered LayerStack. Edit at localhost:5173/#cluster-9.
+//  Thin, data-driven shell. Red full-frame field with a black→white gradient
+//  at the top (large quote mark) and a gray→black gradient at the bottom. A
+//  black ATTENTION pill + black PARENTS OF / YOUTH / ATHLETES subhead sit at
+//  left; the coach cutout sits at right; two white rounded blocks at the
+//  bottom carry the FOUNDATIONAL YOUTH PROGRAM headline and the microscript.
+//  All layers live in cluster-11.config.json and render through the z-ordered
+//  LayerStack. Edit in the position editor at localhost:5173/#cluster-11.
 // ============================================================================
 
-import config from "./cluster-9.config.json";
+import config from "./cluster-11.config.json";
 import { LayerStack } from "./_helpers.jsx";
 
 export const WIDTH = config.width;
@@ -20,12 +21,11 @@ export const HEIGHT = config.height;
 // invisible to it, so every font used must appear here verbatim.
 const _FONT_PREFLIGHT = {
   display: { fontFamily: "'Anton', 'Oswald', sans-serif" },
-  body: { fontFamily: "'Geist', sans-serif" },
   mono: { fontFamily: "'JetBrains Mono', ui-monospace, monospace" },
 };
 
-function Cluster9() {
+function Cluster11() {
   return <LayerStack config={config} />;
 }
 
-export default Cluster9;
+export default Cluster11;

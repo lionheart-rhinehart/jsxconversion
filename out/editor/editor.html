@@ -211,8 +211,8 @@
       display: block;
       white-space: pre;
       line-height: 1.0;
-      /* No text-shadow — the renderer applies none to config.elements, so the
-         editor mustn't either (WYSIWYG). */
+      /* Visual extras (text-shadow, filter, image-fill) are applied inline per
+         element from the config, mirroring renderTextLayer (WYSIWYG). */
       user-select: none;
       pointer-events: none;
     }
@@ -488,6 +488,8 @@
         <div class="field"><label>transform</label><input type="text" id="propTextTransform" placeholder="uppercase / none" /></div>
         <div class="field"><label>strokeW</label><input type="number" id="propStrokeWidth" placeholder="0" /></div>
         <div class="field"><label>strokeC</label><input type="text" id="propStrokeColor" placeholder="#ffffff" /></div>
+        <div class="field"><label>outline only</label><input type="checkbox" id="propOutlineOnly" title="Transparent fill + white stroke (knockout outline)" /></div>
+        <button id="splitSolidOutlineBtn" type="button" title="Make a solid copy behind the subject + a white-outline copy in front" style="width:100%;margin-top:6px;font-size:11px;cursor:pointer">⧉⊟ Split into solid + outline</button>
       </div>
 
       <div class="panel-block" id="shapePanel" style="display: none;">
@@ -832,6 +834,39 @@
         renderStage(); renderElementList(); selectElement(c.id);
       }
     }
+    // The z of the "subject" the text should wrap around — the foreground/cutout.
+    // Prefers a layer tagged `talent_photo`, then the foreground media, then the
+    // topmost image layer; falls back to the middle of the stack.
+    function subjectZ() {
+      const ls = sortedLayers();
+      const tagged = ls.find(l => l.data && l.data.tag === 'talent_photo');
+      if (tagged) return tagged.z;
+      const fg = ls.find(l => l.kind === 'foreground');
+      if (fg) return fg.z;
+      const imgs = ls.filter(l => l.data && (l.data.type === 'image' || l.kind === 'media'));
+      if (imgs.length) return imgs[imgs.length - 1].z;
+      return ls.length ? ls[Math.floor(ls.length / 2)].z : 50;
+    }
+    // One-click "text wraps the subject": keep the selected text as a SOLID copy
+    // behind the subject, and add an exactly-aligned WHITE-OUTLINE copy in front.
+    function splitSolidOutline(id) {
+      const el = (state.config.elements || []).find(e => e.id === id);
+      if (!el) { setStatus('Select a text layer first.'); return; }
+      const sz = subjectZ();
+      el.z = Math.max(0, sz - 1); // solid drops behind the subject
+      const outline = {
+        ...el,
+        id: nextId('text'),
+        label: (el.label || el.text || 'text') + ' (outline)',
+        color: 'transparent',
+        strokeColor: el.strokeColor || '#ffffff',
+        strokeWidth: el.strokeWidth || 5,
+        z: sz + 1, // outline rides in front of the subject — NO x/y offset (must overlap)
+      };
+      state.config.elements.push(outline);
+      renderStage(); renderElementList(); selectElement(outline.id);
+      setStatus('Split "' + (el.text || el.id) + '" → solid (behind) + outline (front). Save + Render to persist.');
+    }
     function deleteLayer(id) {
       if (id === '_media') { setStatus('Background cannot be deleted.'); return; }
       if (id === '_foreground') {
@@ -1090,6 +1125,19 @@
       }, { passive: false });
     }
 
+    // Compose an explicit `transform` matrix (if any) with a centered `scale`
+    // zoom and set the matching transformOrigin — mirrors renderDesignItem in
+    // _helpers.jsx so the editor preview matches the render exactly.
+    function applyDesignTransform(el, it) {
+      const transforms = [];
+      if (it.transform) transforms.push(it.transform);
+      if (it.scale != null && it.scale !== 1) transforms.push('scale(' + it.scale + ')');
+      if (!transforms.length) { el.style.transform = ''; return; }
+      el.style.transform = transforms.join(' ');
+      if (it.transformOrigin != null) el.style.transformOrigin = it.transformOrigin;
+      else el.style.transformOrigin = it.transform ? '0 0' : 'center center';
+    }
+
     // ===== Fixed design layer (renders config.fixedDesign items) =====
     // Mirrors _helpers.jsx FixedDesign so the editor preview matches the render.
     function renderFixedDesignItem(it) {
@@ -1107,6 +1155,13 @@
         el.style.background = it.fill;
         el.style.borderRadius = (it.borderRadius || 0) + 'px';
         if (it.shadow) el.style.boxShadow = it.shadow;
+        // Mirror renderDesignItem: outline-only border, blend mode, angled
+        // clip-path wedge, and tiled-gradient sizing. Inert when absent.
+        if (it.border) el.style.border = it.border;
+        if (it.blendMode && it.blendMode !== 'normal') el.style.mixBlendMode = it.blendMode;
+        if (it.clipPath) el.style.clipPath = it.clipPath;
+        if (it.backgroundSize) el.style.backgroundSize = it.backgroundSize;
+        if (it.backgroundRepeat) el.style.backgroundRepeat = it.backgroundRepeat;
       } else if (it.type === 'image') {
         el.style.width = it.width + 'px';
         el.style.height = it.height + 'px';
@@ -1116,6 +1171,9 @@
         img.style.width = '100%';
         img.style.height = '100%';
         img.style.objectFit = it.objectFit || 'contain';
+        if (it.objectPosition) img.style.objectPosition = it.objectPosition;
+        if (it.filter != null) img.style.filter = it.filter;
+        if (it.blendMode && it.blendMode !== 'normal') img.style.mixBlendMode = it.blendMode;
         img.style.display = 'block';
         img.style.pointerEvents = 'none';
         el.appendChild(img);
@@ -1138,6 +1196,28 @@
         el.appendChild(span);
       } else {
         return null;
+      }
+
+      // Affine transform on the whole box (matches renderDesignItem) so the
+      // selection outline + handle track the painted result. Images default the
+      // origin to top-left so a matrix() maps the box exactly as the source SVG
+      // did; rects keep the CSS default (center). A pure `scale` (centered zoom)
+      // composes after an explicit transform and zooms about the center so a
+      // cutout grows in place to pair with the background. Inert when absent.
+      applyDesignTransform(el, it);
+
+      // Scroll-wheel zoom for image layers (mirrors the foreground/background
+      // wheel zoom) — lets the user fit a cutout to the photo behind it so the
+      // same athlete in both layers lines up instead of "ghosting".
+      if (it.type === 'image') {
+        el.addEventListener('wheel', (e) => {
+          e.preventDefault();
+          const delta = e.deltaY < 0 ? 0.02 : -0.02;
+          it.scale = Math.max(0.2, Math.min(5, (it.scale || 1) + delta));
+          applyDesignTransform(el, it); // live update without a full re-render
+          renderProps();
+          setStatus(it.id + '.scale = ' + it.scale.toFixed(2));
+        }, { passive: false });
       }
 
       attachShapeDragHandler(el, it);
@@ -1371,6 +1451,27 @@
       box.style.top = el.y + 'px';
       box.dataset.id = el.id;
 
+      // ── Arched display text (mirror renderTextLayer's ArchedHeadline) ──────
+      // When `arch` is set the text rides a curved SVG <textPath> baseline
+      // (+depth = dome, -depth = bowl). Build the same SVG the renderer does so
+      // the preview matches; the box stays the draggable selection handle.
+      if (el.arch != null) {
+        const aw = el.width || 1080;
+        box.style.width = aw + 'px';
+        box.style.overflow = 'visible';
+        if (el.transform != null) {
+          box.style.transform = el.transform;
+          if (el.transformOrigin != null) box.style.transformOrigin = el.transformOrigin;
+        }
+        box.innerHTML = archSvg(el, aw);
+        const atag = document.createElement('span');
+        atag.className = 'label-tag';
+        atag.textContent = el.label || el.id;
+        box.appendChild(atag);
+        attachDragHandler(box, el);
+        return box;
+      }
+
       // Optional logo placeholder (for elements that show a logo before text)
       if (el.logoOffsetW) {
         const logoSize = (el.fontSize || 40);
@@ -1400,7 +1501,41 @@
         text.style.webkitTextStroke = el.strokeWidth + 'px ' + (el.strokeColor || '#ffffff');
         text.style.WebkitTextStroke = el.strokeWidth + 'px ' + (el.strokeColor || '#ffffff');
       }
-      text.textContent = el.text || el.label || el.id;
+      // Mirror renderTextLayer's remaining style fields so the preview matches
+      // the render: a full-width box + alignment (so centered/right headlines
+      // actually center), italic, text-shadow, filter, a skew/rotate transform
+      // (on the box, which is the positioned element), and photo-filled glyphs
+      // (background-clip:text). All inert when absent → plain text unchanged.
+      if (el.width != null) box.style.width = el.width + 'px';
+      if (el.textAlign != null) text.style.textAlign = el.textAlign;
+      if (el.fontStyle != null) text.style.fontStyle = el.fontStyle;
+      if (el.textShadow != null) text.style.textShadow = el.textShadow;
+      if (el.filter != null) text.style.filter = el.filter;
+      if (el.transform != null) {
+        box.style.transform = el.transform;
+        if (el.transformOrigin != null) box.style.transformOrigin = el.transformOrigin;
+      }
+      if (el.imageFill != null) {
+        const fillUrl = '/templates/multi-sport-foundations/' + el.imageFill.replace(/^\.\//, '');
+        text.style.backgroundImage = 'url("' + fillUrl + '")';
+        text.style.backgroundSize = el.backgroundSize || 'cover';
+        text.style.backgroundPosition = el.backgroundPosition || 'center';
+        text.style.backgroundRepeat = el.backgroundRepeat || 'no-repeat';
+        text.style.webkitBackgroundClip = 'text';
+        text.style.backgroundClip = 'text';
+        text.style.webkitTextFillColor = 'transparent';
+        text.style.color = 'transparent';
+      }
+      // Optional tiled/repeated watermark: mirror renderTextLayer — repeat the
+      // text on `repeat` stacked lines so a tagged microscript fills the
+      // background "all the way down". Default whiteSpace to 'pre' when the
+      // element doesn't set it, so the newline-joined rows actually break.
+      let content = el.text || el.label || el.id;
+      if (el.repeat && el.repeat > 1) {
+        content = Array.from({ length: el.repeat }, () => (el.text || '')).join('\n');
+        if (el.whiteSpace == null) text.style.whiteSpace = 'pre';
+      }
+      text.textContent = content;
       box.appendChild(text);
 
       // Label tag
@@ -1411,6 +1546,45 @@
 
       attachDragHandler(box, el);
       return box;
+    }
+
+    // Mirror _helpers.jsx ArchedHeadline: lay the text on a quadratic-curve
+    // baseline via SVG <textPath>. Numeric arch = curve depth (+dome / -bowl);
+    // preset names map to the same depths the renderer uses. Uses Anton
+    // (FONT_DISPLAY) like the renderer, regardless of el.fontFamily.
+    function archSvg(el, width) {
+      const fontSize = el.fontSize || 160;
+      const padX = Math.max(20, fontSize * 0.15);
+      const presets = { flat: 0, low: 0.25, med: 0.45, high: 0.7, extreme: 1.0 };
+      const archDepth = typeof el.arch === 'number'
+        ? el.arch
+        : (presets[el.arch] != null ? presets[el.arch] : 0.45);
+      const baselineY = fontSize * 1.18;
+      const peakY = baselineY - fontSize * archDepth;
+      const pathD = 'M ' + padX + ' ' + baselineY + ' Q ' + (width / 2) + ' ' + peakY + ' ' + (width - padX) + ' ' + baselineY;
+      const svgHeight = baselineY + fontSize * 0.4;
+      const id = 'arc-' + String(el.id || el.text || '').replace(/[^a-z0-9]/gi, '');
+      const glow = !!el.glow;
+      // `shadow` may be a string (verbatim CSS filter — matches a Canva export's
+      // baked offset-shadow "layer"), true (subtle built-in), or false (none).
+      const shadow = el.shadow != null ? el.shadow : true;
+      const filter = glow
+        ? 'drop-shadow(0 0 14px #c4141d) drop-shadow(0 4px 14px rgba(0,0,0,0.55))'
+        : (typeof shadow === 'string' ? shadow
+          : (shadow ? 'drop-shadow(0 3px 10px rgba(0,0,0,0.45))' : 'none'));
+      const color = el.color || '#ffffff';
+      // Canonical stroke-width key is `strokeWidth` (what the props panel writes);
+      // fall back to the legacy `stroke` key. Mirrors _helpers.jsx renderTextLayer.
+      const stroke = el.strokeWidth != null ? el.strokeWidth : (el.stroke || 0);
+      const strokeColor = el.strokeColor || color;
+      const fontWeight = el.fontWeight != null ? el.fontWeight : 400;
+      const letterSpacing = el.letterSpacing != null ? el.letterSpacing : '-0.01em';
+      const strokeAttrs = stroke ? ' stroke="' + strokeColor + '" stroke-width="' + stroke + '"' : '';
+      return '<svg width="' + width + '" height="' + svgHeight + '" viewBox="0 0 ' + width + ' ' + svgHeight + '" style="display:block;overflow:visible">'
+        + '<defs><path id="' + id + '" d="' + pathD + '" fill="none"></path></defs>'
+        + '<text fill="' + color + '"' + strokeAttrs + ' font-family="\'Anton\',\'Oswald\',sans-serif" font-size="' + fontSize + '" font-weight="' + fontWeight + '" letter-spacing="' + letterSpacing + '" style="filter:' + filter + ';text-transform:uppercase;paint-order:stroke">'
+        + '<textPath href="#' + id + '" startOffset="50%" text-anchor="middle">' + escapeHtml(el.text || '') + '</textPath>'
+        + '</text></svg>';
     }
 
     function escapeHtml(s) {
@@ -1576,6 +1750,12 @@
       $('propTextTransform').value = el.textTransform != null ? el.textTransform : '';
       $('propStrokeWidth').value = el.strokeWidth != null ? el.strokeWidth : '';
       $('propStrokeColor').value = el.strokeColor != null ? el.strokeColor : '';
+      $('propOutlineOnly').checked = isOutlineOnly(el);
+    }
+    // Outline-only = transparent/none fill (the visible stroke is the outline).
+    function isOutlineOnly(el) {
+      const c = String(el.color || '').trim().toLowerCase();
+      return c === 'transparent' || c === 'none' || c === 'rgba(0,0,0,0)';
     }
 
     // ---- Shape opacity ("see-through") helpers ----
@@ -1620,7 +1800,11 @@
           txt('label', 'label'));
       } else if (shape.type === 'image') {
         fields.push(num('width', 'width'), num('height', 'height'), txt('src', 'src'),
-          txt('objectFit', 'objectFit'));
+          txt('objectFit', 'objectFit'),
+          // Centered zoom — type a multiplier or scroll-wheel over the image on
+          // the stage. 1 = native; >1 enlarges about center to pair a cutout
+          // with the photo behind it. step 0.05 makes the steppers usable.
+          '<div class="field"><label>scale (zoom)</label><input type="number" step="0.05" data-skey="scale" /></div>');
       }
       // Opacity ("see-through") stepper. − / + adjust in 5% steps; for an rgba
       // fill this edits the fill alpha (the real knob). Keyboard +/- does the
@@ -1795,6 +1979,26 @@
     bindPropInput('propTextTransform', 'textTransform', String);
     bindPropInput('propStrokeWidth', 'strokeWidth', (v) => parseInt(v, 10));
     bindPropInput('propStrokeColor', 'strokeColor', String);
+
+    // Outline-only toggle: transparent fill + a visible white stroke (knockout
+    // outline). On → remember nothing fancy, just blank the fill and ensure a
+    // stroke; off → restore a solid white fill.
+    $('propOutlineOnly').addEventListener('change', () => {
+      const el = (state.config.elements || []).find(e => e.id === state.selectedId);
+      if (!el) return;
+      if ($('propOutlineOnly').checked) {
+        el.color = 'transparent';
+        if (!el.strokeWidth) el.strokeWidth = 5;
+        if (!el.strokeColor) el.strokeColor = '#ffffff';
+      } else {
+        el.color = '#ffffff';
+      }
+      renderStage(); renderProps();
+    });
+    // One-click split: solid copy behind the subject + white outline in front.
+    $('splitSolidOutlineBtn').onclick = () => {
+      if (state.config && state.selectedId) splitSolidOutline(state.selectedId);
+    };
 
     // Add-layer buttons
     $('addTextBtn').onclick = () => { if (state.config) addText(); };
