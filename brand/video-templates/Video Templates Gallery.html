@@ -1,0 +1,1238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>AA · Video Templates Gallery</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="assets/aa-tokens.css"/>
+<style>
+  html, body {
+    margin: 0; padding: 0;
+    background: #0a0b0d;
+    color: #f6f7f9;
+    font-family: var(--font-body);
+    min-height: 100vh;
+  }
+  * { box-sizing: border-box; }
+
+  .page {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 48px 32px 96px;
+  }
+
+  /* ── Top header ───────────────────────────── */
+  .topbar {
+    display: flex; align-items: center; gap: 16px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .topbar img { width: 56px; height: 56px; object-fit: contain; }
+  .topbar .wordmark {
+    font-family: var(--font-display);
+    font-size: 36px; line-height: 0.9;
+    letter-spacing: 0.005em;
+    color: #fff;
+  }
+  .topbar .wordmark span { color: var(--aa-red-600); }
+  .topbar .right {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--aa-ink-400);
+    letter-spacing: 0.14em;
+  }
+
+  /* ── Page title ───────────────────────────── */
+  .title-block {
+    padding: 56px 0 32px;
+  }
+  .title-block .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--aa-red-600);
+    letter-spacing: 0.18em;
+    margin-bottom: 16px;
+  }
+  .title-block h1 {
+    font-family: var(--font-display);
+    font-size: 120px;
+    line-height: 0.85;
+    color: #fff;
+    letter-spacing: -0.005em;
+    margin: 0;
+  }
+  .title-block h1 .accent { color: var(--aa-red-600); }
+  .title-block .lead {
+    margin-top: 28px;
+    max-width: 760px;
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--aa-ink-300);
+  }
+  .stat-row {
+    display: flex; gap: 32px;
+    margin-top: 32px;
+    padding: 20px 0;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-family: var(--font-mono);
+  }
+  .stat-row .stat {
+    display: flex; gap: 12px; align-items: baseline;
+  }
+  .stat-row .num {
+    font-size: 28px; font-weight: 700;
+    color: var(--aa-red-600);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-row .lbl {
+    font-size: 12px; letter-spacing: 0.12em;
+    color: var(--aa-ink-400);
+  }
+
+  /* ── Section ──────────────────────────────── */
+  section.group {
+    padding-top: 72px;
+  }
+  .group-header {
+    display: flex; align-items: baseline; gap: 24px;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .group-header .num {
+    font-family: var(--font-display);
+    font-size: 64px;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--aa-red-600);
+    line-height: 0.85;
+    font-variant-numeric: tabular-nums;
+  }
+  .group-header .title {
+    font-family: var(--font-display);
+    font-size: 56px; color: #fff; line-height: 0.9;
+    letter-spacing: 0.005em;
+  }
+  .group-header .meta {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--aa-ink-400);
+    letter-spacing: 0.12em;
+    text-align: right;
+  }
+  .group-header .meta .count {
+    color: var(--aa-red-600);
+    font-weight: 700;
+  }
+
+  /* ── Card grids ──────────────────────────── */
+  .grid {
+    display: grid;
+    gap: 28px;
+  }
+  .grid.reels {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .grid.squares {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .grid.horizontals {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 1100px) {
+    .grid.reels { grid-template-columns: repeat(3, 1fr); }
+    .grid.squares { grid-template-columns: repeat(2, 1fr); }
+    .grid.horizontals { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 720px) {
+    .grid.reels { grid-template-columns: repeat(2, 1fr); }
+    .grid.squares { grid-template-columns: repeat(1, 1fr); }
+    .grid.horizontals { grid-template-columns: repeat(1, 1fr); }
+  }
+
+  .card {
+    position: relative;
+    background: #0a0b0d;
+    border: 1px solid rgba(255,255,255,0.08);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 200ms cubic-bezier(0.2, 0.7, 0.2, 1),
+                border 200ms,
+                box-shadow 200ms;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(196,20,29,0.6);
+    box-shadow: 0 16px 48px rgba(196,20,29,0.18);
+  }
+  .card .video-area {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: #15171a;
+  }
+  .card.reel .video-area { aspect-ratio: 9 / 16; }
+  .card.square .video-area { aspect-ratio: 1 / 1; }
+  .card.horizontal .video-area { aspect-ratio: 16 / 9; }
+
+  .card .info {
+    padding: 14px 16px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .card .info .name {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: 0.01em;
+  }
+  .card .info .desc {
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--aa-ink-400);
+    text-transform: uppercase;
+  }
+  .card .info .spec {
+    margin-top: 8px;
+    display: flex; gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--aa-ink-500);
+    letter-spacing: 0.1em;
+  }
+  .card .info .spec span:first-child { color: var(--aa-red-600); font-weight: 700; }
+
+  .card .expand-hint {
+    position: absolute;
+    top: 12px; right: 12px;
+    width: 32px; height: 32px;
+    background: rgba(10,11,13,0.7);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.18);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    opacity: 0;
+    transition: opacity 200ms;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .card:hover .expand-hint { opacity: 1; }
+  .card .expand-hint svg { width: 14px; height: 14px; }
+
+  /* Big "VIEW LARGE" overlay on hover */
+  .card .hover-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(196,20,29,0.85);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+    transition: opacity 200ms;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .card:hover .hover-overlay { opacity: 1; }
+  .card .hover-overlay .play-icon {
+    width: 64px; height: 64px;
+    background: #fff;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .card .hover-overlay .play-icon::after {
+    content: "";
+    width: 0; height: 0;
+    border-left: 18px solid var(--aa-red-600);
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    margin-left: 4px;
+  }
+
+  /* ── Modal ────────────────────────────────── */
+  .modal-bg {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(16px);
+    z-index: 999;
+    display: flex; align-items: center; justify-content: center;
+    padding: 40px;
+  }
+  .modal-card {
+    position: relative;
+    display: flex; flex-direction: column;
+  }
+  .modal-header {
+    display: flex; align-items: baseline; gap: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    margin-bottom: 16px;
+  }
+  .modal-header .name {
+    font-family: var(--font-display);
+    font-size: 40px; color: #fff; line-height: 0.9;
+  }
+  .modal-header .desc {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--aa-ink-400);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .modal-header .close {
+    margin-left: auto;
+    width: 40px; height: 40px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-header .close:hover {
+    background: var(--aa-red-600);
+    border-color: var(--aa-red-600);
+  }
+  .modal-stage-wrap {
+    position: relative;
+    background: #15171a;
+    overflow: hidden;
+  }
+
+  /* Hide the actual video-caption inside Stage when inside a card */
+  .card .video-caption { display: none; }
+
+  /* ── Tweaks panel ─────────────────────────── */
+  .tp-panel {
+    width: 360px; flex-shrink: 0;
+    background: rgba(15,17,21,0.95);
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex; flex-direction: column;
+    max-height: 100%;
+  }
+  .tp-header {
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;
+    padding: 18px 20px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .tp-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px; color: var(--aa-red-600);
+    letter-spacing: 0.16em; margin-bottom: 4px;
+  }
+  .tp-title {
+    font-family: var(--font-display);
+    font-size: 26px; color: #fff; line-height: 0.9;
+  }
+  .tp-reset {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.18);
+    color: var(--aa-ink-300);
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.12em;
+    padding: 6px 10px;
+    cursor: pointer;
+  }
+  .tp-reset:hover {
+    border-color: var(--aa-red-600);
+    color: var(--aa-red-600);
+  }
+  .tp-fields {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px 20px;
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .tp-fields::-webkit-scrollbar { width: 6px; }
+  .tp-fields::-webkit-scrollbar-track { background: transparent; }
+  .tp-fields::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+  .tp-field-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 6px; gap: 8px;
+  }
+  .tp-field-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--aa-ink-300);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .tp-field-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--aa-ink-500);
+    letter-spacing: 0.08em;
+  }
+  .tp-input {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    padding: 9px 11px;
+    box-sizing: border-box;
+  }
+  .tp-input:focus {
+    outline: none;
+    border-color: var(--aa-red-600);
+    background: rgba(255,255,255,0.06);
+  }
+  .tp-textarea { resize: vertical; min-height: 60px; line-height: 1.4; }
+  .tp-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='%23969ca7'><polygon points='1,3 9,3 5,8'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+    padding-right: 28px;
+  }
+  .tp-number { font-variant-numeric: tabular-nums; }
+  .tp-image {
+    position: relative;
+    width: 100%; aspect-ratio: 16 / 10;
+    background: rgba(255,255,255,0.04);
+    border: 1px dashed rgba(255,255,255,0.2);
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .tp-image.is-over {
+    border-color: var(--aa-red-600);
+    background: rgba(196,20,29,0.08);
+  }
+  .tp-image img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .tp-image-overlay {
+    position: absolute; inset: 0;
+    display: flex; align-items: flex-end;
+    padding: 8px;
+    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.6) 100%);
+  }
+  .tp-image-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: #fff;
+    letter-spacing: 0.1em;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  }
+  .tp-image-reset {
+    position: absolute; top: 6px; right: 6px;
+    width: 22px; height: 22px;
+    background: rgba(10,11,13,0.85);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 16px; line-height: 1;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0;
+  }
+  .tp-image-reset:hover { background: var(--aa-red-600); border-color: var(--aa-red-600); }
+  .tp-footer {
+    padding: 12px 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .tp-footer-mono {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--aa-ink-500);
+    letter-spacing: 0.12em;
+  }
+
+  /* ── Sliders + trim controls ──────────────── */
+  .tp-slider-row { display: flex; align-items: center; gap: 12px; }
+  .tp-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background: rgba(255,255,255,0.12);
+    outline: none;
+    cursor: pointer;
+  }
+  .tp-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px; height: 16px;
+    background: var(--aa-red-600);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .tp-slider::-moz-range-thumb {
+    width: 16px; height: 16px;
+    background: var(--aa-red-600);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+  }
+  .tp-slider-value {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+    width: 48px; text-align: right;
+  }
+  .tp-media { display: flex; flex-direction: column; gap: 12px; }
+  .tp-trim {
+    padding: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .tp-trim-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 14px;
+  }
+  .tp-trim-head-left {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .tp-trim-applied {
+    display: flex; align-items: center; gap: 6px;
+    padding: 3px 8px;
+    background: rgba(21,163,74,0.12);
+    border: 1px solid rgba(21,163,74,0.4);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: #4ade80;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  .tp-trim-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 6px rgba(74,222,128,0.7);
+    animation: tp-pulse 2s ease-in-out infinite;
+  }
+  @keyframes tp-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+  .tp-trim-audio {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .tp-trim-audio-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--aa-ink-300);
+    letter-spacing: 0.16em;
+    margin-bottom: 8px;
+  }
+  .tp-trim-audio-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .tp-trim-audio-btn {
+    padding: 8px 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.14);
+    color: var(--aa-ink-300);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .tp-trim-audio-btn:hover {
+    background: rgba(255,255,255,0.07);
+    color: #fff;
+  }
+  .tp-trim-audio-btn.is-active {
+    background: var(--aa-red-600);
+    border-color: var(--aa-red-600);
+    color: #fff;
+  }
+  .tp-trim-audio-hint {
+    margin-top: 8px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--aa-warning);
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+  .tp-trim-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--aa-red-600);
+    letter-spacing: 0.16em;
+    font-weight: 700;
+  }
+  .tp-trim-play {
+    padding: 5px 10px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+  }
+  .tp-trim-play:hover { background: var(--aa-red-600); border-color: var(--aa-red-600); }
+  .tp-trim-track {
+    position: relative;
+    width: 100%;
+    height: 56px;
+    background: #0a0b0d;
+    border: 1px solid rgba(255,255,255,0.12);
+    user-select: none;
+    touch-action: none;
+    margin-bottom: 10px;
+  }
+  .tp-trim-tick {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: rgba(255,255,255,0.08);
+    pointer-events: none;
+  }
+  .tp-trim-tick:first-child, .tp-trim-tick:last-child { background: rgba(255,255,255,0.16); }
+  .tp-trim-tick-label {
+    position: absolute;
+    bottom: 2px; left: 3px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+  }
+  .tp-trim-window {
+    position: absolute;
+    top: 4px; bottom: 4px;
+    background: rgba(196,20,29,0.35);
+    border: 2px solid var(--aa-red-600);
+    cursor: grab;
+    box-shadow: 0 2px 12px rgba(196,20,29,0.4);
+    display: flex; align-items: center; justify-content: center;
+    box-sizing: border-box;
+  }
+  .tp-trim-window:active { cursor: grabbing; }
+  .tp-trim-window-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    font-variant-numeric: tabular-nums;
+    pointer-events: none;
+  }
+  .tp-trim-resize {
+    position: absolute;
+    top: -2px; bottom: -2px;
+    right: -7px;
+    width: 14px;
+    background: var(--aa-red-600);
+    cursor: ew-resize;
+    border: 2px solid #fff;
+    box-sizing: border-box;
+  }
+  .tp-trim-resize::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px; height: 14px;
+    background: #fff;
+    box-shadow: 4px 0 0 #fff, -4px 0 0 #fff;
+  }
+  .tp-trim-scrub {
+    position: absolute;
+    top: -4px; bottom: -4px;
+    width: 2px;
+    background: #fff;
+    box-shadow: 0 0 8px rgba(255,255,255,0.6);
+    pointer-events: none;
+    transform: translateX(-50%);
+  }
+  .tp-trim-info {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+  .tp-trim-info-cell {
+    padding: 6px 8px;
+    background: rgba(255,255,255,0.04);
+    border-left: 2px solid var(--aa-red-600);
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .tp-trim-info-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.12em;
+  }
+  .tp-trim-info-value {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: #fff;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .tp-trim-hint {
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+
+  /* ── Storage banner ─────────────────── */
+  .tp-storage-banner {
+    margin: 12px 20px 0;
+    padding: 10px 12px;
+    background: rgba(245,158,11,0.12);
+    border: 1px solid rgba(245,158,11,0.4);
+    color: #fbbf24;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+  }
+  .tp-storage-banner.is-error {
+    background: rgba(196,20,29,0.14);
+    border-color: rgba(196,20,29,0.5);
+    color: #ff8e8e;
+  }
+
+  /* ── Editable badge on cards ─────────────── */
+  .card .editable-badge {
+    position: absolute;
+    top: 12px; left: 12px;
+    padding: 4px 8px;
+    background: var(--aa-red-600);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    z-index: 3;
+  }
+
+  /* ── Sub-groups inside REELS section ── */
+  .sub-group { margin-bottom: 56px; }
+  .sub-group:last-child { margin-bottom: 0; }
+  .sub-header {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed rgba(255,255,255,0.1);
+  }
+  .sub-label {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--aa-red-600);
+    letter-spacing: 0.18em;
+    font-weight: 700;
+  }
+  .sub-count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--aa-ink-400);
+    letter-spacing: 0.12em;
+  }
+
+  /* ── Footer ──────────────────────────────── */
+  footer {
+    margin-top: 96px;
+    padding-top: 48px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; gap: 24px;
+  }
+  footer .left {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--aa-ink-400);
+    letter-spacing: 0.1em;
+  }
+  footer .right {
+    margin-left: auto;
+    font-family: var(--font-display);
+    font-size: 28px;
+    color: #fff;
+    line-height: 0.9;
+  }
+  footer .right span { color: var(--aa-red-600); }
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="animations.jsx"></script>
+<script type="text/babel" src="editing.jsx"></script>
+
+<script type="text/babel" src="elements/velocity-meter.jsx"></script>
+<script type="text/babel" src="elements/sprint-trace.jsx"></script>
+<script type="text/babel" src="elements/scoreboard.jsx"></script>
+<script type="text/babel" src="elements/calendar-fill.jsx"></script>
+<script type="text/babel" src="elements/slot-roll.jsx"></script>
+<script type="text/babel" src="elements/live-poll.jsx"></script>
+<script type="text/babel" src="elements/caption-bars.jsx"></script>
+<script type="text/babel" src="elements/audio-waveform.jsx"></script>
+<script type="text/babel" src="elements/anatomy-callouts.jsx"></script>
+<script type="text/babel" src="elements/leaderboard.jsx"></script>
+<script type="text/babel" src="elements/trajectory-arc.jsx"></script>
+<script type="text/babel" src="elements/tier-list.jsx"></script>
+<script type="text/babel" src="elements/hr-zones.jsx"></script>
+<script type="text/babel" src="elements/comic-panels.jsx"></script>
+<script type="text/babel" src="elements/stopwatch.jsx"></script>
+<script type="text/babel" src="elements/bracket.jsx"></script>
+<script type="text/babel" src="elements/comparison-slider.jsx"></script>
+<script type="text/babel" src="elements/radar-chart.jsx"></script>
+<script type="text/babel" src="elements/star-rating.jsx"></script>
+<script type="text/babel" src="elements/macro-ring.jsx"></script>
+<script type="text/babel" src="elements/confetti-burst.jsx"></script>
+<script type="text/babel" src="elements/streak-flame.jsx"></script>
+
+<script type="text/babel" src="templates/pr-alert.jsx"></script>
+<script type="text/babel" src="templates/countdown.jsx"></script>
+<script type="text/babel" src="templates/athlete-spotlight.jsx"></script>
+<script type="text/babel" src="templates/workout-of-week.jsx"></script>
+<script type="text/babel" src="templates/drill-howto.jsx"></script>
+<script type="text/babel" src="templates/before-after.jsx"></script>
+<script type="text/babel" src="templates/story-poll.jsx"></script>
+<script type="text/babel" src="templates/stat-reveal.jsx"></script>
+<script type="text/babel" src="templates/quote-card.jsx"></script>
+<script type="text/babel" src="templates/hype-intro.jsx"></script>
+<script type="text/babel" src="templates/coach-lower-thirds.jsx"></script>
+<script type="text/babel" src="templates/logo-sting.jsx"></script>
+
+<script type="text/babel" src="templates/schedule-drop.jsx"></script>
+<script type="text/babel" src="templates/drill-of-day.jsx"></script>
+<script type="text/babel" src="templates/meet-coach.jsx"></script>
+<script type="text/babel" src="templates/open-house.jsx"></script>
+<script type="text/babel" src="templates/pricing-tiers.jsx"></script>
+<script type="text/babel" src="templates/results-recap.jsx"></script>
+<script type="text/babel" src="templates/camp-announce.jsx"></script>
+<script type="text/babel" src="templates/year-in-review.jsx"></script>
+
+<script type="text/babel" src="templates/vbt-bar-speed.jsx"></script>
+<script type="text/babel" src="templates/sprint-breakdown.jsx"></script>
+<script type="text/babel" src="templates/gameday-recap.jsx"></script>
+<script type="text/babel" src="templates/thirty-day-challenge.jsx"></script>
+<script type="text/babel" src="templates/pick-workout.jsx"></script>
+<script type="text/babel" src="templates/hot-take.jsx"></script>
+
+<script type="text/babel" src="templates/coach-pov.jsx"></script>
+<script type="text/babel" src="templates/three-mistakes.jsx"></script>
+<script type="text/babel" src="templates/voiceover-stack.jsx"></script>
+<script type="text/babel" src="templates/anatomy-lesson.jsx"></script>
+<script type="text/babel" src="templates/manifesto.jsx"></script>
+<script type="text/babel" src="templates/myth-vs-truth.jsx"></script>
+
+<script type="text/babel" src="templates/top10-leaderboard.jsx"></script>
+<script type="text/babel" src="templates/play-of-week.jsx"></script>
+<script type="text/babel" src="templates/position-rankings.jsx"></script>
+<script type="text/babel" src="templates/reaction-stitch.jsx"></script>
+<script type="text/babel" src="templates/carousel-story.jsx"></script>
+<script type="text/babel" src="templates/limited-spots.jsx"></script>
+
+<script type="text/babel" src="templates/heart-rate-story.jsx"></script>
+<script type="text/babel" src="templates/comic-lesson.jsx"></script>
+<script type="text/babel" src="templates/beat-the-clock.jsx"></script>
+<script type="text/babel" src="templates/qa-card.jsx"></script>
+<script type="text/babel" src="templates/last-day-offer.jsx"></script>
+<script type="text/babel" src="templates/day-at-aa.jsx"></script>
+
+<script type="text/babel" src="templates/bracket-reel.jsx"></script>
+<script type="text/babel" src="templates/us-vs-them.jsx"></script>
+<script type="text/babel" src="templates/athlete-profile.jsx"></script>
+<script type="text/babel" src="templates/two-truths-lie.jsx"></script>
+<script type="text/babel" src="templates/did-you-know.jsx"></script>
+<script type="text/babel" src="templates/referral-hero.jsx"></script>
+<script type="text/babel" src="templates/origin-story.jsx"></script>
+
+<script type="text/babel" src="templates/stat-reveal-reel.jsx"></script>
+<script type="text/babel" src="templates/quote-card-reel.jsx"></script>
+<script type="text/babel" src="templates/results-recap-reel.jsx"></script>
+<script type="text/babel" src="templates/camp-announce-reel.jsx"></script>
+<script type="text/babel" src="templates/hype-intro-reel.jsx"></script>
+<script type="text/babel" src="templates/coach-lt-reel.jsx"></script>
+<script type="text/babel" src="templates/logo-sting-reel.jsx"></script>
+<script type="text/babel" src="templates/year-in-review-reel.jsx"></script>
+
+<script type="text/babel" src="templates/signing-day.jsx"></script>
+<script type="text/babel" src="templates/committed.jsx"></script>
+<script type="text/babel" src="templates/fuel-up.jsx"></script>
+<script type="text/babel" src="templates/recovery-tip.jsx"></script>
+<script type="text/babel" src="templates/athlete-birthday.jsx"></script>
+<script type="text/babel" src="templates/welcome-athlete.jsx"></script>
+<script type="text/babel" src="templates/member-milestone.jsx"></script>
+<script type="text/babel" src="templates/now-hiring.jsx"></script>
+<script type="text/babel" src="templates/five-star-review.jsx"></script>
+<script type="text/babel" src="templates/review-roundup.jsx"></script>
+<script type="text/babel" src="templates/back-to-school.jsx"></script>
+<script type="text/babel" src="templates/holiday-hours.jsx"></script>
+<script type="text/babel" src="templates/new-year.jsx"></script>
+
+<script type="text/babel">
+const { TimelineContext, Stage } = window;
+
+// ── MiniStage: lightweight, no-chrome version of Stage for card previews ──
+// Auto-loops, no playback bar, no scrubber. Scales the native canvas to
+// fit the parent. Used inside each gallery card.
+function MiniStage({ width, height, duration, children }) {
+  const [time, setTime] = React.useState(0);
+  const containerRef = React.useRef(null);
+  const [scale, setScale] = React.useState(1);
+  const rafRef = React.useRef(null);
+  const lastTsRef = React.useRef(null);
+
+  React.useEffect(() => {
+    const step = (ts) => {
+      if (lastTsRef.current == null) lastTsRef.current = ts;
+      const dt = (ts - lastTsRef.current) / 1000;
+      lastTsRef.current = ts;
+      setTime((t) => (t + dt) % duration);
+      rafRef.current = requestAnimationFrame(step);
+    };
+    rafRef.current = requestAnimationFrame(step);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      lastTsRef.current = null;
+    };
+  }, [duration]);
+
+  React.useEffect(() => {
+    if (!containerRef.current) return;
+    const el = containerRef.current;
+    const measure = () => {
+      const s = Math.min(el.clientWidth / width, el.clientHeight / height);
+      setScale(s);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [width, height]);
+
+  const ctxValue = React.useMemo(
+    () => ({ time, duration, playing: true, setTime: () => {}, setPlaying: () => {} }),
+    [time, duration]
+  );
+
+  return (
+    <div ref={containerRef} style={{
+      position: 'absolute', inset: 0, overflow: 'hidden',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+    }}>
+      <div style={{
+        width, height,
+        position: 'relative',
+        transform: `scale(${scale})`,
+        transformOrigin: 'center',
+        flexShrink: 0,
+      }}>
+        <TimelineContext.Provider value={ctxValue}>
+          {children}
+        </TimelineContext.Provider>
+      </div>
+    </div>
+  );
+}
+
+// ── Catalog ──────────────────────────────────
+const REELS = [
+  { id: 'pr-alert',     name: 'PR ALERT',           desc: 'Celebrate a personal record',     dur: 6, w: 1080, h: 1920, Comp: window.PRAlertReel, spec: window.PR_ALERT_SPEC, category: 'highlight' },
+  { id: 'countdown',    name: 'COUNTDOWN',          desc: 'Event / launch / camp counter',   dur: 7, w: 1080, h: 1920, Comp: window.CountdownReel, spec: window.COUNTDOWN_SPEC, category: 'promo' },
+  { id: 'spotlight',    name: 'ATHLETE SPOTLIGHT',  desc: '90-day measurable gains',         dur: 8, w: 1080, h: 1920, Comp: window.AthleteSpotlightReel, spec: window.ATHLETE_SPOTLIGHT_SPEC, category: 'highlight' },
+  { id: 'workout',      name: 'WORKOUT OF THE WEEK', desc: 'Programming preview',            dur: 8, w: 1080, h: 1920, Comp: window.WorkoutOfWeekReel, spec: window.WORKOUT_SPEC, category: 'edu' },
+  { id: 'drill-howto',  name: 'DRILL HOW-TO',       desc: 'Teach technique in 3 cues',       dur: 8, w: 1080, h: 1920, Comp: window.DrillHowToReel, spec: window.DRILL_HOWTO_SPEC, category: 'edu' },
+  { id: 'before-after', name: 'BEFORE / AFTER',     desc: '90-day transformation reveal',    dur: 6, w: 1080, h: 1920, Comp: window.BeforeAfterReel, spec: window.BEFORE_AFTER_SPEC, category: 'highlight' },
+  { id: 'story-poll',   name: 'STORY POLL',         desc: 'IG / TikTok engagement driver',   dur: 7, w: 1080, h: 1920, Comp: window.StoryPollReel, spec: window.STORY_POLL_SPEC, category: 'engage' },
+  { id: 'schedule',     name: 'SCHEDULE DROP',      desc: "This week's classes",             dur: 7, w: 1080, h: 1920, Comp: window.ScheduleDropReel, spec: window.SCHEDULE_DROP_SPEC, category: 'promo' },
+  { id: 'drill-of-day', name: 'DRILL OF THE DAY',   desc: 'Single-drill spotlight',          dur: 7, w: 1080, h: 1920, Comp: window.DrillOfDayReel, spec: window.DRILL_OF_DAY_SPEC, category: 'edu' },
+  { id: 'meet-coach',   name: 'MEET THE COACH',     desc: 'Staff intro card',                dur: 8, w: 1080, h: 1920, Comp: window.MeetCoachReel, spec: window.MEET_COACH_SPEC, category: 'talking' },
+  { id: 'open-house',   name: 'OPEN HOUSE',         desc: 'Location reveal / grand opening', dur: 7, w: 1080, h: 1920, Comp: window.OpenHouseReel, spec: window.OPEN_HOUSE_SPEC, category: 'promo' },
+  { id: 'pricing',      name: 'PRICING TIERS',      desc: 'Three-package sales reel',        dur: 8, w: 1080, h: 1920, Comp: window.PricingTiersReel, spec: window.PRICING_TIERS_SPEC, category: 'promo' },
+  { id: 'vbt-bar-speed',       name: 'VBT BAR SPEED',       desc: 'Velocity meter · educational',         dur: 7, w: 1080, h: 1920, Comp: window.VBTBarSpeedReel,        spec: window.VBT_BAR_SPEED_SPEC, category: 'edu' },
+  { id: 'sprint-breakdown',    name: 'SPRINT BREAKDOWN',    desc: 'Speed-curve graph · educational',      dur: 8, w: 1080, h: 1920, Comp: window.SprintBreakdownReel,    spec: window.SPRINT_BREAKDOWN_SPEC, category: 'edu' },
+  { id: 'gameday-recap',       name: 'GAME DAY RECAP',      desc: 'LED scoreboard · weekend wins',        dur: 7, w: 1080, h: 1920, Comp: window.GameDayRecapReel,       spec: window.GAMEDAY_RECAP_SPEC, category: 'highlight' },
+  { id: 'thirty-day-challenge', name: '30 DAY CHALLENGE',   desc: 'Calendar fill · consistency',          dur: 8, w: 1080, h: 1920, Comp: window.ThirtyDayChallengeReel, spec: window.THIRTY_DAY_CHALLENGE_SPEC, category: 'promo' },
+  { id: 'pick-workout',        name: 'PICK YOUR WORKOUT',   desc: 'Slot machine · daily workout',         dur: 7, w: 1080, h: 1920, Comp: window.PickYourWorkoutReel,    spec: window.PICK_WORKOUT_SPEC, category: 'engage' },
+  { id: 'hot-take',            name: 'HOT TAKE',            desc: 'Live poll · engagement bait',          dur: 7, w: 1080, h: 1920, Comp: window.HotTakeReel,            spec: window.HOT_TAKE_SPEC, category: 'engage' },
+  { id: 'coach-pov',           name: 'COACH POV',           desc: 'Talking head · caption bars',          dur: 7, w: 1080, h: 1920, Comp: window.CoachPOVReel,           spec: window.COACH_POV_SPEC, category: 'talking' },
+  { id: 'three-mistakes',      name: '3 MISTAKES',          desc: 'Educational · wrong vs right',         dur: 7, w: 1080, h: 1920, Comp: window.ThreeMistakesReel,      spec: window.THREE_MISTAKES_SPEC, category: 'edu' },
+  { id: 'voiceover-stack',     name: 'VOICEOVER STACK',     desc: 'Voiceover-ready · 4 stat stack',       dur: 8, w: 1080, h: 1920, Comp: window.VoiceoverStackReel,     spec: window.VOICEOVER_STACK_SPEC, category: 'talking' },
+  { id: 'anatomy-lesson',      name: 'ANATOMY LESSON',      desc: 'Body diagram · educational',           dur: 8, w: 1080, h: 1920, Comp: window.AnatomyLessonReel,      spec: window.ANATOMY_LESSON_SPEC, category: 'edu' },
+  { id: 'manifesto',           name: 'MANIFESTO',           desc: 'Kinetic type · voiceover',             dur: 8, w: 1080, h: 1920, Comp: window.ManifestoReel,          spec: window.MANIFESTO_SPEC, category: 'talking' },
+  { id: 'myth-vs-truth',       name: 'MYTH VS TRUTH',       desc: 'Educational · myth-busting',           dur: 7, w: 1080, h: 1920, Comp: window.MythVsTruthReel,        spec: window.MYTH_VS_TRUTH_SPEC, category: 'edu' },
+  { id: 'top10-leaderboard',   name: 'TOP 10 LEADERBOARD',  desc: 'Ranked athletes leaderboard',          dur: 7, w: 1080, h: 1920, Comp: window.Top10LeaderboardReel,   spec: window.TOP10_LEADERBOARD_SPEC, category: 'highlight' },
+  { id: 'play-of-week',        name: 'PLAY OF THE WEEK',    desc: 'Trajectory arc · game highlight',      dur: 7, w: 1080, h: 1920, Comp: window.PlayOfWeekReel,         spec: window.PLAY_OF_WEEK_SPEC, category: 'highlight' },
+  { id: 'position-rankings',   name: 'TIER RANKINGS',       desc: 'S/A/B/C tier list · opinion',          dur: 8, w: 1080, h: 1920, Comp: window.PositionRankingsReel,   spec: window.POSITION_RANKINGS_SPEC, category: 'engage' },
+  { id: 'reaction-stitch',     name: 'REACTION STITCH',     desc: 'Split-screen response · talking head', dur: 7, w: 1080, h: 1920, Comp: window.ReactionStitchReel,     spec: window.REACTION_STITCH_SPEC, category: 'talking' },
+  { id: 'carousel-story',      name: 'CAROUSEL STORY',      desc: 'Voiceover · 4-slide story',            dur: 9, w: 1080, h: 1920, Comp: window.CarouselStoryReel,      spec: window.CAROUSEL_STORY_SPEC, category: 'talking' },
+  { id: 'limited-spots',       name: 'LIMITED SPOTS',       desc: 'Urgency · spots-remaining ticker',     dur: 7, w: 1080, h: 1920, Comp: window.LimitedSpotsReel,       spec: window.LIMITED_SPOTS_SPEC, category: 'promo' },
+  { id: 'heart-rate-story',    name: 'HEART RATE STORY',    desc: 'HR zones · conditioning truth',        dur: 7, w: 1080, h: 1920, Comp: window.HeartRateStoryReel,     spec: window.HEART_RATE_STORY_SPEC, category: 'edu' },
+  { id: 'comic-lesson',        name: 'COMIC LESSON',        desc: 'Comic panels · 90-day journey',        dur: 7, w: 1080, h: 1920, Comp: window.ComicLessonReel,        spec: window.COMIC_LESSON_SPEC, category: 'talking' },
+  { id: 'beat-the-clock',      name: 'BEAT THE CLOCK',      desc: 'Stopwatch · time challenge',           dur: 7, w: 1080, h: 1920, Comp: window.BeatTheClockReel,       spec: window.BEAT_THE_CLOCK_SPEC, category: 'engage' },
+  { id: 'qa-card',             name: 'Q & A CARD',          desc: 'Talking head · ask-the-coach',         dur: 7, w: 1080, h: 1920, Comp: window.QACardReel,             spec: window.QA_CARD_SPEC, category: 'talking' },
+  { id: 'last-day-offer',      name: 'LAST DAY',            desc: 'Conversion · urgent countdown',        dur: 7, w: 1080, h: 1920, Comp: window.LastDayOfferReel,       spec: window.LAST_DAY_OFFER_SPEC, category: 'promo' },
+  { id: 'day-at-aa',           name: 'A DAY AT AA',         desc: 'Brand · timestamp walkthrough',        dur: 9, w: 1080, h: 1920, Comp: window.DayAtAAReel,            spec: window.DAY_AT_AA_SPEC, category: 'brand' },
+  { id: 'bracket-reel',        name: 'BRACKET REEL',        desc: 'Tournament-style debate',              dur: 7, w: 1080, h: 1920, Comp: window.BracketReel,            spec: window.BRACKET_SPEC, category: 'engage' },
+  { id: 'us-vs-them',          name: 'US VS THEM',          desc: 'Comparison · trained vs untrained',    dur: 7, w: 1080, h: 1920, Comp: window.UsVsThemReel,           spec: window.US_VS_THEM_SPEC, category: 'proof' },
+  { id: 'athlete-profile',     name: 'ATHLETE PROFILE',     desc: 'Radar chart · 6-axis attributes',      dur: 7, w: 1080, h: 1920, Comp: window.AthleteProfileReel,     spec: window.ATHLETE_PROFILE_SPEC, category: 'highlight' },
+  { id: 'two-truths-lie',      name: 'TWO TRUTHS ONE LIE',  desc: 'Guess-the-lie engagement',             dur: 8, w: 1080, h: 1920, Comp: window.TwoTruthsLieReel,       spec: window.TWO_TRUTHS_LIE_SPEC, category: 'engage' },
+  { id: 'did-you-know',        name: 'DID YOU KNOW',        desc: 'Big-stat fact reveal',                 dur: 7, w: 1080, h: 1920, Comp: window.DidYouKnowReel,         spec: window.DID_YOU_KNOW_SPEC, category: 'edu' },
+  { id: 'referral-hero',       name: 'REFERRAL HERO',       desc: 'Refer-a-friend recognition',           dur: 7, w: 1080, h: 1920, Comp: window.ReferralHeroReel,       spec: window.REFERRAL_HERO_SPEC, category: 'promo' },
+  { id: 'origin-story',        name: 'ORIGIN STORY',        desc: 'Brand timeline · year milestones',     dur: 8, w: 1080, h: 1920, Comp: window.OriginStoryReel,        spec: window.ORIGIN_STORY_SPEC, category: 'brand' },
+  { id: 'stat-reveal-reel',    name: 'STAT REVEAL · REEL',  desc: '+1mph / +3" guarantee · reel format',   dur: 6, w: 1080, h: 1920, Comp: window.StatRevealReel,         spec: window.STAT_REVEAL_REEL_SPEC, category: 'brand' },
+  { id: 'quote-card-reel',     name: 'PARENT QUOTE · REEL', desc: 'Testimonial · reel format',             dur: 8, w: 1080, h: 1920, Comp: window.QuoteCardReel,          spec: window.QUOTE_CARD_REEL_SPEC, category: 'proof' },
+  { id: 'results-recap-reel',  name: 'RESULTS RECAP · REEL', desc: 'Weekend scoreboard · reel format',     dur: 7, w: 1080, h: 1920, Comp: window.ResultsRecapReel,       spec: window.RESULTS_RECAP_REEL_SPEC, category: 'highlight' },
+  { id: 'camp-announce-reel',  name: 'CAMP ANNOUNCE · REEL', desc: 'Registration push · reel format',      dur: 7, w: 1080, h: 1920, Comp: window.CampAnnounceReel,       spec: window.CAMP_ANNOUNCE_REEL_SPEC, category: 'promo' },
+  { id: 'hype-intro-reel',     name: 'HYPE INTRO · REEL',   desc: 'Brand sting · reel format',             dur: 6, w: 1080, h: 1920, Comp: window.HypeIntroReel,          spec: window.HYPE_INTRO_REEL_SPEC, category: 'brand' },
+  { id: 'coach-lt-reel',       name: 'COACH LOWER-THIRDS · REEL', desc: 'Name plate overlay · reel format',dur: 6, w: 1080, h: 1920, Comp: window.CoachLowerThirdsReel,   spec: window.COACH_LT_REEL_SPEC, category: 'talking' },
+  { id: 'logo-sting-reel',     name: 'LOGO STING · REEL',   desc: 'Outro stamp · reel format',             dur: 3, w: 1080, h: 1920, Comp: window.LogoStingReel,          spec: window.LOGO_STING_REEL_SPEC, category: 'brand' },
+  { id: 'year-in-review-reel', name: 'YEAR IN REVIEW · REEL', desc: 'Aggregate stats · reel format',       dur: 8, w: 1080, h: 1920, Comp: window.YearInReviewReel,       spec: window.YEAR_IN_REVIEW_REEL_SPEC, category: 'brand' },
+
+  { id: 'signing-day',      name: 'SIGNING DAY',        desc: 'Commitment reveal · confetti',         dur: 8, w: 1080, h: 1920, Comp: window.SigningDayReel,       spec: window.SIGNING_DAY_SPEC, category: 'recruiting' },
+  { id: 'committed',        name: 'COMMITTED',          desc: 'Stamp slam · next-level commit',       dur: 7, w: 1080, h: 1920, Comp: window.CommittedReel,        spec: window.COMMITTED_SPEC, category: 'recruiting' },
+  { id: 'fuel-up',          name: 'FUEL UP',            desc: 'Macro ring · nutrition card',          dur: 7, w: 1080, h: 1920, Comp: window.FuelUpReel,           spec: window.FUEL_UP_SPEC, category: 'nutrition' },
+  { id: 'recovery-tip',     name: 'RECOVERY TIP',       desc: 'Sleep / hydration / mobility',         dur: 7, w: 1080, h: 1920, Comp: window.RecoveryTipReel,      spec: window.RECOVERY_TIP_SPEC, category: 'nutrition' },
+  { id: 'athlete-birthday', name: 'ATHLETE BIRTHDAY',   desc: 'Birthday shoutout · confetti',         dur: 7, w: 1080, h: 1920, Comp: window.AthleteBirthdayReel,  spec: window.ATHLETE_BIRTHDAY_SPEC, category: 'community' },
+  { id: 'welcome-athlete',  name: 'WELCOME ATHLETE',    desc: 'New-member intro card',                dur: 7, w: 1080, h: 1920, Comp: window.WelcomeAthleteReel,   spec: window.WELCOME_ATHLETE_SPEC, category: 'community' },
+  { id: 'member-milestone', name: 'MEMBER MILESTONE',   desc: 'Streak flame · consistency win',       dur: 7, w: 1080, h: 1920, Comp: window.MemberMilestoneReel,  spec: window.MEMBER_MILESTONE_SPEC, category: 'community' },
+  { id: 'now-hiring',       name: 'NOW HIRING',         desc: 'Staff recruitment · role + CTA',       dur: 7, w: 1080, h: 1920, Comp: window.NowHiringReel,        spec: window.NOW_HIRING_SPEC, category: 'community' },
+  { id: 'five-star-review', name: 'FIVE-STAR REVIEW',   desc: 'Star burst · testimonial type-on',     dur: 8, w: 1080, h: 1920, Comp: window.FiveStarReviewReel,   spec: window.FIVE_STAR_REVIEW_SPEC, category: 'proof' },
+  { id: 'review-roundup',   name: 'REVIEW ROUNDUP',     desc: 'Avg rating + 3 review cards',          dur: 8, w: 1080, h: 1920, Comp: window.ReviewRoundupReel,    spec: window.REVIEW_ROUNDUP_SPEC, category: 'proof' },
+  { id: 'back-to-school',   name: 'BACK TO SCHOOL',     desc: 'Seasonal push · 3 hooks + CTA',        dur: 7, w: 1080, h: 1920, Comp: window.BackToSchoolReel,     spec: window.BACK_TO_SCHOOL_SPEC, category: 'seasonal' },
+  { id: 'holiday-hours',    name: 'HOLIDAY HOURS',      desc: 'Closure notice · hours table',         dur: 6, w: 1080, h: 1920, Comp: window.HolidayHoursReel,     spec: window.HOLIDAY_HOURS_SPEC, category: 'seasonal' },
+  { id: 'new-year',         name: 'NEW YEAR',           desc: 'Resolution push · year reveal',        dur: 7, w: 1080, h: 1920, Comp: window.NewYearReel,          spec: window.NEW_YEAR_SPEC, category: 'seasonal' },
+];
+const SQUARES = [
+  { id: 'stat-reveal',  name: 'STAT REVEAL',        desc: '+1 mph · +3" guarantee anchor',   dur: 6, w: 1080, h: 1080, Comp: window.StatRevealSquare, spec: window.STAT_REVEAL_SPEC },
+  { id: 'quote-card',   name: 'PARENT QUOTE',       desc: 'Animated testimonial',            dur: 7, w: 1080, h: 1080, Comp: window.QuoteCardSquare, spec: window.QUOTE_CARD_SPEC },
+  { id: 'results',      name: 'RESULTS RECAP',      desc: 'Weekend scoreboard',              dur: 7, w: 1080, h: 1080, Comp: window.ResultsRecapSquare, spec: window.RESULTS_RECAP_SPEC },
+  { id: 'camp',         name: 'CAMP ANNOUNCEMENT',  desc: 'Event registration push',         dur: 7, w: 1080, h: 1080, Comp: window.CampAnnounceSquare, spec: window.CAMP_ANNOUNCE_SPEC },
+];
+const HORIZ = [
+  { id: 'hype-intro',   name: 'HYPE INTRO',         desc: 'Fast-cut brand sting',            dur: 5, w: 1920, h: 1080, Comp: window.HypeIntro, spec: window.HYPE_INTRO_SPEC },
+  { id: 'coach-lt',     name: 'COACH LOWER-THIRDS', desc: 'Name plate overlay on footage',   dur: 6, w: 1920, h: 1080, Comp: window.CoachLowerThirds, spec: window.COACH_LT_SPEC },
+  { id: 'logo-sting',   name: 'LOGO STING',         desc: 'Outro stamp · 3 seconds',         dur: 3, w: 1920, h: 1080, Comp: window.LogoSting, spec: window.LOGO_STING_SPEC },
+  { id: 'year-review',  name: 'YEAR IN REVIEW',     desc: 'Aggregate stats montage',         dur: 8, w: 1920, h: 1080, Comp: window.YearInReviewHorizontal, spec: window.YEAR_IN_REVIEW_SPEC },
+];
+
+// ── Card ──────────────────────────────────────
+function Card({ item, kind, onOpen }) {
+  const { Comp, spec } = item;
+  const hasEdits = !!spec;
+  // Always call the hook in the same order — use a stable no-op spec otherwise
+  const NULL_SPEC = React.useMemo(() => ({ id: `__none-${item.id}`, name: '', fields: [] }), [item.id]);
+  const { data } = useTemplateEdits(spec || NULL_SPEC);
+  return (
+    <div className={`card ${kind}`} onClick={() => onOpen(item)} data-screen-label={item.id}>
+      <div className="video-area">
+        <MiniStage
+          width={item.w}
+          height={item.h}
+          duration={hasEdits && data.duration ? data.duration : item.dur}
+          key={`mini-${item.id}-${hasEdits && data.duration ? data.duration : item.dur}`}
+        >
+          {hasEdits ? <Comp data={data}/> : <Comp/>}
+        </MiniStage>
+        {hasEdits && <div className="editable-badge">EDITABLE</div>}
+        <div className="expand-hint">
+          <svg viewBox="0 0 14 14" fill="none">
+            <path d="M2 6V2h4M12 8v4H8M2 8v4h4M12 6V2H8" stroke="currentColor" strokeWidth="1.5"/>
+          </svg>
+        </div>
+        <div className="hover-overlay"><div className="play-icon"/></div>
+      </div>
+      <div className="info">
+        <div className="name">{item.name}</div>
+        <div className="desc">{item.desc}</div>
+        <div className="spec">
+          <span>{item.w} × {item.h}</span>
+          <span>{item.dur}s LOOP</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Modal ────────────────────────────────────
+function Modal({ item, onClose }) {
+  const [vp, setVp] = React.useState({ w: window.innerWidth, h: window.innerHeight });
+  React.useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    const onResize = () => setVp({ w: window.innerWidth, h: window.innerHeight });
+    window.addEventListener('keydown', onKey);
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('resize', onResize);
+    };
+  }, [onClose]);
+
+  // Hook must be called unconditionally — fall back to a no-op spec when none
+  const NULL_SPEC = React.useMemo(() => ({ id: '__none__', name: '', fields: [] }), []);
+  const spec = (item && item.spec) || NULL_SPEC;
+  const { data, setField, setFields, reset } = useTemplateEdits(spec);
+
+  if (!item) return null;
+  const { Comp } = item;
+  const hasSpec = !!item.spec;
+
+  const PANEL_W = 360, PANEL_GAP = 24;
+  const availW = vp.w - 80 - (hasSpec ? PANEL_W + PANEL_GAP : 0);
+  const availH = vp.h - 200;
+  const maxW = Math.max(280, Math.min(availW, 1080));
+  const maxH = Math.max(280, availH);
+  const ratio = item.w / item.h;
+  let w = maxW, h = maxW / ratio;
+  if (h > maxH) { h = maxH; w = h * ratio; }
+
+  const totalW = w + (hasSpec ? PANEL_W + PANEL_GAP : 0);
+
+  return (
+    <div className="modal-bg" onClick={onClose}>
+      <div className="modal-card" onClick={(e) => e.stopPropagation()} style={{ width: totalW }}>
+        <div className="modal-header">
+          <div className="name">{item.name}</div>
+          <div className="desc">{item.desc} · {item.w}×{item.h} · {item.dur}s LOOP</div>
+          <button className="close" onClick={onClose} aria-label="Close">×</button>
+        </div>
+        <div style={{ display: 'flex', gap: PANEL_GAP, alignItems: 'stretch', height: h }}>
+          <div className="modal-stage-wrap" style={{ width: w, height: h, flexShrink: 0 }}>
+            <Stage
+              key={`modal-${item.id}-${(hasSpec && data.duration) ? data.duration : item.dur}`}
+              width={item.w} height={item.h}
+              duration={(hasSpec && data.duration) ? data.duration : item.dur}
+              background="#0a0b0d"
+              persistKey={`modal-${item.id}`}
+              autoplay loop>
+              {hasSpec ? <Comp data={data}/> : <Comp/>}
+            </Stage>
+          </div>
+          {hasSpec && (
+            <EditPanel spec={spec} data={data} setField={setField} setFields={setFields} reset={reset} templateDuration={item.dur}/>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Page ─────────────────────────────────────
+function App() {
+  const [open, setOpen] = React.useState(null);
+
+  return (
+    <div className="page">
+      <div className="topbar">
+        <img src="assets/logo.png" alt="AA"/>
+        <div className="wordmark">ATHLETES <span>ACCELERATION</span></div>
+        <div className="right">// VIDEO TEMPLATE GALLERY · v2</div>
+        <a href="Elements Library.html" style={{ marginLeft: 16, padding: '8px 14px', border: '1px solid rgba(255,255,255,0.18)', color: '#fff', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.14em', textDecoration: 'none', textTransform: 'uppercase' }}>ELEMENTS →</a>
+      </div>
+
+      <div className="title-block">
+        <div className="eyebrow">// SOCIAL CONTENT TOOLKIT</div>
+        <h1>72 ANIMATED<br/><span className="accent">VIDEO TEMPLATES.</span></h1>
+        <p className="lead">
+          Pre-built, brand-locked motion graphics across the three aspect ratios that matter:
+          vertical reels for TikTok &amp; Instagram, square posts for the feed, horizontal for
+          YouTube &amp; web. Every template loops, autoplays on hover, and expands to fullscreen
+          on click. Swap photos, copy, and stats to repurpose each one weekly.
+        </p>
+        <div className="stat-row">
+          <div className="stat"><span className="num">72</span><span className="lbl">TEMPLATES</span></div>
+          <div className="stat"><span className="num">3</span><span className="lbl">ASPECT RATIOS</span></div>
+          <div className="stat"><span className="num">231s</span><span className="lbl">TOTAL RUNTIME</span></div>
+          <div className="stat"><span className="num">1</span><span className="lbl">BRAND SYSTEM</span></div>
+        </div>
+      </div>
+
+      <section className="group" data-screen-label="reels-section">
+        <div className="group-header">
+          <div className="num">01</div>
+          <div className="title">REELS · TIKTOK · SHORTS</div>
+          <div className="meta">
+            <div><span className="count">64</span> TEMPLATES</div>
+            <div>9:16 · 1080×1920</div>
+          </div>
+        </div>
+        {(() => {
+          const SUBGROUPS = [
+            { id: 'highlight', label: 'ATHLETE HIGHLIGHTS & RESULTS' },
+            { id: 'recruiting', label: 'RECRUITING · COMMITMENT' },
+            { id: 'edu',       label: 'EDUCATIONAL · COACHING' },
+            { id: 'nutrition', label: 'NUTRITION · RECOVERY · LIFESTYLE' },
+            { id: 'talking',   label: 'TALKING HEAD · VOICEOVER' },
+            { id: 'engage',    label: 'ENGAGEMENT · DEBATE' },
+            { id: 'proof',     label: 'PROOF · TESTIMONIAL' },
+            { id: 'promo',     label: 'PROMO · CONVERSION' },
+            { id: 'seasonal',  label: 'SEASONAL · EVERGREEN' },
+            { id: 'community', label: 'COMMUNITY · CULTURE' },
+            { id: 'brand',     label: 'BRAND · STORY' },
+          ];
+          return SUBGROUPS.map((sg) => {
+            const items = REELS.filter((it) => it.category === sg.id);
+            if (items.length === 0) return null;
+            return (
+              <div key={sg.id} className="sub-group">
+                <div className="sub-header">
+                  <div className="sub-label">// {sg.label}</div>
+                  <div className="sub-count">{items.length} TEMPLATE{items.length === 1 ? '' : 'S'}</div>
+                </div>
+                <div className="grid reels">
+                  {items.map((it) => <Card key={it.id} item={it} kind="reel" onOpen={setOpen}/>)}
+                </div>
+              </div>
+            );
+          });
+        })()}
+      </section>
+
+      <section className="group" data-screen-label="feed-section">
+        <div className="group-header">
+          <div className="num">02</div>
+          <div className="title">FEED POSTS</div>
+          <div className="meta">
+            <div><span className="count">4</span> TEMPLATES</div>
+            <div>1:1 · 1080×1080</div>
+          </div>
+        </div>
+        <div className="grid squares">
+          {SQUARES.map((it) => <Card key={it.id} item={it} kind="square" onOpen={setOpen}/>)}
+        </div>
+      </section>
+
+      <section className="group" data-screen-label="horizontal-section">
+        <div className="group-header">
+          <div className="num">03</div>
+          <div className="title">HORIZONTAL · YOUTUBE · WEB</div>
+          <div className="meta">
+            <div><span className="count">4</span> TEMPLATES</div>
+            <div>16:9 · 1920×1080</div>
+          </div>
+        </div>
+        <div className="grid horizontals">
+          {HORIZ.map((it) => <Card key={it.id} item={it} kind="horizontal" onOpen={setOpen}/>)}
+        </div>
+      </section>
+
+      <footer>
+        <div className="left">// CLICK ANY TEMPLATE TO PREVIEW LARGE · SPACE TO PLAY/PAUSE · ← → TO SCRUB</div>
+        <div className="right">+1 MPH · +3<span>"</span> · 90 DAYS</div>
+      </footer>
+
+      {open && <Modal item={open} onClose={() => setOpen(null)} key={open.id}/>}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

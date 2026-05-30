@@ -1,0 +1,276 @@
+/* =========================================================================
+   ATHLETES ACCELERATION. COLORS & TYPE
+   Youth sports performance training. Bold, data-driven, aggressive but warm.
+   ========================================================================= */
+
+/* ---------- FONTS ----------
+   Display:  Anton              · Condensed athletic display, all-caps
+   Body:     Geist (variable)   · Modern technical sans, weights 100–900
+   Mono:     JetBrains Mono     · For metrics, code-comment overlays, data
+   Icons:    Material Symbols Rounded (loaded separately in HTML)
+   All three are served locally from ./fonts/. Geist + JetBrains Mono are
+   variable fonts. one file covers every weight via font-weight.
+*/
+@font-face {
+  font-family: 'Anton';
+  src: url('fonts/Anton-Regular.ttf') format('truetype');
+  /* served from assets/fonts/ */
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('fonts/Geist-Variable.ttf') format('truetype-variations'),
+       url('fonts/Geist-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('fonts/JetBrainsMono-Variable.ttf') format('truetype-variations'),
+       url('fonts/JetBrainsMono-Variable.ttf') format('truetype');
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* =========================
+     CORE BRAND COLOR. RED
+     Pulled from the metallic logo. The hero red of "Athletes Acceleration".
+     ========================= */
+  --aa-red-50:  #fff1f1;
+  --aa-red-100: #ffdede;
+  --aa-red-200: #ffc2c2;
+  --aa-red-300: #ff8e8e;
+  --aa-red-400: #f55757;
+  --aa-red-500: #e02828;  /* base */
+  --aa-red-600: #c4141d;  /* primary brand red. Matches logo */
+  --aa-red-700: #a30f17;
+  --aa-red-800: #821016;
+  --aa-red-900: #5e0b10;
+
+  --aa-red:        var(--aa-red-600);
+  --aa-red-deep:   var(--aa-red-800);
+  --aa-red-bright: var(--aa-red-500);
+
+  /* =========================
+     NEUTRALS. Slate/graphite
+     Warm-cool blacks matching gym walls & athletic gear.
+     ========================= */
+  --aa-ink-950: #0a0b0d;   /* near-black backgrounds                 */
+  --aa-ink-900: #15171a;   /* primary dark surface                   */
+  --aa-ink-800: #1f2227;   /* elevated dark surface                  */
+  --aa-ink-700: #2c3038;   /* dark borders / hovered dark surface    */
+  --aa-ink-600: #434954;   /* muted body on dark                     */
+  --aa-ink-500: #6b727f;   /* secondary text                         */
+  --aa-ink-400: #969ca7;   /* tertiary text                          */
+  --aa-ink-300: #c2c6cd;   /* dividers on light                      */
+  --aa-ink-200: #dfe2e7;   /* subtle borders                         */
+  --aa-ink-100: #eef0f3;   /* light surface                          */
+  --aa-ink-50:  #f6f7f9;   /* page background                        */
+  --aa-white:   #ffffff;
+
+  /* =========================
+     CHROME. The metallic logo highlight
+     Used sparingly as a finish on awards/badges/founder labels.
+     ========================= */
+  --aa-chrome-light: #e6e7e9;
+  --aa-chrome:       #b7bcc4;
+  --aa-chrome-dark:  #6f7682;
+
+  /* =========================
+     SEMANTIC / ACCENTS
+     ========================= */
+  --aa-success: #15a34a;     /* PRs, gains, "+1 mph" up-arrows         */
+  --aa-warning: #f59e0b;     /* schedule conflicts                     */
+  --aa-danger:  var(--aa-red-600);
+  --aa-info:    #1d6fb8;     /* informational data callouts            */
+
+  /* Field/turf accent. Almost never on UI chrome. Only sport context. */
+  --aa-turf:    #2f6a3a;
+
+  /* =========================
+     SEMANTIC TOKENS. LIGHT MODE (default)
+     ========================= */
+  --fg-1:      var(--aa-ink-950);    /* primary text                  */
+  --fg-2:      var(--aa-ink-700);    /* secondary text                */
+  --fg-3:      var(--aa-ink-500);    /* tertiary / meta               */
+  --fg-muted:  var(--aa-ink-400);
+  --fg-on-red: var(--aa-white);
+
+  --bg-1:      var(--aa-white);      /* base page background          */
+  --bg-2:      var(--aa-ink-50);     /* section bg                    */
+  --bg-3:      var(--aa-ink-100);    /* card bg                       */
+  --bg-inverse:var(--aa-ink-950);
+
+  --border-1:  var(--aa-ink-200);
+  --border-2:  var(--aa-ink-300);
+  --border-strong: var(--aa-ink-900);
+
+  --link:      var(--aa-red-600);
+  --link-hover:var(--aa-red-700);
+
+  /* =========================
+     TYPE FAMILY VARIABLES
+     ========================= */
+  --font-display: "Anton", "Oswald", "Arial Narrow", system-ui, sans-serif;
+  --font-body:    "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* =========================
+     TYPE SCALE. Body
+     ========================= */
+  --fs-xs:   12px;
+  --fs-sm:   14px;
+  --fs-base: 16px;
+  --fs-md:   18px;
+  --fs-lg:   20px;
+  --fs-xl:   24px;
+  --fs-2xl:  32px;
+  --fs-3xl:  44px;
+  --fs-4xl:  64px;
+  --fs-5xl:  96px;
+  --fs-hero: clamp(64px, 11vw, 168px);
+
+  /* =========================
+     SPACING (8pt-ish with tighter low-end)
+     ========================= */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  24px;
+  --s-6:  32px;
+  --s-7:  48px;
+  --s-8:  64px;
+  --s-9:  96px;
+  --s-10: 128px;
+
+  /* =========================
+     RADII
+     The brand favors squared/slightly-softened corners. Never overly round.
+     ========================= */
+  --r-none: 0;
+  --r-sm:   2px;
+  --r-md:   4px;
+  --r-lg:   8px;
+  --r-xl:   12px;
+  --r-pill: 999px;
+
+  /* =========================
+     ELEVATION / SHADOWS
+     Layered, subtle. The athletic context wants confidence, not floatiness.
+     ========================= */
+  --shadow-1: 0 1px 2px rgba(15, 17, 21, 0.06);
+  --shadow-2: 0 2px 8px rgba(15, 17, 21, 0.08), 0 1px 2px rgba(15, 17, 21, 0.04);
+  --shadow-3: 0 12px 32px -8px rgba(15, 17, 21, 0.18), 0 2px 6px rgba(15, 17, 21, 0.06);
+  --shadow-4: 0 28px 64px -16px rgba(15, 17, 21, 0.28);
+  --shadow-red: 0 8px 24px -8px rgba(196, 20, 29, 0.45);
+  --inner-1:  inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+  /* =========================
+     MOTION
+     Quick, confident easing. No bounce, no overshoot. These are athletes.
+     ========================= */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in:  cubic-bezier(0.6, 0.0, 0.8, 0.3);
+  --ease-snap:cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 360ms;
+}
+
+/* =========================
+   SEMANTIC TYPE RULES
+   ========================= */
+.aa-display,
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 400;        /* Anton has one weight. Letter-spacing carries weight */
+  letter-spacing: -0.005em;
+  line-height: 0.9;
+  text-transform: uppercase;
+  /* color inherits from section context so dark sections stay white. Each
+     component sets its own explicit color when needed. */
+  color: inherit;
+}
+
+.aa-hero,
+h1 {
+  font-size: var(--fs-hero);
+  line-height: 0.85;
+  letter-spacing: -0.01em;
+}
+
+h2 { font-size: var(--fs-4xl); line-height: 0.9; }
+h3 { font-size: var(--fs-2xl); line-height: 1.0; letter-spacing: 0; }
+
+h4 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--fs-xl);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: inherit;
+}
+
+h5 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--fs-md);
+  line-height: 1.3;
+  color: inherit;
+}
+
+p, body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: 1.55;
+  color: var(--fg-2);
+}
+
+small, .aa-small { font-size: var(--fs-sm); color: var(--fg-3); }
+
+.aa-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--aa-red-600);
+  font-weight: 500;
+}
+
+.aa-eyebrow--muted { color: var(--fg-3); }
+
+/* Code-comment style header. Site uses lines like "// Find Your Starting Line" */
+.aa-code-comment {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--fg-3);
+  font-weight: 400;
+}
+.aa-code-comment::before { content: "// "; opacity: 0.5; }
+
+/* Mono data. For metrics: +1mph, +3", 10/20/40, etc. */
+.aa-data {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+code, kbd, pre, .aa-mono { font-family: var(--font-mono); }
+
+/* Two-tone display word. Site frequently splits headlines red vs ink */
+.aa-display .accent,
+h1 .accent, h2 .accent { color: var(--aa-red-600); }
+
+/* Outline display word. The "stadium signage" treatment */
+.aa-display .outline,
+h1 .outline, h2 .outline {
+  color: transparent;
+  -webkit-text-stroke: 2px currentColor;
+}

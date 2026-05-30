@@ -14,6 +14,8 @@ Source of truth for **Athletes Acceleration** brand identity, used by every JSX 
   - `project/fonts/` — Anton-Regular.ttf, Geist-Variable.ttf, JetBrainsMono-Variable.ttf (already mirrored into the project's top-level `fonts/` so the renderer's preflight finds them).
   - `chats/chat1.md` — original brand-creation conversation, useful as context.
 
+- `video-templates/` — library of **72 animated video templates** + **22 reusable signature elements**, built on the design system (from Claude Design project "template creation - test run"). A browseable, in-browser-editable gallery. See `video-templates/README.md`. Run `node brand/video-templates/serve.mjs` and open the printed URL.
+
 ## Fonts
 
 The kit ships three fonts; all three are installed at the project's top-level `fonts/` directory so the JSX-to-MP4 renderer's font preflight resolves them:
