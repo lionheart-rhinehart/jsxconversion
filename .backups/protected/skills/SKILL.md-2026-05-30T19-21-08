@@ -77,24 +77,6 @@ pulled/derived from `campaign-knowledge.json` to a beat, a format, and an image
 source. Validate tag→layer-type before binding an image tag. Write
 `campaigns/<name>/creative-plan.json` (schema in `docs/PROCESS.md`).
 
-**`templateData` — map copy onto each template's REAL fields.** `headline` and
-`microscript` are human-facing summary fields; they do NOT auto-land in a
-template's slots. For any `source:"template"` asset, also write a `templateData`
-object keyed to that specific template's own field names, so the campaign copy
-renders where it belongs (else the template shows its stock defaults). Find the
-keys by reading the template:
-- **Motion** (`brand/video-templates/templates/<t>.jsx`): the keys are the
-  `data.<key>` reads (and the `*_SPEC.fields[].key` list). Examples:
-  `stat-reveal` → `{eyebrow,title1,title2,ctaText}`; `quote-card` →
-  `{eyebrow,quoteText,bylineName,bylineMeta,statsLabel}`; `coach-lower-thirds` →
-  `{coachName,coachTitle}`; `meet-coach` →
-  `{eyebrow,coachFirst,coachLast,coachTitle,ctaText,ctaMicro}`; `logo-sting` →
-  `{wordmark1,wordmark2,tagline,url}`.
-- **Static** (`cluster-*`): the keys are the layer `tag` names in
-  `<cluster>.config.json` (e.g. `title`, `microscript`, `city`, `guarantee`).
-The runner uses `templateData` verbatim when present (warning on keys the template
-doesn't read), and falls back to a headline/microscript heuristic when it's absent.
-
 ### Step 5 — Review (stop here)
 Ensure the servers are up:
 - `node scripts/editor-server.mjs` (:5173 — plan API + render)

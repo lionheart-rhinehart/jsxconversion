@@ -106,6 +106,44 @@ function mp4ToGif(mp4Path, gifPath, fps = 15, width = 480) {
 
 const slug = (s) => String(s).replace(/[^\w.-]+/g, "-");
 
+// The set of data keys a motion template actually consumes — the real contract.
+// We read `data.<key>` usages (what the component renders) rather than trusting
+// the *_SPEC list, which can carry stale/extra keys. `map` etc. are filtered.
+function templateDataKeys(src) {
+  const keys = new Set(
+    [...src.matchAll(/\bdata\.([A-Za-z_$][\w$]*)/g)].map((m) => m[1]),
+  );
+  for (const noise of ["map", "filter", "forEach", "length", "slice"]) keys.delete(noise);
+  return [...keys];
+}
+
+// Build the `data` object a motion template receives via window.__CONFIG__.
+// Priority: asset.templateData (the planner's explicit, key-accurate map) wins;
+// otherwise a small heuristic maps headline/microscript onto sensible fields so
+// an un-mapped asset still renders campaign-ish copy instead of pure defaults.
+// Unknown keys (not in the template's real contract) are warned, not dropped.
+function buildMotionData(asset, dataKeys) {
+  let data = {};
+  if (asset.templateData && typeof asset.templateData === "object") {
+    data = { ...asset.templateData };
+  } else {
+    if (asset.microscript && dataKeys.includes("eyebrow")) data.eyebrow = asset.microscript;
+    if (asset.headline) {
+      const target =
+        dataKeys.find((k) => /^(headline|title1|quote|primaryText|claim|coachName)$/i.test(k)) ||
+        dataKeys.find((k) => k !== "eyebrow");
+      if (target) data[target] = asset.headline;
+    }
+  }
+  if (dataKeys.length) {
+    const unknown = Object.keys(data).filter((k) => k !== "_asset" && !dataKeys.includes(k));
+    if (unknown.length) {
+      console.error(`[render]   note: ${asset.id} templateData keys not read by template: ${unknown.join(", ")} (valid: ${dataKeys.join(", ")})`);
+    }
+  }
+  return data;
+}
+
 // ── per-asset render paths ───────────────────────────────────────────────────
 
 // template + static: cascade-fill the cluster config, render PNG.
@@ -118,9 +156,16 @@ async function renderTemplateStatic(asset, angleId) {
   const sourceConfig = JSON.parse(readFileSync(join(TEMPLATE_DIR, `${clusterId}.config.json`), "utf8"));
   // Cascade tags + per-asset copy overrides (headline→tag 'title'/'headline', microscript→'microscript').
   const brandTier = loadTier("brand", brand, join(PROJECT_ROOT, "data"));
-  const overrides = {};
-  if (asset.headline) { overrides.title = asset.headline; overrides.headline = asset.headline; }
-  if (asset.microscript) overrides.microscript = asset.microscript;
+  // For statics, copy maps onto config-layer TAGS. asset.templateData (keyed to
+  // the template's tags) wins; else a heuristic maps headline→title/headline,
+  // microscript→microscript.
+  let overrides = {};
+  if (asset.templateData && typeof asset.templateData === "object") {
+    overrides = { ...asset.templateData };
+  } else {
+    if (asset.headline) { overrides.title = asset.headline; overrides.headline = asset.headline; }
+    if (asset.microscript) overrides.microscript = asset.microscript;
+  }
   const resolved = mergeTiers(brandTier.tags, {}, overrides);
   const { config } = applySubstitutions(sourceConfig, resolved);
   const { fillJsxPath } = emitVariant({ clusterId, config, templateDir: TEMPLATE_DIR, suffix });
@@ -156,11 +201,9 @@ async function renderTemplateMotion(asset, angleId, wantGif) {
   const base = `_camp-${slug(campaign)}-${slug(angleId)}-${slug(asset.id)}`;
   const wrapperPath = join(VIDEO_DIR, `${base}.jsx`);
   const dataPath = join(VIDEO_DIR, `${base}.data.json`);
-  const data = {};
-  if (asset.headline) data.headline = asset.headline;
-  if (asset.microscript) data.microscript = asset.microscript;
-  // Carry the full asset so templates can map their own fields.
-  data._asset = { id: asset.id, headline: asset.headline, microscript: asset.microscript };
+  // Map campaign copy onto the template's REAL field keys (*_SPEC-driven adapter).
+  const dataKeys = templateDataKeys(src);
+  const data = buildMotionData(asset, dataKeys);
   writeFileSync(dataPath, JSON.stringify(data, null, 2));
 
   // Wrapper: define a Stage-wrapping component that mounts the bank template,

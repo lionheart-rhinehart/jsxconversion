@@ -51,13 +51,6 @@ so the gallery + tweaks panel can drive it. Per-asset copy arrives via
 `window.__CONFIG__` (the renderer injects it). Register the window global or the
 renderer throws.
 
-**Keep the `data.<key>` reads and the `X_SPEC.fields[].key` list in sync** — those
-keys ARE the template's public contract. The campaign planner targets them via the
-asset's `templateData` object, and the runner extracts the real keys from the
-`data.<key>` reads to validate. A field the component renders but doesn't expose as
-a `data.<key>` read can never be filled, so every fillable slot must read from
-`data`.
-
 ## Process
 1. Read the asset spec (concept, headline, microscript, photo source, beat) and
    the relevant `campaign-knowledge.json` entries.

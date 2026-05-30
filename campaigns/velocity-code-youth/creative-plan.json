@@ -303,7 +303,13 @@
           "thumb": null,
           "knowledgeRefs": [
             "reframe:tired-vs-trained"
-          ]
+          ],
+          "templateData": {
+            "eyebrow": "COACH GRAHAM WILKERSON",
+            "quote": "They confuse tired with trained. Your kid isn't behind — they're in the wrong system.",
+            "attribution": "COACH GRAHAM WILKERSON",
+            "role": "CSCS · GENESIS SPORTS PERFORMANCE"
+          }
         },
         {
           "id": "E1",
@@ -329,7 +335,13 @@
           "thumb": "out/campaigns/velocity-code-youth/angle-1-tries-harder/E1.mp4",
           "knowledgeRefs": [
             "proof:wang-2026"
-          ]
+          ],
+          "templateData": {
+            "eyebrow": "WANG ET AL. 2026",
+            "title1": "224% MORE",
+            "title2": "VERTICAL JUMP.",
+            "ctaText": "BOOK YOUR FREE ASSESSMENT"
+          }
         },
         {
           "id": "E2",
@@ -355,7 +367,13 @@
           "thumb": null,
           "knowledgeRefs": [
             "proof:pareja-blanco-2017"
-          ]
+          ],
+          "templateData": {
+            "eyebrow": "PAREJA-BLANCO 2017",
+            "title1": "40% FEWER REPS.",
+            "title2": "146% MORE JUMP.",
+            "ctaText": "BOOK YOUR FREE ASSESSMENT"
+          }
         },
         {
           "id": "E3",
@@ -384,7 +402,13 @@
           "knowledgeRefs": [
             "speaker:graham",
             "discovery:V1.9"
-          ]
+          ],
+          "templateData": {
+            "eyebrow": "MEET COACH GRAHAM",
+            "coachName": "GRAHAM WILKERSON",
+            "credentials": "CSCS · TRAINED ZACK MARTIN, TED KARRAS, NICK MARTIN",
+            "quote": "I've watched hundreds of athletes train for months without getting faster. The reason is always the same."
+          }
         },
         {
           "id": "E4",
@@ -412,7 +436,13 @@
           "thumb": "out/campaigns/velocity-code-youth/angle-1-tries-harder/E4.gif",
           "knowledgeRefs": [
             "proof:wang-2026"
-          ]
+          ],
+          "templateData": {
+            "eyebrow": "VELOCITY-PROTECTED",
+            "title1": "224%",
+            "title2": "MORE JUMP.",
+            "ctaText": "TRAIN FAST TO BE FAST"
+          }
         },
         {
           "id": "E5",
@@ -496,7 +526,12 @@
           "thumb": null,
           "knowledgeRefs": [
             "offer:performance-contract"
-          ]
+          ],
+          "templateData": {
+            "eyebrow": "THE PERFORMANCE CONTRACT",
+            "tagline": "+1 mph speed, +3\" vertical, 90 days, or training is free.",
+            "locations": "AGES 8-12 · HAMILTON COUNTY, IN"
+          }
         },
         {
           "id": "F2",
@@ -522,7 +557,15 @@
           "thumb": null,
           "knowledgeRefs": [
             "offer:free-assessment"
-          ]
+          ],
+          "templateData": {
+            "eyebrow": "THE FREE ASSESSMENT",
+            "coachName": "BRING YOUR ATHLETE IN",
+            "headline": "See their actual sprint time, jump height, velocity.",
+            "subtext": "Not a sales pitch. A data set.",
+            "credentials": "GENESIS SPORTS PERFORMANCE",
+            "cta": "BOOK YOUR FREE ASSESSMENT"
+          }
         },
         {
           "id": "F3",
@@ -544,7 +587,7 @@
           "flags": [
             "guarantee-verbatim"
           ],
-          "status": "rendered",
+          "status": "planned",
           "notes": "",
           "output": "out/campaigns/velocity-code-youth/angle-1-tries-harder/F3.png",
           "thumb": "out/campaigns/velocity-code-youth/angle-1-tries-harder/F3.png",
