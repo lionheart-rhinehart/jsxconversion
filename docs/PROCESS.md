@@ -124,6 +124,28 @@ authoritative** — they persist and survive re-render.
 - **Staleness**: edit routes stamp `editedAt`; the runner stamps `renderedAt`; the
   card shows "edited — re-render needed" when `editedAt > renderedAt`.
 
+### Full video editing = `TplText` + promoted fields (per-template, lazy)
+A motion template is fully editable in the modal once every text element renders through
+`TplText` (animations.jsx) and every string is a `data` field. Retrofit a template **when a
+campaign first uses it** (don't pre-do all 72). The pattern (see stat-reveal / quote-card /
+coach-lower-thirds / logo-sting / meet-coach for worked examples):
+1. **Wrap each text element in `<TplText>`** — pass the element's existing animated style as
+   `style`, its default position as `base`, a `field` key (becomes `data-ov-key` → drag
+   handle + the override slot), a `fitKey` (the text, so auto-fit only re-measures on change),
+   and `maxWidth`/`maxHeight` where overflow is a risk. For flex-laid-out elements wrap
+   **in place** (`base={{}}`) — the drag override is a `translate`, so flow is preserved; no
+   flex→absolute rework needed.
+2. **Promote hardcoded literals to `data` fields** (default = the literal) and add each to the
+   template's `*_SPEC.fields` so the COPY tab lists them. Delimited groups (chips, stat pairs)
+   become one `text` field parsed at render (e.g. `"a|b · c|d"`).
+3. **Preserve animation** — the template still computes its per-frame `opacity`/`transform`;
+   just hand them to `TplText` via `style`.
+4. **Verify by render** — render the asset (looks identical at defaults) + open it in the
+   modal (a handle on every element, COPY lists every text). Re-check the gallery (H7).
+**New templates** should author text via `TplText` from the start. Added text boxes
+(`ExtrasLayer`) already work on ANY template with no retrofit. Audio mux + the planner's
+`templateData` key-mapping remain deferred.
+
 ## Non-negotiables
 - **No skim**: deep-read via sub-agents into `campaign-knowledge.json`.
 - **Hand placement sacred**: fill/generate set data only.
