@@ -270,6 +270,20 @@ function TplText({ field, data, base = {}, style = {}, maxWidth, maxHeight, minS
 }
 window.TplText = TplText;
 
+// Split text into tokens for word-by-word reveal animations, preserving typed
+// newlines as explicit line-break tokens ({br:true}) — so a `\n` forces a new
+// line instead of being swallowed by a plain `split(/\s+/)`. Render `{br:true}`
+// as a full-width flex spacer inside a flex-wrap container.
+function wordTokens(text) {
+  const out = [];
+  String(text == null ? '' : text).split('\n').forEach((line, li) => {
+    if (li > 0) out.push({ br: true });
+    line.split(/\s+/).filter(Boolean).forEach((w) => out.push({ w }));
+  });
+  return out;
+}
+window.wordTokens = wordTokens;
+
 // ── ExtrasLayer ─────────────────────────────────────────────────────────────
 // Renders user-added free text boxes from `data._extras` (a list of
 // {key,label,x,y,fontSize}). Each is a plain TplText: text from data[key],

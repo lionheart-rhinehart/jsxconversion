@@ -10,8 +10,8 @@ function QuoteCardSquare({ data = {} }) {
   const stats = data.stats ?? '+4.2"|VERT · −0.4s|40YD · +25LB|BENCH';
   const statPairs = stats.split(/\s*·\s*/).map((p) => p.split('|')).filter((p) => p[0]);
   const media = data.media ?? 'assets/photo-coach-action.jpg';
-  // Build words array from editable quote
-  const _quoteWords = quoteText.split(/\s+/);
+  // Build word tokens from the editable quote (preserves \n as line breaks).
+  const _quoteWords = wordTokens(quoteText);
 
   const t = useTime();
   const RED = '#c4141d';
@@ -80,19 +80,21 @@ function QuoteCardSquare({ data = {} }) {
         style={{ fontFamily: 'Anton, sans-serif', fontSize: 110, color: '#fff', lineHeight: 0.95, letterSpacing: '0.005em' }}
         fitKey={quoteText}
       >
-        {words.map((w, i) => {
-          const wt = Math.max(0, Math.min(1, (t - (wordStart + i * wordStep)) / 0.25));
+        {(() => { let wi = 0; return words.map((tk, i) => {
+          if (tk.br) return <div key={'br' + i} style={{ flexBasis: '100%', height: 0 }} />;
+          const k = wi++;
+          const wt = Math.max(0, Math.min(1, (t - (wordStart + k * wordStep)) / 0.25));
           const eased = Easing.easeOutCubic(wt);
-          const isAccent = w === '4 INCHES' || w === '8 WEEKS.';
+          const isAccent = tk.w === '4 INCHES' || tk.w === '8 WEEKS.';
           return (
             <span key={i} style={{
               opacity: eased,
               transform: `translateY(${(1 - eased) * 14}px)`,
               color: isAccent ? RED : '#fff',
               display: 'inline-block',
-            }}>{w}</span>
+            }}>{tk.w}</span>
           );
-        })}
+        }); })()}
       </TplText>
 
       {/* Byline */}

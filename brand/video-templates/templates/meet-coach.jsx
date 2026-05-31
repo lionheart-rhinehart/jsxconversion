@@ -26,8 +26,9 @@ function MeetCoachReel({ data = {} }) {
   const titleT = Easing.easeOutCubic(Math.max(0, Math.min(1, (t - 1.1) / 0.5)));
   const chipsT = Easing.easeOutCubic(Math.max(0, Math.min(1, (t - 1.8) / 0.5)));
 
-  // Quote types in word by word from 2.6 (built from the editable quote)
-  const words = quote.split(/\s+/);
+  // Quote types in word by word from 2.6 (built from the editable quote;
+  // wordTokens preserves \n as line breaks).
+  const words = wordTokens(quote);
   const wordT = (i) => Math.max(0, Math.min(1, (t - (2.6 + i * 0.16)) / 0.25));
 
   const factsT = Easing.easeOutCubic(Math.max(0, Math.min(1, (t - 5.6) / 0.5)));
@@ -114,18 +115,19 @@ function MeetCoachReel({ data = {} }) {
         style={{ fontFamily: 'Anton, sans-serif', fontSize: 60, color: '#fff', lineHeight: 1.05 }}
         fitKey={quote}
       >
-        {words.map((w, i) => {
-          const r = wordT(i);
-          const isAccent = w === 'WHAT' || w === 'YOU' || w === 'SHOW' || w === 'ME.';
+        {(() => { let wi = 0; return words.map((tk, i) => {
+          if (tk.br) return <div key={'br' + i} style={{ flexBasis: '100%', height: 0 }} />;
+          const r = wordT(wi++);
+          const isAccent = tk.w === 'WHAT' || tk.w === 'YOU' || tk.w === 'SHOW' || tk.w === 'ME.';
           return (
             <span key={i} style={{
               opacity: r,
               transform: `translateY(${(1 - r) * 12}px)`,
               color: isAccent ? RED : '#fff',
               display: 'inline-block',
-            }}>{w}</span>
+            }}>{tk.w}</span>
           );
-        })}
+        }); })()}
       </TplText>
 
       {/* Quick facts */}

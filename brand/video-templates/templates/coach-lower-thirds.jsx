@@ -27,8 +27,8 @@ function CoachLowerThirds({ data = {} }) {
     panelOp = 1 - p;
   } else { panelX = -100; panelOp = 0; }
 
-  // Sub-title types in word-by-word starting 1.2
-  const subWords = coachTitle.split(/\s+/);
+  // Sub-title types in word-by-word starting 1.2 (wordTokens preserves \n).
+  const subWords = wordTokens(coachTitle);
   const credT = (i) => Math.max(0, Math.min(1, (t - (1.2 + i * 0.12)) / 0.25));
 
   // Credentials chips
@@ -103,13 +103,17 @@ function CoachLowerThirds({ data = {} }) {
             style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 24, color: '#c2c6cd', letterSpacing: '0.12em' }}
             fitKey={coachTitle}
           >
-            {subWords.map((w, i) => (
-              <span key={i} style={{
-                opacity: credT(i),
-                transform: `translateY(${(1 - credT(i)) * 6}px)`,
-                display: 'inline-block',
-              }}>{w}</span>
-            ))}
+            {(() => { let wi = 0; return subWords.map((tk, i) => {
+              if (tk.br) return <div key={'br' + i} style={{ flexBasis: '100%', height: 0 }} />;
+              const k = wi++;
+              return (
+                <span key={i} style={{
+                  opacity: credT(k),
+                  transform: `translateY(${(1 - credT(k)) * 6}px)`,
+                  display: 'inline-block',
+                }}>{tk.w}</span>
+              );
+            }); })()}
           </TplText>
 
           {/* Credentials chips */}
