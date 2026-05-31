@@ -108,6 +108,12 @@
      Without this it escapes to the viewport. */
   .vmodal-stage { position: relative; width: 360px; flex-shrink: 0; aspect-ratio: 9/16; background: #000; overflow: hidden; display: flex; align-items: center; justify-content: center; }
   .vmodal-stage > * { max-width: 100%; max-height: 100%; }
+  /* Drag/resize handles (position tab) — float over the live preview. */
+  .vm-drag-overlay { position: absolute; inset: 0; z-index: 20; pointer-events: none; }
+  .vm-handle { position: absolute; border: 1.5px dashed rgba(245,158,11,0.9); cursor: move; pointer-events: auto; box-sizing: border-box; }
+  .vm-handle:hover { background: rgba(245,158,11,0.10); }
+  .vm-handle-tag { position: absolute; top: -14px; left: 0; font-family: var(--font-mono, monospace); font-size: 9px; background: rgba(245,158,11,0.95); color: #0a0b0d; padding: 0 4px; white-space: nowrap; pointer-events: none; }
+  .vm-handle-resize { position: absolute; right: -6px; bottom: -6px; width: 12px; height: 12px; background: #f59e0b; border: 2px solid #0a0b0d; cursor: nwse-resize; pointer-events: auto; }
   .vm-fresh { color: var(--aa-ink-400, #969ca7); font-family: var(--font-mono, monospace); font-size: 13px; text-align: center; line-height: 1.5; }
   .vm-fresh span { font-size: 11px; color: var(--aa-ink-500, #6b7280); }
   .vmodal-side { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 12px; min-height: 0; }
@@ -627,6 +633,79 @@ function MediaPicker({ kind, current, onPick }) {
   );
 }
 
+// Drag/resize overlay: floats handles over each retrofitted [data-ov-key] text
+// node in the live preview. A rAF loop re-measures every frame so handles track
+// the animating text. Dragging writes data._overrides[key] {dx,dy} (move) or
+// {fontSize} (resize); TplText re-applies it live (preview == render).
+function DragOverlay({ stageRef, data, setOverride }) {
+  const [boxes, setBoxes] = useState([]);
+  const dragRef = React.useRef(null);
+
+  useEffect(() => {
+    let raf;
+    const tick = () => {
+      const stage = stageRef.current;
+      if (stage) {
+        const sRect = stage.getBoundingClientRect();
+        const canvas = [...stage.querySelectorAll("div")].find((d) => d.offsetWidth === 1080 && d.offsetHeight === 1920);
+        const scale = canvas ? canvas.getBoundingClientRect().width / 1080 : 1;
+        const nodes = [...stage.querySelectorAll("[data-ov-key]")];
+        setBoxes(nodes.map((n) => {
+          const r = n.getBoundingClientRect();
+          return {
+            key: n.getAttribute("data-ov-key"),
+            left: r.left - sRect.left, top: r.top - sRect.top, w: r.width, h: r.height,
+            fontPx: parseFloat(getComputedStyle(n).fontSize) || 0, scale,
+          };
+        }));
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [stageRef]);
+
+  useEffect(() => {
+    const onMove = (e) => {
+      const d = dragRef.current; if (!d) return;
+      const ddx = (e.clientX - d.startX) / d.scale;
+      const ddy = (e.clientY - d.startY) / d.scale;
+      if (d.mode === "move") {
+        setOverride(d.key, { dx: Math.round(d.baseDx + ddx), dy: Math.round(d.baseDy + ddy) });
+      } else {
+        setOverride(d.key, { fontSize: Math.max(16, Math.round(d.baseSize + ddy)) });
+      }
+    };
+    const onUp = () => { dragRef.current = null; };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    return () => { window.removeEventListener("mousemove", onMove); window.removeEventListener("mouseup", onUp); };
+  }, [setOverride]);
+
+  const startMove = (b, e) => {
+    e.preventDefault(); e.stopPropagation();
+    const ov = (data._overrides && data._overrides[b.key]) || {};
+    dragRef.current = { mode: "move", key: b.key, startX: e.clientX, startY: e.clientY, baseDx: ov.dx || 0, baseDy: ov.dy || 0, scale: b.scale || 1 };
+  };
+  const startResize = (b, e) => {
+    e.preventDefault(); e.stopPropagation();
+    dragRef.current = { mode: "resize", key: b.key, startX: e.clientX, startY: e.clientY, baseSize: (b.fontPx || 40) / (b.scale || 1), scale: b.scale || 1 };
+  };
+
+  return (
+    <div className="vm-drag-overlay">
+      {boxes.map((b) => (
+        <div key={b.key} className="vm-handle"
+          style={{ left: b.left, top: b.top, width: b.w, height: b.h }}
+          onMouseDown={(e) => startMove(b, e)} title={"Drag to move · " + b.key}>
+          <span className="vm-handle-tag">{b.key}</span>
+          <div className="vm-handle-resize" onMouseDown={(e) => startResize(b, e)} title="Drag to resize" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function VideoEditModal({ angleId, assetId, onClose }) {
   const bridge = window.ReviewBridge;
   const plan = bridge.getPlan();
@@ -674,6 +753,14 @@ function VideoEditModal({ angleId, assetId, onClose }) {
   const setFields = (patch) => setData((d) => ({ ...d, ...patch }));
   const reset = () => setData(spec ? defaultsFromFields(spec.fields) : {});
 
+  const stageRef = React.useRef(null);
+  // H2: init _overrides defensively so the first-ever drag can't throw on undefined.
+  const setOverride = (key, patch) => setData((d) => ({
+    ...d,
+    _overrides: { ...(d._overrides || {}), [key]: { ...((d._overrides || {})[key] || {}), ...patch } },
+  }));
+  const resetOverrides = () => setData((d) => { const n = { ...d }; delete n._overrides; return n; });
+
   const fields = (spec && spec.fields) || [];
   const copyFields = fields.filter((f) => f.type !== "image");
   const imageFields = fields.filter((f) => f.type === "image");
@@ -718,7 +805,7 @@ function VideoEditModal({ angleId, assetId, onClose }) {
           <button className="x" onClick={onClose}>Close</button>
         </div>
         <div className="vmodal-body">
-          <div className="vmodal-stage">
+          <div className="vmodal-stage" ref={stageRef}>
             {isFresh
               ? <div className="vm-fresh">Fresh render pending<br/><span>(compose-creative not built yet)</span></div>
               : (Comp && window.Stage
@@ -728,6 +815,8 @@ function VideoEditModal({ angleId, assetId, onClose }) {
                       <Comp data={data} />
                     </window.Stage>
                   : <div className="vm-fresh">Loading preview…</div>)}
+            {!isFresh && tab === "position" && Comp && window.Stage &&
+              <DragOverlay stageRef={stageRef} data={data} setOverride={setOverride} />}
           </div>
           <div className="vmodal-side">
             {isFresh ? (
@@ -740,7 +829,7 @@ function VideoEditModal({ angleId, assetId, onClose }) {
             ) : (
               <React.Fragment>
                 <div className="vm-tabs">
-                  {["copy", "media", "audio", "swap"].map((t) =>
+                  {["copy", "media", "audio", "swap", "position"].map((t) =>
                     <button key={t} className={"vm-tab" + (tab === t ? " on" : "")} onClick={() => setTab(t)}>{t}</button>)}
                 </div>
                 <div className="vm-tabbody">
@@ -768,6 +857,11 @@ function VideoEditModal({ angleId, assetId, onClose }) {
                       {bank.map((t) => <option key={t} value={t}>{t}</option>)}
                     </select>
                     <div className="vm-note">Switching carries copy by matching field name; re-check fields after a swap.</div>
+                  </React.Fragment>}
+                  {tab === "position" && <React.Fragment>
+                    <div className="vm-sub">Move &amp; resize text</div>
+                    <div className="vm-hint">Drag any highlighted text on the preview to move it; drag its corner handle to resize. Shrink-only auto-fit still applies — text won't grow past its box. Only the template's built-in fields can be moved (adding brand-new text boxes is a separate overlay feature, not built yet).</div>
+                    <button className="vm-tab" style={{ marginTop: 8 }} onClick={resetOverrides}>Reset all positions</button>
                   </React.Fragment>}
                 </div>
               </React.Fragment>
