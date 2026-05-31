@@ -163,11 +163,17 @@ export function ArchedHeadline({
     typeof arch === "number"
       ? arch
       : ({ flat: 0, low: 0.25, med: 0.45, high: 0.7, extreme: 1.0 }[arch] ?? 0.45);
-  const baselineY = fontSize * 1.18;
-  const peakY = baselineY - fontSize * archDepth;
-  const pathD = `M ${padX} ${baselineY} Q ${width / 2} ${peakY} ${width - padX} ${baselineY}`;
-  const svgHeight = baselineY + fontSize * 0.4;
-  const id = `arc-${text.replace(/[^a-z0-9]/gi, "")}-${arch}`;
+  // Multi-line: split on typed newlines and stack one arch per line. Curved text
+  // rides a single SVG path, so a `\n` can't break within a path — instead each
+  // line gets its own path + textPath, offset vertically. lineStep grows with the
+  // arch (deeper curve lifts the center higher, needing more room). Spacing is
+  // derived from fontSize+archDepth only (NO lineHeight) so the editor preview
+  // (archSvg in editor.html) can mirror it exactly without threading extra props.
+  const lines = String(text == null ? "" : text).split("\n");
+  const lineStep = fontSize * (1.0 + archDepth * 0.7);
+  const baseY0 = fontSize * 1.18;
+  const svgHeight = baseY0 + (lines.length - 1) * lineStep + fontSize * 0.4;
+  const idBase = `arc-${String(text == null ? "" : text).replace(/[^a-z0-9]/gi, "")}-${arch}`;
   // `glow` wins; else honor `shadow`. `shadow` may be:
   //   • a string  → used verbatim as the CSS filter (e.g. a custom
   //                  "drop-shadow(5px 9px 7px rgba(0,0,0,0.45))" to match a
@@ -190,22 +196,36 @@ export function ArchedHeadline({
       style={{ display: "block", overflow: "visible" }}
     >
       <defs>
-        <path id={id} d={pathD} fill="none" />
+        {lines.map((ln, i) => {
+          const baselineY = baseY0 + i * lineStep;
+          const peakY = baselineY - fontSize * archDepth;
+          return (
+            <path
+              key={i}
+              id={`${idBase}-${i}`}
+              d={`M ${padX} ${baselineY} Q ${width / 2} ${peakY} ${width - padX} ${baselineY}`}
+              fill="none"
+            />
+          );
+        })}
       </defs>
-      <text
-        fill={color}
-        stroke={stroke ? strokeColor || color : undefined}
-        strokeWidth={stroke || undefined}
-        fontFamily={FONT_DISPLAY}
-        fontSize={fontSize}
-        fontWeight={fontWeight}
-        letterSpacing={letterSpacing}
-        style={{ filter, textTransform: "uppercase", paintOrder: "stroke" }}
-      >
-        <textPath href={`#${id}`} startOffset="50%" textAnchor="middle">
-          {text}
-        </textPath>
-      </text>
+      {lines.map((ln, i) => (
+        <text
+          key={i}
+          fill={color}
+          stroke={stroke ? strokeColor || color : undefined}
+          strokeWidth={stroke || undefined}
+          fontFamily={FONT_DISPLAY}
+          fontSize={fontSize}
+          fontWeight={fontWeight}
+          letterSpacing={letterSpacing}
+          style={{ filter, textTransform: "uppercase", paintOrder: "stroke" }}
+        >
+          <textPath href={`#${idBase}-${i}`} startOffset="50%" textAnchor="middle">
+            {ln}
+          </textPath>
+        </text>
+      ))}
     </svg>
   );
 }

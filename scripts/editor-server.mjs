@@ -478,6 +478,42 @@ const server = createServer(async (req, res) => {
     return;
   }
 
+  // POST /media-into-template { src } — copy a chosen brand-library photo into
+  // templates/multi-sport-foundations/library/ and return "./library/<name>".
+  // WHY: MediaSlot renders src={path} verbatim, resolved relative to
+  // TEMPLATE_DIR, so a library photo must be copied in (a /media-file URL would
+  // preview but render BLANK). The "./library/<name>" path resolves identically
+  // in the editor preview (/templates/...) AND the PNG render (relative to dir).
+  if (path === "/media-into-template" && req.method === "POST") {
+    try {
+      const { src } = JSON.parse((await readBody(req)) || "{}");
+      if (!src) { sendJson(res, 400, { error: "missing src" }); return; }
+      const from = resolve(join(PROJECT_ROOT, src));
+      // Guard: source must live under a known brand-media root.
+      if (!MEDIA_ROOTS.some((r) => from.startsWith(resolve(r))) || !existsSync(from)) {
+        sendJson(res, 404, { error: "source media not found in a brand media root" });
+        return;
+      }
+      // MUST live under assets/: the static renderer (static-react.mjs) copies
+      // ONLY the sibling assets/ dir into its temp render dir, so a photo under
+      // any other subdir renders BLACK. Match the proven "./assets/<name>"
+      // convention. Prefix "swap-" to stay identifiable + avoid clobbering
+      // curated assets. Slug the name (brand photos have spaces/parens) so it's
+      // URL-safe in the editor preview regardless of decoding.
+      const assetsDir = join(TEMPLATES_DIR, "assets");
+      mkdirSync(assetsDir, { recursive: true });
+      const ext = extname(from).toLowerCase();
+      const slug = basename(from, extname(from))
+        .replace(/[^a-z0-9]+/gi, "-").replace(/^-+|-+$/g, "").toLowerCase() || "photo";
+      const name = "swap-" + slug + ext;
+      copyFileSync(from, join(assetsDir, name));
+      sendJson(res, 200, { path: "./assets/" + name });
+    } catch (e) {
+      sendJson(res, 500, { error: String((e && e.message) || e) });
+    }
+    return;
+  }
+
   // GET /media-file/<project-relative-path> — serve a brand-media file from a
   // guarded root (MEDIA_ROOTS only).
   if (path.startsWith("/media-file/") && req.method === "GET") {
@@ -526,7 +562,8 @@ const server = createServer(async (req, res) => {
 
   // GET /templates/... → serve template assets (photos, SVGs, etc.)
   if (path.startsWith("/templates/") && req.method === "GET") {
-    const filePath = join(PROJECT_ROOT, path.slice(1));
+    // Decode so asset names with spaces/parens resolve (url.pathname keeps %20).
+    const filePath = join(PROJECT_ROOT, decodeURIComponent(path.slice(1)));
     // Security: ensure resolved path stays under TEMPLATES_DIR
     const resolved = resolve(filePath);
     if (resolved.startsWith(resolve(TEMPLATES_DIR)) && existsSync(resolved)) {

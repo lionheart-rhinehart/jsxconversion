@@ -32,7 +32,13 @@ const server = http.createServer(async (req, res) => {
     const file = normalize(join(ROOT, p));
     if (!file.startsWith(ROOT)) { res.writeHead(403); return res.end('forbidden'); }
     const buf = await readFile(file);
-    res.writeHead(200, { 'Content-Type': MIME[extname(file).toLowerCase()] || 'application/octet-stream' });
+    res.writeHead(200, {
+      'Content-Type': MIME[extname(file).toLowerCase()] || 'application/octet-stream',
+      // Dev server: never cache. review.html loads ~96 .jsx over XHR via
+      // Babel-standalone; without this the browser serves stale compiled code
+      // (the "my fix isn't showing" symptom). Matches editor-server.mjs (:5173).
+      'Cache-Control': 'no-store',
+    });
     res.end(buf);
   } catch {
     res.writeHead(404); res.end('not found: ' + req.url);
