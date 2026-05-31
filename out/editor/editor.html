@@ -437,6 +437,8 @@
       <button id="modeMoveBtn" class="mode-btn active" data-mode="move">Move</button>
       <button id="modeCropBtn" class="mode-btn" data-mode="crop">Crop</button>
     </div>
+    <button id="undoBtn" title="Undo (Ctrl+Z)">↶</button>
+    <button id="redoBtn" title="Redo (Ctrl+Shift+Z)">↷</button>
     <button id="reloadBtn" title="Reload config + image from disk">↻ Reload</button>
     <button id="saveBtn" class="accent">Save</button>
     <button id="renderBtn" class="primary">Save + Render</button>
@@ -554,10 +556,33 @@
       cropDrag: null, // { handle, startMouseX, startMouseY, startCrop, photoScale }
       fontsReady: false,
       mode: 'move', // 'move' | 'crop'
+      undo: [], redo: [],
     };
 
     const $ = (id) => document.getElementById(id);
     const setStatus = (txt) => { $('statusText').textContent = txt || ''; };
+
+    // ===== Undo / redo (snapshots of state.config) =====
+    // snapshotForUndo() captures the CURRENT config BEFORE a mutation; call it at
+    // the start of each gesture (drag mousedown, prop focus, structural action).
+    function snapshotForUndo() {
+      if (!state.config) return;
+      const snap = JSON.stringify(state.config);
+      if (state.undo.length && state.undo[state.undo.length - 1] === snap) return; // dedupe
+      state.undo.push(snap);
+      if (state.undo.length > 80) state.undo.shift();
+      state.redo = [];
+    }
+    function applyHistory(from, to, label) {
+      if (!from.length || !state.config) return;
+      to.push(JSON.stringify(state.config));
+      state.config = JSON.parse(from.pop());
+      state.selectedId = null;
+      renderStage(); renderElementList(); renderProps();
+      setStatus(label + '. Save + Render to persist.');
+    }
+    const doUndo = () => applyHistory(state.undo, state.redo, 'Undo');
+    const doRedo = () => applyHistory(state.redo, state.undo, 'Redo');
 
     // ===== Campaign-asset ids =====
     // A campaign creative is addressed by a hash id "camp:<campaign>:<angle>:<asset>"
@@ -831,6 +856,7 @@
       sortedLayers().forEach((l, i) => { l.data.z = i * 10; });
     }
     function moveLayer(id, dir) { // dir +1 = toward front (higher z), -1 = back
+      snapshotForUndo();
       normalizeZ();
       const ls = sortedLayers();
       const idx = ls.findIndex(l => l.id === id);
@@ -841,6 +867,7 @@
       renderStage(); renderElementList();
     }
     function bringToFront(id) {
+      snapshotForUndo();
       normalizeZ();
       const ls = sortedLayers();
       const l = ls.find(x => x.id === id); if (!l) return;
@@ -848,6 +875,7 @@
       renderStage(); renderElementList();
     }
     function sendToBack(id) {
+      snapshotForUndo();
       normalizeZ();
       const ls = sortedLayers();
       const l = ls.find(x => x.id === id); if (!l) return;
@@ -868,6 +896,7 @@
       return prefix + '_' + n;
     }
     function addText() {
+      snapshotForUndo();
       const W = state.config.width || 1080, H = state.config.height || 1920;
       const el = {
         id: nextId('text'), label: 'New text', tag: 'new_text',
@@ -881,6 +910,7 @@
       setStatus('Added ' + el.id + '. Save + Render to persist.');
     }
     function addRect() {
+      snapshotForUndo();
       const W = state.config.width || 1080, H = state.config.height || 1920;
       const it = {
         id: nextId('rect'), type: 'rect',
@@ -894,6 +924,7 @@
       setStatus('Added ' + it.id + '. Save + Render to persist.');
     }
     function duplicateLayer(id) {
+      snapshotForUndo();
       const el = (state.config.elements || []).find(e => e.id === id);
       if (el) {
         const c = { ...el, id: nextId('text'), x: (el.x || 0) + 24, y: (el.y || 0) + 24, z: topZ() };
@@ -926,6 +957,7 @@
     function splitSolidOutline(id) {
       const el = (state.config.elements || []).find(e => e.id === id);
       if (!el) { setStatus('Select a text layer first.'); return; }
+      snapshotForUndo();
       const sz = subjectZ();
       el.z = Math.max(0, sz - 1); // solid drops behind the subject
       const outline = {
@@ -942,6 +974,7 @@
       setStatus('Split "' + (el.text || el.id) + '" → solid (behind) + outline (front). Save + Render to persist.');
     }
     function deleteLayer(id) {
+      snapshotForUndo();
       if (id === '_media') { setStatus('Background cannot be deleted.'); return; }
       if (id === '_foreground') {
         if (state.config.foregroundMedia) state.config.foregroundMedia.path = '';
@@ -2000,6 +2033,14 @@
       if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
         e.preventDefault(); doSaveAndRender(); return;
       }
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'z' || e.key === 'Z')) {
+        const el = document.activeElement;
+        if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA')) return; // native field undo
+        e.preventDefault(); e.shiftKey ? doRedo() : doUndo(); return;
+      }
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || e.key === 'Y')) {
+        e.preventDefault(); doRedo(); return;
+      }
       if (e.key === 'Escape') {
         selectElement(null);
         return;
@@ -2227,6 +2268,15 @@
     }
     $('saveBtn').onclick = doSave;
     $('renderBtn').onclick = doSaveAndRender;
+    $('undoBtn').onclick = doUndo;
+    $('redoBtn').onclick = doRedo;
+    // Snapshot the config BEFORE a gesture so undo restores the pre-edit state:
+    // any drag/resize starts with a mousedown in the stage; any prop edit starts
+    // by focusing a field in the side panel.
+    $('stage').addEventListener('mousedown', () => { if (state.config) snapshotForUndo(); }, true);
+    document.querySelector('aside').addEventListener('focusin', (e) => {
+      if (e.target && e.target.matches && e.target.matches('input, select, textarea')) snapshotForUndo();
+    }, true);
     $('reloadBtn').onclick = async () => {
       if (state.cluster) {
         const cfg = await fetchConfig(state.cluster);

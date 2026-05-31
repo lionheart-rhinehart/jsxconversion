@@ -100,7 +100,10 @@
   .vmodal-head { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.1); font-family: var(--font-mono, monospace); font-size: 12px; }
   .vmodal-head .vm-id { background: var(--aa-red-600, #c4141d); color: #fff; padding: 3px 8px; font-weight: 700; }
   .vmodal-head .vm-title { color: var(--aa-ink-300, #b8bdc6); letter-spacing: 0.08em; text-transform: uppercase; }
-  .vmodal-head .x { margin-left: auto; cursor: pointer; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); color: #fff; padding: 6px 12px; font-family: inherit; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .vmodal-head .vm-hbtn { margin-left: auto; cursor: pointer; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); color: #fff; width: 30px; padding: 5px 0; font-size: 14px; line-height: 1; }
+  .vmodal-head .vm-hbtn + .vm-hbtn { margin-left: 4px; }
+  .vmodal-head .vm-hbtn:hover { border-color: var(--aa-red-600, #c4141d); }
+  .vmodal-head .x { margin-left: 8px; cursor: pointer; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); color: #fff; padding: 6px 12px; font-family: inherit; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
   .vmodal-head .x:hover { background: var(--aa-red-600, #c4141d); border-color: var(--aa-red-600, #c4141d); }
   .vmodal-body { display: flex; gap: 18px; padding: 18px; min-height: 0; }
   /* position:relative is load-bearing — the bank's <Stage> root is
@@ -819,6 +822,35 @@ function VideoEditModal({ angleId, assetId, onClose }) {
     return n;
   });
 
+  // ── Undo / redo: a debounced history of the whole `data` object. Rapid
+  // changes within 450ms (typing, a drag) coalesce into ONE undo step. ──
+  const histRef = React.useRef({ undo: [], redo: [], committed: null, pending: null, timer: null, applying: false });
+  const flushHistory = () => {
+    const h = histRef.current;
+    if (h.timer) { clearTimeout(h.timer); h.timer = null; h.undo.push(h.committed); if (h.undo.length > 60) h.undo.shift(); h.redo = []; h.committed = h.pending; }
+  };
+  useEffect(() => {
+    const h = histRef.current;
+    if (h.committed === null) { h.committed = data; return; }
+    if (h.applying) { h.applying = false; h.committed = data; return; }
+    h.pending = data;
+    if (h.timer) clearTimeout(h.timer);
+    h.timer = setTimeout(() => { h.undo.push(h.committed); if (h.undo.length > 60) h.undo.shift(); h.redo = []; h.committed = h.pending; h.timer = null; }, 450);
+  }, [data]);
+  const undo = () => { const h = histRef.current; flushHistory(); if (!h.undo.length) return; h.redo.push(h.committed); const prev = h.undo.pop(); h.committed = prev; h.applying = true; setData(prev); };
+  const redo = () => { const h = histRef.current; if (!h.redo.length) return; h.undo.push(h.committed); const next = h.redo.pop(); h.committed = next; h.applying = true; setData(next); };
+  useEffect(() => {
+    const onKey = (e) => {
+      const el = document.activeElement;
+      if (el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA")) return; // let fields own Ctrl+Z
+      const mod = e.ctrlKey || e.metaKey;
+      if (mod && (e.key === "z" || e.key === "Z")) { e.preventDefault(); e.shiftKey ? redo() : undo(); }
+      else if (mod && (e.key === "y" || e.key === "Y")) { e.preventDefault(); redo(); }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   const fields = (spec && spec.fields) || [];
   // Added text boxes (data._extras) join the editable field list, so they show
   // up in the COPY tab + swap dropdown exactly like the template's own fields.
@@ -866,6 +898,8 @@ function VideoEditModal({ angleId, assetId, onClose }) {
         <div className="vmodal-head">
           <span className="vm-id">{assetId}</span>
           <span className="vm-title">{isFresh ? "Fresh creative — copy only" : ((asset.format || "video").toUpperCase() + " · " + template)}</span>
+          {!isFresh && <button className="vm-hbtn" onClick={undo} title="Undo (Ctrl+Z)">↶</button>}
+          {!isFresh && <button className="vm-hbtn" onClick={redo} title="Redo (Ctrl+Shift+Z)">↷</button>}
           <button className="x" onClick={onClose}>Close</button>
         </div>
         <div className="vmodal-body">
