@@ -80,6 +80,17 @@
 
   .empty { padding: 80px 20px; text-align: center; color: var(--aa-ink-400, #969ca7); font-family: var(--font-mono, monospace); }
   .err { color: #ff6b6b; }
+
+  /* Edit modal — embeds the position editor (static) in an iframe so editing
+     happens in place ("one app" feel). */
+  .modal-bg { position: fixed; inset: 0; background: rgba(5,6,8,0.86); display: none; align-items: center; justify-content: center; z-index: 1000; }
+  .modal-bg.on { display: flex; }
+  .modal-card { background: #15171a; border: 1px solid rgba(255,255,255,0.14); width: min(1320px, 96vw); height: 92vh; display: flex; flex-direction: column; }
+  .modal-head { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.1); font-family: var(--font-mono, monospace); font-size: 12px; color: var(--aa-ink-200, #d6d9de); letter-spacing: 0.04em; }
+  .modal-head .x { margin-left: auto; cursor: pointer; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); color: #fff; padding: 6px 12px; font-family: inherit; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .modal-head .x:hover { border-color: var(--aa-red-600, #c4141d); }
+  .modal-body { flex: 1; min-height: 0; }
+  .modal-body iframe { width: 100%; height: 100%; border: 0; display: block; }
 </style>
 </head>
 <body>
@@ -95,6 +106,17 @@
   <div class="controls" id="controls"></div>
 
   <div id="content"><div class="empty">Loading plan…</div></div>
+</div>
+
+<!-- Edit modal (static = embedded position editor; video/gif filled by Part 4) -->
+<div class="modal-bg" id="editModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <span id="editModalTitle">Edit</span>
+      <button class="x" id="editModalClose">Close</button>
+    </div>
+    <div class="modal-body" id="editModalBody"></div>
+  </div>
 </div>
 
 <script>
@@ -260,10 +282,12 @@ function wire() {
       btn.addEventListener("click", () => {
         const act = btn.dataset.act;
         if (act === "edit") {
-          // Statics map to the position editor by template id (cluster-*).
           const a = findAsset(angle, asset);
-          if (a && a.template && a.template.startsWith("cluster-")) {
-            window.open(EDITOR + "/#" + a.template, "_blank");
+          // Static cluster templates → embed the position editor on the asset's
+          // OWN campaign config (camp:<campaign>:<angle>:<asset>), not the source
+          // template. Video/gif/fresh editing is wired by Part 4.
+          if (a && a.format === "static" && a.template && a.template.startsWith("cluster-")) {
+            openStaticEditor(angle, asset);
           } else {
             alert("Inline editor is wired for cluster-* statics. This asset is " +
               (a ? a.source + "/" + a.format : "?") + " — video/fresh editing comes with the embed phase.");
@@ -300,6 +324,30 @@ async function patch(angleId, assetId, fields) {
     alert("Save failed: " + e.message);
   }
 }
+
+// ── Static edit modal: embed the position editor on the asset's own config ──
+function openStaticEditor(angleId, assetId) {
+  // The editor lives on :5173 (editor-server). It's cross-origin to this page
+  // (:5599) so it can't touch our DOM — it postMessages on render (handled
+  // below). camp id = camp:<campaign>:<angle>:<asset>.
+  const id = `camp:${PLAN.campaign}:${angleId}:${assetId}`;
+  document.getElementById("editModalTitle").textContent =
+    `Editing ${assetId} — drag layers, edit text, then Save + Render`;
+  document.getElementById("editModalBody").innerHTML =
+    `<iframe src="${EDITOR}/editor#${id}" title="position editor"></iframe>`;
+  document.getElementById("editModal").classList.add("on");
+}
+function closeEditModal() {
+  document.getElementById("editModal").classList.remove("on");
+  document.getElementById("editModalBody").innerHTML = ""; // unload the iframe
+  load(); // refresh cards — picks up any edits/renders made in the editor
+}
+document.getElementById("editModalClose").addEventListener("click", closeEditModal);
+// B4: the editor iframe postMessages when a single-asset render finishes so we
+// can refresh that card's thumb without cross-origin DOM access.
+window.addEventListener("message", (e) => {
+  if (e.data && e.data.type === "camp-rendered") load();
+});
 
 load();
 </script>

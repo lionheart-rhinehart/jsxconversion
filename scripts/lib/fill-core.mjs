@@ -85,6 +85,41 @@ export function applySubstitutions(sourceConfig, resolved) {
 }
 
 // ---------------------------------------------------------------------------
+// Static asset config resolution (the ONE fill path)
+// ---------------------------------------------------------------------------
+
+// Resolve the filled layer-model config for a static template asset — the
+// SINGLE source of the seed config shared by the campaign runner (first render)
+// and the editor-server /campaign-config first-fill. Both call this so the
+// editor preview and the rendered PNG can never start from different configs
+// (B2: one fill path). Returns the filled config object, or null if the
+// template's source config is missing.
+//
+//   clusterId   the asset's `template` (e.g. "cluster-12")
+//   asset       the plan asset (reads templateData | headline/microscript)
+//   brand       brand slug for the brand data tier
+//   templateDir absolute path to templates/multi-sport-foundations
+//   dataDir     absolute path to the project's data/ dir
+export function resolveStaticConfig({ clusterId, asset, brand, templateDir, dataDir }) {
+  const configPath = join(templateDir, `${clusterId}.config.json`);
+  if (!existsSync(configPath)) return null;
+  const sourceConfig = JSON.parse(readFileSync(configPath, "utf8"));
+  const brandTier = loadTier("brand", brand, dataDir);
+  // asset.templateData (keyed to the template's tags) wins; else a heuristic
+  // maps headline→title/headline and microscript→microscript.
+  let overrides = {};
+  if (asset.templateData && typeof asset.templateData === "object") {
+    overrides = { ...asset.templateData };
+  } else {
+    if (asset.headline) { overrides.title = asset.headline; overrides.headline = asset.headline; }
+    if (asset.microscript) overrides.microscript = asset.microscript;
+  }
+  const resolved = mergeTiers(brandTier.tags, {}, overrides);
+  const { config } = applySubstitutions(sourceConfig, resolved);
+  return config;
+}
+
+// ---------------------------------------------------------------------------
 // Variant emit (non-mutating to source)
 // ---------------------------------------------------------------------------
 

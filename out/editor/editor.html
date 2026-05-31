@@ -553,6 +553,24 @@
     const $ = (id) => document.getElementById(id);
     const setStatus = (txt) => { $('statusText').textContent = txt || ''; };
 
+    // ===== Campaign-asset ids =====
+    // A campaign creative is addressed by a hash id "camp:<campaign>:<angle>:<asset>"
+    // instead of a cluster id. The 3 I/O fns + the crop-bg fallback + the init
+    // loader branch on this so the SAME editor edits campaign creatives, writing
+    // their authoritative per-asset config (campaigns/<name>/edits/…). Cluster
+    // editing is untouched. (campaign/angle/asset ids never contain ':'.)
+    function parseCampId(id) {
+      if (typeof id !== 'string' || !id.startsWith('camp:')) return null;
+      const parts = id.split(':');
+      if (parts.length !== 4) return null;
+      return { campaign: parts[1], angle: parts[2], asset: parts[3] };
+    }
+    // Where the campaign render lands (statics → .png). Used as the crop-mode /
+    // Move-mode background reference for camp assets (B9).
+    function campOutputPng(camp) {
+      return '/out/campaigns/' + camp.campaign + '/' + camp.angle + '/' + camp.asset + '.png';
+    }
+
     // ===== Wait for fonts to load (so text measurement is accurate) =====
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(() => {
@@ -565,13 +583,17 @@
     async function fetchClusters() {
       const r = await fetch('/clusters'); return r.json();
     }
+    function configUrl(id) {
+      const camp = parseCampId(id);
+      return camp ? `/campaign-config/${camp.campaign}/${camp.angle}/${camp.asset}` : '/config/' + id;
+    }
     async function fetchConfig(cluster) {
-      const r = await fetch('/config/' + cluster);
+      const r = await fetch(configUrl(cluster));
       if (!r.ok) return null;
       return r.json();
     }
     async function saveConfig(cluster, config) {
-      const r = await fetch('/config/' + cluster, {
+      const r = await fetch(configUrl(cluster), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(config),
@@ -579,7 +601,11 @@
       return r.json();
     }
     async function triggerRender(cluster) {
-      const r = await fetch('/render/' + cluster, { method: 'POST' });
+      const camp = parseCampId(cluster);
+      const url = camp
+        ? `/render-asset/${camp.campaign}/${camp.angle}/${camp.asset}`
+        : '/render/' + cluster;
+      const r = await fetch(url, { method: 'POST' });
       return r.json();
     }
 
@@ -962,7 +988,11 @@
         img.src = '/templates/multi-sport-foundations/' + cleanPath;
         img.onload = () => repositionPhoto(img);
       } else {
-        img.src = '/out/' + state.cluster + '.png';
+        // No media.path → use the last rendered composite as a positioning
+        // reference. For campaign assets that's the campaign output path, not
+        // /out/<cluster>.png (B9). Non-fatal if missing — text/move still work.
+        const camp = parseCampId(state.cluster);
+        img.src = camp ? campOutputPng(camp) : '/out/' + state.cluster + '.png';
         img.style.width = W + 'px';
         img.style.height = H + 'px';
         img.style.left = '0';
@@ -2077,8 +2107,16 @@
       setStatus('Rendering…');
       const r = await triggerRender(state.cluster);
       if (r.exitCode === 0) {
-        setStatus('Rendered ' + state.cluster + '.png ✓');
+        const camp = parseCampId(state.cluster);
+        setStatus('Rendered ' + (camp ? (r.output || state.cluster) : state.cluster + '.png') + ' ✓');
         renderStage();
+        // B4: this editor runs cross-origin inside the review page's iframe
+        // (:5173 ↔ :5599), so the parent can't read our DOM. Tell it the render
+        // finished so it can refresh that card's thumb.
+        if (camp && window.parent && window.parent !== window) {
+          window.parent.postMessage(
+            { type: 'camp-rendered', id: state.cluster, output: r.output || null }, '*');
+        }
       } else {
         setStatus('Render failed: ' + (r.stderr || '').slice(-200));
       }
@@ -2132,7 +2170,11 @@
         select.appendChild(opt);
       }
       const initial = window.location.hash.slice(1);
-      if (initial && r.clusters.includes(initial)) {
+      if (initial && parseCampId(initial)) {
+        // Campaign asset — not present in the cluster <select>; load directly
+        // (B5: the cluster-membership gate would otherwise drop a camp: hash).
+        loadCluster(initial);
+      } else if (initial && r.clusters.includes(initial)) {
         select.value = initial;
         loadCluster(initial);
       }

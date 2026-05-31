@@ -32,7 +32,7 @@ import {
 import { resolve, join, dirname } from "node:path";
 import { spawn, spawnSync } from "node:child_process";
 import {
-  loadTier, mergeTiers, applySubstitutions, emitVariant, renderJsx,
+  emitVariant, renderJsx, resolveStaticConfig,
 } from "./lib/fill-core.mjs";
 
 const PROJECT_ROOT = resolve(".");
@@ -67,6 +67,14 @@ const brand = plan.brand || null;
 
 const campaignOut = join(OUT_DIR, "campaigns", campaign);
 mkdirSync(campaignOut, { recursive: true });
+
+const DATA_DIR = join(PROJECT_ROOT, "data");
+// Per-asset authoritative static config (the user's hand edits). Tracked in git
+// under campaigns/<name>/edits/. Naming MUST match editor-server's route so the
+// editor writes and the runner reads the SAME file (B1/B2).
+function editsConfigPath(angleId, assetId) {
+  return join(CAMPAIGNS_DIR, campaign, "edits", `${angleId}__${assetId}.config.json`);
+}
 
 // ── plan patching (single-writer aware) ──────────────────────────────────────
 async function serverUp() {
@@ -146,28 +154,30 @@ function buildMotionData(asset, dataKeys) {
 
 // ── per-asset render paths ───────────────────────────────────────────────────
 
-// template + static: cascade-fill the cluster config, render PNG.
+// template + static: render PNG from the AUTHORITATIVE per-asset config.
+//
+// Edit-first ordering (B1/B2 — non-negotiable): if a hand-edited config exists
+// at campaigns/<name>/edits/<angle>__<asset>.config.json, render straight from
+// it and NEVER re-fill (re-filling would silently clobber the user's work).
+// Only on first render (no edits file yet) do we resolve the template fill,
+// PERSIST it as the seed edits file, then render from that. After that the edits
+// file is the single source of truth for both the editor and the renderer.
 async function renderTemplateStatic(asset, angleId) {
   const clusterId = asset.template;
   if (!clusterId || !existsSync(join(TEMPLATE_DIR, `${clusterId}.config.json`))) {
     return { ok: false, error: `template "${clusterId}" not found in ${TEMPLATE_DIR}` };
   }
   const suffix = `.camp-${slug(campaign)}-${slug(angleId)}-${slug(asset.id)}`;
-  const sourceConfig = JSON.parse(readFileSync(join(TEMPLATE_DIR, `${clusterId}.config.json`), "utf8"));
-  // Cascade tags + per-asset copy overrides (headline→tag 'title'/'headline', microscript→'microscript').
-  const brandTier = loadTier("brand", brand, join(PROJECT_ROOT, "data"));
-  // For statics, copy maps onto config-layer TAGS. asset.templateData (keyed to
-  // the template's tags) wins; else a heuristic maps headline→title/headline,
-  // microscript→microscript.
-  let overrides = {};
-  if (asset.templateData && typeof asset.templateData === "object") {
-    overrides = { ...asset.templateData };
+  const editsPath = editsConfigPath(angleId, asset.id);
+  let config;
+  if (existsSync(editsPath)) {
+    config = JSON.parse(readFileSync(editsPath, "utf8"));
   } else {
-    if (asset.headline) { overrides.title = asset.headline; overrides.headline = asset.headline; }
-    if (asset.microscript) overrides.microscript = asset.microscript;
+    config = resolveStaticConfig({ clusterId, asset, brand, templateDir: TEMPLATE_DIR, dataDir: DATA_DIR });
+    if (!config) return { ok: false, error: `could not resolve config for "${clusterId}"` };
+    mkdirSync(dirname(editsPath), { recursive: true });
+    writeFileSync(editsPath, JSON.stringify(config, null, 2));
   }
-  const resolved = mergeTiers(brandTier.tags, {}, overrides);
-  const { config } = applySubstitutions(sourceConfig, resolved);
   const { fillJsxPath } = emitVariant({ clusterId, config, templateDir: TEMPLATE_DIR, suffix });
   const basename = `${clusterId}${suffix}`;
   const r = await renderJsx({ jsxPath: fillJsxPath, projectRoot: PROJECT_ROOT, renderer: RENDERER, inherit: false });
@@ -204,6 +214,36 @@ async function renderTemplateMotion(asset, angleId, wantGif) {
   // Map campaign copy onto the template's REAL field keys (*_SPEC-driven adapter).
   const dataKeys = templateDataKeys(src);
   const data = buildMotionData(asset, dataKeys);
+
+  // Hand-picked media from the video edit surface (Part 4). asset.clip/photo are
+  // REAL served paths under a tracked dir (B10), relative to PROJECT_ROOT. Stage
+  // a copy next to the wrapper so the headless page can load it as a sibling,
+  // and bind it to the template's media key. (Motion media in render is verified
+  // in the deferred live-render pass; the wiring is here.)
+  let stagedMedia = null;
+  const picked = asset.photo || asset.clip;
+  if (picked) {
+    const abs = join(PROJECT_ROOT, picked);
+    if (existsSync(abs)) {
+      const mediaKey = dataKeys.find((k) => /(clip|photo|image|video|media|bg|src|poster|background)/i.test(k));
+      if (mediaKey) {
+        const ext = picked.split(".").pop();
+        stagedMedia = join(VIDEO_DIR, `${base}.media.${ext}`);
+        copyFileSync(abs, stagedMedia);
+        data[mediaKey] = `./${base}.media.${ext}`;
+      } else {
+        console.error(`[render]   note: ${asset.id} has a picked clip/photo but template ${tmpl} exposes no media key (${dataKeys.join(", ") || "none"}).`);
+      }
+    } else {
+      console.error(`[render]   note: ${asset.id} picked media not found at ${picked}.`);
+    }
+  }
+  // Audio choice persists in the plan but the render is silent for now (ffmpeg
+  // mux is deferred). Log so the silent output isn't read as a bug.
+  if (asset.audio && asset.audio.src) {
+    console.error(`[render]   note: ${asset.id} audio "${asset.audio.src}" recorded; mux deferred (silent render).`);
+  }
+
   writeFileSync(dataPath, JSON.stringify(data, null, 2));
 
   // Wrapper: define a Stage-wrapping component that mounts the bank template,
@@ -255,6 +295,7 @@ ${src}
   if (!keepVariants) {
     rmSync(wrapperPath, { force: true });
     rmSync(dataPath, { force: true });
+    if (stagedMedia) rmSync(stagedMedia, { force: true });
     rmSync(join(VIDEO_DIR, "__render"), { recursive: true, force: true });
   }
   return result;
@@ -308,7 +349,10 @@ async function main() {
         const destRel = `out/campaigns/${campaign}/${angle.id}/${asset.id}.${res.ext}`;
         const dest = join(PROJECT_ROOT, destRel);
         renameSync(res.produced, dest);
-        await patchAsset(useServer, angle.id, asset.id, { status: "rendered", output: destRel, thumb: destRel });
+        await patchAsset(useServer, angle.id, asset.id, {
+          status: "rendered", output: destRel, thumb: destRel,
+          renderedAt: new Date().toISOString(),
+        });
         row.status = "rendered"; row.output = destRel; ok++;
         console.error(`[render] ${tag} ✓ → ${destRel}`);
       } else if (res.pending) {

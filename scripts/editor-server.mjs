@@ -22,9 +22,12 @@ import {
   existsSync,
   copyFileSync,
   readdirSync,
+  mkdirSync,
+  renameSync,
 } from "node:fs";
-import { join, resolve, extname, basename } from "node:path";
+import { join, resolve, extname, basename, dirname } from "node:path";
 import { spawn } from "node:child_process";
+import { resolveStaticConfig } from "./lib/fill-core.mjs";
 
 const PORT = 5173;
 const PROJECT_ROOT = resolve(".");
@@ -33,6 +36,68 @@ const OUT_DIR = join(PROJECT_ROOT, "out");
 const EDITOR_DIR = join(OUT_DIR, "editor");
 const COMPARE_DIR = join(OUT_DIR, "compare");
 const CAMPAIGNS_DIR = join(PROJECT_ROOT, "campaigns");
+const DATA_DIR = join(PROJECT_ROOT, "data");
+const VIDEO_DIR = join(PROJECT_ROOT, "brand/video-templates");
+const VIDEO_TEMPLATES_DIR = join(VIDEO_DIR, "templates");
+// Brand media library — photos/clips selectable in the video edit pickers.
+const MEDIA_ROOTS = [
+  join(PROJECT_ROOT, "brand/aa-design-system/project/uploads"),
+  join(PROJECT_ROOT, "brand/aa-design-system/project/assets"),
+  join(VIDEO_DIR, "assets"),
+];
+const PHOTO_EXT = new Set([".jpg", ".jpeg", ".png", ".webp"]);
+const CLIP_EXT = new Set([".mp4", ".mov", ".webm"]);
+
+// Per-asset authoritative static config — MUST match run-campaign.mjs so the
+// editor writes and the runner reads the same file (B1/B2).
+function editsConfigPath(campaign, angleId, assetId) {
+  return join(CAMPAIGNS_DIR, campaign, "edits", `${angleId}__${assetId}.config.json`);
+}
+
+// Atomic write: temp file in the same dir, then rename (so a crash mid-write
+// never leaves a half-written config the runner might read).
+function writeAtomic(filePath, contents) {
+  mkdirSync(dirname(filePath), { recursive: true });
+  const tmp = filePath + ".tmp";
+  writeFileSync(tmp, contents);
+  renameSync(tmp, filePath);
+}
+
+// Patch a plan asset in place (read-modify-write). Same-process single writer —
+// callers in this server never race each other.
+function stampPlanAsset(campaign, angleId, assetId, fields) {
+  const p = join(CAMPAIGNS_DIR, campaign, "creative-plan.json");
+  if (!existsSync(p)) return false;
+  const plan = JSON.parse(readFileSync(p, "utf8"));
+  const angle = (plan.angles || []).find((a) => a.id === angleId);
+  const asset = angle && (angle.assets || []).find((a) => a.id === assetId);
+  if (!asset) return false;
+  Object.assign(asset, fields);
+  writeAtomic(p, JSON.stringify(plan, null, 2));
+  return true;
+}
+
+// Extract a motion template's *_SPEC.fields array. The fields array is pure JSON
+// (quoted keys) so we balance-match the brackets after `fields:` and JSON.parse.
+function extractSpecFields(src) {
+  const at = src.indexOf("fields:");
+  if (at < 0) return null;
+  const open = src.indexOf("[", at);
+  if (open < 0) return null;
+  let depth = 0;
+  for (let i = open; i < src.length; i++) {
+    const ch = src[i];
+    if (ch === "[") depth++;
+    else if (ch === "]") {
+      depth--;
+      if (depth === 0) {
+        try { return JSON.parse(src.slice(open, i + 1)); }
+        catch { return null; }
+      }
+    }
+  }
+  return null;
+}
 
 // First campaign folder that has a creative-plan.json (used when /plan is
 // called without ?campaign=).
@@ -233,12 +298,164 @@ const server = createServer(async (req, res) => {
       sendJson(res, 404, { error: `asset "${assetId}" not found` });
       return;
     }
-    // Only the reviewer-editable fields can be patched this way.
-    const ALLOWED = ["status", "notes", "flags", "headline", "microscript", "output", "thumb"];
+    // Only the reviewer-editable fields can be patched this way. Includes the
+    // edit/render stamps and the motion edit-surface fields (Part 4).
+    const ALLOWED = [
+      "status", "notes", "flags", "headline", "microscript", "output", "thumb",
+      "editedAt", "renderedAt", "templateData", "clip", "photo", "audio", "template",
+    ];
     for (const k of ALLOWED) if (k in patch) asset[k] = patch[k];
     writeFileSync(p, JSON.stringify(plan, null, 2));
     sendJson(res, 200, { saved: true, campaign, angle: angleId, asset: assetId });
     return;
+  }
+
+  // ── Campaign EDIT API (Part 2: static editor + video modal back end) ──
+
+  // GET/POST /campaign-config/:campaign/:angle/:asset — the static per-asset
+  // layer-model config (the user's authoritative hand edits). GET creates it on
+  // first access by resolving the template fill (the ONE fill path, shared with
+  // the runner) and writing the edits file; POST saves it + stamps editedAt.
+  const campCfg = path.match(/^\/campaign-config\/([\w.-]+)\/([\w.-]+)\/([\w.-]+)$/);
+  if (campCfg) {
+    const [, campaign, angleId, assetId] = campCfg;
+    const editsPath = editsConfigPath(campaign, angleId, assetId);
+
+    if (req.method === "GET") {
+      if (existsSync(editsPath)) { send(res, 200, readFileSync(editsPath, "utf8")); return; }
+      const planFile = join(CAMPAIGNS_DIR, campaign, "creative-plan.json");
+      if (!existsSync(planFile)) { sendJson(res, 404, { error: `no plan for "${campaign}"` }); return; }
+      const plan = JSON.parse(readFileSync(planFile, "utf8"));
+      const angle = (plan.angles || []).find((a) => a.id === angleId);
+      const asset = angle && (angle.assets || []).find((a) => a.id === assetId);
+      if (!asset) { sendJson(res, 404, { error: `asset "${assetId}" not found` }); return; }
+      if (!asset.template || !asset.template.startsWith("cluster-")) {
+        sendJson(res, 400, { error: `asset "${assetId}" is not a static cluster template (template=${asset.template})` });
+        return;
+      }
+      const config = resolveStaticConfig({
+        clusterId: asset.template, asset, brand: plan.brand,
+        templateDir: TEMPLATES_DIR, dataDir: DATA_DIR,
+      });
+      if (!config) { sendJson(res, 404, { error: `could not resolve config for ${asset.template}` }); return; }
+      writeAtomic(editsPath, JSON.stringify(config, null, 2));
+      send(res, 200, JSON.stringify(config));
+      return;
+    }
+
+    if (req.method === "POST") {
+      const body = await readBody(req);
+      let parsed;
+      try { parsed = JSON.parse(body); } catch (e) { sendJson(res, 400, { error: e.message }); return; }
+      writeAtomic(editsPath, JSON.stringify(parsed, null, 2));
+      stampPlanAsset(campaign, angleId, assetId, { editedAt: new Date().toISOString() });
+      sendJson(res, 200, { saved: true, campaign, angle: angleId, asset: assetId });
+      return;
+    }
+  }
+
+  // POST /render-asset/:campaign/:angle/:asset — render ONE asset now, bypassing
+  // the approval gate (single-asset edit-render). The runner patches
+  // output/thumb/renderedAt back into the plan via this server's single-writer
+  // route; we read it back to return the fresh output path.
+  const renderAsset = path.match(/^\/render-asset\/([\w.-]+)\/([\w.-]+)\/([\w.-]+)$/);
+  if (renderAsset && req.method === "POST") {
+    const [, campaign, angleId, assetId] = renderAsset;
+    const proc = spawn(
+      "node",
+      ["scripts/run-campaign.mjs", campaign, "--only", assetId, "--angle", angleId, "--all"],
+      { cwd: PROJECT_ROOT },
+    );
+    let stderr = "";
+    proc.stderr.on("data", (d) => (stderr += d));
+    proc.on("exit", (code) => {
+      let output = null;
+      try {
+        const plan = JSON.parse(readFileSync(join(CAMPAIGNS_DIR, campaign, "creative-plan.json"), "utf8"));
+        const angle = (plan.angles || []).find((a) => a.id === angleId);
+        const asset = angle && (angle.assets || []).find((a) => a.id === assetId);
+        output = asset ? asset.output : null;
+      } catch (_) {}
+      sendJson(res, code === 0 ? 200 : 500, { exitCode: code, output, stderr: stderr.slice(-2000) });
+    });
+    return;
+  }
+
+  // GET /template-spec/:template — a motion template's editable copy fields.
+  const specMatch = path.match(/^\/template-spec\/([\w-]+)$/);
+  if (specMatch && req.method === "GET") {
+    const tmpl = specMatch[1];
+    const p = join(VIDEO_TEMPLATES_DIR, `${tmpl}.jsx`);
+    if (!existsSync(p)) { sendJson(res, 404, { error: `template "${tmpl}" not found` }); return; }
+    const fields = extractSpecFields(readFileSync(p, "utf8"));
+    sendJson(res, 200, { template: tmpl, fields: fields || [] });
+    return;
+  }
+
+  // GET /bank?type=motion|static — bank templates for the swap dropdown.
+  if (path === "/bank" && req.method === "GET") {
+    const type = url.searchParams.get("type") || "motion";
+    let templates = [];
+    try {
+      if (type === "static") {
+        templates = readdirSync(TEMPLATES_DIR)
+          .filter((f) => /^cluster-[\w-]+\.config\.json$/.test(f))
+          .map((f) => f.replace(/\.config\.json$/, ""));
+      } else {
+        templates = readdirSync(VIDEO_TEMPLATES_DIR)
+          .filter((f) => f.endsWith(".jsx"))
+          .map((f) => f.replace(/\.jsx$/, ""));
+      }
+    } catch (_) {}
+    templates.sort();
+    sendJson(res, 200, { type, templates });
+    return;
+  }
+
+  // GET /media?kind=photo|clip — selectable brand media (served paths).
+  if (path === "/media" && req.method === "GET") {
+    const kind = url.searchParams.get("kind") || "photo";
+    const exts = kind === "clip" ? CLIP_EXT : PHOTO_EXT;
+    const items = [];
+    for (const root of MEDIA_ROOTS) {
+      let files = [];
+      try { files = readdirSync(root); } catch (_) { continue; }
+      for (const f of files) {
+        if (!exts.has(extname(f).toLowerCase())) continue;
+        const abs = join(root, f);
+        const rel = abs.slice(PROJECT_ROOT.length + 1).replace(/\\/g, "/");
+        items.push({ name: f, path: rel, url: "/media-file/" + rel });
+      }
+    }
+    sendJson(res, 200, { kind, items });
+    return;
+  }
+
+  // GET /media-file/<project-relative-path> — serve a brand-media file from a
+  // guarded root (MEDIA_ROOTS only).
+  if (path.startsWith("/media-file/") && req.method === "GET") {
+    const rel = decodeURIComponent(path.slice("/media-file/".length));
+    const resolved = resolve(join(PROJECT_ROOT, rel));
+    const allowed = MEDIA_ROOTS.some((r) => resolved.startsWith(resolve(r)));
+    if (allowed && existsSync(resolved)) {
+      const mime = MIME[extname(resolved).toLowerCase()] || "application/octet-stream";
+      send(res, 200, readFileSync(resolved), mime);
+      return;
+    }
+    sendJson(res, 404, { error: "media not found" });
+    return;
+  }
+
+  // GET /video-templates/... — SEPARATE guarded root for the video bank (B3:
+  // /templates/ stays guarded to multi-sport-foundations).
+  if (path.startsWith("/video-templates/") && req.method === "GET") {
+    const rel = path.slice("/video-templates/".length);
+    const resolved = resolve(join(VIDEO_DIR, rel));
+    if (resolved.startsWith(resolve(VIDEO_DIR)) && existsSync(resolved)) {
+      const mime = MIME[extname(resolved).toLowerCase()] || "application/octet-stream";
+      send(res, 200, readFileSync(resolved), mime);
+      return;
+    }
   }
 
   // GET / → editor index
