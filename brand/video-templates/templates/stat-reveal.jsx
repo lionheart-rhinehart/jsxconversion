@@ -70,26 +70,23 @@ function StatRevealSquare({ data = {} }) {
         filter: 'blur(20px)',
       }}/>
 
-      <div style={{
-        position: 'absolute',
-        top: 100, left: 100,
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 28,
-        color: RED,
-        letterSpacing: '0.18em',
-        opacity: eyebrowT,
-      }}>// {eyebrow}</div>
+      <TplText field="eyebrow" data={data}
+        base={{ position: 'absolute', top: 100, left: 100, right: 100 }}
+        style={{
+          fontFamily: '"JetBrains Mono", monospace', fontSize: 28, color: RED,
+          letterSpacing: '0.18em', opacity: eyebrowT, whiteSpace: 'nowrap',
+        }}
+        maxWidth={880} fitKey={eyebrow}
+      >// {eyebrow}</TplText>
 
-      <div style={{
-        position: 'absolute',
-        top: 160, left: 100, right: 100,
-        fontFamily: 'Anton, sans-serif',
-        fontSize: 120,
-        color: '#fff',
-        lineHeight: 0.9,
-        opacity: eyebrowT,
-        transform: `translateY(${(1 - eyebrowT) * 12}px)`,
-      }}>{title1}<br/><span style={{color: RED}}>{title2}</span></div>
+      <TplText field="title" data={data}
+        base={{ position: 'absolute', top: 160, left: 100, right: 100 }}
+        style={{
+          fontFamily: 'Anton, sans-serif', fontSize: 120, color: '#fff', lineHeight: 0.9,
+          opacity: eyebrowT, transform: `translateY(${(1 - eyebrowT) * 12}px)`,
+        }}
+        maxHeight={350} fitKey={title1 + '|' + title2}
+      >{title1}<br/><span style={{color: RED}}>{title2}</span></TplText>
 
       {/* Stats row */}
       <div style={{
@@ -127,10 +124,13 @@ function StatRevealSquare({ data = {} }) {
         opacity: bannerT,
         transform: `translateY(${(1 - bannerT) * 30}px)`,
       }}>
-        <div style={{
-          fontFamily: 'Anton, sans-serif',
-          fontSize: 64, color: '#fff', letterSpacing: '0.005em',
-        }}>{ctaText}</div>
+        <TplText field="cta" data={data} base={{}}
+          style={{
+            fontFamily: 'Anton, sans-serif', fontSize: 64, color: '#fff',
+            letterSpacing: '0.005em', whiteSpace: 'nowrap',
+          }}
+          maxWidth={760} fitKey={ctaText}
+        >{ctaText}</TplText>
         <div style={{
           width: 80, height: 80,
           background: '#fff',

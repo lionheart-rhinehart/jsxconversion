@@ -206,6 +206,63 @@ function TextSprite({
   );
 }
 
+// ── TplText ───────────────────────────────────────────────────────────────
+// Layout/override/auto-fit wrapper for template text. NOT animated itself —
+// the template passes its own per-frame animated `style` (opacity/transform/
+// color/fontSize); TplText only: (1) merges a per-asset position/size override
+// from data._overrides[field], (2) SHRINK-ONLY auto-fits the text to maxWidth/
+// maxHeight (never grows, never exceeds the hand-set or template size — a
+// guardrail, not auto-design), (3) tags the node data-ov-key for the editor's
+// drag handles. Define top-level so retrofitted templates resolve it as a bare
+// global (same as Stage/useTime); window.TplText is set explicitly too.
+//
+//   <TplText field="title" data={data} base={{position:'absolute',top:160,left:100,right:100}}
+//            style={{fontFamily:'Anton',fontSize:120,opacity:t}} maxHeight={350}
+//            fitKey={title1+'|'+title2}>{title1}<br/>{title2}</TplText>
+function TplText({ field, data, base = {}, style = {}, maxWidth, maxHeight, minSize = 20, fitKey = '', children }) {
+  const ref = React.useRef(null);
+  const ov = (data && data._overrides && data._overrides[field]) || {};
+  // Ceiling = the hand-set override size if present, else the template's size.
+  const ceiling = ov.fontSize != null ? ov.fontSize
+    : (style.fontSize != null ? style.fontSize : base.fontSize);
+  const [size, setSize] = React.useState(ceiling);
+
+  // Track font readiness — measuring before fonts load gives wrong widths.
+  const [fontsReady, setFontsReady] = React.useState(
+    !(typeof document !== 'undefined' && document.fonts) || document.fonts.status === 'loaded');
+  React.useLayoutEffect(() => {
+    if (fontsReady || !document.fonts) return;
+    let live = true;
+    document.fonts.ready.then(() => { if (live) setFontsReady(true); });
+    return () => { live = false; };
+  }, [fontsReady]);
+
+  // Shrink-only auto-fit. useLayoutEffect (pre-paint) so the deterministic
+  // renderer never captures an unshrunk frame 0. Re-runs only when the copy /
+  // ceiling / box / fonts change — NOT every animation frame (fitKey gates it).
+  React.useLayoutEffect(() => {
+    const node = ref.current;
+    if (!node || ceiling == null) return;
+    if (maxWidth == null && maxHeight == null) return;
+    if (!fontsReady || !node.scrollWidth || !node.scrollHeight) return; // H3
+    let s = ceiling;
+    node.style.fontSize = s + 'px';
+    const overflows = () =>
+      (maxWidth != null && node.scrollWidth > maxWidth + 0.5) ||
+      (maxHeight != null && node.scrollHeight > maxHeight + 0.5);
+    let guard = 0;
+    while (overflows() && s > minSize && guard < 400) { s -= 2; node.style.fontSize = s + 'px'; guard++; }
+    setSize(s); // == ceiling when it already fits (shrink-only, never grows)
+  }, [fitKey, ceiling, maxWidth, maxHeight, fontsReady]);
+
+  const ox = ov.dx || 0, oy = ov.dy || 0;
+  const transform = [style.transform, base.transform, (ox || oy) ? `translate(${ox}px, ${oy}px)` : '']
+    .filter(Boolean).join(' ') || undefined;
+  const merged = { ...base, ...style, fontSize: size, transform };
+  return <div ref={ref} data-ov-key={field} style={merged}>{children}</div>;
+}
+window.TplText = TplText;
+
 // ImageSprite: scales + fades in; optional Ken Burns drift during hold.
 function ImageSprite({
   src,
