@@ -393,7 +393,7 @@
       margin-bottom: 6px;
     }
     .field label { width: 60px; color: var(--muted); font-family: ui-monospace, monospace; }
-    .field input {
+    .field input, .field textarea {
       flex: 1;
       background: var(--bg);
       border: 1px solid var(--border);
@@ -403,6 +403,11 @@
       font-family: ui-monospace, monospace;
       font-size: 12px;
     }
+    .field textarea { resize: vertical; min-height: 46px; line-height: 1.3; white-space: pre-wrap; }
+    /* Layer-row secondary line: the actual text content, so two layers sharing a
+       field name (e.g. two `microscript`s) are distinguishable at a glance. */
+    .lyr-sub { font-size: 11px; color: var(--muted); font-family: ui-monospace, Menlo, monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lyr-dup { font-size: 9px; color: #f59e0b; letter-spacing: 0.04em; }
     .kbd-hints {
       font-size: 11px;
       color: var(--muted);
@@ -480,7 +485,7 @@
         <div class="field"><label>x</label><input type="number" id="propX" /></div>
         <div class="field"><label>y</label><input type="number" id="propY" /></div>
         <div class="field"><label>fontSize</label><input type="number" id="propFontSize" /></div>
-        <div class="field"><label>text</label><input type="text" id="propText" /></div>
+        <div class="field"><label>text</label><textarea id="propText" rows="2" title="Enter inserts a line break"></textarea></div>
         <div class="field"><label>color</label><input type="text" id="propColor" placeholder="#ffffff" /></div>
         <div class="field"><label>weight</label><input type="number" id="propFontWeight" placeholder="400" /></div>
         <div class="field"><label>lineH</label><input type="number" id="propLineHeight" step="0.05" placeholder="1.0" /></div>
@@ -1656,6 +1661,13 @@
 
       // Unified list, top (highest z) first — matches a layers panel.
       const layers = sortedLayers().reverse();
+      // Count how many layers share each effective field name, so we can flag
+      // duplicates (two same-named layers is allowed, but the user needs to know).
+      const tagCount = {};
+      for (const l of layers) {
+        const t = l.data.tag || deriveTagDefault(l);
+        tagCount[t] = (tagCount[t] || 0) + 1;
+      }
       for (const layer of layers) {
         const li = document.createElement('li');
         li.dataset.id = layer.id;
@@ -1696,6 +1708,25 @@
         head.appendChild(nameWrap);
         head.appendChild(zc);
         li.appendChild(head);
+
+        // Secondary line: the layer's actual text (truncated), so two layers
+        // sharing a field name are distinguishable. Newlines shown as ⏎.
+        const contentText = layer.kind === 'text' ? (layer.data.text || '') : '';
+        if (contentText) {
+          const sub = document.createElement('div');
+          sub.className = 'lyr-sub';
+          sub.textContent = contentText.replace(/\s*\n\s*/g, ' ⏎ ');
+          sub.title = contentText;
+          li.appendChild(sub);
+        }
+        // Duplicate-name flag (informational — duplicates are allowed).
+        const effTag = layer.data.tag || deriveTagDefault(layer);
+        if (tagCount[effTag] > 1) {
+          const dup = document.createElement('div');
+          dup.className = 'lyr-dup';
+          dup.textContent = '⚠ name "' + effTag + '" used ' + tagCount[effTag] + '×';
+          li.appendChild(dup);
+        }
 
         const controls = document.createElement('div');
         controls.className = 'lyr-controls';
@@ -1929,6 +1960,12 @@
         selectElement(null);
         return;
       }
+      // While typing in a text field (incl. the multi-line text box), let the
+      // field own keys — Enter for newlines, arrows to move the caret, Tab — so
+      // none get hijacked for layer nav. (Ctrl+S/R + Esc above still work.)
+      const typingInField = document.activeElement &&
+        (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA');
+      if (typingInField) return;
       if (e.key === 'Tab' && state.config) {
         e.preventDefault();
         const els = state.config.elements;
@@ -2002,6 +2039,18 @@
     bindPropInput('propY', 'y');
     bindPropInput('propFontSize', 'fontSize');
     bindPropInput('propText', 'text', String);
+    // Newlines: when the text gains a line break, switch the element to pre-wrap
+    // so BOTH the preview (makeElementBox) and the renderer (_helpers.jsx
+    // renderTextLayer, which honors el.whiteSpace) actually break the line
+    // instead of collapsing the \n to a space.
+    $('propText').addEventListener('input', () => {
+      const el = state.config && (state.config.elements || []).find((e) => e.id === state.selectedId);
+      if (!el) return;
+      if (typeof el.text === 'string' && el.text.includes('\n') && el.whiteSpace == null) {
+        el.whiteSpace = 'pre-wrap';
+        renderStage();
+      }
+    });
     bindPropInput('propColor', 'color', String);
     bindPropInput('propFontWeight', 'fontWeight', (v) => parseInt(v, 10));
     bindPropInput('propLineHeight', 'lineHeight', parseFloat);
