@@ -313,6 +313,44 @@ const server = createServer(async (req, res) => {
     return;
   }
 
+  // GET /campaign-values/:campaign — deduped copy values across the plan, for
+  // the quick-swap dropdowns. H1: wrapped so a malformed asset can NEVER throw
+  // past the handler (which has no outer try/catch) and hang the client.
+  const campVals = path.match(/^\/campaign-values\/([\w.-]+)$/);
+  if (campVals && req.method === "GET") {
+    const campaign = campVals[1];
+    try {
+      const planFile = join(CAMPAIGNS_DIR, campaign, "creative-plan.json");
+      if (!existsSync(planFile)) { sendJson(res, 404, { error: `no plan for "${campaign}"` }); return; }
+      const plan = JSON.parse(readFileSync(planFile, "utf8"));
+      const microscript = new Set(), headline = new Set(), all = new Set();
+      const byKey = {};
+      const add = (set, v) => { if (typeof v === "string" && v.trim()) { set.add(v); all.add(v); } };
+      for (const ang of plan.angles || []) {
+        for (const a of ang.assets || []) {
+          add(microscript, a.microscript);
+          add(headline, a.headline);
+          if (a.templateData && typeof a.templateData === "object") {  // H1 guard
+            for (const [k, v] of Object.entries(a.templateData)) {
+              if (k.startsWith("_")) continue;                          // skip _overrides etc.
+              if (typeof v !== "string" || !v.trim()) continue;
+              (byKey[k] = byKey[k] || new Set()).add(v);
+              all.add(v);
+            }
+          }
+        }
+      }
+      const byKeyArr = {};
+      for (const k of Object.keys(byKey)) byKeyArr[k] = [...byKey[k]];
+      sendJson(res, 200, {
+        microscript: [...microscript], headline: [...headline], byKey: byKeyArr, all: [...all],
+      });
+    } catch (e) {
+      sendJson(res, 500, { error: e.message });
+    }
+    return;
+  }
+
   // ── Campaign EDIT API (Part 2: static editor + video modal back end) ──
 
   // GET/POST /campaign-config/:campaign/:angle/:asset — the static per-asset

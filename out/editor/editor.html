@@ -393,7 +393,7 @@
       margin-bottom: 6px;
     }
     .field label { width: 60px; color: var(--muted); font-family: ui-monospace, monospace; }
-    .field input, .field textarea {
+    .field input, .field textarea, .field select {
       flex: 1;
       background: var(--bg);
       border: 1px solid var(--border);
@@ -486,6 +486,7 @@
         <div class="field"><label>y</label><input type="number" id="propY" /></div>
         <div class="field"><label>fontSize</label><input type="number" id="propFontSize" /></div>
         <div class="field"><label>text</label><textarea id="propText" rows="2" title="Enter inserts a line break"></textarea></div>
+        <div class="field"><label>swap</label><select id="propTextSwap" title="Swap in another value from this campaign"><option value="">— campaign copy —</option></select></div>
         <div class="field"><label>color</label><input type="text" id="propColor" placeholder="#ffffff" /></div>
         <div class="field"><label>weight</label><input type="number" id="propFontWeight" placeholder="400" /></div>
         <div class="field"><label>lineH</label><input type="number" id="propLineHeight" step="0.05" placeholder="1.0" /></div>
@@ -574,6 +575,48 @@
     // Move-mode background reference for camp assets (B9).
     function campOutputPng(camp) {
       return '/out/campaigns/' + camp.campaign + '/' + camp.angle + '/' + camp.asset + '.png';
+    }
+
+    // ===== Campaign value quick-swap (shared copy pool from the plan) =====
+    let CAMPAIGN_VALUES = null;
+    async function loadCampaignValues() {
+      const camp = parseCampId(state.cluster);
+      if (!camp) return null;
+      if (CAMPAIGN_VALUES) return CAMPAIGN_VALUES;
+      try {
+        const r = await fetch('/campaign-values/' + camp.campaign);
+        if (r.ok) CAMPAIGN_VALUES = await r.json();
+      } catch (_) { CAMPAIGN_VALUES = null; }
+      return CAMPAIGN_VALUES;
+    }
+    // Map a layer's field name to the relevant value pool: microscript-ish tags
+    // → all microscripts, title/headline-ish → all headlines, plus any values
+    // other assets used for the exact same key; fall back to everything.
+    function valuesForTag(tag, vals) {
+      if (!vals) return [];
+      const t = String(tag || '').toLowerCase();
+      let pool = [];
+      if (/eyebrow|micro|byline|attribution|credential|role|label|tag/.test(t)) pool = vals.microscript || [];
+      else if (/title|head|quote|claim|primary|cta|tagline|subtext|name/.test(t)) pool = vals.headline || [];
+      const keyed = (vals.byKey && vals.byKey[tag]) || [];
+      const merged = [...new Set([...keyed, ...pool])];
+      return merged.length ? merged : (vals.all || []);
+    }
+    async function populateTextSwap(el) {
+      const sel = $('propTextSwap');
+      if (!sel) return;
+      const vals = await loadCampaignValues();
+      sel.innerHTML = '';
+      const def = document.createElement('option');
+      def.value = ''; def.textContent = '— campaign copy —';
+      sel.appendChild(def);
+      for (const v of valuesForTag(el.tag, vals)) {
+        const o = document.createElement('option');
+        o.value = v;                                   // full value (preserves \n)
+        o.textContent = v.length > 60 ? v.slice(0, 57) + '…' : v;
+        if (v === el.text) o.selected = true;
+        sel.appendChild(o);
+      }
     }
 
     // ===== Wait for fonts to load (so text measurement is accurate) =====
@@ -1804,6 +1847,7 @@
       $('propY').value = Math.round(el.y);
       $('propFontSize').value = el.fontSize || '';
       $('propText').value = el.text || '';
+      populateTextSwap(el);
       $('propColor').value = el.color || '';
       $('propFontWeight').value = el.fontWeight != null ? el.fontWeight : '';
       $('propLineHeight').value = el.lineHeight != null ? el.lineHeight : '';
@@ -2050,6 +2094,17 @@
         el.whiteSpace = 'pre-wrap';
         renderStage();
       }
+    });
+    // Quick-swap: pick another campaign value for this layer's field.
+    $('propTextSwap').addEventListener('change', () => {
+      const v = $('propTextSwap').value;
+      const el = state.config && (state.config.elements || []).find((e) => e.id === state.selectedId);
+      if (!el || !v) return;
+      el.text = v;
+      if (v.includes('\n') && el.whiteSpace == null) el.whiteSpace = 'pre-wrap';
+      $('propText').value = v;
+      renderStage();
+      setStatus('Swapped text. Save + Render to persist.');
     });
     bindPropInput('propColor', 'color', String);
     bindPropInput('propFontWeight', 'fontWeight', (v) => parseInt(v, 10));

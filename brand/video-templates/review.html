@@ -117,6 +117,10 @@
   .vm-tabbody { flex: 1; overflow-y: auto; min-height: 0; }
   .vm-sub { font-family: var(--font-mono, monospace); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--aa-ink-400, #969ca7); margin: 12px 0 8px; }
   .vm-sub:first-child { margin-top: 0; }
+  .vm-swap { margin-bottom: 14px; }
+  .vm-swap-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .vm-swap-row span { width: 108px; flex-shrink: 0; font-family: var(--font-mono, monospace); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--aa-ink-400, #969ca7); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .vm-swap-row select { flex: 1; min-width: 0; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); color: #fff; font-family: var(--font-mono, monospace); font-size: 11px; padding: 6px 8px; }
   .vm-hint, .vm-note { font-family: var(--font-mono, monospace); font-size: 11px; color: var(--aa-ink-400, #969ca7); line-height: 1.5; padding: 8px 0; }
   .vm-note { color: var(--aa-ink-500, #6b7280); border-top: 1px solid rgba(255,255,255,0.08); margin-top: 10px; }
   .vm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 6px; }
@@ -551,6 +555,50 @@ function defaultsFromFields(fields) {
   return d;
 }
 
+// Map a field key to the relevant campaign value pool (mirrors the static
+// editor's valuesForTag): eyebrow/micro-ish → microscripts, title/head-ish →
+// headlines, plus values other assets used for the exact same key.
+function valuesForKey(key, vals) {
+  if (!vals) return [];
+  const t = String(key || "").toLowerCase();
+  let pool = [];
+  if (/eyebrow|micro|byline|attribution|credential|role|label|tag/.test(t)) pool = vals.microscript || [];
+  else if (/title|head|quote|claim|primary|cta|tagline|subtext|name/.test(t)) pool = vals.headline || [];
+  const keyed = (vals.byKey && vals.byKey[key]) || [];
+  return [...new Set([...keyed, ...pool])];
+}
+
+// Quick-swap: per copy field, a dropdown of campaign values to drop in.
+function CampaignSwap({ fields, setField, campaign }) {
+  const [vals, setVals] = useState(null);
+  useEffect(() => {
+    let live = true;
+    fetch(apiBase() + "/campaign-values/" + campaign).then((r) => r.json())
+      .then((j) => { if (live) setVals(j); }).catch(() => {});
+    return () => { live = false; };
+  }, [campaign]);
+  if (!vals) return null;
+  const rows = (fields || [])
+    .filter((f) => f.type === "text" || f.type === "textarea")
+    .map((f) => ({ f, opts: valuesForKey(f.key, vals) }))
+    .filter((r) => r.opts.length);
+  if (!rows.length) return null;
+  return (
+    <div className="vm-swap">
+      <div className="vm-sub">Swap copy from campaign</div>
+      {rows.map(({ f, opts }) => (
+        <label key={f.key} className="vm-swap-row">
+          <span title={f.label}>{f.label}</span>
+          <select value="" onChange={(e) => { if (e.target.value) setField(f.key, e.target.value); }}>
+            <option value="">— pick —</option>
+            {opts.map((v, i) => <option key={i} value={v}>{v.length > 50 ? v.slice(0, 47) + "…" : v}</option>)}
+          </select>
+        </label>
+      ))}
+    </div>
+  );
+}
+
 function MediaPicker({ kind, current, onPick }) {
   const [items, setItems] = useState(null);
   useEffect(() => {
@@ -697,9 +745,12 @@ function VideoEditModal({ angleId, assetId, onClose }) {
                 </div>
                 <div className="vm-tabbody">
                   {tab === "copy" && (window.EditPanel
-                    ? <window.EditPanel spec={{ id: template, name: template, fields: copyFields }}
-                        data={data} setField={setField} setFields={setFields} reset={reset}
-                        templateDuration={Number(data.duration) || 8} />
+                    ? <React.Fragment>
+                        <CampaignSwap fields={copyFields} setField={setField} campaign={plan.campaign} />
+                        <window.EditPanel spec={{ id: template, name: template, fields: copyFields }}
+                          data={data} setField={setField} setFields={setFields} reset={reset}
+                          templateDuration={Number(data.duration) || 8} />
+                      </React.Fragment>
                     : <div className="vm-hint">Loading editor…</div>)}
                   {tab === "media" && (imageKey
                     ? <React.Fragment>
