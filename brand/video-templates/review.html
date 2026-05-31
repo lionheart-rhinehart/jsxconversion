@@ -46,7 +46,16 @@
   .prev img, .prev video { width: 100%; height: 100%; object-fit: cover; display: block; }
   .prev .ph { text-align: center; padding: 16px; }
   .prev .ph .fmt { font-family: var(--font-display, sans-serif); font-size: 30px; color: rgba(255,255,255,0.22); letter-spacing: 0.04em; }
-  .prev .ph .sub { font-family: var(--font-mono, monospace); font-size: 10px; color: var(--aa-ink-500, #6b7280); letter-spacing: 0.14em; margin-top: 6px; text-transform: uppercase; }
+  .prev .ph .sub { font-family: var(--font-mono, monospace); font-size: 11px; font-weight: 700; color: var(--aa-ink-500, #6b7280); letter-spacing: 0.12em; margin-top: 6px; text-transform: uppercase; }
+  /* Readiness colors on a thumbnail-less card: ready=go, fresh=waiting, unmapped=blocked */
+  .prev .ph-ready .sub { color: #4ade80; }
+  .prev .ph-fresh .sub { color: #f59e0b; }
+  .prev .ph-unmapped .sub { color: #ff6b6b; }
+  .prev .ph-ready .fmt { color: rgba(74,222,128,0.32); }
+  .prev .ph .ph-hint { font-family: var(--font-mono, monospace); font-size: 9px; color: var(--aa-ink-500, #6b7280); letter-spacing: 0.08em; margin-top: 6px; text-transform: uppercase; opacity: 0.85; }
+  /* "editable" tag, bottom-right of the preview */
+  .b.edit-tag { position: absolute; bottom: 8px; right: 8px; background: rgba(29,111,184,0.92); border: 1px solid rgba(255,255,255,0.18); color: #fff; }
+  .b.edit-tag.fresh { background: rgba(245,158,11,0.85); color: #1a1205; }
 
   .badges { position: absolute; top: 8px; left: 8px; right: 8px; display: flex; gap: 6px; align-items: center; }
   .b { font-family: var(--font-mono, monospace); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; padding: 3px 7px; text-transform: uppercase; }
@@ -255,8 +264,8 @@ function renderDash() {
   const stat = (num, lbl, cls = "") => `<div class="stat"><div class="num ${cls}">${num}</div><div class="lbl">${lbl}</div></div>`;
   document.getElementById("dash").innerHTML =
     stat(assets.length, "assets") +
-    stat(`${pct("video")}/${pct("gif")}/${pct("static")}`, `vid/gif/stat · tgt ${tgt("video")}/${tgt("gif")}/${tgt("static")}`) +
-    stat(`${pct("video") === undefined ? 0 : Math.round((fresh / n) * 100)}%`, `fresh · floor ${Math.round(floor * 100)}%`, freshClass) +
+    stat(`${pct(by("video"))}/${pct(by("gif"))}/${pct(by("static"))}`, `vid/gif/stat · tgt ${tgt("video")}/${tgt("gif")}/${tgt("static")}`) +
+    stat(`${Math.round((fresh / n) * 100)}%`, `fresh · floor ${Math.round(floor * 100)}%`, freshClass) +
     stat(`${approved + rendered}/${assets.length}`, "approved", approved + rendered === assets.length ? "ok" : "") +
     stat(flags, "open flags", flags ? "warn" : "ok");
 }
@@ -282,6 +291,23 @@ function pass(a) {
 // (Bug: flipping status to "changes" used to hide the creative because preview
 // was gated on status === "rendered". The output file doesn't disappear when a
 // reviewer asks for changes — so neither should the preview.)
+// A creative's lifecycle state — what the reviewer can DO with it right now:
+//   rendered  — has output (thumbnail shows)
+//   ready     — template-backed, not yet rendered → EDITABLE + renderable now
+//   fresh     — source:fresh, no generator yet → copy-editable, can't render
+//   unmapped  — template source but no template picked → needs a template first
+function assetState(a) {
+  if (a.output || a.thumb) return "rendered";
+  if (a.source === "fresh") return "fresh";
+  if (a.template) return "ready";
+  return "unmapped";
+}
+const STATE_COPY = {
+  ready:    ["ready to edit / render", (a) => a.template],
+  fresh:    ["fresh — needs generation", (a) => a.freshConcept || ""],
+  unmapped: ["needs a template", (a) => a.templateQuery || ""],
+};
+
 function previewHTML(a) {
   const media = a.output || a.thumb;
   if (media) {
@@ -289,8 +315,16 @@ function previewHTML(a) {
     if (/\.mp4$/i.test(media)) return `<video src="${src}" muted loop autoplay playsinline></video>`;
     return `<img src="${src}" alt="">`; // png/jpg/gif
   }
-  // N1 guard: never set an empty/null media src.
-  return `<div class="ph"><div class="fmt">${fmtLabel(a.format)}</div><div class="sub">not rendered yet</div></div>`;
+  // N1 guard: never set an empty/null media src. Distinct messaging per state so
+  // a blank card tells you whether it's ready vs blocked.
+  const st = assetState(a);
+  const [sub, hintFn] = STATE_COPY[st] || ["not rendered yet", () => ""];
+  const hint = (hintFn(a) || "").replace(/</g, "&lt;");
+  return `<div class="ph ph-${st}">
+    <div class="fmt">${fmtLabel(a.format)}</div>
+    <div class="sub">${sub}</div>
+    ${hint ? `<div class="ph-hint">${hint}</div>` : ""}
+  </div>`;
 }
 
 // An asset whose hand edits are newer than its last render needs a re-render to
@@ -308,12 +342,17 @@ function cardHTML(a) {
   const flags = (a.flags || []).map((f) => `<span class="flag">${f}</span>`).join("");
   const tref = a.source === "template" && !a.template && a.templateQuery
     ? `<div class="tref">→ ${a.templateQuery} (to map)</div>` : "";
+  const st = assetState(a);
+  // Editability tag — so a thumbnail-less card still shows it can be edited.
+  const editTag = st === "unmapped" ? ""
+    : `<span class="b edit-tag ${st}">✎ ${st === "fresh" ? "copy" : "editable"}</span>`;
   return `
-  <div class="card s-${a.status}" data-angle="${a._angle.id}" data-asset="${a.id}">
+  <div class="card s-${a.status} as-${st}" data-angle="${a._angle.id}" data-asset="${a.id}">
     <div class="prev">
       ${previewHTML(a)}
       <div class="badges"><span class="b fmt">${fmtLabel(a.format)}</span>${srcBadge}<span class="b id">${a.id}</span></div>
       <span class="b status ${a.status}">${a.status}</span>
+      ${editTag}
     </div>
     <div class="body">
       <div class="head">${(a.headline || "").replace(/</g, "&lt;")}</div>
