@@ -43,16 +43,29 @@ inspects what already exists on disk for the campaign and resumes from there.
 ## The flow
 
 ### Step 1 — Brand
-Ask: **"What's the brand?"** Resolve it against
-`.claude/skills/creative-engine/config.json` → `brands[<slug>]`. That gives:
+Read `.claude/skills/creative-engine/config.json` → `brands` and pick the brand:
+- **Exactly one registered** (today's state) → don't ask open-ended. State it and
+  confirm, e.g. *"Only one brand kit is set up right now: **Athletes Acceleration**.
+  Using it for this campaign. (When you add more clients I'll ask you to pick.)"* —
+  proceed once the user confirms. This still records the brand on the campaign, so
+  nothing has to be retrofitted when more brands exist.
+- **More than one registered** → list them and ask **"Which brand?"** (the real
+  pick — scales automatically, no further change needed). Resolve the answer against
+  `brands[<slug>]` (match `slug` or any `aliases`).
+- **Unknown name / none match** → ask for the brand's slug + Kraken subfolder + data
+  tier and add it to `config.json`.
+
+The resolved brand gives:
 - the **Kraken** raw-media folder: `<krakenRoot>/<krakenSubfolder>` (images/clips/
   videos — pulled at CREATION time, not now);
 - the **data tier** for the cascade fill (`data/brand.<dataTier>.json`);
 - the brand kit path (read it before composing anything fresh).
 
-If `krakenRoot` is null, ask for the local Kraken folder path and write it back to
-`config.json`. If the brand is unknown, ask for its slug + Kraken subfolder + data
-tier and add it to `config.json`.
+**Kraken is lazy.** Do NOT prompt for `krakenRoot` here. Only ask for it later (and
+write it back to `config.json`) when the plan actually contains an asset whose image
+`source` is `library` or `client` — i.e. when raw media is genuinely needed at
+render time. A template-only or jsx-render campaign must never be blocked on a
+Kraken path that isn't set up yet.
 
 ### Step 2 — Collect inputs
 Ensure `campaigns/<name>/` contains: `brief.md` (reverse brief), `ad-copy.md`,

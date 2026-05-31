@@ -15,3 +15,5 @@ brand/video-templates/__render/
 .DS_Store
 __render/
 .claude/settings.local.json
+# Zone-protection auto-backups (machine-local, created by the protection hook)
+.backups/
