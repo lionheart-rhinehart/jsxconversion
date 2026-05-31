@@ -801,9 +801,29 @@ function VideoEditModal({ angleId, assetId, onClose }) {
     _overrides: { ...(d._overrides || {}), [key]: { ...((d._overrides || {})[key] || {}), ...patch } },
   }));
   const resetOverrides = () => setData((d) => { const n = { ...d }; delete n._overrides; return n; });
+  // Add a free text box: a new editable field (data[key]) + an _extras entry
+  // (ExtrasLayer renders it; it gets a handle + a COPY field automatically).
+  const addText = () => setData((d) => {
+    const extras = d._extras || [];
+    const key = "extra_" + Date.now().toString(36);
+    return {
+      ...d,
+      _extras: [...extras, { key, label: "Added text " + (extras.length + 1), x: 120, y: 420 + extras.length * 90, fontSize: 72 }],
+      [key]: "NEW TEXT",
+    };
+  });
+  const removeExtra = (key) => setData((d) => {
+    const n = { ...d, _extras: (d._extras || []).filter((e) => e.key !== key) };
+    delete n[key];
+    if (n._overrides) { const ov = { ...n._overrides }; delete ov[key]; n._overrides = ov; }
+    return n;
+  });
 
   const fields = (spec && spec.fields) || [];
-  const copyFields = fields.filter((f) => f.type !== "image");
+  // Added text boxes (data._extras) join the editable field list, so they show
+  // up in the COPY tab + swap dropdown exactly like the template's own fields.
+  const extraFields = (data._extras || []).map((e) => ({ key: e.key, label: e.label || "Added text", type: "text" }));
+  const copyFields = [...fields.filter((f) => f.type !== "image"), ...extraFields];
   const imageFields = fields.filter((f) => f.type === "image");
   const imageKey = imageFields.length ? imageFields[0].key : null;
   const Comp = spec && spec.component ? window[spec.component] : null;
@@ -854,6 +874,7 @@ function VideoEditModal({ angleId, assetId, onClose }) {
                       width={1080} height={1920} duration={Number(data.duration) || 8}
                       background="#0a0b0d" autoplay loop>
                       <Comp data={data} />
+                      {window.ExtrasLayer && <window.ExtrasLayer data={data} />}
                     </window.Stage>
                   : <div className="vm-fresh">Loading preview…</div>)}
             {!isFresh && tab === "position" && Comp && window.Stage &&
@@ -902,8 +923,18 @@ function VideoEditModal({ angleId, assetId, onClose }) {
                   </React.Fragment>}
                   {tab === "position" && <React.Fragment>
                     <div className="vm-sub">Move &amp; resize text{selected.length ? ` · ${selected.length} selected` : ""}</div>
-                    <div className="vm-hint">Click a highlighted element to select; <b>shift-click</b> to add more and move them together. <b>Drag</b> to move. <b>Scroll-wheel</b>, the <b>± buttons</b>, or <b>+/−</b> keys resize the selection (a hand-set size wins — text grows past its box if you push it; auto-fit only pre-sizes text you haven't touched). Only the template's built-in fields move here — adding brand-new text boxes is a separate overlay feature, not built yet.</div>
-                    <button className="vm-tab" style={{ marginTop: 8 }} onClick={() => { resetOverrides(); setSelected([]); }}>Reset all positions &amp; sizes</button>
+                    <div className="vm-hint">Click a highlighted element to select; <b>shift-click</b> to add more and move them together. <b>Drag</b> to move. <b>Scroll-wheel</b>, the <b>± buttons</b>, or <b>+/−</b> keys resize the selection (a hand-set size wins — text grows past its box if you push it; auto-fit only pre-sizes text you haven't touched). Edit any text in the <b>COPY</b> tab.</div>
+                    <button className="vm-tab" style={{ marginTop: 8 }} onClick={addText}>+ Add text</button>
+                    {(data._extras || []).length > 0 && <React.Fragment>
+                      <div className="vm-sub">Added text boxes</div>
+                      {(data._extras || []).map((e) => (
+                        <div key={e.key} className="vm-swap-row">
+                          <span>{(data[e.key] || e.label || "").slice(0, 22)}</span>
+                          <button className="vm-tab" onClick={() => removeExtra(e.key)}>✕ remove</button>
+                        </div>
+                      ))}
+                    </React.Fragment>}
+                    <button className="vm-tab" style={{ marginTop: 10 }} onClick={() => { resetOverrides(); setSelected([]); }}>Reset all positions &amp; sizes</button>
                   </React.Fragment>}
                 </div>
               </React.Fragment>

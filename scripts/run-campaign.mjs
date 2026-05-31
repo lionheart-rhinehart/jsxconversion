@@ -144,11 +144,12 @@ function buildMotionData(asset, dataKeys) {
     }
   }
   if (dataKeys.length) {
-    // `_`-prefixed keys (e.g. _overrides, consumed by TplText inside
-    // animations.jsx, not via `data.X` in the template source) are intentional —
-    // don't flag them as unread.
+    // `_`-prefixed keys (e.g. _overrides) and added-text keys (data._extras,
+    // consumed by ExtrasLayer inside animations.jsx — not via `data.X` in the
+    // template source) are intentional — don't flag them as unread.
+    const extraKeys = new Set((data._extras || []).map((e) => e && e.key));
     const unknown = Object.keys(data).filter(
-      (k) => k !== "_asset" && !k.startsWith("_") && !dataKeys.includes(k));
+      (k) => k !== "_asset" && !k.startsWith("_") && !extraKeys.has(k) && !dataKeys.includes(k));
     if (unknown.length) {
       console.error(`[render]   note: ${asset.id} templateData keys not read by template: ${unknown.join(", ")} (valid: ${dataKeys.join(", ")})`);
     }
@@ -271,6 +272,7 @@ function ${wrapperName}({ data }) {
   return (
     <Stage width={${W}} height={${H}} duration={${D}} fps={${FPS}} background="#0a0b0d">
       <Inner data={data || {}} />
+      {window.ExtrasLayer ? <window.ExtrasLayer data={data || {}} /> : null}
     </Stage>
   );
 }

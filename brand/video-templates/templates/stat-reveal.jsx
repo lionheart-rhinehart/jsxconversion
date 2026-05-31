@@ -6,6 +6,15 @@ function StatRevealSquare({ data = {} }) {
   const title1 = data.title1 ?? 'WE GUARANTEE';
   const title2 = data.title2 ?? 'RESULTS.';
   const ctaText = data.ctaText ?? 'BOOK YOUR FREE ASSESSMENT';
+  // Stats are data-driven (editable in the COPY tab); literals are the defaults.
+  const stat1Value = data.stat1Value ?? 1;
+  const stat1Unit = data.stat1Unit ?? ' MPH';
+  const stat1Label = data.stat1Label ?? 'SPEED';
+  const stat2Value = data.stat2Value ?? 3;
+  const stat2Unit = data.stat2Unit ?? '"';
+  const stat2Label = data.stat2Label ?? 'VERTICAL';
+  const freeLine1 = data.freeLine1 ?? "OR IT'S";
+  const freeLine2 = data.freeLine2 ?? 'FREE.';
 
   const t = useTime();
   const RED = '#c4141d';
@@ -15,9 +24,9 @@ function StatRevealSquare({ data = {} }) {
   const s2T = Easing.easeOutCubic(Math.max(0, Math.min(1, (t - 1.6) / 0.5)));
   const s3T = Easing.easeOutCubic(Math.max(0, Math.min(1, (t - 2.4) / 0.5)));
 
-  // Count-up values
-  const v1 = (Easing.easeOutCubic(Math.max(0, Math.min(1, (t - 1.0) / 0.7))) * 1).toFixed(0);
-  const v2 = (Easing.easeOutCubic(Math.max(0, Math.min(1, (t - 1.8) / 0.7))) * 3).toFixed(0);
+  // Count-up values (target = editable stat value)
+  const v1 = (Easing.easeOutCubic(Math.max(0, Math.min(1, (t - 1.0) / 0.7))) * Number(stat1Value || 0)).toFixed(0);
+  const v2 = (Easing.easeOutCubic(Math.max(0, Math.min(1, (t - 1.8) / 0.7))) * Number(stat2Value || 0)).toFixed(0);
   const v3 = Easing.easeOutCubic(Math.max(0, Math.min(1, (t - 2.6) / 0.7)));
 
   // Bottom banner at 4
@@ -68,20 +77,20 @@ function StatRevealSquare({ data = {} }) {
           Inner sizes are em-relative so resizing the unit scales it proportionally. */}
       <TplText field="stat1" data={data} base={{ position: 'absolute', top: 530, left: 92, width: 256 }}
         style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 180, fontWeight: 800, lineHeight: 0.85, letterSpacing: '-0.03em', color: '#fff', opacity: s1T, transform: `translateY(${(1 - s1T) * 20}px)` }}>
-        <div><span style={{ color: RED }}>+</span>{v1}<span style={{ fontSize: '0.556em', color: '#969ca7' }}> MPH</span></div>
-        <div style={{ fontFamily: 'Anton, sans-serif', fontWeight: 400, fontSize: '0.311em', lineHeight: 1, letterSpacing: '0.005em', marginTop: '0.13em' }}>SPEED</div>
+        <div><span style={{ color: RED }}>+</span>{v1}<span style={{ fontSize: '0.556em', color: '#969ca7' }}>{stat1Unit}</span></div>
+        <div style={{ fontFamily: 'Anton, sans-serif', fontWeight: 400, fontSize: '0.311em', lineHeight: 1, letterSpacing: '0.005em', marginTop: '0.13em' }}>{stat1Label}</div>
       </TplText>
 
       <TplText field="stat2" data={data} base={{ position: 'absolute', top: 530, left: 412, width: 256 }}
         style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 180, fontWeight: 800, lineHeight: 0.85, letterSpacing: '-0.03em', color: '#fff', opacity: s2T, transform: `translateY(${(1 - s2T) * 20}px)` }}>
-        <div><span style={{ color: RED }}>+</span>{v2}<span style={{ fontSize: '0.556em', color: '#969ca7' }}>"</span></div>
-        <div style={{ fontFamily: 'Anton, sans-serif', fontWeight: 400, fontSize: '0.311em', lineHeight: 1, letterSpacing: '0.005em', marginTop: '0.13em' }}>VERTICAL</div>
+        <div><span style={{ color: RED }}>+</span>{v2}<span style={{ fontSize: '0.556em', color: '#969ca7' }}>{stat2Unit}</span></div>
+        <div style={{ fontFamily: 'Anton, sans-serif', fontWeight: 400, fontSize: '0.311em', lineHeight: 1, letterSpacing: '0.005em', marginTop: '0.13em' }}>{stat2Label}</div>
       </TplText>
 
       <TplText field="orfree" data={data}
         base={{ position: 'absolute', top: 530, left: 732, width: 300 }}
         style={{ fontFamily: 'Anton, sans-serif', fontSize: 144, color: '#fff', lineHeight: 0.85, letterSpacing: '0.01em', opacity: s3T, transform: `translateY(${(1 - s3T) * 20}px)` }}
-      >OR IT'S<br/><span style={{color: RED}}>FREE.</span></TplText>
+      >{freeLine1}<br/><span style={{color: RED}}>{freeLine2}</span></TplText>
 
       {/* Bottom CTA banner */}
       <div style={{
@@ -151,7 +160,15 @@ const STAT_REVEAL_SPEC = {
     "label": "CTA text",
     "type": "text",
     "default": "BOOK YOUR FREE ASSESSMENT"
-  }
+  },
+  { "key": "stat1Value", "label": "Stat 1 — number", "type": "number", "default": 1 },
+  { "key": "stat1Unit",  "label": "Stat 1 — unit",   "type": "text",   "default": " MPH" },
+  { "key": "stat1Label", "label": "Stat 1 — label",  "type": "text",   "default": "SPEED" },
+  { "key": "stat2Value", "label": "Stat 2 — number", "type": "number", "default": 3 },
+  { "key": "stat2Unit",  "label": "Stat 2 — unit",   "type": "text",   "default": "\"" },
+  { "key": "stat2Label", "label": "Stat 2 — label",  "type": "text",   "default": "VERTICAL" },
+  { "key": "freeLine1",  "label": "Free line 1",     "type": "text",   "default": "OR IT'S" },
+  { "key": "freeLine2",  "label": "Free line 2 (red)","type": "text",  "default": "FREE." }
 ],
 };
 window.STAT_REVEAL_SPEC = STAT_REVEAL_SPEC;

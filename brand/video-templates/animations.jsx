@@ -267,6 +267,28 @@ function TplText({ field, data, base = {}, style = {}, maxWidth, maxHeight, minS
 }
 window.TplText = TplText;
 
+// ── ExtrasLayer ─────────────────────────────────────────────────────────────
+// Renders user-added free text boxes from `data._extras` (a list of
+// {key,label,x,y,fontSize}). Each is a plain TplText: text from data[key],
+// geometry override from data._overrides[key], data-ov-key={key} so the editor's
+// drag handles pick it up automatically. Mounted INSIDE the Stage in both the
+// modal preview and the headless render → added text renders identically on ANY
+// template (this is the generalised "overlay" feature). No-op when no extras.
+function ExtrasLayer({ data }) {
+  const extras = (data && data._extras) || [];
+  return (
+    <React.Fragment>
+      {extras.map((ex) => (
+        <TplText key={ex.key} field={ex.key} data={data}
+          base={{ position: 'absolute', top: ex.y != null ? ex.y : 420, left: ex.x != null ? ex.x : 120, width: ex.width || 840 }}
+          style={{ fontFamily: 'Anton, sans-serif', fontSize: ex.fontSize || 72, color: ex.color || '#fff', lineHeight: 1.0 }}
+        >{data[ex.key] != null ? data[ex.key] : (ex.text != null ? ex.text : 'NEW TEXT')}</TplText>
+      ))}
+    </React.Fragment>
+  );
+}
+window.ExtrasLayer = ExtrasLayer;
+
 // ImageSprite: scales + fades in; optional Ken Burns drift during hold.
 function ImageSprite({
   src,
