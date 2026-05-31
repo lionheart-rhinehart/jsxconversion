@@ -38,6 +38,18 @@ const CSS_GENERIC = new Set([
   "inherit", "initial", "unset", "revert",
 ]);
 
+// Well-known OS/system fonts. These render natively in the headless browser
+// (or degrade gracefully to the nearest generic) and are typically used as
+// fallbacks like 'Georgia, serif' — they are NOT brand fonts that need
+// @font-face resolution. Treating them like generics (skip during detection)
+// stops the strict preflight from failing on a system fallback while still
+// enforcing real brand fonts (Anton, Geist, JetBrains Mono, …).
+const SYSTEM_FONTS = new Set([
+  "georgia", "arial", "helvetica", "helvetica neue", "times", "times new roman",
+  "courier", "courier new", "verdana", "tahoma", "trebuchet ms", "impact",
+  "comic sans ms", "segoe ui", "arial black", "palatino", "garamond",
+]);
+
 // Modern Chromium UA is required: Google Fonts only returns the genuine
 // fonts.gstatic.com/s/<slug>/<version>/<file>.woff2 URLs to UAs that
 // support woff2. Legacy UAs (Chrome 30 et al.) get everything routed
@@ -87,6 +99,7 @@ export function detectFontsInSource(src) {
         const name = raw.trim().replace(/^["']|["']$/g, "");
         if (!name) continue;
         if (CSS_GENERIC.has(name.toLowerCase())) continue;
+        if (SYSTEM_FONTS.has(name.toLowerCase())) continue;
         if (name.startsWith("-")) continue;
         if (name.toLowerCase() === "blinkmacsystemfont") continue;
         fonts.add(name);
