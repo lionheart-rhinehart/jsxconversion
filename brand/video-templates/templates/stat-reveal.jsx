@@ -26,35 +26,7 @@ function StatRevealSquare({ data = {} }) {
   // Eyebrow
   const eyebrowT = Math.max(0, Math.min(1, (t - 0.2) / 0.3));
 
-  const Stat = ({ value, suffix, label, reveal, accent }) => (
-    <div style={{
-      flex: 1,
-      borderRight: '1px solid rgba(255,255,255,0.12)',
-      padding: '0 32px',
-      opacity: reveal,
-      transform: `translateY(${(1 - reveal) * 20}px)`,
-    }}>
-      <div style={{
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 180,
-        color: '#fff',
-        fontWeight: 800,
-        lineHeight: 0.85,
-        fontVariantNumeric: 'tabular-nums',
-        letterSpacing: '-0.03em',
-      }}>
-        <span style={{ color: accent ? RED : '#fff' }}>+</span>{value}<span style={{ fontSize: 100, color: '#969ca7' }}>{suffix}</span>
-      </div>
-      <div style={{
-        marginTop: 24,
-        fontFamily: 'Anton, sans-serif',
-        fontSize: 56,
-        color: '#fff',
-        letterSpacing: '0.005em',
-      }}>{label}</div>
-    </div>
-  );
-
+  // Stats are rendered below as movable TplText units (number + label stacked).
   return (
     <div style={{
       position: 'absolute', inset: 0,
@@ -88,31 +60,28 @@ function StatRevealSquare({ data = {} }) {
         maxHeight={350} fitKey={title1 + '|' + title2}
       >{title1}<br/><span style={{color: RED}}>{title2}</span></TplText>
 
-      {/* Stats row */}
-      <div style={{
-        position: 'absolute',
-        top: 530, left: 60, right: 60,
-        display: 'flex',
-        alignItems: 'flex-start',
-        height: 320,
-      }}>
-        <Stat value={v1} suffix=" MPH" label="SPEED" reveal={s1T} accent/>
-        <Stat value={v2} suffix={'"'} label="VERTICAL" reveal={s2T} accent/>
-        <div style={{
-          flex: 1,
-          padding: '0 32px',
-          opacity: s3T,
-          transform: `translateY(${(1 - s3T) * 20}px)`,
-        }}>
-          <div style={{
-            fontFamily: 'Anton, sans-serif',
-            fontSize: 144,
-            color: '#fff',
-            lineHeight: 0.85,
-            letterSpacing: '0.01em',
-          }}>OR IT'S<br/><span style={{color: RED}}>FREE.</span></div>
-        </div>
-      </div>
+      {/* Stat dividers (decorative, not movable) */}
+      <div style={{ position: 'absolute', top: 530, left: 380, width: 1, height: 300, background: 'rgba(255,255,255,0.12)', opacity: s2T }}/>
+      <div style={{ position: 'absolute', top: 530, left: 700, width: 1, height: 300, background: 'rgba(255,255,255,0.12)', opacity: s3T }}/>
+
+      {/* Each stat is ONE movable unit (number + label stacked, as the original).
+          Inner sizes are em-relative so resizing the unit scales it proportionally. */}
+      <TplText field="stat1" data={data} base={{ position: 'absolute', top: 530, left: 92, width: 256 }}
+        style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 180, fontWeight: 800, lineHeight: 0.85, letterSpacing: '-0.03em', color: '#fff', opacity: s1T, transform: `translateY(${(1 - s1T) * 20}px)` }}>
+        <div><span style={{ color: RED }}>+</span>{v1}<span style={{ fontSize: '0.556em', color: '#969ca7' }}> MPH</span></div>
+        <div style={{ fontFamily: 'Anton, sans-serif', fontWeight: 400, fontSize: '0.311em', lineHeight: 1, letterSpacing: '0.005em', marginTop: '0.13em' }}>SPEED</div>
+      </TplText>
+
+      <TplText field="stat2" data={data} base={{ position: 'absolute', top: 530, left: 412, width: 256 }}
+        style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 180, fontWeight: 800, lineHeight: 0.85, letterSpacing: '-0.03em', color: '#fff', opacity: s2T, transform: `translateY(${(1 - s2T) * 20}px)` }}>
+        <div><span style={{ color: RED }}>+</span>{v2}<span style={{ fontSize: '0.556em', color: '#969ca7' }}>"</span></div>
+        <div style={{ fontFamily: 'Anton, sans-serif', fontWeight: 400, fontSize: '0.311em', lineHeight: 1, letterSpacing: '0.005em', marginTop: '0.13em' }}>VERTICAL</div>
+      </TplText>
+
+      <TplText field="orfree" data={data}
+        base={{ position: 'absolute', top: 530, left: 732, width: 300 }}
+        style={{ fontFamily: 'Anton, sans-serif', fontSize: 144, color: '#fff', lineHeight: 0.85, letterSpacing: '0.01em', opacity: s3T, transform: `translateY(${(1 - s3T) * 20}px)` }}
+      >OR IT'S<br/><span style={{color: RED}}>FREE.</span></TplText>
 
       {/* Bottom CTA banner */}
       <div style={{

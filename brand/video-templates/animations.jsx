@@ -243,6 +243,10 @@ function TplText({ field, data, base = {}, style = {}, maxWidth, maxHeight, minS
   React.useLayoutEffect(() => {
     const node = ref.current;
     if (!node || ceiling == null) return;
+    // Manual size wins: a hand-set override renders EXACTLY (grow or shrink,
+    // even past the box) — auto-fit never fights it. Auto-fit (shrink-only)
+    // applies only to untouched fields below.
+    if (ov.fontSize != null) { setSize(ov.fontSize); return; }
     if (maxWidth == null && maxHeight == null) return;
     if (!fontsReady || !node.scrollWidth || !node.scrollHeight) return; // H3
     let s = ceiling;
