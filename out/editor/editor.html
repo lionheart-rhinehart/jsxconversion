@@ -402,12 +402,13 @@
     .ed-pane[hidden] { display: none; }
     .ed-empty { font-size: 11px; color: var(--muted); padding: 2px; line-height: 1.4; }
     /* Background-photo swap grid (MEDIA tab) */
-    .ed-photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 8px; max-height: 360px; overflow-y: auto; }
+    .ed-photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-top: 8px; max-height: 520px; overflow-y: auto; }
     .ed-photo-grid[hidden] { display: none; }
     /* Definite height (NOT aspect-ratio): the img's height:100% needs a real
-       parent height, else the button collapses to a thin band. */
-    .ed-photo-tile { padding: 0; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; cursor: pointer; background: var(--bg); height: 120px; line-height: 0; }
-    .ed-photo-tile img { width: 100%; height: 120px; object-fit: cover; display: block; }
+       parent height, else the button collapses to a thin band. 2 columns ×
+       ~230px ≈ 4× the area of the old 3-col/120px tiles. */
+    .ed-photo-tile { padding: 0; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; cursor: pointer; background: var(--bg); height: 230px; line-height: 0; }
+    .ed-photo-tile img { width: 100%; height: 230px; object-fit: cover; display: block; }
     .ed-photo-tile:hover { border-color: var(--muted); }
     .ed-photo-tile.on { border-color: var(--red); }
     /* All-copy list rows (COPY tab) */
