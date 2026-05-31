@@ -8,10 +8,17 @@ function MeetCoachReel({ data = {} }) {
   const coachTitle = data.coachTitle ?? 'DIRECTOR OF PERFORMANCE';
   const ctaText = data.ctaText ?? 'TRAIN WITH HIM →';
   const ctaMicro = data.ctaMicro ?? 'BOOK FREE ASSESSMENT';
+  const quote = data.quote ?? "I DON’T COACH POTENTIAL. I COACH WHAT YOU SHOW ME.";
+  const credentials = data.credentials ?? 'CSCS · USATF L2 · 15 YRS · NCAA D1 · PhD KIN';
+  // facts: "value|label · value|label" pairs.
+  const factsText = data.facts ?? '237|ATHLETES · 12|D1 COMMITS · 8 YRS|AT AA';
   const media = data.media ?? 'assets/photo-coach-action.jpg';
 
   const t = useTime();
   const RED = '#c4141d';
+
+  const credChips = credentials.split(/\s*·\s*/).filter(Boolean);
+  const factPairs = factsText.split(/\s*·\s*/).map((p) => p.split('|')).filter((p) => p[0]);
 
   const photoScale = 1.06 - 0.04 * Math.min(1, t / 8);
   const eyebrowT = Math.max(0, Math.min(1, (t - 0.3) / 0.4));
@@ -19,8 +26,8 @@ function MeetCoachReel({ data = {} }) {
   const titleT = Easing.easeOutCubic(Math.max(0, Math.min(1, (t - 1.1) / 0.5)));
   const chipsT = Easing.easeOutCubic(Math.max(0, Math.min(1, (t - 1.8) / 0.5)));
 
-  // Quote types in word by word from 2.6
-  const words = ['I', 'DON\u2019T', 'COACH', 'POTENTIAL.', 'I', 'COACH', 'WHAT', 'YOU', 'SHOW', 'ME.'];
+  // Quote types in word by word from 2.6 (built from the editable quote)
+  const words = quote.split(/\s+/);
   const wordT = (i) => Math.max(0, Math.min(1, (t - (2.6 + i * 0.16)) / 0.25));
 
   const factsT = Easing.easeOutCubic(Math.max(0, Math.min(1, (t - 5.6) / 0.5)));
@@ -53,14 +60,11 @@ function MeetCoachReel({ data = {} }) {
         }}/>
 
         {/* Eyebrow */}
-        <div style={{
-          position: 'absolute', top: 100, left: 60,
-          padding: '8px 16px',
-          background: RED,
-          fontFamily: '"JetBrains Mono", monospace',
-          fontSize: 24, color: '#fff', letterSpacing: '0.16em',
-          opacity: eyebrowT,
-        }}>// {eyebrow}</div>
+        <TplText field="eyebrow" data={data}
+          base={{ position: 'absolute', top: 100, left: 60, padding: '8px 16px', background: RED }}
+          style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 24, color: '#fff', letterSpacing: '0.16em', opacity: eyebrowT }}
+          fitKey={eyebrow}
+        >// {eyebrow}</TplText>
       </div>
 
       {/* Name */}
@@ -70,38 +74,30 @@ function MeetCoachReel({ data = {} }) {
         opacity: nameT,
         transform: `translateY(${(1 - nameT) * 24}px)`,
       }}>
-        <div style={{
-          fontFamily: 'Anton, sans-serif',
-          fontSize: 200, color: '#fff', lineHeight: 0.85,
-        }}>{coachFirst}</div>
-        <div style={{
-          fontFamily: 'Anton, sans-serif',
-          fontSize: 200, color: RED, lineHeight: 0.85, marginTop: 6,
-        }}>{coachLast}</div>
+        <TplText field="coachFirst" data={data} base={{}}
+          style={{ fontFamily: 'Anton, sans-serif', fontSize: 200, color: '#fff', lineHeight: 0.85 }}
+          maxWidth={960} fitKey={coachFirst}
+        >{coachFirst}</TplText>
+        <TplText field="coachLast" data={data} base={{ marginTop: 6 }}
+          style={{ fontFamily: 'Anton, sans-serif', fontSize: 200, color: RED, lineHeight: 0.85 }}
+          maxWidth={960} fitKey={coachLast}
+        >{coachLast}</TplText>
       </div>
 
       {/* Title */}
-      <div style={{
-        position: 'absolute',
-        top: 1280, left: 60, right: 60,
-        opacity: titleT,
-        transform: `translateY(${(1 - titleT) * 12}px)`,
-      }}>
-        <div style={{
-          fontFamily: '"JetBrains Mono", monospace',
-          fontSize: 26, color: '#fff', letterSpacing: '0.14em',
-        }}>{coachTitle}</div>
-      </div>
+      <TplText field="coachTitle" data={data}
+        base={{ position: 'absolute', top: 1280, left: 60, right: 60 }}
+        style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 26, color: '#fff', letterSpacing: '0.14em', opacity: titleT, transform: `translateY(${(1 - titleT) * 12}px)` }}
+        fitKey={coachTitle}
+      >{coachTitle}</TplText>
 
       {/* Cred chips */}
-      <div style={{
-        position: 'absolute',
-        top: 1350, left: 60, right: 60,
-        display: 'flex', gap: 10, flexWrap: 'wrap',
-        opacity: chipsT,
-        transform: `translateY(${(1 - chipsT) * 14}px)`,
-      }}>
-        {['CSCS', 'USATF L2', '15 YRS', 'NCAA D1', 'PhD KIN'].map((c) => (
+      <TplText field="credentials" data={data}
+        base={{ position: 'absolute', top: 1350, left: 60, right: 60, display: 'flex', gap: 10, flexWrap: 'wrap' }}
+        style={{ opacity: chipsT, transform: `translateY(${(1 - chipsT) * 14}px)` }}
+        fitKey={credentials}
+      >
+        {credChips.map((c) => (
           <div key={c} style={{
             padding: '8px 14px',
             border: '1px solid rgba(255,255,255,0.22)',
@@ -110,16 +106,14 @@ function MeetCoachReel({ data = {} }) {
             letterSpacing: '0.08em',
           }}>{c}</div>
         ))}
-      </div>
+      </TplText>
 
       {/* Quote */}
-      <div style={{
-        position: 'absolute',
-        top: 1480, left: 60, right: 60,
-        fontFamily: 'Anton, sans-serif',
-        fontSize: 60, color: '#fff', lineHeight: 1.05,
-        display: 'flex', flexWrap: 'wrap', gap: '0 16px',
-      }}>
+      <TplText field="quote" data={data}
+        base={{ position: 'absolute', top: 1480, left: 60, right: 60, display: 'flex', flexWrap: 'wrap', gap: '0 16px' }}
+        style={{ fontFamily: 'Anton, sans-serif', fontSize: 60, color: '#fff', lineHeight: 1.05 }}
+        fitKey={quote}
+      >
         {words.map((w, i) => {
           const r = wordT(i);
           const isAccent = w === 'WHAT' || w === 'YOU' || w === 'SHOW' || w === 'ME.';
@@ -132,20 +126,15 @@ function MeetCoachReel({ data = {} }) {
             }}>{w}</span>
           );
         })}
-      </div>
+      </TplText>
 
       {/* Quick facts */}
-      <div style={{
-        position: 'absolute',
-        bottom: 180, left: 60, right: 60,
-        display: 'flex', gap: 12,
-        opacity: factsT,
-      }}>
-        {[
-          ['237', 'ATHLETES'],
-          ['12', 'D1 COMMITS'],
-          ['8 YRS', 'AT AA'],
-        ].map(([v, l]) => (
+      <TplText field="facts" data={data}
+        base={{ position: 'absolute', bottom: 180, left: 60, right: 60, display: 'flex', gap: 12 }}
+        style={{ opacity: factsT }}
+        fitKey={factsText}
+      >
+        {factPairs.map(([v, l]) => (
           <div key={l} style={{
             flex: 1,
             padding: '14px 16px',
@@ -164,7 +153,7 @@ function MeetCoachReel({ data = {} }) {
             }}>{l}</div>
           </div>
         ))}
-      </div>
+      </TplText>
 
       {/* CTA */}
       <div style={{
@@ -176,14 +165,12 @@ function MeetCoachReel({ data = {} }) {
         opacity: ctaT,
         transform: `translateY(${(1 - ctaT) * 16}px)`,
       }}>
-        <div style={{
-          fontFamily: 'Anton, sans-serif',
-          fontSize: 36, color: '#fff',
-        }}>{ctaText}</div>
-        <div style={{
-          fontFamily: '"JetBrains Mono", monospace',
-          fontSize: 16, color: '#fff', letterSpacing: '0.1em',
-        }}>{ctaMicro}</div>
+        <TplText field="ctaText" data={data} base={{}}
+          style={{ fontFamily: 'Anton, sans-serif', fontSize: 36, color: '#fff' }} fitKey={ctaText}
+        >{ctaText}</TplText>
+        <TplText field="ctaMicro" data={data} base={{}}
+          style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 16, color: '#fff', letterSpacing: '0.1em' }} fitKey={ctaMicro}
+        >{ctaMicro}</TplText>
       </div>
     </div>
   );
@@ -228,6 +215,24 @@ const MEET_COACH_SPEC = {
     "label": "Title",
     "type": "text",
     "default": "DIRECTOR OF PERFORMANCE"
+  },
+  {
+    "key": "quote",
+    "label": "Quote (types word-by-word)",
+    "type": "textarea",
+    "default": "I DON’T COACH POTENTIAL. I COACH WHAT YOU SHOW ME."
+  },
+  {
+    "key": "credentials",
+    "label": "Credential chips (· separated)",
+    "type": "text",
+    "default": "CSCS · USATF L2 · 15 YRS · NCAA D1 · PhD KIN"
+  },
+  {
+    "key": "facts",
+    "label": "Quick facts (value|label · …)",
+    "type": "text",
+    "default": "237|ATHLETES · 12|D1 COMMITS · 8 YRS|AT AA"
   },
   {
     "key": "ctaText",

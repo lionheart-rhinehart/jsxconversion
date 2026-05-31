@@ -68,15 +68,11 @@ function LogoSting({ data = {} }) {
           opacity: logoIn,
           transform: `scale(${0.6 + 0.4 * logoIn})`,
         }}/>
-        <div style={{
-          marginTop: 24,
-          fontFamily: 'Anton, sans-serif',
-          fontSize: 120, color: '#fff', lineHeight: 0.9,
-          letterSpacing: '0.005em',
-          opacity: wordmarkT,
-          transform: `translateY(${(1 - wordmarkT) * 16}px)`,
-          textAlign: 'center',
-        }}>{wordmark1} <span style={{color: RED}}>{wordmark2}</span></div>
+        <TplText field="wordmark" data={data}
+          base={{ marginTop: 24, textAlign: 'center' }}
+          style={{ fontFamily: 'Anton, sans-serif', fontSize: 120, color: '#fff', lineHeight: 0.9, letterSpacing: '0.005em', opacity: wordmarkT, transform: `translateY(${(1 - wordmarkT) * 16}px)` }}
+          maxWidth={1760} fitKey={wordmark1 + ' ' + wordmark2}
+        >{wordmark1} <span style={{color: RED}}>{wordmark2}</span></TplText>
 
         <div style={{
           marginTop: 16,
@@ -84,23 +80,17 @@ function LogoSting({ data = {} }) {
           background: RED,
         }}/>
 
-        <div style={{
-          marginTop: 28,
-          fontFamily: '"JetBrains Mono", monospace',
-          fontSize: 28, color: '#969ca7', letterSpacing: '0.18em',
-          opacity: tagT,
-        }}>{tagline}</div>
+        <TplText field="tagline" data={data}
+          base={{ marginTop: 28, textAlign: 'center' }}
+          style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 28, color: '#969ca7', letterSpacing: '0.18em', opacity: tagT }}
+          maxWidth={1760} fitKey={tagline}
+        >{tagline}</TplText>
 
-        <div style={{
-          marginTop: 28,
-          padding: '12px 24px',
-          background: '#fff',
-          fontFamily: '"JetBrains Mono", monospace',
-          fontSize: 28, color: '#0a0b0d', fontWeight: 700,
-          letterSpacing: '0.12em',
-          opacity: urlT,
-          transform: `translateY(${(1 - urlT) * 10}px)`,
-        }}>{url}</div>
+        <TplText field="url" data={data}
+          base={{ marginTop: 28, padding: '12px 24px', background: '#fff' }}
+          style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 28, color: '#0a0b0d', fontWeight: 700, letterSpacing: '0.12em', opacity: urlT, transform: `translateY(${(1 - urlT) * 10}px)` }}
+          fitKey={url}
+        >{url}</TplText>
       </div>
     </div>
   );

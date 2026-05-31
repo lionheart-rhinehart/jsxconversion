@@ -5,6 +5,8 @@
 function CoachLowerThirds({ data = {} }) {
   const coachName = data.coachName ?? 'COACH MIKE TORRES';
   const coachTitle = data.coachTitle ?? 'DIRECTOR OF PERFORMANCE';
+  const credentials = data.credentials ?? 'CSCS · USATF L2 · 15 YRS · NCAA D1';
+  const credChips = credentials.split(/\s*·\s*/).filter(Boolean);
   const media = data.media ?? 'assets/photo-group-coaching.jpg';
 
   const t = useTime();
@@ -90,19 +92,17 @@ function CoachLowerThirds({ data = {} }) {
           borderBottom: '1px solid rgba(255,255,255,0.12)',
           minWidth: 700,
         }}>
-          <div style={{
-            fontFamily: 'Anton, sans-serif',
-            fontSize: 92, color: '#fff', lineHeight: 0.9,
-            letterSpacing: '0.005em',
-          }}>{coachName}</div>
+          <TplText field="coachName" data={data} base={{}}
+            style={{ fontFamily: 'Anton, sans-serif', fontSize: 92, color: '#fff', lineHeight: 0.9, letterSpacing: '0.005em' }}
+            fitKey={coachName}
+          >{coachName}</TplText>
 
           {/* Title typed in */}
-          <div style={{
-            marginTop: 16,
-            display: 'flex', gap: 14, alignItems: 'baseline',
-            fontFamily: '"JetBrains Mono", monospace',
-            fontSize: 24, color: '#c2c6cd', letterSpacing: '0.12em',
-          }}>
+          <TplText field="coachTitle" data={data}
+            base={{ marginTop: 16, display: 'flex', gap: 14, alignItems: 'baseline', flexWrap: 'wrap' }}
+            style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 24, color: '#c2c6cd', letterSpacing: '0.12em' }}
+            fitKey={coachTitle}
+          >
             {subWords.map((w, i) => (
               <span key={i} style={{
                 opacity: credT(i),
@@ -110,16 +110,15 @@ function CoachLowerThirds({ data = {} }) {
                 display: 'inline-block',
               }}>{w}</span>
             ))}
-          </div>
+          </TplText>
 
           {/* Credentials chips */}
-          <div style={{
-            marginTop: 18,
-            display: 'flex', gap: 10,
-            opacity: chipT,
-            transform: `translateY(${(1 - chipT) * 12}px)`,
-          }}>
-            {['CSCS', 'USATF L2', '15 YRS', 'NCAA D1'].map((c) => (
+          <TplText field="credentials" data={data}
+            base={{ marginTop: 18, display: 'flex', gap: 10, flexWrap: 'wrap' }}
+            style={{ opacity: chipT, transform: `translateY(${(1 - chipT) * 12}px)` }}
+            fitKey={credentials}
+          >
+            {credChips.map((c) => (
               <div key={c} style={{
                 padding: '6px 12px',
                 background: 'transparent',
@@ -129,7 +128,7 @@ function CoachLowerThirds({ data = {} }) {
                 letterSpacing: '0.08em',
               }}>{c}</div>
             ))}
-          </div>
+          </TplText>
         </div>
       </div>
 
@@ -177,6 +176,12 @@ const COACH_LT_SPEC = {
     "label": "Title (typed in word-by-word)",
     "type": "text",
     "default": "DIRECTOR OF PERFORMANCE"
+  },
+  {
+    "key": "credentials",
+    "label": "Credential chips (· separated)",
+    "type": "text",
+    "default": "CSCS · USATF L2 · 15 YRS · NCAA D1"
   },
   {
     "key": "media",

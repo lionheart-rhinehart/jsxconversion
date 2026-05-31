@@ -7,6 +7,8 @@ function QuoteCardSquare({ data = {} }) {
   const bylineName = data.bylineName ?? 'SARAH M.';
   const bylineMeta = data.bylineMeta ?? 'PARENT · U14 BASKETBALL · NOBLESVILLE';
   const statsLabel = data.statsLabel ?? "HER ATHLETE'S 90-DAY DATA";
+  const stats = data.stats ?? '+4.2"|VERT · −0.4s|40YD · +25LB|BENCH';
+  const statPairs = stats.split(/\s*·\s*/).map((p) => p.split('|')).filter((p) => p[0]);
   const media = data.media ?? 'assets/photo-coach-action.jpg';
   // Build words array from editable quote
   const _quoteWords = quoteText.split(/\s+/);
@@ -55,15 +57,11 @@ function QuoteCardSquare({ data = {} }) {
       }}/>
 
       {/* Eyebrow */}
-      <div style={{
-        position: 'absolute',
-        top: 100, left: 100,
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 26,
-        color: RED,
-        letterSpacing: '0.18em',
-        opacity: eyebrowT,
-      }}>// {eyebrow}</div>
+      <TplText field="eyebrow" data={data}
+        base={{ position: 'absolute', top: 100, left: 100 }}
+        style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 26, color: RED, letterSpacing: '0.18em', opacity: eyebrowT }}
+        fitKey={eyebrow}
+      >// {eyebrow}</TplText>
 
       {/* Big quote mark */}
       <div style={{
@@ -77,19 +75,11 @@ function QuoteCardSquare({ data = {} }) {
       }}>"</div>
 
       {/* Quote text - words appear in sequence */}
-      <div style={{
-        position: 'absolute',
-        top: 280,
-        left: 100, right: 380,
-        fontFamily: 'Anton, sans-serif',
-        fontSize: 110,
-        color: '#fff',
-        lineHeight: 0.95,
-        letterSpacing: '0.005em',
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: '0 24px',
-      }}>
+      <TplText field="quoteText" data={data}
+        base={{ position: 'absolute', top: 280, left: 100, right: 380, display: 'flex', flexWrap: 'wrap', gap: '0 24px' }}
+        style={{ fontFamily: 'Anton, sans-serif', fontSize: 110, color: '#fff', lineHeight: 0.95, letterSpacing: '0.005em' }}
+        fitKey={quoteText}
+      >
         {words.map((w, i) => {
           const wt = Math.max(0, Math.min(1, (t - (wordStart + i * wordStep)) / 0.25));
           const eased = Easing.easeOutCubic(wt);
@@ -103,7 +93,7 @@ function QuoteCardSquare({ data = {} }) {
             }}>{w}</span>
           );
         })}
-      </div>
+      </TplText>
 
       {/* Byline */}
       <div style={{
@@ -117,18 +107,12 @@ function QuoteCardSquare({ data = {} }) {
           background: RED,
           marginBottom: 20,
         }}/>
-        <div style={{
-          fontFamily: 'Anton, sans-serif',
-          fontSize: 52,
-          color: '#fff',
-        }}>{bylineName}</div>
-        <div style={{
-          fontFamily: '"JetBrains Mono", monospace',
-          fontSize: 22,
-          color: '#c2c6cd',
-          marginTop: 8,
-          letterSpacing: '0.08em',
-        }}>{bylineMeta}</div>
+        <TplText field="bylineName" data={data} base={{}}
+          style={{ fontFamily: 'Anton, sans-serif', fontSize: 52, color: '#fff' }} fitKey={bylineName}
+        >{bylineName}</TplText>
+        <TplText field="bylineMeta" data={data} base={{ marginTop: 8 }}
+          style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 22, color: '#c2c6cd', letterSpacing: '0.08em' }} fitKey={bylineMeta}
+        >{bylineMeta}</TplText>
       </div>
 
       {/* Stats strip bottom right */}
@@ -139,21 +123,13 @@ function QuoteCardSquare({ data = {} }) {
         opacity: statsT,
         transform: `translateY(${(1 - statsT) * 16}px)`,
       }}>
-        <div style={{
-          fontFamily: '"JetBrains Mono", monospace',
-          fontSize: 22,
-          color: '#969ca7',
-          letterSpacing: '0.12em',
-          marginBottom: 12,
-        }}>{statsLabel}</div>
+        <TplText field="statsLabel" data={data} base={{ marginBottom: 12 }}
+          style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 22, color: '#969ca7', letterSpacing: '0.12em' }} fitKey={statsLabel}
+        >{statsLabel}</TplText>
         <div style={{
           display: 'flex', gap: 32, justifyContent: 'flex-end',
         }}>
-          {[
-            ['+4.2"', 'VERT'],
-            ['−0.4s', '40YD'],
-            ['+25LB', 'BENCH'],
-          ].map(([v, l]) => (
+          {statPairs.map(([v, l]) => (
             <div key={l}>
               <div style={{
                 fontFamily: '"JetBrains Mono", monospace',
@@ -239,6 +215,12 @@ const QUOTE_CARD_SPEC = {
     "label": "Stats label",
     "type": "text",
     "default": "HER ATHLETE'S 90-DAY DATA"
+  },
+  {
+    "key": "stats",
+    "label": "Stat chips (value|label · …)",
+    "type": "text",
+    "default": "+4.2\"|VERT · −0.4s|40YD · +25LB|BENCH"
   },
   {
     "key": "media",
