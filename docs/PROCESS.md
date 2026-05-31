@@ -98,6 +98,32 @@ mounts the component as `createElement(Comp, { data })`. It also auto-loads
 `animations.jsx` + `editing.jsx` + `elements/*` so element-dependent templates
 (e.g. `window.StarRating`) render fully.
 
+## Editing creatives on the review page (authoritative hand edits)
+Every creative is editable in place from the review page; **hand edits are
+authoritative** — they persist and survive re-render.
+
+- **Statics** edit in an embedded position-editor iframe (`/editor#camp:<campaign>:<angle>:<asset>`).
+  The editor's I/O routes branch on the `camp:` id to `GET/POST /campaign-config`
+  + `POST /render-asset`. The per-asset config lives at
+  `campaigns/<name>/edits/<angle>__<asset>.config.json` — **tracked in git**, it is
+  the user's layer work. `GET /campaign-config` seeds it on first access from the
+  ONE shared fill path (`resolveStaticConfig` in `fill-core`); after that the runner
+  renders straight from it and **never re-fills** (so a batch render can't clobber
+  edits). The editor postMessages `camp-rendered` so the cross-origin review page
+  refreshes the card thumb.
+- **Video/gif** edit in a React modal lifted from the gallery: a live `<Stage>`
+  preview (mounting the same component the runner wraps → preview == render), copy
+  fields (the bank's `EditPanel`, driven by asset-id-keyed state — **not**
+  `useTemplateEdits`/localStorage), a clip/photo picker (`GET /media` → a real served
+  path), an audio picker, and a template-swap dropdown (`GET /bank`). Save writes
+  `templateData`/`clip`/`photo`/`audio`/`template` to the plan via the single-writer
+  `/plan` route, then `POST /render-asset`. Picked media must be a **real served
+  path** (never a `blob:`/dataURL — those can't be headlessly rendered).
+- **Fresh `[F]`** assets edit copy only this round (saved to the plan); they show a
+  "fresh render pending" state until `compose-creative` ships.
+- **Staleness**: edit routes stamp `editedAt`; the runner stamps `renderedAt`; the
+  card shows "edited — re-render needed" when `editedAt > renderedAt`.
+
 ## Non-negotiables
 - **No skim**: deep-read via sub-agents into `campaign-knowledge.json`.
 - **Hand placement sacred**: fill/generate set data only.

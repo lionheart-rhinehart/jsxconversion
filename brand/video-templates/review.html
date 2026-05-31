@@ -91,6 +91,69 @@
   .modal-head .x:hover { border-color: var(--aa-red-600, #c4141d); }
   .modal-body { flex: 1; min-height: 0; }
   .modal-body iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+  /* ── Video/gif edit modal (React; namespaced vmodal-* to avoid colliding
+        with the static-editor .modal-* above) ── */
+  .vmodal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 32px; }
+  .vmodal-bg.on { display: flex; }
+  .vmodal-card { background: #0f1115; border: 1px solid rgba(255,255,255,0.12); width: min(1180px, 96vw); max-height: 92vh; display: flex; flex-direction: column; }
+  .vmodal-head { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.1); font-family: var(--font-mono, monospace); font-size: 12px; }
+  .vmodal-head .vm-id { background: var(--aa-red-600, #c4141d); color: #fff; padding: 3px 8px; font-weight: 700; }
+  .vmodal-head .vm-title { color: var(--aa-ink-300, #b8bdc6); letter-spacing: 0.08em; text-transform: uppercase; }
+  .vmodal-head .x { margin-left: auto; cursor: pointer; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); color: #fff; padding: 6px 12px; font-family: inherit; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .vmodal-head .x:hover { background: var(--aa-red-600, #c4141d); border-color: var(--aa-red-600, #c4141d); }
+  .vmodal-body { display: flex; gap: 18px; padding: 18px; min-height: 0; }
+  /* position:relative is load-bearing — the bank's <Stage> root is
+     position:absolute;inset:0, so it fills its nearest positioned ancestor.
+     Without this it escapes to the viewport. */
+  .vmodal-stage { position: relative; width: 360px; flex-shrink: 0; aspect-ratio: 9/16; background: #000; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .vmodal-stage > * { max-width: 100%; max-height: 100%; }
+  .vm-fresh { color: var(--aa-ink-400, #969ca7); font-family: var(--font-mono, monospace); font-size: 13px; text-align: center; line-height: 1.5; }
+  .vm-fresh span { font-size: 11px; color: var(--aa-ink-500, #6b7280); }
+  .vmodal-side { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+  .vm-tabs { display: flex; gap: 6px; }
+  .vm-tab { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); color: var(--aa-ink-300, #b8bdc6); font-family: var(--font-mono, monospace); font-size: 11px; padding: 6px 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.08em; }
+  .vm-tab.on { background: var(--aa-red-600, #c4141d); border-color: var(--aa-red-600, #c4141d); color: #fff; }
+  .vm-tabbody { flex: 1; overflow-y: auto; min-height: 0; }
+  .vm-sub { font-family: var(--font-mono, monospace); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--aa-ink-400, #969ca7); margin: 12px 0 8px; }
+  .vm-sub:first-child { margin-top: 0; }
+  .vm-hint, .vm-note { font-family: var(--font-mono, monospace); font-size: 11px; color: var(--aa-ink-400, #969ca7); line-height: 1.5; padding: 8px 0; }
+  .vm-note { color: var(--aa-ink-500, #6b7280); border-top: 1px solid rgba(255,255,255,0.08); margin-top: 10px; }
+  .vm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 6px; }
+  .vm-tile { padding: 0; border: 1px solid rgba(255,255,255,0.14); background: #15171a; cursor: pointer; overflow: hidden; aspect-ratio: 1; }
+  .vm-tile.on { border-color: var(--aa-red-600, #c4141d); box-shadow: 0 0 0 1px var(--aa-red-600, #c4141d); }
+  .vm-tile img, .vm-tile video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .vm-grid-audio { grid-template-columns: 1fr; }
+  .vm-grid-audio .vm-tile { aspect-ratio: auto; padding: 8px 10px; text-align: left; }
+  .vm-audio-name { font-family: var(--font-mono, monospace); font-size: 11px; color: #fff; }
+  .vm-copy label { display: block; font-family: var(--font-mono, monospace); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--aa-ink-300, #b8bdc6); margin-bottom: 12px; }
+  .vm-copy input, .vm-copy textarea { display: block; width: 100%; margin-top: 5px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); color: #fff; font-family: var(--font-mono, monospace); font-size: 12px; padding: 8px 10px; box-sizing: border-box; }
+  .vmodal-actions { display: flex; gap: 8px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); }
+  .vmodal-actions button { flex: 1; font-family: var(--font-mono, monospace); font-size: 12px; font-weight: 600; padding: 10px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.08em; border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.05); color: #fff; }
+  .vmodal-actions .vm-render { background: var(--aa-red-600, #c4141d); border-color: var(--aa-red-600, #c4141d); }
+  .vmodal-actions button:disabled { opacity: 0.6; cursor: wait; }
+  /* EditPanel (tp-*) reused from the gallery, flattened to fit the side column */
+  .vmodal-side .tp-panel { width: 100%; border: none; background: transparent; max-height: none; }
+  .vmodal-side .tp-header, .vmodal-side .tp-footer { display: none; }
+  .vmodal-side .tp-fields { padding: 0; }
+  .tp-field { margin: 0; }
+  .tp-field-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 6px; gap: 8px; }
+  .tp-field-label { font-family: var(--font-mono, monospace); font-size: 11px; color: var(--aa-ink-300, #b8bdc6); letter-spacing: 0.14em; text-transform: uppercase; }
+  .tp-field-sub { font-family: var(--font-mono, monospace); font-size: 10px; color: var(--aa-ink-500, #6b7280); }
+  .tp-input { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); color: #fff; font-family: var(--font-mono, monospace); font-size: 13px; padding: 9px 11px; box-sizing: border-box; }
+  .tp-input:focus { outline: none; border-color: var(--aa-red-600, #c4141d); background: rgba(255,255,255,0.06); }
+  .tp-textarea { resize: vertical; min-height: 60px; line-height: 1.4; }
+  .tp-select { appearance: none; padding-right: 28px; }
+  .tp-number { font-variant-numeric: tabular-nums; }
+  .tp-slider-row { display: flex; align-items: center; gap: 12px; }
+  .tp-slider { flex: 1; -webkit-appearance: none; appearance: none; height: 4px; background: rgba(255,255,255,0.12); outline: none; cursor: pointer; }
+  .tp-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; background: var(--aa-red-600, #c4141d); border: 2px solid #fff; border-radius: 50%; cursor: pointer; }
+  .tp-slider::-moz-range-thumb { width: 16px; height: 16px; background: var(--aa-red-600, #c4141d); border-radius: 50%; border: none; cursor: pointer; }
+  .tp-slider-value { font-family: var(--font-mono, monospace); font-size: 12px; color: #fff; font-variant-numeric: tabular-nums; width: 48px; text-align: right; }
+  .tp-swatches { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tp-swatch { width: 26px; height: 26px; border: 2px solid transparent; border-radius: 3px; cursor: pointer; }
+  .tp-swatch.is-active { border-color: #fff; }
+  .tp-storage-banner { font-family: var(--font-mono, monospace); font-size: 10px; color: #fbbf24; padding: 6px 0; }
 </style>
 </head>
 <body>
@@ -118,6 +181,9 @@
     <div class="modal-body" id="editModalBody"></div>
   </div>
 </div>
+
+<!-- React root for the video/gif edit modal (Part 4) -->
+<div id="videoModalRoot"></div>
 
 <script>
 // review.html is served by brand/video-templates/serve.mjs (:5599); the data
@@ -288,9 +354,11 @@ function wire() {
           // template. Video/gif/fresh editing is wired by Part 4.
           if (a && a.format === "static" && a.template && a.template.startsWith("cluster-")) {
             openStaticEditor(angle, asset);
+          } else if (window.openVideoEditor) {
+            // Video / gif / fresh → the React edit modal (Part 4).
+            window.openVideoEditor(angle, asset);
           } else {
-            alert("Inline editor is wired for cluster-* statics. This asset is " +
-              (a ? a.source + "/" + a.format : "?") + " — video/fresh editing comes with the embed phase.");
+            alert("Editor is still loading (template scripts compiling). Try again in a moment.");
           }
           return;
         }
@@ -349,7 +417,327 @@ window.addEventListener("message", (e) => {
   if (e.data && e.data.type === "camp-rendered") load();
 });
 
+// Bridge so the React video modal (a separate babel script) can read the plan,
+// resolve assets, and trigger a refresh without re-implementing any of it.
+window.ReviewBridge = {
+  API,
+  getPlan: () => PLAN,
+  findAsset,
+  reload: load,
+};
+
 load();
+</script>
+
+<!-- ── Part 4: video/gif edit modal — React + the bank's own runtime ──
+     Same script set + load order as the Video Templates Gallery (animations →
+     editing → elements/* → templates/*) so window.Stage, window.EditPanel, and
+     every template's window.<Comp>/<NAME>_SPEC are available for live preview.
+     Served same-origin from :5599 (serve.mjs serves .jsx as text/babel). -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="animations.jsx"></script>
+<script type="text/babel" src="editing.jsx"></script>
+
+<script type="text/babel" src="elements/velocity-meter.jsx"></script>
+<script type="text/babel" src="elements/sprint-trace.jsx"></script>
+<script type="text/babel" src="elements/scoreboard.jsx"></script>
+<script type="text/babel" src="elements/calendar-fill.jsx"></script>
+<script type="text/babel" src="elements/slot-roll.jsx"></script>
+<script type="text/babel" src="elements/live-poll.jsx"></script>
+<script type="text/babel" src="elements/caption-bars.jsx"></script>
+<script type="text/babel" src="elements/audio-waveform.jsx"></script>
+<script type="text/babel" src="elements/anatomy-callouts.jsx"></script>
+<script type="text/babel" src="elements/leaderboard.jsx"></script>
+<script type="text/babel" src="elements/trajectory-arc.jsx"></script>
+<script type="text/babel" src="elements/tier-list.jsx"></script>
+<script type="text/babel" src="elements/hr-zones.jsx"></script>
+<script type="text/babel" src="elements/comic-panels.jsx"></script>
+<script type="text/babel" src="elements/stopwatch.jsx"></script>
+<script type="text/babel" src="elements/bracket.jsx"></script>
+<script type="text/babel" src="elements/comparison-slider.jsx"></script>
+<script type="text/babel" src="elements/radar-chart.jsx"></script>
+<script type="text/babel" src="elements/star-rating.jsx"></script>
+<script type="text/babel" src="elements/macro-ring.jsx"></script>
+<script type="text/babel" src="elements/confetti-burst.jsx"></script>
+<script type="text/babel" src="elements/streak-flame.jsx"></script>
+
+<script type="text/babel" src="templates/pr-alert.jsx"></script>
+<script type="text/babel" src="templates/countdown.jsx"></script>
+<script type="text/babel" src="templates/athlete-spotlight.jsx"></script>
+<script type="text/babel" src="templates/workout-of-week.jsx"></script>
+<script type="text/babel" src="templates/drill-howto.jsx"></script>
+<script type="text/babel" src="templates/before-after.jsx"></script>
+<script type="text/babel" src="templates/story-poll.jsx"></script>
+<script type="text/babel" src="templates/stat-reveal.jsx"></script>
+<script type="text/babel" src="templates/quote-card.jsx"></script>
+<script type="text/babel" src="templates/hype-intro.jsx"></script>
+<script type="text/babel" src="templates/coach-lower-thirds.jsx"></script>
+<script type="text/babel" src="templates/logo-sting.jsx"></script>
+<script type="text/babel" src="templates/schedule-drop.jsx"></script>
+<script type="text/babel" src="templates/drill-of-day.jsx"></script>
+<script type="text/babel" src="templates/meet-coach.jsx"></script>
+<script type="text/babel" src="templates/open-house.jsx"></script>
+<script type="text/babel" src="templates/pricing-tiers.jsx"></script>
+<script type="text/babel" src="templates/results-recap.jsx"></script>
+<script type="text/babel" src="templates/camp-announce.jsx"></script>
+<script type="text/babel" src="templates/year-in-review.jsx"></script>
+<script type="text/babel" src="templates/vbt-bar-speed.jsx"></script>
+<script type="text/babel" src="templates/sprint-breakdown.jsx"></script>
+<script type="text/babel" src="templates/gameday-recap.jsx"></script>
+<script type="text/babel" src="templates/thirty-day-challenge.jsx"></script>
+<script type="text/babel" src="templates/pick-workout.jsx"></script>
+<script type="text/babel" src="templates/hot-take.jsx"></script>
+<script type="text/babel" src="templates/coach-pov.jsx"></script>
+<script type="text/babel" src="templates/three-mistakes.jsx"></script>
+<script type="text/babel" src="templates/voiceover-stack.jsx"></script>
+<script type="text/babel" src="templates/anatomy-lesson.jsx"></script>
+<script type="text/babel" src="templates/manifesto.jsx"></script>
+<script type="text/babel" src="templates/myth-vs-truth.jsx"></script>
+<script type="text/babel" src="templates/top10-leaderboard.jsx"></script>
+<script type="text/babel" src="templates/play-of-week.jsx"></script>
+<script type="text/babel" src="templates/position-rankings.jsx"></script>
+<script type="text/babel" src="templates/reaction-stitch.jsx"></script>
+<script type="text/babel" src="templates/carousel-story.jsx"></script>
+<script type="text/babel" src="templates/limited-spots.jsx"></script>
+<script type="text/babel" src="templates/heart-rate-story.jsx"></script>
+<script type="text/babel" src="templates/comic-lesson.jsx"></script>
+<script type="text/babel" src="templates/beat-the-clock.jsx"></script>
+<script type="text/babel" src="templates/qa-card.jsx"></script>
+<script type="text/babel" src="templates/last-day-offer.jsx"></script>
+<script type="text/babel" src="templates/day-at-aa.jsx"></script>
+<script type="text/babel" src="templates/bracket-reel.jsx"></script>
+<script type="text/babel" src="templates/us-vs-them.jsx"></script>
+<script type="text/babel" src="templates/athlete-profile.jsx"></script>
+<script type="text/babel" src="templates/two-truths-lie.jsx"></script>
+<script type="text/babel" src="templates/did-you-know.jsx"></script>
+<script type="text/babel" src="templates/referral-hero.jsx"></script>
+<script type="text/babel" src="templates/origin-story.jsx"></script>
+<script type="text/babel" src="templates/stat-reveal-reel.jsx"></script>
+<script type="text/babel" src="templates/quote-card-reel.jsx"></script>
+<script type="text/babel" src="templates/results-recap-reel.jsx"></script>
+<script type="text/babel" src="templates/camp-announce-reel.jsx"></script>
+<script type="text/babel" src="templates/hype-intro-reel.jsx"></script>
+<script type="text/babel" src="templates/coach-lt-reel.jsx"></script>
+<script type="text/babel" src="templates/logo-sting-reel.jsx"></script>
+<script type="text/babel" src="templates/year-in-review-reel.jsx"></script>
+<script type="text/babel" src="templates/signing-day.jsx"></script>
+<script type="text/babel" src="templates/committed.jsx"></script>
+<script type="text/babel" src="templates/fuel-up.jsx"></script>
+<script type="text/babel" src="templates/recovery-tip.jsx"></script>
+<script type="text/babel" src="templates/athlete-birthday.jsx"></script>
+<script type="text/babel" src="templates/welcome-athlete.jsx"></script>
+<script type="text/babel" src="templates/member-milestone.jsx"></script>
+<script type="text/babel" src="templates/now-hiring.jsx"></script>
+<script type="text/babel" src="templates/five-star-review.jsx"></script>
+<script type="text/babel" src="templates/review-roundup.jsx"></script>
+<script type="text/babel" src="templates/back-to-school.jsx"></script>
+<script type="text/babel" src="templates/holiday-hours.jsx"></script>
+<script type="text/babel" src="templates/new-year.jsx"></script>
+
+<script type="text/babel">
+// VideoEditModal — copy + clip/photo + audio + template-swap, with a live
+// <Stage> preview that mounts the SAME component the runner wraps (preview ==
+// render, B8). Driven by our OWN asset-keyed state — NOT useTemplateEdits /
+// localStorage — so two assets sharing a template never clobber each other (B6).
+const { useState, useEffect } = React;
+const apiBase = () => (window.ReviewBridge && window.ReviewBridge.API) || "";
+
+function defaultsFromFields(fields) {
+  const d = {};
+  for (const f of fields || []) if (f.default !== undefined) d[f.key] = f.default;
+  return d;
+}
+
+function MediaPicker({ kind, current, onPick }) {
+  const [items, setItems] = useState(null);
+  useEffect(() => {
+    let live = true;
+    fetch(apiBase() + "/media?kind=" + kind)
+      .then((r) => r.json()).then((j) => { if (live) setItems(j.items || []); })
+      .catch(() => { if (live) setItems([]); });
+    return () => { live = false; };
+  }, [kind]);
+  if (items === null) return <div className="vm-hint">Loading {kind}…</div>;
+  if (!items.length) return <div className="vm-hint">No {kind} in the brand library.</div>;
+  return (
+    <div className={"vm-grid vm-grid-" + kind}>
+      {items.map((it) => (
+        <button key={it.path} type="button" title={it.name}
+          className={"vm-tile" + (current === it.path ? " on" : "")}
+          onClick={() => onPick(it)}>
+          {kind === "audio"
+            ? <span className="vm-audio-name">{it.name}</span>
+            : kind === "clip"
+              ? <video src={apiBase() + encodeURI(it.url)} muted preload="metadata" />
+              : <img src={apiBase() + encodeURI(it.url)} alt="" loading="lazy" />}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function VideoEditModal({ angleId, assetId, onClose }) {
+  const bridge = window.ReviewBridge;
+  const plan = bridge.getPlan();
+  const asset = bridge.findAsset(angleId, assetId);
+  const isFresh = !asset || asset.source === "fresh" || !asset.template;
+
+  const [template, setTemplate] = useState(asset ? asset.template : null);
+  const [spec, setSpec] = useState(null);
+  const [bank, setBank] = useState([]);
+  const [data, setData] = useState(() => ({ ...((asset && asset.templateData) || {}) }));
+  const [photo, setPhoto] = useState(asset ? asset.photo || null : null);
+  const [clip, setClip] = useState(asset ? asset.clip || null : null);
+  const [audio, setAudio] = useState(asset ? asset.audio || null : null);
+  const [headline, setHeadline] = useState(asset ? asset.headline || "" : "");
+  const [microscript, setMicroscript] = useState(asset ? asset.microscript || "" : "");
+  const [notes, setNotes] = useState(asset ? asset.notes || "" : "");
+  const [busy, setBusy] = useState(null);
+  const [tab, setTab] = useState("copy");
+
+  useEffect(() => {
+    fetch(apiBase() + "/bank?type=motion").then((r) => r.json())
+      .then((j) => setBank(j.templates || [])).catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (!template) { setSpec(null); return; }
+    let live = true;
+    fetch(apiBase() + "/template-spec/" + template).then((r) => r.json()).then((j) => {
+      if (!live) return;
+      setSpec(j);
+      // Carry existing copy by matching key (best-match), seed new keys from
+      // defaults; unknown old keys are ignored by the component (no silent loss).
+      setData((prev) => ({ ...defaultsFromFields(j.fields), ...prev }));
+    }).catch(() => { if (live) setSpec({ fields: [], component: null }); });
+    return () => { live = false; };
+  }, [template]);
+
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  const setField = (k, v) => setData((d) => ({ ...d, [k]: v }));
+  const setFields = (patch) => setData((d) => ({ ...d, ...patch }));
+  const reset = () => setData(spec ? defaultsFromFields(spec.fields) : {});
+
+  const fields = (spec && spec.fields) || [];
+  const copyFields = fields.filter((f) => f.type !== "image");
+  const imageFields = fields.filter((f) => f.type === "image");
+  const imageKey = imageFields.length ? imageFields[0].key : null;
+  const Comp = spec && spec.component ? window[spec.component] : null;
+
+  const pickPhoto = (it) => { setPhoto(it.path); setClip(null); if (imageKey) setField(imageKey, apiBase() + it.url); };
+  const pickClip  = (it) => { setClip(it.path); setPhoto(null); if (imageKey) setField(imageKey, apiBase() + it.url); };
+  const pickAudio = (it) => setAudio({ src: it.path, startAt: 0, volume: 1 });
+
+  async function save(render) {
+    setBusy(render ? "Rendering…" : "Saving…");
+    const patch = isFresh
+      ? { headline, microscript, notes }
+      : { templateData: data, template,
+          ...(photo ? { photo } : {}), ...(clip ? { clip } : {}), ...(audio ? { audio } : {}) };
+    try {
+      // B7: await the /plan patch before render (the runner reads the plan from
+      // disk at start), so the render never picks up stale copy.
+      const r = await fetch(`${apiBase()}/plan/${plan.campaign}/${angleId}/${assetId}`, {
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(patch),
+      });
+      if (!r.ok) throw new Error(await r.text());
+      if (render && !isFresh) {
+        const rr = await fetch(`${apiBase()}/render-asset/${plan.campaign}/${angleId}/${assetId}`, { method: "POST" });
+        const rj = await rr.json();
+        if (rj.exitCode !== 0) throw new Error((rj.stderr || "render failed").slice(-200));
+      }
+      setBusy(null); bridge.reload(); onClose();
+    } catch (e) {
+      setBusy(null);
+      alert((render ? "Render" : "Save") + " failed: " + e.message);
+    }
+  }
+
+  return (
+    <div className="vmodal-bg on" onClick={onClose}>
+      <div className="vmodal-card" onClick={(e) => e.stopPropagation()}>
+        <div className="vmodal-head">
+          <span className="vm-id">{assetId}</span>
+          <span className="vm-title">{isFresh ? "Fresh creative — copy only" : ((asset.format || "video").toUpperCase() + " · " + template)}</span>
+          <button className="x" onClick={onClose}>Close</button>
+        </div>
+        <div className="vmodal-body">
+          <div className="vmodal-stage">
+            {isFresh
+              ? <div className="vm-fresh">Fresh render pending<br/><span>(compose-creative not built yet)</span></div>
+              : (Comp && window.Stage
+                  ? <window.Stage key={template + ":" + (Number(data.duration) || 8)}
+                      width={1080} height={1920} duration={Number(data.duration) || 8}
+                      background="#0a0b0d" autoplay loop>
+                      <Comp data={data} />
+                    </window.Stage>
+                  : <div className="vm-fresh">Loading preview…</div>)}
+          </div>
+          <div className="vmodal-side">
+            {isFresh ? (
+              <div className="vm-copy">
+                <label>Headline<textarea value={headline} onChange={(e) => setHeadline(e.target.value)} rows={3} /></label>
+                <label>Microscript<input value={microscript} onChange={(e) => setMicroscript(e.target.value)} /></label>
+                <label>Notes<textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={2} /></label>
+                <div className="vm-note">Fresh assets render once compose-creative ships. Copy is saved to the plan now.</div>
+              </div>
+            ) : (
+              <React.Fragment>
+                <div className="vm-tabs">
+                  {["copy", "media", "audio", "swap"].map((t) =>
+                    <button key={t} className={"vm-tab" + (tab === t ? " on" : "")} onClick={() => setTab(t)}>{t}</button>)}
+                </div>
+                <div className="vm-tabbody">
+                  {tab === "copy" && (window.EditPanel
+                    ? <window.EditPanel spec={{ id: template, name: template, fields: copyFields }}
+                        data={data} setField={setField} setFields={setFields} reset={reset}
+                        templateDuration={Number(data.duration) || 8} />
+                    : <div className="vm-hint">Loading editor…</div>)}
+                  {tab === "media" && (imageKey
+                    ? <React.Fragment>
+                        <div className="vm-sub">Photo</div><MediaPicker kind="photo" current={photo} onPick={pickPhoto} />
+                        <div className="vm-sub">Clip</div><MediaPicker kind="clip" current={clip} onPick={pickClip} />
+                      </React.Fragment>
+                    : <div className="vm-hint">This template has no photo/clip slot.</div>)}
+                  {tab === "audio" && <React.Fragment>
+                    <MediaPicker kind="audio" current={audio && audio.src} onPick={pickAudio} />
+                    <div className="vm-note">Audio choice persists but the render is silent for now (mux deferred).</div>
+                  </React.Fragment>}
+                  {tab === "swap" && <React.Fragment>
+                    <div className="vm-sub">Swap template</div>
+                    <select className="tp-input tp-select" value={template || ""} onChange={(e) => setTemplate(e.target.value)}>
+                      {bank.map((t) => <option key={t} value={t}>{t}</option>)}
+                    </select>
+                    <div className="vm-note">Switching carries copy by matching field name; re-check fields after a swap.</div>
+                  </React.Fragment>}
+                </div>
+              </React.Fragment>
+            )}
+            <div className="vmodal-actions">
+              <button className="vm-save" disabled={!!busy} onClick={() => save(false)}>{busy || "Save"}</button>
+              {!isFresh && <button className="vm-render" disabled={!!busy} onClick={() => save(true)}>{busy || "Save + Re-render"}</button>}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const _vmRoot = ReactDOM.createRoot(document.getElementById("videoModalRoot"));
+function renderVideoModal(props) {
+  _vmRoot.render(props ? <VideoEditModal {...props} onClose={() => renderVideoModal(null)} /> : null);
+}
+// Called by the vanilla card "Edit" handler for video/gif/fresh assets.
+window.openVideoEditor = (angleId, assetId) => renderVideoModal({ angleId, assetId });
 </script>
 </body>
 </html>

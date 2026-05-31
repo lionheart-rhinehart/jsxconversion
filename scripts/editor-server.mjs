@@ -39,14 +39,17 @@ const CAMPAIGNS_DIR = join(PROJECT_ROOT, "campaigns");
 const DATA_DIR = join(PROJECT_ROOT, "data");
 const VIDEO_DIR = join(PROJECT_ROOT, "brand/video-templates");
 const VIDEO_TEMPLATES_DIR = join(VIDEO_DIR, "templates");
-// Brand media library — photos/clips selectable in the video edit pickers.
+// Brand media library — photos/clips/audio selectable in the video edit pickers.
 const MEDIA_ROOTS = [
   join(PROJECT_ROOT, "brand/aa-design-system/project/uploads"),
   join(PROJECT_ROOT, "brand/aa-design-system/project/assets"),
   join(VIDEO_DIR, "assets"),
+  join(PROJECT_ROOT, "music-library"),
 ];
 const PHOTO_EXT = new Set([".jpg", ".jpeg", ".png", ".webp"]);
 const CLIP_EXT = new Set([".mp4", ".mov", ".webm"]);
+const AUDIO_EXT = new Set([".mp3", ".wav", ".m4a", ".aac", ".ogg"]);
+const EXT_FOR_KIND = { photo: PHOTO_EXT, clip: CLIP_EXT, audio: AUDIO_EXT };
 
 // Per-asset authoritative static config — MUST match run-campaign.mjs so the
 // editor writes and the runner reads the same file (B1/B2).
@@ -381,14 +384,20 @@ const server = createServer(async (req, res) => {
     return;
   }
 
-  // GET /template-spec/:template — a motion template's editable copy fields.
+  // GET /template-spec/:template — a motion template's editable copy fields +
+  // the window component name (so the review page can mount it for live preview
+  // — the runner wraps THIS component in a 1080×1920 Stage, B8).
   const specMatch = path.match(/^\/template-spec\/([\w-]+)$/);
   if (specMatch && req.method === "GET") {
     const tmpl = specMatch[1];
     const p = join(VIDEO_TEMPLATES_DIR, `${tmpl}.jsx`);
     if (!existsSync(p)) { sendJson(res, 404, { error: `template "${tmpl}" not found` }); return; }
-    const fields = extractSpecFields(readFileSync(p, "utf8"));
-    sendJson(res, 200, { template: tmpl, fields: fields || [] });
+    const src = readFileSync(p, "utf8");
+    const fields = extractSpecFields(src);
+    // Same component-detection as run-campaign.mjs (the wrapper mounts this).
+    const component = (src.match(/window\.([A-Za-z_$][\w$]*Reel)\s*=/) ||
+      src.match(/window\.([A-Za-z_$][\w$]*)\s*=\s*[A-Za-z_$][\w$]*\s*;/) || [])[1] || null;
+    sendJson(res, 200, { template: tmpl, fields: fields || [], component });
     return;
   }
 
@@ -412,10 +421,10 @@ const server = createServer(async (req, res) => {
     return;
   }
 
-  // GET /media?kind=photo|clip — selectable brand media (served paths).
+  // GET /media?kind=photo|clip|audio — selectable brand media (served paths).
   if (path === "/media" && req.method === "GET") {
     const kind = url.searchParams.get("kind") || "photo";
-    const exts = kind === "clip" ? CLIP_EXT : PHOTO_EXT;
+    const exts = EXT_FOR_KIND[kind] || PHOTO_EXT;
     const items = [];
     for (const root of MEDIA_ROOTS) {
       let files = [];
