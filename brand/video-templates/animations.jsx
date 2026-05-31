@@ -262,7 +262,10 @@ function TplText({ field, data, base = {}, style = {}, maxWidth, maxHeight, minS
   const ox = ov.dx || 0, oy = ov.dy || 0;
   const transform = [style.transform, base.transform, (ox || oy) ? `translate(${ox}px, ${oy}px)` : '']
     .filter(Boolean).join(' ') || undefined;
-  const merged = { ...base, ...style, fontSize: size, transform };
+  // whiteSpace: 'pre-line' honors typed newlines (\n → line break) while still
+  // wrapping/collapsing spaces like normal. base/style can override (e.g.
+  // 'nowrap' fields for single-line width auto-fit).
+  const merged = { whiteSpace: 'pre-line', ...base, ...style, fontSize: size, transform };
   return <div ref={ref} data-ov-key={field} style={merged}>{children}</div>;
 }
 window.TplText = TplText;

@@ -156,7 +156,7 @@
   .tp-field-sub { font-family: var(--font-mono, monospace); font-size: 10px; color: var(--aa-ink-500, #6b7280); }
   .tp-input { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); color: #fff; font-family: var(--font-mono, monospace); font-size: 13px; padding: 9px 11px; box-sizing: border-box; }
   .tp-input:focus { outline: none; border-color: var(--aa-red-600, #c4141d); background: rgba(255,255,255,0.06); }
-  .tp-textarea { resize: vertical; min-height: 60px; line-height: 1.4; }
+  .tp-textarea { resize: vertical; min-height: 38px; height: 2.6em; line-height: 1.4; }
   .tp-select { appearance: none; padding-right: 28px; }
   .tp-number { font-variant-numeric: tabular-nums; }
   .tp-slider-row { display: flex; align-items: center; gap: 12px; }
@@ -823,7 +823,10 @@ function VideoEditModal({ angleId, assetId, onClose }) {
   // Added text boxes (data._extras) join the editable field list, so they show
   // up in the COPY tab + swap dropdown exactly like the template's own fields.
   const extraFields = (data._extras || []).map((e) => ({ key: e.key, label: e.label || "Added text", type: "text" }));
-  const copyFields = [...fields.filter((f) => f.type !== "image"), ...extraFields];
+  // Render text fields as textareas so Enter inserts a line break; TplText shows
+  // the \n (white-space: pre-line). Mirrors the static editor's newline support.
+  const multiline = (f) => (f.type === "text" ? { ...f, type: "textarea" } : f);
+  const copyFields = [...fields.filter((f) => f.type !== "image").map(multiline), ...extraFields.map(multiline)];
   const imageFields = fields.filter((f) => f.type === "image");
   const imageKey = imageFields.length ? imageFields[0].key : null;
   const Comp = spec && spec.component ? window[spec.component] : null;
