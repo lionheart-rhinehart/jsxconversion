@@ -6,14 +6,53 @@ const REVIEW_ROUNDUP_SPEC = {
   id: 'review-roundup',
   name: 'REVIEW ROUNDUP',
   fields: [
-    { key: 'duration', label: 'Length',     type: 'slider', default: 8, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow',  label: 'Eyebrow',    type: 'text',   default: 'WHAT FAMILIES SAY' },
-    { key: 'avg',      label: 'Avg rating', type: 'text',   default: '4.9' },
-    { key: 'count',    label: 'Review count', type: 'text', default: '180+ REVIEWS' },
-    { key: 'r1',       label: 'Review 1',   type: 'text',   default: 'Coaches who actually know youth development. — JEN R.' },
-    { key: 'r2',       label: 'Review 2',   type: 'text',   default: 'My daughter is faster AND more confident. — MIKE T.' },
-    { key: 'r3',       label: 'Review 3',   type: 'text',   default: 'Worth every dollar. Real measurable gains. — PRIYA K.' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 8,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "WHAT FAMILIES SAY"
+  },
+  {
+    "key": "avg",
+    "label": "Avg rating",
+    "type": "text",
+    "default": "4.9"
+  },
+  {
+    "key": "count",
+    "label": "Review count",
+    "type": "text",
+    "default": "180+ REVIEWS"
+  },
+  {
+    "key": "r1",
+    "label": "Review 1",
+    "type": "text",
+    "default": "Coaches who actually know youth development. — JEN R."
+  },
+  {
+    "key": "r2",
+    "label": "Review 2",
+    "type": "text",
+    "default": "My daughter is faster AND more confident. — MIKE T."
+  },
+  {
+    "key": "r3",
+    "label": "Review 3",
+    "type": "text",
+    "default": "Worth every dollar. Real measurable gains. — PRIYA K."
+  }
+],
 };
 
 function ReviewRoundupReel({ data = {} }) {

@@ -105,21 +105,111 @@ const HOT_TAKE_SPEC = {
   id: 'hot-take',
   name: 'HOT TAKE',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow tag', type: 'text', default: 'HOT TAKE TUESDAY' },
-    { key: 'title1', label: 'Title line 1', type: 'text', default: 'WHAT MATTERS' },
-    { key: 'title2', label: 'Title line 2 (red)', type: 'text', default: 'MOST?' },
-    { key: 'question', label: 'Poll question', type: 'text', default: 'WHAT BUILDS A BETTER ATHLETE FIRST?' },
-    { key: 'opt1Label', label: 'Option 1 label', type: 'text', default: 'SPEED' },
-    { key: 'opt1Pct', label: 'Option 1 %', type: 'number', default: 47, step: 1, min: 0, max: 100 },
-    { key: 'opt2Label', label: 'Option 2 label', type: 'text', default: 'STRENGTH' },
-    { key: 'opt2Pct', label: 'Option 2 %', type: 'number', default: 31, step: 1, min: 0, max: 100 },
-    { key: 'opt3Label', label: 'Option 3 label', type: 'text', default: 'POWER' },
-    { key: 'opt3Pct', label: 'Option 3 %', type: 'number', default: 22, step: 1, min: 0, max: 100 },
-    { key: 'totalVotes', label: 'Total votes', type: 'number', default: 1247, step: 1, min: 0 },
-    { key: 'verdict', label: 'Verdict headline', type: 'text', default: 'OUR TAKE: SPEED.' },
-    { key: 'reasoning', label: 'Reasoning', type: 'textarea', default: "You can't play if you can't catch up. Speed unlocks every other skill." },
-    { key: 'ctaText', label: 'CTA text', type: 'text', default: 'DROP YOUR TAKE ↓' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow tag",
+    "type": "text",
+    "default": "HOT TAKE TUESDAY"
+  },
+  {
+    "key": "title1",
+    "label": "Title line 1",
+    "type": "text",
+    "default": "WHAT MATTERS"
+  },
+  {
+    "key": "title2",
+    "label": "Title line 2 (red)",
+    "type": "text",
+    "default": "MOST?"
+  },
+  {
+    "key": "question",
+    "label": "Poll question",
+    "type": "text",
+    "default": "WHAT BUILDS A BETTER ATHLETE FIRST?"
+  },
+  {
+    "key": "opt1Label",
+    "label": "Option 1 label",
+    "type": "text",
+    "default": "SPEED"
+  },
+  {
+    "key": "opt1Pct",
+    "label": "Option 1 %",
+    "type": "number",
+    "default": 47,
+    "step": 1,
+    "min": 0,
+    "max": 100
+  },
+  {
+    "key": "opt2Label",
+    "label": "Option 2 label",
+    "type": "text",
+    "default": "STRENGTH"
+  },
+  {
+    "key": "opt2Pct",
+    "label": "Option 2 %",
+    "type": "number",
+    "default": 31,
+    "step": 1,
+    "min": 0,
+    "max": 100
+  },
+  {
+    "key": "opt3Label",
+    "label": "Option 3 label",
+    "type": "text",
+    "default": "POWER"
+  },
+  {
+    "key": "opt3Pct",
+    "label": "Option 3 %",
+    "type": "number",
+    "default": 22,
+    "step": 1,
+    "min": 0,
+    "max": 100
+  },
+  {
+    "key": "totalVotes",
+    "label": "Total votes",
+    "type": "number",
+    "default": 1247,
+    "step": 1,
+    "min": 0
+  },
+  {
+    "key": "verdict",
+    "label": "Verdict headline",
+    "type": "text",
+    "default": "OUR TAKE: SPEED."
+  },
+  {
+    "key": "reasoning",
+    "label": "Reasoning",
+    "type": "textarea",
+    "default": "You can't play if you can't catch up. Speed unlocks every other skill."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA text",
+    "type": "text",
+    "default": "DROP YOUR TAKE ↓"
+  }
+],
 };
 window.HOT_TAKE_SPEC = HOT_TAKE_SPEC;

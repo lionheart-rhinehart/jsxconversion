@@ -82,22 +82,159 @@ function YearInReviewReel({ data = {} }) {
 }
 window.YearInReviewReel = YearInReviewReel;
 const YEAR_IN_REVIEW_REEL_SPEC = { id:'year-in-review-reel', name:'YEAR IN REVIEW · REEL', fields:[
-  {key:'duration',label:'Length',type:'slider',default:8,min:4,max:15,step:0.5,unit:'s'},
-  {key:'eyebrow',label:'Eyebrow',type:'text',default:'2025 · BY THE NUMBERS'},
-  {key:'title1',label:'Title 1',type:'text',default:'ONE YEAR.'},
-  {key:'title2',label:'Title 2 (red)',type:'text',default:'FOUR HUNDRED ATHLETES.'},
-  {key:'c1v',label:'#1 value',type:'number',default:412},{key:'c1l',label:'#1 label',type:'text',default:'ATHLETES TRAINED'},
-  {key:'c2v',label:'#2 value',type:'number',default:1247},{key:'c2l',label:'#2 label',type:'text',default:'PRs SET'},
-  {key:'c3v',label:'#3 value',type:'number',default:28},{key:'c3l',label:'#3 label',type:'text',default:'D1 COMMITS'},
-  {key:'c4v',label:'#4 value',type:'number',default:5},{key:'c4l',label:'#4 label',type:'text',default:'LOCATIONS LIVE'},
-  {key:'sub1v',label:'Sub 1 v',type:'text',default:'+1.2'},{key:'sub1l',label:'Sub 1 l',type:'text',default:'AVG MPH GAIN'},
-  {key:'sub2v',label:'Sub 2 v',type:'text',default:'+4.1″'},{key:'sub2l',label:'Sub 2 l',type:'text',default:'AVG VERT GAIN'},
-  {key:'sub3v',label:'Sub 3 v',type:'text',default:'97%'},{key:'sub3l',label:'Sub 3 l',type:'text',default:'GUARANTEE HIT'},
-  {key:'sub4v',label:'Sub 4 v',type:'text',default:'$0'},{key:'sub4l',label:'Sub 4 l',type:'text',default:'WHEN WE MISS'},
-  {key:'closer',label:'Closer',type:'text',default:"WE'RE JUST GETTING STARTED."},
-  {key:'ctaText',label:'CTA',type:'text',default:'JOIN IN 2026 →'},
-  {key:'media1',label:'BG photo 1',type:'image',default:'assets/hero-sprint-male.jpg'},
-  {key:'media2',label:'BG photo 2',type:'image',default:'assets/photo-lifting.jpg'},
-  {key:'media3',label:'BG photo 3',type:'image',default:'assets/photo-jump-female.jpg'},
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 8,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "2025 · BY THE NUMBERS"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "ONE YEAR."
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "FOUR HUNDRED ATHLETES."
+  },
+  {
+    "key": "c1v",
+    "label": "#1 value",
+    "type": "number",
+    "default": 412
+  },
+  {
+    "key": "c1l",
+    "label": "#1 label",
+    "type": "text",
+    "default": "ATHLETES TRAINED"
+  },
+  {
+    "key": "c2v",
+    "label": "#2 value",
+    "type": "number",
+    "default": 1247
+  },
+  {
+    "key": "c2l",
+    "label": "#2 label",
+    "type": "text",
+    "default": "PRs SET"
+  },
+  {
+    "key": "c3v",
+    "label": "#3 value",
+    "type": "number",
+    "default": 28
+  },
+  {
+    "key": "c3l",
+    "label": "#3 label",
+    "type": "text",
+    "default": "D1 COMMITS"
+  },
+  {
+    "key": "c4v",
+    "label": "#4 value",
+    "type": "number",
+    "default": 5
+  },
+  {
+    "key": "c4l",
+    "label": "#4 label",
+    "type": "text",
+    "default": "LOCATIONS LIVE"
+  },
+  {
+    "key": "sub1v",
+    "label": "Sub 1 v",
+    "type": "text",
+    "default": "+1.2"
+  },
+  {
+    "key": "sub1l",
+    "label": "Sub 1 l",
+    "type": "text",
+    "default": "AVG MPH GAIN"
+  },
+  {
+    "key": "sub2v",
+    "label": "Sub 2 v",
+    "type": "text",
+    "default": "+4.1″"
+  },
+  {
+    "key": "sub2l",
+    "label": "Sub 2 l",
+    "type": "text",
+    "default": "AVG VERT GAIN"
+  },
+  {
+    "key": "sub3v",
+    "label": "Sub 3 v",
+    "type": "text",
+    "default": "97%"
+  },
+  {
+    "key": "sub3l",
+    "label": "Sub 3 l",
+    "type": "text",
+    "default": "GUARANTEE HIT"
+  },
+  {
+    "key": "sub4v",
+    "label": "Sub 4 v",
+    "type": "text",
+    "default": "$0"
+  },
+  {
+    "key": "sub4l",
+    "label": "Sub 4 l",
+    "type": "text",
+    "default": "WHEN WE MISS"
+  },
+  {
+    "key": "closer",
+    "label": "Closer",
+    "type": "text",
+    "default": "WE'RE JUST GETTING STARTED."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "JOIN IN 2026 →"
+  },
+  {
+    "key": "media1",
+    "label": "BG photo 1",
+    "type": "image",
+    "default": "assets/hero-sprint-male.jpg"
+  },
+  {
+    "key": "media2",
+    "label": "BG photo 2",
+    "type": "image",
+    "default": "assets/photo-lifting.jpg"
+  },
+  {
+    "key": "media3",
+    "label": "BG photo 3",
+    "type": "image",
+    "default": "assets/photo-jump-female.jpg"
+  }
 ]};
 window.YEAR_IN_REVIEW_REEL_SPEC = YEAR_IN_REVIEW_REEL_SPEC;

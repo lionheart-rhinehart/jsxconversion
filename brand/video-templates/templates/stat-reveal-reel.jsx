@@ -55,10 +55,39 @@ function StatRevealReel({ data = {} }) {
 }
 window.StatRevealReel = StatRevealReel;
 const STAT_REVEAL_REEL_SPEC = { id:'stat-reveal-reel', name:'STAT REVEAL · REEL', fields:[
-  {key:'duration',label:'Length',type:'slider',default:6,min:3,max:15,step:0.5,unit:'s'},
-  {key:'eyebrow',label:'Eyebrow',type:'text',default:'90-DAY GUARANTEE'},
-  {key:'title1',label:'Title 1',type:'text',default:'WE GUARANTEE'},
-  {key:'title2',label:'Title 2 (red)',type:'text',default:'RESULTS.'},
-  {key:'ctaText',label:'CTA',type:'text',default:'BOOK YOUR FREE ASSESSMENT'},
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 6,
+    "min": 3,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "90-DAY GUARANTEE"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "WE GUARANTEE"
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "RESULTS."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "BOOK YOUR FREE ASSESSMENT"
+  }
 ]};
 window.STAT_REVEAL_REEL_SPEC = STAT_REVEAL_REEL_SPEC;

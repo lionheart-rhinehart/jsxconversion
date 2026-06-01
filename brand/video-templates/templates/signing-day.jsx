@@ -7,14 +7,62 @@ const SIGNING_DAY_SPEC = {
   id: 'signing-day',
   name: 'SIGNING DAY',
   fields: [
-    { key: 'duration',  label: 'Length',       type: 'slider', default: 8, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow',   label: 'Eyebrow tag',  type: 'text',   default: 'SIGNING DAY' },
-    { key: 'name',      label: 'Athlete name', type: 'text',   default: 'JORDAN REESE' },
-    { key: 'meta',      label: 'Class · sport', type: 'text',  default: "CLASS OF '26 · BASEBALL · RHP" },
-    { key: 'school',    label: 'Commits to',   type: 'text',   default: 'STATE UNIVERSITY' },
-    { key: 'level',     label: 'Level tag',    type: 'select', default: 'D1 COMMIT', options: ['D1 COMMIT', 'D2 COMMIT', 'D3 COMMIT', 'NAIA COMMIT', 'JUCO COMMIT', 'PRO CONTRACT'] },
-    { key: 'photo',     label: 'Photo or video', type: 'image', default: 'assets/photo-coach-action.jpg', sub: 'image or short video' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 8,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow tag",
+    "type": "text",
+    "default": "SIGNING DAY"
+  },
+  {
+    "key": "name",
+    "label": "Athlete name",
+    "type": "text",
+    "default": "JORDAN REESE"
+  },
+  {
+    "key": "meta",
+    "label": "Class · sport",
+    "type": "text",
+    "default": "CLASS OF '26 · BASEBALL · RHP"
+  },
+  {
+    "key": "school",
+    "label": "Commits to",
+    "type": "text",
+    "default": "STATE UNIVERSITY"
+  },
+  {
+    "key": "level",
+    "label": "Level tag",
+    "type": "select",
+    "default": "D1 COMMIT",
+    "options": [
+      "D1 COMMIT",
+      "D2 COMMIT",
+      "D3 COMMIT",
+      "NAIA COMMIT",
+      "JUCO COMMIT",
+      "PRO CONTRACT"
+    ]
+  },
+  {
+    "key": "photo",
+    "label": "Photo or video",
+    "type": "image",
+    "default": "assets/photo-coach-action.jpg",
+    "sub": "image or short video"
+  }
+],
 };
 
 function SigningDayReel({ data = {} }) {

@@ -125,17 +125,85 @@ const VBT_BAR_SPEED_SPEC = {
   id: 'vbt-bar-speed',
   name: 'VBT BAR SPEED',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow tag', type: 'text', default: 'VELOCITY-BASED TRAINING' },
-    { key: 'title1', label: 'Title line 1', type: 'text', default: "DON'T LIFT" },
-    { key: 'title2', label: 'Title line 2 (red)', type: 'text', default: 'JUST HEAVY.' },
-    { key: 'subhead', label: 'Subhead', type: 'text', default: 'LIFT FAST. THEN HEAVY.' },
-    { key: 'liftLabel', label: 'Lift label', type: 'text', default: 'BACK SQUAT · 80% 1RM' },
-    { key: 'targetValue', label: 'Target speed (m/s)', type: 'number', default: 0.85, step: 0.05, min: 0.2, max: 2 },
-    { key: 'peakValue', label: 'Peak speed (m/s)', type: 'number', default: 0.93, step: 0.05, min: 0.2, max: 2 },
-    { key: 'maxValue', label: 'Gauge max (m/s)', type: 'number', default: 1.2, step: 0.1, min: 0.5, max: 3 },
-    { key: 'insight', label: 'Coach insight', type: 'textarea', default: "Below 0.5 m/s? You're grinding. Stop sets when speed drops." },
-    { key: 'ctaText', label: 'CTA text', type: 'text', default: 'TRAIN SMARTER →' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow tag",
+    "type": "text",
+    "default": "VELOCITY-BASED TRAINING"
+  },
+  {
+    "key": "title1",
+    "label": "Title line 1",
+    "type": "text",
+    "default": "DON'T LIFT"
+  },
+  {
+    "key": "title2",
+    "label": "Title line 2 (red)",
+    "type": "text",
+    "default": "JUST HEAVY."
+  },
+  {
+    "key": "subhead",
+    "label": "Subhead",
+    "type": "text",
+    "default": "LIFT FAST. THEN HEAVY."
+  },
+  {
+    "key": "liftLabel",
+    "label": "Lift label",
+    "type": "text",
+    "default": "BACK SQUAT · 80% 1RM"
+  },
+  {
+    "key": "targetValue",
+    "label": "Target speed (m/s)",
+    "type": "number",
+    "default": 0.85,
+    "step": 0.05,
+    "min": 0.2,
+    "max": 2
+  },
+  {
+    "key": "peakValue",
+    "label": "Peak speed (m/s)",
+    "type": "number",
+    "default": 0.93,
+    "step": 0.05,
+    "min": 0.2,
+    "max": 2
+  },
+  {
+    "key": "maxValue",
+    "label": "Gauge max (m/s)",
+    "type": "number",
+    "default": 1.2,
+    "step": 0.1,
+    "min": 0.5,
+    "max": 3
+  },
+  {
+    "key": "insight",
+    "label": "Coach insight",
+    "type": "textarea",
+    "default": "Below 0.5 m/s? You're grinding. Stop sets when speed drops."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA text",
+    "type": "text",
+    "default": "TRAIN SMARTER →"
+  }
+],
 };
 window.VBT_BAR_SPEED_SPEC = VBT_BAR_SPEED_SPEC;

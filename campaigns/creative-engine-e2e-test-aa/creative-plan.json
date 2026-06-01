@@ -62,14 +62,14 @@
               }
             }
           },
-          "renderedAt": "2026-06-01T02:00:06.989Z"
+          "renderedAt": "2026-06-01T13:43:43.001Z"
         },
         {
           "id": "A2",
           "beat": "A — Stop the scroll",
           "format": "static",
           "source": "template",
-          "template": "cluster-13",
+          "template": "fresh-e2e-a2-hook",
           "templateQuery": "eyebrow + bold headline over athlete cutout",
           "freshConcept": null,
           "headline": "Your kid's training is working perfectly. The problem is what it's teaching.",
@@ -81,11 +81,9 @@
             "ref": null
           },
           "audio": null,
-          "flags": [
-            "editor-fit:headline-to-2-words"
-          ],
+          "flags": [],
           "status": "rendered",
-          "notes": "Hook V1.5 (Paradox), verbatim from Angle-1 ad copy alt hooks. cluster-13 title is Anton display — short value here, full paradox carried on the mono microscript line; refine fit in the editor.",
+          "notes": "Rebound to composed lone-hook static (was cluster-13 — 3 shared-tag title slots overlapped). Verbatim V1.5 hook.",
           "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/A2.png",
           "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/A2.png",
           "knowledgeRefs": [
@@ -94,10 +92,9 @@
           ],
           "templateData": {
             "eyebrow": "THE LAST REP LIE",
-            "title": "WORKING\nPERFECTLY",
-            "microscript": "YOUR KID'S TRAINING IS WORKING PERFECTLY. THE PROBLEM IS WHAT IT'S TEACHING."
+            "hook": "Your kid's training is working perfectly. The problem is what it's teaching."
           },
-          "renderedAt": "2026-06-01T00:49:40.793Z"
+          "renderedAt": "2026-06-01T13:59:45.971Z"
         },
         {
           "id": "A3",
@@ -176,7 +173,7 @@
           "template": "fresh-e2e-b2",
           "templateQuery": null,
           "freshConcept": "velocity-bar-dataviz-loop",
-          "headline": "0.92 m/s, then 0.71. A 23% drop. The set should have ended.",
+          "headline": "0.92 m/s, then 0.71. A 23% drop.",
           "microscript": "THE 10% RULE",
           "visual": "Clean data-viz loop: a velocity bar dropping from rep 1 to rep 5 past the 10% threshold line, then resetting.",
           "image": {
@@ -197,9 +194,9 @@
           "templateData": {
             "eyebrow": "THE 10% RULE",
             "headline": "0.92 m/s, then 0.71. A 23% drop.",
-            "microscript": "THE SET SHOULD HAVE ENDED."
+            "microscript": "We measure to the hundredth. Everyone else guesses."
           },
-          "renderedAt": "2026-06-01T01:09:54.255Z"
+          "renderedAt": "2026-06-01T13:39:35.306Z"
         },
         {
           "id": "C1",
@@ -244,7 +241,7 @@
           "templateQuery": null,
           "freshConcept": "slow-code-terminal-aesthetic",
           "headline": "Working harder is writing slower code.",
-          "microscript": "SLOW CODE",
+          "microscript": "The harder they grind, the deeper the slow groove.",
           "visual": "Terminal / code aesthetic over an athlete silhouette; lines of 'slow code' compile as the athlete fatigues.",
           "image": {
             "tag": "bg_clip",
@@ -264,10 +261,10 @@
           "templateData": {
             "eyebrow": "SLOW CODE",
             "headline": "Working harder is writing slower code.",
-            "microscript": "Every tired rep compiles a slower athlete.",
+            "microscript": "The harder they grind, the deeper the slow groove.",
             "media": "assets/photo-lifting.jpg"
           },
-          "renderedAt": "2026-06-01T01:11:20.207Z"
+          "renderedAt": "2026-06-01T13:40:43.198Z"
         },
         {
           "id": "C3",
@@ -407,12 +404,12 @@
             "quoteText": "The reps that feel like the hardest work are the ones quietly making your kid slower.",
             "bylineName": "COACH GRAHAM WILKERSON",
             "bylineMeta": "CSCS · ATHLETES ACCELERATION",
-            "statsLabel": "WHY HARD WORK ISN'T ENOUGH",
-            "stats": "+4.2\"|VERT · −0.4s|40YD · +25LB|BENCH",
+            "statsLabel": "THE VELOCITY-PROTECTED DIFFERENCE",
+            "stats": "+224%|VERT JUMP · 40%|FEWER REPS · 28%|LESS FATIGUE",
             "media": "http://localhost:5273/media-file/brand/aa-design-system/project/uploads/17859384366612528.mp4"
           },
           "photo": "brand/aa-design-system/project/uploads/Action Image - Med Ball Throw - High School - Female - Genesis.jpg",
-          "renderedAt": "2026-06-01T01:06:30.996Z",
+          "renderedAt": "2026-06-01T13:40:21.963Z",
           "clip": "brand/aa-design-system/project/uploads/17859384366612528.mp4"
         },
         {
@@ -444,9 +441,11 @@
             "eyebrow": "FRONTIERS IN PHYSIOLOGY · 2026",
             "title1": "224% MORE",
             "title2": "VERTICAL JUMP.",
-            "ctaText": "BOOK THE ATHLETE ANALYSIS"
+            "ctaText": "BOOK THE ATHLETE ANALYSIS",
+            "freeLine1": "OR IT'S",
+            "freeLine2": "ON US."
           },
-          "renderedAt": "2026-06-01T00:52:15.980Z"
+          "renderedAt": "2026-06-01T14:00:49.843Z"
         },
         {
           "id": "E2",
@@ -478,9 +477,11 @@
             "eyebrow": "PAREJA-BLANCO · 2017",
             "title1": "40% FEWER REPS.",
             "title2": "146% MORE JUMP.",
-            "ctaText": "BOOK THE ATHLETE ANALYSIS"
+            "ctaText": "BOOK THE ATHLETE ANALYSIS",
+            "freeLine1": "OR IT'S",
+            "freeLine2": "ON US."
           },
-          "renderedAt": "2026-06-01T00:52:39.240Z"
+          "renderedAt": "2026-06-01T14:01:15.371Z"
         },
         {
           "id": "E3",
@@ -547,20 +548,22 @@
             "eyebrow": "VELOCITY-PROTECTED",
             "title1": "224%",
             "title2": "MORE JUMP.",
-            "ctaText": "TRAIN FAST TO BE FAST"
+            "ctaText": "TRAIN FAST TO BE FAST",
+            "freeLine1": "OR IT'S",
+            "freeLine2": "ON US."
           },
-          "renderedAt": "2026-06-01T00:54:44.697Z"
+          "renderedAt": "2026-06-01T14:01:40.558Z"
         },
         {
           "id": "E5",
           "beat": "E — Prove it",
           "format": "static",
           "source": "template",
-          "template": "cluster-10",
+          "template": "fresh-e2e-e5-testimonial",
           "templateQuery": "testimonial card over photo, red bottom panel",
           "freshConcept": null,
-          "headline": "One week here beat two years somewhere else.",
-          "microscript": "Andy Johnson, parent",
+          "headline": "We were with another facility for 2 years. After just 1 week with Genesis, my son said this was the best he'd ever had.",
+          "microscript": "Andy Johnson · Verified Google review",
           "visual": "Athlete photo dimmed; Anton title over bottom red panel.",
           "image": {
             "tag": "bg_photo",
@@ -572,7 +575,7 @@
             "editor-fit:title-to-short-lines"
           ],
           "status": "rendered",
-          "notes": "Testimonial verbatim (Andy Johnson) from UMS first-user-success. cluster-10 title is Anton — short lines; full quote carried in the editor as an added text box if needed.",
+          "notes": "Rebound to composed testimonial static (was cluster-10, which had no testimonial slot). Verbatim Andy Johnson Google review.",
           "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/E5.png",
           "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/E5.png",
           "knowledgeRefs": [
@@ -580,10 +583,11 @@
             "ums:first-user-success"
           ],
           "templateData": {
-            "title": "ONE WEEK\nBEAT TWO YEARS",
-            "title_2": "ANDY JOHNSON, PARENT"
+            "eyebrow": "// VERIFIED GOOGLE REVIEW",
+            "testimonial": "We were with another facility for 2 years. After just 1 week with Genesis, my son said this was the best he'd ever had.",
+            "byline": "ANDY JOHNSON · PARENT"
           },
-          "renderedAt": "2026-06-01T00:54:47.794Z"
+          "renderedAt": "2026-06-01T13:40:26.093Z"
         },
         {
           "id": "E6",
@@ -629,7 +633,7 @@
           "template": "logo-sting",
           "templateQuery": "guarantee / offer reel",
           "freshConcept": null,
-          "headline": "+1 mph. +3 inches. 90 days. Or we keep training them free.",
+          "headline": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us.",
           "microscript": "The Performance Contract",
           "visual": "Logo sting resolving to the written guarantee.",
           "image": {
@@ -652,10 +656,10 @@
           "templateData": {
             "wordmark1": "ATHLETES",
             "wordmark2": "ACCELERATION",
-            "tagline": "+1 mph. +3 inches. 90 days. Or we keep training them free.",
+            "tagline": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us.",
             "url": "athletesacceleration.com"
           },
-          "renderedAt": "2026-06-01T00:55:11.821Z"
+          "renderedAt": "2026-06-01T13:40:51.519Z"
         },
         {
           "id": "F2",
@@ -701,7 +705,7 @@
           "template": "cluster-12",
           "templateQuery": "guarantee card",
           "freshConcept": null,
-          "headline": "+1 mph. +3 inches. 90 days. Or we keep training them free.",
+          "headline": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us.",
           "microscript": "Ages 8–12 · Hamilton County, IN",
           "visual": "Guarantee card + athlete photo.",
           "image": {
@@ -722,9 +726,9 @@
           ],
           "templateData": {
             "title": "THE\nGUARANTEE",
-            "microscript": "+1 MPH. +3 INCHES. 90 DAYS. OR WE KEEP TRAINING THEM FREE. AGES 8-12 · HAMILTON COUNTY, IN"
+            "microscript": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us."
           },
-          "renderedAt": "2026-06-01T00:56:15.223Z"
+          "renderedAt": "2026-06-01T13:40:54.825Z"
         }
       ]
     }

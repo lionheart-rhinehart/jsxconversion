@@ -63,16 +63,77 @@ function CampAnnounceReel({ data = {} }) {
 }
 window.CampAnnounceReel = CampAnnounceReel;
 const CAMP_ANNOUNCE_REEL_SPEC = { id:'camp-announce-reel', name:'CAMP ANNOUNCE · REEL', fields:[
-  {key:'duration',label:'Length',type:'slider',default:7,min:4,max:15,step:0.5,unit:'s'},
-  {key:'eyebrow',label:'Eyebrow',type:'text',default:'SUMMER 2026'},
-  {key:'title1',label:'Title 1',type:'text',default:'SPEED'},
-  {key:'title2',label:'Title 2 (red)',type:'text',default:'CAMP.'},
-  {key:'subhead',label:'Subhead',type:'text',default:'5 DAYS · 10 HOURS · 1 PR'},
-  {key:'dates',label:'Dates',type:'text',default:'JUN 24–28'},
-  {key:'hours',label:'Hours',type:'text',default:'9A–11A'},
-  {key:'ages',label:'Ages',type:'text',default:'11–14'},
-  {key:'totalSpots',label:'Total spots',type:'number',default:24,step:1,min:1},
-  {key:'ctaText',label:'CTA',type:'text',default:'RESERVE YOUR SPOT'},
-  {key:'media',label:'Background photo/video',type:'image',default:'assets/photo-group-coaching.jpg'},
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "SUMMER 2026"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "SPEED"
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "CAMP."
+  },
+  {
+    "key": "subhead",
+    "label": "Subhead",
+    "type": "text",
+    "default": "5 DAYS · 10 HOURS · 1 PR"
+  },
+  {
+    "key": "dates",
+    "label": "Dates",
+    "type": "text",
+    "default": "JUN 24–28"
+  },
+  {
+    "key": "hours",
+    "label": "Hours",
+    "type": "text",
+    "default": "9A–11A"
+  },
+  {
+    "key": "ages",
+    "label": "Ages",
+    "type": "text",
+    "default": "11–14"
+  },
+  {
+    "key": "totalSpots",
+    "label": "Total spots",
+    "type": "number",
+    "default": 24,
+    "step": 1,
+    "min": 1
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "RESERVE YOUR SPOT"
+  },
+  {
+    "key": "media",
+    "label": "Background photo/video",
+    "type": "image",
+    "default": "assets/photo-group-coaching.jpg"
+  }
 ]};
 window.CAMP_ANNOUNCE_REEL_SPEC = CAMP_ANNOUNCE_REEL_SPEC;

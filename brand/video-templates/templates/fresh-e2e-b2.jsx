@@ -10,7 +10,7 @@ function FreshE2eB2Reel({ data = {} }) {
 
   const eyebrow = data.eyebrow ?? 'THE 10% RULE';
   const headline = data.headline ?? '0.92 m/s, then 0.71. A 23% drop.';
-  const microscript = data.microscript ?? 'THE SET SHOULD HAVE ENDED.';
+  const microscript = data.microscript ?? 'We measure to the hundredth. Everyone else guesses.';
 
   const clamp = (x) => Math.max(0, Math.min(1, x));
   // Five reps, each a velocity value descending past the 10% threshold (0.83).
@@ -113,7 +113,7 @@ const FRESH_E2E_B2_SPEC = {
         "key": "microscript",
         "label": "Microscript",
         "type": "text",
-        "default": "THE SET SHOULD HAVE ENDED."
+        "default": "We measure to the hundredth. Everyone else guesses."
       }
     ],
 };

@@ -64,15 +64,87 @@ function QuoteCardReel({ data = {} }) {
 }
 window.QuoteCardReel = QuoteCardReel;
 const QUOTE_CARD_REEL_SPEC = { id:'quote-card-reel', name:'PARENT QUOTE · REEL', fields:[
-  {key:'duration',label:'Length',type:'slider',default:8,min:4,max:15,step:0.5,unit:'s'},
-  {key:'eyebrow',label:'Eyebrow',type:'text',default:'PARENT TESTIMONIAL'},
-  {key:'quoteText',label:'Quote',type:'textarea',default:'MY KID GAINED 4 INCHES ON HIS VERTICAL IN 8 WEEKS.'},
-  {key:'bylineName',label:'Quoted by',type:'text',default:'SARAH M.'},
-  {key:'bylineMeta',label:'Byline meta',type:'text',default:'PARENT · U14 BASKETBALL · NOBLESVILLE'},
-  {key:'statsLabel',label:'Stats label',type:'text',default:"HER ATHLETE'S 90-DAY DATA"},
-  {key:'stat1Val',label:'Stat 1 value',type:'text',default:'+4.2"'},{key:'stat1Lbl',label:'Stat 1 label',type:'text',default:'VERT'},
-  {key:'stat2Val',label:'Stat 2 value',type:'text',default:'−0.4s'},{key:'stat2Lbl',label:'Stat 2 label',type:'text',default:'40YD'},
-  {key:'stat3Val',label:'Stat 3 value',type:'text',default:'+25LB'},{key:'stat3Lbl',label:'Stat 3 label',type:'text',default:'BENCH'},
-  {key:'media',label:'Background photo/video',type:'image',default:'assets/photo-coach-action.jpg'},
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 8,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "PARENT TESTIMONIAL"
+  },
+  {
+    "key": "quoteText",
+    "label": "Quote",
+    "type": "textarea",
+    "default": "MY KID GAINED 4 INCHES ON HIS VERTICAL IN 8 WEEKS."
+  },
+  {
+    "key": "bylineName",
+    "label": "Quoted by",
+    "type": "text",
+    "default": "SARAH M."
+  },
+  {
+    "key": "bylineMeta",
+    "label": "Byline meta",
+    "type": "text",
+    "default": "PARENT · U14 BASKETBALL · NOBLESVILLE"
+  },
+  {
+    "key": "statsLabel",
+    "label": "Stats label",
+    "type": "text",
+    "default": "HER ATHLETE'S 90-DAY DATA"
+  },
+  {
+    "key": "stat1Val",
+    "label": "Stat 1 value",
+    "type": "text",
+    "default": "+4.2\""
+  },
+  {
+    "key": "stat1Lbl",
+    "label": "Stat 1 label",
+    "type": "text",
+    "default": "VERT"
+  },
+  {
+    "key": "stat2Val",
+    "label": "Stat 2 value",
+    "type": "text",
+    "default": "−0.4s"
+  },
+  {
+    "key": "stat2Lbl",
+    "label": "Stat 2 label",
+    "type": "text",
+    "default": "40YD"
+  },
+  {
+    "key": "stat3Val",
+    "label": "Stat 3 value",
+    "type": "text",
+    "default": "+25LB"
+  },
+  {
+    "key": "stat3Lbl",
+    "label": "Stat 3 label",
+    "type": "text",
+    "default": "BENCH"
+  },
+  {
+    "key": "media",
+    "label": "Background photo/video",
+    "type": "image",
+    "default": "assets/photo-coach-action.jpg"
+  }
 ]};
 window.QUOTE_CARD_REEL_SPEC = QUOTE_CARD_REEL_SPEC;

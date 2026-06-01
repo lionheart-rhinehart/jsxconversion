@@ -48,20 +48,94 @@ window.ComicLessonReel = ComicLessonReel;
 const COMIC_LESSON_SPEC = {
   id: 'comic-lesson', name: 'COMIC LESSON',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'PROGRESSION' },
-    { key: 'title1', label: 'Title 1', type: 'text', default: '90 DAYS.' },
-    { key: 'title2', label: 'Title 2 (red)', type: 'text', default: '4 PHOTOS.' },
-    { key: 'cap1', label: 'Panel 1 caption', type: 'text', default: 'DAY ONE' },
-    { key: 'media1', label: 'Panel 1 photo/video', type: 'image', default: 'assets/photo-coach-action.jpg' },
-    { key: 'cap2', label: 'Panel 2 caption', type: 'text', default: 'WEEK 4' },
-    { key: 'media2', label: 'Panel 2 photo/video', type: 'image', default: 'assets/photo-lifting.jpg' },
-    { key: 'cap3', label: 'Panel 3 caption', type: 'text', default: 'WEEK 8' },
-    { key: 'media3', label: 'Panel 3 photo/video', type: 'image', default: 'assets/photo-jump-male.jpg' },
-    { key: 'cap4', label: 'Panel 4 caption (accent)', type: 'text', default: 'NOW.' },
-    { key: 'media4', label: 'Panel 4 photo/video', type: 'image', default: 'assets/hero-sprint-male.jpg' },
-    { key: 'closer', label: 'Closer line', type: 'text', default: 'CONSISTENCY > INTENSITY.' },
-    { key: 'ctaText', label: 'CTA', type: 'text', default: 'START YOUR 90 →' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "PROGRESSION"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "90 DAYS."
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "4 PHOTOS."
+  },
+  {
+    "key": "cap1",
+    "label": "Panel 1 caption",
+    "type": "text",
+    "default": "DAY ONE"
+  },
+  {
+    "key": "media1",
+    "label": "Panel 1 photo/video",
+    "type": "image",
+    "default": "assets/photo-coach-action.jpg"
+  },
+  {
+    "key": "cap2",
+    "label": "Panel 2 caption",
+    "type": "text",
+    "default": "WEEK 4"
+  },
+  {
+    "key": "media2",
+    "label": "Panel 2 photo/video",
+    "type": "image",
+    "default": "assets/photo-lifting.jpg"
+  },
+  {
+    "key": "cap3",
+    "label": "Panel 3 caption",
+    "type": "text",
+    "default": "WEEK 8"
+  },
+  {
+    "key": "media3",
+    "label": "Panel 3 photo/video",
+    "type": "image",
+    "default": "assets/photo-jump-male.jpg"
+  },
+  {
+    "key": "cap4",
+    "label": "Panel 4 caption (accent)",
+    "type": "text",
+    "default": "NOW."
+  },
+  {
+    "key": "media4",
+    "label": "Panel 4 photo/video",
+    "type": "image",
+    "default": "assets/hero-sprint-male.jpg"
+  },
+  {
+    "key": "closer",
+    "label": "Closer line",
+    "type": "text",
+    "default": "CONSISTENCY > INTENSITY."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "START YOUR 90 →"
+  }
+],
 };
 window.COMIC_LESSON_SPEC = COMIC_LESSON_SPEC;

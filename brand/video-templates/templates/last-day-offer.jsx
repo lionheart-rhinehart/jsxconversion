@@ -67,17 +67,82 @@ window.LastDayOfferReel = LastDayOfferReel;
 const LAST_DAY_OFFER_SPEC = {
   id: 'last-day-offer', name: 'LAST DAY',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'LAST CHANCE' },
-    { key: 'title1', label: 'Title 1', type: 'text', default: 'TODAY.' },
-    { key: 'title2', label: 'Title 2 (red)', type: 'text', default: 'OR NEVER.' },
-    { key: 'offerLabel', label: 'Offer label', type: 'text', default: 'THE DEAL' },
-    { key: 'offerHeadline', label: 'Offer headline', type: 'text', default: '50% OFF' },
-    { key: 'offerSub', label: 'Offer sub', type: 'text', default: 'FIRST MONTH · NEW MEMBERS ONLY' },
-    { key: 'closeAtHours', label: 'Hours left', type: 'number', default: 11, step: 1, min: 0, max: 99 },
-    { key: 'closeAtMins', label: 'Mins left', type: 'number', default: 59, step: 1, min: 0, max: 59 },
-    { key: 'closingNote', label: 'Closing line', type: 'text', default: 'CLOCK STOPS AT MIDNIGHT.' },
-    { key: 'ctaText', label: 'CTA', type: 'text', default: 'CLAIM IT' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "LAST CHANCE"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "TODAY."
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "OR NEVER."
+  },
+  {
+    "key": "offerLabel",
+    "label": "Offer label",
+    "type": "text",
+    "default": "THE DEAL"
+  },
+  {
+    "key": "offerHeadline",
+    "label": "Offer headline",
+    "type": "text",
+    "default": "50% OFF"
+  },
+  {
+    "key": "offerSub",
+    "label": "Offer sub",
+    "type": "text",
+    "default": "FIRST MONTH · NEW MEMBERS ONLY"
+  },
+  {
+    "key": "closeAtHours",
+    "label": "Hours left",
+    "type": "number",
+    "default": 11,
+    "step": 1,
+    "min": 0,
+    "max": 99
+  },
+  {
+    "key": "closeAtMins",
+    "label": "Mins left",
+    "type": "number",
+    "default": 59,
+    "step": 1,
+    "min": 0,
+    "max": 59
+  },
+  {
+    "key": "closingNote",
+    "label": "Closing line",
+    "type": "text",
+    "default": "CLOCK STOPS AT MIDNIGHT."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "CLAIM IT"
+  }
+],
 };
 window.LAST_DAY_OFFER_SPEC = LAST_DAY_OFFER_SPEC;

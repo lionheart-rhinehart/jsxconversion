@@ -6,17 +6,71 @@ const HOLIDAY_HOURS_SPEC = {
   id: 'holiday-hours',
   name: 'HOLIDAY HOURS',
   fields: [
-    { key: 'duration', label: 'Length',    type: 'slider', default: 6, min: 3, max: 15, step: 0.5, unit: 's' },
-    { key: 'holiday',  label: 'Holiday',   type: 'text',   default: 'HOLIDAY HOURS' },
-    { key: 'subtitle', label: 'Subtitle',  type: 'text',   default: 'PLAN YOUR TRAINING AROUND THE BREAK' },
-    { key: 'd1day',    label: 'Row 1 day', type: 'text',   default: 'DEC 24 — EVE' },
-    { key: 'd1hrs',    label: 'Row 1 hrs', type: 'text',   default: '6AM – 12PM' },
-    { key: 'd2day',    label: 'Row 2 day', type: 'text',   default: 'DEC 25 — DAY' },
-    { key: 'd2hrs',    label: 'Row 2 hrs', type: 'text',   default: 'CLOSED' },
-    { key: 'd3day',    label: 'Row 3 day', type: 'text',   default: 'DEC 26 — 31' },
-    { key: 'd3hrs',    label: 'Row 3 hrs', type: 'text',   default: '8AM – 4PM' },
-    { key: 'reopen',   label: 'Reopen note', type: 'text', default: 'FULL SCHEDULE RESUMES JAN 2' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 6,
+    "min": 3,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "holiday",
+    "label": "Holiday",
+    "type": "text",
+    "default": "HOLIDAY HOURS"
+  },
+  {
+    "key": "subtitle",
+    "label": "Subtitle",
+    "type": "text",
+    "default": "PLAN YOUR TRAINING AROUND THE BREAK"
+  },
+  {
+    "key": "d1day",
+    "label": "Row 1 day",
+    "type": "text",
+    "default": "DEC 24 — EVE"
+  },
+  {
+    "key": "d1hrs",
+    "label": "Row 1 hrs",
+    "type": "text",
+    "default": "6AM – 12PM"
+  },
+  {
+    "key": "d2day",
+    "label": "Row 2 day",
+    "type": "text",
+    "default": "DEC 25 — DAY"
+  },
+  {
+    "key": "d2hrs",
+    "label": "Row 2 hrs",
+    "type": "text",
+    "default": "CLOSED"
+  },
+  {
+    "key": "d3day",
+    "label": "Row 3 day",
+    "type": "text",
+    "default": "DEC 26 — 31"
+  },
+  {
+    "key": "d3hrs",
+    "label": "Row 3 hrs",
+    "type": "text",
+    "default": "8AM – 4PM"
+  },
+  {
+    "key": "reopen",
+    "label": "Reopen note",
+    "type": "text",
+    "default": "FULL SCHEDULE RESUMES JAN 2"
+  }
+],
 };
 
 function HolidayHoursReel({ data = {} }) {

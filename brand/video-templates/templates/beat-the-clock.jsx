@@ -46,16 +46,74 @@ window.BeatTheClockReel = BeatTheClockReel;
 const BEAT_THE_CLOCK_SPEC = {
   id: 'beat-the-clock', name: 'BEAT THE CLOCK',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'BEAT THE CLOCK' },
-    { key: 'title1', label: 'Title 1', type: 'text', default: "YOU'VE GOT" },
-    { key: 'title2', label: 'Title 2 (red)', type: 'text', default: '12 SECONDS.' },
-    { key: 'challenge', label: 'Challenge name', type: 'text', default: 'BURPEES FOR TIME · 10 REPS' },
-    { key: 'targetSeconds', label: 'Your time (s)', type: 'number', default: 12.43, step: 0.01, min: 0 },
-    { key: 'recordValue', label: 'Record time (s)', type: 'number', default: 11.92, step: 0.01, min: 0 },
-    { key: 'recordLabel', label: 'Record label', type: 'text', default: 'GYM RECORD' },
-    { key: 'insight', label: 'Prompt text', type: 'textarea', default: 'Can you beat 11.92? Drop your time in the comments.' },
-    { key: 'ctaText', label: 'CTA', type: 'text', default: 'POST YOUR TIME ↓' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "BEAT THE CLOCK"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "YOU'VE GOT"
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "12 SECONDS."
+  },
+  {
+    "key": "challenge",
+    "label": "Challenge name",
+    "type": "text",
+    "default": "BURPEES FOR TIME · 10 REPS"
+  },
+  {
+    "key": "targetSeconds",
+    "label": "Your time (s)",
+    "type": "number",
+    "default": 12.43,
+    "step": 0.01,
+    "min": 0
+  },
+  {
+    "key": "recordValue",
+    "label": "Record time (s)",
+    "type": "number",
+    "default": 11.92,
+    "step": 0.01,
+    "min": 0
+  },
+  {
+    "key": "recordLabel",
+    "label": "Record label",
+    "type": "text",
+    "default": "GYM RECORD"
+  },
+  {
+    "key": "insight",
+    "label": "Prompt text",
+    "type": "textarea",
+    "default": "Can you beat 11.92? Drop your time in the comments."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "POST YOUR TIME ↓"
+  }
+],
 };
 window.BEAT_THE_CLOCK_SPEC = BEAT_THE_CLOCK_SPEC;

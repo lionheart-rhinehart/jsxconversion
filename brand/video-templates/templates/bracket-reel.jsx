@@ -45,18 +45,153 @@ function BracketReel({ data = {} }) {
 }
 window.BracketReel = BracketReel;
 const BRACKET_SPEC = { id:'bracket-reel', name:'BRACKET REEL', fields:[
-  {key:'duration',label:'Length',type:'slider',default:7,min:4,max:15,step:0.5,unit:'s'},
-  {key:'eyebrow',label:'Eyebrow',type:'text',default:'THE TOURNAMENT'},
-  {key:'title1',label:'Title 1',type:'text',default:'WHAT MATTERS'},
-  {key:'title2',label:'Title 2 (red)',type:'text',default:'MOST?'},
-  {key:'label',label:'Bracket label',type:'text',default:'WHAT BUILDS THE BEST ATHLETE?'},
-  {key:'m1a',label:'Match 1 · A',type:'text',default:'SPEED'},{key:'m1b',label:'Match 1 · B',type:'text',default:'POWER'},{key:'w1',label:'Match 1 winner (0/1)',type:'number',default:0,min:0,max:1,step:1},
-  {key:'m2a',label:'Match 2 · A',type:'text',default:'STRENGTH'},{key:'m2b',label:'Match 2 · B',type:'text',default:'MOBILITY'},{key:'w2',label:'Match 2 winner (0/1)',type:'number',default:0,min:0,max:1,step:1},
-  {key:'m3a',label:'Match 3 · A',type:'text',default:'NUTRITION'},{key:'m3b',label:'Match 3 · B',type:'text',default:'SLEEP'},{key:'w3',label:'Match 3 winner (0/1)',type:'number',default:1,min:0,max:1,step:1},
-  {key:'m4a',label:'Match 4 · A',type:'text',default:'MINDSET'},{key:'m4b',label:'Match 4 · B',type:'text',default:'RECOVERY'},{key:'w4',label:'Match 4 winner (0/1)',type:'number',default:0,min:0,max:1,step:1},
-  {key:'sf1',label:'Semi 1 winner (0/1)',type:'number',default:0,min:0,max:1,step:1},
-  {key:'sf2',label:'Semi 2 winner (0/1)',type:'number',default:0,min:0,max:1,step:1},
-  {key:'champion',label:'Champion',type:'text',default:'SPEED'},
-  {key:'ctaText',label:'CTA',type:'text',default:'DEBATE IT IN THE COMMENTS ↓'},
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "THE TOURNAMENT"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "WHAT MATTERS"
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "MOST?"
+  },
+  {
+    "key": "label",
+    "label": "Bracket label",
+    "type": "text",
+    "default": "WHAT BUILDS THE BEST ATHLETE?"
+  },
+  {
+    "key": "m1a",
+    "label": "Match 1 · A",
+    "type": "text",
+    "default": "SPEED"
+  },
+  {
+    "key": "m1b",
+    "label": "Match 1 · B",
+    "type": "text",
+    "default": "POWER"
+  },
+  {
+    "key": "w1",
+    "label": "Match 1 winner (0/1)",
+    "type": "number",
+    "default": 0,
+    "min": 0,
+    "max": 1,
+    "step": 1
+  },
+  {
+    "key": "m2a",
+    "label": "Match 2 · A",
+    "type": "text",
+    "default": "STRENGTH"
+  },
+  {
+    "key": "m2b",
+    "label": "Match 2 · B",
+    "type": "text",
+    "default": "MOBILITY"
+  },
+  {
+    "key": "w2",
+    "label": "Match 2 winner (0/1)",
+    "type": "number",
+    "default": 0,
+    "min": 0,
+    "max": 1,
+    "step": 1
+  },
+  {
+    "key": "m3a",
+    "label": "Match 3 · A",
+    "type": "text",
+    "default": "NUTRITION"
+  },
+  {
+    "key": "m3b",
+    "label": "Match 3 · B",
+    "type": "text",
+    "default": "SLEEP"
+  },
+  {
+    "key": "w3",
+    "label": "Match 3 winner (0/1)",
+    "type": "number",
+    "default": 1,
+    "min": 0,
+    "max": 1,
+    "step": 1
+  },
+  {
+    "key": "m4a",
+    "label": "Match 4 · A",
+    "type": "text",
+    "default": "MINDSET"
+  },
+  {
+    "key": "m4b",
+    "label": "Match 4 · B",
+    "type": "text",
+    "default": "RECOVERY"
+  },
+  {
+    "key": "w4",
+    "label": "Match 4 winner (0/1)",
+    "type": "number",
+    "default": 0,
+    "min": 0,
+    "max": 1,
+    "step": 1
+  },
+  {
+    "key": "sf1",
+    "label": "Semi 1 winner (0/1)",
+    "type": "number",
+    "default": 0,
+    "min": 0,
+    "max": 1,
+    "step": 1
+  },
+  {
+    "key": "sf2",
+    "label": "Semi 2 winner (0/1)",
+    "type": "number",
+    "default": 0,
+    "min": 0,
+    "max": 1,
+    "step": 1
+  },
+  {
+    "key": "champion",
+    "label": "Champion",
+    "type": "text",
+    "default": "SPEED"
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "DEBATE IT IN THE COMMENTS ↓"
+  }
 ]};
 window.BRACKET_SPEC = BRACKET_SPEC;

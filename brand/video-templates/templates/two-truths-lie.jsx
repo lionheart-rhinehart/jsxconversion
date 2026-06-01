@@ -77,14 +77,66 @@ function TwoTruthsLieReel({ data = {} }) {
 }
 window.TwoTruthsLieReel = TwoTruthsLieReel;
 const TWO_TRUTHS_LIE_SPEC = { id:'two-truths-lie', name:'TWO TRUTHS ONE LIE', fields:[
-  {key:'duration',label:'Length',type:'slider',default:8,min:4,max:15,step:0.5,unit:'s'},
-  {key:'eyebrow',label:'Eyebrow',type:'text',default:'2 TRUTHS · 1 LIE'},
-  {key:'title',label:'Title',type:'text',default:'CAN YOU SPOT IT?'},
-  {key:'claim1',label:'Claim 1',type:'textarea',default:'YOUR VERTICAL CAN INCREASE 4-6" IN 90 DAYS.'},
-  {key:'claim2',label:'Claim 2',type:'textarea',default:'SPRINTING DEVELOPS POWER MORE THAN SQUATS.'},
-  {key:'claim3',label:'Claim 3',type:'textarea',default:'HEAVIER WEIGHTS ALWAYS BUILD MORE STRENGTH.'},
-  {key:'lieIndex',label:'Lie is # (1/2/3)',type:'number',default:3,min:1,max:3,step:1},
-  {key:'lieExplain',label:'Why it\'s a lie',type:'textarea',default:'Bar speed matters more than load. After ~80% 1RM, gains plateau.'},
-  {key:'ctaText',label:'CTA',type:'text',default:'GUESS BEFORE THE REVEAL ↓'},
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 8,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "2 TRUTHS · 1 LIE"
+  },
+  {
+    "key": "title",
+    "label": "Title",
+    "type": "text",
+    "default": "CAN YOU SPOT IT?"
+  },
+  {
+    "key": "claim1",
+    "label": "Claim 1",
+    "type": "textarea",
+    "default": "YOUR VERTICAL CAN INCREASE 4-6\" IN 90 DAYS."
+  },
+  {
+    "key": "claim2",
+    "label": "Claim 2",
+    "type": "textarea",
+    "default": "SPRINTING DEVELOPS POWER MORE THAN SQUATS."
+  },
+  {
+    "key": "claim3",
+    "label": "Claim 3",
+    "type": "textarea",
+    "default": "HEAVIER WEIGHTS ALWAYS BUILD MORE STRENGTH."
+  },
+  {
+    "key": "lieIndex",
+    "label": "Lie is # (1/2/3)",
+    "type": "number",
+    "default": 3,
+    "min": 1,
+    "max": 3,
+    "step": 1
+  },
+  {
+    "key": "lieExplain",
+    "label": "Why it's a lie",
+    "type": "textarea",
+    "default": "Bar speed matters more than load. After ~80% 1RM, gains plateau."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "GUESS BEFORE THE REVEAL ↓"
+  }
 ]};
 window.TWO_TRUTHS_LIE_SPEC = TWO_TRUTHS_LIE_SPEC;

@@ -269,7 +269,13 @@ async function renderTemplateMotion(asset, angleId, wantGif) {
   // templates/*, so the template must be carried in here). The wrapper's window
   // global is written FIRST so detectVariationGlobal picks the wrapper (not the
   // template) as the component to mount — it mounts with {data} from __CONFIG__.
-  const W = 1080, H = 1920, D = 8, FPS = 30;
+  const W = 1080, H = 1920, FPS = 30;
+  // Honor the per-asset duration set via the editor slider (saved in
+  // templateData.duration). Coerce to a NUMBER so the value interpolates into
+  // the wrapper as a numeric literal — readStageProps (claude-design.mjs) only
+  // accepts /^[0-9.]+$/ in `duration={...}`; a quoted/NaN value would silently
+  // fall back to DEFAULTS (8s). Fall back to 8 when unset.
+  const D = Math.max(1, Number(asset.templateData?.duration) || 8);
   const wrapperName = `CampWrap_${slug(asset.id).replace(/-/g, "_")}`;
   const wrapper = `// Auto-generated motion wrapper for campaign "${campaign}" asset ${asset.id}.
 // Renders bank template ${tmpl} (window.${compName}) inside a Stage with __CONFIG__ data.

@@ -144,17 +144,82 @@ const LIMITED_SPOTS_SPEC = {
   id: 'limited-spots',
   name: 'LIMITED SPOTS',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'LIMITED AVAILABILITY' },
-    { key: 'title1', label: 'Title 1', type: 'text', default: 'FALL SLOTS' },
-    { key: 'title2', label: 'Title 2 (red)', type: 'text', default: 'ARE GOING.' },
-    { key: 'programName', label: 'Program name', type: 'text', default: 'ACCELERATE · FALL 2026' },
-    { key: 'totalSlots', label: 'Total slots', type: 'number', default: 40, step: 1, min: 1 },
-    { key: 'startRemaining', label: 'Start remaining', type: 'number', default: 12, step: 1, min: 0 },
-    { key: 'endRemaining', label: 'End remaining', type: 'number', default: 4, step: 1, min: 0 },
-    { key: 'fillLabel', label: 'Fill bar label', type: 'text', default: 'BOOKED:' },
-    { key: 'closingBy', label: 'Closing line', type: 'text', default: 'CLOSES SUN AT MIDNIGHT' },
-    { key: 'ctaText', label: 'CTA text', type: 'text', default: 'CLAIM YOUR SPOT' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "LIMITED AVAILABILITY"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "FALL SLOTS"
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "ARE GOING."
+  },
+  {
+    "key": "programName",
+    "label": "Program name",
+    "type": "text",
+    "default": "ACCELERATE · FALL 2026"
+  },
+  {
+    "key": "totalSlots",
+    "label": "Total slots",
+    "type": "number",
+    "default": 40,
+    "step": 1,
+    "min": 1
+  },
+  {
+    "key": "startRemaining",
+    "label": "Start remaining",
+    "type": "number",
+    "default": 12,
+    "step": 1,
+    "min": 0
+  },
+  {
+    "key": "endRemaining",
+    "label": "End remaining",
+    "type": "number",
+    "default": 4,
+    "step": 1,
+    "min": 0
+  },
+  {
+    "key": "fillLabel",
+    "label": "Fill bar label",
+    "type": "text",
+    "default": "BOOKED:"
+  },
+  {
+    "key": "closingBy",
+    "label": "Closing line",
+    "type": "text",
+    "default": "CLOSES SUN AT MIDNIGHT"
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA text",
+    "type": "text",
+    "default": "CLAIM YOUR SPOT"
+  }
+],
 };
 window.LIMITED_SPOTS_SPEC = LIMITED_SPOTS_SPEC;

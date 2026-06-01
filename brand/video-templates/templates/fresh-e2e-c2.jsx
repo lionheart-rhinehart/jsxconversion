@@ -11,7 +11,7 @@ function FreshE2eC2Reel({ data = {} }) {
 
   const eyebrow = data.eyebrow ?? 'SLOW CODE';
   const headline = data.headline ?? 'Working harder is writing slower code.';
-  const microscript = data.microscript ?? 'Every tired rep compiles a slower athlete.';
+  const microscript = data.microscript ?? 'The harder they grind, the deeper the slow groove.';
   const media = data.media ?? 'assets/photo-lifting.jpg';
 
   const clamp = (x) => Math.max(0, Math.min(1, x));
@@ -111,7 +111,7 @@ const FRESH_E2E_C2_SPEC = {
         "key": "microscript",
         "label": "Microscript",
         "type": "text",
-        "default": "Every tired rep compiles a slower athlete."
+        "default": "The harder they grind, the deeper the slow groove."
       },
       {
         "key": "media",

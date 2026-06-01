@@ -6,14 +6,61 @@ const RECOVERY_TIP_SPEC = {
   id: 'recovery-tip',
   name: 'RECOVERY TIP',
   fields: [
-    { key: 'duration', label: 'Length',    type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'category', label: 'Category',  type: 'select', default: 'SLEEP', options: ['SLEEP', 'HYDRATION', 'MOBILITY', 'NUTRITION', 'STRESS'] },
-    { key: 'stat',     label: 'Big stat',  type: 'text',   default: '8–10' },
-    { key: 'unit',     label: 'Stat unit', type: 'text',   default: 'HOURS / NIGHT' },
-    { key: 'headline', label: 'Headline',  type: 'text',   default: 'SLEEP IS THE #1 PERFORMANCE DRUG' },
-    { key: 'detail',   label: 'Detail',    type: 'textarea', default: 'Growth hormone peaks in deep sleep. Skimp on it and you blunt every adaptation you trained for today.' },
-    { key: 'photo',    label: 'Photo (bg)', type: 'image', default: 'assets/photo-conditioning.jpg', sub: 'shown dimmed behind' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "category",
+    "label": "Category",
+    "type": "select",
+    "default": "SLEEP",
+    "options": [
+      "SLEEP",
+      "HYDRATION",
+      "MOBILITY",
+      "NUTRITION",
+      "STRESS"
+    ]
+  },
+  {
+    "key": "stat",
+    "label": "Big stat",
+    "type": "text",
+    "default": "8–10"
+  },
+  {
+    "key": "unit",
+    "label": "Stat unit",
+    "type": "text",
+    "default": "HOURS / NIGHT"
+  },
+  {
+    "key": "headline",
+    "label": "Headline",
+    "type": "text",
+    "default": "SLEEP IS THE #1 PERFORMANCE DRUG"
+  },
+  {
+    "key": "detail",
+    "label": "Detail",
+    "type": "textarea",
+    "default": "Growth hormone peaks in deep sleep. Skimp on it and you blunt every adaptation you trained for today."
+  },
+  {
+    "key": "photo",
+    "label": "Photo (bg)",
+    "type": "image",
+    "default": "assets/photo-conditioning.jpg",
+    "sub": "shown dimmed behind"
+  }
+],
 };
 
 function RecoveryTipReel({ data = {} }) {

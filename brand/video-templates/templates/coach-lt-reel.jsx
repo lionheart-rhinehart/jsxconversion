@@ -53,10 +53,39 @@ function CoachLowerThirdsReel({ data = {} }) {
 }
 window.CoachLowerThirdsReel = CoachLowerThirdsReel;
 const COACH_LT_REEL_SPEC = { id:'coach-lt-reel', name:'COACH LOWER-THIRDS · REEL', fields:[
-  {key:'duration',label:'Length',type:'slider',default:6,min:4,max:15,step:0.5,unit:'s'},
-  {key:'coachName',label:'Coach name',type:'text',default:'COACH MIKE TORRES'},
-  {key:'coachTitle',label:'Title (typed in)',type:'text',default:'DIRECTOR OF PERFORMANCE'},
-  {key:'credsCsv',label:'Credentials (comma)',type:'text',default:'CSCS,USATF L2,15 YRS,NCAA D1'},
-  {key:'media',label:'Background photo/video',type:'image',default:'assets/photo-group-coaching.jpg'},
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 6,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "coachName",
+    "label": "Coach name",
+    "type": "text",
+    "default": "COACH MIKE TORRES"
+  },
+  {
+    "key": "coachTitle",
+    "label": "Title (typed in)",
+    "type": "text",
+    "default": "DIRECTOR OF PERFORMANCE"
+  },
+  {
+    "key": "credsCsv",
+    "label": "Credentials (comma)",
+    "type": "text",
+    "default": "CSCS,USATF L2,15 YRS,NCAA D1"
+  },
+  {
+    "key": "media",
+    "label": "Background photo/video",
+    "type": "image",
+    "default": "assets/photo-group-coaching.jpg"
+  }
 ]};
 window.COACH_LT_REEL_SPEC = COACH_LT_REEL_SPEC;

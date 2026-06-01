@@ -7,10 +7,7 @@
       "tag": "bg_fill",
       "label": "Ink background",
       "type": "rect",
-      "x": 0,
-      "y": 0,
-      "width": 1080,
-      "height": 1920,
+      "x": 0, "y": 0, "width": 1080, "height": 1920,
       "fill": "#0a0b0d",
       "z": 0
     },
@@ -20,10 +17,7 @@
       "label": "Group-coaching photo (dimmed)",
       "type": "image",
       "src": "./assets/cluster-10-bg.jpg",
-      "x": -897,
-      "y": 0,
-      "width": 2812,
-      "height": 2112,
+      "x": -897, "y": 0, "width": 2812, "height": 2112,
       "objectFit": "fill",
       "filter": "grayscale(0.5) brightness(0.32) contrast(1.02)",
       "z": 1
@@ -33,10 +27,7 @@
       "tag": "brand_dim",
       "label": "Dark scrim for legibility",
       "type": "rect",
-      "x": 0,
-      "y": 0,
-      "width": 1080,
-      "height": 1920,
+      "x": 0, "y": 0, "width": 1080, "height": 1920,
       "fill": "linear-gradient(180deg, rgba(10,11,13,0.55) 0%, rgba(10,11,13,0.35) 40%, rgba(10,11,13,0.8) 100%)",
       "z": 2
     },
@@ -45,10 +36,7 @@
       "tag": "accent_strip",
       "label": "Bottom red strip",
       "type": "rect",
-      "x": 0,
-      "y": 1890,
-      "width": 1080,
-      "height": 30,
+      "x": 0, "y": 1890, "width": 1080, "height": 30,
       "fill": "#c4141d",
       "z": 15
     }
@@ -58,9 +46,7 @@
       "id": "stars",
       "tag": "stars",
       "label": "Five-star rating",
-      "x": 0,
-      "y": 470,
-      "width": 1080,
+      "x": 0, "y": 470, "width": 1080,
       "textAlign": "center",
       "text": "★★★★★",
       "fontSize": 84,
@@ -73,9 +59,7 @@
       "id": "eyebrow",
       "tag": "eyebrow",
       "label": "Verified-review eyebrow",
-      "x": 0,
-      "y": 610,
-      "width": 1080,
+      "x": 0, "y": 610, "width": 1080,
       "textAlign": "center",
       "text": "// VERIFIED GOOGLE REVIEW",
       "fontSize": 34,
@@ -86,18 +70,14 @@
       "textTransform": "uppercase",
       "z": 21,
       "role": "eyebrow",
-      "accepts": [
-        "eyebrow"
-      ],
+      "accepts": ["eyebrow"],
       "maxChars": 24
     },
     {
       "id": "quote",
       "tag": "testimonial",
       "label": "Testimonial quote (verbatim)",
-      "x": 90,
-      "y": 720,
-      "width": 900,
+      "x": 90, "y": 720, "width": 900,
       "textAlign": "center",
       "text": "We were with another facility for 2 years. After just 1 week with Genesis, my son said this was the best he'd ever had.",
       "fontSize": 76,
@@ -109,18 +89,14 @@
       "textShadow": "0 2px 18px rgba(0,0,0,0.7)",
       "z": 22,
       "role": "testimonial",
-      "accepts": [
-        "testimonial"
-      ],
+      "accepts": ["testimonial"],
       "maxChars": 160
     },
     {
       "id": "byline",
       "tag": "byline",
       "label": "Attribution",
-      "x": 90,
-      "y": 1320,
-      "width": 900,
+      "x": 90, "y": 1320, "width": 900,
       "textAlign": "center",
       "text": "ANDY JOHNSON · PARENT",
       "fontSize": 36,
@@ -131,10 +107,7 @@
       "textTransform": "uppercase",
       "z": 23,
       "role": "byline",
-      "accepts": [
-        "byline",
-        "proof"
-      ],
+      "accepts": ["byline", "proof"],
       "maxChars": 40
     }
   ]

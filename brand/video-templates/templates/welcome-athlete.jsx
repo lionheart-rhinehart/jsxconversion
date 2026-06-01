@@ -6,13 +6,48 @@ const WELCOME_ATHLETE_SPEC = {
   id: 'welcome-athlete',
   name: 'WELCOME ATHLETE',
   fields: [
-    { key: 'duration', label: 'Length',    type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow',  label: 'Eyebrow',   type: 'text',   default: 'NEW TO THE TEAM' },
-    { key: 'name',     label: 'Name',      type: 'text',   default: 'MAYA CHEN' },
-    { key: 'meta',     label: 'Meta line', type: 'text',   default: 'U14 · VOLLEYBALL · OUTSIDE HITTER' },
-    { key: 'goal',     label: 'Goal line', type: 'text',   default: 'GOAL: +4" VERTICAL BY TRYOUTS' },
-    { key: 'photo',    label: 'Photo or video', type: 'image', default: 'assets/photo-jump-female.jpg', sub: 'image or short video' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "NEW TO THE TEAM"
+  },
+  {
+    "key": "name",
+    "label": "Name",
+    "type": "text",
+    "default": "MAYA CHEN"
+  },
+  {
+    "key": "meta",
+    "label": "Meta line",
+    "type": "text",
+    "default": "U14 · VOLLEYBALL · OUTSIDE HITTER"
+  },
+  {
+    "key": "goal",
+    "label": "Goal line",
+    "type": "text",
+    "default": "GOAL: +4\" VERTICAL BY TRYOUTS"
+  },
+  {
+    "key": "photo",
+    "label": "Photo or video",
+    "type": "image",
+    "default": "assets/photo-jump-female.jpg",
+    "sub": "image or short video"
+  }
+],
 };
 
 function WelcomeAthleteReel({ data = {} }) {

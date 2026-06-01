@@ -6,14 +6,54 @@ const NEW_YEAR_SPEC = {
   id: 'new-year',
   name: 'NEW YEAR',
   fields: [
-    { key: 'duration', label: 'Length',   type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'year',     label: 'Year',     type: 'text',   default: '2027' },
-    { key: 'line1',    label: 'Headline 1', type: 'text', default: 'NEW YEAR' },
-    { key: 'line2',    label: 'Headline 2', type: 'text', default: 'NEW SPEED' },
-    { key: 'promise',  label: 'Promise',  type: 'text',   default: 'Resolutions fade. Programs deliver. Start January with a plan that measures every rep.' },
-    { key: 'cta',      label: 'CTA',      type: 'text',   default: 'JAN INTAKE OPEN → LINK IN BIO' },
-    { key: 'photo',    label: 'Photo or video', type: 'image', default: 'assets/hero-sprint-male.jpg', sub: 'image or short video' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "year",
+    "label": "Year",
+    "type": "text",
+    "default": "2027"
+  },
+  {
+    "key": "line1",
+    "label": "Headline 1",
+    "type": "text",
+    "default": "NEW YEAR"
+  },
+  {
+    "key": "line2",
+    "label": "Headline 2",
+    "type": "text",
+    "default": "NEW SPEED"
+  },
+  {
+    "key": "promise",
+    "label": "Promise",
+    "type": "text",
+    "default": "Resolutions fade. Programs deliver. Start January with a plan that measures every rep."
+  },
+  {
+    "key": "cta",
+    "label": "CTA",
+    "type": "text",
+    "default": "JAN INTAKE OPEN → LINK IN BIO"
+  },
+  {
+    "key": "photo",
+    "label": "Photo or video",
+    "type": "image",
+    "default": "assets/hero-sprint-male.jpg",
+    "sub": "image or short video"
+  }
+],
 };
 
 function NewYearReel({ data = {} }) {

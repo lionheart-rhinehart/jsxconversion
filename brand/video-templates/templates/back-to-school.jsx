@@ -6,15 +6,60 @@ const BACK_TO_SCHOOL_SPEC = {
   id: 'back-to-school',
   name: 'BACK TO SCHOOL',
   fields: [
-    { key: 'duration', label: 'Length',    type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow',  label: 'Eyebrow',   type: 'text',   default: 'BACK-TO-SCHOOL SEASON' },
-    { key: 'headline', label: 'Headline',  type: 'text',   default: 'SHOW UP FASTER THAN YOU LEFT' },
-    { key: 'hook1',    label: 'Hook 1',    type: 'text',   default: 'BEAT TRYOUT NERVES WITH REAL NUMBERS' },
-    { key: 'hook2',    label: 'Hook 2',    type: 'text',   default: 'AFTER-SCHOOL SLOTS · 3:30–8PM' },
-    { key: 'hook3',    label: 'Hook 3',    type: 'text',   default: 'STUDENT PRICING THROUGH SEPT' },
-    { key: 'cta',      label: 'CTA',       type: 'text',   default: 'LOCK YOUR SLOT → LINK IN BIO' },
-    { key: 'photo',    label: 'Photo or video', type: 'image', default: 'assets/photo-agility-mixed.jpg', sub: 'image or short video' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "BACK-TO-SCHOOL SEASON"
+  },
+  {
+    "key": "headline",
+    "label": "Headline",
+    "type": "text",
+    "default": "SHOW UP FASTER THAN YOU LEFT"
+  },
+  {
+    "key": "hook1",
+    "label": "Hook 1",
+    "type": "text",
+    "default": "BEAT TRYOUT NERVES WITH REAL NUMBERS"
+  },
+  {
+    "key": "hook2",
+    "label": "Hook 2",
+    "type": "text",
+    "default": "AFTER-SCHOOL SLOTS · 3:30–8PM"
+  },
+  {
+    "key": "hook3",
+    "label": "Hook 3",
+    "type": "text",
+    "default": "STUDENT PRICING THROUGH SEPT"
+  },
+  {
+    "key": "cta",
+    "label": "CTA",
+    "type": "text",
+    "default": "LOCK YOUR SLOT → LINK IN BIO"
+  },
+  {
+    "key": "photo",
+    "label": "Photo or video",
+    "type": "image",
+    "default": "assets/photo-agility-mixed.jpg",
+    "sub": "image or short video"
+  }
+],
 };
 
 function BackToSchoolReel({ data = {} }) {

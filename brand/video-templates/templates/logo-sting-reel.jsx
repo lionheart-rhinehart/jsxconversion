@@ -31,10 +31,39 @@ function LogoStingReel({ data = {} }) {
 }
 window.LogoStingReel = LogoStingReel;
 const LOGO_STING_REEL_SPEC = { id:'logo-sting-reel', name:'LOGO STING · REEL', fields:[
-  {key:'duration',label:'Length',type:'slider',default:3,min:2,max:8,step:0.5,unit:'s'},
-  {key:'wordmark1',label:'Wordmark (white)',type:'text',default:'ATHLETES'},
-  {key:'wordmark2',label:'Wordmark (red)',type:'text',default:'ACCELERATION'},
-  {key:'tagline',label:'Tagline',type:'textarea',default:'THE DRIVE IS THEIRS.\nWE BUILD THE ATHLETE.'},
-  {key:'url',label:'URL',type:'text',default:'ATHLETESACCEL.COM'},
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 3,
+    "min": 2,
+    "max": 8,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "wordmark1",
+    "label": "Wordmark (white)",
+    "type": "text",
+    "default": "ATHLETES"
+  },
+  {
+    "key": "wordmark2",
+    "label": "Wordmark (red)",
+    "type": "text",
+    "default": "ACCELERATION"
+  },
+  {
+    "key": "tagline",
+    "label": "Tagline",
+    "type": "textarea",
+    "default": "THE DRIVE IS THEIRS.\nWE BUILD THE ATHLETE."
+  },
+  {
+    "key": "url",
+    "label": "URL",
+    "type": "text",
+    "default": "ATHLETESACCEL.COM"
+  }
 ]};
 window.LOGO_STING_REEL_SPEC = LOGO_STING_REEL_SPEC;

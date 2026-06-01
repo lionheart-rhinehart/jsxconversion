@@ -47,16 +47,79 @@ window.HeartRateStoryReel = HeartRateStoryReel;
 const HEART_RATE_STORY_SPEC = {
   id: 'heart-rate-story', name: 'HEART RATE STORY',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'CONDITIONING TRUTH' },
-    { key: 'title1', label: 'Title 1', type: 'text', default: 'YOUR HEART' },
-    { key: 'title2', label: 'Title 2 (red)', type: 'text', default: 'TELLS THE STORY.' },
-    { key: 'session', label: 'Session label', type: 'text', default: '12 MIN · ASSAULT BIKE INTERVALS' },
-    { key: 'peakBpm', label: 'Peak BPM', type: 'number', default: 178, step: 1, min: 60, max: 240 },
-    { key: 'restBpm', label: 'Rest BPM', type: 'number', default: 62, step: 1, min: 30, max: 120 },
-    { key: 'maxBpm', label: 'Max BPM', type: 'number', default: 200, step: 1, min: 100, max: 240 },
-    { key: 'insight', label: 'Insight', type: 'textarea', default: 'If you never touch Zone 5, you never grow Zone 5. Train the top.' },
-    { key: 'ctaText', label: 'CTA', type: 'text', default: 'BUILD YOUR ENGINE →' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "CONDITIONING TRUTH"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "YOUR HEART"
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "TELLS THE STORY."
+  },
+  {
+    "key": "session",
+    "label": "Session label",
+    "type": "text",
+    "default": "12 MIN · ASSAULT BIKE INTERVALS"
+  },
+  {
+    "key": "peakBpm",
+    "label": "Peak BPM",
+    "type": "number",
+    "default": 178,
+    "step": 1,
+    "min": 60,
+    "max": 240
+  },
+  {
+    "key": "restBpm",
+    "label": "Rest BPM",
+    "type": "number",
+    "default": 62,
+    "step": 1,
+    "min": 30,
+    "max": 120
+  },
+  {
+    "key": "maxBpm",
+    "label": "Max BPM",
+    "type": "number",
+    "default": 200,
+    "step": 1,
+    "min": 100,
+    "max": 240
+  },
+  {
+    "key": "insight",
+    "label": "Insight",
+    "type": "textarea",
+    "default": "If you never touch Zone 5, you never grow Zone 5. Train the top."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "BUILD YOUR ENGINE →"
+  }
+],
 };
 window.HEART_RATE_STORY_SPEC = HEART_RATE_STORY_SPEC;
