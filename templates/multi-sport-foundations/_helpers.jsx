@@ -111,16 +111,74 @@ export function MediaSlot({
     );
   }
 
-  // ── NO-CROP path (default — cover-fit with offsetX/Y/scale) ──────────────
-  const objPos =
-    objectPosition || `${50 - offsetX / 10.8}% ${50 - offsetY / 19.2}%`;
+  // ── NO-CROP path (cover-fit with offsetX/Y/scale) ────────────────────────
+  // HYBRID: offset-0 (the common case) uses declarative object-fit:cover — zero
+  // render-timing risk, byte-identical to before. A real pan (offset≠0) uses the
+  // same JS pixel-pan + clamp as the editor's repositionPhoto, so editor==render.
+  const ox = offsetX || 0;
+  const oy = offsetY || 0;
+
+  if (ox !== 0 || oy !== 0) {
+    const applyCover = (el) => {
+      if (!el) return;
+      const ready = isVideo ? el.videoWidth : el.naturalWidth;
+      if (!ready) return;
+      const nW = isVideo ? el.videoWidth : el.naturalWidth;
+      const nH = isVideo ? el.videoHeight : el.naturalHeight;
+      const coverScale = Math.max(width / nW, height / nH) * scale;
+      const coverW = nW * coverScale;
+      const coverH = nH * coverScale;
+      const maxOX = Math.max(0, (coverW - width) / 2);
+      const maxOY = Math.max(0, (coverH - height) / 2);
+      const px = Math.max(-maxOX, Math.min(maxOX, ox));
+      const py = Math.max(-maxOY, Math.min(maxOY, oy));
+      el.style.position = "absolute";
+      el.style.width = coverW + "px";
+      el.style.height = coverH + "px";
+      el.style.left = (width - coverW) / 2 + px + "px";
+      el.style.top = (height - coverH) / 2 + py + "px";
+    };
+    const wrapperStyle = { position: "absolute", inset: 0, overflow: "hidden", ...style };
+    if (isVideo) {
+      return (
+        <div style={wrapperStyle}>
+          <video
+            src={path}
+            autoPlay
+            muted
+            playsInline
+            loop
+            preload="auto"
+            ref={(el) => {
+              if (!el) return;
+              if (videoStartTime) el.currentTime = videoStartTime;
+              el.addEventListener("loadeddata", () => applyCover(el), { once: true });
+              if (el.videoWidth) applyCover(el);
+            }}
+          />
+        </div>
+      );
+    }
+    return (
+      <div style={wrapperStyle}>
+        <img
+          src={path}
+          alt=""
+          onLoad={(e) => applyCover(e.target)}
+          ref={(el) => el && el.complete && applyCover(el)}
+        />
+      </div>
+    );
+  }
+
+  // offset 0 → centered cover-fit (declarative). Unchanged from before.
   const baseStyle = {
     position: "absolute",
     inset: 0,
     width: "100%",
     height: "100%",
     objectFit,
-    objectPosition: objPos,
+    objectPosition: objectPosition || "50% 50%",
     transform: scale !== 1 ? `scale(${scale})` : undefined,
     transformOrigin: "center center",
     display: "block",

@@ -6,7 +6,7 @@
     "type": "image",
     "tag": "bg_photo",
     "offsetX": 0,
-    "offsetY": 480,
+    "offsetY": 0,
     "scale": 1,
     "videoStartTime": 0,
     "videoEndTime": null,
