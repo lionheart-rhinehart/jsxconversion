@@ -1,0 +1,108 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "_beat": "C — Reveal mechanism (WARM). mechanism (dominant) + stat support.",
+  "media": {
+    "path": "./assets/photo-lifting.jpg",
+    "type": "image",
+    "tag": "bg_photo",
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1.08,
+    "z": 0
+  },
+  "fixedDesign": [
+    {
+      "id": "wash",
+      "tag": "protect_gradient",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.7) 0%, rgba(10,11,13,0.35) 40%, rgba(10,11,13,0.55) 70%, rgba(10,11,13,0.9) 100%)",
+      "z": 5
+    },
+    {
+      "id": "strip",
+      "tag": "accent_strip",
+      "type": "rect",
+      "x": 0,
+      "y": 1890,
+      "width": 1080,
+      "height": 30,
+      "fill": "#c4141d",
+      "z": 15
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "role": "eyebrow",
+      "x": 80,
+      "y": 210,
+      "width": 920,
+      "text": "// WHY EFFORT ALONE STALLS",
+      "fontSize": 30,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 600,
+      "color": "#c4141d",
+      "letterSpacing": "0.15em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 10px rgba(0,0,0,0.9)",
+      "z": 25
+    },
+    {
+      "id": "mechanism",
+      "tag": "headline",
+      "role": "mechanism",
+      "x": 70,
+      "y": 296,
+      "width": 970,
+      "text": "IT'S NOT MORE REPS.\nIT'S THE RIGHT ONES —\nMEASURED.",
+      "fontSize": 92,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.98,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "whiteSpace": "pre-wrap",
+      "textShadow": "0 4px 22px rgba(0,0,0,0.9)",
+      "z": 30
+    },
+    {
+      "id": "stat",
+      "tag": "stat",
+      "role": "stat",
+      "x": 80,
+      "y": 1240,
+      "width": 920,
+      "text": "EVERY REP TRACKED · 90-DAY DATA",
+      "fontSize": 38,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#ffffff",
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)",
+      "z": 30
+    },
+    {
+      "id": "brand",
+      "tag": "brand_name",
+      "role": "brand",
+      "x": 80,
+      "y": 1792,
+      "width": 920,
+      "text": "ATHLETES ACCELERATION",
+      "fontSize": 34,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "letterSpacing": "0.02em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 10px rgba(0,0,0,0.9)",
+      "z": 30
+    }
+  ]
+}

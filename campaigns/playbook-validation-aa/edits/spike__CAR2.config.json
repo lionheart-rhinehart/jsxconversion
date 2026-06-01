@@ -1,0 +1,93 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "_beat": "Carousel 2/3 — E proof.",
+  "media": {
+    "path": "./assets/swap-action-image-agility-drill-high-school-mixed-genesis-8.jpg",
+    "type": "image",
+    "tag": "bg_photo",
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1.05,
+    "z": 0
+  },
+  "fixedDesign": [
+    {
+      "id": "wash",
+      "tag": "protect_gradient",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.55) 0%, rgba(10,11,13,0.1) 30%, rgba(10,11,13,0.4) 64%, rgba(10,11,13,0.85) 100%)",
+      "z": 5
+    },
+    {
+      "id": "strip",
+      "tag": "accent_strip",
+      "type": "rect",
+      "x": 0,
+      "y": 1890,
+      "width": 1080,
+      "height": 30,
+      "fill": "#c4141d",
+      "z": 15
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "role": "eyebrow",
+      "x": 80,
+      "y": 210,
+      "width": 920,
+      "text": "// REAL 90-DAY DATA",
+      "fontSize": 30,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 600,
+      "color": "#c4141d",
+      "letterSpacing": "0.16em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 10px rgba(0,0,0,0.9)",
+      "z": 25
+    },
+    {
+      "id": "stat",
+      "tag": "stat",
+      "role": "stat",
+      "x": 80,
+      "y": 300,
+      "width": 960,
+      "text": "+4.2\" VERTICAL\n-0.4s · 40-YARD\n+25 lb · BENCH",
+      "fontSize": 96,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 800,
+      "color": "#ffffff",
+      "lineHeight": 1.04,
+      "letterSpacing": "-0.02em",
+      "whiteSpace": "pre-wrap",
+      "textShadow": "0 4px 20px rgba(0,0,0,0.9)",
+      "z": 30
+    },
+    {
+      "id": "pager",
+      "tag": "pager",
+      "role": "brand",
+      "x": 60,
+      "y": 1790,
+      "width": 960,
+      "textAlign": "right",
+      "text": "SWIPE  2 / 3  →",
+      "fontSize": 30,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#ffffff",
+      "letterSpacing": "0.1em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 10px rgba(0,0,0,0.9)",
+      "z": 30
+    }
+  ]
+}

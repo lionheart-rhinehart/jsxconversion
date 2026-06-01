@@ -55,7 +55,13 @@
       "z": 20,
       "lineHeight": 0.9,
       "letterSpacing": "-0.02em",
-      "textTransform": "uppercase"
+      "textTransform": "uppercase",
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "brand"
+      ],
+      "maxChars": 12
     },
     {
       "id": "city_2",
@@ -72,7 +78,13 @@
       "z": 21,
       "lineHeight": 0.9,
       "letterSpacing": "-0.02em",
-      "textTransform": "uppercase"
+      "textTransform": "uppercase",
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "brand"
+      ],
+      "maxChars": 12
     },
     {
       "id": "city_3",
@@ -89,7 +101,13 @@
       "z": 22,
       "lineHeight": 0.9,
       "letterSpacing": "-0.02em",
-      "textTransform": "uppercase"
+      "textTransform": "uppercase",
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "brand"
+      ],
+      "maxChars": 12
     },
     {
       "id": "attention",
@@ -104,7 +122,12 @@
       "z": 60,
       "lineHeight": 1,
       "letterSpacing": "-0.01em",
-      "textTransform": "uppercase"
+      "textTransform": "uppercase",
+      "role": "hook",
+      "accepts": [
+        "hook"
+      ],
+      "maxChars": 14
     },
     {
       "id": "subhead",
@@ -119,7 +142,13 @@
       "z": 61,
       "lineHeight": 1,
       "letterSpacing": "-0.01em",
-      "textTransform": "uppercase"
+      "textTransform": "uppercase",
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "eyebrow"
+      ],
+      "maxChars": 35
     },
     {
       "id": "microscript",
@@ -134,7 +163,14 @@
       "z": 62,
       "fontWeight": 600,
       "letterSpacing": "0.04em",
-      "textTransform": "uppercase"
+      "textTransform": "uppercase",
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 27
     }
   ]
 }

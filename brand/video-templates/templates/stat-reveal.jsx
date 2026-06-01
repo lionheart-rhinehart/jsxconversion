@@ -139,36 +139,44 @@ const STAT_REVEAL_SPEC = {
   },
   {
     "key": "eyebrow",
+
+    "role": "eyebrow",
     "label": "Eyebrow tag",
     "type": "text",
     "default": "90-DAY GUARANTEE"
   },
   {
     "key": "title1",
+
+    "role": "claim",
     "label": "Title line 1",
     "type": "text",
     "default": "WE GUARANTEE"
   },
   {
     "key": "title2",
+
+    "role": "claim",
     "label": "Title line 2 (red)",
     "type": "text",
     "default": "RESULTS."
   },
   {
     "key": "ctaText",
+
+    "role": "cta",
     "label": "CTA text",
     "type": "text",
     "default": "BOOK YOUR FREE ASSESSMENT"
   },
-  { "key": "stat1Value", "label": "Stat 1 — number", "type": "number", "default": 1 },
-  { "key": "stat1Unit",  "label": "Stat 1 — unit",   "type": "text",   "default": " MPH" },
-  { "key": "stat1Label", "label": "Stat 1 — label",  "type": "text",   "default": "SPEED" },
-  { "key": "stat2Value", "label": "Stat 2 — number", "type": "number", "default": 3 },
-  { "key": "stat2Unit",  "label": "Stat 2 — unit",   "type": "text",   "default": "\"" },
-  { "key": "stat2Label", "label": "Stat 2 — label",  "type": "text",   "default": "VERTICAL" },
-  { "key": "freeLine1",  "label": "Free line 1",     "type": "text",   "default": "OR IT'S" },
-  { "key": "freeLine2",  "label": "Free line 2 (red)","type": "text",  "default": "FREE." }
+  { "key": "stat1Value", "role": "stat", "label": "Stat 1 — number", "type": "number", "default": 1 },
+  { "key": "stat1Unit",  "role": "stat", "label": "Stat 1 — unit",   "type": "text",   "default": " MPH" },
+  { "key": "stat1Label", "role": "stat", "label": "Stat 1 — label",  "type": "text",   "default": "SPEED" },
+  { "key": "stat2Value", "role": "stat", "label": "Stat 2 — number", "type": "number", "default": 3 },
+  { "key": "stat2Unit",  "role": "stat", "label": "Stat 2 — unit",   "type": "text",   "default": "\"" },
+  { "key": "stat2Label", "role": "stat", "label": "Stat 2 — label",  "type": "text",   "default": "VERTICAL" },
+  { "key": "freeLine1",  "role": "guarantee", "label": "Free line 1",     "type": "text",   "default": "OR IT'S" },
+  { "key": "freeLine2",  "role": "guarantee", "label": "Free line 2 (red)","type": "text",  "default": "FREE." }
 ],
 };
 window.STAT_REVEAL_SPEC = STAT_REVEAL_SPEC;

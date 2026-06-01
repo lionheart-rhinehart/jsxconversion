@@ -215,12 +215,16 @@
 // review.html is served by brand/video-templates/serve.mjs (:5599); the data
 // API + render live in editor-server (:5173). Same-origin if you ever serve
 // this from editor-server itself.
-const API = (location.port === "5599" || location.protocol === "file:")
-  ? "http://localhost:5173"
-  : "";
-const EDITOR = "http://localhost:5173"; // position editor for inline tweaks
-
 const qs = new URLSearchParams(location.search);
+// API base resolution (back-compat): explicit ?api= wins, else default to :5173
+// when served from the review server / file://, else same-origin. This lets a
+// second isolated instance run its plan API on a different port (e.g. ?api=http://localhost:5273).
+const API = qs.get("api")
+  ? qs.get("api").replace(/\/$/, "")
+  : ((location.port === "5599" || location.protocol === "file:")
+      ? "http://localhost:5173"
+      : "");
+const EDITOR = qs.get("editor") ? qs.get("editor").replace(/\/$/, "") : (API || "http://localhost:5173"); // position editor for inline tweaks
 const campaignParam = qs.get("campaign") || "";
 
 let PLAN = null;
@@ -607,17 +611,53 @@ function defaultsFromFields(fields) {
   return d;
 }
 
+// Dynamically load a motion template's component when it isn't already on
+// window. The page hardcodes <script> tags for the original bank, but
+// campaign-composed templates (e.g. fresh-e2e-*) are authored after the page
+// was built, so their window.<Comp> global doesn't exist yet → the preview
+// would hang on "Loading preview…". This fetches the template JSX, Babel-
+// transforms it (same as the hardcoded text/babel tags), and injects it as a
+// plain <script> so it self-registers its window global in the global scope.
+// Memoized per template; resolves once the global appears. Future-proofs ANY
+// new template, not just this campaign's.
+const _compLoads = {};
+function ensureComponent(template, component) {
+  if (component && window[component]) return Promise.resolve(true);
+  if (_compLoads[template]) return _compLoads[template];
+  _compLoads[template] = (async () => {
+    const url = apiBase() + "/video-templates/templates/" + template + ".jsx";
+    const src = await fetch(url).then((r) => { if (!r.ok) throw new Error("fetch " + r.status); return r.text(); });
+    if (!window.Babel) throw new Error("Babel standalone not loaded");
+    const code = window.Babel.transform(src, { presets: ["react"], filename: template + ".jsx" }).code;
+    await new Promise((resolve, reject) => {
+      const s = document.createElement("script");
+      s.text = code + "\n//# sourceURL=" + template + ".jsx";
+      s.onerror = () => reject(new Error("inject failed"));
+      document.head.appendChild(s);
+      // Synchronous <script> with inline text executes on append; resolve next tick.
+      setTimeout(resolve, 0);
+    });
+    return !!(component ? window[component] : true);
+  })().catch((e) => { delete _compLoads[template]; throw e; });
+  return _compLoads[template];
+}
+
 // Map a field key to the relevant campaign value pool (mirrors the static
 // editor's valuesForTag): eyebrow/micro-ish → microscripts, title/head-ish →
 // headlines, plus values other assets used for the exact same key.
-function valuesForKey(key, vals) {
+function valuesForKey(field, vals) {
   if (!vals) return [];
+  // Accept a field object {key,role} (preferred) or a bare key string (back-compat).
+  const role = field && typeof field === "object" ? field.role : null;
+  const key = field && typeof field === "object" ? field.key : field;
   const t = String(key || "").toLowerCase();
+  // Role-aware first: a field with a role shows that role's pool ("all hooks").
+  const roled = (role && vals.byRole && vals.byRole[role]) || [];
   let pool = [];
   if (/eyebrow|micro|byline|attribution|credential|role|label|tag/.test(t)) pool = vals.microscript || [];
   else if (/title|head|quote|claim|primary|cta|tagline|subtext|name/.test(t)) pool = vals.headline || [];
   const keyed = (vals.byKey && vals.byKey[key]) || [];
-  return [...new Set([...keyed, ...pool])];
+  return [...new Set([...roled, ...keyed, ...pool])];
 }
 
 // Quick-swap: per copy field, a dropdown of campaign values to drop in.
@@ -632,7 +672,7 @@ function CampaignSwap({ fields, setField, campaign }) {
   if (!vals) return null;
   const rows = (fields || [])
     .filter((f) => f.type === "text" || f.type === "textarea")
-    .map((f) => ({ f, opts: valuesForKey(f.key, vals) }))
+    .map((f) => ({ f, opts: valuesForKey(f, vals) }))
     .filter((r) => r.opts.length);
   if (!rows.length) return null;
   return (
@@ -812,6 +852,7 @@ function VideoEditModal({ angleId, assetId, onClose }) {
       .then((j) => setBank(j.templates || [])).catch(() => {});
   }, []);
 
+  const [compReady, setCompReady] = useState(0); // bump to re-render once a lazily-loaded component registers
   useEffect(() => {
     if (!template) { setSpec(null); return; }
     let live = true;
@@ -821,6 +862,13 @@ function VideoEditModal({ angleId, assetId, onClose }) {
       // Carry existing copy by matching key (best-match), seed new keys from
       // defaults; unknown old keys are ignored by the component (no silent loss).
       setData((prev) => ({ ...defaultsFromFields(j.fields), ...prev }));
+      // Lazily load the component if its window global isn't registered yet
+      // (campaign-composed templates aren't in the page's hardcoded script list).
+      if (j.component && !window[j.component]) {
+        ensureComponent(j.template || template, j.component)
+          .then(() => { if (live) setCompReady((n) => n + 1); })
+          .catch((e) => { if (live) { console.error("template load failed:", e); setCompReady((n) => n + 1); } });
+      }
     }).catch(() => { if (live) setSpec({ fields: [], component: null }); });
     return () => { live = false; };
   }, [template]);

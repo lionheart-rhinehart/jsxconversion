@@ -32,8 +32,10 @@ import {
 import { resolve, join, dirname } from "node:path";
 import { spawn, spawnSync } from "node:child_process";
 import {
-  emitVariant, renderJsx, resolveStaticConfig,
+  emitVariant, renderJsx, resolveStaticConfig, buildCopyByRole,
 } from "./lib/fill-core.mjs";
+import { assemble } from "./lib/assemble.mjs";
+import { fieldRole } from "./lib/roles.mjs";
 
 const PROJECT_ROOT = resolve(".");
 const CAMPAIGNS_DIR = join(PROJECT_ROOT, "campaigns");
@@ -41,7 +43,7 @@ const TEMPLATE_DIR = join(PROJECT_ROOT, "templates/multi-sport-foundations");
 const VIDEO_DIR = join(PROJECT_ROOT, "brand/video-templates");
 const OUT_DIR = join(PROJECT_ROOT, "out");
 const RENDERER = ".claude/skills/jsx-to-mp4/scripts/render.mjs";
-const SERVER = "http://localhost:5173";
+const SERVER = process.env.EDITOR_SERVER || `http://localhost:${process.env.EDITOR_PORT || 5173}`;
 
 // ── CLI ─────────────────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
@@ -135,12 +137,22 @@ function buildMotionData(asset, dataKeys) {
   if (asset.templateData && typeof asset.templateData === "object") {
     data = { ...asset.templateData };
   } else {
-    if (asset.microscript && dataKeys.includes("eyebrow")) data.eyebrow = asset.microscript;
-    if (asset.headline) {
-      const target =
-        dataKeys.find((k) => /^(headline|title1|quote|primaryText|claim|coachName)$/i.test(k)) ||
-        dataKeys.find((k) => k !== "eyebrow");
-      if (target) data[target] = asset.headline;
+    // Role-aware JOIN: infer each field's role from its name, then match the
+    // asset's copy (headline routed by beat, microscript → reframe) to fields by
+    // role — replacing the old hardcoded regex guess.
+    const slots = dataKeys.map((k) => ({ id: k, role: fieldRole(k), accepts: [] }));
+    if (slots.some((s) => s.role)) {
+      const { bySlotId } = assemble({ slots, copyByRole: buildCopyByRole(asset) });
+      data = { ...bySlotId };
+    } else {
+      // Fallback for templates with no role-ish field names.
+      if (asset.microscript && dataKeys.includes("eyebrow")) data.eyebrow = asset.microscript;
+      if (asset.headline) {
+        const target =
+          dataKeys.find((k) => /^(headline|title1|quote|primaryText|claim|coachName)$/i.test(k)) ||
+          dataKeys.find((k) => k !== "eyebrow");
+        if (target) data[target] = asset.headline;
+      }
     }
   }
   if (dataKeys.length) {

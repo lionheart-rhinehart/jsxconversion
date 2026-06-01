@@ -114,24 +114,32 @@ const LOGO_STING_SPEC = {
   },
   {
     "key": "wordmark1",
+
+    "role": "brand",
     "label": "Wordmark (white)",
     "type": "text",
     "default": "ATHLETES"
   },
   {
     "key": "wordmark2",
+
+    "role": "brand",
     "label": "Wordmark (red)",
     "type": "text",
     "default": "ACCELERATION"
   },
   {
     "key": "tagline",
+
+    "role": "claim",
     "label": "Tagline",
     "type": "text",
     "default": "THE DRIVE IS THEIRS. WE BUILD THE ATHLETE."
   },
   {
     "key": "url",
+
+    "role": "byline",
     "label": "URL",
     "type": "text",
     "default": "ATHLETESACCEL.COM"

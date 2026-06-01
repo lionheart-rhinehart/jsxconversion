@@ -50,12 +50,12 @@
         "brand",
         "offer"
       ],
-      "maxChars": 17,
+      "maxChars": 48,
       "label": "FOUNDATIONAL (arched, glow)",
       "x": 0,
       "y": 110,
       "width": 1080,
-      "text": "FOUNDATIONAL",
+      "text": "GETTING FASTER? OR JUST MORE TIRED?",
       "fontSize": 158,
       "arch": 1.5,
       "glow": true,
@@ -70,7 +70,7 @@
         "brand",
         "claim"
       ],
-      "maxChars": 10,
+      "maxChars": 36,
       "label": "PROGRAM (arched low, glow)",
       "x": 0,
       "y": 1240,
@@ -89,7 +89,7 @@
       "accepts": [
         "brand"
       ],
-      "maxChars": 8,
+      "maxChars": 12,
       "label": "YOUTH (red, skewed)",
       "x": 0,
       "y": 1180,
@@ -115,13 +115,13 @@
         "eyebrow",
         "proof"
       ],
-      "maxChars": 27,
+      "maxChars": 40,
       "label": "Microscript",
       "x": 60,
       "y": 1628,
       "width": 960,
       "textAlign": "center",
-      "text": "{{MICRO - SCRIPTS}}",
+      "text": "THE LAST REP LIE",
       "fontSize": 32,
       "fontFamily": "JetBrains Mono",
       "fontWeight": 600,

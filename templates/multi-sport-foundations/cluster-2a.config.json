@@ -57,7 +57,14 @@
       "z": 31,
       "lineHeight": 0.92,
       "letterSpacing": "-0.02em",
-      "textTransform": "uppercase"
+      "textTransform": "uppercase",
+      "role": "brand",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand"
+      ],
+      "maxChars": 17
     },
     {
       "id": "headline_mid",
@@ -73,7 +80,12 @@
       "lineHeight": 0.9,
       "letterSpacing": "-0.01em",
       "fontStyle": "italic",
-      "textTransform": "uppercase"
+      "textTransform": "uppercase",
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 8
     },
     {
       "id": "headline_bot",
@@ -88,7 +100,13 @@
       "z": 32,
       "lineHeight": 0.92,
       "letterSpacing": "-0.02em",
-      "textTransform": "uppercase"
+      "textTransform": "uppercase",
+      "role": "brand",
+      "accepts": [
+        "brand",
+        "claim"
+      ],
+      "maxChars": 10
     },
     {
       "id": "microscript",
@@ -103,7 +121,14 @@
       "z": 40,
       "fontWeight": 600,
       "letterSpacing": "0.04em",
-      "textTransform": "uppercase"
+      "textTransform": "uppercase",
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 27
     }
   ]
 }

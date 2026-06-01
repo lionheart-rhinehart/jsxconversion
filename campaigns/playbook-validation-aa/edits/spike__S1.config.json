@@ -1,0 +1,91 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "_beat": "A — Stop the scroll (COLD). Just the hook + brand.",
+  "media": {
+    "path": "./assets/hero-sprint-male.jpg",
+    "type": "image",
+    "tag": "bg_photo",
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1.05,
+    "z": 0
+  },
+  "fixedDesign": [
+    {
+      "id": "wash",
+      "tag": "protect_gradient",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.55) 0%, rgba(10,11,13,0.05) 32%, rgba(10,11,13,0.10) 64%, rgba(10,11,13,0.82) 100%)",
+      "z": 5
+    },
+    {
+      "id": "strip",
+      "tag": "accent_strip",
+      "type": "rect",
+      "x": 0,
+      "y": 1890,
+      "width": 1080,
+      "height": 30,
+      "fill": "#c4141d",
+      "z": 15
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "role": "eyebrow",
+      "x": 80,
+      "y": 196,
+      "width": 920,
+      "text": "// YOUTH SPEED · AGES 8-18",
+      "fontSize": 28,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 600,
+      "color": "#c4141d",
+      "letterSpacing": "0.16em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 10px rgba(0,0,0,0.85)",
+      "z": 20
+    },
+    {
+      "id": "hook",
+      "tag": "headline",
+      "role": "hook",
+      "x": 70,
+      "y": 272,
+      "width": 970,
+      "text": "STILL TRAINING\nHARD BUT NOT\nGETTING FASTER?",
+      "fontSize": 104,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.98,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "whiteSpace": "pre-wrap",
+      "textShadow": "0 4px 24px rgba(0,0,0,0.88), 0 0 40px rgba(0,0,0,0.5)",
+      "z": 25
+    },
+    {
+      "id": "brand",
+      "tag": "brand_name",
+      "role": "brand",
+      "x": 80,
+      "y": 1792,
+      "width": 920,
+      "text": "ATHLETES ACCELERATION",
+      "fontSize": 34,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "letterSpacing": "0.02em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 10px rgba(0,0,0,0.9)",
+      "z": 30
+    }
+  ]
+}

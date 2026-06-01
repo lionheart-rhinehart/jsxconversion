@@ -687,14 +687,19 @@
     // Map a layer's field name to the relevant value pool: microscript-ish tags
     // → all microscripts, title/headline-ish → all headlines, plus any values
     // other assets used for the exact same key; fall back to everything.
-    function valuesForTag(tag, vals) {
+    function valuesForTag(el, vals) {
       if (!vals) return [];
+      // Accept an element {role,tag} (preferred) or a bare tag string (back-compat).
+      const role = el && typeof el === 'object' ? el.role : null;
+      const tag = el && typeof el === 'object' ? el.tag : el;
       const t = String(tag || '').toLowerCase();
+      // Role-aware first: a slot with a role shows that role's pool ("all hooks").
+      const roled = (role && vals.byRole && vals.byRole[role]) || [];
       let pool = [];
       if (/eyebrow|micro|byline|attribution|credential|role|label|tag/.test(t)) pool = vals.microscript || [];
       else if (/title|head|quote|claim|primary|cta|tagline|subtext|name/.test(t)) pool = vals.headline || [];
       const keyed = (vals.byKey && vals.byKey[tag]) || [];
-      const merged = [...new Set([...keyed, ...pool])];
+      const merged = [...new Set([...roled, ...keyed, ...pool])];
       return merged.length ? merged : (vals.all || []);
     }
     async function populateTextSwap(el) {
@@ -705,7 +710,7 @@
       const def = document.createElement('option');
       def.value = ''; def.textContent = '— campaign copy —';
       sel.appendChild(def);
-      for (const v of valuesForTag(el.tag, vals)) {
+      for (const v of valuesForTag(el, vals)) {
         const o = document.createElement('option');
         o.value = v;                                   // full value (preserves \n)
         o.textContent = v.length > 60 ? v.slice(0, 57) + '…' : v;
@@ -1966,7 +1971,7 @@
           renderStage();
         });
         row.appendChild(ta);
-        const opts = valuesForTag(el.tag, vals);
+        const opts = valuesForTag(el, vals);
         if (opts.length) {
           const sel = document.createElement('select');
           const def = document.createElement('option');

@@ -73,7 +73,15 @@
       "textTransform": "uppercase",
       "transform": "scaleX(0.75)",
       "transformOrigin": "center",
-      "z": 10
+      "z": 10,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 17
     },
     {
       "id": "headline_youth",
@@ -92,7 +100,15 @@
       "textTransform": "uppercase",
       "transform": "scaleX(0.75)",
       "transformOrigin": "center",
-      "z": 11
+      "z": 11,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 8
     },
     {
       "id": "headline_program",
@@ -112,7 +128,15 @@
       "transform": "scaleX(0.70)",
       "transformOrigin": "center",
       "textShadow": "3px 3px 4px rgba(0,0,0,0.25)",
-      "z": 12
+      "z": 12,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 10
     },
     {
       "id": "panel_title",
@@ -131,7 +155,13 @@
       "textTransform": "uppercase",
       "transform": "scaleX(0.73)",
       "transformOrigin": "center",
-      "z": 8
+      "z": 8,
+      "role": "claim",
+      "accepts": [
+        "claim",
+        "hook"
+      ],
+      "maxChars": 10
     },
     {
       "id": "panel_microscripts",
@@ -150,7 +180,14 @@
       "textTransform": "uppercase",
       "transform": "scaleX(0.84)",
       "transformOrigin": "center",
-      "z": 8
+      "z": 8,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 24
     }
   ]
 }
