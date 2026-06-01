@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-01T16:52:34.536Z",
+  "generatedAt": "2026-06-01T18:29:08.541Z",
   "note": "Role-index for playbook-driven template selection. Regenerate with: node scripts/build-template-index.mjs",
   "templates": {
     "cluster-1": {
@@ -381,6 +381,69 @@
         "proof"
       ],
       "slotCount": 3
+    },
+    "fresh-multisport-foundations-grind-trap-E2": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "stat",
+        "proof",
+        "claim",
+        "brand"
+      ],
+      "accepts": [
+        "eyebrow",
+        "proof",
+        "stat",
+        "claim",
+        "byline",
+        "reframe",
+        "brand"
+      ],
+      "slotCount": 8
+    },
+    "fresh-multisport-foundations-grind-trap-E3": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "byline",
+        "proof",
+        "claim",
+        "brand"
+      ],
+      "accepts": [
+        "eyebrow",
+        "proof",
+        "byline",
+        "claim",
+        "reframe",
+        "brand"
+      ],
+      "slotCount": 7
+    },
+    "fresh-multisport-foundations-grind-trap-F2": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "offer",
+        "guarantee",
+        "cta",
+        "brand"
+      ],
+      "accepts": [
+        "eyebrow",
+        "proof",
+        "offer",
+        "claim",
+        "reframe",
+        "guarantee",
+        "cta",
+        "brand"
+      ],
+      "slotCount": 6
     },
     "logo-sting": {
       "format": "video",

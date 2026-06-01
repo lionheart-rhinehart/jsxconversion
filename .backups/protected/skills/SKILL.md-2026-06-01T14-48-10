@@ -47,28 +47,17 @@ already exists on disk for the campaign and resumes from there.
 
 ## The flow
 
-### Step 1 — Brand + Kraken (workspace → source media)
+### Step 1 — Brand
 Ask: **"What's the brand?"** Resolve it against
 `.claude/skills/creative-engine/config.json` → `brands[<slug>]`. That gives:
+- the **Kraken** raw-media folder: `<krakenRoot>/<krakenSubfolder>` (images/clips/
+  videos — pulled at CREATION time, not now);
 - the **data tier** for the cascade fill (`data/brand.<dataTier>.json`);
 - the brand kit path (read it before composing anything fresh).
 
-Then resolve **The Kraken Content Library** (raw source media lives there — a Supabase
-store, NOT local folders; connector is `scripts/lib/kraken.mjs`):
-1. **Ask which AA LOCATION this campaign is for.** AA is multi-location — Indy/Carmel/
-   Noblesville/Westfield/Milford each map to a DIFFERENT workspace in
-   `~/.claude/client-workspaces.json` (bare `athletes-acceleration` → Milford). Never assume
-   Genesis. The location decides the whole library you read and write.
-2. **Pick the SOURCE folder.** Run `node scripts/kraken-pull.mjs <campaign> --workspace <loc>`.
-   With no `--folder` it prints that workspace's live folder list and exits — show it to the
-   user and ask which folder holds the raw media, then re-run with `--folder "<name>"`. It
-   caches the media into `brand/kraken-cache/` and saves the picks to
-   `campaigns/<name>/kraken.json`.
-
-Pulled media appears in the editor `/media` picker (motion) and via `/media-into-template`
-(statics) for **hand placement** — pulling surfaces media, it does not auto-place it, and does
-not auto-clear `needs-kraken-path` (a human placement does). If the brand is unknown, ask for
-its slug + data tier and add it to `config.json`.
+If `krakenRoot` is null, ask for the local Kraken folder path and write it back to
+`config.json`. If the brand is unknown, ask for its slug + Kraken subfolder + data
+tier and add it to `config.json`.
 
 ### Step 2 — Collect inputs
 Ensure `campaigns/<name>/` contains: `brief.md` (reverse brief), `ad-copy.md`,
@@ -142,16 +131,6 @@ ignore the gate). It renders approved assets, writes
 `out/campaigns/<name>/<angle>/<id>.<ext>`, patches each card's status/thumb (the
 page updates live), and emits `manifest.json`. While it runs in the background,
 return to Step 4 for the next angle.
-
-### Step 7 — Export to The Kraken (after render)
-Push the rendered creatives into a **destination folder** in the Content Library
-(same workspace as the source). Run `node scripts/kraken-export.mjs <name>` — with no
-`--folder` it prints the live folder list and exits; show it, ask which folder is the
-DESTINATION, then re-run with `--folder "<name>"`. **Run `--dry-run` first** (it reports the
-push set + resolved workspace UUID, writing nothing). The exporter dedups on the
-(campaign, angle, asset) triple (safe to re-run), attaches a video thumbnail, assigns the
-folder, and writes `asset.kraken = {id,url,folder}` back into the plan. The workspace/folder
-picks persist in `campaigns/<name>/kraken.json`.
 
 ## Dispatch (which renderer per asset)
 - `template` + `static` → `fill-core` cascade fill → static render (PNG).

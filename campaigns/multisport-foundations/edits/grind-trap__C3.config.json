@@ -1,0 +1,106 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "photo_top",
+      "tag": "bg_photo",
+      "label": "Soccer girls field photo (top half)",
+      "type": "image",
+      "src": "./assets/cluster-15-background-top.jpg",
+      "x": -407,
+      "y": -3,
+      "width": 1764,
+      "height": 1174,
+      "objectFit": "cover",
+      "z": 1
+    },
+    {
+      "id": "photo_bottom",
+      "tag": "bg_photo_2",
+      "label": "Indoor turf training photo (bottom half)",
+      "type": "image",
+      "src": "./assets/cluster-15-background-bottom.jpg",
+      "x": -177,
+      "y": 960,
+      "width": 1436,
+      "height": 960,
+      "objectFit": "cover",
+      "z": 2
+    }
+  ],
+  "elements": [
+    {
+      "id": "headline_foundational",
+      "tag": "title",
+      "label": "FOUNDATIONAL",
+      "x": 0,
+      "y": 738,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "FOUNDATIONAL",
+      "fontSize": 140,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 1,
+      "letterSpacing": "0.01em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 17
+    },
+    {
+      "id": "headline_youth_program",
+      "tag": "title_2",
+      "label": "YOUTH PROGRAM",
+      "x": 0,
+      "y": 930,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "YOUTH PROGRAM",
+      "fontSize": 140,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 1,
+      "letterSpacing": "0.01em",
+      "textTransform": "uppercase",
+      "z": 21,
+      "role": "claim",
+      "accepts": [
+        "claim",
+        "brand"
+      ],
+      "maxChars": 19
+    },
+    {
+      "id": "microscript",
+      "tag": "microscript",
+      "label": "Microscript line (bottom)",
+      "x": 0,
+      "y": 1742,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "MEASURED, NOT GUESSED",
+      "fontSize": 30,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 400,
+      "color": "#ffffff",
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "z": 22,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 27
+    }
+  ]
+}

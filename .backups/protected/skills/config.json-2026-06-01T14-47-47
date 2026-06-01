@@ -16,7 +16,8 @@
       "slug": "athletes-acceleration",
       "aliases": ["athletes acceleration", "aa", "genesis", "genesis sports performance"],
       "dataTier": "athletes-acceleration",
-      "brandKit": "brand/aa-design-system/project/README.md"
+      "brandKit": "brand/aa-design-system/project/README.md",
+      "krakenSubfolder": "athletes-acceleration"
     }
   }
 }

@@ -15,7 +15,8 @@ and it renders the approved ones in the background while you move to the next an
 
 ```
 /creative-engine
-  1. BRAND      → resolve Kraken\<brand> (raw media) + data tier + brand kit
+  1. BRAND      → pick AA LOCATION → Kraken workspace; pull SOURCE-folder raw media
+                  (kraken-pull.mjs → brand/kraken-cache/) + data tier + brand kit
   2. INTAKE     → campaigns/<name>/{brief.md, ad-copy.md, microscripts.md, named templates}
   3. DEEP READ  → 1 sub-agent per doc/section → campaign-knowledge.json (quoted, auditable)
   4. PLAN       → creative-plan.json (angles × assets: format, source, copy, microscript, image, flags)
@@ -23,8 +24,13 @@ and it renders the approved ones in the background while you move to the next an
   6. RENDER     → run-campaign.mjs: approved only, background, render-then-move
                   → out/campaigns/<name>/<angle>/<id>.<ext> + manifest.json
                   → good fresh assets ⇒ promote into the bank
+  7. EXPORT     → kraken-export.mjs: push rendered creatives into the chosen
+                  DESTINATION folder in the Kraken Content Library (idempotent)
   └─ while rendering, loop back to step 4 for the next angle
 ```
+
+The Kraken (per-AA-location workspace + source/destination folders) is chosen **per
+run** and saved to `campaigns/<name>/kraken.json` — not hardcoded.
 
 ## Components (what does what)
 
@@ -36,6 +42,9 @@ and it renders the approved ones in the background while you move to the next an
 | Static fill core | `scripts/lib/fill-core.mjs` | Cascade + substitution + variant-emit + render. Shared by CLI + runner. |
 | Single-template CLI | `scripts/fill-template.mjs` | Thin CLI over fill-core. |
 | Campaign runner | `scripts/run-campaign.mjs` | Renders approved assets; render-then-move; gif post-step; manifest. |
+| Kraken connector | `scripts/lib/kraken.mjs` | Supabase Content-Library client (PostgREST + Storage + ingest edge fn); workspace resolve; creds from Kraken `.env.local`. |
+| Kraken pull | `scripts/kraken-pull.mjs` | Caches a source-folder's raw media into `brand/kraken-cache/` for hand placement. |
+| Kraken export | `scripts/kraken-export.mjs` | Pushes rendered creatives into a destination Content-Library folder (dedup + folder PATCH). |
 | Review API | `scripts/editor-server.mjs` (:5173) | `/plan`, `/plan/:campaign/:angle/:asset` (single writer), `/render`, static `/out`. |
 | Review page | `brand/video-templates/review.html` (:5599 via `serve.mjs`) | Card grid by angle→beat; badges; dashboard; approve/note/edit. |
 | Position editor | `out/editor/editor.html` (:5173) | Hand-tweak layer positions for `cluster-*` statics. |
@@ -68,7 +77,9 @@ campaign}.<name>.json`, each `{ "tags": { <tag>: <value> } }`.
 ```
 
 ## Image sources (the four)
-1. **library** — curated brand media in `Kraken\<brand>\…`.
+1. **library** — raw media in The Kraken **Content Library** (Supabase, per-AA-location
+   workspace). Pulled at intake into `brand/kraken-cache/` via `kraken-pull.mjs` and placed
+   by hand in the editor (`/media` picker for motion; `/media-into-template` swap for statics).
 2. **client** — campaign/location-specific media the client supplies.
 3. **jsx-render** — render a sub-template to PNG, then use it as another creative's
    image layer (compositional). Memoized; cycle-guarded.

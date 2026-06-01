@@ -1,0 +1,124 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "bg_photo",
+      "tag": "bg_photo",
+      "label": "Track photo (darkened/desaturated)",
+      "type": "image",
+      "src": "./assets/cluster-12-background.jpg",
+      "x": -1335,
+      "y": -42,
+      "width": 2864,
+      "height": 2358,
+      "filter": "grayscale(0.55) brightness(0.62) contrast(0.98)",
+      "z": 1
+    },
+    {
+      "id": "photo_tint",
+      "tag": "brand_tint",
+      "label": "Dark tint over photo",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "rgba(0,0,0,0.32)",
+      "z": 2
+    },
+    {
+      "id": "bubble",
+      "tag": "speech_bubble",
+      "label": "Green speech bubble (border + tail)",
+      "type": "image",
+      "src": "./assets/cluster-12-bubble.png",
+      "x": 88,
+      "y": 732,
+      "width": 959,
+      "height": 728,
+      "objectFit": "contain",
+      "z": 10
+    }
+  ],
+  "elements": [
+    {
+      "id": "watermark",
+      "tag": "microscript",
+      "label": "Tiled microscript watermark (background)",
+      "x": 34,
+      "y": 12,
+      "width": 1080,
+      "textAlign": "left",
+      "text": "EVERY REP STAYS FAST",
+      "repeat": 14,
+      "fontSize": 120,
+      "fontFamily": "Anton",
+      "color": "rgba(240,240,240,0.5)",
+      "lineHeight": 1.2,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "whiteSpace": "pre",
+      "textShadow": "0 0 16px rgba(255,255,255,0.3)",
+      "z": 3,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 27
+    },
+    {
+      "id": "headline",
+      "tag": "title",
+      "label": "PARENTS IN PORTLAND",
+      "x": 57,
+      "y": 784,
+      "width": 959,
+      "textAlign": "center",
+      "text": "PARENTS IN\nPORTLAND",
+      "fontSize": 148,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.9,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "whiteSpace": "pre-line",
+      "textShadow": "0 0 28px rgba(255,255,255,0.85), 0 0 60px rgba(255,255,255,0.55)",
+      "z": 20,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 27
+    },
+    {
+      "id": "microscript",
+      "tag": "microscript",
+      "label": "Microscript line",
+      "x": 62,
+      "y": 1100,
+      "width": 959,
+      "textAlign": "center",
+      "text": "AGES 8-18 · FORT WAYNE, IN",
+      "fontSize": 36,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#f0f0f0",
+      "letterSpacing": "0.02em",
+      "textTransform": "uppercase",
+      "z": 21,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 27
+    }
+  ]
+}

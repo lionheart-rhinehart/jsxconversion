@@ -41,11 +41,15 @@ const DATA_DIR = join(PROJECT_ROOT, "data");
 const VIDEO_DIR = join(PROJECT_ROOT, "brand/video-templates");
 const VIDEO_TEMPLATES_DIR = join(VIDEO_DIR, "templates");
 // Brand media library — photos/clips/audio selectable in the video edit pickers.
+// brand/kraken-cache holds raw media pulled from The Kraken Content Library
+// (scripts/kraken-pull.mjs) — kept FLAT because the /media route reads each root
+// with a single non-recursive readdirSync.
 const MEDIA_ROOTS = [
   join(PROJECT_ROOT, "brand/aa-design-system/project/uploads"),
   join(PROJECT_ROOT, "brand/aa-design-system/project/assets"),
   join(VIDEO_DIR, "assets"),
   join(PROJECT_ROOT, "music-library"),
+  join(PROJECT_ROOT, "brand/kraken-cache"),
 ];
 const PHOTO_EXT = new Set([".jpg", ".jpeg", ".png", ".webp"]);
 const CLIP_EXT = new Set([".mp4", ".mov", ".webm"]);
@@ -307,6 +311,7 @@ const server = createServer(async (req, res) => {
     const ALLOWED = [
       "status", "notes", "flags", "headline", "microscript", "output", "thumb",
       "editedAt", "renderedAt", "templateData", "clip", "photo", "audio", "template",
+      "kraken", // Content-Library writeback from kraken-export.mjs ({id,url,folder})
     ];
     for (const k of ALLOWED) if (k in patch) asset[k] = patch[k];
     writeFileSync(p, JSON.stringify(plan, null, 2));
