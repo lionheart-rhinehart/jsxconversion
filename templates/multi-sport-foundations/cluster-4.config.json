@@ -96,7 +96,15 @@
       "letterSpacing": "-0.01em",
       "textTransform": "uppercase",
       "whiteSpace": "pre-line",
-      "z": 20
+      "z": 20,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 37
     },
     {
       "id": "microscript",
@@ -111,7 +119,14 @@
       "color": "#ffffff",
       "letterSpacing": "0.04em",
       "textTransform": "uppercase",
-      "z": 21
+      "z": 21,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 27
     },
     {
       "id": "brand_name",
@@ -125,7 +140,12 @@
       "color": "#ffffff",
       "letterSpacing": "-0.01em",
       "textTransform": "uppercase",
-      "z": 22
+      "z": 22,
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 30
     }
   ]
 }

@@ -1,0 +1,239 @@
+{
+  "key": "10-microscripts",
+  "section": "Micro-Scripts (5 DSIs)",
+  "sourceFile": "campaigns/creative-engine-e2e-test-aa/microscripts.md",
+  "dsis": [
+    {
+      "id": "dsi:1-grind-trap",
+      "name": "THE GRIND TRAP",
+      "statement": "Conventional youth speed training doesn't just fail to develop faster athletes — it actively programs slower movement patterns into the nervous system. Every rep performed past the velocity drop threshold is teaching the body to move slowly. The harder athletes grind, the more precisely they install the slow pattern as default.",
+      "sourceLines": "L25-L29"
+    },
+    {
+      "id": "dsi:2-measurement-advantage",
+      "name": "THE MEASUREMENT ADVANTAGE",
+      "statement": "The Velocity Code™ is the only youth performance program in Hamilton County that measures explosive output on every rep with professional-grade technology — tracking bar velocity to 0.01 m/s, sprint speed to 0.001 seconds, and jump output to the centimeter — making it the only program where improvement is provable rather than claimed. Everyone else is watching. We are measuring.",
+      "sourceLines": "L85-L89"
+    },
+    {
+      "id": "dsi:3-developmental-window",
+      "name": "THE DEVELOPMENTAL WINDOW",
+      "statement": "Ages 8–12 is the single highest-return period in athletic development — the window where the nervous system is actively forming foundational speed and movement patterns for the next 20 years of athletic life. After puberty, that process shifts from formation to correction. Formation and correction are not equivalent. Every month of this window spent in a program that can't measure velocity is a month that cannot be recovered.",
+      "sourceLines": "L145-L149"
+    },
+    {
+      "id": "dsi:4-written-guarantee",
+      "name": "THE WRITTEN GUARANTEE",
+      "statement": "The Velocity Code™ is the only youth performance program in Hamilton County with a written performance contract: +1 mph sprint speed improvement and +3 inches of vertical jump improvement in 90 days — or training continues at no additional cost until both benchmarks are achieved. This guarantee exists not as a marketing device but as the logical output of a system that measures everything. We guarantee it because we measure it.",
+      "sourceLines": "L205-L209"
+    },
+    {
+      "id": "dsi:5-confidence-built-on-proof",
+      "name": "CONFIDENCE BUILT ON PROOF",
+      "statement": "The primary outcome delivered by The Velocity Code™ is not speed — it is a specific, durable form of confidence that no competitor can produce: confidence built on irrefutable objective data. When an athlete's bar speed moves from 0.72 to 0.89 m/s over eight weeks, that is not encouragement. It is a permanent, verifiable fact the athlete owns forever — and the only kind of confidence that survives competition pressure, bad games, and skeptical teammates.",
+      "sourceLines": "L265-L269"
+    }
+  ],
+  "items": [
+    {
+      "id": "microscript:dsi1-1",
+      "type": "microscript",
+      "dsi": "dsi:1-grind-trap",
+      "text": "The tired rep isn't effort. It's instruction.",
+      "sourceLines": "L45",
+      "notes": "Nine-word counterintuitive contrast (it's not X, it's Y); reframes the sideline 'hard work' image as instruction to be slower; conversation-reproducible."
+    },
+    {
+      "id": "microscript:dsi1-2",
+      "type": "microscript",
+      "dsi": "dsi:1-grind-trap",
+      "text": "The harder they grind, the deeper the slow groove.",
+      "sourceLines": "L53",
+      "notes": "Activates vinyl-record groove metaphor; attaches consequence (slow groove) to the virtue (grind) for productive dissonance; alliteration makes it sticky."
+    },
+    {
+      "id": "microscript:dsi1-3",
+      "type": "microscript",
+      "dsi": "dsi:1-grind-trap",
+      "text": "'Push through it' programs exactly one thing: slow.",
+      "sourceLines": "L61",
+      "notes": "Names the ubiquitous coaching phrase, creating a recognition trigger at every practice; verdict structure; high word-of-mouth potential."
+    },
+    {
+      "id": "microscript:dsi1-4",
+      "type": "microscript",
+      "dsi": "dsi:1-grind-trap",
+      "text": "Working harder is writing slower code.",
+      "sourceLines": "L69",
+      "notes": "Software metaphor for an affluent, tech-adjacent audience; harder-equals-slower paradox drives sharing; one-line rebuttal to 'he just needs to work harder.'"
+    },
+    {
+      "id": "microscript:dsi1-5",
+      "type": "microscript",
+      "dsi": "dsi:1-grind-trap",
+      "text": "They're not falling behind. Their training is pushing them back.",
+      "sourceLines": "L77",
+      "notes": "Emotional close for DSI 1; flips passive 'falling behind' to active external culprit; ends parent guilt — the Away-From relief moment."
+    },
+    {
+      "id": "microscript:dsi2-1",
+      "type": "microscript",
+      "dsi": "dsi:2-measurement-advantage",
+      "text": "No sensor. No proof. Just a coach's opinion.",
+      "sourceLines": "L105",
+      "notes": "Three-beat verdict reducing the alternative to subjectivity; precise rather than angry; works as comparison, headline, and sideline closer."
+    },
+    {
+      "id": "microscript:dsi2-2",
+      "type": "microscript",
+      "dsi": "dsi:2-measurement-advantage",
+      "text": "We measure to the hundredth. Everyone else guesses.",
+      "sourceLines": "L113",
+      "notes": "Specificity ('the hundredth') establishes precision and reveals the gap; 'guesses' matches the parent's own vocabulary; ad/headline/conversation ready."
+    },
+    {
+      "id": "microscript:dsi2-3",
+      "type": "microscript",
+      "dsi": "dsi:2-measurement-advantage",
+      "text": "Speed claimed isn't speed. Speed measured is.",
+      "sourceLines": "L121",
+      "notes": "Parallel construction = highly repeatable; category divider sorting all programs into measured vs unmeasured without naming a competitor."
+    },
+    {
+      "id": "microscript:dsi2-4",
+      "type": "microscript",
+      "dsi": "dsi:2-measurement-advantage",
+      "text": "Ask your coach for the number. We'll write ours down.",
+      "sourceLines": "L129",
+      "notes": "Action micro-script with embedded challenge + confidence close; prompts an independent test parents are likely to run and find confirming."
+    },
+    {
+      "id": "microscript:dsi2-5",
+      "type": "microscript",
+      "dsi": "dsi:2-measurement-advantage",
+      "text": "They watch your child train. We measure what actually happens.",
+      "sourceLines": "L137",
+      "notes": "Watching-vs-measuring gap in human terms; 'what actually happens' is relief language and implies prior programs reported something else, without accusing."
+    },
+    {
+      "id": "microscript:dsi3-1",
+      "type": "microscript",
+      "dsi": "dsi:3-developmental-window",
+      "text": "The speed window is open right now. It closes at puberty.",
+      "sourceLines": "L165",
+      "notes": "Factually complete in eleven words; 'right now' makes it urgent present-tense; absence of hype sounds like a doctor, not a marketer."
+    },
+    {
+      "id": "microscript:dsi3-2",
+      "type": "microscript",
+      "dsi": "dsi:3-developmental-window",
+      "text": "Form it now, or spend years correcting it.",
+      "sourceLines": "L173",
+      "notes": "Now/years binary is temporal and economic; 'form' vs 'correcting' verbs; standalone billboard requiring no context."
+    },
+    {
+      "id": "microscript:dsi3-3",
+      "type": "microscript",
+      "dsi": "dsi:3-developmental-window",
+      "text": "At age 9, the nervous system is writing blueprints. Not refinements.",
+      "sourceLines": "L181",
+      "notes": "Blueprint/construction metaphor; 'not refinements' = work now can't be replicated later at same return; better for long-form than cold hook."
+    },
+    {
+      "id": "microscript:dsi3-4",
+      "type": "microscript",
+      "dsi": "dsi:3-developmental-window",
+      "text": "They only build the foundation once.",
+      "sourceLines": "L189",
+      "notes": "Six words, universal; 'only once' is scarcity without manufactured pressure; sounds like common sense, highly repeatable in word-of-mouth."
+    },
+    {
+      "id": "microscript:dsi3-5",
+      "type": "microscript",
+      "dsi": "dsi:3-developmental-window",
+      "text": "After puberty, you rewrite. Before, you write. These are not the same job.",
+      "sourceLines": "L197",
+      "notes": "Intellectual version for the analytical parent; rewrite/write distinction; matter-of-fact-competence tone often more persuasive at Stage 3–4."
+    },
+    {
+      "id": "microscript:dsi4-1",
+      "type": "microscript",
+      "dsi": "dsi:4-written-guarantee",
+      "text": "+1 mph. +3 inches. 90 days. In writing.",
+      "sourceLines": "L225",
+      "notes": "Pure specificity, no metaphor; four real data points contrast the industry's vague vocabulary; four-beat rhythm is memorable and repeatable."
+    },
+    {
+      "id": "microscript:dsi4-2",
+      "type": "microscript",
+      "dsi": "dsi:4-written-guarantee",
+      "text": "Miss the number, train free until we don't.",
+      "sourceLines": "L233",
+      "notes": "Consequence clause in plain language; commitment with a defined endpoint; confident tone ('we don't' implies eventual success); spoken-not-written authenticity."
+    },
+    {
+      "id": "microscript:dsi4-3",
+      "type": "microscript",
+      "dsi": "dsi:4-written-guarantee",
+      "text": "A number. In writing. Before you spend a dollar.",
+      "sourceLines": "L241",
+      "notes": "Mirrors the sales process; 'before you spend a dollar' is max trust-building for a burned market; three-beat rhythm aids recall."
+    },
+    {
+      "id": "microscript:dsi4-4",
+      "type": "microscript",
+      "dsi": "dsi:4-written-guarantee",
+      "text": "We guarantee it because we measure it.",
+      "sourceLines": "L249",
+      "notes": "Explanation micro-script answering 'why would they guarantee that?'; implies non-guaranteers don't measure — implied accusation, parent reaches it independently."
+    },
+    {
+      "id": "microscript:dsi4-5",
+      "type": "microscript",
+      "dsi": "dsi:4-written-guarantee",
+      "text": "Ask them for the guarantee number. Then ask us for ours.",
+      "sourceLines": "L257",
+      "notes": "Competitive challenge as fair-witness invitation; 'ask them' first respects existing relationships; welcoming comparison is itself a trust signal."
+    },
+    {
+      "id": "microscript:dsi5-1",
+      "type": "microscript",
+      "dsi": "dsi:5-confidence-built-on-proof",
+      "text": "'Great job' disappears. A velocity PR is forever.",
+      "sourceLines": "L285",
+      "notes": "Maximum, personal contrast praise vs data; 'disappears' is the exact word; permanent recorded measurement the athlete owns; works in any context."
+    },
+    {
+      "id": "microscript:dsi5-2",
+      "type": "microscript",
+      "dsi": "dsi:5-confidence-built-on-proof",
+      "text": "We don't tell them they're improving. We show them the number.",
+      "sourceLines": "L293",
+      "notes": "Show/tell trust mechanism implying competitors only tell; 'the number' is general yet implies a precise figure exists; parent-repeatable."
+    },
+    {
+      "id": "microscript:dsi5-3",
+      "type": "microscript",
+      "dsi": "dsi:5-confidence-built-on-proof",
+      "text": "One number no bad game, no cut, no coach can take away.",
+      "sourceLines": "L301",
+      "notes": "Speaks to the emotional nadir; lists specific confidence threats (bad game/cut/coach), all subjective; a velocity PR is immune to each."
+    },
+    {
+      "id": "microscript:dsi5-4",
+      "type": "microscript",
+      "dsi": "dsi:5-confidence-built-on-proof",
+      "text": "Data-proof confidence survives what praise never can.",
+      "sourceLines": "L309",
+      "notes": "'Data-proof' compound carries the mechanism; praise has a ceiling (pressure, adversity, others' opinions); intellectual yet warm; headline/caption/spoken."
+    },
+    {
+      "id": "microscript:dsi5-5",
+      "type": "microscript",
+      "dsi": "dsi:5-confidence-built-on-proof",
+      "text": "42 out of 63 parents said confidence first. More than speed.",
+      "sourceLines": "L317",
+      "notes": "Social-proof micro-script as a ratio; precise numbers read as reported fact; 'more than speed' is the unexpected closer reflecting the real purchase."
+    }
+  ]
+}

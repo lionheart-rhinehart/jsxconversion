@@ -54,15 +54,69 @@ function DidYouKnowReel({ data = {} }) {
 }
 window.DidYouKnowReel = DidYouKnowReel;
 const DID_YOU_KNOW_SPEC = { id:'did-you-know', name:'DID YOU KNOW', fields:[
-  {key:'duration',label:'Length',type:'slider',default:7,min:4,max:15,step:0.5,unit:'s'},
-  {key:'eyebrow',label:'Eyebrow',type:'text',default:'DID YOU KNOW'},
-  {key:'factPrefix',label:'Fact prefix',type:'text',default:'YOUTH ATHLETES WHO LIFT'},
-  {key:'factBig',label:'Big phrase',type:'text',default:'4× PER WEEK'},
-  {key:'factSuffix',label:'Fact suffix',type:'text',default:'CUT INJURY RISK BY'},
-  {key:'factPercent',label:'Percent/headline',type:'text',default:'68%'},
-  {key:'sourceLabel',label:'Source label',type:'text',default:'SOURCE'},
-  {key:'source',label:'Source',type:'text',default:'BR J SPORTS MED · META-ANALYSIS 2024'},
-  {key:'insight',label:'Insight',type:'textarea',default:'Strong tissue handles stress. Untrained tissue breaks.'},
-  {key:'ctaText',label:'CTA',type:'text',default:'BUILD YOUR ARMOR →'},
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "DID YOU KNOW"
+  },
+  {
+    "key": "factPrefix",
+    "label": "Fact prefix",
+    "type": "text",
+    "default": "YOUTH ATHLETES WHO LIFT"
+  },
+  {
+    "key": "factBig",
+    "label": "Big phrase",
+    "type": "text",
+    "default": "4× PER WEEK"
+  },
+  {
+    "key": "factSuffix",
+    "label": "Fact suffix",
+    "type": "text",
+    "default": "CUT INJURY RISK BY"
+  },
+  {
+    "key": "factPercent",
+    "label": "Percent/headline",
+    "type": "text",
+    "default": "68%"
+  },
+  {
+    "key": "sourceLabel",
+    "label": "Source label",
+    "type": "text",
+    "default": "SOURCE"
+  },
+  {
+    "key": "source",
+    "label": "Source",
+    "type": "text",
+    "default": "BR J SPORTS MED · META-ANALYSIS 2024"
+  },
+  {
+    "key": "insight",
+    "label": "Insight",
+    "type": "textarea",
+    "default": "Strong tissue handles stress. Untrained tissue breaks."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "BUILD YOUR ARMOR →"
+  }
 ]};
 window.DID_YOU_KNOW_SPEC = DID_YOU_KNOW_SPEC;

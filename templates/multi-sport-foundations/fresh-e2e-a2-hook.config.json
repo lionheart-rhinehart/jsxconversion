@@ -1,0 +1,71 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/hero-sprint-male.jpg",
+    "type": "image",
+    "tag": "bg_photo",
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1,
+    "z": 0
+  },
+  "fixedDesign": [
+    {
+      "id": "protect_gradient",
+      "tag": "protect_gradient",
+      "label": "Dark protection gradient (bottom-weighted for lone-hook)",
+      "type": "rect",
+      "x": 0, "y": 0, "width": 1080, "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.35) 0%, rgba(10,11,13,0) 30%, rgba(10,11,13,0.5) 62%, rgba(10,11,13,0.92) 100%)",
+      "z": 5
+    },
+    {
+      "id": "bottom_strip",
+      "tag": "accent_strip",
+      "label": "Bottom red strip",
+      "type": "rect",
+      "x": 0, "y": 1890, "width": 1080, "height": 30,
+      "fill": "#c4141d",
+      "z": 50
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Eyebrow chip (red bg, per playbook)",
+      "x": 64, "y": 1180,
+      "text": "  THE LAST REP LIE  ",
+      "fontSize": 34,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#ffffff",
+      "background": "#c4141d",
+      "padding": "10px 16px",
+      "letterSpacing": "0.12em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": ["eyebrow"],
+      "maxChars": 24
+    },
+    {
+      "id": "hook",
+      "tag": "hook",
+      "label": "Lone hook (lower-third over gradient)",
+      "x": 64, "y": 1270, "width": 952,
+      "text": "Your kid's training is working perfectly. The problem is what it's teaching.",
+      "fontSize": 92,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.98,
+      "letterSpacing": "-0.01em",
+      "textShadow": "0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)",
+      "z": 30,
+      "role": "hook",
+      "accepts": ["hook", "claim", "reframe"],
+      "maxChars": 100
+    }
+  ]
+}

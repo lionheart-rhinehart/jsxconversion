@@ -6,14 +6,57 @@ const MEMBER_MILESTONE_SPEC = {
   id: 'member-milestone',
   name: 'MEMBER MILESTONE',
   fields: [
-    { key: 'duration', label: 'Length',    type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow',  label: 'Eyebrow',   type: 'text',   default: 'CONSISTENCY WINS' },
-    { key: 'count',    label: 'Count',     type: 'number', default: 100, min: 1, step: 1, sub: 'counts up to this' },
-    { key: 'label',    label: 'Count label', type: 'text', default: 'SESSIONS LOGGED' },
-    { key: 'name',     label: 'Name',      type: 'text',   default: 'DEVIN CARTER' },
-    { key: 'note',     label: 'Note',      type: 'text',   default: 'Showed up. Did the work. Every single time.' },
-    { key: 'photo',    label: 'Photo (bg)', type: 'image', default: 'assets/photo-lifting.jpg', sub: 'shown dimmed behind' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "CONSISTENCY WINS"
+  },
+  {
+    "key": "count",
+    "label": "Count",
+    "type": "number",
+    "default": 100,
+    "min": 1,
+    "step": 1,
+    "sub": "counts up to this"
+  },
+  {
+    "key": "label",
+    "label": "Count label",
+    "type": "text",
+    "default": "SESSIONS LOGGED"
+  },
+  {
+    "key": "name",
+    "label": "Name",
+    "type": "text",
+    "default": "DEVIN CARTER"
+  },
+  {
+    "key": "note",
+    "label": "Note",
+    "type": "text",
+    "default": "Showed up. Did the work. Every single time."
+  },
+  {
+    "key": "photo",
+    "label": "Photo (bg)",
+    "type": "image",
+    "default": "assets/photo-lifting.jpg",
+    "sub": "shown dimmed behind"
+  }
+],
 };
 
 function MemberMilestoneReel({ data = {} }) {

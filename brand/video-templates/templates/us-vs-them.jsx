@@ -40,17 +40,85 @@ function UsVsThemReel({ data = {} }) {
 }
 window.UsVsThemReel = UsVsThemReel;
 const US_VS_THEM_SPEC = { id:'us-vs-them', name:'US VS THEM', fields:[
-  {key:'duration',label:'Length',type:'slider',default:7,min:4,max:15,step:0.5,unit:'s'},
-  {key:'eyebrow',label:'Eyebrow',type:'text',default:'THE DIFFERENCE'},
-  {key:'title1',label:'Title 1',type:'text',default:'AVG SENIOR.'},
-  {key:'title2',label:'Title 2 (red)',type:'text',default:'AA SENIOR.'},
-  {key:'metric',label:'Metric label',type:'text',default:'40 YD DASH · 12-MONTH AVG'},
-  {key:'leftLabel',label:'Left label',type:'text',default:'NO TRAINING'},
-  {key:'rightLabel',label:'Right label',type:'text',default:'WITH AA'},
-  {key:'leftValue',label:'Left value',type:'number',default:5.62,step:0.01,min:0},
-  {key:'rightValue',label:'Right value',type:'number',default:4.91,step:0.01,min:0},
-  {key:'unit',label:'Unit',type:'text',default:'s'},
-  {key:'insight',label:'Insight',type:'textarea',default:'Same age. Same school. Different system.'},
-  {key:'ctaText',label:'CTA',type:'text',default:'BUILD YOUR DIFFERENCE →'},
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "THE DIFFERENCE"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "AVG SENIOR."
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "AA SENIOR."
+  },
+  {
+    "key": "metric",
+    "label": "Metric label",
+    "type": "text",
+    "default": "40 YD DASH · 12-MONTH AVG"
+  },
+  {
+    "key": "leftLabel",
+    "label": "Left label",
+    "type": "text",
+    "default": "NO TRAINING"
+  },
+  {
+    "key": "rightLabel",
+    "label": "Right label",
+    "type": "text",
+    "default": "WITH AA"
+  },
+  {
+    "key": "leftValue",
+    "label": "Left value",
+    "type": "number",
+    "default": 5.62,
+    "step": 0.01,
+    "min": 0
+  },
+  {
+    "key": "rightValue",
+    "label": "Right value",
+    "type": "number",
+    "default": 4.91,
+    "step": 0.01,
+    "min": 0
+  },
+  {
+    "key": "unit",
+    "label": "Unit",
+    "type": "text",
+    "default": "s"
+  },
+  {
+    "key": "insight",
+    "label": "Insight",
+    "type": "textarea",
+    "default": "Same age. Same school. Different system."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "BUILD YOUR DIFFERENCE →"
+  }
 ]};
 window.US_VS_THEM_SPEC = US_VS_THEM_SPEC;

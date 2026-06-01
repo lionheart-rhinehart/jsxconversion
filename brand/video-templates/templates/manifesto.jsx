@@ -97,15 +97,67 @@ const MANIFESTO_SPEC = {
   id: 'manifesto',
   name: 'MANIFESTO',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 8, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow tag', type: 'text', default: 'OUR MANIFESTO' },
-    { key: 'line1', label: 'Line 1', type: 'text', default: 'TALENT IS GIVEN.' },
-    { key: 'line2', label: 'Line 2', type: 'text', default: 'WORK ETHIC IS CHOSEN.' },
-    { key: 'line3', label: 'Line 3', type: 'text', default: 'THE EDGE IS BUILT.' },
-    { key: 'line4', label: 'Line 4', type: 'text', default: 'WE BUILD EDGES.' },
-    { key: 'accentLine', label: 'Accent line (1–4)', type: 'number', default: 4, step: 1, min: 1, max: 4 },
-    { key: 'ctaText', label: 'CTA text', type: 'text', default: 'BUILD YOURS WITH US →' },
-    { key: 'media', label: 'Background photo/video', type: 'image', default: 'assets/photo-lifting.jpg' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 8,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow tag",
+    "type": "text",
+    "default": "OUR MANIFESTO"
+  },
+  {
+    "key": "line1",
+    "label": "Line 1",
+    "type": "text",
+    "default": "TALENT IS GIVEN."
+  },
+  {
+    "key": "line2",
+    "label": "Line 2",
+    "type": "text",
+    "default": "WORK ETHIC IS CHOSEN."
+  },
+  {
+    "key": "line3",
+    "label": "Line 3",
+    "type": "text",
+    "default": "THE EDGE IS BUILT."
+  },
+  {
+    "key": "line4",
+    "label": "Line 4",
+    "type": "text",
+    "default": "WE BUILD EDGES."
+  },
+  {
+    "key": "accentLine",
+    "label": "Accent line (1–4)",
+    "type": "number",
+    "default": 4,
+    "step": 1,
+    "min": 1,
+    "max": 4
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA text",
+    "type": "text",
+    "default": "BUILD YOURS WITH US →"
+  },
+  {
+    "key": "media",
+    "label": "Background photo/video",
+    "type": "image",
+    "default": "assets/photo-lifting.jpg"
+  }
+],
 };
 window.MANIFESTO_SPEC = MANIFESTO_SPEC;

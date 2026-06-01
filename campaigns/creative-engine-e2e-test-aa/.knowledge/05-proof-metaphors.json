@@ -1,0 +1,245 @@
+{
+  "key": "05-proof-metaphors",
+  "sections": ["Testable Proof", "Metaphors", "UMS Proof"],
+  "sourceFile": "campaigns/creative-engine-e2e-test-aa/brief.md",
+  "items": [
+    {
+      "id": "testable:three-questions-test",
+      "type": "testable-claim",
+      "text": "Test 1 — The Three Questions Test: \"Try this. Ask your child's current coach three questions: One — what is my child's current peak sprint velocity? Two — what is their vertical jump height today? Three — what will those numbers be in 90 days? If they can't answer all three with a specific number — they're not measuring. And if they're not measuring, how do you know it's working?\"",
+      "sourceLines": "L176-177",
+      "notes": "Reader-validated test"
+    },
+    {
+      "id": "testable:sprint-timer-test",
+      "type": "testable-claim",
+      "text": "Test 2 — The Sprint Timer Test: \"Time your child in a 30-yard sprint right now. Write down the number. Then ask their current coach what that number will be in 90 days. If they can't give you a number — or won't commit to one — that tells you everything about whether they're measuring or just showing up. We'll give you a number. And we'll guarantee it.\"",
+      "sourceLines": "L179-180",
+      "notes": "30-yard sprint; 90 days"
+    },
+    {
+      "id": "testable:end-of-session-observation",
+      "type": "testable-claim",
+      "text": "Test 3 — The End-of-Session Observation: \"Watch your child at their next training session. Specifically, watch the last few reps of every drill. Are they moving at the same speed as the first rep? Or have they slowed down? If they're slower — and the set continues anyway — you are watching the mechanism. Those slow reps aren't effort. They're instruction. The nervous system is being taught: this is how fast we move. That's not a theory. That's exactly why your athlete can train for six months and stay at the same speed.\"",
+      "sourceLines": "L182-183",
+      "notes": "six months / same speed"
+    },
+    {
+      "id": "testable:readiness-test",
+      "type": "testable-claim",
+      "text": "Test 4 — The Readiness Test: \"Before your child's next session, notice this: does anyone check whether your athlete is actually ready to produce explosive output before the first rep begins? Not a general warmup. A readiness check. A measurement. If the answer is no — and at virtually every facility you've tried, it will be no — then every session has been starting without verifying that explosive output is even possible that day.\"",
+      "sourceLines": "L185-186",
+      "notes": "readiness check vs general warmup"
+    },
+    {
+      "id": "testable:fatigue-recognition-test",
+      "type": "testable-claim",
+      "text": "Test 5 — The Fatigue Recognition Test (from Quiz 4): \"Here's a test you can run yourself. Watch the last rep of any set your athlete does. Now ask: was that rep performed at the same velocity as the first rep? If the answer is no — and it almost always is — then the nervous system just received instruction to encode the slower version as its new movement standard. That's not a coaching failure. That's a physics problem. And physics is solved with a velocity tracker, not another lap.\"",
+      "sourceLines": "L188-189",
+      "notes": "references a velocity tracker; from Quiz 4"
+    },
+    {
+      "id": "metaphor:tired-recording",
+      "type": "metaphor",
+      "text": "Metaphor 1 — The Tired Recording (Primary, most versatile): \"The nervous system is a recording device. Whatever speed a movement happens at — that's what gets recorded. Not the speed you intended. Not the speed you were trying to achieve. The speed that actually happened. Play it back under game pressure: you get the recording. When athletes train through fatigue and their movement slows, the recording says: this is how fast we move. Those last tired reps aren't just wasted effort. They're data being written to the wrong file.\"",
+      "sourceLines": "L195-196",
+      "notes": "Illustrates: nervous system records actual movement speed; recording device / wrong file"
+    },
+    {
+      "id": "metaphor:wrong-groove-vinyl",
+      "type": "metaphor",
+      "text": "Metaphor 2 — The Wrong Groove (vinyl record): \"Every repeated movement at a given speed carves a groove — a physical pattern in the nervous system. The more reps at that speed, the deeper the groove. The deeper the groove, the more default the movement becomes. Tired reps carve slow grooves. Do enough tired reps and the slow groove becomes the deepest one — the first one the nervous system returns to when the game is on the line.\"",
+      "sourceLines": "L198-199",
+      "notes": "Illustrates: repeated tired reps carve a slow default movement pattern; vinyl groove"
+    },
+    {
+      "id": "metaphor:wrong-blueprint",
+      "type": "metaphor",
+      "text": "Metaphor 3 — The Wrong Blueprint: \"A blueprint drawn by an exhausted architect. Every structural decision made in a state of fatigue, every measurement taken when nothing was precise. Then the building goes up exactly as the blueprint says — including every flawed specification. That's what training through velocity degradation does. The nervous system takes its blueprint from the movements it executes most frequently. Execute them slowly and the blueprint says: build this slow. The building follows the blueprint every time.\"",
+      "sourceLines": "L201-202",
+      "notes": "Illustrates: nervous system builds from its most frequent movements; blueprint / exhausted architect"
+    },
+    {
+      "id": "metaphor:wrong-software-slow-code",
+      "type": "metaphor",
+      "text": "Metaphor 4 — The Wrong Software (Slow Code): \"Think of the nervous system like code. Whatever speed a rep happens at — that's the code that gets written. Tired reps write slow code. And slow code doesn't care how hard the programmer was working. The output is determined by what's written, not by the effort applied during writing. Your athlete has been running on code that was written during the slowest reps of the longest sessions. We rewrite the code. Slowly doesn't have to be default.\"",
+      "sourceLines": "L204-205",
+      "notes": "Illustrates: output determined by what is written not effort applied; software/code"
+    },
+    {
+      "id": "metaphor:water-cutting-canyon",
+      "type": "metaphor",
+      "text": "Metaphor 5 — Water Cutting a Canyon: \"Water cutting a canyon doesn't ask permission. It doesn't announce itself. It just flows, rep after rep, session after session, following the lowest path — which in this case is the path of least resistance: the slow movement pattern. The more it flows down the slow groove, the deeper that groove gets. The deeper the groove, the more natural the slow movement becomes. By the time you notice the canyon, years of slow reps have carved it. We're here to cut a new channel.\"",
+      "sourceLines": "L207-208",
+      "notes": "Illustrates: slow patterns carved invisibly over years via path of least resistance; water/canyon"
+    },
+    {
+      "id": "metaphor:exhausted-musician",
+      "type": "metaphor",
+      "text": "Metaphor 6 — The Exhausted Musician (practicing the wrong note): \"Imagine a musician practicing a wrong note thousands of times. They don't get better at the piece. They get better at playing the wrong note. Perfectly. Every time. Under any conditions. Under performance pressure — when it matters most — they play the wrong note with maximum precision and commitment. That's exactly what happens when athletes train through fatigue. They get very, very good at performing at the speed they practiced. Which is the speed of a tired athlete.\"",
+      "sourceLines": "L210-211",
+      "notes": "Illustrates: practice perfects whatever you repeat, including the wrong/slow version; musician/wrong note"
+    },
+    {
+      "id": "metaphor:agility-ladder-athletes",
+      "type": "metaphor",
+      "text": "Metaphor 7 — The Agility Ladder Producing Agility Ladder Athletes: \"Walk into any youth speed facility in the country and you'll see the agility ladder. Kids moving their feet through the rungs — fast, then faster, then slower as the reps accumulate. Here's the exact truth that nobody says out loud: agility ladders produce great agility ladder athletes. The neuromuscular pattern required to move feet through ladder rungs on the ground is different from the pattern required to accelerate through the first ten yards of a sprint. Related. Not the same. The visual of training is not the output of training. The ladder teaches the ladder. Speed is something else.\"",
+      "sourceLines": "L213-214",
+      "notes": "Illustrates: specificity — visual of training is not output of training; agility ladder vs first ten yards of a sprint"
+    },
+    {
+      "id": "metaphor:the-drain",
+      "type": "metaphor",
+      "text": "Metaphor 8 — The Drain: \"Every parent thinks they're paying to fill the speed tank. More sessions, more conditioning, more reps — filling it up. Here's what nobody shows them: there's a drain at the bottom of every program that doesn't monitor velocity. And every rep performed past the velocity threshold opens the drain a little wider. You've been paying to fill a tank with a drain in it. The filling is real. The draining is real. The net result is what you've been watching — the same speed, month after month, regardless of how much gets poured in.\"",
+      "sourceLines": "L216-217",
+      "notes": "Illustrates: reps past velocity threshold drain gains; tank with a drain"
+    },
+    {
+      "id": "metaphor:trap-set-by-grind-culture",
+      "type": "metaphor",
+      "text": "Metaphor 9 — The Trap Set by Grind Culture: \"A trap is designed to catch you using the path that looks like the right one. Grind culture set this trap in youth sports decades ago. Work harder. Push through. Never quit. The path looked right. It IS right for building character, for building endurance, for building a thousand things. But for building explosive speed in the developing nervous system — it's the trap. And the harder your athlete runs into it, the more thoroughly it catches them.\"",
+      "sourceLines": "L219-220",
+      "notes": "Illustrates: grind culture is right for character/endurance but a trap for explosive speed; trap"
+    },
+    {
+      "id": "metaphor:stamped-document",
+      "type": "metaphor",
+      "text": "Metaphor 10 — The Stamped Document: \"When the body is in a fatigued state — when the material is soft — every movement leaves a stamp. Whatever the stamp says, the tissue remembers. Training through fatigue leaves a tired stamp. 'Slow.' Pressed into the nervous system's movement library at exactly the moment when the material is most receptive to being marked. The problem isn't the athlete. It's what the program is stamping.\"",
+      "sourceLines": "L222-223",
+      "notes": "Illustrates: fatigue makes nervous system receptive to encoding 'slow'; stamp on soft material"
+    },
+    {
+      "id": "metaphor:sprint-debt",
+      "type": "metaphor",
+      "text": "Metaphor 11 — The Sprint Debt: \"Every fatigued rep doesn't just fail to build speed. It creates speed debt. A small negative entry in the account. Accumulated over sessions, weeks, months of 'push through' training — the debt compounds. Your athlete doesn't just start at zero. They may be starting in the red. Before we can build speed, we may need to pay off the debt that conventional training accumulated.\"",
+      "sourceLines": "L225-226",
+      "notes": "Illustrates: fatigued reps create compounding negative balance; debt/account in the red"
+    },
+    {
+      "id": "metaphor:rust-under-paint",
+      "type": "metaphor",
+      "text": "Metaphor 12 — Rust Forming Under Paint: \"You can't see it happening. The surface looks fine. The training looks like training. The effort looks like effort. The coach looks satisfied. But underneath, rep by rep, the slow patterns are being laid down — invisibly, incrementally, in proportion to every fatigued set that continued past the threshold. By the time you see the damage on the surface, it's been forming underneath for months.\"",
+      "sourceLines": "L228-229",
+      "notes": "Illustrates: damage forms invisibly beneath a fine-looking surface; rust under paint"
+    },
+    {
+      "id": "proof:wang-2026-frontiers-physiology",
+      "type": "study",
+      "text": "\"In a 2026 peer-reviewed study on adolescent sprinters, the group using a 10% velocity loss threshold — the EXACT protocol used in The Velocity Code™ — showed a 224% GREATER improvement in vertical jump compared to the high-volume group. They achieved this with 28% less total training stress. Less fatigue. Less soreness. More than triple the results. Meanwhile, the high-volume group — training the way most programs train — saw their fast-twitch muscle fibers begin to shift toward SLOWER fiber types.\" (Wang et al. 2026, Frontiers in Physiology — Verified)",
+      "sourceLines": "L632",
+      "notes": "Wang et al. 2026, Frontiers in Physiology, Verified. 10% velocity loss threshold; 224% greater vertical jump improvement; 28% less total training stress"
+    },
+    {
+      "id": "proof:pareja-blanco-2017-sjmss",
+      "type": "study",
+      "text": "\"A landmark study found that the velocity-monitored group performed 40% FEWER repetitions yet achieved 146% GREATER jump improvement — AND preserved their fast-twitch speed fibers. The high-rep group actually LOST their fastest muscle fibers. Type IIX converted to Type IIA. Measured under a microscope. Permanent. Training to exhaustion didn't just fail to help. It altered muscle fiber composition toward slower performance.\" (Pareja-Blanco et al. 2017, SJMSS — Verified)",
+      "sourceLines": "L634",
+      "notes": "Pareja-Blanco et al. 2017, SJMSS, Verified. 40% fewer reps; 146% greater jump improvement; Type IIX -> Type IIA"
+    },
+    {
+      "id": "proof:lloyd-2016-jscr",
+      "type": "study",
+      "text": "\"NSCA Long-Term Athlete Development researcher Dr. Rhodri Lloyd proved something counterintuitive: pre-pubescent children respond BETTER to structured training than older teenagers. Not equally. Better. The younger group showed significantly greater improvements in speed and jump height than post-pubescent adolescents doing the EXACT same program.\" (Lloyd et al. 2016, JSCR — Verified, specific figures require full-text confirmation)",
+      "sourceLines": "L636",
+      "notes": "Lloyd et al. 2016, JSCR, Verified (specific figures require full-text confirmation). NSCA LTAD researcher Dr. Rhodri Lloyd; pre-pubescent respond better than post-pubescent"
+    },
+    {
+      "id": "proof:bogdanis-2019-sports-basel",
+      "type": "study",
+      "text": "\"A randomized controlled trial on 50 children, ages 7–9, found a large, statistically significant improvement in sprint speed (d=1.14, p=0.011) after just 8 weeks of structured plyometric training, twice per week. The control group showed no sprint improvement. These children didn't have different genetics. They had a different training stimulus. Still think +1 mph in 90 days sounds aggressive? The research says it might actually be conservative.\" (Bogdanis et al. 2019, Sports (Basel) — Verified)",
+      "sourceLines": "L638",
+      "notes": "Bogdanis et al. 2019, Sports (Basel), Verified. 50 children ages 7-9; d=1.14, p=0.011; 8 weeks plyometric, twice per week"
+    },
+    {
+      "id": "proof:ma-2025-jssm",
+      "type": "study",
+      "text": "\"A 2025 meta-analysis found that combining plyometrics WITH resistance training produces 2.5× the vertical jump improvement of doing either one alone. The combination isn't additive — it's multiplicative.\" (Ma et al. 2025, JSSM — Verified: complex +5.0cm, plyometrics +2.0cm, resistance +2.2cm)",
+      "sourceLines": "L640",
+      "notes": "Ma et al. 2025, JSSM, Verified. 2.5x vertical jump improvement; complex +5.0cm, plyometrics +2.0cm, resistance +2.2cm"
+    },
+    {
+      "id": "proof:weakley-mann-2021-nsca",
+      "type": "study",
+      "text": "\"The National Strength and Conditioning Association published research showing that providing velocity feedback after each repetition improved 10m sprint performance (ES=0.69) and 20m sprint performance (ES=0.71) in adolescent athletes within just 4 weeks.\" (Weakley/Mann et al. 2021, NSCA Strength & Conditioning Journal — Verified)",
+      "sourceLines": "L642",
+      "notes": "Weakley/Mann et al. 2021, NSCA Strength & Conditioning Journal, Verified. 10m ES=0.69; 20m ES=0.71; 4 weeks"
+    },
+    {
+      "id": "proof:faigenbaum-myer-2010-bjsm",
+      "type": "study",
+      "text": "\"The British Journal of Sports Medicine reviewed all available prospective youth resistance training studies and found zero growth cartilage injuries under qualified supervision. Injury rates: 0.0013–0.176 per 100 participant-hours supervised resistance training. Youth rugby: 0.800 per 100 hours. Weight training accounts for 0.7% of all youth sports injuries. Football: 19%. Basketball: 15%.\" (Faigenbaum & Myer 2010, BJSM — Verified)",
+      "sourceLines": "L644",
+      "notes": "Faigenbaum & Myer 2010, BJSM, Verified. Zero growth cartilage injuries supervised; 0.0013-0.176 per 100 hrs; rugby 0.800; weight training 0.7% of injuries; football 19%; basketball 15%"
+    },
+    {
+      "id": "proof:aossm-stop-program",
+      "type": "study",
+      "text": "\"The American Orthopaedic Society for Sports Medicine found that young athletes who do NOT participate in resistance training are 2× more likely to sustain a sports injury. The most dangerous thing for your child athlete isn't weights. It's being UNTRAINED.\" (AOSSM STOP program — ⚠️ Partial — confirm primary source before publication)",
+      "sourceLines": "L646",
+      "notes": "AOSSM STOP program, Partial (confirm primary source before publication). Non-resistance-trained youth 2x more likely to be injured"
+    },
+    {
+      "id": "proof:four-orgs-endorse-resistance-training",
+      "type": "study",
+      "text": "\"Four organizations — the NSCA, the American Academy of Pediatrics, the British Journal of Sports Medicine, and the American College of Sports Medicine — all endorse supervised resistance training beginning at approximately age 7–8.\" (All four confirmed)",
+      "sourceLines": "L648",
+      "notes": "NSCA, AAP, BJSM, ACSM all endorse supervised resistance training from age 7-8. All four confirmed"
+    },
+    {
+      "id": "proof:testimonial-jennifer-feeney",
+      "type": "testimonial",
+      "text": "\"'Genesis has been a life-changing experience for my family. My boys have trained here for several years now — they LOVE it. They helped my son put on 25+ pounds for football season. The healthy way. He just accepted a D2 football scholarship offer.'\" — Jennifer Feeney (Google Review, Verified)",
+      "sourceLines": "L654",
+      "notes": "Google Review, Verified. 25+ pounds; D2 football scholarship"
+    },
+    {
+      "id": "proof:testimonial-chrissie-davis",
+      "type": "testimonial",
+      "text": "\"'My son was shy and quiet. He didn't want to be a part of any sport team. Over the time he's been at Genesis, he's become physically stronger — but more importantly, stronger as a person mentally. He now has the confidence and strength to play on a team. I'm so thankful for how they made my son feel comfortable and confident.'\" — Chrissie Davis (Google Review, Verified)",
+      "sourceLines": "L656",
+      "notes": "Google Review, Verified"
+    },
+    {
+      "id": "proof:testimonial-andy-johnson",
+      "type": "testimonial",
+      "text": "\"'We were with another facility for 2 years. After just 1 week with Genesis, my son said this was the best he'd ever had.'\" — Andy Johnson (Google Review, Verified). Two years at another program. One week here. The child knew immediately.",
+      "sourceLines": "L658",
+      "notes": "Google Review, Verified. 2 years prior facility vs 1 week here"
+    },
+    {
+      "id": "proof:testimonial-ashley-tidd",
+      "type": "testimonial",
+      "text": "\"'My 9 year old son has loved training here for the past 3 seasons. He is getting bigger, faster, and stronger!'\" — Ashley Tidd (Google Review, Verified)",
+      "sourceLines": "L660",
+      "notes": "Google Review, Verified. 9 year old; 3 seasons"
+    },
+    {
+      "id": "proof:testimonial-amy-jochem",
+      "type": "testimonial",
+      "text": "\"'My boys have loved training at Genesis. Their confidence both on and off the field has skyrocketed.'\" — Amy Jochem (Google Review, Verified)",
+      "sourceLines": "L662",
+      "notes": "Google Review, Verified"
+    },
+    {
+      "id": "proof:testimonial-amy-ray",
+      "type": "testimonial",
+      "text": "\"'My boys love going to Genesis. They feel stronger and healthier and have way more confidence. I love how fun and inclusive the coaches make it. Could not recommend more!!'\" — Amy Ray (Google Review, Verified)",
+      "sourceLines": "L664",
+      "notes": "Google Review, Verified"
+    },
+    {
+      "id": "proof:testimonial-mj-coach-validation",
+      "type": "testimonial",
+      "text": "\"Her coach calls me all the time about how strong she's gotten.\" — M.J. (testimonial reference, confirm specifics) — The external, unsolicited coach validation: the highest tribal status event for this market.",
+      "sourceLines": "L666",
+      "notes": "M.J. testimonial reference (confirm specifics). External unsolicited coach validation"
+    },
+    {
+      "id": "proof:voc-reddit-lacrosse",
+      "type": "testimonial",
+      "text": "\"I believe he gained more from that $2000 [speed/agility program] than the over $10,000 we spent sending him to club ball.\" — r/lacrosse (Reddit VOC, verbatim) — Market validation that focused development outperforms volume spending.",
+      "sourceLines": "L668",
+      "notes": "r/lacrosse Reddit VOC, verbatim. $2000 speed/agility vs $10,000 club ball"
+    }
+  ]
+}

@@ -119,22 +119,106 @@ const VOICEOVER_STACK_SPEC = {
   id: 'voiceover-stack',
   name: 'VOICEOVER STAT STACK',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 8, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow tag', type: 'text', default: 'BY THE NUMBERS' },
-    { key: 'headline', label: 'Headline', type: 'text', default: 'THIS IS WHAT WORKS.' },
-    { key: 'stat1Value', label: 'Stat 1 value', type: 'text', default: '90' },
-    { key: 'stat1Unit', label: 'Stat 1 unit', type: 'text', default: 'DAYS' },
-    { key: 'stat1Label', label: 'Stat 1 label', type: 'text', default: 'TO MEASURABLE CHANGE' },
-    { key: 'stat2Value', label: 'Stat 2 value', type: 'text', default: '4×' },
-    { key: 'stat2Unit', label: 'Stat 2 unit', type: 'text', default: 'PER WEEK' },
-    { key: 'stat2Label', label: 'Stat 2 label', type: 'text', default: 'STRUCTURED SESSIONS' },
-    { key: 'stat3Value', label: 'Stat 3 value', type: 'text', default: '+1' },
-    { key: 'stat3Unit', label: 'Stat 3 unit', type: 'text', default: 'MPH' },
-    { key: 'stat3Label', label: 'Stat 3 label', type: 'text', default: 'AVERAGE SPEED GAIN' },
-    { key: 'stat4Value', label: 'Stat 4 value', type: 'text', default: '0' },
-    { key: 'stat4Unit', label: 'Stat 4 unit', type: 'text', default: 'EXCUSES' },
-    { key: 'stat4Label', label: 'Stat 4 label', type: 'text', default: 'WE TRACK EVERYTHING' },
-    { key: 'ctaText', label: 'CTA text', type: 'text', default: 'BOOK YOUR ASSESSMENT' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 8,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow tag",
+    "type": "text",
+    "default": "BY THE NUMBERS"
+  },
+  {
+    "key": "headline",
+    "label": "Headline",
+    "type": "text",
+    "default": "THIS IS WHAT WORKS."
+  },
+  {
+    "key": "stat1Value",
+    "label": "Stat 1 value",
+    "type": "text",
+    "default": "90"
+  },
+  {
+    "key": "stat1Unit",
+    "label": "Stat 1 unit",
+    "type": "text",
+    "default": "DAYS"
+  },
+  {
+    "key": "stat1Label",
+    "label": "Stat 1 label",
+    "type": "text",
+    "default": "TO MEASURABLE CHANGE"
+  },
+  {
+    "key": "stat2Value",
+    "label": "Stat 2 value",
+    "type": "text",
+    "default": "4×"
+  },
+  {
+    "key": "stat2Unit",
+    "label": "Stat 2 unit",
+    "type": "text",
+    "default": "PER WEEK"
+  },
+  {
+    "key": "stat2Label",
+    "label": "Stat 2 label",
+    "type": "text",
+    "default": "STRUCTURED SESSIONS"
+  },
+  {
+    "key": "stat3Value",
+    "label": "Stat 3 value",
+    "type": "text",
+    "default": "+1"
+  },
+  {
+    "key": "stat3Unit",
+    "label": "Stat 3 unit",
+    "type": "text",
+    "default": "MPH"
+  },
+  {
+    "key": "stat3Label",
+    "label": "Stat 3 label",
+    "type": "text",
+    "default": "AVERAGE SPEED GAIN"
+  },
+  {
+    "key": "stat4Value",
+    "label": "Stat 4 value",
+    "type": "text",
+    "default": "0"
+  },
+  {
+    "key": "stat4Unit",
+    "label": "Stat 4 unit",
+    "type": "text",
+    "default": "EXCUSES"
+  },
+  {
+    "key": "stat4Label",
+    "label": "Stat 4 label",
+    "type": "text",
+    "default": "WE TRACK EVERYTHING"
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA text",
+    "type": "text",
+    "default": "BOOK YOUR ASSESSMENT"
+  }
+],
 };
 window.VOICEOVER_STACK_SPEC = VOICEOVER_STACK_SPEC;

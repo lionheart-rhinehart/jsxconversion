@@ -65,18 +65,87 @@ function ReferralHeroReel({ data = {} }) {
 }
 window.ReferralHeroReel = ReferralHeroReel;
 const REFERRAL_HERO_SPEC = { id:'referral-hero', name:'REFERRAL HERO', fields:[
-  {key:'duration',label:'Length',type:'slider',default:7,min:4,max:15,step:0.5,unit:'s'},
-  {key:'eyebrow',label:'Eyebrow',type:'text',default:'REFERRAL HERO'},
-  {key:'title1',label:'Title 1',type:'text',default:'BRING A FRIEND.'},
-  {key:'title2',label:'Title 2 (red)',type:'text',default:'GET A MONTH.'},
-  {key:'hero',label:'Hero name',type:'text',default:'JORDAN K.'},
-  {key:'heroMeta',label:'Hero meta',type:'text',default:'U17 · 2 REFERRALS THIS MONTH'},
-  {key:'rewardAmount',label:'Reward',type:'text',default:'FREE MONTH'},
-  {key:'rewardSub',label:'Reward sub',type:'text',default:'PER FRIEND WHO SIGNS UP'},
-  {key:'friendsLabel',label:'Friends label',type:'text',default:'FRIENDS WHO TRAIN'},
-  {key:'friend1',label:'Friend 1',type:'text',default:'TYLER S.'},
-  {key:'friend2',label:'Friend 2',type:'text',default:'MARCUS R.'},
-  {key:'ctaText',label:'CTA',type:'text',default:'GET YOUR CODE'},
-  {key:'media',label:'Background photo/video',type:'image',default:'assets/hero-sprint-male.jpg'},
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "REFERRAL HERO"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "BRING A FRIEND."
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "GET A MONTH."
+  },
+  {
+    "key": "hero",
+    "label": "Hero name",
+    "type": "text",
+    "default": "JORDAN K."
+  },
+  {
+    "key": "heroMeta",
+    "label": "Hero meta",
+    "type": "text",
+    "default": "U17 · 2 REFERRALS THIS MONTH"
+  },
+  {
+    "key": "rewardAmount",
+    "label": "Reward",
+    "type": "text",
+    "default": "FREE MONTH"
+  },
+  {
+    "key": "rewardSub",
+    "label": "Reward sub",
+    "type": "text",
+    "default": "PER FRIEND WHO SIGNS UP"
+  },
+  {
+    "key": "friendsLabel",
+    "label": "Friends label",
+    "type": "text",
+    "default": "FRIENDS WHO TRAIN"
+  },
+  {
+    "key": "friend1",
+    "label": "Friend 1",
+    "type": "text",
+    "default": "TYLER S."
+  },
+  {
+    "key": "friend2",
+    "label": "Friend 2",
+    "type": "text",
+    "default": "MARCUS R."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "GET YOUR CODE"
+  },
+  {
+    "key": "media",
+    "label": "Background photo/video",
+    "type": "image",
+    "default": "assets/hero-sprint-male.jpg"
+  }
 ]};
 window.REFERRAL_HERO_SPEC = REFERRAL_HERO_SPEC;

@@ -60,7 +60,15 @@
       "lineHeight": 1,
       "letterSpacing": "0.005em",
       "textTransform": "uppercase",
-      "z": 7
+      "z": 7,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 37
     },
     {
       "id": "track_subtitle",
@@ -78,7 +86,13 @@
       "lineHeight": 1,
       "letterSpacing": "0.02em",
       "textTransform": "uppercase",
-      "z": 8
+      "z": 8,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "eyebrow"
+      ],
+      "maxChars": 31
     },
     {
       "id": "lower_heading",
@@ -96,7 +110,13 @@
       "lineHeight": 1,
       "letterSpacing": "0.02em",
       "textTransform": "uppercase",
-      "z": 9
+      "z": 9,
+      "role": "claim",
+      "accepts": [
+        "claim",
+        "brand"
+      ],
+      "maxChars": 31
     },
     {
       "id": "microscript",
@@ -113,7 +133,14 @@
       "color": "#e8e8e8",
       "letterSpacing": "0.02em",
       "textTransform": "uppercase",
-      "z": 10
+      "z": 10,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 27
     }
   ]
 }

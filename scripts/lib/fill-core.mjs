@@ -14,6 +14,8 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { spawn } from "node:child_process";
+import { assemble } from "./assemble.mjs";
+import { BEAT_HEADLINE_ROLE, beatLetter } from "./roles.mjs";
 
 // ---------------------------------------------------------------------------
 // Data tiers
@@ -85,6 +87,69 @@ export function applySubstitutions(sourceConfig, resolved) {
 }
 
 // ---------------------------------------------------------------------------
+// Role-aware fill (copy-role schema) — id-keyed, so two slots that once
+// shared a tag can hold different copy. Falls back to the legacy tag path
+// when a config carries no `role` annotations (back-compat: untouched configs
+// render byte-identically).
+// ---------------------------------------------------------------------------
+
+// Mutate `config` in place: set each matching element's fillable field by id.
+export function applyById(config, bySlotId = {}) {
+  const walk = (arr) => {
+    for (const item of arr || []) {
+      if (item && item.id && item.id in bySlotId) fillField(item, bySlotId[item.id]);
+    }
+  };
+  walk(config.elements);
+  walk(config.fixedDesign);
+  for (const slot of ["media", "foregroundMedia"]) {
+    const m = config[slot];
+    if (m && m.id && m.id in bySlotId) fillField(m, bySlotId[m.id]);
+  }
+  return config;
+}
+
+// Text slots (in document order) carrying the copy-role schema fields.
+function collectTextSlots(config) {
+  return (config.elements || [])
+    .filter((el) => typeof el.text === "string")
+    .map((el) => ({
+      id: el.id, role: el.role, accepts: el.accepts,
+      locked: el.locked, maxChars: el.maxChars, tag: el.tag,
+    }));
+}
+
+// Build the role→copy pool from a plan asset. The legacy `headline` routes to a
+// role chosen by the asset's beat (A/B→hook, C→mechanism, D→reframe, E→claim,
+// F→offer); `microscript` routes to reframe (eyebrow as fallback via accepts).
+export function buildCopyByRole(asset) {
+  const pool = {};
+  const add = (role, val) => {
+    if (role && typeof val === "string" && val.trim()) (pool[role] = pool[role] || []).push(val);
+  };
+  add(BEAT_HEADLINE_ROLE[beatLetter(asset.beat)] || "hook", asset.headline);
+  add("reframe", asset.microscript);
+  // Future: explicit role-keyed copy at asset.copyByRole merges straight in.
+  if (asset.copyByRole && typeof asset.copyByRole === "object") {
+    for (const [role, vals] of Object.entries(asset.copyByRole)) {
+      for (const v of [].concat(vals || [])) add(role, v);
+    }
+  }
+  return pool;
+}
+
+// Planner targets: templateData keyed by a slot's id (preferred) or its tag.
+function buildExplicit(asset, slots) {
+  const td = asset.templateData && typeof asset.templateData === "object" ? asset.templateData : {};
+  const explicit = {};
+  for (const s of slots) {
+    if (typeof td[s.id] === "string") explicit[s.id] = td[s.id];
+    else if (s.tag && typeof td[s.tag] === "string") explicit[s.id] = td[s.tag];
+  }
+  return explicit;
+}
+
+// ---------------------------------------------------------------------------
 // Static asset config resolution (the ONE fill path)
 // ---------------------------------------------------------------------------
 
@@ -105,8 +170,29 @@ export function resolveStaticConfig({ clusterId, asset, brand, templateDir, data
   if (!existsSync(configPath)) return null;
   const sourceConfig = JSON.parse(readFileSync(configPath, "utf8"));
   const brandTier = loadTier("brand", brand, dataDir);
-  // asset.templateData (keyed to the template's tags) wins; else a heuristic
-  // maps headline→title/headline and microscript→microscript.
+
+  const slots = collectTextSlots(sourceConfig);
+  const roleAware = slots.some((s) => s.role);
+
+  if (roleAware) {
+    // Role-aware path: brand-tier tags fill media/logo by tag first, then the
+    // role→slot JOIN fills the text slots by id (so duplicate tags can't collide
+    // and copy lands by marketing function, not by look).
+    const { config } = applySubstitutions(sourceConfig, mergeTiers(brandTier.tags, {}, {}));
+    const { bySlotId, warnings } = assemble({
+      slots,
+      copyByRole: buildCopyByRole(asset),
+      explicit: buildExplicit(asset, slots),
+    });
+    for (const w of warnings) {
+      console.error(`[fill] ${asset.id || clusterId} overflow: slot "${w.id}" (${w.role}) ${w.len} > maxChars ${w.maxChars}`);
+    }
+    applyById(config, bySlotId);
+    return config;
+  }
+
+  // Legacy tag path (configs without roles): heuristic maps headline→title/
+  // headline and microscript→microscript. Untouched configs render unchanged.
   let overrides = {};
   if (asset.templateData && typeof asset.templateData === "object") {
     overrides = { ...asset.templateData };
@@ -170,5 +256,10 @@ export function renderJsx({ jsxPath, projectRoot, renderer = DEFAULT_RENDERER, i
     }
     proc.on("exit", (code) => resolve({ code, ok: code === 0, stdout, stderr }));
     proc.on("error", (err) => resolve({ code: 1, ok: false, stdout, stderr: String(err) }));
+    // NOTE: the child reaps itself on normal exit, and the grandchild Chrome is
+    // now cleaned up by the renderer's own try/finally (render.mjs/static-react.mjs/
+    // claude-design.mjs). If the PARENT (run-campaign) is hard-killed mid-render,
+    // this child is NOT group-killed on Windows — rely on the orphan-cleanup step
+    // (Part B) rather than process-group plumbing here.
   });
 }

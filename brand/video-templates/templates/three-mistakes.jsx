@@ -148,18 +148,82 @@ const THREE_MISTAKES_SPEC = {
   id: 'three-mistakes',
   name: '3 MISTAKES',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow tag', type: 'text', default: 'BIG 3 MISTAKES' },
-    { key: 'title1', label: 'Title line 1', type: 'text', default: "YOU'RE BENCHING" },
-    { key: 'title2', label: 'Title line 2 (red)', type: 'text', default: 'IT WRONG.' },
-    { key: 'drillName', label: 'Exercise', type: 'text', default: 'BENCH PRESS' },
-    { key: 'wrong1', label: 'Wrong #1', type: 'text', default: 'FLARED ELBOWS' },
-    { key: 'right1', label: 'Right #1', type: 'text', default: 'TUCK TO 45°' },
-    { key: 'wrong2', label: 'Wrong #2', type: 'text', default: 'NO LEG DRIVE' },
-    { key: 'right2', label: 'Right #2', type: 'text', default: 'PUSH THE FLOOR' },
-    { key: 'wrong3', label: 'Wrong #3', type: 'text', default: 'BOUNCING OFF CHEST' },
-    { key: 'right3', label: 'Right #3', type: 'text', default: 'PAUSE. CONTROL.' },
-    { key: 'ctaText', label: 'CTA text', type: 'text', default: 'FIX YOUR FORM →' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow tag",
+    "type": "text",
+    "default": "BIG 3 MISTAKES"
+  },
+  {
+    "key": "title1",
+    "label": "Title line 1",
+    "type": "text",
+    "default": "YOU'RE BENCHING"
+  },
+  {
+    "key": "title2",
+    "label": "Title line 2 (red)",
+    "type": "text",
+    "default": "IT WRONG."
+  },
+  {
+    "key": "drillName",
+    "label": "Exercise",
+    "type": "text",
+    "default": "BENCH PRESS"
+  },
+  {
+    "key": "wrong1",
+    "label": "Wrong #1",
+    "type": "text",
+    "default": "FLARED ELBOWS"
+  },
+  {
+    "key": "right1",
+    "label": "Right #1",
+    "type": "text",
+    "default": "TUCK TO 45°"
+  },
+  {
+    "key": "wrong2",
+    "label": "Wrong #2",
+    "type": "text",
+    "default": "NO LEG DRIVE"
+  },
+  {
+    "key": "right2",
+    "label": "Right #2",
+    "type": "text",
+    "default": "PUSH THE FLOOR"
+  },
+  {
+    "key": "wrong3",
+    "label": "Wrong #3",
+    "type": "text",
+    "default": "BOUNCING OFF CHEST"
+  },
+  {
+    "key": "right3",
+    "label": "Right #3",
+    "type": "text",
+    "default": "PAUSE. CONTROL."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA text",
+    "type": "text",
+    "default": "FIX YOUR FORM →"
+  }
+],
 };
 window.THREE_MISTAKES_SPEC = THREE_MISTAKES_SPEC;

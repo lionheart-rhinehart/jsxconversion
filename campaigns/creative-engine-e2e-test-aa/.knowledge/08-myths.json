@@ -1,0 +1,88 @@
+{
+  "key": "08-myths",
+  "section": "Myths & Mistakes",
+  "sourceFile": "campaigns/creative-engine-e2e-test-aa/brief.md",
+  "items": [
+    {
+      "id": "myth:1",
+      "type": "myth",
+      "text": "\"Resistance Training Is Dangerous for Children\"  \n \"If they are 14 and under stay away from weights as it can stunt their growth.\" — r/basketballcoach\n\n\"Many parents mistakenly believe that weightlifting is detrimental to their children, which makes it simpler to promote activities like medicine ball throws instead.\" — r/Homeplate",
+      "truth": "Faigenbaum & Myer (2010), British Journal of Sports Medicine: zero growth cartilage injuries under qualified supervision. Injury rates for supervised resistance training: 0.0013–0.176 per 100 participant-hours. Youth rugby: 0.800 per 100 hours (470× higher). Resistance training accounts for 0.7% of all youth sports injuries vs. football (19%) and basketball (15%). The NSCA, AAP, BJSM, and ACSM all endorse supervised resistance training beginning at approximately age 7–8. \"The ONLY people still saying 'weights are bad for kids' are people who haven't read the research since 1985.\"",
+      "number": "#1",
+      "sourceLines": "L374-L379",
+      "notes": ""
+    },
+    {
+      "id": "myth:2",
+      "type": "myth",
+      "text": "\"Faster Kids Are Just Born Faster\"  \n \"At the highest level track is like 90% genetics, but at the high school level it's much more about good habits and just getting faster every week.\" — r/trackandfield\n\n\"You can't make a slow kid fast, but you can make him faster.\" — r/trackandfield (direct thread title)",
+      "truth": "Bogdanis et al. (2019), Sports (Basel): RCT with 50 female athletes aged 7–9, 8 weeks of twice-weekly supplementary plyometric training, 20m sprint effect size d=1.14 (p=0.011) — a large effect. Control group showed zero sprint improvement. These children didn't have different genetics — they had a different training stimulus. \"Speed isn't something you're born with at this age. It's a movement pattern your nervous system learns — or doesn't.\"",
+      "number": "#2",
+      "sourceLines": "L381-L386",
+      "notes": ""
+    },
+    {
+      "id": "myth:3",
+      "type": "myth",
+      "text": "\"Sweating and Breathing Hard Means Explosive Work Is Happening\"  \n The visual cues of effort (sweat, labored breathing, flushed face, visible strain) are metabolic stress markers confirming aerobic work — not explosive neuromuscular adaptation. Without direct velocity measurement, a coach cannot confirm that maximal explosive intent occurred on any given rep. A visibly exhausted athlete may be producing 40–60% of their explosive capacity without the coach or athlete knowing. \"Your child isn't slacking. The coaching eye just can't see what a velocity sensor measures to the hundredth of a meter per second.\"",
+      "truth": "",
+      "number": "#3",
+      "sourceLines": "L388-L389",
+      "notes": "Myth 3 has no separate 'The Truth:' block; the correction is embedded inline within the myth text itself."
+    },
+    {
+      "id": "myth:4",
+      "type": "myth",
+      "text": "\"More Reps in Practice = Better Performance in Games\"  \n Pareja-Blanco et al. (2017): the VL20 group performed 40% fewer repetitions than the VL40 group yet achieved 146% greater CMJ improvement (9.5% vs. 3.5%). \"The program running 40% more reps got worse results. Every single time.\" Repetitions performed in fatigue don't transfer — they encode the fatigued movement pattern as the movement standard.",
+      "truth": "",
+      "number": "#4",
+      "sourceLines": "L391-L392",
+      "notes": "Myth 4 has no separate 'The Truth:' block; the correction is embedded inline within the myth text itself."
+    },
+    {
+      "id": "myth:5",
+      "type": "myth",
+      "text": "\"Kids Don't Need Strength Training Until High School\"  \n \"It's also important to note that children don't require strength training at this stage. Avoid spending time on weights or gym workouts; these can be addressed later in high school.\" — r/youthsoccer",
+      "truth": "Per NSCA's \"Windows of Opportunity\" framework, the first window for speed and agility adaptation in boys occurs at ages 7–9 — prior to PHV — driven by rapid brain maturation and neural plasticity. Waiting for high school means attempting pattern correction in a window designed for pattern formation — a categorically harder, slower, and less effective process. \"Every year they wait is a year the window gets smaller.\"",
+      "number": "#5",
+      "sourceLines": "L394-L397",
+      "notes": ""
+    },
+    {
+      "id": "mistake:1",
+      "type": "mistake",
+      "text": "Training to Exhaustion as the Goal  \n \"The session that looked hardest did the least. And no one knew — because no one was measuring velocity.\" Wang et al. (2026): the 30% velocity loss group accumulated 28% more training fatigue (364 AU vs. 284 AU sRPE) while achieving 224% less CMJ improvement. The exhaustion wasn't building capacity — it was suppressing adaptation.",
+      "truth": "",
+      "number": "Mistake 1",
+      "sourceLines": "L403-L404",
+      "notes": "Costly Mistake (not a myth/truth pair); correction is inline."
+    },
+    {
+      "id": "mistake:2",
+      "type": "mistake",
+      "text": "Using the Same Load for Every Athlete in a Group  \n Generic group programming gives every athlete the same training load and expects individual results. Physics doesn't cooperate. The load that places Athlete A at 0.85 m/s (optimal power zone) may place Athlete B at 0.65 m/s (pure strength, no speed development) or 1.1 m/s (too light, insufficient force). Without velocity measurement, this individualization is impossible and the miss rate is near-total.",
+      "truth": "",
+      "number": "Mistake 2",
+      "sourceLines": "L406-L407",
+      "notes": "Costly Mistake (not a myth/truth pair); correction is inline."
+    },
+    {
+      "id": "mistake:3",
+      "type": "mistake",
+      "text": "Skipping Readiness Assessment  \n Starting any training session without verifying that the athlete is physically, neurologically, and mentally prepared to produce maximal explosive effort installs exactly the wrong movement pattern. Per GymAware readiness protocol: a 10% velocity drop from baseline warrants reducing session volume and intensity by 10–20%. A 10%+ deficit warrants redesigning the session entirely. \"Every program in this market starts every session without verifying that your child is ready to produce explosive effort. The Velocity Code™ is the only program that checks before the first rep.\"",
+      "truth": "",
+      "number": "Mistake 3",
+      "sourceLines": "L409-L410",
+      "notes": "Costly Mistake (not a myth/truth pair); correction is inline."
+    },
+    {
+      "id": "mistake:4",
+      "type": "mistake",
+      "text": "Developing One Sport to the Exclusion of Athletic Foundation  \n Jayanthi et al. (2019): high sport specialization before age 12 produced OR=2.25 serious overuse injury risk (p<0.001) and OR=1.58 total injury risk. The AAOS/AOSSM OneSport Injury campaign explicitly targets early specialization as the primary mechanism of preventable youth sports injury. 70% of youth athletes drop out of organized sports by age 13, with \"sport stopped being fun\" and \"excessive pressure\" as primary drivers. \"The multi-sport athlete isn't falling behind. They're building the neural foundation the single-sport specialist never gets.\"",
+      "truth": "",
+      "number": "Mistake 4",
+      "sourceLines": "L412-L413",
+      "notes": "Costly Mistake (not a myth/truth pair); correction is inline."
+    }
+  ]
+}

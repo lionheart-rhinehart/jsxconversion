@@ -66,7 +66,13 @@
       "z": 20,
       "lineHeight": 0.9,
       "letterSpacing": "-0.02em",
-      "textTransform": "uppercase"
+      "textTransform": "uppercase",
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "brand"
+      ],
+      "maxChars": 12
     },
     {
       "id": "city_2",
@@ -83,7 +89,13 @@
       "z": 30,
       "lineHeight": 0.9,
       "letterSpacing": "-0.02em",
-      "textTransform": "uppercase"
+      "textTransform": "uppercase",
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "brand"
+      ],
+      "maxChars": 12
     },
     {
       "id": "city_3",
@@ -100,7 +112,13 @@
       "z": 40,
       "lineHeight": 0.9,
       "letterSpacing": "-0.02em",
-      "textTransform": "uppercase"
+      "textTransform": "uppercase",
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "brand"
+      ],
+      "maxChars": 12
     },
     {
       "id": "subhead",
@@ -115,7 +133,13 @@
       "z": 70,
       "lineHeight": 1,
       "letterSpacing": "-0.01em",
-      "textTransform": "uppercase"
+      "textTransform": "uppercase",
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "eyebrow"
+      ],
+      "maxChars": 34
     },
     {
       "id": "banner_text",
@@ -131,7 +155,13 @@
       "lineHeight": 1,
       "letterSpacing": "0em",
       "fontStyle": "italic",
-      "textTransform": "uppercase"
+      "textTransform": "uppercase",
+      "role": "claim",
+      "accepts": [
+        "claim",
+        "proof"
+      ],
+      "maxChars": 59
     },
     {
       "id": "microscript",
@@ -146,7 +176,14 @@
       "z": 90,
       "fontWeight": 600,
       "letterSpacing": "0.04em",
-      "textTransform": "uppercase"
+      "textTransform": "uppercase",
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 27
     }
   ]
 }

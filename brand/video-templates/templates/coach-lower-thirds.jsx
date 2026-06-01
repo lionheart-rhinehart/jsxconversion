@@ -171,18 +171,24 @@ const COACH_LT_SPEC = {
   },
   {
     "key": "coachName",
+
+    "role": "byline",
     "label": "Coach name",
     "type": "text",
     "default": "COACH MIKE TORRES"
   },
   {
     "key": "coachTitle",
+
+    "role": "claim",
     "label": "Title (typed in word-by-word)",
     "type": "text",
     "default": "DIRECTOR OF PERFORMANCE"
   },
   {
     "key": "credentials",
+
+    "role": "proof",
     "label": "Credential chips (· separated)",
     "type": "text",
     "default": "CSCS · USATF L2 · 15 YRS · NCAA D1"

@@ -117,16 +117,73 @@ const THIRTY_DAY_CHALLENGE_SPEC = {
   id: 'thirty-day-challenge',
   name: '30 DAY CHALLENGE',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 8, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow tag', type: 'text', default: '30-DAY CHALLENGE' },
-    { key: 'title1', label: 'Title line 1', type: 'text', default: 'SHOW UP' },
-    { key: 'title2', label: 'Title line 2 (red)', type: 'text', default: '30 DAYS.' },
-    { key: 'challengeName', label: 'Challenge name', type: 'text', default: 'JUMP ROPE · 5 MIN A DAY' },
-    { key: 'totalDays', label: 'Days', type: 'number', default: 30, step: 1, min: 5, max: 100 },
-    { key: 'completedLabel', label: 'Result eyebrow', type: 'text', default: 'YOU DID THIS:' },
-    { key: 'resultStat', label: 'Result stat', type: 'text', default: '+3.4"' },
-    { key: 'resultLabel', label: 'Result label', type: 'text', default: 'AVERAGE VERTICAL GAIN' },
-    { key: 'ctaText', label: 'CTA text', type: 'text', default: 'JOIN THE NEXT ROUND →' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 8,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow tag",
+    "type": "text",
+    "default": "30-DAY CHALLENGE"
+  },
+  {
+    "key": "title1",
+    "label": "Title line 1",
+    "type": "text",
+    "default": "SHOW UP"
+  },
+  {
+    "key": "title2",
+    "label": "Title line 2 (red)",
+    "type": "text",
+    "default": "30 DAYS."
+  },
+  {
+    "key": "challengeName",
+    "label": "Challenge name",
+    "type": "text",
+    "default": "JUMP ROPE · 5 MIN A DAY"
+  },
+  {
+    "key": "totalDays",
+    "label": "Days",
+    "type": "number",
+    "default": 30,
+    "step": 1,
+    "min": 5,
+    "max": 100
+  },
+  {
+    "key": "completedLabel",
+    "label": "Result eyebrow",
+    "type": "text",
+    "default": "YOU DID THIS:"
+  },
+  {
+    "key": "resultStat",
+    "label": "Result stat",
+    "type": "text",
+    "default": "+3.4\""
+  },
+  {
+    "key": "resultLabel",
+    "label": "Result label",
+    "type": "text",
+    "default": "AVERAGE VERTICAL GAIN"
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA text",
+    "type": "text",
+    "default": "JOIN THE NEXT ROUND →"
+  }
+],
 };
 window.THIRTY_DAY_CHALLENGE_SPEC = THIRTY_DAY_CHALLENGE_SPEC;

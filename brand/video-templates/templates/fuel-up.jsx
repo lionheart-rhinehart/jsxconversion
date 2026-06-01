@@ -6,16 +6,74 @@ const FUEL_UP_SPEC = {
   id: 'fuel-up',
   name: 'FUEL UP',
   fields: [
-    { key: 'duration', label: 'Length',   type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow',  label: 'Eyebrow',  type: 'text',   default: 'FUEL UP' },
-    { key: 'meal',     label: 'Meal name', type: 'text',  default: 'POST-LIFT RECOVERY BOWL' },
-    { key: 'tagline',  label: 'Tagline',  type: 'text',   default: 'EAT TO PERFORM · NOT TO RESTRICT' },
-    { key: 'protein',  label: 'Protein (g)', type: 'number', default: 42, min: 0, step: 1 },
-    { key: 'carbs',    label: 'Carbs (g)',   type: 'number', default: 58, min: 0, step: 1 },
-    { key: 'fat',      label: 'Fat (g)',     type: 'number', default: 16, min: 0, step: 1 },
-    { key: 'calories', label: 'Calories',    type: 'number', default: 580, min: 0, step: 10 },
-    { key: 'photo',    label: 'Meal photo (bg)', type: 'image', default: 'assets/photo-gym-wide.jpg', sub: 'shown dimmed behind' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "FUEL UP"
+  },
+  {
+    "key": "meal",
+    "label": "Meal name",
+    "type": "text",
+    "default": "POST-LIFT RECOVERY BOWL"
+  },
+  {
+    "key": "tagline",
+    "label": "Tagline",
+    "type": "text",
+    "default": "EAT TO PERFORM · NOT TO RESTRICT"
+  },
+  {
+    "key": "protein",
+    "label": "Protein (g)",
+    "type": "number",
+    "default": 42,
+    "min": 0,
+    "step": 1
+  },
+  {
+    "key": "carbs",
+    "label": "Carbs (g)",
+    "type": "number",
+    "default": 58,
+    "min": 0,
+    "step": 1
+  },
+  {
+    "key": "fat",
+    "label": "Fat (g)",
+    "type": "number",
+    "default": 16,
+    "min": 0,
+    "step": 1
+  },
+  {
+    "key": "calories",
+    "label": "Calories",
+    "type": "number",
+    "default": 580,
+    "min": 0,
+    "step": 10
+  },
+  {
+    "key": "photo",
+    "label": "Meal photo (bg)",
+    "type": "image",
+    "default": "assets/photo-gym-wide.jpg",
+    "sub": "shown dimmed behind"
+  }
+],
 };
 
 function FuelUpReel({ data = {} }) {

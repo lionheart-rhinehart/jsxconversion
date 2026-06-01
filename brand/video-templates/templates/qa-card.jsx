@@ -61,17 +61,76 @@ window.QACardReel = QACardReel;
 const QA_CARD_SPEC = {
   id: 'qa-card', name: 'Q & A CARD',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'ASK THE COACH' },
-    { key: 'askedBy', label: 'Asked by', type: 'text', default: '@DM FROM A PARENT' },
-    { key: 'question', label: 'Question', type: 'textarea', default: 'WHEN SHOULD MY 12-YEAR-OLD START LIFTING?' },
-    { key: 'answerLabel', label: 'Answer label', type: 'text', default: "COACH'S ANSWER:" },
-    { key: 'answerLine1', label: 'Answer line 1 (red)', type: 'text', default: 'YESTERDAY.' },
-    { key: 'answerLine2', label: 'Answer line 2', type: 'text', default: 'WITH PROPER COACHING.' },
-    { key: 'answerNote', label: 'Answer note', type: 'textarea', default: 'The risk is bad coaching, not the age. Start now with someone who knows.' },
-    { key: 'coachName', label: 'Coach signature', type: 'text', default: 'COACH TORRES' },
-    { key: 'ctaText', label: 'CTA', type: 'text', default: 'GOT A QUESTION? DM US.' },
-    { key: 'media', label: 'Coach photo/video', type: 'image', default: 'assets/photo-coach-action.jpg' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "ASK THE COACH"
+  },
+  {
+    "key": "askedBy",
+    "label": "Asked by",
+    "type": "text",
+    "default": "@DM FROM A PARENT"
+  },
+  {
+    "key": "question",
+    "label": "Question",
+    "type": "textarea",
+    "default": "WHEN SHOULD MY 12-YEAR-OLD START LIFTING?"
+  },
+  {
+    "key": "answerLabel",
+    "label": "Answer label",
+    "type": "text",
+    "default": "COACH'S ANSWER:"
+  },
+  {
+    "key": "answerLine1",
+    "label": "Answer line 1 (red)",
+    "type": "text",
+    "default": "YESTERDAY."
+  },
+  {
+    "key": "answerLine2",
+    "label": "Answer line 2",
+    "type": "text",
+    "default": "WITH PROPER COACHING."
+  },
+  {
+    "key": "answerNote",
+    "label": "Answer note",
+    "type": "textarea",
+    "default": "The risk is bad coaching, not the age. Start now with someone who knows."
+  },
+  {
+    "key": "coachName",
+    "label": "Coach signature",
+    "type": "text",
+    "default": "COACH TORRES"
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "GOT A QUESTION? DM US."
+  },
+  {
+    "key": "media",
+    "label": "Coach photo/video",
+    "type": "image",
+    "default": "assets/photo-coach-action.jpg"
+  }
+],
 };
 window.QA_CARD_SPEC = QA_CARD_SPEC;

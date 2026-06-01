@@ -54,15 +54,99 @@ function OriginStoryReel({ data = {} }) {
 }
 window.OriginStoryReel = OriginStoryReel;
 const ORIGIN_STORY_SPEC = { id:'origin-story', name:'ORIGIN STORY', fields:[
-  {key:'duration',label:'Length',type:'slider',default:8,min:4,max:15,step:0.5,unit:'s'},
-  {key:'eyebrow',label:'Eyebrow',type:'text',default:'OUR STORY'},
-  {key:'title1',label:'Title 1',type:'text',default:'STARTED IN'},
-  {key:'title2',label:'Title 2 (red)',type:'text',default:'A GARAGE.'},
-  {key:'y1',label:'Year 1',type:'text',default:'2013'},{key:'t1',label:'Milestone 1',type:'text',default:'ONE GYM. ONE COACH.'},
-  {key:'y2',label:'Year 2',type:'text',default:'2017'},{key:'t2',label:'Milestone 2',type:'text',default:'FIRST D1 COMMIT.'},
-  {key:'y3',label:'Year 3',type:'text',default:'2020'},{key:'t3',label:'Milestone 3',type:'text',default:'90-DAY GUARANTEE LAUNCHED.'},
-  {key:'y4',label:'Year 4',type:'text',default:'2023'},{key:'t4',label:'Milestone 4',type:'text',default:'FIVE FACILITIES OPEN.'},
-  {key:'y5',label:'Year 5 (red)',type:'text',default:'2026'},{key:'t5',label:'Milestone 5',type:'text',default:'WESTFIELD FLAGSHIP.'},
-  {key:'ctaText',label:'CTA',type:'text',default:"WE'RE JUST WARMING UP →"},
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 8,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "OUR STORY"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "STARTED IN"
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "A GARAGE."
+  },
+  {
+    "key": "y1",
+    "label": "Year 1",
+    "type": "text",
+    "default": "2013"
+  },
+  {
+    "key": "t1",
+    "label": "Milestone 1",
+    "type": "text",
+    "default": "ONE GYM. ONE COACH."
+  },
+  {
+    "key": "y2",
+    "label": "Year 2",
+    "type": "text",
+    "default": "2017"
+  },
+  {
+    "key": "t2",
+    "label": "Milestone 2",
+    "type": "text",
+    "default": "FIRST D1 COMMIT."
+  },
+  {
+    "key": "y3",
+    "label": "Year 3",
+    "type": "text",
+    "default": "2020"
+  },
+  {
+    "key": "t3",
+    "label": "Milestone 3",
+    "type": "text",
+    "default": "90-DAY GUARANTEE LAUNCHED."
+  },
+  {
+    "key": "y4",
+    "label": "Year 4",
+    "type": "text",
+    "default": "2023"
+  },
+  {
+    "key": "t4",
+    "label": "Milestone 4",
+    "type": "text",
+    "default": "FIVE FACILITIES OPEN."
+  },
+  {
+    "key": "y5",
+    "label": "Year 5 (red)",
+    "type": "text",
+    "default": "2026"
+  },
+  {
+    "key": "t5",
+    "label": "Milestone 5",
+    "type": "text",
+    "default": "WESTFIELD FLAGSHIP."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "WE'RE JUST WARMING UP →"
+  }
 ]};
 window.ORIGIN_STORY_SPEC = ORIGIN_STORY_SPEC;

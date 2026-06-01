@@ -28,8 +28,9 @@ import {
 import { join, resolve, extname, basename, dirname } from "node:path";
 import { spawn } from "node:child_process";
 import { resolveStaticConfig } from "./lib/fill-core.mjs";
+import { fieldRole, BEAT_HEADLINE_ROLE, beatLetter } from "./lib/roles.mjs";
 
-const PORT = 5173;
+const PORT = Number(process.env.EDITOR_PORT) || 5173;
 const PROJECT_ROOT = resolve(".");
 const TEMPLATES_DIR = join(PROJECT_ROOT, "templates/multi-sport-foundations");
 const OUT_DIR = join(PROJECT_ROOT, "out");
@@ -325,16 +326,22 @@ const server = createServer(async (req, res) => {
       const plan = JSON.parse(readFileSync(planFile, "utf8"));
       const microscript = new Set(), headline = new Set(), all = new Set();
       const byKey = {};
+      const byRole = {};                                              // copy-role pool (P5)
       const add = (set, v) => { if (typeof v === "string" && v.trim()) { set.add(v); all.add(v); } };
+      const addRole = (role, v) => { if (role && typeof v === "string" && v.trim()) (byRole[role] = byRole[role] || new Set()).add(v); };
       for (const ang of plan.angles || []) {
         for (const a of ang.assets || []) {
           add(microscript, a.microscript);
           add(headline, a.headline);
+          // Role buckets: headline routed by beat, microscript → reframe.
+          addRole(BEAT_HEADLINE_ROLE[beatLetter(a.beat)] || "hook", a.headline);
+          addRole("reframe", a.microscript);
           if (a.templateData && typeof a.templateData === "object") {  // H1 guard
             for (const [k, v] of Object.entries(a.templateData)) {
               if (k.startsWith("_")) continue;                          // skip _overrides etc.
               if (typeof v !== "string" || !v.trim()) continue;
               (byKey[k] = byKey[k] || new Set()).add(v);
+              addRole(fieldRole(k), v);                                 // role bucket by field name
               all.add(v);
             }
           }
@@ -342,8 +349,11 @@ const server = createServer(async (req, res) => {
       }
       const byKeyArr = {};
       for (const k of Object.keys(byKey)) byKeyArr[k] = [...byKey[k]];
+      const byRoleArr = {};
+      for (const r of Object.keys(byRole)) byRoleArr[r] = [...byRole[r]];
       sendJson(res, 200, {
-        microscript: [...microscript], headline: [...headline], byKey: byKeyArr, all: [...all],
+        microscript: [...microscript], headline: [...headline],
+        byKey: byKeyArr, byRole: byRoleArr, all: [...all],
       });
     } catch (e) {
       sendJson(res, 500, { error: e.message });

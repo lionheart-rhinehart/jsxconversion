@@ -79,20 +79,94 @@ const POSITION_RANKINGS_SPEC = {
   id: 'position-rankings',
   name: 'TIER RANKINGS',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 8, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'OPINIONATED RANKINGS' },
-    { key: 'title1', label: 'Title 1', type: 'text', default: 'EVERY LIFT' },
-    { key: 'title2', label: 'Title 2 (red)', type: 'text', default: 'RANKED.' },
-    { key: 'subhead', label: 'Subhead', type: 'text', default: 'FOR YOUTH ATHLETES · BUILD THE BASE' },
-    { key: 'sLabel', label: 'S tier label', type: 'text', default: 'GOD TIER' },
-    { key: 'sCsv', label: 'S items (comma)', type: 'text', default: 'DEADLIFT,SPRINT' },
-    { key: 'aLabel', label: 'A tier label', type: 'text', default: 'GREAT' },
-    { key: 'aCsv', label: 'A items (comma)', type: 'text', default: 'BACK SQUAT,BOX JUMP,POWER CLEAN' },
-    { key: 'bLabel', label: 'B tier label', type: 'text', default: 'GOOD' },
-    { key: 'bCsv', label: 'B items (comma)', type: 'text', default: 'BENCH PRESS,ROW' },
-    { key: 'cLabel', label: 'C tier label', type: 'text', default: 'SITUATIONAL' },
-    { key: 'cCsv', label: 'C items (comma)', type: 'text', default: 'BICEP CURL,CALF RAISE' },
-    { key: 'ctaText', label: 'CTA text', type: 'text', default: 'AGREE? DISAGREE? ↓' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 8,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "OPINIONATED RANKINGS"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "EVERY LIFT"
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "RANKED."
+  },
+  {
+    "key": "subhead",
+    "label": "Subhead",
+    "type": "text",
+    "default": "FOR YOUTH ATHLETES · BUILD THE BASE"
+  },
+  {
+    "key": "sLabel",
+    "label": "S tier label",
+    "type": "text",
+    "default": "GOD TIER"
+  },
+  {
+    "key": "sCsv",
+    "label": "S items (comma)",
+    "type": "text",
+    "default": "DEADLIFT,SPRINT"
+  },
+  {
+    "key": "aLabel",
+    "label": "A tier label",
+    "type": "text",
+    "default": "GREAT"
+  },
+  {
+    "key": "aCsv",
+    "label": "A items (comma)",
+    "type": "text",
+    "default": "BACK SQUAT,BOX JUMP,POWER CLEAN"
+  },
+  {
+    "key": "bLabel",
+    "label": "B tier label",
+    "type": "text",
+    "default": "GOOD"
+  },
+  {
+    "key": "bCsv",
+    "label": "B items (comma)",
+    "type": "text",
+    "default": "BENCH PRESS,ROW"
+  },
+  {
+    "key": "cLabel",
+    "label": "C tier label",
+    "type": "text",
+    "default": "SITUATIONAL"
+  },
+  {
+    "key": "cCsv",
+    "label": "C items (comma)",
+    "type": "text",
+    "default": "BICEP CURL,CALF RAISE"
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA text",
+    "type": "text",
+    "default": "AGREE? DISAGREE? ↓"
+  }
+],
 };
 window.POSITION_RANKINGS_SPEC = POSITION_RANKINGS_SPEC;

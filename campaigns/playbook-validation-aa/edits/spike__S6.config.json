@@ -1,0 +1,95 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "_beat": "D — Remove blame (WARM) ★ AA signature. reframe epiphany (centered) + microscript anchor.",
+  "media": {
+    "path": "./assets/photo-coach-action.jpg",
+    "type": "image",
+    "tag": "bg_photo",
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1.06,
+    "z": 0
+  },
+  "fixedDesign": [
+    {
+      "id": "wash",
+      "tag": "protect_gradient",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.72) 0%, rgba(10,11,13,0.5) 38%, rgba(10,11,13,0.62) 70%, rgba(10,11,13,0.92) 100%)",
+      "z": 5
+    },
+    {
+      "id": "strip",
+      "tag": "accent_strip",
+      "type": "rect",
+      "x": 0,
+      "y": 1890,
+      "width": 1080,
+      "height": 30,
+      "fill": "#c4141d",
+      "z": 15
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "role": "eyebrow",
+      "x": 60,
+      "y": 340,
+      "width": 960,
+      "textAlign": "center",
+      "text": "// THE LAST-REP LIE",
+      "fontSize": 30,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 600,
+      "color": "#c4141d",
+      "letterSpacing": "0.18em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 10px rgba(0,0,0,0.92)",
+      "z": 25
+    },
+    {
+      "id": "reframe",
+      "tag": "headline",
+      "role": "reframe",
+      "x": 50,
+      "y": 440,
+      "width": 980,
+      "textAlign": "center",
+      "text": "YOUR ATHLETE\nISN'T THE PROBLEM.\nTHE PLAN WAS.",
+      "fontSize": 104,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 1,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "whiteSpace": "pre-wrap",
+      "textShadow": "0 4px 24px rgba(0,0,0,0.92)",
+      "z": 30
+    },
+    {
+      "id": "microscript",
+      "tag": "microscript",
+      "role": "reframe",
+      "x": 60,
+      "y": 1700,
+      "width": 960,
+      "textAlign": "center",
+      "text": "THE DRIVE IS THEIRS. WE BUILD THE ATHLETE.",
+      "fontSize": 30,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 600,
+      "color": "#ffffff",
+      "letterSpacing": "0.06em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 12px rgba(0,0,0,0.95)",
+      "z": 30
+    }
+  ]
+}

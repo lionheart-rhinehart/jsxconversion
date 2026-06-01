@@ -69,26 +69,130 @@ window.DayAtAAReel = DayAtAAReel;
 const DAY_AT_AA_SPEC = {
   id: 'day-at-aa', name: 'A DAY AT AA',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 9, min: 6, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'A DAY AT AA' },
-    { key: 'title1', label: 'Title 1', type: 'text', default: "HERE'S WHAT" },
-    { key: 'title2', label: 'Title 2 (red)', type: 'text', default: 'A DAY LOOKS LIKE.' },
-    { key: 'time1', label: 'Slide 1 time', type: 'text', default: '5:30 AM' },
-    { key: 'cap1', label: 'Slide 1 caption', type: 'text', default: 'COACH GETS HERE.' },
-    { key: 'media1', label: 'Slide 1 media', type: 'image', default: 'assets/photo-gym-wide.jpg' },
-    { key: 'time2', label: 'Slide 2 time', type: 'text', default: '6:00 AM' },
-    { key: 'cap2', label: 'Slide 2 caption', type: 'text', default: 'FIRST ATHLETES IN.' },
-    { key: 'media2', label: 'Slide 2 media', type: 'image', default: 'assets/photo-coach-action.jpg' },
-    { key: 'time3', label: 'Slide 3 time', type: 'text', default: '9:00 AM' },
-    { key: 'cap3', label: 'Slide 3 caption', type: 'text', default: 'TEAM SESSIONS BEGIN.' },
-    { key: 'media3', label: 'Slide 3 media', type: 'image', default: 'assets/photo-group-coaching.jpg' },
-    { key: 'time4', label: 'Slide 4 time', type: 'text', default: '4:00 PM' },
-    { key: 'cap4', label: 'Slide 4 caption', type: 'text', default: 'AFTER-SCHOOL RUSH.' },
-    { key: 'media4', label: 'Slide 4 media', type: 'image', default: 'assets/photo-lifting.jpg' },
-    { key: 'time5', label: 'Slide 5 time', type: 'text', default: '9:30 PM' },
-    { key: 'cap5', label: 'Slide 5 caption', type: 'text', default: 'LAST REP CLOCKED.' },
-    { key: 'media5', label: 'Slide 5 media', type: 'image', default: 'assets/photo-jump-male.jpg' },
-    { key: 'ctaText', label: 'CTA', type: 'text', default: 'COME SEE IT YOURSELF →' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 9,
+    "min": 6,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "A DAY AT AA"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "HERE'S WHAT"
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "A DAY LOOKS LIKE."
+  },
+  {
+    "key": "time1",
+    "label": "Slide 1 time",
+    "type": "text",
+    "default": "5:30 AM"
+  },
+  {
+    "key": "cap1",
+    "label": "Slide 1 caption",
+    "type": "text",
+    "default": "COACH GETS HERE."
+  },
+  {
+    "key": "media1",
+    "label": "Slide 1 media",
+    "type": "image",
+    "default": "assets/photo-gym-wide.jpg"
+  },
+  {
+    "key": "time2",
+    "label": "Slide 2 time",
+    "type": "text",
+    "default": "6:00 AM"
+  },
+  {
+    "key": "cap2",
+    "label": "Slide 2 caption",
+    "type": "text",
+    "default": "FIRST ATHLETES IN."
+  },
+  {
+    "key": "media2",
+    "label": "Slide 2 media",
+    "type": "image",
+    "default": "assets/photo-coach-action.jpg"
+  },
+  {
+    "key": "time3",
+    "label": "Slide 3 time",
+    "type": "text",
+    "default": "9:00 AM"
+  },
+  {
+    "key": "cap3",
+    "label": "Slide 3 caption",
+    "type": "text",
+    "default": "TEAM SESSIONS BEGIN."
+  },
+  {
+    "key": "media3",
+    "label": "Slide 3 media",
+    "type": "image",
+    "default": "assets/photo-group-coaching.jpg"
+  },
+  {
+    "key": "time4",
+    "label": "Slide 4 time",
+    "type": "text",
+    "default": "4:00 PM"
+  },
+  {
+    "key": "cap4",
+    "label": "Slide 4 caption",
+    "type": "text",
+    "default": "AFTER-SCHOOL RUSH."
+  },
+  {
+    "key": "media4",
+    "label": "Slide 4 media",
+    "type": "image",
+    "default": "assets/photo-lifting.jpg"
+  },
+  {
+    "key": "time5",
+    "label": "Slide 5 time",
+    "type": "text",
+    "default": "9:30 PM"
+  },
+  {
+    "key": "cap5",
+    "label": "Slide 5 caption",
+    "type": "text",
+    "default": "LAST REP CLOCKED."
+  },
+  {
+    "key": "media5",
+    "label": "Slide 5 media",
+    "type": "image",
+    "default": "assets/photo-jump-male.jpg"
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "COME SEE IT YOURSELF →"
+  }
+],
 };
 window.DAY_AT_AA_SPEC = DAY_AT_AA_SPEC;

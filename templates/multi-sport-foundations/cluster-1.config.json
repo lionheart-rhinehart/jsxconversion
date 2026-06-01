@@ -43,6 +43,14 @@
     {
       "id": "headline_top",
       "tag": "headline",
+      "role": "brand",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 17,
       "label": "FOUNDATIONAL (arched, glow)",
       "x": 0,
       "y": 110,
@@ -57,6 +65,12 @@
     {
       "id": "headline_bot",
       "tag": "headline",
+      "role": "brand",
+      "accepts": [
+        "brand",
+        "claim"
+      ],
+      "maxChars": 10,
       "label": "PROGRAM (arched low, glow)",
       "x": 0,
       "y": 1240,
@@ -71,6 +85,11 @@
     {
       "id": "headline_mid",
       "tag": "headline_accent",
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 8,
       "label": "YOUTH (red, skewed)",
       "x": 0,
       "y": 1180,
@@ -90,6 +109,13 @@
     {
       "id": "microscript",
       "tag": "microscript",
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 27,
       "label": "Microscript",
       "x": 60,
       "y": 1628,

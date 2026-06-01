@@ -1,0 +1,736 @@
+{
+  "schemaVersion": 1,
+  "campaign": "creative-engine-e2e-test-aa",
+  "brand": "athletes-acceleration",
+  "knobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": {
+      "video": 0.6,
+      "gif": 0.15,
+      "static": 0.25
+    },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 3
+  },
+  "angles": [
+    {
+      "id": "angle-1-my-kid-tries-hard",
+      "name": "My kid tries harder than everyone and still isn't getting faster",
+      "mechanism": "UMP Mechanism 1 — The Velocity Drop / The Last Rep Lie / Phantom Progress (Slow Code)",
+      "emotionalJob": "Take the blame off the kid and off the parent; put it on the unmeasured rep / the training model.",
+      "voice": "Coach Graham Wilkerson, Vulnerable Mentor — 'here's the brutal truth'; names the moment, never scolds; declarative, metric-driven, no emoji, no exclamation points.",
+      "assets": [
+        {
+          "id": "A1",
+          "beat": "A — Stop the scroll",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-e2e-a1",
+          "templateQuery": null,
+          "freshConcept": "kinetic-typography-sprint-to-slowmo",
+          "headline": "SHOWS UP. WORKS HARD. NEVER QUITS. / STILL THE SAME SPEED.",
+          "microscript": "This isn't bad luck. This is physics.",
+          "visual": "Explosive sprint start cutting to slow-motion deceleration as kinetic type stamps each line; ends on the velocity readout dropping.",
+          "image": {
+            "tag": "bg_clip",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/A1.mp4",
+          "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/A1.mp4",
+          "knowledgeRefs": [
+            "hook:V2.2",
+            "ad:2#altHook-V2.2",
+            "ump:explanation-nervous-system-recording"
+          ],
+          "templateData": {
+            "duration": 12,
+            "eyebrow": "SPORT PARENTS",
+            "line1": "DOES YOUR YOUTH ATHLETE ",
+            "line2": "SHOW UP & WORK HARD,",
+            "line3": "NEVER QUITS.",
+            "turn": "AND IS STILL THE SAME SPEED\nAS LAST SEASON?",
+            "microscript": "This isn't bad luck. This is physics.",
+            "media": "assets/photo-running.jpg",
+            "_overrides": {
+              "eyebrow": {
+                "fontSize": 46
+              }
+            }
+          },
+          "renderedAt": "2026-06-01T13:43:43.001Z"
+        },
+        {
+          "id": "A2",
+          "beat": "A — Stop the scroll",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-e2e-a2-hook",
+          "templateQuery": "eyebrow + bold headline over athlete cutout",
+          "freshConcept": null,
+          "headline": "Your kid's training is working perfectly. The problem is what it's teaching.",
+          "microscript": "THE LAST REP LIE",
+          "visual": "Athlete cutout over red wedge; eyebrow + Anton headline, mono microscript lower line.",
+          "image": {
+            "tag": "bg_photo",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "rendered",
+          "notes": "Rebound to composed lone-hook static (was cluster-13 — 3 shared-tag title slots overlapped). Verbatim V1.5 hook.",
+          "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/A2.png",
+          "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/A2.png",
+          "knowledgeRefs": [
+            "hook:V1.5",
+            "myth:2"
+          ],
+          "templateData": {
+            "eyebrow": "THE LAST REP LIE",
+            "hook": "Your kid's training is working perfectly. The problem is what it's teaching."
+          },
+          "renderedAt": "2026-06-01T13:59:45.971Z"
+        },
+        {
+          "id": "A3",
+          "beat": "A — Stop the scroll",
+          "format": "gif",
+          "source": "template",
+          "template": "fresh-e2e-a3",
+          "templateQuery": null,
+          "freshConcept": "typographic-flip-loop",
+          "headline": "GETTING FASTER?  OR JUST MORE TIRED?",
+          "microscript": "TRAIN FAST TO BE FAST",
+          "visual": "Two-state flip loop — explosive sprint vs. hands-on-knees — type snaps between the two questions.",
+          "image": {
+            "tag": "bg_clip",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/A3.gif",
+          "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/A3.gif",
+          "knowledgeRefs": [
+            "paradox:getting-faster-or-tired",
+            "dsi:1-grind-trap"
+          ],
+          "templateData": {
+            "questionA": "GETTING FASTER?",
+            "questionB": "OR JUST MORE TIRED?",
+            "microscript": "TRAIN FAST TO BE FAST"
+          },
+          "renderedAt": "2026-06-01T01:07:50.615Z"
+        },
+        {
+          "id": "B1",
+          "beat": "B — Name the moment",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-e2e-b1",
+          "templateQuery": null,
+          "freshConcept": "two-more-slowmo-velocity-readout",
+          "headline": "Every coach says 'two more.' Here's what those two reps are teaching.",
+          "microscript": "The tired rep isn't effort. It's instruction.",
+          "visual": "Slow-mo of a rep slowing at end of a set, velocity readout ticking down past the threshold line.",
+          "image": {
+            "tag": "bg_clip",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "rendered",
+          "notes": "Hook V1.1 (Warning) + DSI-1 lead microscript.",
+          "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/B1.mp4",
+          "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/B1.mp4",
+          "knowledgeRefs": [
+            "hook:V1.1",
+            "microscript:dsi1-1"
+          ],
+          "templateData": {
+            "eyebrow": "THE VELOCITY DROP",
+            "headline": "Every coach says 'two more.' Here's what those two reps are teaching.",
+            "microscript": "The tired rep isn't effort. It's instruction.",
+            "vFrom": 0.92,
+            "vTo": 0.71,
+            "media": "assets/photo-lifting.jpg"
+          },
+          "renderedAt": "2026-06-01T01:09:29.073Z"
+        },
+        {
+          "id": "B2",
+          "beat": "B — Name the moment",
+          "format": "gif",
+          "source": "template",
+          "template": "fresh-e2e-b2",
+          "templateQuery": null,
+          "freshConcept": "velocity-bar-dataviz-loop",
+          "headline": "0.92 m/s, then 0.71. A 23% drop.",
+          "microscript": "THE 10% RULE",
+          "visual": "Clean data-viz loop: a velocity bar dropping from rep 1 to rep 5 past the 10% threshold line, then resetting.",
+          "image": {
+            "tag": null,
+            "source": null,
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "rendered",
+          "notes": "Numbers verbatim from UMP first-velocity-readout (0.92 to 0.71 = 23% drop).",
+          "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/B2.gif",
+          "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/B2.gif",
+          "knowledgeRefs": [
+            "ump:proof-first-velocity-readout",
+            "ums:tip-1-the-10-percent-rule"
+          ],
+          "templateData": {
+            "eyebrow": "THE 10% RULE",
+            "headline": "0.92 m/s, then 0.71. A 23% drop.",
+            "microscript": "We measure to the hundredth. Everyone else guesses."
+          },
+          "renderedAt": "2026-06-01T13:39:35.306Z"
+        },
+        {
+          "id": "C1",
+          "beat": "C — Reveal the mechanism",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-e2e-c1",
+          "templateQuery": null,
+          "freshConcept": "muscle-memory-recording-overlay",
+          "headline": "The nervous system records the speed that actually happens. Not the speed you meant.",
+          "microscript": "Muscle memory remembers the speed, not just the move.",
+          "visual": "Sprint footage with an audio-waveform / recording overlay; the waveform flattens as the rep slows.",
+          "image": {
+            "tag": "bg_clip",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "rendered",
+          "notes": "Core epiphany of the Angle-1 ad copy (muscle memory remembers the speed).",
+          "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/C1.mp4",
+          "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/C1.mp4",
+          "knowledgeRefs": [
+            "ump:explanation-nervous-system-recording",
+            "ad:1"
+          ],
+          "templateData": {
+            "eyebrow": "THE RECORDING",
+            "headline": "The nervous system records the speed that actually happens. Not the speed you meant.",
+            "microscript": "Muscle memory remembers the speed, not just the move.",
+            "media": "assets/photo-running.jpg"
+          },
+          "renderedAt": "2026-06-01T01:16:56.268Z"
+        },
+        {
+          "id": "C2",
+          "beat": "C — Reveal the mechanism",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-e2e-c2",
+          "templateQuery": null,
+          "freshConcept": "slow-code-terminal-aesthetic",
+          "headline": "Working harder is writing slower code.",
+          "microscript": "The harder they grind, the deeper the slow groove.",
+          "visual": "Terminal / code aesthetic over an athlete silhouette; lines of 'slow code' compile as the athlete fatigues.",
+          "image": {
+            "tag": "bg_clip",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "rendered",
+          "notes": "DSI-1 software-metaphor microscript.",
+          "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/C2.mp4",
+          "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/C2.mp4",
+          "knowledgeRefs": [
+            "microscript:dsi1-4",
+            "ad:3"
+          ],
+          "templateData": {
+            "eyebrow": "SLOW CODE",
+            "headline": "Working harder is writing slower code.",
+            "microscript": "The harder they grind, the deeper the slow groove.",
+            "media": "assets/photo-lifting.jpg"
+          },
+          "renderedAt": "2026-06-01T13:40:43.198Z"
+        },
+        {
+          "id": "C3",
+          "beat": "C — Reveal the mechanism",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-e2e-c3",
+          "templateQuery": null,
+          "freshConcept": "fiber-erosion-motif",
+          "headline": "Every slow rep remodels the muscle to be slower. That's not training. That's erosion.",
+          "microscript": "PHANTOM PROGRESS",
+          "visual": "Erosion / fast-twitch-to-slow-twitch fiber motif; Type IIX converting to Type IIA as reps pile up.",
+          "image": {
+            "tag": "bg_clip",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "rendered",
+          "notes": "Verbatim 'erosion' framing from UMS core explanation; Phantom Progress (Tier 1).",
+          "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/C3.mp4",
+          "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/C3.mp4",
+          "knowledgeRefs": [
+            "ums:core-explanation-rep-that-ends-the-set",
+            "ump:proof-pareja-blanco-2017"
+          ],
+          "templateData": {
+            "eyebrow": "PHANTOM PROGRESS",
+            "headline": "Every slow rep remodels the muscle to be slower.",
+            "microscript": "That's not training. That's erosion.",
+            "media": "assets/photo-lifting.jpg"
+          },
+          "renderedAt": "2026-06-01T01:12:16.155Z"
+        },
+        {
+          "id": "C4",
+          "beat": "C — Reveal the mechanism",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-e2e-c4",
+          "templateQuery": null,
+          "freshConcept": "velocity-code-card",
+          "headline": "TIRED REP → SLOW CODE → SLOW ATHLETE",
+          "microscript": "THE VELOCITY CODE™",
+          "visual": "Terminal / code card; three-stage chain rendered as compiling lines on a dark card.",
+          "image": {
+            "tag": null,
+            "source": null,
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/C4.png",
+          "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/C4.png",
+          "knowledgeRefs": [
+            "ums:velocity-code-overview",
+            "microscript:dsi1-4"
+          ],
+          "templateData": {
+            "eyebrow": "// THE MECHANISM",
+            "title": "THE LAST REP\nWRITES SLOW CODE.",
+            "chain1": "TIRED REP",
+            "chain2": "SLOW CODE",
+            "chain3": "SLOW ATHLETE",
+            "microscript": "THE VELOCITY CODE™"
+          },
+          "renderedAt": "2026-06-01T01:12:19.397Z"
+        },
+        {
+          "id": "D1",
+          "beat": "D — Remove the blame",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-e2e-d1",
+          "templateQuery": null,
+          "freshConcept": "sideline-emotional-blame-lift",
+          "headline": "It was never your kid's fault. It was never yours. It's the model every program in town runs.",
+          "microscript": "They're not falling behind. Their training is pushing them back.",
+          "visual": "Sideline, parent watching; warm slow push-in; type lifts the blame line by line.",
+          "image": {
+            "tag": "bg_clip",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "rendered",
+          "notes": "Removal/Time-Division beat from AD 3 + DSI-1 emotional close.",
+          "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/D1.mp4",
+          "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/D1.mp4",
+          "knowledgeRefs": [
+            "ad:3",
+            "microscript:dsi1-5"
+          ],
+          "templateData": {
+            "eyebrow": "YOUR KID ISN’T THE PROBLEM",
+            "line1": "It was never your kid’s fault.",
+            "line2": "It was never yours.",
+            "line3": "It’s the model every program in town runs.",
+            "microscript": "They're not falling behind. Their training is pushing them back.",
+            "media": "assets/photo-coach-action.jpg"
+          },
+          "renderedAt": "2026-06-01T01:14:25.578Z"
+        },
+        {
+          "id": "D2",
+          "beat": "D — Remove the blame",
+          "format": "video",
+          "source": "template",
+          "template": "quote-card",
+          "templateQuery": "spoken quote / statement reel",
+          "freshConcept": null,
+          "headline": "The reps that feel like the hardest work are the ones quietly making your kid slower.",
+          "microscript": "— Coach Graham Wilkerson, CSCS",
+          "visual": "Coach + athlete; statement reel.",
+          "image": {
+            "tag": "bg_photo",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "rendered",
+          "notes": "Quote verbatim from AD 1 primary text.",
+          "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/D2.mp4",
+          "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/D2.mp4",
+          "knowledgeRefs": [
+            "ad:1",
+            "speaker:graham-wilkerson"
+          ],
+          "templateData": {
+            "duration": 7,
+            "eyebrow": "THE LAST REP LIE",
+            "quoteText": "The reps that feel like the hardest work are the ones quietly making your kid slower.",
+            "bylineName": "COACH GRAHAM WILKERSON",
+            "bylineMeta": "CSCS · ATHLETES ACCELERATION",
+            "statsLabel": "THE VELOCITY-PROTECTED DIFFERENCE",
+            "stats": "+224%|VERT JUMP · 40%|FEWER REPS · 28%|LESS FATIGUE",
+            "media": "http://localhost:5273/media-file/brand/aa-design-system/project/uploads/17859384366612528.mp4"
+          },
+          "photo": "brand/aa-design-system/project/uploads/Action Image - Med Ball Throw - High School - Female - Genesis.jpg",
+          "renderedAt": "2026-06-01T13:40:21.963Z",
+          "clip": "brand/aa-design-system/project/uploads/17859384366612528.mp4"
+        },
+        {
+          "id": "E1",
+          "beat": "E — Prove it",
+          "format": "video",
+          "source": "template",
+          "template": "stat-reveal",
+          "templateQuery": "big-number stat reveal",
+          "freshConcept": null,
+          "headline": "224% more vertical jump, with less total fatigue.",
+          "microscript": "Wang et al., 2026 · Frontiers in Physiology",
+          "visual": "Jump mat / clean studio; big-number reveal.",
+          "image": {
+            "tag": "bg_photo",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "rendered",
+          "notes": "Hero stat verbatim from UMP trigger (Wang 2026).",
+          "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/E1.mp4",
+          "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/E1.mp4",
+          "knowledgeRefs": [
+            "ump:proof-wang-2026"
+          ],
+          "templateData": {
+            "eyebrow": "FRONTIERS IN PHYSIOLOGY · 2026",
+            "title1": "224% MORE",
+            "title2": "VERTICAL JUMP.",
+            "ctaText": "BOOK THE ATHLETE ANALYSIS",
+            "freeLine1": "OR IT'S",
+            "freeLine2": "ON US."
+          },
+          "renderedAt": "2026-06-01T14:00:49.843Z"
+        },
+        {
+          "id": "E2",
+          "beat": "E — Prove it",
+          "format": "video",
+          "source": "template",
+          "template": "stat-reveal",
+          "templateQuery": "big-number stat reveal (2nd skeleton use)",
+          "freshConcept": null,
+          "headline": "40% fewer reps. 146% more jump.",
+          "microscript": "Pareja-Blanco et al., 2017",
+          "visual": "Bar-velocity tracker; big-number reveal.",
+          "image": {
+            "tag": "bg_photo",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "rendered",
+          "notes": "Stat verbatim from UMP proof (Pareja-Blanco 2017).",
+          "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/E2.mp4",
+          "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/E2.mp4",
+          "knowledgeRefs": [
+            "ump:proof-pareja-blanco-2017",
+            "myth:4"
+          ],
+          "templateData": {
+            "eyebrow": "PAREJA-BLANCO · 2017",
+            "title1": "40% FEWER REPS.",
+            "title2": "146% MORE JUMP.",
+            "ctaText": "BOOK THE ATHLETE ANALYSIS",
+            "freeLine1": "OR IT'S",
+            "freeLine2": "ON US."
+          },
+          "renderedAt": "2026-06-01T14:01:15.371Z"
+        },
+        {
+          "id": "E3",
+          "beat": "E — Prove it",
+          "format": "video",
+          "source": "template",
+          "template": "coach-lower-thirds",
+          "templateQuery": "talking-head lower-thirds",
+          "freshConcept": null,
+          "headline": "I've watched hundreds of athletes train for months without getting faster. The reason is always the same.",
+          "microscript": "CSCS · trained Zack Martin, Ted Karras, Nick Martin",
+          "visual": "Coach Graham talking head; lower-thirds name plate.",
+          "image": {
+            "tag": "bg_clip",
+            "source": "client",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [
+            "needs-graham-footage"
+          ],
+          "status": "rendered",
+          "notes": "Swap for a [T] proof static if no Graham footage is available.",
+          "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/E3.mp4",
+          "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/E3.mp4",
+          "knowledgeRefs": [
+            "speaker:graham-wilkerson",
+            "ad:3"
+          ],
+          "templateData": {
+            "coachName": "GRAHAM WILKERSON",
+            "coachTitle": "CSCS · TRAINED NFL'S ZACK MARTIN, TED KARRAS, NICK MARTIN"
+          },
+          "renderedAt": "2026-06-01T00:54:20.633Z"
+        },
+        {
+          "id": "E4",
+          "beat": "E — Prove it",
+          "format": "gif",
+          "source": "template",
+          "template": "stat-reveal",
+          "templateQuery": "number count-up loop (3rd skeleton use — at repetition cap)",
+          "freshConcept": null,
+          "headline": "224%",
+          "microscript": "Velocity-protected training",
+          "visual": "Number count-up loop to 224%.",
+          "image": {
+            "tag": null,
+            "source": null,
+            "ref": null
+          },
+          "audio": null,
+          "flags": [
+            "repetition-cap-reached:stat-reveal"
+          ],
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/E4.gif",
+          "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/E4.gif",
+          "knowledgeRefs": [
+            "ump:proof-wang-2026"
+          ],
+          "templateData": {
+            "eyebrow": "VELOCITY-PROTECTED",
+            "title1": "224%",
+            "title2": "MORE JUMP.",
+            "ctaText": "TRAIN FAST TO BE FAST",
+            "freeLine1": "OR IT'S",
+            "freeLine2": "ON US."
+          },
+          "renderedAt": "2026-06-01T14:01:40.558Z"
+        },
+        {
+          "id": "E5",
+          "beat": "E — Prove it",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-e2e-e5-testimonial",
+          "templateQuery": "testimonial card over photo, red bottom panel",
+          "freshConcept": null,
+          "headline": "We were with another facility for 2 years. After just 1 week with Genesis, my son said this was the best he'd ever had.",
+          "microscript": "Andy Johnson · Verified Google review",
+          "visual": "Athlete photo dimmed; Anton title over bottom red panel.",
+          "image": {
+            "tag": "bg_photo",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [
+            "editor-fit:title-to-short-lines"
+          ],
+          "status": "rendered",
+          "notes": "Rebound to composed testimonial static (was cluster-10, which had no testimonial slot). Verbatim Andy Johnson Google review.",
+          "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/E5.png",
+          "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/E5.png",
+          "knowledgeRefs": [
+            "testimonial:andy-johnson",
+            "ums:first-user-success"
+          ],
+          "templateData": {
+            "eyebrow": "// VERIFIED GOOGLE REVIEW",
+            "testimonial": "We were with another facility for 2 years. After just 1 week with Genesis, my son said this was the best he'd ever had.",
+            "byline": "ANDY JOHNSON · PARENT"
+          },
+          "renderedAt": "2026-06-01T13:40:26.093Z"
+        },
+        {
+          "id": "E6",
+          "beat": "E — Prove it",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-e2e-e6",
+          "templateQuery": null,
+          "freshConcept": "measured-vs-watched-checklist",
+          "headline": "Velocity measured every rep. Calibrated timing gates. A guarantee in writing.",
+          "microscript": "They watch your child train. We measure what actually happens.",
+          "visual": "Checklist card: measured vs. typical program, two columns, brand red checks.",
+          "image": {
+            "tag": null,
+            "source": null,
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "rendered",
+          "notes": "DSI-2 Measurement Advantage; microscript verbatim.",
+          "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/E6.png",
+          "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/E6.png",
+          "knowledgeRefs": [
+            "microscript:dsi2-5",
+            "dsi:2-measurement-advantage"
+          ],
+          "templateData": {
+            "eyebrow": "// THE MEASUREMENT ADVANTAGE",
+            "title": "MEASURED,\nNOT WATCHED.",
+            "check1": "Velocity measured every rep",
+            "check2": "Calibrated timing gates",
+            "check3": "A guarantee in writing",
+            "microscript": "THEY WATCH YOUR CHILD TRAIN. WE MEASURE WHAT ACTUALLY HAPPENS."
+          },
+          "renderedAt": "2026-06-01T01:14:28.012Z"
+        },
+        {
+          "id": "F1",
+          "beat": "F — The offer",
+          "format": "video",
+          "source": "template",
+          "template": "logo-sting",
+          "templateQuery": "guarantee / offer reel",
+          "freshConcept": null,
+          "headline": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us.",
+          "microscript": "The Performance Contract",
+          "visual": "Logo sting resolving to the written guarantee.",
+          "image": {
+            "tag": "bg_photo",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [
+            "guarantee-verbatim"
+          ],
+          "status": "rendered",
+          "notes": "Guarantee verbatim from Angle-1 ad copy; never paraphrase.",
+          "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/F1.mp4",
+          "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/F1.mp4",
+          "knowledgeRefs": [
+            "offer:guarantee",
+            "ad:1"
+          ],
+          "templateData": {
+            "wordmark1": "ATHLETES",
+            "wordmark2": "ACCELERATION",
+            "tagline": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us.",
+            "url": "athletesacceleration.com"
+          },
+          "renderedAt": "2026-06-01T13:40:51.519Z"
+        },
+        {
+          "id": "F2",
+          "beat": "F — The offer",
+          "format": "video",
+          "source": "template",
+          "template": "meet-coach",
+          "templateQuery": "CTA / assessment reel",
+          "freshConcept": null,
+          "headline": "Bring your athlete in. See their real sprint time, jump height, velocity.",
+          "microscript": "Not a sales pitch. A data set.",
+          "visual": "Facility, tablet, velocity data; CTA reel.",
+          "image": {
+            "tag": "bg_photo",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [],
+          "status": "rendered",
+          "notes": "The Athlete Analysis first-step offer, verbatim closers from the ad copy.",
+          "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/F2.mp4",
+          "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/F2.mp4",
+          "knowledgeRefs": [
+            "offer:athlete-analysis",
+            "ad:2"
+          ],
+          "templateData": {
+            "eyebrow": "THE ATHLETE ANALYSIS",
+            "coachFirst": "BRING YOUR",
+            "coachLast": "ATHLETE IN",
+            "coachTitle": "See their real sprint time, jump height, velocity.",
+            "ctaText": "BOOK THE ATHLETE ANALYSIS",
+            "ctaMicro": "Not a sales pitch. A data set."
+          },
+          "renderedAt": "2026-06-01T00:56:12.275Z"
+        },
+        {
+          "id": "F3",
+          "beat": "F — The offer",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-12",
+          "templateQuery": "guarantee card",
+          "freshConcept": null,
+          "headline": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us.",
+          "microscript": "Ages 8–12 · Hamilton County, IN",
+          "visual": "Guarantee card + athlete photo.",
+          "image": {
+            "tag": "bg_photo",
+            "source": "library",
+            "ref": null
+          },
+          "audio": null,
+          "flags": [
+            "guarantee-verbatim"
+          ],
+          "status": "rendered",
+          "notes": "Guarantee verbatim; never paraphrase.",
+          "output": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/F3.png",
+          "thumb": "out/campaigns/creative-engine-e2e-test-aa/angle-1-my-kid-tries-hard/F3.png",
+          "knowledgeRefs": [
+            "offer:guarantee"
+          ],
+          "templateData": {
+            "title": "THE\nGUARANTEE",
+            "microscript": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us."
+          },
+          "renderedAt": "2026-06-01T13:40:54.825Z"
+        }
+      ]
+    }
+  ]
+}

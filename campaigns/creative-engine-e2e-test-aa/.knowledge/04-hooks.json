@@ -1,0 +1,175 @@
+{
+  "key": "04-hooks",
+  "section": "Hooks",
+  "sourceFile": "campaigns/creative-engine-e2e-test-aa/brief.md",
+  "items": [
+    {
+      "id": "hook:H1",
+      "type": "hook",
+      "text": "What if every hard session your child just finished was teaching their nervous system to be slower?",
+      "code": "H1",
+      "sourceLines": "L128",
+      "notes": "From direct document extraction (no brief code; sequential assigned)"
+    },
+    {
+      "id": "hook:H2",
+      "type": "hook",
+      "text": "The program that looked hardest got the worst results. Every single time.",
+      "code": "H2",
+      "sourceLines": "L130",
+      "notes": "From direct document extraction"
+    },
+    {
+      "id": "hook:H3",
+      "type": "hook",
+      "text": "Your child isn't behind. Their training system is — and there's a measurable reason why.",
+      "code": "H3",
+      "sourceLines": "L132",
+      "notes": "From direct document extraction"
+    },
+    {
+      "id": "hook:H4",
+      "type": "hook",
+      "text": "There's a moment in every set when it stops being training and starts being anti-training. No program in this market knows when that moment happens.",
+      "code": "H4",
+      "sourceLines": "L134",
+      "notes": "From direct document extraction"
+    },
+    {
+      "id": "hook:H5",
+      "type": "hook",
+      "text": "Your kid hasn't been failing. The training system has been flying blind.",
+      "code": "H5",
+      "sourceLines": "L136",
+      "notes": "From direct document extraction"
+    },
+    {
+      "id": "hook:H6",
+      "type": "hook",
+      "text": "Every coach says 'two more' at the end of every drill. Here's what those last two reps are actually doing to your athlete's speed.",
+      "code": "H6",
+      "sourceLines": "L138",
+      "notes": "From direct document extraction"
+    },
+    {
+      "id": "hook:H7",
+      "type": "hook",
+      "text": "The reps that are making your kid slower are the ones every coach calls the most important.",
+      "code": "H7",
+      "sourceLines": "L140",
+      "notes": "From direct document extraction"
+    },
+    {
+      "id": "hook:H8",
+      "type": "hook",
+      "text": "Your athlete shows up. Works hard. Never quits. And hasn't gotten faster in six months. Here's the reason — and it's not them.",
+      "code": "H8",
+      "sourceLines": "L142",
+      "notes": "From direct document extraction"
+    },
+    {
+      "id": "hook:H9",
+      "type": "hook",
+      "text": "Nobody in youth sports will say this out loud: those last reps when your kid slows down are teaching their body to move slowly.",
+      "code": "H9",
+      "sourceLines": "L144",
+      "notes": "From direct document extraction"
+    },
+    {
+      "id": "hook:H10",
+      "type": "hook",
+      "text": "Your kid's training is working perfectly. The problem is what it's teaching.",
+      "code": "H10",
+      "sourceLines": "L146",
+      "notes": "From direct document extraction"
+    },
+    {
+      "id": "hook:H11",
+      "type": "hook",
+      "text": "The window they told you to wait for? It closes before puberty starts.",
+      "code": "H11",
+      "sourceLines": "L148",
+      "notes": "From direct document extraction"
+    },
+    {
+      "id": "hook:H12",
+      "type": "hook",
+      "text": "I've used this same technology to help build a 7× Pro Bowl offensive lineman. I'm now using it on 9-year-olds. The science is the same. The window of opportunity is better.",
+      "code": "H12",
+      "sourceLines": "L150",
+      "notes": "From direct document extraction"
+    },
+    {
+      "id": "hook:H13",
+      "type": "hook",
+      "text": "Speed isn't born. It's a movement pattern your nervous system learns — or doesn't.",
+      "code": "H13",
+      "sourceLines": "L152",
+      "notes": "From direct document extraction"
+    },
+    {
+      "id": "hook:H14",
+      "type": "hook",
+      "text": "We measure your child's explosive output to the hundredth of a meter per second. Every rep.",
+      "code": "H14",
+      "sourceLines": "L154",
+      "notes": "From direct document extraction"
+    },
+    {
+      "id": "hook:H15",
+      "type": "hook",
+      "text": "For 8–12 year old athletes who work hard but aren't getting faster.",
+      "code": "H15",
+      "sourceLines": "L156",
+      "notes": "From direct document extraction"
+    },
+    {
+      "id": "hook:H16",
+      "type": "hook",
+      "text": "Hamilton County parents: the developmental window for speed is open. It closes at puberty.",
+      "code": "H16",
+      "sourceLines": "L158",
+      "notes": "From direct document extraction"
+    },
+    {
+      "id": "hook:H17",
+      "type": "hook",
+      "text": "There's no middle ground. Either you are all in and get private training just to be able to keep up... or you fall back into rec.",
+      "code": "H17",
+      "sourceLines": "L160",
+      "notes": "From direct document extraction; VOC hook — real parent quote"
+    },
+    {
+      "id": "hook:H18",
+      "type": "hook",
+      "text": "I have a deep love for my son and I'm committed to helping him succeed, even if he appears to be moving in slow motion on the field.",
+      "code": "H18",
+      "sourceLines": "L162",
+      "notes": "From direct document extraction; VOC mirror hook — real parent quote"
+    },
+    {
+      "id": "hook:Q1",
+      "type": "hook",
+      "text": "Which of these common youth speed training drills has been shown to make athletes SLOWER — the longer the drill goes on?",
+      "code": "Q1",
+      "sourceLines": "L166",
+      "notes": "Quiz-based VSL opening hooks"
+    },
+    {
+      "id": "hook:Q2",
+      "type": "hook",
+      "text": "Which phrase — shouted by coaches at virtually every youth sports practice in the country — has been identified by sports neuroscientists as one of the most counterproductive things you can say to an athlete training for speed?",
+      "code": "Q2",
+      "sourceLines": "L168",
+      "notes": "Quiz-based VSL opening hooks"
+    },
+    {
+      "id": "hook:Q3",
+      "type": "hook",
+      "text": "Which visible sign at the end of a youth training session — the one most parents point to as proof that the coach is REALLY pushing their athlete — is actually evidence that the final portion of the session produced zero speed development?",
+      "code": "Q3",
+      "sourceLines": "L170",
+      "notes": "Quiz-based VSL opening hooks"
+    }
+  ]
+}
