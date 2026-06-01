@@ -73,35 +73,21 @@ block of quoted items with source lines. Aggregate, then **assert every expected
 section produced output** before planning; re-run any that came back empty.
 
 ### Step 4 — Plan
-**Plan by the playbook (`docs/creative-playbook.md`).** For each angle, author assets up to
-`knobs.assetsPerAngle`. For each asset:
-- **Pick the beat + roles by the selection rule** (audience temperature → beat → format →
-  role-count): COLD → beat A, `hook` (+`brand`), 1–2 roles, static/short video; WARM → beats
-  C/D/E, reframe/mechanism + proof/stat/testimonial, 2–3 roles, video shines; HOT → beat F,
-  offer+guarantee+cta, 2–3 roles. Hold **role-count** to **1 dominant + ~2 supporting** (cold = 1).
-  Use `beat: null` for brand bumpers / logo stings (no funnel step).
-- **Spread beats A–F across the angle's mix** (rough lead-gen budget ≈ 70% warm proof/offer ·
-  20% hot retarget · 10% cold hook) — the plan is the coverage map; don't ship all one beat.
-- **Select a template by ROLE-FIT.** Read `templates/_role-index.json` **if present** (regenerate
-  with `node scripts/build-template-index.mjs` when templates changed): pick a role-ready template
-  of the right `format` whose `roles` expose the beat's required roles (or whose `accepts` can hold
-  them — a hijackable slot). **Fit-first:** only mark `source:"fresh"` when nothing fits. If the
-  index is missing, fall back to reading specs / judgment.
-- Bind a headline + microscript pulled/derived from `campaign-knowledge.json` to the beat, format,
-  and image source. Validate tag→layer-type before binding an image tag.
+For each angle, author assets up to `knobs.assetsPerAngle`, honoring the
+motion:still ratio, the **repetition cap** (≤ cap reuses of any one template
+skeleton per angle), and the **freshness floor** (min % fresh). **Fit-first:** use
+a bank template when one genuinely expresses the message; otherwise mark the asset
+`source:"fresh"` for the generator. Each asset binds a headline + microscript
+pulled/derived from `campaign-knowledge.json` to a beat, a format, and an image
+source. Validate tag→layer-type before binding an image tag. Write
+`campaigns/<name>/creative-plan.json` (schema in `docs/PROCESS.md`).
 
-**Constraint priority** when they conflict: brand-voice & guarantee > beat & role correctness >
-beat coverage (A–F spread) > the knobs (motionRatio / freshnessFloor / repetitionCap).
-Write `campaigns/<name>/creative-plan.json` (schema in `docs/PROCESS.md`).
-
-**`templateData` — precise per-slot fill (selection ≠ fill).** The role-index only *picks* a
-template; copy then lands two ways. (a) The **role-aware auto-join** now routes `headline` → the
-beat's role-slot and `microscript` → the `reframe` slot automatically, so a simple template fills
-with no `templateData`. (b) **`templateData`** gives precise/complete control — still required for
-multi-field templates (e.g. `stat-reveal`'s eyebrow/title1/title2/stat*/cta) which otherwise show
-stock defaults. Key it by the slot's **`id`** (precise) or its tag/field name (back-compat);
-explicit `templateData` always wins. The `guarantee` slot is **locked** (renders the verbatim
-guarantee, won't auto-fill — don't override). Find the keys by reading the template:
+**`templateData` — map copy onto each template's REAL fields.** `headline` and
+`microscript` are human-facing summary fields; they do NOT auto-land in a
+template's slots. For any `source:"template"` asset, also write a `templateData`
+object keyed to that specific template's own field names, so the campaign copy
+renders where it belongs (else the template shows its stock defaults). Find the
+keys by reading the template:
 - **Motion** (`brand/video-templates/templates/<t>.jsx`): the keys are the
   `data.<key>` reads (and the `*_SPEC.fields[].key` list). Examples:
   `stat-reveal` → `{eyebrow,title1,title2,ctaText}`; `quote-card` →
@@ -112,8 +98,7 @@ guarantee, won't auto-fill — don't override). Find the keys by reading the tem
 - **Static** (`cluster-*`): the keys are the layer `tag` names in
   `<cluster>.config.json` (e.g. `title`, `microscript`, `city`, `guarantee`).
 The runner uses `templateData` verbatim when present (warning on keys the template
-doesn't read), and otherwise the **role-aware join** (`buildCopyByRole` → `assemble` in
-`scripts/lib/`) routes headline/microscript onto the right role-slots.
+doesn't read), and falls back to a headline/microscript heuristic when it's absent.
 
 ### Step 5 — Review (stop here)
 Ensure the servers are up:

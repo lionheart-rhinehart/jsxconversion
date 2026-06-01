@@ -86,6 +86,13 @@ expresses the message; else generate fresh. Bounded by a **repetition cap**
 (≤ ~3 reuses of a skeleton per angle) and a **freshness floor** (~45% now, tapering
 to ~25-30% as the bank deepens). The observed split is an output, not an input.
 
+Selection is **role-fit + playbook-driven**: `docs/creative-playbook.md` is the rulebook for which
+**roles** each beat (A–F) needs and how many; `templates/_role-index.json` (regenerate with
+`node scripts/build-template-index.mjs`) maps each role-ready template → its `roles`/`accepts`, so
+the planner picks a template that exposes the beat's roles (native `roles` preferred, `accepts` =
+hijackable) before falling to `fresh`. Most of the bank is **not** yet role-ready, so fresh still
+dominates until templates are retrofitted.
+
 ## The flywheel
 Every good `fresh` asset is **promoted into the bank** (static → a `cluster-*`;
 motion → a `templates/*.jsx` + `*_SPEC`). Generation isn't a competitor to the

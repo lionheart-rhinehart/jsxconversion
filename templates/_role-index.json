@@ -1,0 +1,433 @@
+{
+  "generatedAt": "2026-06-01T16:52:34.536Z",
+  "note": "Role-index for playbook-driven template selection. Regenerate with: node scripts/build-template-index.mjs",
+  "templates": {
+    "cluster-1": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "brand",
+        "reframe"
+      ],
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer",
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "slotCount": 4
+    },
+    "cluster-10": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "claim",
+        "reframe"
+      ],
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer",
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "slotCount": 3
+    },
+    "cluster-11": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "hook",
+        "reframe",
+        "claim"
+      ],
+      "accepts": [
+        "hook",
+        "reframe",
+        "eyebrow",
+        "claim",
+        "brand",
+        "offer",
+        "proof"
+      ],
+      "slotCount": 4
+    },
+    "cluster-12": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "reframe",
+        "claim"
+      ],
+      "accepts": [
+        "reframe",
+        "eyebrow",
+        "proof",
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "slotCount": 3
+    },
+    "cluster-13": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "claim",
+        "reframe"
+      ],
+      "accepts": [
+        "eyebrow",
+        "hook",
+        "claim",
+        "brand",
+        "offer",
+        "reframe",
+        "proof"
+      ],
+      "slotCount": 6
+    },
+    "cluster-14": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "claim"
+      ],
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "slotCount": 6
+    },
+    "cluster-15": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "claim",
+        "reframe"
+      ],
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer",
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "slotCount": 3
+    },
+    "cluster-16": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "brand",
+        "claim",
+        "reframe"
+      ],
+      "accepts": [
+        "brand",
+        "hook",
+        "claim",
+        "offer",
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "slotCount": 5
+    },
+    "cluster-17": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "claim",
+        "reframe"
+      ],
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer",
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "slotCount": 4
+    },
+    "cluster-18": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "claim",
+        "brand",
+        "reframe"
+      ],
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer",
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "slotCount": 5
+    },
+    "cluster-2": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "claim",
+        "brand",
+        "reframe"
+      ],
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer",
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "slotCount": 4
+    },
+    "cluster-21": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "claim",
+        "reframe"
+      ],
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer",
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "slotCount": 4
+    },
+    "cluster-22": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "claim",
+        "reframe"
+      ],
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer",
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "slotCount": 5
+    },
+    "cluster-2a": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "brand",
+        "reframe"
+      ],
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "slotCount": 4
+    },
+    "cluster-3": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "claim",
+        "brand",
+        "reframe"
+      ],
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer",
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "slotCount": 4
+    },
+    "cluster-4": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "claim",
+        "reframe",
+        "brand"
+      ],
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer",
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "slotCount": 3
+    },
+    "cluster-8": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "hook",
+        "reframe"
+      ],
+      "accepts": [
+        "eyebrow",
+        "brand",
+        "hook",
+        "reframe",
+        "proof"
+      ],
+      "slotCount": 6
+    },
+    "cluster-8a": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "reframe",
+        "claim"
+      ],
+      "accepts": [
+        "eyebrow",
+        "brand",
+        "reframe",
+        "claim",
+        "proof"
+      ],
+      "slotCount": 6
+    },
+    "cluster-9": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "hook",
+        "reframe"
+      ],
+      "accepts": [
+        "hook",
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "slotCount": 3
+    },
+    "coach-lower-thirds": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
+      "roles": [
+        "byline",
+        "claim",
+        "proof"
+      ],
+      "slotCount": 3
+    },
+    "fresh-e2e-a2-hook": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "hook"
+      ],
+      "accepts": [
+        "eyebrow",
+        "hook",
+        "claim",
+        "reframe"
+      ],
+      "slotCount": 2
+    },
+    "fresh-e2e-e5-testimonial": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "testimonial",
+        "byline"
+      ],
+      "accepts": [
+        "eyebrow",
+        "testimonial",
+        "byline",
+        "proof"
+      ],
+      "slotCount": 3
+    },
+    "logo-sting": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
+      "roles": [
+        "brand",
+        "claim",
+        "byline"
+      ],
+      "slotCount": 3
+    },
+    "meet-coach": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
+      "roles": [
+        "eyebrow",
+        "byline",
+        "claim",
+        "testimonial",
+        "proof",
+        "stat",
+        "cta"
+      ],
+      "slotCount": 7
+    },
+    "quote-card": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
+      "roles": [
+        "eyebrow",
+        "testimonial",
+        "byline",
+        "stat"
+      ],
+      "slotCount": 4
+    },
+    "stat-reveal": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
+      "roles": [
+        "eyebrow",
+        "claim",
+        "cta",
+        "stat",
+        "guarantee"
+      ],
+      "slotCount": 5
+    }
+  }
+}

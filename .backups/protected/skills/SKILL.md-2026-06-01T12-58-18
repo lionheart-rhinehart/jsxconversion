@@ -25,14 +25,6 @@ bank's own file shape so it is **promotable**. This is invoked per-asset by
   (scrim/overlay where needed). **Never** place text the user must later move to
   read — compose it correctly the first time, but expose every value as data so
   the user can still tweak in the editor.
-- **Follow `docs/creative-playbook.md`** (the canonical rulebook). Place roles by the beat's
-  recipe + placement laws: hook in the top third (a lone cold hook → anchor it in the lower
-  third over the gradient, not floating mid-frame), proof in the first half, offer/guarantee/cta
-  in the bottom band, eyebrow as a **legible chip** (not thin mono over a busy photo). **Motion
-  authoring rules** (hard-won): author **vertical-native** (fill the 1080×1920 frame, don't drop a
-  square layout in); call **`useTime()` INSIDE `<Stage>`** (in a child component — calling it in
-  the Stage host returns t=0 and everything renders invisible); give **every** text an explicit
-  `color`; captions carry the whole message (mute viewing).
 
 ## Output shapes (match the bank exactly)
 
@@ -40,11 +32,8 @@ bank's own file shape so it is **promotable**. This is invoked per-asset by
 Emit a pair into `templates/multi-sport-foundations/` (so `./_helpers.jsx` and
 `./assets/*` resolve), named `fresh-<campaign>-<angle>-<assetId>`:
 - `<name>.config.json` — the data-driven layer model: `{ width, height, media?,
-  fixedDesign[], elements[], foregroundMedia? }`. Each editable text layer carries a
-  semantic `tag` **plus a copy-role header — `role` (one of the 13 in
-  `scripts/lib/roles.mjs`), `accepts` (other roles the slot can hold), and `maxChars`** — so
-  the role-aware fill lands copy correctly and the result is promotable into the role-aware bank.
-  Validate JSON before writing.
+  fixedDesign[], elements[], foregroundMedia? }`. Each editable layer carries a
+  semantic `tag`. Validate JSON before writing.
 - `<name>.jsx` — the thin shell, **with `_FONT_PREFLIGHT` markers** (else fonts
   silently fall back to sans-serif), importing the config and rendering
   `<LayerStack config={config} />` via `./_helpers.jsx`.
@@ -57,9 +46,7 @@ Emit a pair into `templates/multi-sport-foundations/` (so `./_helpers.jsx` and
 Emit a Claude Design Stage component into `brand/video-templates/templates/` (so
 `animations.jsx` + `elements/*` are siblings), shaped like the existing bank
 templates: a `function XReel({ data })` that reads `data.*` with `?? default`
-fallbacks, plus `window.XReel = XReel` and an `X_SPEC = { fields: [...] }` **where every
-field carries a `role` (one of the 13 in `scripts/lib/roles.mjs`)** — so the planner's
-role-fit selection (`templates/_role-index.json`) and the role-aware fill both see it —
+fallbacks, plus `window.XReel = XReel` and an optional `X_SPEC = { fields: [...] }`
 so the gallery + tweaks panel can drive it. Per-asset copy arrives via
 `window.__CONFIG__` (the renderer injects it). Register the window global or the
 renderer throws.

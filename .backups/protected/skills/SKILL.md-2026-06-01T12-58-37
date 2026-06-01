@@ -57,9 +57,7 @@ Emit a pair into `templates/multi-sport-foundations/` (so `./_helpers.jsx` and
 Emit a Claude Design Stage component into `brand/video-templates/templates/` (so
 `animations.jsx` + `elements/*` are siblings), shaped like the existing bank
 templates: a `function XReel({ data })` that reads `data.*` with `?? default`
-fallbacks, plus `window.XReel = XReel` and an `X_SPEC = { fields: [...] }` **where every
-field carries a `role` (one of the 13 in `scripts/lib/roles.mjs`)** — so the planner's
-role-fit selection (`templates/_role-index.json`) and the role-aware fill both see it —
+fallbacks, plus `window.XReel = XReel` and an optional `X_SPEC = { fields: [...] }`
 so the gallery + tweaks panel can drive it. Per-asset copy arrives via
 `window.__CONFIG__` (the renderer injects it). Register the window global or the
 renderer throws.

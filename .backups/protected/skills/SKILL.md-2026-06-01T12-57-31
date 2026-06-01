@@ -94,14 +94,12 @@ section produced output** before planning; re-run any that came back empty.
 beat coverage (A–F spread) > the knobs (motionRatio / freshnessFloor / repetitionCap).
 Write `campaigns/<name>/creative-plan.json` (schema in `docs/PROCESS.md`).
 
-**`templateData` — precise per-slot fill (selection ≠ fill).** The role-index only *picks* a
-template; copy then lands two ways. (a) The **role-aware auto-join** now routes `headline` → the
-beat's role-slot and `microscript` → the `reframe` slot automatically, so a simple template fills
-with no `templateData`. (b) **`templateData`** gives precise/complete control — still required for
-multi-field templates (e.g. `stat-reveal`'s eyebrow/title1/title2/stat*/cta) which otherwise show
-stock defaults. Key it by the slot's **`id`** (precise) or its tag/field name (back-compat);
-explicit `templateData` always wins. The `guarantee` slot is **locked** (renders the verbatim
-guarantee, won't auto-fill — don't override). Find the keys by reading the template:
+**`templateData` — map copy onto each template's REAL fields.** `headline` and
+`microscript` are human-facing summary fields; they do NOT auto-land in a
+template's slots. For any `source:"template"` asset, also write a `templateData`
+object keyed to that specific template's own field names, so the campaign copy
+renders where it belongs (else the template shows its stock defaults). Find the
+keys by reading the template:
 - **Motion** (`brand/video-templates/templates/<t>.jsx`): the keys are the
   `data.<key>` reads (and the `*_SPEC.fields[].key` list). Examples:
   `stat-reveal` → `{eyebrow,title1,title2,ctaText}`; `quote-card` →
@@ -112,8 +110,7 @@ guarantee, won't auto-fill — don't override). Find the keys by reading the tem
 - **Static** (`cluster-*`): the keys are the layer `tag` names in
   `<cluster>.config.json` (e.g. `title`, `microscript`, `city`, `guarantee`).
 The runner uses `templateData` verbatim when present (warning on keys the template
-doesn't read), and otherwise the **role-aware join** (`buildCopyByRole` → `assemble` in
-`scripts/lib/`) routes headline/microscript onto the right role-slots.
+doesn't read), and falls back to a headline/microscript heuristic when it's absent.
 
 ### Step 5 — Review (stop here)
 Ensure the servers are up:
