@@ -1,0 +1,111 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "background",
+      "tag": "bg_photo",
+      "label": "Gym scene (full frame)",
+      "type": "image",
+      "src": "./assets/cluster-10-bg.jpg",
+      "x": -897,
+      "y": 0,
+      "width": 2812,
+      "height": 2112,
+      "objectFit": "fill",
+      "z": 0
+    },
+    {
+      "id": "scene_dim",
+      "tag": "brand_dim",
+      "label": "Scene darkening overlay",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "rgba(8,8,12,0.55)",
+      "z": 1
+    },
+    {
+      "id": "glass_panel",
+      "tag": "brand_panel",
+      "label": "Frosted glass panel (rounded)",
+      "type": "rect",
+      "x": 28,
+      "y": 28,
+      "width": 1024,
+      "height": 1864,
+      "fill": "rgba(255,255,255,0.12)",
+      "border": "2px solid rgba(255,255,255,0.42)",
+      "borderRadius": 44,
+      "z": 2
+    },
+    {
+      "id": "athletes",
+      "tag": "talent_photo",
+      "label": "Jumping athlete + coach cutout",
+      "type": "image",
+      "src": "./assets/cluster-10-foreground.png",
+      "x": -866,
+      "y": 313,
+      "width": 2812,
+      "height": 2112,
+      "objectFit": "fill",
+      "z": 3,
+      "opacity": 1
+    }
+  ],
+  "elements": [
+    {
+      "id": "top_heading",
+      "tag": "title",
+      "label": "PARENTS OF YOUTH ATHLETES (top, italic)",
+      "x": 74,
+      "y": 128,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "ONE WEEK\nBEAT TWO YEARS",
+      "fontSize": 48,
+      "fontFamily": "Geist",
+      "fontWeight": 700,
+      "fontStyle": "italic",
+      "color": "#ffffff",
+      "lineHeight": 1,
+      "letterSpacing": "0.04em",
+      "z": 4
+    },
+    {
+      "id": "microscript",
+      "tag": "microscript",
+      "label": "Microscript line (left)",
+      "x": 68,
+      "y": 688,
+      "text": "AGES 8-18 · FORT WAYNE, IN",
+      "fontSize": 28,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 400,
+      "color": "rgba(255,255,255,0.82)",
+      "letterSpacing": "0.02em",
+      "textTransform": "uppercase",
+      "z": 5
+    },
+    {
+      "id": "bottom_title",
+      "tag": "title_2",
+      "label": "Foundational Youth Program (bottom bold)",
+      "x": 41,
+      "y": 1501,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "ANDY JOHNSON, PARENT",
+      "fontSize": 42,
+      "fontFamily": "Geist",
+      "fontWeight": 700,
+      "color": "#ffffff",
+      "lineHeight": 1,
+      "letterSpacing": "0.01em",
+      "z": 6
+    }
+  ]
+}

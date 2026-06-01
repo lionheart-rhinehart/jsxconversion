@@ -193,44 +193,35 @@ ${fontsCssPath ? '<link rel="stylesheet" href="./fonts.css">' : ""}
   })();
 </script></body></html>`);
 
+  const puppeteer = (await import("puppeteer")).default;
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage",
+      "--font-render-hinting=none", "--disable-gpu", `--window-size=${params.WIDTH},${params.HEIGHT}`],
+    defaultViewport: { width: params.WIDTH, height: params.HEIGHT, deviceScaleFactor: 1 },
+  });
+  const page = await browser.newPage();
+  page.on("pageerror", (e) => console.error("[page error]", e.message));
+  await page.goto(pathToFileURL(html).href, { waitUntil: "load" });
+  await page.waitForFunction("window.__ready === true", { timeout: 15000 });
+  await page.evaluate(async () => { if (document.fonts && document.fonts.ready) await document.fonts.ready; });
+  await page.evaluate(() => window.__renderAt(0));
+  await new Promise((r) => setTimeout(r, 250));
+
   const totalFrames = Math.round(params.DURATION_SECONDS * params.FPS);
   const framesDir = join(tmp, "frames");
   mkdirSync(framesDir, { recursive: true });
-
-  const puppeteer = (await import("puppeteer")).default;
-  // Wrap the whole browser lifecycle in try/finally so a waitForFunction
-  // timeout (or any screenshot error) can NEVER skip browser.close() and orphan
-  // Chrome. Mirrors the shipped path in claude-design.mjs. encodeFrames runs
-  // AFTER the finally — it needs the captured PNGs, not the live browser.
-  let browser;
-  try {
-    browser = await puppeteer.launch({
-      headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage",
-        "--font-render-hinting=none", "--disable-gpu", `--window-size=${params.WIDTH},${params.HEIGHT}`],
-      defaultViewport: { width: params.WIDTH, height: params.HEIGHT, deviceScaleFactor: 1 },
+  for (let i = 0; i < totalFrames; i++) {
+    const t = i / params.FPS;
+    await page.evaluate((time) => window.__renderAt(time), t);
+    await page.screenshot({
+      path: join(framesDir, `f_${String(i).padStart(6, "0")}.png`),
+      omitBackground: false,
+      clip: { x: 0, y: 0, width: params.WIDTH, height: params.HEIGHT },
     });
-    const page = await browser.newPage();
-    page.on("pageerror", (e) => console.error("[page error]", e.message));
-    await page.goto(pathToFileURL(html).href, { waitUntil: "load" });
-    await page.waitForFunction("window.__ready === true", { timeout: 15000 });
-    await page.evaluate(async () => { if (document.fonts && document.fonts.ready) await document.fonts.ready; });
-    await page.evaluate(() => window.__renderAt(0));
-    await new Promise((r) => setTimeout(r, 250));
-
-    for (let i = 0; i < totalFrames; i++) {
-      const t = i / params.FPS;
-      await page.evaluate((time) => window.__renderAt(time), t);
-      await page.screenshot({
-        path: join(framesDir, `f_${String(i).padStart(6, "0")}.png`),
-        omitBackground: false,
-        clip: { x: 0, y: 0, width: params.WIDTH, height: params.HEIGHT },
-      });
-      if (i % params.FPS === 0 || i === totalFrames - 1) console.error(`[render] frame ${i + 1}/${totalFrames}`);
-    }
-  } finally {
-    if (browser) await browser.close().catch(() => {});
+    if (i % params.FPS === 0 || i === totalFrames - 1) console.error(`[render] frame ${i + 1}/${totalFrames}`);
   }
+  await browser.close();
   await encodeFrames(framesDir, params, outPath);
 }
 

@@ -1,0 +1,210 @@
+{
+  "key": "06-paradox-fascination-quiz",
+  "sections": ["Paradoxes", "Fascinations", "UMP Quiz"],
+  "sourceFile": "campaigns/creative-engine-e2e-test-aa/brief.md",
+  "items": [
+    {
+      "id": "paradox:harder-worker-gets-slower",
+      "type": "paradox",
+      "text": "Why does a child who works harder than every other athlete on the field — who never quits, never misses a session, runs every extra rep — still get slower while a child who does fewer reps at full velocity keeps getting faster?",
+      "sourceLines": "L235",
+      "notes": ""
+    },
+    {
+      "id": "paradox:9yo-vs-nfl-response",
+      "type": "paradox",
+      "text": "Why can a 9-year-old respond more dramatically to the same training stimulus than an NFL athlete in his prime — even though the NFL athlete is stronger, more experienced, and more developed in every measurable way?",
+      "sourceLines": "L237",
+      "notes": ""
+    },
+    {
+      "id": "paradox:last-reps-lowest-velocity",
+      "type": "paradox",
+      "text": "If the last few reps are the most productive (as every coach says), why do they happen at the lowest velocity of any rep in the set?",
+      "sourceLines": "L239",
+      "notes": ""
+    },
+    {
+      "id": "paradox:most-dedicated-plateau-fastest",
+      "type": "paradox",
+      "text": "Why do the most dedicated athletes in youth sports — the ones who train the most sessions, push through every conditioning circuit, never skip a practice — plateau the fastest and the most completely?",
+      "sourceLines": "L241",
+      "notes": ""
+    },
+    {
+      "id": "paradox:rest-produces-faster",
+      "type": "paradox",
+      "text": "Why does rest between sets — the thing that looks like doing nothing — produce faster athletes than the continuous high-output training that looks like doing everything right?",
+      "sourceLines": "L243",
+      "notes": ""
+    },
+    {
+      "id": "paradox:tired-is-trained-endurance",
+      "type": "paradox",
+      "text": "If tired is trained, why do athletes who condition to exhaustion every session arrive at their sport season faster in endurance but identical in sprint speed?",
+      "sourceLines": "L245",
+      "notes": ""
+    },
+    {
+      "id": "paradox:stop-early-ends-faster",
+      "type": "paradox",
+      "text": "Why does a child who asks to stop a set early and rest longer often end up significantly faster than the child who 'pushes through' and finishes every rep?",
+      "sourceLines": "L247",
+      "notes": ""
+    },
+    {
+      "id": "paradox:8yo-vs-16yo-strength",
+      "type": "paradox",
+      "text": "Why does an 8-year-old, who has never touched a barbell, respond more powerfully to strength training than a 16-year-old who has been training for three years?",
+      "sourceLines": "L249",
+      "notes": ""
+    },
+    {
+      "id": "paradox:push-through-it-encodes-opposite",
+      "type": "paradox",
+      "text": "Why is the most celebrated coaching phrase in all of youth sports — 'push through it' — the precise instruction that encodes the opposite of what the coach is trying to build?",
+      "sourceLines": "L251",
+      "notes": ""
+    },
+    {
+      "id": "paradox:40pct-more-reps-224pct-worse",
+      "type": "paradox",
+      "text": "Why does a program that runs 40% more total reps produce 224% worse speed development outcomes than a program that deliberately stops each set early?",
+      "sourceLines": "L253",
+      "notes": ""
+    },
+    {
+      "id": "fascination:10pct-velocity-threshold-224pct",
+      "type": "fascination",
+      "text": "And I'll explain how THIS ultra-specific 10% velocity threshold — the exact moment we stop every set — produces 224% greater speed improvement than the training method your athlete is currently in, according to a peer-reviewed 2026 study on adolescent sprinters.",
+      "sourceLines": "L259",
+      "notes": ""
+    },
+    {
+      "id": "fascination:nsca-kids-respond-more",
+      "type": "fascination",
+      "text": "Plus, I'll tell you about the NSCA-published researcher who proved that 8–12 year old athletes respond MORE dramatically to training than professional athletes — not equally, but more — and what that means for every session your child is in right now.",
+      "sourceLines": "L261",
+      "notes": ""
+    },
+    {
+      "id": "fascination:muscle-fiber-conversion",
+      "type": "fascination",
+      "text": "And I'll reveal exactly what happens inside your athlete's muscle fibers during the last few reps of a high-volume conditioning circuit — a cellular-level conversion that sports scientists have documented under a microscope — and why it explains why more reps can produce a biologically slower athlete.",
+      "sourceLines": "L263",
+      "notes": ""
+    },
+    {
+      "id": "fascination:40pct-more-reps-224pct-worse-reframe",
+      "type": "fascination",
+      "text": "I'll show you why the program that ran 40% MORE total reps in a published study got 224% WORSE results — and why this single finding should completely reframe how you evaluate every program you're considering.",
+      "sourceLines": "L265",
+      "notes": ""
+    },
+    {
+      "id": "fascination:conditioning-vs-velocity-protected",
+      "type": "fascination",
+      "text": "And I'll explain the specific biological reason why conventional 'conditioning' builds an athlete who can run longer at the same slow speed — while velocity-protected training builds an athlete who runs shorter distances... faster.",
+      "sourceLines": "L267",
+      "notes": ""
+    },
+    {
+      "id": "fascination:50-child-rct-d114",
+      "type": "fascination",
+      "text": "I'll tell you about the 50-child randomized controlled trial that documented a d=1.14 effect size on sprint speed in 7–9 year olds after just 8 weeks — and what that number means in terms of the guarantee we put on paper before you spend a dollar.",
+      "sourceLines": "L269",
+      "notes": ""
+    },
+    {
+      "id": "fascination:470x-lower-injury-rate",
+      "type": "fascination",
+      "text": "Plus, I'll reveal why supervised resistance training has a 470× lower injury rate per participation hour than youth rugby — and why the pediatricians, the AAP, the BJSM, the NSCA, and the ACSM all agree that the growth-plate danger myth has no scientific basis whatsoever.",
+      "sourceLines": "L271",
+      "notes": ""
+    },
+    {
+      "id": "fascination:phosphocreatine-rest-window",
+      "type": "fascination",
+      "text": "And I'll tell you about the specific rest window — the exact number of minutes between sprint efforts — that the phosphocreatine system requires to fully reload, and why every program that shortens it is accidentally converting speed training into endurance training without knowing it.",
+      "sourceLines": "L273",
+      "notes": ""
+    },
+    {
+      "id": "fascination:complex-training-25x-vertical",
+      "type": "fascination",
+      "text": "I'll explain why 'complex training' — combining a strength movement immediately followed by an explosive movement — produces 2.5 times the vertical jump improvement of either method alone, not because of any special exercise selection, but because of what heavy resistance does to motor unit recruitment in the milliseconds before an explosive effort.",
+      "sourceLines": "L275",
+      "notes": ""
+    },
+    {
+      "id": "fascination:free-assessment-most-important-hour",
+      "type": "fascination",
+      "text": "And I'll show you exactly why the free athletic assessment we offer is the single most important hour of your athlete's development — not because of what we sell afterward, but because it's the first time they will have ever had objective, technology-measured data about their own explosive capacity.",
+      "sourceLines": "L277",
+      "notes": ""
+    },
+    {
+      "id": "quiz:v1-program-audit-intro",
+      "type": "quiz",
+      "text": "Quiz Version 1 — \"The Program Audit\" (Short, 3 Questions): Take this quick audit of your athlete's current program:",
+      "sourceLines": "L511-513",
+      "notes": "Quiz Version 1 header + intro line"
+    },
+    {
+      "id": "quiz:v1-q1",
+      "type": "quiz",
+      "text": "Question 1: When your child finishes a conditioning session, which describes what happens? (A) They're tired and sweaty — the coach says it was a great session (B) Their sprint times are measured before and after to confirm speed quality was maintained (C) I don't actually know — no one has shown me their performance data",
+      "sourceLines": "L515-518",
+      "notes": "Question 1 with options A/B/C"
+    },
+    {
+      "id": "quiz:v1-q2",
+      "type": "quiz",
+      "text": "Question 2: When your child works with a private coach or speed trainer, how is the training load determined? (A) Based on a percentage of their estimated max — the same formula for every athlete (B) Based on their individual velocity profile, adjusted every session (C) I've never been shown that data",
+      "sourceLines": "L520-523",
+      "notes": "Question 2 with options A/B/C"
+    },
+    {
+      "id": "quiz:v1-q3",
+      "type": "quiz",
+      "text": "Question 3: How does your child's program confirm that maximal explosive effort occurred on each rep? (A) The coach watches and calls it — 'good reps, great effort' (B) A velocity measurement device measures bar speed on every repetition to the hundredth of a meter per second (C) I don't know — I've never seen that kind of data from any program",
+      "sourceLines": "L525-528",
+      "notes": "Question 3 with options A/B/C"
+    },
+    {
+      "id": "quiz:v1-scoring",
+      "type": "quiz",
+      "text": "If you answered mostly A: Your child has been working in a system that can't measure or protect their explosive output. The results you've seen are the predictable outcome. If you answered any C: The program your child is in right now has never shown you proof of their explosive output. That's not a reflection on your child. It's a measurement gap.",
+      "sourceLines": "L530-531",
+      "notes": "Quiz Version 1 scoring/results"
+    },
+    {
+      "id": "quiz:v2-intro",
+      "type": "quiz",
+      "text": "Quiz Version 2 — \"VSL Opening Quiz\" (3 options, best for cold traffic):",
+      "sourceLines": "L535",
+      "notes": "Quiz Version 2 header"
+    },
+    {
+      "id": "quiz:v2-option-a-suicides",
+      "type": "quiz",
+      "text": "Quiz Option A (Suicides): \"Which of these common youth speed training drills has been shown to make athletes SLOWER — the longer the drill goes on? Is it: box jumps, ladder drills, suicides (shuttle runs), cone sprints, or hurdle hops?\" Answer: Suicides. \"Suicides are specifically designed to be run until exhaustion — meaning the final runs are completed at dramatically reduced velocity. The nervous system records movement at the speed it actually happens, not the speed it was intended to happen. Every slow, exhausted shuttle run encodes that slower pace as normal. The drill that looks the most like hard work is doing the most damage.\"",
+      "sourceLines": "L537-540",
+      "notes": "Quiz Option A with question, answer, and explanation"
+    },
+    {
+      "id": "quiz:v2-option-b-push-through-it",
+      "type": "quiz",
+      "text": "Quiz Option B (Push Through It): \"Which phrase — shouted by coaches at virtually every youth sports practice in the country — has been identified by sports neuroscientists as one of the most counterproductive things you can say to an athlete training for speed? Is it: 'Stay low,' 'Push through it,' 'Explode off the line,' 'Drive your arms,' or 'Stay relaxed'?\" Answer: \"Push through it.\" \"'Push through it' is the cultural anthem of youth sports. What it actually does is instruct an already-fatigued athlete to continue performing reps at reduced velocity — and the nervous system records exactly what happens, not what was intended. Every 'push through it' rep done while slowing down is a direct instruction to the nervous system: this slower movement is what you do when it's hard. That is the exact pattern that shows up when a game is on the line.\"",
+      "sourceLines": "L542-545",
+      "notes": "Quiz Option B with question, answer, and explanation"
+    },
+    {
+      "id": "quiz:v2-option-c-last-few-reps",
+      "type": "quiz",
+      "text": "Quiz Option C (Last Few Reps): \"Which visible sign at the end of a youth training session — the one most parents point to as proof that the coach is REALLY pushing their athlete — is actually evidence that the final portion of the session produced zero speed development? Is it: excessive sweating, visible exhaustion and labored breathing, dramatically slower sprint times in the final sets, muscle soreness beginning to set in, or elevated heart rate throughout?\" Answer: Dramatically slower sprint times in the final sets. \"An athlete who is visibly exhausted, drenched in sweat, and barely crossing the line on the final sprint looks like the most committed player on the field. But those slower final sprints are the exact reps doing the damage. The nervous system is encoding that exhausted, reduced-velocity movement pattern as normal. The last few reps that look the hardest are the ones actively teaching the body to be slower.\"",
+      "sourceLines": "L547-550",
+      "notes": "Quiz Option C with question, answer, and explanation"
+    }
+  ]
+}

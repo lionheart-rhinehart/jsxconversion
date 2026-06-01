@@ -1,0 +1,105 @@
+{
+  "key": "07-beatmaps-guarantee-coi",
+  "sections": ["Beat Maps", "Guarantee", "Cost of Inaction"],
+  "sourceFile": "campaigns/creative-engine-e2e-test-aa/brief.md",
+  "items": [
+    {
+      "id": "beatmap:all-relevant-beat-maps-comprehensive",
+      "type": "beatmap-container",
+      "text": "ALL RELEVANT BEAT MAPS — COMPREHENSIVE:",
+      "beats": [
+        { "label": "Speaker Background & Credibility", "content": "Graham Wilkerson, owner/operator of Genesis Sports Performance / Athletes Acceleration; Vulnerable Mentor voice archetype; NFL + NSCA credentials; warm, direct, scientifically grounded. (Brief L285-L312)" },
+        { "label": "Problem Narrative", "content": "Ordered emotional arc: Early Warning Signs -> Worsening Situation -> Crisis Point -> Emotional Nadir. (Brief L314-L367)" },
+        { "label": "Myths & Mistakes", "content": "5 prevailing myths + 4 costly mistakes, each with VOC quote + scientific truth. (Brief L370-L414)" },
+        { "label": "Unique Mechanism Preview (UMP)", "content": "Discovery Narrative -> UMP Trigger -> UMP Explanation -> UMP Proof. (Brief L417-L451)" },
+        { "label": "UMP Cause: Surprising Culprit & Adversaries", "content": "Surprising Culprit (the unmeasured rep) -> 5 Adversaries. (Brief L453-L488)" },
+        { "label": "Unique Mechanism Elaboration", "content": "Individual Differences -> Changing Landscape -> Unspoken Truth. (Brief L490-L507)" },
+        { "label": "Self-Reflection (UMP Quiz)", "content": "Program Audit + VSL Opening Quiz versions. (Brief L509-L552)" },
+        { "label": "UMS Preview", "content": "UMS Trigger options (First Velocity Readout / Benchmark Prediction / NFL Comparison). (Brief L554-L567)" }
+      ],
+      "sourceLines": "L281-L285",
+      "notes": "L281-L285 is the parent heading 'ALL RELEVANT BEAT MAPS — COMPREHENSIVE:' (intro block, only a horizontal rule between it and the next subheading at L285). It is a CONTAINER: every ### subsection from L285 through the UMS Preview (~L567) sits under it and constitutes the comprehensive ordered beat-map set. Subsection labels/lines captured in beats[] above. Three named story frameworks are not explicitly enumerated here; the de-facto frameworks the brief runs on are the Problem Narrative arc and the additional Risk-Reversal and Cost-of-Inaction beat maps below."
+    },
+    {
+      "id": "offer:guarantee",
+      "type": "guarantee",
+      "text": "Guarantee: +1 mph / +3 inches / 90 days, or continued training at no additional cost until both benchmarks are achieved.",
+      "beats": [],
+      "sourceLines": "L13",
+      "notes": "VERBATIM guarantee as stated in Product Details > Delivery Mechanism (L13). Note: the brief's exact wording is NOT 'or training is free' here — it is 'or continued training at no additional cost until both benchmarks are achieved.' The Logical Outcome (L54) restates: '+1 mph sprint speed improvement. +3 inch vertical jump improvement. 90 days. Or training continues at no additional cost until both benchmarks are hit.' The Risk Reversal beat map (L722) phrases it: 'Improve your peak speed by +1 mph and your vertical jump by +3 inches. Or training is free.'"
+    },
+    {
+      "id": "riskreversal:guarantee-beat-map",
+      "type": "risk-reversal",
+      "text": "\"Here's our guarantee — and I want you to notice something about it. Train with us 2× per week for 90 days. Improve your peak speed by +1 mph and your vertical jump by +3 inches. Or training is free. That's not 'we hope you feel better.' It's not 'you'll probably see some improvement.' It's two specific numbers. Measured by calibrated equipment. On Day 1 and Day 90. Either the number went up, or it didn't. There's nowhere to hide. No subjectivity. No coach's opinion. The data says yes or the training is free. Why would we make this guarantee if we weren't confident? The answer is simple: we've tracked enough athletes with enough data to know what happens when a motivated kid trains 2× per week for 90 days using The Velocity Code™. We're not guessing. We're measuring. And here's the real question: What does it say about every other program that WON'T make this promise?\"",
+      "beats": [
+        { "label": "The Promise", "content": "Train with us 2× per week for 90 days. Improve your peak speed by +1 mph and your vertical jump by +3 inches. Or training is free." },
+        { "label": "Why It's Different", "content": "It's two specific numbers. Measured by calibrated equipment. On Day 1 and Day 90. Either the number went up, or it didn't. There's nowhere to hide. No subjectivity. No coach's opinion. The data says yes or the training is free." },
+        { "label": "Why We Can Make It", "content": "We've tracked enough athletes with enough data to know what happens when a motivated kid trains 2× per week for 90 days using The Velocity Code™. We're not guessing. We're measuring." },
+        { "label": "The Turn (offensive question)", "content": "And here's the real question: What does it say about every other program that WON'T make this promise?" }
+      ],
+      "sourceLines": "L718-L728",
+      "notes": "RISK REVERSAL & GUARANTEE (BEAT MAP — ADDITIONAL). Section heading at L718; beat-map narration L720-L728. Guarantee stated verbatim mid-block: '+1 mph ... +3 inches. Or training is free.'"
+    },
+    {
+      "id": "riskreversal:scientific-backing",
+      "type": "risk-reversal-proof",
+      "text": "Scientific Backing for the Guarantee: Bogdanis et al. (2019): d=1.14 on 20m sprint in 7–9 year olds in 8 weeks — shorter than the 90-day window. Wang et al. (2026): +4.93cm CMJ improvement in 6 weeks using 10% VLT — shorter than the 90-day window. The guarantee is conservative relative to the science.",
+      "beats": [],
+      "sourceLines": "L730-L734",
+      "notes": "Proof that the guaranteed benchmarks are conservative vs. published effect sizes; both cited studies hit results in windows shorter than 90 days."
+    },
+    {
+      "id": "riskreversal:guarantee-distinction",
+      "type": "risk-reversal",
+      "text": "The Guarantee Distinction: \"This is not a satisfaction guarantee. It is not a refund. It is a commitment to deliver measurable results — and to keep working until they arrive. If after 90 days the numbers haven't moved — training is free. That's how confident we are in the protocol.\"",
+      "beats": [],
+      "sourceLines": "L736-L737",
+      "notes": "Clarifies the guarantee is a performance/results commitment (keep working until benchmarks hit), NOT a refund or satisfaction guarantee."
+    },
+    {
+      "id": "riskreversal:both-outcomes-are-proof",
+      "type": "risk-reversal",
+      "text": "Both Outcomes Are Proof: \"'We hit the numbers in 73 days' AND 'We didn't hit by day 90, so we kept going at no cost and hit them on day 112' are both powerful conversion stories. The second story is actually MORE powerful for the skeptical buyer because it proves the guarantee is real.\"",
+      "beats": [],
+      "sourceLines": "L739-L740",
+      "notes": "Conversion framing: the guarantee-honored case (kept training free past day 90) is the stronger proof point for the burned-and-ready skeptical segment."
+    },
+    {
+      "id": "coi:biological-cost",
+      "type": "cost-of-inaction",
+      "text": "Biological Cost: \"Every month this window is open and the training method is wrong is a month that can't be recovered. After PHV, you're not developing patterns — you're correcting them. The correction takes longer, costs more, and produces less.\"",
+      "beats": [],
+      "sourceLines": "L746-L747",
+      "notes": "Developmental-window urgency: irrecoverable time. Post-PHV shifts from pattern formation to costlier correction (takes longer, costs more, produces less). First beat of COST OF INACTION (BEAT MAP — ADDITIONAL), heading at L744."
+    },
+    {
+      "id": "coi:sliding-scale-of-regret",
+      "type": "cost-of-inaction",
+      "text": "The Sliding Scale of Regret: At age 10: \"We tried the wrong program for one season.\" At age 13: \"We spent three years in programs that couldn't measure velocity.\" At age 16: \"We're now doing remedial pattern work on a body that's post-pubescent. It's taking twice as long and we're still not where we should be.\"",
+      "beats": [
+        { "label": "At age 10", "content": "We tried the wrong program for one season." },
+        { "label": "At age 13", "content": "We spent three years in programs that couldn't measure velocity." },
+        { "label": "At age 16", "content": "We're now doing remedial pattern work on a body that's post-pubescent. It's taking twice as long and we're still not where we should be." }
+      ],
+      "sourceLines": "L749-L753",
+      "notes": "Escalating-regret timeline keyed to the athlete's age (10 -> 13 -> 16). Verbatim three-item list. Each delay compounds into post-pubescent remedial pattern correction taking twice as long."
+    },
+    {
+      "id": "coi:economic-frame",
+      "type": "cost-of-inaction",
+      "text": "Economic Frame: Per Aspen Institute Project Play (2025): average U.S. sports family spent $1,016 on primary sport in 2024 — 46% increase from 2019. Hamilton County families at the affluent end spend $4,000–$15,000+ annually on programs that, by the research, cannot confirm verified explosive output on any rep. \"One month here versus three months on a travel team. One of those produces measurable results. The other produces hotel receipts.\"",
+      "beats": [],
+      "sourceLines": "L755-L756",
+      "notes": "Cost-of-inaction reframed economically: high annual spend ($4,000–$15,000+) on programs that cannot verify explosive output. Punch line: 'One of those produces measurable results. The other produces hotel receipts.'"
+    },
+    {
+      "id": "coi:the-70-percent-frame",
+      "type": "cost-of-inaction",
+      "text": "The 70% Frame: \"70% of youth athletes quit organized sports by age 13. The primary reasons: 'sport stopped being fun' and 'excessive pressure.' This dropout rate is occurring against a backdrop of record family spending. The spending is not the problem. The method is.\"",
+      "beats": [],
+      "sourceLines": "L758-L759",
+      "notes": "Final COI beat (end of file, L759). 70% dropout by age 13 against record spend; payoff line: 'The spending is not the problem. The method is.'"
+    }
+  ]
+}

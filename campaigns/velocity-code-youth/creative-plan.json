@@ -66,13 +66,15 @@
           },
           "audio": null,
           "flags": [],
-          "status": "planned",
+          "status": "rendered",
           "notes": "",
-          "output": null,
-          "thumb": null,
+          "output": "out/campaigns/velocity-code-youth/angle-1-tries-harder/A2.png",
+          "thumb": "out/campaigns/velocity-code-youth/angle-1-tries-harder/A2.png",
           "knowledgeRefs": [
             "hook:V1.5"
-          ]
+          ],
+          "editedAt": "2026-06-01T00:14:12.959Z",
+          "renderedAt": "2026-06-01T01:03:34.528Z"
         },
         {
           "id": "A3",
@@ -305,11 +307,24 @@
             "reframe:tired-vs-trained"
           ],
           "templateData": {
+            "duration": 7,
             "eyebrow": "COACH GRAHAM WILKERSON",
+            "quoteText": "MY KID GAINED 4 INCHES ON HIS VERTICAL IN 8 WEEKS.",
+            "bylineName": "SARAH M.",
+            "bylineMeta": "PARENT · U14 BASKETBALL · NOBLESVILLE",
+            "statsLabel": "HER ATHLETE'S 90-DAY DATA",
+            "stats": "+4.2\"|VERT · −0.4s|40YD · +25LB|BENCH",
+            "media": "http://localhost:5173/media-file/brand/aa-design-system/project/assets/photo-sprint-mixed.jpg",
             "quote": "They confuse tired with trained. Your kid isn't behind — they're in the wrong system.",
             "attribution": "COACH GRAHAM WILKERSON",
-            "role": "CSCS · GENESIS SPORTS PERFORMANCE"
-          }
+            "role": "CSCS · GENESIS SPORTS PERFORMANCE",
+            "_overrides": {
+              "statsLabel": {
+                "fontSize": 38
+              }
+            }
+          },
+          "photo": "brand/aa-design-system/project/assets/photo-sprint-mixed.jpg"
         },
         {
           "id": "E1",
@@ -438,11 +453,43 @@
             "proof:wang-2026"
           ],
           "templateData": {
+            "duration": 6,
             "eyebrow": "VELOCITY-PROTECTED",
             "title1": "224%",
-            "title2": "MORE JUMP.",
-            "ctaText": "TRAIN FAST TO BE FAST"
-          }
+            "title2": "HIGHER VERTICAL",
+            "ctaText": "TRAIN FAST TO BE FAST",
+            "stat1Value": 1,
+            "stat1Unit": " MPH",
+            "stat1Label": "SPEED",
+            "stat2Value": 3,
+            "stat2Unit": "\"",
+            "stat2Label": "VERTICAL",
+            "freeLine1": "OR IT'S",
+            "freeLine2": "FREE.",
+            "_overrides": {
+              "stat1": {
+                "dx": -13,
+                "dy": 660
+              },
+              "stat2": {
+                "dx": -13,
+                "dy": 660
+              },
+              "orfree": {
+                "dx": -13,
+                "dy": 660
+              },
+              "title": {
+                "dx": 6,
+                "dy": 126,
+                "fontSize": 232
+              },
+              "eyebrow": {
+                "fontSize": 48
+              }
+            }
+          },
+          "renderedAt": "2026-06-01T00:28:27.610Z"
         },
         {
           "id": "E5",
