@@ -89,6 +89,11 @@
          edge; you just see the clipped result, which is the truth. */
       overflow: hidden;
       background: #000;
+      /* The frame is a flex child of .stage; without this it gets SHRUNK to the
+         stage width whenever the stage is < 1080px, clipping the right side of
+         the 1080-wide design. The CSS transform already scales it to fit, so the
+         box must keep its true 1080×1920 size. */
+      flex-shrink: 0;
     }
     .frame-outline {
       position: absolute;
@@ -1136,6 +1141,11 @@
         const cleanPath = media.path.replace(/^\.\//, '');
         img.src = '/templates/multi-sport-foundations/' + cleanPath;
         img.onload = () => repositionPhoto(img);
+        // On a stage RE-render the img is cached, so onload often never fires and
+        // the photo would stay at natural size / top-left (zoomed, right cut off).
+        // decode() resolves even from cache; repositionPhoto needs only
+        // naturalWidth (not DOM), so the cover-fit always applies.
+        if (img.decode) img.decode().then(() => repositionPhoto(img)).catch(() => {});
       } else {
         // No media.path → use the last rendered composite as a positioning
         // reference. For campaign assets that's the campaign output path, not
@@ -1212,13 +1222,23 @@
       }, { passive: false });
     }
 
+    // A crop is photo-specific: ignore one stamped for a DIFFERENT photo
+    // (crop.forPath), so a stale crop never applies to a swapped photo. Legacy
+    // crops (no forPath) still apply. The renderer's MediaSlot uses the SAME
+    // guard, so editor preview and render can never disagree on crop presence.
+    function activeCrop(media) {
+      const c = media && media.crop;
+      if (!c || !(c.width > 0) || !(c.height > 0)) return null;
+      if (c.forPath && c.forPath !== media.path) return null;
+      return c;
+    }
+
     // Effective "natural" dimensions for the editor — if a crop is set,
     // those become the dimensions of the visible region (since cropping
     // effectively redefines the source photo).
     function effectiveNatural(media, img) {
-      if (media?.crop && media.crop.width > 0 && media.crop.height > 0) {
-        return { width: media.crop.width, height: media.crop.height };
-      }
+      const c = activeCrop(media);
+      if (c) return { width: c.width, height: c.height };
       return { width: img.naturalWidth, height: img.naturalHeight };
     }
 
@@ -1246,10 +1266,10 @@
 
       // If crop is set, show only the cropped region cover-fit to the frame,
       // matching the renderer's CROP path in _helpers.jsx MediaSlot.
-      if (media.crop && media.crop.width > 0 && media.crop.height > 0) {
+      const crop = activeCrop(media);
+      if (crop) {
         const nW = img.naturalWidth;
         const nH = img.naturalHeight;
-        const crop = media.crop;
         const cropAspect = crop.width / crop.height;
         const frameAspect = W / H;
         const s = (cropAspect > frameAspect ? H / crop.height : W / crop.width) * (media.scale || 1);
@@ -1470,7 +1490,9 @@
 
         // Initialize crop if none exists — default to a 9:16 frame-aspect
         // rectangle centered in the photo (much more intuitive than full-photo).
-        if (!media.crop) {
+        // Fresh default crop if none active for THIS photo (a stale crop stamped
+        // for a different photo is replaced, not reused).
+        if (!activeCrop(media)) {
           const W = state.config.width || 1080;
           const H = state.config.height || 1920;
           const frameAspect = W / H;
@@ -1488,6 +1510,7 @@
             y: Math.round((nH - cropH) / 2),
             width: cropW,
             height: cropH,
+            forPath: media.path,
           };
         }
         const crop = media.crop;
@@ -2407,14 +2430,8 @@
         newPath = j.path;
       } catch (e) { setStatus('Photo swap failed: ' + e.message); return; }
       snapshotForUndo();
-      if (!state.config.media) state.config.media = { offsetX: 0, offsetY: 0, scale: 1, z: 0 };
-      const m = state.config.media;
-      // Fresh photo: reset pan/zoom and drop any crop tied to the old image's pixels.
-      m.path = newPath; m.offsetX = 0; m.offsetY = 0; m.scale = 1;
-      delete m.crop;
+      setMediaPhoto(newPath); // resets pan/zoom + drops the old photo's crop
       document.querySelectorAll('.ed-photo-tile').forEach((el) => el.classList.toggle('on', el === tile));
-      renderStage();
-      renderProps();
       setStatus('Background swapped. Save + Render to persist.');
     }
     $('browsePhotosBtn').onclick = () => {
@@ -2422,6 +2439,20 @@
       grid.hidden = !grid.hidden;
       if (!grid.hidden) loadPhotoGrid();
     };
+
+    // Point the background at a new photo. A crop/pan belongs to ONE photo, so
+    // reset framing (clear crop, recenter, scale 1) whenever the photo changes.
+    // Shared by the swap-photo grid AND the mediaPath field.
+    function setMediaPhoto(newPath) {
+      if (!state.config) return;
+      if (!state.config.media) state.config.media = { offsetX: 0, offsetY: 0, scale: 1, z: 0 };
+      const m = state.config.media;
+      m.path = newPath;
+      m.offsetX = 0; m.offsetY = 0; m.scale = 1;
+      delete m.crop;
+      renderStage();
+      renderProps();
+    }
 
     // Media-specific input bindings
     function bindMediaInput(inputId, propName, parser) {
@@ -2434,7 +2465,18 @@
         media[propName] = v;
       });
     }
-    bindMediaInput('mediaPath', 'path', String);
+    // Path changes go through setMediaPhoto (resets framing) on COMMIT (change),
+    // not per-keystroke — typing a path shouldn't wipe the crop mid-edit.
+    let _mediaPathBefore = '';
+    $('mediaPath').addEventListener('focus', () => { _mediaPathBefore = $('mediaPath').value; });
+    $('mediaPath').addEventListener('change', () => {
+      if (!state.config?.media) return;
+      const v = $('mediaPath').value;
+      if (v === _mediaPathBefore) return;
+      snapshotForUndo();
+      setMediaPhoto(v);
+      setStatus('Photo changed — crop/pan reset. Save + Render to persist.');
+    });
     bindMediaInput('mediaOffsetX', 'offsetX', (v) => parseInt(v, 10));
     bindMediaInput('mediaOffsetY', 'offsetY', (v) => parseInt(v, 10));
     bindMediaInput('mediaScale', 'scale', (v) => Math.max(1.0, parseFloat(v) || 1));

@@ -46,7 +46,13 @@ export function MediaSlot({
   // ── CROP path ────────────────────────────────────────────────────────────
   // Wrap in overflow:hidden, size the inner image so the crop region cover-fits
   // the frame, then position it so the cropped region lands at the right spot.
-  if (crop && crop.width > 0 && crop.height > 0) {
+  // A crop is photo-specific: ignore one stamped for a DIFFERENT photo
+  // (crop.forPath) so a stale crop never applies to a swapped photo. Matches the
+  // editor's activeCrop guard, so preview and render agree on crop presence.
+  // Legacy crops (no forPath) still apply.
+  const cropActive =
+    crop && crop.width > 0 && crop.height > 0 && !(crop.forPath && crop.forPath !== path);
+  if (cropActive) {
     const applyCrop = (el) => {
       if (!el) return;
       const ready = isVideo ? el.videoWidth : el.naturalWidth;
