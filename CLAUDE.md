@@ -69,3 +69,7 @@ npm install
 ## Campaign workflow (manual, for now)
 
 Today this is a Claude-Code-driven workflow: hand Claude a campaign brief in chat, it authors JSX templates per angle, the renderer produces MP4s + statics, you ship them. After a handful of campaigns produce repeatable patterns, the next step is wrapping this in a Claude Agent SDK service for autonomous brief-in / creatives-out.
+
+## Parallel chats (avoid clobbering)
+
+If more than one chat/session works on this repo at once, follow **`docs/parallel-chats.md`**. The rule: **one chat = one worktree/branch; chats combine only through git (commit + merge), never by copying files between folders.** Start an isolated workspace with `./scripts/new-workspace.ps1 <name>`. **Never `cp` files from one checkout into another** (e.g. a worktree into the main checkout) — that silently overwrites uncommitted work. To test in another checkout, merge via git first.
