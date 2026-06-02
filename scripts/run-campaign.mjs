@@ -185,12 +185,18 @@ function buildMotionData(asset, dataKeys, tierTags = {}) {
   // role is brand/eyebrow (never content/numeric — a string in a stat field
   // would NaN the count-up at render). Explicit templateData already populated
   // `data`, so this only touches keys it didn't set ("explicit wins").
-  const anchor = `// ${tierTags.audience || "AGES 8-12"}${tierTags.city ? ` · ${tierTags.city}` : ""}`;
+  // Locale eyebrow anchor: "<CITY> SPORT PARENT" (city from the location tier, state
+  // suffix stripped). Falls back to the "{city name}" placeholder when no location/
+  // city is resolved, so an un-located campaign renders an obvious fill-me token.
+  const cityName = String(tierTags.city || "").split(",")[0].trim();
+  const anchor = cityName ? `${cityName} SPORT PARENT` : "{city name} SPORT PARENT";
   for (const k of dataKeys) {
-    if (k in data) continue;
     const role = fieldRole(k);
-    if (role === "eyebrow") data[k] = anchor;
-    else if (role === "brand" && typeof tierTags.brand_name === "string") data[k] = tierTags.brand_name;
+    // The eyebrow is the brand's locale anchor on EVERY design — force it, overriding
+    // any per-template tagline (e.g. "// THE 10% RULE") or stale copy.
+    if (role === "eyebrow") { data[k] = anchor; continue; }
+    if (k in data) continue;
+    if (role === "brand" && typeof tierTags.brand_name === "string") data[k] = tierTags.brand_name;
   }
   if (dataKeys.length) {
     // `_`-prefixed keys (e.g. _overrides) and added-text keys (data._extras,
