@@ -10,7 +10,7 @@
       "y": 0,
       "width": 1080,
       "height": 1920,
-      "fill": "linear-gradient(180deg, rgba(10,11,13,0.50) 0%, rgba(10,11,13,0.38) 45%, rgba(10,11,13,0.82) 100%)",
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
       "z": 1
     },
     {
@@ -71,7 +71,8 @@
         "eyebrow",
         "proof"
       ],
-      "maxChars": 24
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "offer_headline",
@@ -95,7 +96,8 @@
         "offer",
         "claim"
       ],
-      "maxChars": 24
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "offer_detail",
@@ -117,7 +119,8 @@
         "offer",
         "reframe"
       ],
-      "maxChars": 70
+      "maxChars": 70,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "guarantee_text",
@@ -139,7 +142,8 @@
       "accepts": [
         "guarantee"
       ],
-      "maxChars": 64
+      "maxChars": 64,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "cta_text",
@@ -161,7 +165,8 @@
       "accepts": [
         "cta"
       ],
-      "maxChars": 28
+      "maxChars": 28,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "brand_wordmark",
@@ -183,7 +188,8 @@
       "accepts": [
         "brand"
       ],
-      "maxChars": 24
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     }
   ],
   "media": {

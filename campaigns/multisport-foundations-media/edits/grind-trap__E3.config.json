@@ -10,7 +10,7 @@
       "y": 0,
       "width": 1080,
       "height": 1920,
-      "fill": "linear-gradient(180deg, rgba(10,11,13,0.50) 0%, rgba(10,11,13,0.38) 45%, rgba(10,11,13,0.82) 100%)",
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
       "z": 1
     },
     {
@@ -58,7 +58,8 @@
         "eyebrow",
         "proof"
       ],
-      "maxChars": 24
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "coach_name",
@@ -82,7 +83,8 @@
         "byline",
         "claim"
       ],
-      "maxChars": 26
+      "maxChars": 26,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "coach_title",
@@ -105,7 +107,8 @@
         "byline",
         "proof"
       ],
-      "maxChars": 40
+      "maxChars": 40,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "proof_hero",
@@ -129,7 +132,8 @@
         "proof",
         "claim"
       ],
-      "maxChars": 24
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "proof_names",
@@ -152,7 +156,8 @@
         "proof",
         "byline"
       ],
-      "maxChars": 44
+      "maxChars": 44,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "claim_line",
@@ -175,7 +180,8 @@
         "claim",
         "reframe"
       ],
-      "maxChars": 72
+      "maxChars": 72,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "brand_wordmark",
@@ -197,7 +203,8 @@
       "accepts": [
         "brand"
       ],
-      "maxChars": 24
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     }
   ],
   "media": {

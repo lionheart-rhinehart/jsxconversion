@@ -10,7 +10,7 @@
       "y": 0,
       "width": 1080,
       "height": 1920,
-      "fill": "linear-gradient(180deg, rgba(10,11,13,0.50) 0%, rgba(10,11,13,0.38) 45%, rgba(10,11,13,0.82) 100%)",
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
       "z": 1
     },
     {
@@ -47,7 +47,8 @@
         "eyebrow",
         "proof"
       ],
-      "maxChars": 34
+      "maxChars": 34,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "line1",
@@ -72,7 +73,8 @@
         "claim",
         "reframe"
       ],
-      "maxChars": 26
+      "maxChars": 26,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "line2",
@@ -96,7 +98,8 @@
         "reframe",
         "proof"
       ],
-      "maxChars": 52
+      "maxChars": 52,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "brand_wordmark",
@@ -118,7 +121,8 @@
       "accepts": [
         "brand"
       ],
-      "maxChars": 24
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     }
   ],
   "media": {

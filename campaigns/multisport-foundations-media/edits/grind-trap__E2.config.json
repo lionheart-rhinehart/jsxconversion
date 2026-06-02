@@ -10,7 +10,7 @@
       "y": 0,
       "width": 1080,
       "height": 1920,
-      "fill": "linear-gradient(180deg, rgba(10,11,13,0.50) 0%, rgba(10,11,13,0.38) 45%, rgba(10,11,13,0.82) 100%)",
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
       "z": 1
     },
     {
@@ -58,7 +58,8 @@
         "eyebrow",
         "proof"
       ],
-      "maxChars": 24
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "stat1_value",
@@ -80,7 +81,8 @@
       "accepts": [
         "stat"
       ],
-      "maxChars": 6
+      "maxChars": 6,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "stat1_label",
@@ -103,7 +105,8 @@
         "stat",
         "claim"
       ],
-      "maxChars": 26
+      "maxChars": 26,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "stat2_value",
@@ -125,7 +128,8 @@
       "accepts": [
         "stat"
       ],
-      "maxChars": 6
+      "maxChars": 6,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "stat2_label",
@@ -148,7 +152,8 @@
         "stat",
         "claim"
       ],
-      "maxChars": 24
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "proof_citation",
@@ -171,7 +176,8 @@
         "proof",
         "byline"
       ],
-      "maxChars": 40
+      "maxChars": 40,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "claim_line",
@@ -195,7 +201,8 @@
         "claim",
         "reframe"
       ],
-      "maxChars": 44
+      "maxChars": 44,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
       "id": "brand_wordmark",
@@ -217,7 +224,8 @@
       "accepts": [
         "brand"
       ],
-      "maxChars": 24
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     }
   ],
   "media": {

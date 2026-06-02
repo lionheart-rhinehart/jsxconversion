@@ -214,7 +214,15 @@ async function renderTemplateStatic(asset, angleId) {
       config.fixedDesign = config.fixedDesign || [];
       config.fixedDesign.unshift({ id: "_bg_scrim", tag: "_bg_scrim", type: "rect", x: 0, y: 0,
         width: config.width || 1080, height: config.height || 1920,
-        fill: "linear-gradient(180deg, rgba(10,11,13,0.50) 0%, rgba(10,11,13,0.38) 45%, rgba(10,11,13,0.82) 100%)", z: 1 });
+        fill: "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)", z: 1 });
+      // Legibility over footage: give each text layer a drop-shadow (helps red
+      // accents + white alike). Skip layers that already define one (e.g. the
+      // photo-hook template). Only when media is present → solid batch untouched.
+      for (const el of config.elements || []) {
+        if (typeof el.text === "string" && el.textShadow == null) {
+          el.textShadow = "0 2px 12px rgba(0,0,0,0.92)";
+        }
+      }
     }
     mkdirSync(dirname(editsPath), { recursive: true });
     writeFileSync(editsPath, JSON.stringify(config, null, 2));
