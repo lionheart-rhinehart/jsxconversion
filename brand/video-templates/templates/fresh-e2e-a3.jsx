@@ -26,7 +26,7 @@ function FreshE2eA3Reel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
-      <div data-eyebrow style={{ position: 'absolute', top: 90, left: 90, right: 90, fontFamily: '"JetBrains Mono", monospace', fontSize: 34, color: '#c4141d', letterSpacing: '0.06em', textTransform: 'uppercase', zIndex: 5 }}>{data.eyebrow ?? "// ATHLETES ACCELERATION"}</div>
+      <div data-eyebrow style={{ position: 'absolute', top: 90, left: 90, right: 90, fontFamily: '"JetBrains Mono", monospace', fontSize: 34, color: '#c4141d', letterSpacing: '0.06em', textTransform: 'uppercase', zIndex: 5 }}>{data.eyebrow ?? "{city name} SPORT PARENT"}</div>
       {/* red glow that pulses on the B (tired) face */}
       <div style={{
         position: 'absolute', top: '38%', left: '50%', width: 900, height: 900,
@@ -79,7 +79,7 @@ const FRESH_E2E_A3_SPEC = {
       "role": "eyebrow",
       "label": "Eyebrow",
       "type": "text",
-      "default": "// ATHLETES ACCELERATION"
+      "default": "{city name} SPORT PARENT"
     },
     {
       "key": "questionA",

@@ -22,7 +22,7 @@ function CoachLowerThirdsReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
-      <div data-eyebrow style={{ position: 'absolute', top: 90, left: 90, right: 90, fontFamily: '"JetBrains Mono", monospace', fontSize: 34, color: '#c4141d', letterSpacing: '0.06em', textTransform: 'uppercase', zIndex: 5 }}>{data.eyebrow ?? "// ATHLETES ACCELERATION"}</div>
+      <div data-eyebrow style={{ position: 'absolute', top: 90, left: 90, right: 90, fontFamily: '"JetBrains Mono", monospace', fontSize: 34, color: '#c4141d', letterSpacing: '0.06em', textTransform: 'uppercase', zIndex: 5 }}>{data.eyebrow ?? "{city name} SPORT PARENT"}</div>
       {window.TrimmedMedia && <window.TrimmedMedia src={media} clipStart={data.media_clipStart} clipEnd={data.media_clipEnd} muted={!data.media_audio} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'contrast(1.05) saturate(0.9) brightness(0.7)' }}/>}
 
       {/* Helper hint top-right */}
@@ -69,7 +69,7 @@ const COACH_LT_REEL_SPEC = { id:'coach-lt-reel', name:'COACH LOWER-THIRDS · REE
       "role": "eyebrow",
       "label": "Eyebrow",
       "type": "text",
-      "default": "// ATHLETES ACCELERATION"
+      "default": "{city name} SPORT PARENT"
     },
     {
       "key": "coachName",

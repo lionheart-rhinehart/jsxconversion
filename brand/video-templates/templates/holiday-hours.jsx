@@ -21,7 +21,7 @@ const HOLIDAY_HOURS_SPEC = {
       "role": "eyebrow",
       "label": "Eyebrow",
       "type": "text",
-      "default": "// ATHLETES ACCELERATION"
+      "default": "{city name} SPORT PARENT"
     },
     {
       "key": "holiday",
@@ -101,7 +101,7 @@ function HolidayHoursReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
-      <div data-eyebrow style={{ position: 'absolute', top: 90, left: 90, right: 90, fontFamily: '"JetBrains Mono", monospace', fontSize: 34, color: '#c4141d', letterSpacing: '0.06em', textTransform: 'uppercase', zIndex: 5 }}>{data.eyebrow ?? "// ATHLETES ACCELERATION"}</div>
+      <div data-eyebrow style={{ position: 'absolute', top: 90, left: 90, right: 90, fontFamily: '"JetBrains Mono", monospace', fontSize: 34, color: '#c4141d', letterSpacing: '0.06em', textTransform: 'uppercase', zIndex: 5 }}>{data.eyebrow ?? "{city name} SPORT PARENT"}</div>
       <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(120% 70% at 50% 18%, rgba(196,20,29,0.16) 0%, rgba(10,11,13,0.7) 55%, #0a0b0d 100%)' }}/>
       {/* corner ticks */}
       <div style={{ position: 'absolute', top: 80, left: 60, width: 70, height: 70, borderTop: `5px solid ${RED}`, borderLeft: `5px solid ${RED}` }}/>

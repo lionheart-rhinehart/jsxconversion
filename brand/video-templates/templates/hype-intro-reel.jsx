@@ -29,7 +29,7 @@ function HypeIntroReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
-      <div data-eyebrow style={{ position: 'absolute', top: 90, left: 90, right: 90, fontFamily: '"JetBrains Mono", monospace', fontSize: 34, color: '#c4141d', letterSpacing: '0.06em', textTransform: 'uppercase', zIndex: 5 }}>{data.eyebrow ?? "// ATHLETES ACCELERATION"}</div>
+      <div data-eyebrow style={{ position: 'absolute', top: 90, left: 90, right: 90, fontFamily: '"JetBrains Mono", monospace', fontSize: 34, color: '#c4141d', letterSpacing: '0.06em', textTransform: 'uppercase', zIndex: 5 }}>{data.eyebrow ?? "{city name} SPORT PARENT"}</div>
       {photos.map((p, i) => {
         const active = t >= p.from && t <= p.to + 0.15;
         if (!active) return null;
@@ -96,7 +96,7 @@ const HYPE_INTRO_REEL_SPEC = { id:'hype-intro-reel', name:'HYPE INTRO · REEL', 
       "role": "eyebrow",
       "label": "Eyebrow",
       "type": "text",
-      "default": "// ATHLETES ACCELERATION"
+      "default": "{city name} SPORT PARENT"
     },
     {
       "key": "tag1",

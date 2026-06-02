@@ -21,7 +21,7 @@ const FIVE_STAR_REVIEW_SPEC = {
       "role": "eyebrow",
       "label": "Eyebrow",
       "type": "text",
-      "default": "// ATHLETES ACCELERATION"
+      "default": "{city name} SPORT PARENT"
     },
     {
       "key": "source",
@@ -91,7 +91,7 @@ function FiveStarReviewReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
-      <div data-eyebrow style={{ position: 'absolute', top: 90, left: 90, right: 90, fontFamily: '"JetBrains Mono", monospace', fontSize: 34, color: '#c4141d', letterSpacing: '0.06em', textTransform: 'uppercase', zIndex: 5 }}>{data.eyebrow ?? "// ATHLETES ACCELERATION"}</div>
+      <div data-eyebrow style={{ position: 'absolute', top: 90, left: 90, right: 90, fontFamily: '"JetBrains Mono", monospace', fontSize: 34, color: '#c4141d', letterSpacing: '0.06em', textTransform: 'uppercase', zIndex: 5 }}>{data.eyebrow ?? "{city name} SPORT PARENT"}</div>
       <img src={photo} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
         opacity: 0.16, filter: 'grayscale(0.45) brightness(0.6)' }}/>
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.85) 0%, rgba(10,11,13,0.55) 45%, rgba(10,11,13,0.96) 100%)' }}/>
