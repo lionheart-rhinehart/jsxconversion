@@ -52,13 +52,13 @@ function StatRevealSquare({ data = {} }) {
       }}/>
 
       <TplText field="eyebrow" data={data}
-        base={{ position: 'absolute', top: 100, left: 100, right: 100 }}
+        base={{ position: 'absolute', top: 100, left: 100, padding: '10px 22px', background: '#fff', borderRadius: 8 }}
         style={{
-          fontFamily: '"JetBrains Mono", monospace', fontSize: 28, color: RED,
-          letterSpacing: '0.18em', opacity: eyebrowT, whiteSpace: 'nowrap',
+          fontFamily: '"JetBrains Mono", monospace', fontSize: 28, color: RED, fontWeight: 700,
+          letterSpacing: '0.08em', opacity: eyebrowT, whiteSpace: 'nowrap',
         }}
         maxWidth={880} fitKey={eyebrow}
-      >// {eyebrow}</TplText>
+      >{eyebrow}</TplText>
 
       <TplText field="title" data={data}
         base={{ position: 'absolute', top: 160, left: 100, right: 100 }}

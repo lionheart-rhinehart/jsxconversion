@@ -15,7 +15,7 @@ import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { spawn } from "node:child_process";
 import { assemble } from "./assemble.mjs";
-import { BEAT_HEADLINE_ROLE, beatLetter } from "./roles.mjs";
+import { BEAT_HEADLINE_ROLE, beatLetter, buildEyebrowAnchor } from "./roles.mjs";
 
 // ---------------------------------------------------------------------------
 // Data tiers
@@ -188,13 +188,12 @@ export function resolveStaticConfig({ clusterId, asset, brand, location, campaig
     const { config, subs } = applySubstitutions(sourceConfig, tierTags);
     const tierFilledIds = new Set(subs.map((s) => s.id));
     const explicit = buildExplicit(asset, slots);
-    // S4 — auto-inject the audience+locale context anchor into a clean eyebrow
-    // slot so every creative self-contextualizes ("// AGES 8-12 · CARMEL, IN").
-    // Null-guarded (no city → audience only); skips city-tagged eyebrow slots
-    // (the big stacked city graphic), tier-filled slots, and any eyebrow the
-    // planner set explicitly or via copyByRole.
-    const audience = tierTags.audience || "AGES 8-12";
-    const anchor = `// ${audience}${tierTags.city ? ` · ${tierTags.city}` : ""}`;
+    // S4 — auto-inject the locale context anchor into a clean eyebrow slot so
+    // every creative self-contextualizes ("CARMEL SPORTS PARENTS"). The string is
+    // built by the shared buildEyebrowAnchor (single source with the motion path).
+    // Skips city-tagged eyebrow slots (the big stacked city graphic), tier-filled
+    // slots, and any eyebrow the planner set explicitly or via copyByRole.
+    const anchor = buildEyebrowAnchor(tierTags);
     if (!(asset.copyByRole && asset.copyByRole.eyebrow)) {
       const eyeSlot = slots.find(
         (s) => s.role === "eyebrow" && s.tag !== "city" && !s.locked

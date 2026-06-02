@@ -4,7 +4,7 @@
 // from stat-reveal so F1 and F3 don't look alike. Vertical-native 1080x1920.
 
 function SeasonClock({ data = {} }) {
-  const eyebrow = data.eyebrow ?? '// ANOTHER SEASON, SAME SPEED?';
+  const eyebrow = data.eyebrow ?? 'CITY SPORTS PARENTS';
   const line1 = data.line1 ?? 'ANOTHER SEASON.';
   const line2 = data.line2 ?? 'SAME SPEED.';
   const offer = data.offer ?? 'SEE THE NUMBER FIRST.';
@@ -31,9 +31,10 @@ function SeasonClock({ data = {} }) {
       {bgClip ? <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.55) 0%, rgba(10,11,13,0.45) 45%, rgba(10,11,13,0.85) 100%)' }} /> : null}
       {/* SCENE 1 — the season that changed nothing */}
       <div style={{ position: 'absolute', inset: 0, opacity: s1 }}>
-        <div style={{ position: 'absolute', top: 150, left: 90, right: 90,
-          fontFamily: '"JetBrains Mono", monospace', fontSize: 38, color: RED,
-          letterSpacing: '0.06em', textTransform: 'uppercase', opacity: ease((t - 0.05) / 0.3) }}>
+        <div style={{ position: 'absolute', top: 150, left: 90,
+          fontFamily: '"JetBrains Mono", monospace', fontSize: 32, color: RED, fontWeight: 700,
+          display: 'inline-block', background: '#fff', padding: '10px 22px', borderRadius: 8,
+          letterSpacing: '0.04em', textTransform: 'uppercase', opacity: ease((t - 0.05) / 0.3) }}>
           {eyebrow}
         </div>
         <div style={{ position: 'absolute', top: 620, left: 86, right: 86,
@@ -87,7 +88,7 @@ const SEASON_CLOCK_SPEC = {
   name: 'SEASON CLOCK (retarget offer)',
   fields: [
     { "key": "duration", "label": "Length", "type": "slider", "default": 7, "min": 5, "max": 12, "step": 0.5, "unit": "s" },
-    { "key": "eyebrow", "role": "eyebrow", "label": "Eyebrow", "type": "text", "default": "// ANOTHER SEASON, SAME SPEED?" },
+    { "key": "eyebrow", "role": "eyebrow", "label": "Eyebrow", "type": "text", "default": "CITY SPORTS PARENTS" },
     { "key": "line1", "role": "hook", "label": "Scene 1 line 1", "type": "text", "default": "ANOTHER SEASON." },
     { "key": "line2", "role": "hook", "label": "Scene 1 line 2 (red)", "type": "text", "default": "SAME SPEED." },
     { "key": "offer", "role": "offer", "label": "Offer line", "type": "text", "default": "SEE THE NUMBER FIRST." },

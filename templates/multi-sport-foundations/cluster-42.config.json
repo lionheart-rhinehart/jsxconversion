@@ -2,14 +2,15 @@
   "width": 1080,
   "height": 1920,
   "fixedDesign": [
-    { "id": "center_rule", "tag": "center_rule", "type": "rect", "x": 440, "y": 1200, "width": 200, "height": 8, "fill": "#c4141d", "z": 15 }
+    { "id": "rule_top", "tag": "rule_top", "type": "rect", "x": 240, "y": 690, "width": 600, "height": 6, "fill": "#c4141d", "z": 15 },
+    { "id": "rule_bottom", "tag": "rule_bottom", "type": "rect", "x": 240, "y": 1230, "width": 600, "height": 6, "fill": "#c4141d", "z": 15 }
   ],
   "elements": [
     {
       "id": "eyebrow",
       "tag": "eyebrow",
       "label": "Context anchor chip (auto-filled, centered)",
-      "x": 0, "y": 360, "width": 1080,
+      "x": 0, "y": 340, "width": 1080,
       "textAlign": "center",
       "text": "CITY SPORTS PARENTS",
       "fontSize": 32,
@@ -29,20 +30,21 @@
     {
       "id": "reframe",
       "tag": "reframe",
-      "label": "Centered epiphany",
-      "x": 60, "y": 720, "width": 960,
+      "label": "Framed reframe (centered, two-line)",
+      "x": 60, "y": 760, "width": 960,
       "textAlign": "center",
-      "text": "THEY'RE NOT FALLING BEHIND. THEIR TRAINING IS PUSHING THEM BACK.",
-      "fontSize": 104,
+      "text": "THIS WAS NEVER\nYOUR KID'S FAULT. OR YOURS.",
+      "fontSize": 96,
       "fontFamily": "Anton",
       "color": "#ffffff",
       "lineHeight": 1.0,
       "letterSpacing": "0.005em",
       "textTransform": "uppercase",
+      "whiteSpace": "pre-line",
       "z": 21,
       "role": "reframe",
-      "accepts": ["reframe", "claim"],
-      "maxChars": 92
+      "accepts": ["reframe", "claim", "hook"],
+      "maxChars": 80
     },
     {
       "id": "brand_wordmark",
