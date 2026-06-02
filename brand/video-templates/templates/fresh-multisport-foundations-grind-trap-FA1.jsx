@@ -6,7 +6,7 @@
 // Rendered by the runner inside <Stage duration={30}> (useTime() runs in-Stage).
 
 function GrindArcVSL({ data = {} }) {
-  const eyebrow = data.eyebrow ?? '// AGES 8-12 · HAMILTON COUNTY, IN';
+  const eyebrow = data.eyebrow ?? 'CITY SPORTS PARENTS';
   const hook = data.hook ?? 'YOUR YOUNG ATHLETE\nTRAINS HARD.\nSTILL THE SAME SPEED.';
   const mech1 = data.mech1 ?? 'THE TIRED REPS ARE\nREHEARSING SLOW.';
   const mech2 = data.mech2 ?? 'SO THE SET ENDS THE\nSECOND SPEED DROPS.';
@@ -61,9 +61,10 @@ function GrindArcVSL({ data = {} }) {
       </div>
 
       {/* A — context anchor + hook */}
-      <div style={{ position: 'absolute', top: 540, left: 90, right: 90,
-        fontFamily: '"JetBrains Mono", monospace', fontSize: 34, color: RED,
-        letterSpacing: '0.06em', textTransform: 'uppercase', opacity: fade(A[0], A[1]) }}>{eyebrow}</div>
+      <div style={{ position: 'absolute', top: 540, left: 90,
+        fontFamily: '"JetBrains Mono", monospace', fontSize: 32, color: RED, fontWeight: 700,
+        display: 'inline-block', background: '#fff', padding: '10px 22px', borderRadius: 8,
+        letterSpacing: '0.04em', textTransform: 'uppercase', opacity: fade(A[0], A[1]) }}>{eyebrow}</div>
       <div style={{ ...cap, opacity: fade(A[0], A[1]), transform: `translateY(${rise(A[0])}px)` }}>{hook}</div>
 
       {/* C — mechanism (two beats) */}
@@ -121,7 +122,7 @@ const GRIND_ARC_SPEC = {
   name: 'GRIND ARC VSL (FA1)',
   fields: [
     { "key": "duration", "label": "Length", "type": "slider", "default": 30, "min": 15, "max": 45, "step": 1, "unit": "s" },
-    { "key": "eyebrow", "role": "eyebrow", "label": "A: Context anchor", "type": "text", "default": "// AGES 8-12 · HAMILTON COUNTY, IN" },
+    { "key": "eyebrow", "role": "eyebrow", "label": "A: Context anchor", "type": "text", "default": "CITY SPORTS PARENTS" },
     { "key": "hook", "role": "hook", "label": "A: Hook", "type": "text", "default": "YOUR YOUNG ATHLETE\nTRAINS HARD.\nSTILL THE SAME SPEED." },
     { "key": "mech1", "role": "mechanism", "label": "C: Mechanism 1", "type": "text", "default": "THE TIRED REPS ARE\nREHEARSING SLOW." },
     { "key": "mech2", "role": "mechanism", "label": "C: Mechanism 2", "type": "text", "default": "SO THE SET ENDS THE\nSECOND SPEED DROPS." },

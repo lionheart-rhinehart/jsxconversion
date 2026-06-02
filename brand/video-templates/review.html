@@ -315,7 +315,11 @@ const STATE_COPY = {
 function previewHTML(a) {
   const media = a.output || a.thumb;
   if (media) {
-    const src = (API ? API : "") + (media.startsWith("/") ? media : "/" + media);
+    // Cache-bust by renderedAt: the browser's media cache can serve a stale
+    // (even corrupt) copy of a re-rendered file at an identical URL, so make the
+    // URL change whenever the file is re-rendered.
+    const ver = "?v=" + encodeURIComponent(a.renderedAt || a.editedAt || "");
+    const src = (API ? API : "") + (media.startsWith("/") ? media : "/" + media) + ver;
     if (/\.mp4$/i.test(media)) return `<video src="${src}" muted loop autoplay playsinline></video>`;
     return `<img src="${src}" alt="">`; // png/jpg/gif
   }
@@ -1010,19 +1014,33 @@ function VideoEditModal({ angleId, assetId, onClose }) {
               const outUrl = out ? (apiBase() + (out.startsWith("/") ? out : "/" + out)) : null;
               const wantLive = tab === "position";
               if (!wantLive && outUrl) {
-                const busted = outUrl + (outUrl.includes("?") ? "&" : "?") + "v=" + outVer;
+                // Bust on renderedAt (changes when the file changes, survives page
+                // reloads) AND outVer (in-session re-render bump) so the browser's
+                // media cache can never replay a stale/corrupt copy at the same URL.
+                const ver = (live.renderedAt || live.editedAt || "0") + "." + outVer;
+                const busted = outUrl + (outUrl.includes("?") ? "&" : "?") + "v=" + encodeURIComponent(ver);
                 return /\.mp4(\?|$)/i.test(outUrl)
                   ? <video key={busted} src={busted} muted loop autoPlay playsInline style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                   : <img key={busted} src={busted} alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />;
               }
-              if (Comp && window.Stage) return (
-                <window.Stage key={template + ":" + (Number(data.duration) || 8)}
-                    width={1080} height={1920} duration={Number(data.duration) || 8}
-                    background="#0a0b0d" autoplay loop>
-                  <Comp data={data} />
-                  {window.ExtrasLayer && <window.ExtrasLayer data={data} />}
-                </window.Stage>
-              );
+              if (Comp && window.Stage) {
+                // Loop the template's intrinsic L-second animation to fill the
+                // chosen clip length (L = SPEC duration default), so the live
+                // preview matches the looped render (PROCESS.md "preview == render").
+                const durField = (spec && spec.fields || []).find((f) => f.key === "duration");
+                const loopLen = (durField && durField.default) || (Number(data.duration) || 8);
+                const Loop = window.LoopRemap || ((p) => p.children);
+                return (
+                  <window.Stage key={template + ":" + (Number(data.duration) || 8)}
+                      width={1080} height={1920} duration={Number(data.duration) || 8}
+                      background="#0a0b0d" autoplay loop>
+                    <Loop loopLength={loopLen}>
+                      <Comp data={data} />
+                      {window.ExtrasLayer && <window.ExtrasLayer data={data} />}
+                    </Loop>
+                  </window.Stage>
+                );
+              }
               return outUrl
                 ? <div className="vm-fresh">Showing last render. Save + Re-render to update.</div>
                 : <div className="vm-fresh">Loading preview…</div>;

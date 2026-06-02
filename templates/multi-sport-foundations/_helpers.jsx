@@ -754,6 +754,32 @@ export function renderTextLayer(el, key) {
     content = Array.from({ length: el.repeat }, () => el.text).join("\n");
     if (el.whiteSpace == null) style.whiteSpace = "pre";
   }
+  // Optional "chip" treatment: a filled pill that hugs the text (e.g. the
+  // white-bg / red-text eyebrow that pops over footage). When `chipBg` is set,
+  // split the positioning onto an OUTER absolutely-positioned wrapper (which
+  // keeps left/top/width + textAlign so left- and center-aligned chips both
+  // work) and the visual text styling onto an INNER inline-block span carrying
+  // the background, padding and rounded corners. Inline-block + the wrapper's
+  // textAlign makes the pill shrink-to-fit its text. Inert when `chipBg` is
+  // absent → the element renders as the plain positioned div, byte-identical.
+  if (el.chipBg) {
+    const { position, left, top, width, textAlign, ...textStyle } = style;
+    const outerStyle = { position, left, top };
+    if (width != null) outerStyle.width = width;
+    if (textAlign != null) outerStyle.textAlign = textAlign;
+    const innerStyle = {
+      ...textStyle,
+      display: "inline-block",
+      background: el.chipBg,
+      padding: el.chipPad || "10px 22px",
+      borderRadius: el.chipRadius != null ? el.chipRadius : 8,
+    };
+    return (
+      <div key={key} style={outerStyle}>
+        <span style={innerStyle}>{content}</span>
+      </div>
+    );
+  }
   return (
     <div key={key} style={style}>
       {content}

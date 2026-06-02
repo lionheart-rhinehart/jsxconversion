@@ -117,6 +117,58 @@ const TimelineContext = React.createContext({ time: 0, duration: 10, playing: fa
 const useTime = () => React.useContext(TimelineContext).time;
 const useTimeline = () => React.useContext(TimelineContext);
 
+// ── LoopRemap ─────────────────────────────────────────────────────────────────
+// Replays a template's intrinsic L-second animation to fill a longer clip.
+// Templates animate on absolute useTime() thresholds tuned to a fixed "N-second
+// loop" (the SPEC duration `default`). Without this, a clip longer than L just
+// holds — or, for templates with a loop-seam fade like logo-sting, fades to black —
+// on a frozen tail, which reads as "the animation stuck on a short loop". LoopRemap
+// re-provides the timeline with `time` wrapped to [0, L), so a 3s sting in a 12s
+// clip plays 4 clean loops. loopLength <= 0 (or a clip no longer than one loop) is
+// a no-op. Used identically by the render wrapper (run-campaign) and the review-page
+// preview (review.html) so preview == render.
+function LoopRemap({ loopLength, children }) {
+  const tl = useTimeline();
+  const L = Number(loopLength) || 0;
+  const value = React.useMemo(
+    () => (L > 0 ? { ...tl, time: tl.time % L } : tl),
+    [tl, L],
+  );
+  return React.createElement(TimelineContext.Provider, { value }, children);
+}
+
+// ── SyncedVideo ───────────────────────────────────────────────────────────────
+// A background <video> whose playback is tied to the timeline (useTime) instead of
+// the wall clock. WHY: the headless renderer steps a virtual clock and screenshots
+// frame-by-frame, which takes far longer than real time; a raw <video autoPlay loop>
+// keeps playing on the wall clock during that slow capture, so its motion gets
+// packed into the output = "hyperloop" (the background races/loops many times).
+// In RENDER mode (window.__renderTime is set by the render driver) we disable
+// autoplay/loop and seek currentTime = t % duration each frame, so the background
+// advances exactly 1s per output second. In the LIVE editor preview (__renderTime
+// undefined) we keep normal autoplay/loop so the preview stays smooth (it already
+// plays in real time there). Drop-in replacement for <video src={bgClip} …/>.
+function SyncedVideo({ src, loopSeconds, ...rest }) {
+  const t = useTime();
+  const ref = React.useRef(null);
+  const isRender = typeof window !== "undefined" && typeof window.__renderTime === "number";
+  React.useLayoutEffect(() => {
+    const v = ref.current;
+    if (!v || !isRender) return;
+    const dur = (loopSeconds && loopSeconds > 0) ? loopSeconds : v.duration;
+    if (!dur || !isFinite(dur) || dur <= 0) return;
+    try {
+      v.pause();
+      const target = ((t % dur) + dur) % dur;
+      if (Math.abs(v.currentTime - target) > 1e-3) v.currentTime = target;
+    } catch (e) { /* seek before metadata — ignored, next frame retries */ }
+  });
+  return React.createElement("video", {
+    ref, src, muted: true, playsInline: true, preload: "auto",
+    autoPlay: !isRender, loop: !isRender, ...rest,
+  });
+}
+
 // ── Sprite ──────────────────────────────────────────────────────────────────
 // Renders children only when the playhead is inside [start, end]. Provides
 // a sub-context with `localTime` (seconds since start) and `progress` (0..1).
@@ -765,7 +817,7 @@ function IconButton({ children, onClick, title }) {
 
 Object.assign(window, {
   Easing, interpolate, animate, clamp,
-  TimelineContext, useTime, useTimeline,
+  TimelineContext, useTime, useTimeline, LoopRemap, SyncedVideo,
   Sprite, SpriteContext, useSprite,
   TextSprite, ImageSprite, RectSprite,
   Stage, PlaybackBar,

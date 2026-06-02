@@ -1,0 +1,7 @@
+{
+  "_comment": "Location tier — Indianapolis. Supplies `city` for the locale eyebrow anchor ('INDIANAPOLIS SPORTS PARENTS'). State suffix is stripped by buildEyebrowAnchor.",
+  "location": "indianapolis",
+  "tags": {
+    "city": "INDIANAPOLIS, IN"
+  }
+}

@@ -40,17 +40,19 @@
     {
       "id": "eyebrow",
       "tag": "eyebrow",
-      "label": "Mono code-comment eyebrow",
+      "label": "Context anchor chip (auto-filled)",
       "x": 90,
       "y": 170,
-      "width": 900,
       "textAlign": "left",
-      "text": "// AGES 8-12 · HAMILTON COUNTY, IN",
-      "fontSize": 36,
+      "text": "INDIANAPOLIS SPORTS PARENTS",
+      "fontSize": 32,
       "fontFamily": "JetBrains Mono",
-      "fontWeight": 500,
+      "fontWeight": 700,
       "color": "#c4141d",
-      "letterSpacing": "0.08em",
+      "chipBg": "#ffffff",
+      "chipPad": "12px 24px",
+      "chipRadius": 8,
+      "letterSpacing": "0.04em",
       "textTransform": "uppercase",
       "z": 20,
       "role": "eyebrow",
@@ -58,7 +60,7 @@
         "eyebrow",
         "proof"
       ],
-      "maxChars": 24,
+      "maxChars": 34,
       "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
@@ -208,7 +210,7 @@
     }
   ],
   "media": {
-    "path": "./assets/batch-media/lift.jpg",
+    "path": "./assets/batch-media/ms-carry.jpg",
     "tag": "bg_media",
     "z": 0,
     "videoStartTime": 1

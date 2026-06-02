@@ -380,7 +380,17 @@ ${configTag}
         "-framerate", String(params.FPS),
         "-i", "pipe:0",
         "-c:v", "libx264",
+        // Color correctness (matches encodeFrames in render.mjs): input PNG frames
+        // are full-range sRGB. Without explicit signaling, swscale uses BT.601 and
+        // writes color_space=unknown, so HD players decode as BT.709 → the brand
+        // red shifts/desaturates vs the static PNGs. Force BT.709 conversion AND
+        // tag it BT.709 so encode matrix == decode matrix.
+        "-vf", "scale=in_range=full:out_range=tv:out_color_matrix=bt709,format=yuv420p",
         "-pix_fmt", "yuv420p",
+        "-colorspace", "bt709",
+        "-color_primaries", "bt709",
+        "-color_trc", "bt709",
+        "-color_range", "tv",
         "-movflags", "+faststart",
         "-preset", "medium",
         "-crf", "20",

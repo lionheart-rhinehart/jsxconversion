@@ -36,7 +36,7 @@ import {
   loadTier, mergeTiers,
 } from "./lib/fill-core.mjs";
 import { assemble } from "./lib/assemble.mjs";
-import { fieldRole } from "./lib/roles.mjs";
+import { fieldRole, buildEyebrowAnchor } from "./lib/roles.mjs";
 
 const PROJECT_ROOT = resolve(".");
 const CAMPAIGNS_DIR = join(PROJECT_ROOT, "campaigns");
@@ -128,6 +128,30 @@ function templateDataKeys(src) {
   return [...keys];
 }
 
+// The template's `duration` SPEC field, parsed from its *_SPEC `fields:` array
+// (same brace-match + JSON.parse the editor-server uses). Its `default` is the
+// template's intrinsic animation/loop length L — the "N-second loop" the template
+// is authored around; `min`/`max` are the per-template clip-length bounds. Returns
+// null if there's no parseable duration field.
+function durationField(src) {
+  const at = src.indexOf("fields:");
+  if (at < 0) return null;
+  const open = src.indexOf("[", at);
+  if (open < 0) return null;
+  let depth = 0;
+  for (let i = open; i < src.length; i++) {
+    if (src[i] === "[") depth++;
+    else if (src[i] === "]" && --depth === 0) {
+      try {
+        const fields = JSON.parse(src.slice(open, i + 1));
+        const f = Array.isArray(fields) && fields.find((x) => x && x.key === "duration");
+        return f && typeof f.default === "number" ? f : null;
+      } catch { return null; }
+    }
+  }
+  return null;
+}
+
 // Build the `data` object a motion template receives via window.__CONFIG__.
 // Priority: asset.templateData (the planner's explicit, key-accurate map) wins;
 // otherwise a small heuristic maps headline/microscript onto sensible fields so
@@ -160,7 +184,10 @@ function buildMotionData(asset, dataKeys, tierTags = {}) {
   // role is brand/eyebrow (never content/numeric — a string in a stat field
   // would NaN the count-up at render). Explicit templateData already populated
   // `data`, so this only touches keys it didn't set ("explicit wins").
-  const anchor = `// ${tierTags.audience || "AGES 8-12"}${tierTags.city ? ` · ${tierTags.city}` : ""}`;
+  // Locale eyebrow anchor — SINGLE SOURCE in roles.mjs (shared with the static
+  // fill path). Produces "{CITY} SPORTS PARENTS". Do NOT re-inline an ad-hoc
+  // string here — that diverges from the static path and regresses the eyebrow.
+  const anchor = buildEyebrowAnchor(tierTags);
   for (const k of dataKeys) {
     if (k in data) continue;
     const role = fieldRole(k);
@@ -316,7 +343,18 @@ async function renderTemplateMotion(asset, angleId, wantGif) {
   // the wrapper as a numeric literal — readStageProps (claude-design.mjs) only
   // accepts /^[0-9.]+$/ in `duration={...}`; a quoted/NaN value would silently
   // fall back to DEFAULTS (8s). Fall back to 8 when unset.
-  const D = Math.max(1, Number(asset.templateData?.duration) || 8);
+  // L = the template's intrinsic animation/loop length (SPEC duration `default`);
+  // D = the exported clip length, clamped to the template's per-template bounds so
+  // a stale plan value can't exceed what the template is meant to do. When D > L the
+  // wrapper loops the L-second animation to fill D (LoopRemap); when no duration
+  // field exists, L falls back to D (no looping, prior behavior).
+  const dField = durationField(src);
+  const L = dField ? dField.default : 0;
+  let D = Math.max(1, Number(asset.templateData?.duration) || L || 8);
+  if (dField) {
+    if (typeof dField.min === "number") D = Math.max(dField.min, D);
+    if (typeof dField.max === "number") D = Math.min(dField.max, D);
+  }
   const wrapperName = `CampWrap_${slug(asset.id).replace(/-/g, "_")}`;
   const wrapper = `// Auto-generated motion wrapper for campaign "${campaign}" asset ${asset.id}.
 // Renders bank template ${tmpl} (window.${compName}) inside a Stage with __CONFIG__ data.
@@ -328,10 +366,13 @@ const _FONT_PREFLIGHT = {
 function ${wrapperName}({ data }) {
   const Inner = window.${compName};
   if (!Inner) return null;
+  const Loop = window.LoopRemap || (function (p) { return p.children; });
   return (
     <Stage width={${W}} height={${H}} duration={${D}} fps={${FPS}} background="#0a0b0d">
-      <Inner data={data || {}} />
-      {window.ExtrasLayer ? <window.ExtrasLayer data={data || {}} /> : null}
+      <Loop loopLength={${L}}>
+        <Inner data={data || {}} />
+        {window.ExtrasLayer ? <window.ExtrasLayer data={data || {}} /> : null}
+      </Loop>
     </Stage>
   );
 }
