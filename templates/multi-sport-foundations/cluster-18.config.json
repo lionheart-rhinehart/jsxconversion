@@ -23,7 +23,7 @@
       "y": 128,
       "width": 752,
       "height": 1320,
-      "fill": "#ed1c24",
+      "fill": "#c4141d",
       "borderRadius": 18,
       "z": 1
     },
@@ -118,7 +118,7 @@
       "text": "PROGRAM",
       "fontSize": 155,
       "fontFamily": "Anton",
-      "color": "#ed1c24",
+      "color": "#c4141d",
       "lineHeight": 1,
       "letterSpacing": "-0.01em",
       "textTransform": "uppercase",
