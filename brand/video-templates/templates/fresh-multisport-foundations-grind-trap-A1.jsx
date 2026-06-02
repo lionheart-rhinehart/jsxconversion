@@ -5,7 +5,7 @@
 // Promotable to a named motion bank template + _SPEC.
 
 function GrindHookReel({ data = {} }) {
-  const eyebrow = data.eyebrow ?? 'CITY SPORTS PARENTS';
+  const eyebrow = data.eyebrow ?? '// THE LAST REP LIE';
   const line1 = data.line1 ?? "THE TIRED REP\nISN'T EFFORT.";
   const line2 = data.line2 ?? "IT'S INSTRUCTION.";
   const brand = data.brand ?? 'ATHLETES ACCELERATION';
@@ -22,16 +22,15 @@ function GrindHookReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
-      {bgClip ? <video src={bgClip} autoPlay muted playsInline loop style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} /> : null}
+      {bgClip ? <SyncedVideo src={bgClip} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} /> : null}
       {bgClip ? <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.5) 0%, rgba(10,11,13,0.4) 45%, rgba(10,11,13,0.82) 100%)' }} /> : null}
       {/* subtle red glow */}
       <div style={{ position: 'absolute', bottom: -220, left: -160, width: 640, height: 640,
         background: `radial-gradient(circle, ${RED}22 0%, transparent 60%)`, filter: 'blur(20px)' }} />
 
-      <div style={{ position: 'absolute', top: 690, left: 90,
-        fontFamily: '"JetBrains Mono", monospace', fontSize: 32, color: RED, fontWeight: 700,
-        display: 'inline-block', background: '#fff', padding: '10px 22px', borderRadius: 8,
-        letterSpacing: '0.04em', textTransform: 'uppercase', opacity: eyeT }}>
+      <div style={{ position: 'absolute', top: 690, left: 90, right: 90,
+        fontFamily: '"JetBrains Mono", monospace', fontSize: 40, color: RED,
+        letterSpacing: '0.12em', textTransform: 'uppercase', opacity: eyeT }}>
         {eyebrow}
       </div>
 
@@ -64,11 +63,49 @@ const GRIND_HOOK_SPEC = {
   id: 'fresh-multisport-foundations-grind-trap-A1',
   name: 'GRIND HOOK (A1)',
   fields: [
-    { "key": "duration", "label": "Length", "type": "slider", "default": 3, "min": 2, "max": 6, "step": 0.5, "unit": "s" },
-    { "key": "eyebrow", "role": "eyebrow", "label": "Eyebrow", "type": "text", "default": "CITY SPORTS PARENTS" },
-    { "key": "line1", "role": "hook", "label": "Hook line 1", "type": "text", "default": "THE TIRED REP\nISN'T EFFORT." },
-    { "key": "line2", "role": "hook", "label": "Hook line 2 (red)", "type": "text", "default": "IT'S INSTRUCTION." },
-    { "key": "brand", "role": "brand", "label": "Brand", "type": "text", "default": "ATHLETES ACCELERATION" }
+    {
+      "key": "duration",
+      "label": "Length",
+      "type": "slider",
+      "default": 3,
+      "min": 2,
+      "max": 6,
+      "step": 0.5,
+      "unit": "s"
+    },
+    {
+      "key": "bgClip",
+      "label": "Background clip",
+      "type": "image"
+    },
+    {
+      "key": "eyebrow",
+      "role": "eyebrow",
+      "label": "Eyebrow",
+      "type": "text",
+      "default": "// THE LAST REP LIE"
+    },
+    {
+      "key": "line1",
+      "role": "hook",
+      "label": "Hook line 1",
+      "type": "text",
+      "default": "THE TIRED REP\nISN'T EFFORT."
+    },
+    {
+      "key": "line2",
+      "role": "hook",
+      "label": "Hook line 2 (red)",
+      "type": "text",
+      "default": "IT'S INSTRUCTION."
+    },
+    {
+      "key": "brand",
+      "role": "brand",
+      "label": "Brand",
+      "type": "text",
+      "default": "ATHLETES ACCELERATION"
+    }
   ],
 };
 window.GRIND_HOOK_SPEC = GRIND_HOOK_SPEC;
