@@ -22,7 +22,7 @@ function HeartRateStoryReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', top: 110, left: 60, right: 60, opacity: eyebrowT, fontFamily: '"JetBrains Mono", monospace', fontSize: 28, color: RED, letterSpacing: '0.18em' }}>// {eyebrow}</div>
+      <Eyebrow top={110} fontSize={28}>// {eyebrow}</Eyebrow>
       <div style={{ position: 'absolute', top: 180, left: 60, right: 60, fontFamily: 'Anton, sans-serif', fontSize: 140, color: '#fff', lineHeight: 0.88, opacity: titleT, transform: `translateY(${(1 - titleT) * 16}px)` }}>{title1}<br/><span style={{ color: RED }}>{title2}</span></div>
 
       <div style={{ position: 'absolute', top: 540, left: 60, padding: '10px 16px', background: RED, fontFamily: '"JetBrains Mono", monospace', fontSize: 22, color: '#fff', letterSpacing: '0.14em', opacity: sessT }}>{session}</div>

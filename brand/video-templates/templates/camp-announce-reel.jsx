@@ -28,7 +28,7 @@ function CampAnnounceReel({ data = {} }) {
       {window.TrimmedMedia && <window.TrimmedMedia src={media} clipStart={data.media_clipStart} clipEnd={data.media_clipEnd} muted={!data.media_audio} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${photoScale})`, filter: 'brightness(0.32) saturate(0.7) contrast(1.1)' }}/>}
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.6) 0%, rgba(10,11,13,0.9) 100%)' }}/>
 
-      <div style={{ position: 'absolute', top: 130, left: 60, padding: '8px 16px', background: RED, fontFamily: '"JetBrains Mono", monospace', fontSize: 24, color: '#fff', letterSpacing: '0.16em', opacity: eyebrowT }}>// {eyebrow}</div>
+      <Eyebrow top={130} fontSize={24}>// {eyebrow}</Eyebrow>
 
       <div style={{ position: 'absolute', top: 250, left: 60, right: 60, opacity: titleT, transform: `translateY(${(1-titleT)*18}px)` }}>
         <div style={{ fontFamily: 'Anton, sans-serif', fontSize: 240, color: '#fff', lineHeight: 0.82 }}>{title1}</div>

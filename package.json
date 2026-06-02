@@ -5,7 +5,9 @@
   "type": "module",
   "description": "Athletes Acceleration creative engine — generates branded ad videos and statics from JSX templates.",
   "scripts": {
-    "render": "node .claude/skills/jsx-to-mp4/scripts/render.mjs"
+    "render": "node .claude/skills/jsx-to-mp4/scripts/render.mjs",
+    "validate-templates": "node scripts/validate-templates.mjs",
+    "prepare": "git config core.hooksPath scripts/githooks"
   },
   "dependencies": {
     "@babel/standalone": "^7.29.0",

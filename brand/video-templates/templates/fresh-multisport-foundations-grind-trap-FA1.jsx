@@ -46,7 +46,7 @@ function GrindArcVSL({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: INK, overflow: 'hidden' }}>
-      {bgClip ? <video src={bgClip} autoPlay muted playsInline loop style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} /> : null}
+      {bgClip ? <SyncedVideo src={bgClip} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} /> : null}
       {bgClip ? <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.6) 0%, rgba(10,11,13,0.5) 45%, rgba(10,11,13,0.85) 100%)' }} /> : null}
       {/* red glow */}
       <div style={{ position: 'absolute', top: -200, right: -200, width: 640, height: 640,
@@ -61,10 +61,7 @@ function GrindArcVSL({ data = {} }) {
       </div>
 
       {/* A — context anchor + hook */}
-      <div style={{ position: 'absolute', top: 540, left: 90,
-        fontFamily: '"JetBrains Mono", monospace', fontSize: 32, color: RED, fontWeight: 700,
-        display: 'inline-block', background: '#fff', padding: '10px 22px', borderRadius: 8,
-        letterSpacing: '0.04em', textTransform: 'uppercase', opacity: fade(A[0], A[1]) }}>{eyebrow}</div>
+      <Eyebrow top={540} fontSize={34} style={{ opacity: fade(A[0], A[1]) }}>{eyebrow}</Eyebrow>
       <div style={{ ...cap, opacity: fade(A[0], A[1]), transform: `translateY(${rise(A[0])}px)` }}>{hook}</div>
 
       {/* C — mechanism (two beats) */}
@@ -121,18 +118,98 @@ const GRIND_ARC_SPEC = {
   id: 'fresh-multisport-foundations-grind-trap-FA1',
   name: 'GRIND ARC VSL (FA1)',
   fields: [
-    { "key": "duration", "label": "Length", "type": "slider", "default": 30, "min": 15, "max": 45, "step": 1, "unit": "s" },
-    { "key": "eyebrow", "role": "eyebrow", "label": "A: Context anchor", "type": "text", "default": "CITY SPORTS PARENTS" },
-    { "key": "hook", "role": "hook", "label": "A: Hook", "type": "text", "default": "YOUR YOUNG ATHLETE\nTRAINS HARD.\nSTILL THE SAME SPEED." },
-    { "key": "mech1", "role": "mechanism", "label": "C: Mechanism 1", "type": "text", "default": "THE TIRED REPS ARE\nREHEARSING SLOW." },
-    { "key": "mech2", "role": "mechanism", "label": "C: Mechanism 2", "type": "text", "default": "SO THE SET ENDS THE\nSECOND SPEED DROPS." },
-    { "key": "reframe", "role": "reframe", "label": "D: Reframe", "type": "text", "default": "THIS WAS NEVER\nYOUR KID'S FAULT." },
-    { "key": "statValue", "role": "stat", "label": "E: Stat value", "type": "text", "default": "224%" },
-    { "key": "statLabel", "role": "stat", "label": "E: Stat label", "type": "text", "default": "GREATER VERTICAL JUMP" },
-    { "key": "proofCite", "role": "proof", "label": "E: Proof citation", "type": "text", "default": "WANG 2026 · CSCS · NFL-TRAINED" },
-    { "key": "guarantee", "role": "guarantee", "label": "F: Guarantee (verbatim)", "type": "text", "default": "+1 mph speed. +3\" vertical.\n90 days. Or your training is on us." },
-    { "key": "cta", "role": "cta", "label": "CTA", "type": "text", "default": "BOOK THE FREE\nATHLETE ANALYSIS" },
-    { "key": "brand", "role": "brand", "label": "Brand", "type": "text", "default": "ATHLETES ACCELERATION" }
+    {
+      "key": "duration",
+      "label": "Length",
+      "type": "slider",
+      "default": 30,
+      "min": 15,
+      "max": 45,
+      "step": 1,
+      "unit": "s"
+    },
+    {
+      "key": "bgClip",
+      "label": "Background clip",
+      "type": "image"
+    },
+    {
+      "key": "eyebrow",
+      "role": "eyebrow",
+      "label": "A: Context anchor",
+      "type": "text",
+      "default": "// AGES 8-12 · HAMILTON COUNTY, IN"
+    },
+    {
+      "key": "hook",
+      "role": "hook",
+      "label": "A: Hook",
+      "type": "text",
+      "default": "YOUR YOUNG ATHLETE\nTRAINS HARD.\nSTILL THE SAME SPEED."
+    },
+    {
+      "key": "mech1",
+      "role": "mechanism",
+      "label": "C: Mechanism 1",
+      "type": "text",
+      "default": "THE TIRED REPS ARE\nREHEARSING SLOW."
+    },
+    {
+      "key": "mech2",
+      "role": "mechanism",
+      "label": "C: Mechanism 2",
+      "type": "text",
+      "default": "SO THE SET ENDS THE\nSECOND SPEED DROPS."
+    },
+    {
+      "key": "reframe",
+      "role": "reframe",
+      "label": "D: Reframe",
+      "type": "text",
+      "default": "THIS WAS NEVER\nYOUR KID'S FAULT."
+    },
+    {
+      "key": "statValue",
+      "role": "stat",
+      "label": "E: Stat value",
+      "type": "text",
+      "default": "224%"
+    },
+    {
+      "key": "statLabel",
+      "role": "stat",
+      "label": "E: Stat label",
+      "type": "text",
+      "default": "GREATER VERTICAL JUMP"
+    },
+    {
+      "key": "proofCite",
+      "role": "proof",
+      "label": "E: Proof citation",
+      "type": "text",
+      "default": "WANG 2026 · CSCS · NFL-TRAINED"
+    },
+    {
+      "key": "guarantee",
+      "role": "guarantee",
+      "label": "F: Guarantee (verbatim)",
+      "type": "text",
+      "default": "+1 mph speed. +3\" vertical.\n90 days. Or your training is on us."
+    },
+    {
+      "key": "cta",
+      "role": "cta",
+      "label": "CTA",
+      "type": "text",
+      "default": "BOOK THE FREE\nATHLETE ANALYSIS"
+    },
+    {
+      "key": "brand",
+      "role": "brand",
+      "label": "Brand",
+      "type": "text",
+      "default": "ATHLETES ACCELERATION"
+    }
   ],
 };
 window.GRIND_ARC_SPEC = GRIND_ARC_SPEC;

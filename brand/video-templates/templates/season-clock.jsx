@@ -27,16 +27,11 @@ function SeasonClock({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
-      {bgClip ? <video src={bgClip} autoPlay muted playsInline loop style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} /> : null}
+      {bgClip ? <SyncedVideo src={bgClip} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} /> : null}
       {bgClip ? <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.55) 0%, rgba(10,11,13,0.45) 45%, rgba(10,11,13,0.85) 100%)' }} /> : null}
       {/* SCENE 1 — the season that changed nothing */}
       <div style={{ position: 'absolute', inset: 0, opacity: s1 }}>
-        <div style={{ position: 'absolute', top: 150, left: 90,
-          fontFamily: '"JetBrains Mono", monospace', fontSize: 32, color: RED, fontWeight: 700,
-          display: 'inline-block', background: '#fff', padding: '10px 22px', borderRadius: 8,
-          letterSpacing: '0.04em', textTransform: 'uppercase', opacity: ease((t - 0.05) / 0.3) }}>
-          {eyebrow}
-        </div>
+        <Eyebrow top={150} fontSize={38} style={{ opacity: ease((t - 0.05) / 0.3) }}>{eyebrow}</Eyebrow>
         <div style={{ position: 'absolute', top: 620, left: 86, right: 86,
           fontFamily: 'Anton, sans-serif', fontSize: 150, color: '#fff', lineHeight: 0.9,
           textTransform: 'uppercase', opacity: ease((t - 0.3) / 0.4) }}>{line1}</div>
@@ -87,14 +82,70 @@ const SEASON_CLOCK_SPEC = {
   id: 'season-clock',
   name: 'SEASON CLOCK (retarget offer)',
   fields: [
-    { "key": "duration", "label": "Length", "type": "slider", "default": 7, "min": 5, "max": 12, "step": 0.5, "unit": "s" },
-    { "key": "eyebrow", "role": "eyebrow", "label": "Eyebrow", "type": "text", "default": "CITY SPORTS PARENTS" },
-    { "key": "line1", "role": "hook", "label": "Scene 1 line 1", "type": "text", "default": "ANOTHER SEASON." },
-    { "key": "line2", "role": "hook", "label": "Scene 1 line 2 (red)", "type": "text", "default": "SAME SPEED." },
-    { "key": "offer", "role": "offer", "label": "Offer line", "type": "text", "default": "SEE THE NUMBER FIRST." },
-    { "key": "guarantee", "role": "guarantee", "label": "Guarantee (verbatim)", "type": "text", "default": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us." },
-    { "key": "cta", "role": "cta", "label": "CTA", "type": "text", "default": "BOOK THE FREE ATHLETE ANALYSIS" },
-    { "key": "brand", "role": "brand", "label": "Brand", "type": "text", "default": "ATHLETES ACCELERATION" }
+    {
+      "key": "duration",
+      "label": "Length",
+      "type": "slider",
+      "default": 7,
+      "min": 5,
+      "max": 12,
+      "step": 0.5,
+      "unit": "s"
+    },
+    {
+      "key": "bgClip",
+      "label": "Background clip",
+      "type": "image"
+    },
+    {
+      "key": "eyebrow",
+      "role": "eyebrow",
+      "label": "Eyebrow",
+      "type": "text",
+      "default": "// ANOTHER SEASON, SAME SPEED?"
+    },
+    {
+      "key": "line1",
+      "role": "hook",
+      "label": "Scene 1 line 1",
+      "type": "text",
+      "default": "ANOTHER SEASON."
+    },
+    {
+      "key": "line2",
+      "role": "hook",
+      "label": "Scene 1 line 2 (red)",
+      "type": "text",
+      "default": "SAME SPEED."
+    },
+    {
+      "key": "offer",
+      "role": "offer",
+      "label": "Offer line",
+      "type": "text",
+      "default": "SEE THE NUMBER FIRST."
+    },
+    {
+      "key": "guarantee",
+      "role": "guarantee",
+      "label": "Guarantee (verbatim)",
+      "type": "text",
+      "default": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us."
+    },
+    {
+      "key": "cta",
+      "role": "cta",
+      "label": "CTA",
+      "type": "text",
+      "default": "BOOK THE FREE ATHLETE ANALYSIS"
+    },
+    {
+      "key": "brand",
+      "role": "brand",
+      "label": "Brand",
+      "type": "text",
+      "default": "ATHLETES ACCELERATION"
+    }
   ],
 };
 window.SEASON_CLOCK_SPEC = SEASON_CLOCK_SPEC;

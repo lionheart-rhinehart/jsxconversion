@@ -61,15 +61,7 @@ function ReactionStitchReel({ data = {} }) {
         background: RED,
         boxShadow: `0 0 24px ${RED}`,
       }}/>
-      <div style={{
-        position: 'absolute', top: 'calc(48% - 22px)', left: '50%',
-        transform: 'translateX(-50%)',
-        padding: '6px 14px',
-        background: RED,
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 18, color: '#fff', fontWeight: 700,
-        letterSpacing: '0.16em',
-      }}>// {eyebrow}</div>
+      <Eyebrow top={150} fontSize={18}>// {eyebrow}</Eyebrow>
 
       {/* Bottom half: photo backdrop + response */}
       {window.TrimmedMedia && <window.TrimmedMedia

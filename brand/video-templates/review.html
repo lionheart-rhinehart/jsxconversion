@@ -1076,6 +1076,13 @@ function VideoEditModal({ angleId, assetId, onClose }) {
                     ? <React.Fragment>
                         <div className="vm-sub">Photo</div><MediaPicker kind="photo" current={photo} onPick={pickPhoto} />
                         <div className="vm-sub">Clip</div><MediaPicker kind="clip" current={clip} onPick={pickClip} />
+                        {window.MediaField && window.isVideoSrc && window.isVideoSrc(data[imageKey]) &&
+                          <React.Fragment>
+                            <div className="vm-sub">Trim clip — crop front/back</div>
+                            <window.MediaField field={{ key: imageKey, label: "Background clip", type: "image" }}
+                              data={data} setFields={setFields} templateDuration={Number(data.duration) || 8} />
+                            <div className="vm-note">Drag the handles to cut the start/end of the clip; the render uses only the trimmed window.</div>
+                          </React.Fragment>}
                       </React.Fragment>
                     : <div className="vm-hint">This template has no photo/clip slot.</div>)}
                   {tab === "audio" && <React.Fragment>

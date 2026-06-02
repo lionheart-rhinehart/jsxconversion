@@ -98,7 +98,7 @@ function NowHiringReel({ data = {} }) {
       <div style={{ position: 'absolute', top: 200, left: 0, display: 'flex', overflow: 'hidden' }}>
         <div style={{ background: RED, padding: '20px 60px', transform: `translateX(${(1 - eyebrowT) * -120}%)`,
           clipPath: 'polygon(0 0, 100% 0, 94% 100%, 0 100%)', boxShadow: '0 16px 48px rgba(196,20,29,0.5)' }}>
-          <div style={{ fontFamily: 'Anton, sans-serif', color: '#fff', fontSize: 92, letterSpacing: '0.02em', lineHeight: 0.9 }}>{eyebrow}</div>
+          <Eyebrow top={150} fontSize={92}>{eyebrow}</Eyebrow>
         </div>
       </div>
 

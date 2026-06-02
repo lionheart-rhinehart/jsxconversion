@@ -27,14 +27,9 @@ function VelocityDrop({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
-      {bgClip ? <video src={bgClip} autoPlay muted playsInline loop style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} /> : null}
+      {bgClip ? <SyncedVideo src={bgClip} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} /> : null}
       {bgClip ? <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.55) 0%, rgba(10,11,13,0.45) 45%, rgba(10,11,13,0.85) 100%)' }} /> : null}
-      <div style={{ position: 'absolute', top: 150, left: 90,
-        fontFamily: '"JetBrains Mono", monospace', fontSize: 32, color: RED, fontWeight: 700,
-        display: 'inline-block', background: '#fff', padding: '10px 22px', borderRadius: 8,
-        letterSpacing: '0.04em', textTransform: 'uppercase', opacity: ease((t - 0.05) / 0.3) }}>
-        {eyebrow}
-      </div>
+      <Eyebrow top={150} fontSize={38} style={{ opacity: ease((t - 0.05) / 0.3) }}>{eyebrow}</Eyebrow>
       <div style={{ position: 'absolute', top: 360, left: 86, right: 86,
         fontFamily: 'Anton, sans-serif', fontSize: 104, color: '#fff', lineHeight: 0.95,
         textTransform: 'uppercase', opacity: capT, transform: `translateY(${(1 - capT) * 14}px)` }}>
@@ -87,12 +82,56 @@ const VELOCITY_DROP_SPEC = {
   id: 'velocity-drop',
   name: 'VELOCITY DROP (mechanism)',
   fields: [
-    { "key": "duration", "label": "Length", "type": "slider", "default": 9, "min": 6, "max": 15, "step": 0.5, "unit": "s" },
-    { "key": "eyebrow", "role": "eyebrow", "label": "Eyebrow", "type": "text", "default": "CITY SPORTS PARENTS" },
-    { "key": "claim", "role": "mechanism", "label": "Mechanism caption", "type": "text", "default": "THE SET ENDS THE SECOND SPEED DROPS." },
-    { "key": "coachName", "role": "byline", "label": "Coach name", "type": "text", "default": "COACH GRAHAM WILKERSON" },
-    { "key": "credentials", "role": "proof", "label": "Credentials", "type": "text", "default": "CSCS · NFL-TRAINED" },
-    { "key": "brand", "role": "brand", "label": "Brand", "type": "text", "default": "ATHLETES ACCELERATION" }
+    {
+      "key": "duration",
+      "label": "Length",
+      "type": "slider",
+      "default": 9,
+      "min": 6,
+      "max": 15,
+      "step": 0.5,
+      "unit": "s"
+    },
+    {
+      "key": "bgClip",
+      "label": "Background clip",
+      "type": "image"
+    },
+    {
+      "key": "eyebrow",
+      "role": "eyebrow",
+      "label": "Eyebrow",
+      "type": "text",
+      "default": "// THE 10% RULE"
+    },
+    {
+      "key": "claim",
+      "role": "mechanism",
+      "label": "Mechanism caption",
+      "type": "text",
+      "default": "THE SET ENDS THE SECOND SPEED DROPS."
+    },
+    {
+      "key": "coachName",
+      "role": "byline",
+      "label": "Coach name",
+      "type": "text",
+      "default": "COACH GRAHAM WILKERSON"
+    },
+    {
+      "key": "credentials",
+      "role": "proof",
+      "label": "Credentials",
+      "type": "text",
+      "default": "CSCS · NFL-TRAINED"
+    },
+    {
+      "key": "brand",
+      "role": "brand",
+      "label": "Brand",
+      "type": "text",
+      "default": "ATHLETES ACCELERATION"
+    }
   ],
 };
 window.VELOCITY_DROP_SPEC = VELOCITY_DROP_SPEC;

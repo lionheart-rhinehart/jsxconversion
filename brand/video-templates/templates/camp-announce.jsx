@@ -55,14 +55,7 @@ function CampAnnounceSquare({ data = {} }) {
         background: 'linear-gradient(180deg, rgba(10,11,13,0.6) 0%, rgba(10,11,13,0.9) 100%)',
       }}/>
 
-      <div style={{
-        position: 'absolute', top: 70, left: 70,
-        padding: '8px 16px',
-        background: RED,
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 20, color: '#fff', letterSpacing: '0.16em',
-        opacity: eyebrowT,
-      }}>// {eyebrow}</div>
+      <Eyebrow top={70} fontSize={20}>// {eyebrow}</Eyebrow>
 
       {/* Title */}
       <div style={{

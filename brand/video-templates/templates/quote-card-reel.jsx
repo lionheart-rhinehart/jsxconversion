@@ -24,7 +24,7 @@ function QuoteCardReel({ data = {} }) {
       {window.TrimmedMedia && <window.TrimmedMedia src={media} clipStart={data.media_clipStart} clipEnd={data.media_clipEnd} muted={!data.media_audio} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${photoScale})`, filter: 'contrast(1.05) saturate(0.7) brightness(0.45)' }}/>}
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.85) 0%, rgba(10,11,13,0.5) 50%, rgba(10,11,13,0.95) 100%)' }}/>
 
-      <div style={{ position: 'absolute', top: 130, left: 60, fontFamily: '"JetBrains Mono", monospace', fontSize: 28, color: RED, letterSpacing: '0.18em', opacity: eyebrowT, background: RED, padding: '8px 16px', color: '#fff' }}>// {eyebrow}</div>
+      <Eyebrow top={130} fontSize={28}>// {eyebrow}</Eyebrow>
 
       <div style={{ position: 'absolute', top: 240, left: 70, fontFamily: 'Georgia, serif', fontSize: 380, color: RED, lineHeight: 1, opacity: 0.18 }}>"</div>
 

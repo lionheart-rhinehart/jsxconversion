@@ -29,7 +29,7 @@ function ReferralHeroReel({ data = {} }) {
       {window.TrimmedMedia && <window.TrimmedMedia src={media} clipStart={data.media_clipStart} clipEnd={data.media_clipEnd} muted={!data.media_audio} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.3) saturate(0.85) contrast(1.1)' }}/>}
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.55) 0%, rgba(10,11,13,0.95) 100%)' }}/>
 
-      <div style={{ position: 'absolute', top: 110, left: 60, padding: '8px 16px', background: RED, fontFamily: '"JetBrains Mono", monospace', fontSize: 24, color: '#fff', letterSpacing: '0.16em', opacity: eT }}>// {eyebrow}</div>
+      <Eyebrow top={110} fontSize={24}>// {eyebrow}</Eyebrow>
       <div style={{ position: 'absolute', top: 200, left: 60, right: 60, fontFamily: 'Anton, sans-serif', fontSize: 130, color: '#fff', lineHeight: 0.88, opacity: tiT }}>{title1}<br/><span style={{color:RED}}>{title2}</span></div>
 
       <div style={{ position: 'absolute', top: 560, left: 60, right: 60, padding: '18px 22px', background: 'rgba(31,34,39,0.85)', borderLeft: `4px solid ${RED}`, opacity: hT }}>

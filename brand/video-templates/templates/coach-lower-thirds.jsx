@@ -39,6 +39,7 @@ function CoachLowerThirds({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
+      <Eyebrow top={90} fontSize={34}>{data.eyebrow ?? "{city name} SPORT PARENT"}</Eyebrow>
       {/* Background "video" — placeholder coaching footage */}
       <window.TrimmedMedia
         src={media}
@@ -159,47 +160,51 @@ const COACH_LT_SPEC = {
   id: 'coach-lt',
   name: 'COACH LOWER THIRDS',
   fields: [
-  {
-    "key": "duration",
-    "label": "Length",
-    "type": "slider",
-    "default": 6,
-    "min": 3,
-    "max": 15,
-    "step": 0.5,
-    "unit": "s"
-  },
-  {
-    "key": "coachName",
-
-    "role": "byline",
-    "label": "Coach name",
-    "type": "text",
-    "default": "COACH MIKE TORRES"
-  },
-  {
-    "key": "coachTitle",
-
-    "role": "claim",
-    "label": "Title (typed in word-by-word)",
-    "type": "text",
-    "default": "DIRECTOR OF PERFORMANCE"
-  },
-  {
-    "key": "credentials",
-
-    "role": "proof",
-    "label": "Credential chips (· separated)",
-    "type": "text",
-    "default": "CSCS · USATF L2 · 15 YRS · NCAA D1"
-  },
-  {
-    "key": "media",
-    "label": "Background photo or video",
-    "type": "image",
-    "default": "assets/photo-group-coaching.jpg",
-    "sub": "Replace with your raw footage"
-  }
-],
+    {
+      "key": "duration",
+      "label": "Length",
+      "type": "slider",
+      "default": 6,
+      "min": 3,
+      "max": 15,
+      "step": 0.5,
+      "unit": "s"
+    },
+    {
+      "key": "eyebrow",
+      "role": "eyebrow",
+      "label": "Eyebrow",
+      "type": "text",
+      "default": "{city name} SPORT PARENT"
+    },
+    {
+      "key": "coachName",
+      "role": "byline",
+      "label": "Coach name",
+      "type": "text",
+      "default": "COACH MIKE TORRES"
+    },
+    {
+      "key": "coachTitle",
+      "role": "claim",
+      "label": "Title (typed in word-by-word)",
+      "type": "text",
+      "default": "DIRECTOR OF PERFORMANCE"
+    },
+    {
+      "key": "credentials",
+      "role": "proof",
+      "label": "Credential chips (· separated)",
+      "type": "text",
+      "default": "CSCS · USATF L2 · 15 YRS · NCAA D1"
+    },
+    {
+      "key": "media",
+      "label": "Background photo or video",
+      "type": "image",
+      "default": "assets/photo-group-coaching.jpg",
+      "sub": "Replace with your raw footage"
+    }
+  ],
 };
 window.COACH_LT_SPEC = COACH_LT_SPEC;

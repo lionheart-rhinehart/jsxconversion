@@ -109,11 +109,7 @@ function FuelUpReel({ data = {} }) {
       <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(120% 80% at 50% 38%, rgba(196,20,29,0.12) 0%, rgba(10,11,13,0.6) 55%, rgba(10,11,13,0.96) 100%)' }}/>
 
       {/* Eyebrow */}
-      <div style={{ position: 'absolute', top: 170, left: 0, right: 0, textAlign: 'center', opacity: eyebrowT,
-        transform: `translateY(${(1 - eyebrowT) * -16}px)` }}>
-        <span style={{ display: 'inline-block', background: RED, color: '#fff', padding: '14px 36px',
-          fontFamily: '"JetBrains Mono", monospace', fontSize: 38, fontWeight: 700, letterSpacing: '0.18em' }}>// {eyebrow}</span>
-      </div>
+      <Eyebrow top={170} fontSize={38} style={{ left: 0, right: 0, textAlign: 'center', opacity: eyebrowT }}>{eyebrow}</Eyebrow>
 
       {/* Meal name */}
       <div style={{ position: 'absolute', top: 310, left: 80, right: 80, textAlign: 'center', opacity: mealT,

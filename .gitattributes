@@ -1,0 +1,3 @@
+# Git hooks are POSIX shell scripts — must stay LF or the #!/bin/sh shebang
+# breaks on checkout under core.autocrlf=true.
+scripts/githooks/** text eol=lf

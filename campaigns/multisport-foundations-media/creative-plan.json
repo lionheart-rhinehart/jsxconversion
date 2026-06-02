@@ -351,10 +351,11 @@
           "templateData": {
             "duration": 7
           },
-          "status": "rendered",
+          "status": "failed",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/F3.mp4",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/F3.mp4",
-          "renderedAt": "2026-06-02T18:32:09.008Z"
+          "renderedAt": "2026-06-02T18:32:09.008Z",
+          "notes": ""
         },
         {
           "id": "FA1",

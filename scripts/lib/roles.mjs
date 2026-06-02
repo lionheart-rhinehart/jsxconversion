@@ -68,7 +68,7 @@ export function fieldRole(name) {
 
 // Build the standalone eyebrow anchor from the merged tier tags. The eyebrow
 // orients the viewer — WHO it's for + WHERE — as a chip at the top of the
-// creative. Pattern: "{CITY} SPORTS PARENTS" with the state suffix stripped
+// creative. Pattern: "{CITY} SPORT PARENT" with the state suffix stripped
 // ("CARMEL, IN" → "CARMEL"). `city` is the per-campaign placeholder, set via the
 // location/campaign data tier. Null-guarded: no city → a generic fallback so the
 // slot never renders "undefined". Single source for BOTH the static
@@ -78,5 +78,5 @@ export function buildEyebrowAnchor(tierTags = {}) {
   const cityLabel = String(tierTags.city || "")
     .replace(/,\s*[A-Za-z]{2}\.?$/, "")
     .trim();
-  return cityLabel ? `${cityLabel} SPORTS PARENTS` : "YOUTH SPORTS PARENTS";
+  return cityLabel ? `${cityLabel} SPORT PARENT` : "{city name} SPORT PARENT";
 }

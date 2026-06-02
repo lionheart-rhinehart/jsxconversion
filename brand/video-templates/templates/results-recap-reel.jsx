@@ -29,7 +29,7 @@ function ResultsRecapReel({ data = {} }) {
       <div style={{ position: 'absolute', top: -200, right: -200, width: 600, height: 600, background: `radial-gradient(circle, ${GREEN}22 0%, transparent 60%)`, filter: 'blur(30px)' }}/>
 
       <div style={{ position: 'absolute', top: 130, left: 60, right: 60, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-        <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 26, color: RED, letterSpacing: '0.18em', opacity: eT }}>// {eyebrow}</div>
+        <Eyebrow top={150} fontSize={26}>// {eyebrow}</Eyebrow>
         <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 22, color: '#969ca7', letterSpacing: '0.12em', opacity: eT }}>{dateLabel}</div>
       </div>
 

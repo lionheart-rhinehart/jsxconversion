@@ -23,7 +23,7 @@ function ComicLessonReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', top: 110, left: 60, padding: '8px 16px', background: RED, fontFamily: '"JetBrains Mono", monospace', fontSize: 24, color: '#fff', letterSpacing: '0.16em', opacity: eyebrowT }}>// {eyebrow}</div>
+      <Eyebrow top={110} fontSize={24}>// {eyebrow}</Eyebrow>
       <div style={{ position: 'absolute', top: 200, left: 60, right: 60, fontFamily: 'Anton, sans-serif', fontSize: 150, color: '#fff', lineHeight: 0.88, opacity: titleT }}>{title1}<br/><span style={{ color: RED }}>{title2}</span></div>
 
       <div style={{ position: 'absolute', top: 580, left: 40, right: 40, height: 900, opacity: panelsT }}>

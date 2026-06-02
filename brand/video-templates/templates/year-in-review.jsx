@@ -58,10 +58,7 @@ function YearInReviewHorizontal({ data = {} }) {
         position: 'absolute', top: 70, left: 70,
         opacity: eyebrowT,
       }}>
-        <div style={{
-          fontFamily: '"JetBrains Mono", monospace',
-          fontSize: 22, color: RED, letterSpacing: '0.18em',
-        }}>// {eyebrow}</div>
+        <Eyebrow top={150} fontSize={22}>// {eyebrow}</Eyebrow>
       </div>
 
       <div style={{

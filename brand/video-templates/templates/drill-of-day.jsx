@@ -64,10 +64,7 @@ function DrillOfDayReel({ data = {} }) {
           fontSize: 26, fontWeight: 700,
           color: '#fff', letterSpacing: '0.14em',
         }}>{dayNumber}</div>
-        <div style={{
-          fontFamily: '"JetBrains Mono", monospace',
-          fontSize: 24, color: '#fff', letterSpacing: '0.16em',
-        }}>{eyebrow}</div>
+        <Eyebrow top={150} fontSize={24}>{eyebrow}</Eyebrow>
       </div>
 
       {/* Name */}

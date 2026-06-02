@@ -39,7 +39,7 @@ function YearInReviewReel({ data = {} }) {
       </div>
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.85) 0%, rgba(10,11,13,0.95) 100%)' }}/>
 
-      <div style={{ position: 'absolute', top: 130, left: 60, fontFamily: '"JetBrains Mono", monospace', fontSize: 26, color: RED, letterSpacing: '0.18em', opacity: eT }}>// {eyebrow}</div>
+      <Eyebrow top={130} fontSize={26}>// {eyebrow}</Eyebrow>
       <div style={{ position: 'absolute', top: 190, left: 60, right: 60, opacity: tiT, transform: `translateY(${(1-tiT)*16}px)` }}>
         <div style={{ fontFamily: 'Anton, sans-serif', fontSize: 140, color: '#fff', lineHeight: 0.88 }}>{title1}</div>
         <div style={{ marginTop: 8, fontFamily: 'Anton, sans-serif', fontSize: 140, color: RED, lineHeight: 0.88 }}>{title2}</div>
