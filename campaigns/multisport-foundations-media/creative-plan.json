@@ -36,7 +36,7 @@
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/A1.gif",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/A1.gif",
-          "renderedAt": "2026-06-02T15:07:26.811Z"
+          "renderedAt": "2026-06-02T15:35:48.306Z"
         },
         {
           "id": "A2",
@@ -237,6 +237,7 @@
           "template": "meet-coach",
           "clip": "brand/video-templates/assets/batch/sprint-m.mp4",
           "templateData": {
+            "duration": 15,
             "eyebrow": "WHY HARD WORK ISN'T ENOUGH",
             "coachFirst": "COACH GRAHAM",
             "coachLast": "WILKERSON.",
@@ -245,12 +246,13 @@
             "credentials": "CSCS · TRAINED ZACK MARTIN, TED KARRAS, NICK MARTIN",
             "facts": "224%|GREATER VERTICAL (WANG 2026) · 28%|LESS FATIGUE · 8-12|THE WINDOW",
             "ctaText": "BOOK THE ATHLETE ANALYSIS",
-            "ctaMicro": "FREE · REAL NUMBERS, NOT A PITCH"
+            "ctaMicro": "FREE · REAL NUMBERS, NOT A PITCH",
+            "media": "assets/photo-coach-action.jpg"
           },
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/E1.mp4",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/E1.mp4",
-          "renderedAt": "2026-06-02T15:10:56.253Z"
+          "renderedAt": "2026-06-02T15:38:56.542Z"
         },
         {
           "id": "E2",
