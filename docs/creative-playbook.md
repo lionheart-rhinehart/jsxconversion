@@ -48,6 +48,11 @@ Notes: 13 is the *dictionary*; a typical frame uses 3–5. `mechanism` has no cu
 
 **Campaign coverage:** spread beats A–F across the *asset mix*, not inside one asset. Rough lead-gen budget: **~70% warm proof/offer · ~20% hot retarget · ~10% cold hook tests.** Each plan asset carries one `beat` (or `beat:null` for brand bumpers) — the plan IS the coverage map.
 
+## Three rules the engine now enforces (learned the hard way)
+1. **Variety — distinct skeleton per asset within a beat.** Never reuse a template beyond `knobs.repetitionCap` (3), and A2≠A3≠A4, D1≠D2≠D3, F1≠F3. Two assets that share a skeleton AND look alike is the failure to avoid. Prefer the clean AA-native bank: statics `cluster-30` (giant-stat) · `cluster-31` (credential/quote) · `cluster-32` (offer+guarantee+cta) · `cluster-33` (hook-over-footage) · `cluster-34` (phrase-kill) · `cluster-35` (split red/black) · `cluster-36` (centered reframe) · `cluster-37` (mechanism velocity-chart); motion `velocity-drop` (mechanism) · `season-clock` (retarget offer) + `stat-reveal`/`meet-coach`/`logo-sting`. Legacy `cluster-1..22` only render correctly once the brand-kit sync fills their `logo`/`city`/`brand_name`.
+2. **Stands alone — who it's for + what it's about, without the body copy.** Every non-`null`-beat asset gets an audience+locale **eyebrow** anchor (`// AGES 8-12 · HAMILTON COUNTY, IN`), auto-injected from the location/campaign data tiers (set `angle.location`; leave the eyebrow unset). The hook is a **complete thought**, never a bare IP fragment ("THE LAST REP LIE" is a tag, not a hook).
+3. **Brand identity syncs from the kit, not the template.** `logo`, `brand_name`, `city` come from the data tiers via the cascade (statics + motion). Never hand-paste a city or trust a template's placeholder; unfilled content slots are blanked, not bled.
+
 ## Beat recipe cards
 Each: **roles (req / opt) · count · static zone · video time · hook/angle · objection.**
 

@@ -63,18 +63,37 @@ Validate tag→layer-type before binding (don't write an image path into a rect'
 
 ### Cascade (most specific wins)
 `campaign > location > brand > template default`. Tiers are `data/{brand,location,
-campaign}.<name>.json`, each `{ "tags": { <tag>: <value> } }`.
+campaign}.<name>.json`, each `{ "tags": { <tag>: <value> } }`. **Wired through BOTH
+statics (`resolveStaticConfig`) AND motion (`buildMotionData`, identity roles only),
+via `run-campaign.mjs` + `editor-server.mjs` — so the editor preview and the render
+seed from the SAME cascade.** The `location` slug comes from the plan (`angle.location`
+or per-asset `location`); `mergeTiers(brand, location, campaign)` makes campaign most
+specific (so per-location-VARYING values like `city` live in the LOCATION tier, never
+the campaign tier, or campaign would always win).
+- **Brand tier = identity only** (`logo`, `brand_name`, `url`, verbatim `guarantee`). Campaign-
+  specific values (`city`, `subhead`, `microscript`) live in the campaign/location tiers so they
+  can't bleed across campaigns. Colors stay per-template (don't blanket-override).
+- **Auto locale-anchor eyebrow:** `resolveStaticConfig` injects `// <audience> · <city>` (from the
+  merged tier) into an empty, non-`city` eyebrow slot — null-guarded (no city → audience only), and
+  `buildMotionData` does the same for an unset `eyebrow`-role motion field. Leave the eyebrow unset
+  to get it; set it explicitly to override.
+- **Placeholder suppression:** a CONTENT-role slot (hook/claim/mechanism/reframe/offer/stat/
+  testimonial) that gets neither campaign copy nor a tier value is blanked (not rendered with the
+  template's hardcoded placeholder). Identity/locked roles + tier-filled slots are untouched.
 
 ### creative-plan.json (the campaign contract)
 ```
 { schemaVersion, campaign, brand, knobs{assetsPerAngle, motionRatio, freshnessFloor, repetitionCap},
-  angles: [ { id, name, mechanism, emotionalJob, voice,
+  angles: [ { id, name, location?, mechanism, emotionalJob, voice,
     assets: [ { id, beat, format(video|gif|static), source(template|fresh),
-      template, templateQuery, freshConcept, headline, microscript, visual,
-      image{tag,source,ref}, audio, flags[],
+      template, templateQuery, freshConcept, headline, microscript, visual, location?,
+      image{tag,source,ref}, media?(static bg image/clip), clip?(motion bg), audio, flags[],
       status(planned|approved|changes|rendering|rendered|failed), notes, output, thumb,
       knowledgeRefs[] } ] } ] }
 ```
+`location` (angle or asset) selects the location tier for the cascade + locale anchor. `media`
+(static) injects a full-frame background + scrim (opt-in); `clip` (motion) binds a bg clip via the
+runner's media key.
 
 ## Image sources (the four)
 1. **library** — raw media in The Kraken **Content Library** (Supabase, per-AA-location

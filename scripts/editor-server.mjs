@@ -131,6 +131,11 @@ const MIME = {
   ".js": "application/javascript",
   ".mjs": "application/javascript",
   ".css": "text/css",
+  ".mp4": "video/mp4",
+  ".gif": "image/gif",
+  ".webp": "image/webp",
+  ".mov": "video/quicktime",
+  ".webm": "video/webm",
 };
 
 function send(res, status, body, contentType = "application/json") {
@@ -389,8 +394,9 @@ const server = createServer(async (req, res) => {
         sendJson(res, 400, { error: `asset "${assetId}" is not a static cluster template (template=${asset.template})` });
         return;
       }
+      const location = asset.location || (angle && angle.location) || plan.location || null;
       const config = resolveStaticConfig({
-        clusterId: asset.template, asset, brand: plan.brand,
+        clusterId: asset.template, asset, brand: plan.brand, location, campaign,
         templateDir: TEMPLATES_DIR, dataDir: DATA_DIR,
       });
       if (!config) { sendJson(res, 404, { error: `could not resolve config for ${asset.template}` }); return; }

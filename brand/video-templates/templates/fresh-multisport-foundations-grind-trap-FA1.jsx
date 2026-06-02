@@ -6,7 +6,8 @@
 // Rendered by the runner inside <Stage duration={30}> (useTime() runs in-Stage).
 
 function GrindArcVSL({ data = {} }) {
-  const hook = data.hook ?? 'WORKS HARD. NEVER QUITS.\nSTILL THE SAME SPEED.';
+  const eyebrow = data.eyebrow ?? '// AGES 8-12 · HAMILTON COUNTY, IN';
+  const hook = data.hook ?? 'YOUR YOUNG ATHLETE\nTRAINS HARD.\nSTILL THE SAME SPEED.';
   const mech1 = data.mech1 ?? 'THE TIRED REPS ARE\nREHEARSING SLOW.';
   const mech2 = data.mech2 ?? 'SO THE SET ENDS THE\nSECOND SPEED DROPS.';
   const reframe = data.reframe ?? "THIS WAS NEVER\nYOUR KID'S FAULT.";
@@ -16,6 +17,7 @@ function GrindArcVSL({ data = {} }) {
   const guarantee = data.guarantee ?? '+1 mph speed. +3" vertical.\n90 days. Or your training is on us.';
   const cta = data.cta ?? 'BOOK THE FREE\nATHLETE ANALYSIS';
   const brand = data.brand ?? 'ATHLETES ACCELERATION';
+  const bgClip = data.bgClip ?? null;
 
   const t = useTime();
   const RED = '#c4141d';
@@ -44,6 +46,8 @@ function GrindArcVSL({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: INK, overflow: 'hidden' }}>
+      {bgClip ? <video src={bgClip} autoPlay muted playsInline loop style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} /> : null}
+      {bgClip ? <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.6) 0%, rgba(10,11,13,0.5) 45%, rgba(10,11,13,0.85) 100%)' }} /> : null}
       {/* red glow */}
       <div style={{ position: 'absolute', top: -200, right: -200, width: 640, height: 640,
         background: `radial-gradient(circle, ${RED}1f 0%, transparent 60%)`, filter: 'blur(20px)' }} />
@@ -56,7 +60,10 @@ function GrindArcVSL({ data = {} }) {
         ))}
       </div>
 
-      {/* A — hook */}
+      {/* A — context anchor + hook */}
+      <div style={{ position: 'absolute', top: 540, left: 90, right: 90,
+        fontFamily: '"JetBrains Mono", monospace', fontSize: 34, color: RED,
+        letterSpacing: '0.06em', textTransform: 'uppercase', opacity: fade(A[0], A[1]) }}>{eyebrow}</div>
       <div style={{ ...cap, opacity: fade(A[0], A[1]), transform: `translateY(${rise(A[0])}px)` }}>{hook}</div>
 
       {/* C — mechanism (two beats) */}
@@ -113,17 +120,18 @@ const GRIND_ARC_SPEC = {
   id: 'fresh-multisport-foundations-grind-trap-FA1',
   name: 'GRIND ARC VSL (FA1)',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 30, min: 15, max: 45, step: 1, unit: 's' },
-    { key: 'hook', role: 'hook', label: 'A — Hook', type: 'text', default: 'WORKS HARD. NEVER QUITS.\nSTILL THE SAME SPEED.' },
-    { key: 'mech1', role: 'mechanism', label: 'C — Mechanism 1', type: 'text', default: 'THE TIRED REPS ARE\nREHEARSING SLOW.' },
-    { key: 'mech2', role: 'mechanism', label: 'C — Mechanism 2', type: 'text', default: 'SO THE SET ENDS THE\nSECOND SPEED DROPS.' },
-    { key: 'reframe', role: 'reframe', label: 'D — Reframe', type: 'text', default: "THIS WAS NEVER\nYOUR KID'S FAULT." },
-    { key: 'statValue', role: 'stat', label: 'E — Stat value', type: 'text', default: '224%' },
-    { key: 'statLabel', role: 'stat', label: 'E — Stat label', type: 'text', default: 'GREATER VERTICAL JUMP' },
-    { key: 'proofCite', role: 'proof', label: 'E — Proof citation', type: 'text', default: 'WANG 2026 · CSCS · NFL-TRAINED' },
-    { key: 'guarantee', role: 'guarantee', label: 'F — Guarantee (verbatim)', type: 'text', default: '+1 mph speed. +3" vertical.\n90 days. Or your training is on us.' },
-    { key: 'cta', role: 'cta', label: 'CTA', type: 'text', default: 'BOOK THE FREE\nATHLETE ANALYSIS' },
-    { key: 'brand', role: 'brand', label: 'Brand', type: 'text', default: 'ATHLETES ACCELERATION' },
+    { "key": "duration", "label": "Length", "type": "slider", "default": 30, "min": 15, "max": 45, "step": 1, "unit": "s" },
+    { "key": "eyebrow", "role": "eyebrow", "label": "A: Context anchor", "type": "text", "default": "// AGES 8-12 · HAMILTON COUNTY, IN" },
+    { "key": "hook", "role": "hook", "label": "A: Hook", "type": "text", "default": "YOUR YOUNG ATHLETE\nTRAINS HARD.\nSTILL THE SAME SPEED." },
+    { "key": "mech1", "role": "mechanism", "label": "C: Mechanism 1", "type": "text", "default": "THE TIRED REPS ARE\nREHEARSING SLOW." },
+    { "key": "mech2", "role": "mechanism", "label": "C: Mechanism 2", "type": "text", "default": "SO THE SET ENDS THE\nSECOND SPEED DROPS." },
+    { "key": "reframe", "role": "reframe", "label": "D: Reframe", "type": "text", "default": "THIS WAS NEVER\nYOUR KID'S FAULT." },
+    { "key": "statValue", "role": "stat", "label": "E: Stat value", "type": "text", "default": "224%" },
+    { "key": "statLabel", "role": "stat", "label": "E: Stat label", "type": "text", "default": "GREATER VERTICAL JUMP" },
+    { "key": "proofCite", "role": "proof", "label": "E: Proof citation", "type": "text", "default": "WANG 2026 · CSCS · NFL-TRAINED" },
+    { "key": "guarantee", "role": "guarantee", "label": "F: Guarantee (verbatim)", "type": "text", "default": "+1 mph speed. +3\" vertical.\n90 days. Or your training is on us." },
+    { "key": "cta", "role": "cta", "label": "CTA", "type": "text", "default": "BOOK THE FREE\nATHLETE ANALYSIS" },
+    { "key": "brand", "role": "brand", "label": "Brand", "type": "text", "default": "ATHLETES ACCELERATION" }
   ],
 };
 window.GRIND_ARC_SPEC = GRIND_ARC_SPEC;

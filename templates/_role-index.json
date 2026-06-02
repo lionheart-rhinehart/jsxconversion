@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-01T18:29:08.541Z",
+  "generatedAt": "2026-06-01T19:50:49.799Z",
   "note": "Role-index for playbook-driven template selection. Regenerate with: node scripts/build-template-index.mjs",
   "templates": {
     "cluster-1": {
@@ -273,6 +273,162 @@
       ],
       "slotCount": 4
     },
+    "cluster-30": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "stat",
+        "proof",
+        "claim",
+        "brand"
+      ],
+      "accepts": [
+        "eyebrow",
+        "proof",
+        "stat",
+        "claim",
+        "byline",
+        "reframe",
+        "brand"
+      ],
+      "slotCount": 8
+    },
+    "cluster-31": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "byline",
+        "proof",
+        "claim",
+        "brand"
+      ],
+      "accepts": [
+        "eyebrow",
+        "proof",
+        "byline",
+        "claim",
+        "reframe",
+        "brand"
+      ],
+      "slotCount": 7
+    },
+    "cluster-32": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "offer",
+        "guarantee",
+        "cta",
+        "brand"
+      ],
+      "accepts": [
+        "eyebrow",
+        "proof",
+        "offer",
+        "claim",
+        "reframe",
+        "guarantee",
+        "cta",
+        "brand"
+      ],
+      "slotCount": 6
+    },
+    "cluster-33": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "hook",
+        "brand"
+      ],
+      "accepts": [
+        "eyebrow",
+        "proof",
+        "hook",
+        "claim",
+        "reframe",
+        "brand"
+      ],
+      "slotCount": 3
+    },
+    "cluster-34": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "hook",
+        "reframe",
+        "brand"
+      ],
+      "accepts": [
+        "eyebrow",
+        "proof",
+        "hook",
+        "claim",
+        "reframe",
+        "mechanism",
+        "offer",
+        "brand"
+      ],
+      "slotCount": 4
+    },
+    "cluster-35": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "hook",
+        "claim",
+        "brand"
+      ],
+      "accepts": [
+        "eyebrow",
+        "proof",
+        "hook",
+        "claim",
+        "reframe",
+        "brand"
+      ],
+      "slotCount": 4
+    },
+    "cluster-36": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "reframe",
+        "brand"
+      ],
+      "accepts": [
+        "eyebrow",
+        "proof",
+        "reframe",
+        "claim",
+        "brand"
+      ],
+      "slotCount": 3
+    },
+    "cluster-37": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "claim",
+        "brand"
+      ],
+      "accepts": [
+        "eyebrow",
+        "proof",
+        "claim",
+        "mechanism",
+        "reframe",
+        "brand"
+      ],
+      "slotCount": 3
+    },
     "cluster-4": {
       "format": "static",
       "dir": "templates/multi-sport-foundations",
@@ -382,68 +538,31 @@
       ],
       "slotCount": 3
     },
-    "fresh-multisport-foundations-grind-trap-E2": {
-      "format": "static",
-      "dir": "templates/multi-sport-foundations",
+    "fresh-multisport-foundations-grind-trap-A1": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
       "roles": [
         "eyebrow",
+        "hook",
+        "brand"
+      ],
+      "slotCount": 3
+    },
+    "fresh-multisport-foundations-grind-trap-FA1": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
+      "roles": [
+        "eyebrow",
+        "hook",
+        "mechanism",
+        "reframe",
         "stat",
         "proof",
-        "claim",
-        "brand"
-      ],
-      "accepts": [
-        "eyebrow",
-        "proof",
-        "stat",
-        "claim",
-        "byline",
-        "reframe",
-        "brand"
-      ],
-      "slotCount": 8
-    },
-    "fresh-multisport-foundations-grind-trap-E3": {
-      "format": "static",
-      "dir": "templates/multi-sport-foundations",
-      "roles": [
-        "eyebrow",
-        "byline",
-        "proof",
-        "claim",
-        "brand"
-      ],
-      "accepts": [
-        "eyebrow",
-        "proof",
-        "byline",
-        "claim",
-        "reframe",
-        "brand"
-      ],
-      "slotCount": 7
-    },
-    "fresh-multisport-foundations-grind-trap-F2": {
-      "format": "static",
-      "dir": "templates/multi-sport-foundations",
-      "roles": [
-        "eyebrow",
-        "offer",
         "guarantee",
         "cta",
         "brand"
       ],
-      "accepts": [
-        "eyebrow",
-        "proof",
-        "offer",
-        "claim",
-        "reframe",
-        "guarantee",
-        "cta",
-        "brand"
-      ],
-      "slotCount": 6
+      "slotCount": 9
     },
     "logo-sting": {
       "format": "video",
@@ -480,6 +599,19 @@
       ],
       "slotCount": 4
     },
+    "season-clock": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
+      "roles": [
+        "eyebrow",
+        "hook",
+        "offer",
+        "guarantee",
+        "cta",
+        "brand"
+      ],
+      "slotCount": 6
+    },
     "stat-reveal": {
       "format": "video",
       "dir": "brand/video-templates/templates",
@@ -489,6 +621,18 @@
         "cta",
         "stat",
         "guarantee"
+      ],
+      "slotCount": 5
+    },
+    "velocity-drop": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
+      "roles": [
+        "eyebrow",
+        "mechanism",
+        "byline",
+        "proof",
+        "brand"
       ],
       "slotCount": 5
     }

@@ -1,0 +1,7 @@
+{
+  "_comment": "Location tier — the campaign-wide default locale (the brief's market). Assigned to assets with no specific facility. Merged campaign > location > brand; supplies `city` for the locale anchor (S4 composes '// <audience> · <city>').",
+  "location": "hamilton-county",
+  "tags": {
+    "city": "HAMILTON COUNTY, IN"
+  }
+}
