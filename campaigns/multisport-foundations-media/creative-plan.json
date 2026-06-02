@@ -33,10 +33,10 @@
           "templateData": {
             "duration": 3
           },
-          "status": "rendered",
+          "status": "rendering",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/A1.gif",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/A1.gif",
-          "renderedAt": "2026-06-02T17:30:38.099Z"
+          "renderedAt": "2026-06-02T18:08:05.549Z"
         },
         {
           "id": "A2",
@@ -136,7 +136,6 @@
           "clip": "brand/kraken-cache/athletes-acceleration-action-clip-kettlebell-squat-middle-school-male-athletes-acc-0f2696cc.mp4",
           "templateData": {
             "duration": 12,
-            "eyebrow": "CITY SPORTS PARENTS",
             "claim": "THE SET ENDS THE SECOND SPEED DROPS.",
             "coachName": "COACH GRAHAM WILKERSON",
             "credentials": "CSCS · NFL-TRAINED",
@@ -145,7 +144,7 @@
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/C1.mp4",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/C1.mp4",
-          "renderedAt": "2026-06-02T17:43:00.359Z"
+          "renderedAt": "2026-06-02T18:17:53.296Z"
         },
         {
           "id": "C2",
@@ -195,8 +194,8 @@
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/D1.png",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/D1.png",
-          "renderedAt": "2026-06-02T16:46:53.875Z",
-          "editedAt": "2026-06-02T16:09:49.398Z"
+          "renderedAt": "2026-06-02T17:52:52.139Z",
+          "editedAt": "2026-06-02T17:52:46.804Z"
         },
         {
           "id": "D2",
@@ -355,7 +354,7 @@
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/F3.mp4",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/F3.mp4",
-          "renderedAt": "2026-06-02T17:28:28.111Z"
+          "renderedAt": "2026-06-02T18:15:46.158Z"
         },
         {
           "id": "FA1",
@@ -371,7 +370,7 @@
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/FA1.mp4",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/FA1.mp4",
-          "renderedAt": "2026-06-02T17:43:00.325Z"
+          "renderedAt": "2026-06-02T18:23:03.597Z"
         },
         {
           "id": "BR1",

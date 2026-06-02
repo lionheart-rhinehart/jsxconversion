@@ -36,7 +36,7 @@ import {
   loadTier, mergeTiers,
 } from "./lib/fill-core.mjs";
 import { assemble } from "./lib/assemble.mjs";
-import { fieldRole } from "./lib/roles.mjs";
+import { fieldRole, buildEyebrowAnchor } from "./lib/roles.mjs";
 
 const PROJECT_ROOT = resolve(".");
 const CAMPAIGNS_DIR = join(PROJECT_ROOT, "campaigns");
@@ -184,7 +184,10 @@ function buildMotionData(asset, dataKeys, tierTags = {}) {
   // role is brand/eyebrow (never content/numeric — a string in a stat field
   // would NaN the count-up at render). Explicit templateData already populated
   // `data`, so this only touches keys it didn't set ("explicit wins").
-  const anchor = `// ${tierTags.audience || "AGES 8-12"}${tierTags.city ? ` · ${tierTags.city}` : ""}`;
+  // Locale eyebrow anchor — SINGLE SOURCE in roles.mjs (shared with the static
+  // fill path). Produces "{CITY} SPORTS PARENTS". Do NOT re-inline an ad-hoc
+  // string here — that diverges from the static path and regresses the eyebrow.
+  const anchor = buildEyebrowAnchor(tierTags);
   for (const k of dataKeys) {
     if (k in data) continue;
     const role = fieldRole(k);
