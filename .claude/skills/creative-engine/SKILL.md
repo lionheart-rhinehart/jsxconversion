@@ -48,8 +48,19 @@ already exists on disk for the campaign and resumes from there.
 ## The flow
 
 ### Step 1 — Brand + Kraken (workspace → source media)
-Ask: **"What's the brand?"** Resolve it against
-`.claude/skills/creative-engine/config.json` → `brands[<slug>]`. That gives:
+Read `.claude/skills/creative-engine/config.json` → `brands` and pick the brand:
+- **Exactly one registered** (today's state) → don't ask open-ended. State it and
+  confirm, e.g. *"Only one brand kit is set up right now: **Athletes Acceleration**.
+  Using it for this campaign. (When you add more clients I'll ask you to pick.)"* —
+  proceed once the user confirms. This still records the brand on the campaign, so
+  nothing has to be retrofitted when more brands exist.
+- **More than one registered** → list them and ask **"Which brand?"** (the real
+  pick — scales automatically, no further change needed). Resolve the answer against
+  `brands[<slug>]` (match `slug` or any `aliases`).
+- **Unknown name / none match** → ask for the brand's slug + data tier and add it to
+  `config.json`.
+
+The resolved brand gives:
 - the **data tier** for the cascade fill (`data/brand.<dataTier>.json`);
 - the brand kit path (read it before composing anything fresh).
 
@@ -65,10 +76,13 @@ store, NOT local folders; connector is `scripts/lib/kraken.mjs`):
    caches the media into `brand/kraken-cache/` and saves the picks to
    `campaigns/<name>/kraken.json`.
 
+**Kraken is lazy.** Don't block a template-only or jsx-render campaign on a Kraken pull —
+only do the location + source-folder pull when the plan actually contains an asset whose
+image `source` is `library` or `client` (i.e. raw media is genuinely needed at render time).
+
 Pulled media appears in the editor `/media` picker (motion) and via `/media-into-template`
 (statics) for **hand placement** — pulling surfaces media, it does not auto-place it, and does
-not auto-clear `needs-kraken-path` (a human placement does). If the brand is unknown, ask for
-its slug + data tier and add it to `config.json`.
+not auto-clear `needs-kraken-path` (a human placement does).
 
 ### Step 2 — Collect inputs
 Ensure `campaigns/<name>/` contains: `brief.md` (reverse brief), `ad-copy.md`,
