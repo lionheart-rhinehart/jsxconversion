@@ -6,7 +6,7 @@
 // Rendered by the runner inside <Stage duration={30}> (useTime() runs in-Stage).
 
 function GrindArcVSL({ data = {} }) {
-  const eyebrow = data.eyebrow ?? '// AGES 8-12 · HAMILTON COUNTY, IN';
+  const eyebrow = data.eyebrow ?? 'CITY SPORTS PARENTS';
   const hook = data.hook ?? 'YOUR YOUNG ATHLETE\nTRAINS HARD.\nSTILL THE SAME SPEED.';
   const mech1 = data.mech1 ?? 'THE TIRED REPS ARE\nREHEARSING SLOW.';
   const mech2 = data.mech2 ?? 'SO THE SET ENDS THE\nSECOND SPEED DROPS.';
@@ -61,7 +61,7 @@ function GrindArcVSL({ data = {} }) {
       </div>
 
       {/* A — context anchor + hook */}
-      <Eyebrow top={540} fontSize={34}>{eyebrow}</Eyebrow>
+      <Eyebrow top={540} fontSize={34} style={{ opacity: fade(A[0], A[1]) }}>{eyebrow}</Eyebrow>
       <div style={{ ...cap, opacity: fade(A[0], A[1]), transform: `translateY(${rise(A[0])}px)` }}>{hook}</div>
 
       {/* C — mechanism (two beats) */}

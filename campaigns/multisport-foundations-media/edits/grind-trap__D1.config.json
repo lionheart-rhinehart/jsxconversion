@@ -29,17 +29,20 @@
     {
       "id": "eyebrow",
       "tag": "eyebrow",
-      "label": "Context anchor (auto-filled, centered)",
-      "x": 0,
-      "y": 360,
+      "label": "Context anchor chip (auto-filled, centered)",
+      "x": 76,
+      "y": 104,
       "width": 1080,
       "textAlign": "center",
-      "text": "// AGES 8-12 · HAMILTON COUNTY, IN",
-      "fontSize": 38,
+      "text": "INDIANAPOLIS SPORTS PARENTS",
+      "fontSize": 32,
       "fontFamily": "JetBrains Mono",
-      "fontWeight": 500,
+      "fontWeight": 700,
       "color": "#c4141d",
-      "letterSpacing": "0.06em",
+      "chipBg": "#ffffff",
+      "chipPad": "12px 24px",
+      "chipRadius": 8,
+      "letterSpacing": "0.04em",
       "textTransform": "uppercase",
       "z": 20,
       "role": "eyebrow",
@@ -99,9 +102,12 @@
     }
   ],
   "media": {
-    "path": "./assets/batch-media/sprint-m.jpg",
+    "path": "./assets/swap-athletes-acceleration-group-shot-posing-high-school-male-athletes-acceleration-ind-1ec5d373.jpg",
     "tag": "bg_media",
     "z": 0,
-    "videoStartTime": 1
+    "videoStartTime": 1,
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1
   }
 }

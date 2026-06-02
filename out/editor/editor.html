@@ -1733,6 +1733,18 @@
         text.style.webkitTextFillColor = 'transparent';
         text.style.color = 'transparent';
       }
+      // Optional "chip" treatment — mirror renderTextLayer: a filled pill that
+      // hugs the text (the white-bg / red-text eyebrow). The box is the
+      // positioned wrapper; the inner text span carries the background, padding
+      // and rounded corners (inline-block so it shrinks to fit). Inert when
+      // chipBg is absent → plain text unchanged.
+      if (el.chipBg) {
+        text.style.display = 'inline-block';
+        text.style.background = el.chipBg;
+        text.style.padding = el.chipPad || '10px 22px';
+        const r = el.chipRadius != null ? el.chipRadius : 8;
+        text.style.borderRadius = (typeof r === 'number' ? r + 'px' : r);
+      }
       // Optional tiled/repeated watermark: mirror renderTextLayer — repeat the
       // text on `repeat` stacked lines so a tagged microscript fills the
       // background "all the way down". Default whiteSpace to 'pre' when the

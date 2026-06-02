@@ -5,7 +5,7 @@
 // Rendered inside <Stage duration> by the runner (useTime runs in-Stage).
 
 function VelocityDrop({ data = {} }) {
-  const eyebrow = data.eyebrow ?? '// THE 10% RULE';
+  const eyebrow = data.eyebrow ?? 'CITY SPORTS PARENTS';
   const claim = data.claim ?? 'THE SET ENDS THE SECOND SPEED DROPS.';
   const coachName = data.coachName ?? 'COACH GRAHAM WILKERSON';
   const credentials = data.credentials ?? 'CSCS · NFL-TRAINED';
@@ -29,7 +29,7 @@ function VelocityDrop({ data = {} }) {
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
       {bgClip ? <SyncedVideo src={bgClip} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} /> : null}
       {bgClip ? <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.55) 0%, rgba(10,11,13,0.45) 45%, rgba(10,11,13,0.85) 100%)' }} /> : null}
-      <Eyebrow top={150} fontSize={38}>{eyebrow}</Eyebrow>
+      <Eyebrow top={150} fontSize={38} style={{ opacity: ease((t - 0.05) / 0.3) }}>{eyebrow}</Eyebrow>
       <div style={{ position: 'absolute', top: 360, left: 86, right: 86,
         fontFamily: 'Anton, sans-serif', fontSize: 104, color: '#fff', lineHeight: 0.95,
         textTransform: 'uppercase', opacity: capT, transform: `translateY(${(1 - capT) * 14}px)` }}>

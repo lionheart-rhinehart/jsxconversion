@@ -244,6 +244,19 @@ small, .aa-small { font-size: var(--fs-sm); color: var(--fg-3); }
 
 .aa-eyebrow--muted { color: var(--fg-3); }
 
+/* Chip eyebrow — white pill, red text. The standard creative-engine eyebrow:
+   pops over footage far better than thin red mono. Hugs its text (inline-block).
+   Copy pattern: "{CITY} SPORTS PARENTS". */
+.aa-eyebrow--chip {
+  display: inline-block;
+  background: #ffffff;
+  color: var(--aa-red-600);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 12px 24px;
+  border-radius: 8px;
+}
+
 /* Code-comment style header. Site uses lines like "// Find Your Starting Line" */
 .aa-code-comment {
   font-family: var(--font-mono);

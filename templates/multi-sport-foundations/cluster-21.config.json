@@ -38,7 +38,7 @@
       "width": 757,
       "height": 1509,
       "fill": "transparent",
-      "border": "6px solid #ed1c24",
+      "border": "6px solid #c4141d",
       "z": 6
     },
     {
@@ -50,7 +50,7 @@
       "y": 108,
       "width": 513,
       "height": 345,
-      "fill": "#ed1c24",
+      "fill": "#c4141d",
       "z": 10
     },
     {

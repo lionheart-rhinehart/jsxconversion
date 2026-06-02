@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-01T19:50:49.799Z",
+  "generatedAt": "2026-06-02T16:03:13.877Z",
   "note": "Role-index for playbook-driven template selection. Regenerate with: node scripts/build-template-index.mjs",
   "templates": {
     "cluster-1": {
@@ -429,6 +429,47 @@
       ],
       "slotCount": 3
     },
+    "cluster-38": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "stat",
+        "claim",
+        "proof",
+        "brand"
+      ],
+      "accepts": [
+        "eyebrow",
+        "proof",
+        "stat",
+        "claim",
+        "reframe",
+        "mechanism",
+        "byline",
+        "brand"
+      ],
+      "slotCount": 6
+    },
+    "cluster-39": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "mechanism",
+        "brand"
+      ],
+      "accepts": [
+        "eyebrow",
+        "proof",
+        "mechanism",
+        "claim",
+        "reframe",
+        "hook",
+        "brand"
+      ],
+      "slotCount": 4
+    },
     "cluster-4": {
       "format": "static",
       "dir": "templates/multi-sport-foundations",
@@ -445,6 +486,63 @@
         "reframe",
         "eyebrow",
         "proof"
+      ],
+      "slotCount": 3
+    },
+    "cluster-40": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "reframe",
+        "brand"
+      ],
+      "accepts": [
+        "eyebrow",
+        "proof",
+        "reframe",
+        "claim",
+        "hook",
+        "mechanism",
+        "brand"
+      ],
+      "slotCount": 4
+    },
+    "cluster-41": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "hook",
+        "claim",
+        "brand"
+      ],
+      "accepts": [
+        "eyebrow",
+        "proof",
+        "hook",
+        "claim",
+        "reframe",
+        "mechanism",
+        "brand"
+      ],
+      "slotCount": 4
+    },
+    "cluster-42": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "reframe",
+        "brand"
+      ],
+      "accepts": [
+        "eyebrow",
+        "proof",
+        "reframe",
+        "claim",
+        "hook",
+        "brand"
       ],
       "slotCount": 3
     },

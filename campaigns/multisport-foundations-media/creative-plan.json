@@ -10,7 +10,7 @@
       "static": 0.25
     },
     "freshnessFloor": 0.45,
-    "repetitionCap": 3
+    "repetitionCap": 1
   },
   "_planNotes": {
     "batch": "MEDIA variant of multisport-foundations: the EXACT same designs (cluster-30..37 + motion) with a real Carmel clip/still behind each, + a legibility scrim. Statics inject config.media (frame-grabbed still); graphic motion (A1/C1/F3/FA1) bind a bg clip; meet-coach (E1) binds its clip. stat-reveal (F1) + logo-sting (BR1) have no media slot — left graphic (noted). A2 keeps its own baked footage."
@@ -19,7 +19,7 @@
     {
       "id": "grind-trap",
       "name": "My kid tries hard — MEDIA batch",
-      "location": "hamilton-county",
+      "location": "indianapolis",
       "voice": "Head-coach-to-parent, declarative, metric-driven. No emoji / exclamation / em dash.",
       "assets": [
         {
@@ -29,14 +29,14 @@
           "format": "gif",
           "source": "template",
           "template": "fresh-multisport-foundations-grind-trap-A1",
-          "clip": "brand/video-templates/assets/batch/sprint-m.mp4",
+          "clip": "brand/kraken-cache/athletes-acceleration-action-clip-sprinting-middle-school-male-athletes-accelerati-c818ba76.mp4",
           "templateData": {
             "duration": 3
           },
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/A1.gif",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/A1.gif",
-          "renderedAt": "2026-06-02T15:35:48.306Z"
+          "renderedAt": "2026-06-02T18:27:33.605Z"
         },
         {
           "id": "A2",
@@ -52,7 +52,7 @@
           "notes": "Already photo-backed (its own bg_photo).",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/A2.png",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/A2.png",
-          "renderedAt": "2026-06-02T15:18:12.976Z"
+          "renderedAt": "2026-06-02T16:44:10.588Z"
         },
         {
           "id": "A3",
@@ -61,7 +61,7 @@
           "format": "static",
           "source": "template",
           "template": "cluster-34",
-          "media": "./assets/batch-media/bench.jpg",
+          "media": "./assets/batch-media/ms-pushups.jpg",
           "templateData": {
             "phrase": "TWO MORE\nREPS?",
             "support": "Those last slow reps train slowness into your athlete."
@@ -69,7 +69,7 @@
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/A3.png",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/A3.png",
-          "renderedAt": "2026-06-02T15:18:16.252Z"
+          "renderedAt": "2026-06-02T16:44:14.473Z"
         },
         {
           "id": "A4",
@@ -78,7 +78,7 @@
           "format": "static",
           "source": "template",
           "template": "cluster-35",
-          "media": "./assets/batch-media/squat.jpg",
+          "media": "./assets/batch-media/ms-squat.jpg",
           "templateData": {
             "line1": "GRIND HARDER?",
             "line2": "THE TIRED REP IS THE ONE THE BODY REMEMBERS."
@@ -86,7 +86,7 @@
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/A4.png",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/A4.png",
-          "renderedAt": "2026-06-02T15:18:19.347Z"
+          "renderedAt": "2026-06-02T16:44:18.229Z"
         },
         {
           "id": "B1",
@@ -94,16 +94,16 @@
           "temperature": "cold",
           "format": "static",
           "source": "template",
-          "template": "cluster-35",
-          "media": "./assets/batch-media/sprint-mix.jpg",
+          "template": "cluster-41",
+          "media": "./assets/batch-media/ms-agility.jpg",
           "templateData": {
-            "line1": "IT'S WORKING.",
-            "line2": "THE PROBLEM IS WHAT IT'S TEACHING."
+            "claim_line1": "IT'S WORKING.",
+            "claim_line2": "THE PROBLEM IS WHAT IT'S TEACHING."
           },
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/B1.png",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/B1.png",
-          "renderedAt": "2026-06-02T15:18:22.132Z"
+          "renderedAt": "2026-06-02T16:44:22.157Z"
         },
         {
           "id": "B2",
@@ -112,7 +112,7 @@
           "format": "static",
           "source": "template",
           "template": "cluster-30",
-          "media": "./assets/batch-media/sprint-f.jpg",
+          "media": "./assets/batch-media/ms-hurdle.jpg",
           "templateData": {
             "stat1_value": "6",
             "stat1_label": "MONTHS IN",
@@ -124,7 +124,7 @@
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/B2.png",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/B2.png",
-          "renderedAt": "2026-06-02T15:18:25.230Z"
+          "renderedAt": "2026-06-02T16:44:26.142Z"
         },
         {
           "id": "C1",
@@ -133,17 +133,18 @@
           "format": "video",
           "source": "template",
           "template": "velocity-drop",
-          "clip": "brand/video-templates/assets/batch/lift.mp4",
+          "clip": "brand/kraken-cache/athletes-acceleration-action-clip-kettlebell-squat-middle-school-male-athletes-acc-0f2696cc.mp4",
           "templateData": {
-            "duration": 9,
+            "duration": 12,
             "claim": "THE SET ENDS THE SECOND SPEED DROPS.",
             "coachName": "COACH GRAHAM WILKERSON",
-            "credentials": "CSCS · NFL-TRAINED"
+            "credentials": "CSCS · NFL-TRAINED",
+            "brand": "ATHLETES ACCELERATION"
           },
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/C1.mp4",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/C1.mp4",
-          "renderedAt": "2026-06-02T15:09:37.951Z"
+          "renderedAt": "2026-06-02T18:30:35.831Z"
         },
         {
           "id": "C2",
@@ -152,14 +153,15 @@
           "format": "static",
           "source": "template",
           "template": "cluster-37",
-          "media": "./assets/batch-media/lift.jpg",
+          "media": "./assets/batch-media/ms-boxjump.jpg",
           "templateData": {
             "claim": "NOT MORE REPS. THE RIGHT ONES, MEASURED."
           },
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/C2.png",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/C2.png",
-          "renderedAt": "2026-06-02T15:18:28.479Z"
+          "renderedAt": "2026-06-02T17:07:43.645Z",
+          "editedAt": "2026-06-02T17:07:38.444Z"
         },
         {
           "id": "C3",
@@ -167,16 +169,16 @@
           "temperature": "warm",
           "format": "static",
           "source": "template",
-          "template": "cluster-34",
-          "media": "./assets/batch-media/boxjump.jpg",
+          "template": "cluster-39",
+          "media": "./assets/batch-media/ms-hipthrust.jpg",
           "templateData": {
-            "phrase": "THE SET ENDS\nWHEN SPEED DROPS.",
+            "claim": "THE SET ENDS WHEN SPEED DROPS.",
             "support": "No two more. Every rep your athlete does stays fast."
           },
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/C3.png",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/C3.png",
-          "renderedAt": "2026-06-02T15:18:32.269Z"
+          "renderedAt": "2026-06-02T16:46:50.417Z"
         },
         {
           "id": "D1",
@@ -185,14 +187,15 @@
           "format": "static",
           "source": "template",
           "template": "cluster-36",
-          "media": "./assets/batch-media/sprint-m.jpg",
+          "media": "./assets/batch-media/ms-jumping.jpg",
           "templateData": {
             "reframe": "THEY'RE NOT FALLING BEHIND. THEIR TRAINING IS PUSHING THEM BACK."
           },
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/D1.png",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/D1.png",
-          "renderedAt": "2026-06-02T15:18:35.335Z"
+          "renderedAt": "2026-06-02T17:52:52.139Z",
+          "editedAt": "2026-06-02T17:52:46.804Z"
         },
         {
           "id": "D2",
@@ -200,16 +203,15 @@
           "temperature": "warm",
           "format": "static",
           "source": "template",
-          "template": "cluster-35",
-          "media": "./assets/batch-media/broadjump.jpg",
+          "template": "cluster-42",
+          "media": "./assets/batch-media/ms-lunge.jpg",
           "templateData": {
-            "line1": "THIS WAS NEVER",
-            "line2": "YOUR KID'S FAULT. OR YOURS."
+            "reframe": "THIS WAS NEVER\nYOUR KID'S FAULT. OR YOURS."
           },
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/D2.png",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/D2.png",
-          "renderedAt": "2026-06-02T15:18:38.527Z"
+          "renderedAt": "2026-06-02T16:46:57.304Z"
         },
         {
           "id": "D3",
@@ -217,16 +219,16 @@
           "temperature": "warm",
           "format": "static",
           "source": "template",
-          "template": "cluster-34",
-          "media": "./assets/batch-media/sprint-f.jpg",
+          "template": "cluster-40",
+          "media": "./assets/batch-media/ms-band.jpg",
           "templateData": {
-            "phrase": "IT'S NOT\nYOUR KID.",
+            "reframe": "IT'S NOT\nYOUR KID.",
             "support": "It's the unmeasured rep. Train the fast one, measured."
           },
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/D3.png",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/D3.png",
-          "renderedAt": "2026-06-02T15:18:41.724Z"
+          "renderedAt": "2026-06-02T16:47:01.095Z"
         },
         {
           "id": "E1",
@@ -235,7 +237,7 @@
           "format": "video",
           "source": "template",
           "template": "meet-coach",
-          "clip": "brand/video-templates/assets/batch/sprint-m.mp4",
+          "clip": "brand/kraken-cache/athletes-acceleration-action-clip-med-ball-throw-high-school-male-athletes-acceler-279e19ec.mp4",
           "templateData": {
             "duration": 15,
             "eyebrow": "WHY HARD WORK ISN'T ENOUGH",
@@ -252,7 +254,7 @@
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/E1.mp4",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/E1.mp4",
-          "renderedAt": "2026-06-02T15:38:56.542Z"
+          "renderedAt": "2026-06-02T17:35:57.878Z"
         },
         {
           "id": "E2",
@@ -260,20 +262,18 @@
           "temperature": "warm",
           "format": "static",
           "source": "template",
-          "template": "cluster-30",
-          "media": "./assets/batch-media/boxjump.jpg",
+          "template": "cluster-38",
+          "media": "./assets/batch-media/ms-broadjump.jpg",
           "templateData": {
-            "stat1_value": "224%",
-            "stat1_label": "GREATER VERTICAL JUMP",
-            "stat2_value": "28%",
-            "stat2_label": "LESS TOTAL FATIGUE",
-            "proof_citation": "WANG 2026 · FRONTIERS IN PHYSIOLOGY",
-            "claim_line": "LESS WORK. MORE SPEED.\nTHAT'S PHYSICS."
+            "stat_value": "224%",
+            "stat_label": "GREATER VERTICAL JUMP",
+            "claim_line": "LESS WORK. MORE SPEED.\nTHAT'S PHYSICS.",
+            "proof_citation": "WANG 2026 · FRONTIERS IN PHYSIOLOGY"
           },
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/E2.png",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/E2.png",
-          "renderedAt": "2026-06-02T15:18:44.791Z"
+          "renderedAt": "2026-06-02T16:49:26.891Z"
         },
         {
           "id": "E3",
@@ -282,7 +282,7 @@
           "format": "static",
           "source": "template",
           "template": "cluster-31",
-          "media": "./assets/batch-media/lift.jpg",
+          "media": "./assets/batch-media/ms-carry.jpg",
           "templateData": {
             "coach_name": "COACH GRAHAM\nWILKERSON",
             "coach_title": "CSCS · FOUNDER, ATHLETES ACCELERATION",
@@ -293,7 +293,7 @@
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/E3.png",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/E3.png",
-          "renderedAt": "2026-06-02T15:18:47.855Z"
+          "renderedAt": "2026-06-02T16:49:30.445Z"
         },
         {
           "id": "F1",
@@ -320,7 +320,7 @@
           "notes": "stat-reveal has no media slot — stays graphic.",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/F1.mp4",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/F1.mp4",
-          "renderedAt": "2026-06-02T15:11:27.208Z"
+          "renderedAt": "2026-06-02T17:36:15.895Z"
         },
         {
           "id": "F2",
@@ -329,7 +329,7 @@
           "format": "static",
           "source": "template",
           "template": "cluster-32",
-          "media": "./assets/batch-media/broadjump.jpg",
+          "media": "./assets/batch-media/ms-stretch.jpg",
           "templateData": {
             "offer_headline": "FREE ATHLETE\nANALYSIS",
             "offer_detail": "Real sprint and jump numbers. Not a pitch. A data set you keep.",
@@ -338,7 +338,7 @@
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/F2.png",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/F2.png",
-          "renderedAt": "2026-06-02T15:18:51.234Z"
+          "renderedAt": "2026-06-02T16:49:58.472Z"
         },
         {
           "id": "F3",
@@ -347,14 +347,14 @@
           "format": "video",
           "source": "template",
           "template": "season-clock",
-          "clip": "brand/video-templates/assets/batch/sprint-mix.mp4",
+          "clip": "brand/kraken-cache/athletes-acceleration-action-clip-running-middle-school-mixed-athletes-acceleratio-6cd13468.mp4",
           "templateData": {
             "duration": 7
           },
           "status": "failed",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/F3.mp4",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/F3.mp4",
-          "renderedAt": "2026-06-02T15:12:45.810Z",
+          "renderedAt": "2026-06-02T18:32:09.008Z",
           "notes": ""
         },
         {
@@ -364,14 +364,14 @@
           "format": "video",
           "source": "template",
           "template": "fresh-multisport-foundations-grind-trap-FA1",
-          "clip": "brand/video-templates/assets/batch/sprint-m.mp4",
+          "clip": "brand/kraken-cache/athletes-acceleration-action-clip-broad-jump-middle-school-male-athletes-accelerat-7d1f3b3e.mp4",
           "templateData": {
             "duration": 30
           },
-          "status": "rendering",
+          "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/FA1.mp4",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/FA1.mp4",
-          "renderedAt": "2026-06-02T11:47:22.457Z"
+          "renderedAt": "2026-06-02T18:38:57.608Z"
         },
         {
           "id": "BR1",
@@ -390,7 +390,7 @@
           "notes": "logo-sting has no media slot — stays graphic.",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/BR1.mp4",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/BR1.mp4",
-          "renderedAt": "2026-06-02T11:47:46.750Z"
+          "renderedAt": "2026-06-02T17:43:11.189Z"
         }
       ]
     }

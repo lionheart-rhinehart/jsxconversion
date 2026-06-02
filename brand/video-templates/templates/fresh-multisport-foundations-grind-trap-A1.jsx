@@ -5,7 +5,7 @@
 // Promotable to a named motion bank template + _SPEC.
 
 function GrindHookReel({ data = {} }) {
-  const eyebrow = data.eyebrow ?? '// THE LAST REP LIE';
+  const eyebrow = data.eyebrow ?? 'CITY SPORTS PARENTS';
   const line1 = data.line1 ?? "THE TIRED REP\nISN'T EFFORT.";
   const line2 = data.line2 ?? "IT'S INSTRUCTION.";
   const brand = data.brand ?? 'ATHLETES ACCELERATION';
@@ -28,7 +28,7 @@ function GrindHookReel({ data = {} }) {
       <div style={{ position: 'absolute', bottom: -220, left: -160, width: 640, height: 640,
         background: `radial-gradient(circle, ${RED}22 0%, transparent 60%)`, filter: 'blur(20px)' }} />
 
-      <Eyebrow top={690} fontSize={40}>{eyebrow}</Eyebrow>
+      <Eyebrow top={690} fontSize={40} style={{ opacity: eyeT }}>{eyebrow}</Eyebrow>
 
       <div style={{ position: 'absolute', top: 790, left: 86, right: 86,
         fontFamily: 'Anton, sans-serif', fontSize: 138, color: '#ffffff', lineHeight: 0.9,

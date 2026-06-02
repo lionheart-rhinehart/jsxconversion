@@ -4,7 +4,7 @@
 // from stat-reveal so F1 and F3 don't look alike. Vertical-native 1080x1920.
 
 function SeasonClock({ data = {} }) {
-  const eyebrow = data.eyebrow ?? '// ANOTHER SEASON, SAME SPEED?';
+  const eyebrow = data.eyebrow ?? 'CITY SPORTS PARENTS';
   const line1 = data.line1 ?? 'ANOTHER SEASON.';
   const line2 = data.line2 ?? 'SAME SPEED.';
   const offer = data.offer ?? 'SEE THE NUMBER FIRST.';
@@ -31,7 +31,7 @@ function SeasonClock({ data = {} }) {
       {bgClip ? <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.55) 0%, rgba(10,11,13,0.45) 45%, rgba(10,11,13,0.85) 100%)' }} /> : null}
       {/* SCENE 1 — the season that changed nothing */}
       <div style={{ position: 'absolute', inset: 0, opacity: s1 }}>
-        <Eyebrow top={150} fontSize={38}>{eyebrow}</Eyebrow>
+        <Eyebrow top={150} fontSize={38} style={{ opacity: ease((t - 0.05) / 0.3) }}>{eyebrow}</Eyebrow>
         <div style={{ position: 'absolute', top: 620, left: 86, right: 86,
           fontFamily: 'Anton, sans-serif', fontSize: 150, color: '#fff', lineHeight: 0.9,
           textTransform: 'uppercase', opacity: ease((t - 0.3) / 0.4) }}>{line1}</div>

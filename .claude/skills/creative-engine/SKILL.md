@@ -105,7 +105,20 @@ section produced output** before planning; re-run any that came back empty.
   Do NOT reuse a skeleton beyond `knobs.repetitionCap` (default 3), and use a **distinct skeleton for
   each asset WITHIN a beat** (A2≠A3≠A4; D1≠D2≠D3; F1≠F3). When the best-fit template is already taken,
   drop to the next-best role-fit; mark `source:"fresh"` only when no distinct fit remains. Two assets
-  that share a skeleton AND look alike is the bug to avoid.
+  that share a skeleton AND look alike is the bug to avoid. **Strict mode:** set `knobs.repetitionCap:1`
+  for a "every asset a distinct design" batch — then `run-campaign.mjs` HARD-FAILS the render if any
+  template repeats within an angle (not just guidance). Prefer the clean AA-native bank
+  `cluster-30..42`; the legacy `cluster-1..22` are Canva imports with baked photos / competitor
+  watermarks — do not reuse them for an on-brand batch.
+- **No media reused in a batch (the footage version of variety).** Every media-backed asset gets a
+  DISTINCT source clip/still — never the same `media`/`clip`/`photo` path on two assets, and avoid the
+  same *movement* (a video and a static of the same drill reads as a repeat). `run-campaign.mjs`
+  validates this per angle and HARD-FAILS on any duplicate path (always, regardless of repetitionCap).
+  Pull distinct scenes from the Kraken cache; prefer the campaign's school level (middle-school for the
+  8–12 foundations work) and clips with no competitor equipment branding.
+- **One red.** The brand red is `#c4141d` (`--aa-red-600`, "matches logo"). Never introduce another red
+  (the legacy clusters once carried `#ed1c24`/`#fe3430` — normalized out). New skeletons use `AA_RED`
+  from `_helpers.jsx` (statics) or `const RED = '#c4141d'` (motion).
 - Bind a headline + microscript pulled/derived from `campaign-knowledge.json` to the beat, format,
   and image source. Validate tag→layer-type before binding an image tag.
 - **Stands alone — EVERY non-`null`-beat asset (the #2 past failure).** A creative must read on its

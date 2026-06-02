@@ -36,7 +36,7 @@ import {
   loadTier, mergeTiers,
 } from "./lib/fill-core.mjs";
 import { assemble } from "./lib/assemble.mjs";
-import { fieldRole } from "./lib/roles.mjs";
+import { fieldRole, buildEyebrowAnchor } from "./lib/roles.mjs";
 import { validateTemplateSource } from "./validate-templates.mjs";
 
 const PROJECT_ROOT = resolve(".");
@@ -185,11 +185,11 @@ function buildMotionData(asset, dataKeys, tierTags = {}) {
   // role is brand/eyebrow (never content/numeric — a string in a stat field
   // would NaN the count-up at render). Explicit templateData already populated
   // `data`, so this only touches keys it didn't set ("explicit wins").
-  // Locale eyebrow anchor: "<CITY> SPORT PARENT" (city from the location tier, state
-  // suffix stripped). Falls back to the "{city name}" placeholder when no location/
-  // city is resolved, so an un-located campaign renders an obvious fill-me token.
-  const cityName = String(tierTags.city || "").split(",")[0].trim();
-  const anchor = cityName ? `${cityName} SPORT PARENT` : "{city name} SPORT PARENT";
+  // Locale eyebrow anchor — SINGLE SOURCE in roles.mjs (shared with the static
+  // fill path), so the motion and static eyebrows never diverge. Produces
+  // "{CITY} SPORT PARENT" (the user-specified wording). Do NOT re-inline an
+  // ad-hoc string here — that would regress the eyebrow on one path only.
+  const anchor = buildEyebrowAnchor(tierTags);
   for (const k of dataKeys) {
     const role = fieldRole(k);
     // The eyebrow is the brand's locale anchor on EVERY design — force it, overriding

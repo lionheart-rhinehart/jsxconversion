@@ -65,3 +65,18 @@ export function fieldRole(name) {
   for (const [re, role] of FIELD_ROLE_PATTERNS) if (re.test(name)) return role;
   return null;
 }
+
+// Build the standalone eyebrow anchor from the merged tier tags. The eyebrow
+// orients the viewer — WHO it's for + WHERE — as a chip at the top of the
+// creative. Pattern: "{CITY} SPORT PARENT" with the state suffix stripped
+// ("CARMEL, IN" → "CARMEL"). `city` is the per-campaign placeholder, set via the
+// location/campaign data tier. Null-guarded: no city → a generic fallback so the
+// slot never renders "undefined". Single source for BOTH the static
+// (fill-core resolveStaticConfig) and motion (run-campaign buildMotionData) paths
+// so they can never drift.
+export function buildEyebrowAnchor(tierTags = {}) {
+  const cityLabel = String(tierTags.city || "")
+    .replace(/,\s*[A-Za-z]{2}\.?$/, "")
+    .trim();
+  return cityLabel ? `${cityLabel} SPORT PARENT` : "{city name} SPORT PARENT";
+}
