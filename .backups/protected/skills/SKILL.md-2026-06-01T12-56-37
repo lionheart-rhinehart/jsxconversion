@@ -1,0 +1,133 @@
+---
+name: creative-engine
+description: >-
+  Campaign-in, approved-creatives-out. Turn a full marketing campaign (reverse
+  brief + ad copy + microscripts) for a brand into ~10-20 on-brand,
+  angle-coherent creatives per angle (video / GIF / static), reviewed and
+  approved on a page, then rendered in the background. Trigger when the user
+  runs /creative-engine, or asks to build/generate a campaign's ad creatives
+  from a brief, or to plan/produce a batch of angle-specific ads.
+---
+
+# Creative Engine
+
+The front door for producing a whole campaign's ad creatives. You orchestrate;
+deterministic scripts do the mechanical work. **You are the brain (matching copy →
+angle → creative); the scripts are the hands (rendering).**
+
+Read `docs/PROCESS.md` for the full machine. This skill is phase-aware: it
+inspects what already exists on disk for the campaign and resumes from there.
+
+## Hard rules (never violate)
+
+1. **No skimming.** Input documents (the reverse brief especially) are huge and
+   dense. You MUST deep-read every line — but NOT in this context. Fan out **one
+   sub-agent (Task tool) per document, and one per major section of the reverse
+   brief**, each returning a quoted, structured extraction. Aggregate into
+   `campaigns/<name>/campaign-knowledge.json`. The main context holds only the
+   digests. This both forces depth and protects the context window.
+2. **Hand placement is sacred.** Filling/generation sets DATA only (copy, colors,
+   image paths). Never auto-move or auto-place layers. Per-creative position
+   tweaks happen in the editor, by the user.
+3. **Brand voice is law** (from the brand kit): head-coach-to-parent, declarative,
+   metric-driven, **no emoji, no exclamation points**. The guarantee is verbatim,
+   never paraphrased — the canonical string is `GUARANTEE_TEXT` in
+   `scripts/lib/roles.mjs` (currently `+1 mph speed. +3" vertical. 90 days. Or your
+   training is on us.`). The `guarantee` role is auto-fill-locked, so the renderer
+   never overwrites it; don't hand-paste a different wording.
+4. **Approval gate is mandatory.** You produce the plan; the user approves on the
+   review page; ONLY approved assets render. Never render unapproved assets unless
+   the user explicitly passes `--all`.
+5. **You do not write the core ad copy.** The user provides it. You MATCH it to
+   angles and the brief, and compose visuals around it. You may derive slot-level
+   fragments (a short microscript variant) only from the brief, flagged for
+   approval — never invent claims.
+
+## The flow
+
+### Step 1 — Brand
+Ask: **"What's the brand?"** Resolve it against
+`.claude/skills/creative-engine/config.json` → `brands[<slug>]`. That gives:
+- the **Kraken** raw-media folder: `<krakenRoot>/<krakenSubfolder>` (images/clips/
+  videos — pulled at CREATION time, not now);
+- the **data tier** for the cascade fill (`data/brand.<dataTier>.json`);
+- the brand kit path (read it before composing anything fresh).
+
+If `krakenRoot` is null, ask for the local Kraken folder path and write it back to
+`config.json`. If the brand is unknown, ask for its slug + Kraken subfolder + data
+tier and add it to `config.json`.
+
+### Step 2 — Collect inputs
+Ensure `campaigns/<name>/` contains: `brief.md` (reverse brief), `ad-copy.md`,
+`microscripts.md`, and any named templates for this campaign. Ask the user for any
+that are missing. Confirm the campaign slug.
+
+### Step 3 — Deep read (no skim — sub-agent fan-out)
+If `campaigns/<name>/campaign-knowledge.json` does not yet exist (or is stale),
+fan out Task sub-agents — one per input doc and one per major reverse-brief
+section (target market, mechanisms, characterizations, hooks, proof, metaphors,
+paradoxes, fascinations, beat maps, myths, testimonials). Each returns a JSON
+block of quoted items with source lines. Aggregate, then **assert every expected
+section produced output** before planning; re-run any that came back empty.
+
+### Step 4 — Plan
+For each angle, author assets up to `knobs.assetsPerAngle`, honoring the
+motion:still ratio, the **repetition cap** (≤ cap reuses of any one template
+skeleton per angle), and the **freshness floor** (min % fresh). **Fit-first:** use
+a bank template when one genuinely expresses the message; otherwise mark the asset
+`source:"fresh"` for the generator. Each asset binds a headline + microscript
+pulled/derived from `campaign-knowledge.json` to a beat, a format, and an image
+source. Validate tag→layer-type before binding an image tag. Write
+`campaigns/<name>/creative-plan.json` (schema in `docs/PROCESS.md`).
+
+**`templateData` — map copy onto each template's REAL fields.** `headline` and
+`microscript` are human-facing summary fields; they do NOT auto-land in a
+template's slots. For any `source:"template"` asset, also write a `templateData`
+object keyed to that specific template's own field names, so the campaign copy
+renders where it belongs (else the template shows its stock defaults). Find the
+keys by reading the template:
+- **Motion** (`brand/video-templates/templates/<t>.jsx`): the keys are the
+  `data.<key>` reads (and the `*_SPEC.fields[].key` list). Examples:
+  `stat-reveal` → `{eyebrow,title1,title2,ctaText}`; `quote-card` →
+  `{eyebrow,quoteText,bylineName,bylineMeta,statsLabel}`; `coach-lower-thirds` →
+  `{coachName,coachTitle}`; `meet-coach` →
+  `{eyebrow,coachFirst,coachLast,coachTitle,ctaText,ctaMicro}`; `logo-sting` →
+  `{wordmark1,wordmark2,tagline,url}`.
+- **Static** (`cluster-*`): the keys are the layer `tag` names in
+  `<cluster>.config.json` (e.g. `title`, `microscript`, `city`, `guarantee`).
+The runner uses `templateData` verbatim when present (warning on keys the template
+doesn't read), and falls back to a headline/microscript heuristic when it's absent.
+
+### Step 5 — Review (stop here)
+Ensure the servers are up:
+- `node scripts/editor-server.mjs` (:5173 — plan API + render)
+- `node "brand/video-templates/serve.mjs"` (:5599 — serves the review page)
+
+Tell the user to open **http://localhost:5599/review.html?campaign=<name>**, review
+the cards, tweak/note, and **Approve** the ones to build. **Then STOP.** Do not render.
+
+### Step 6 — Render (only after approvals)
+When the user says go (re-invoke `/creative-engine <name>` or "render approved"),
+run the background runner:
+`node scripts/run-campaign.mjs <name>`  (add `--angle <id>` to scope, `--all` to
+ignore the gate). It renders approved assets, writes
+`out/campaigns/<name>/<angle>/<id>.<ext>`, patches each card's status/thumb (the
+page updates live), and emits `manifest.json`. While it runs in the background,
+return to Step 4 for the next angle.
+
+## Dispatch (which renderer per asset)
+- `template` + `static` → `fill-core` cascade fill → static render (PNG).
+- `template` + `video`/`gif` → motion wrapper + `window.__CONFIG__` injection
+  (`brand/video-templates/templates/*.jsx`); gif = mp4 → ffmpeg palette.
+- `fresh` + any → `compose-creative` skill output, then the matching renderer.
+
+## Flywheel
+When a `fresh` asset turns out well, offer to **promote it into the bank**
+(static → a `cluster-*` template; motion → a `brand/video-templates/templates/*`
+with a `*_SPEC`). The library compounds; next campaign the bank is bigger.
+
+## Scope notes (current)
+- Video renders are **silent** for now (audio-mux is a later phase; the
+  audio-picker chooses tracks but muxing isn't wired).
+- AI image-gen (nano-banana) is stubbed in the image resolver; `fresh` images use
+  JSX-rendered or library/client sources for now.

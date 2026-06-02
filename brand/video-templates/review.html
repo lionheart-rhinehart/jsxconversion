@@ -215,12 +215,16 @@
 // review.html is served by brand/video-templates/serve.mjs (:5599); the data
 // API + render live in editor-server (:5173). Same-origin if you ever serve
 // this from editor-server itself.
-const API = (location.port === "5599" || location.protocol === "file:")
-  ? "http://localhost:5173"
-  : "";
-const EDITOR = "http://localhost:5173"; // position editor for inline tweaks
-
 const qs = new URLSearchParams(location.search);
+// API base resolution (back-compat): explicit ?api= wins, else default to :5173
+// when served from the review server / file://, else same-origin. This lets a
+// second isolated instance run its plan API on a different port (e.g. ?api=http://localhost:5273).
+const API = qs.get("api")
+  ? qs.get("api").replace(/\/$/, "")
+  : ((location.port === "5599" || location.protocol === "file:")
+      ? "http://localhost:5173"
+      : "");
+const EDITOR = qs.get("editor") ? qs.get("editor").replace(/\/$/, "") : (API || "http://localhost:5173"); // position editor for inline tweaks
 const campaignParam = qs.get("campaign") || "";
 
 let PLAN = null;
@@ -311,7 +315,11 @@ const STATE_COPY = {
 function previewHTML(a) {
   const media = a.output || a.thumb;
   if (media) {
-    const src = (API ? API : "") + (media.startsWith("/") ? media : "/" + media);
+    // Cache-bust by renderedAt: the browser's media cache can serve a stale
+    // (even corrupt) copy of a re-rendered file at an identical URL, so make the
+    // URL change whenever the file is re-rendered.
+    const ver = "?v=" + encodeURIComponent(a.renderedAt || a.editedAt || "");
+    const src = (API ? API : "") + (media.startsWith("/") ? media : "/" + media) + ver;
     if (/\.mp4$/i.test(media)) return `<video src="${src}" muted loop autoplay playsinline></video>`;
     return `<img src="${src}" alt="">`; // png/jpg/gif
   }
@@ -528,6 +536,10 @@ load();
 <script type="text/babel" src="templates/before-after.jsx"></script>
 <script type="text/babel" src="templates/story-poll.jsx"></script>
 <script type="text/babel" src="templates/stat-reveal.jsx"></script>
+<script type="text/babel" src="templates/velocity-drop.jsx"></script>
+<script type="text/babel" src="templates/season-clock.jsx"></script>
+<script type="text/babel" src="templates/fresh-multisport-foundations-grind-trap-A1.jsx"></script>
+<script type="text/babel" src="templates/fresh-multisport-foundations-grind-trap-FA1.jsx"></script>
 <script type="text/babel" src="templates/quote-card.jsx"></script>
 <script type="text/babel" src="templates/hype-intro.jsx"></script>
 <script type="text/babel" src="templates/coach-lower-thirds.jsx"></script>
@@ -607,17 +619,53 @@ function defaultsFromFields(fields) {
   return d;
 }
 
+// Dynamically load a motion template's component when it isn't already on
+// window. The page hardcodes <script> tags for the original bank, but
+// campaign-composed templates (e.g. fresh-e2e-*) are authored after the page
+// was built, so their window.<Comp> global doesn't exist yet → the preview
+// would hang on "Loading preview…". This fetches the template JSX, Babel-
+// transforms it (same as the hardcoded text/babel tags), and injects it as a
+// plain <script> so it self-registers its window global in the global scope.
+// Memoized per template; resolves once the global appears. Future-proofs ANY
+// new template, not just this campaign's.
+const _compLoads = {};
+function ensureComponent(template, component) {
+  if (component && window[component]) return Promise.resolve(true);
+  if (_compLoads[template]) return _compLoads[template];
+  _compLoads[template] = (async () => {
+    const url = apiBase() + "/video-templates/templates/" + template + ".jsx";
+    const src = await fetch(url).then((r) => { if (!r.ok) throw new Error("fetch " + r.status); return r.text(); });
+    if (!window.Babel) throw new Error("Babel standalone not loaded");
+    const code = window.Babel.transform(src, { presets: ["react"], filename: template + ".jsx" }).code;
+    await new Promise((resolve, reject) => {
+      const s = document.createElement("script");
+      s.text = code + "\n//# sourceURL=" + template + ".jsx";
+      s.onerror = () => reject(new Error("inject failed"));
+      document.head.appendChild(s);
+      // Synchronous <script> with inline text executes on append; resolve next tick.
+      setTimeout(resolve, 0);
+    });
+    return !!(component ? window[component] : true);
+  })().catch((e) => { delete _compLoads[template]; throw e; });
+  return _compLoads[template];
+}
+
 // Map a field key to the relevant campaign value pool (mirrors the static
 // editor's valuesForTag): eyebrow/micro-ish → microscripts, title/head-ish →
 // headlines, plus values other assets used for the exact same key.
-function valuesForKey(key, vals) {
+function valuesForKey(field, vals) {
   if (!vals) return [];
+  // Accept a field object {key,role} (preferred) or a bare key string (back-compat).
+  const role = field && typeof field === "object" ? field.role : null;
+  const key = field && typeof field === "object" ? field.key : field;
   const t = String(key || "").toLowerCase();
+  // Role-aware first: a field with a role shows that role's pool ("all hooks").
+  const roled = (role && vals.byRole && vals.byRole[role]) || [];
   let pool = [];
   if (/eyebrow|micro|byline|attribution|credential|role|label|tag/.test(t)) pool = vals.microscript || [];
   else if (/title|head|quote|claim|primary|cta|tagline|subtext|name/.test(t)) pool = vals.headline || [];
   const keyed = (vals.byKey && vals.byKey[key]) || [];
-  return [...new Set([...keyed, ...pool])];
+  return [...new Set([...roled, ...keyed, ...pool])];
 }
 
 // Quick-swap: per copy field, a dropdown of campaign values to drop in.
@@ -632,7 +680,7 @@ function CampaignSwap({ fields, setField, campaign }) {
   if (!vals) return null;
   const rows = (fields || [])
     .filter((f) => f.type === "text" || f.type === "textarea")
-    .map((f) => ({ f, opts: valuesForKey(f.key, vals) }))
+    .map((f) => ({ f, opts: valuesForKey(f, vals) }))
     .filter((r) => r.opts.length);
   if (!rows.length) return null;
   return (
@@ -806,12 +854,14 @@ function VideoEditModal({ angleId, assetId, onClose }) {
   const [notes, setNotes] = useState(asset ? asset.notes || "" : "");
   const [busy, setBusy] = useState(null);
   const [tab, setTab] = useState("copy");
+  const [outVer, setOutVer] = useState(0); // cache-bust the rendered-output preview after a re-render
 
   useEffect(() => {
     fetch(apiBase() + "/bank?type=motion").then((r) => r.json())
       .then((j) => setBank(j.templates || [])).catch(() => {});
   }, []);
 
+  const [compReady, setCompReady] = useState(0); // bump to re-render once a lazily-loaded component registers
   useEffect(() => {
     if (!template) { setSpec(null); return; }
     let live = true;
@@ -821,6 +871,13 @@ function VideoEditModal({ angleId, assetId, onClose }) {
       // Carry existing copy by matching key (best-match), seed new keys from
       // defaults; unknown old keys are ignored by the component (no silent loss).
       setData((prev) => ({ ...defaultsFromFields(j.fields), ...prev }));
+      // Lazily load the component if its window global isn't registered yet
+      // (campaign-composed templates aren't in the page's hardcoded script list).
+      if (j.component && !window[j.component]) {
+        ensureComponent(j.template || template, j.component)
+          .then(() => { if (live) setCompReady((n) => n + 1); })
+          .catch((e) => { if (live) { console.error("template load failed:", e); setCompReady((n) => n + 1); } });
+      }
     }).catch(() => { if (live) setSpec({ fields: [], component: null }); });
     return () => { live = false; };
   }, [template]);
@@ -924,7 +981,11 @@ function VideoEditModal({ angleId, assetId, onClose }) {
         const rj = await rr.json();
         if (rj.exitCode !== 0) throw new Error((rj.stderr || "render failed").slice(-200));
       }
-      setBusy(null); bridge.reload(); onClose();
+      setBusy(null); bridge.reload();
+      // On Render: keep the modal open and bust the preview cache so the user
+      // sees the new output. Plain Save keeps the prior close behavior.
+      if (render && !isFresh) setOutVer((n) => n + 1);
+      else onClose();
     } catch (e) {
       setBusy(null);
       alert((render ? "Render" : "Save") + " failed: " + e.message);
@@ -943,16 +1004,47 @@ function VideoEditModal({ angleId, assetId, onClose }) {
         </div>
         <div className="vmodal-body">
           <div className="vmodal-stage" ref={stageRef}>
-            {isFresh
-              ? <div className="vm-fresh">Fresh render pending<br/><span>(compose-creative not built yet)</span></div>
-              : (Comp && window.Stage
-                  ? <window.Stage key={template + ":" + (Number(data.duration) || 8)}
+            {(() => {
+              if (isFresh) return <div className="vm-fresh">Fresh render pending<br/><span>(compose-creative not built yet)</span></div>;
+              // Prefer the ALREADY-RENDERED output (robust) over the live Stage
+              // remount; keep live Stage only for the position tab (drag handles
+              // need it) + as last-resort fallback.
+              const live = bridge.findAsset(angleId, assetId) || asset;
+              const out = live && (live.output || live.thumb);
+              const outUrl = out ? (apiBase() + (out.startsWith("/") ? out : "/" + out)) : null;
+              const wantLive = tab === "position";
+              if (!wantLive && outUrl) {
+                // Bust on renderedAt (changes when the file changes, survives page
+                // reloads) AND outVer (in-session re-render bump) so the browser's
+                // media cache can never replay a stale/corrupt copy at the same URL.
+                const ver = (live.renderedAt || live.editedAt || "0") + "." + outVer;
+                const busted = outUrl + (outUrl.includes("?") ? "&" : "?") + "v=" + encodeURIComponent(ver);
+                return /\.mp4(\?|$)/i.test(outUrl)
+                  ? <video key={busted} src={busted} muted loop autoPlay playsInline style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                  : <img key={busted} src={busted} alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />;
+              }
+              if (Comp && window.Stage) {
+                // Loop the template's intrinsic L-second animation to fill the
+                // chosen clip length (L = SPEC duration default), so the live
+                // preview matches the looped render (PROCESS.md "preview == render").
+                const durField = (spec && spec.fields || []).find((f) => f.key === "duration");
+                const loopLen = (durField && durField.default) || (Number(data.duration) || 8);
+                const Loop = window.LoopRemap || ((p) => p.children);
+                return (
+                  <window.Stage key={template + ":" + (Number(data.duration) || 8)}
                       width={1080} height={1920} duration={Number(data.duration) || 8}
                       background="#0a0b0d" autoplay loop>
+                    <Loop loopLength={loopLen}>
                       <Comp data={data} />
                       {window.ExtrasLayer && <window.ExtrasLayer data={data} />}
-                    </window.Stage>
-                  : <div className="vm-fresh">Loading preview…</div>)}
+                    </Loop>
+                  </window.Stage>
+                );
+              }
+              return outUrl
+                ? <div className="vm-fresh">Showing last render. Save + Re-render to update.</div>
+                : <div className="vm-fresh">Loading preview…</div>;
+            })()}
             {!isFresh && tab === "position" && Comp && window.Stage &&
               <DragOverlay stageRef={stageRef} data={data} setOverride={setOverride}
                 selected={selected} setSelected={setSelected} />}
@@ -984,6 +1076,13 @@ function VideoEditModal({ angleId, assetId, onClose }) {
                     ? <React.Fragment>
                         <div className="vm-sub">Photo</div><MediaPicker kind="photo" current={photo} onPick={pickPhoto} />
                         <div className="vm-sub">Clip</div><MediaPicker kind="clip" current={clip} onPick={pickClip} />
+                        {window.MediaField && window.isVideoSrc && window.isVideoSrc(data[imageKey]) &&
+                          <React.Fragment>
+                            <div className="vm-sub">Trim clip — crop front/back</div>
+                            <window.MediaField field={{ key: imageKey, label: "Background clip", type: "image" }}
+                              data={data} setFields={setFields} templateDuration={Number(data.duration) || 8} />
+                            <div className="vm-note">Drag the handles to cut the start/end of the clip; the render uses only the trimmed window.</div>
+                          </React.Fragment>}
                       </React.Fragment>
                     : <div className="vm-hint">This template has no photo/clip slot.</div>)}
                   {tab === "audio" && <React.Fragment>

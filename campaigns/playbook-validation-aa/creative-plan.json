@@ -1,0 +1,259 @@
+{
+  "schemaVersion": 1,
+  "campaign": "playbook-validation-aa",
+  "brand": "athletes-acceleration",
+  "_note": "Throwaway spike: assets per beat/temperature to validate the AA Creative Playbook before locking the schema. Statics render from hand-authored edits/ configs.",
+  "angles": [
+    {
+      "id": "spike",
+      "name": "Playbook validation — one asset per beat/temperature",
+      "assets": [
+        {
+          "id": "S1",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-1",
+          "status": "rendered",
+          "knowledgeRefs": [
+            "hook:VALID"
+          ],
+          "output": "out/campaigns/playbook-validation-aa/spike/S1.png",
+          "thumb": "out/campaigns/playbook-validation-aa/spike/S1.png",
+          "renderedAt": "2026-06-01T02:03:02.672Z"
+        },
+        {
+          "id": "S2",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-1",
+          "status": "approved",
+          "knowledgeRefs": [
+            "proof:VALID",
+            "stat:VALID",
+            "testimonial:VALID"
+          ]
+        },
+        {
+          "id": "S3",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-1",
+          "status": "rendered",
+          "knowledgeRefs": [
+            "offer:VALID",
+            "guarantee:VALID",
+            "cta:VALID"
+          ],
+          "output": "out/campaigns/playbook-validation-aa/spike/S3.png",
+          "thumb": "out/campaigns/playbook-validation-aa/spike/S3.png",
+          "renderedAt": "2026-06-01T02:00:52.853Z"
+        },
+        {
+          "id": "V1",
+          "beat": "E/F — Prove + Offer",
+          "temperature": "warm-hot",
+          "format": "video",
+          "source": "template",
+          "template": "stat-reveal",
+          "status": "approved",
+          "knowledgeRefs": [
+            "stat:VALID",
+            "guarantee:VALID",
+            "cta:VALID"
+          ],
+          "templateData": {
+            "eyebrow": "90-DAY GUARANTEE",
+            "title1": "WE GUARANTEE",
+            "title2": "RESULTS.",
+            "stat1Value": 1,
+            "stat1Unit": " MPH",
+            "stat1Label": "SPEED",
+            "stat2Value": 3,
+            "stat2Unit": "\"",
+            "stat2Label": "VERTICAL",
+            "freeLine1": "OR IT'S",
+            "freeLine2": "FREE.",
+            "ctaText": "BOOK YOUR FREE ASSESSMENT"
+          }
+        },
+        {
+          "id": "S4",
+          "beat": "B — Name the moment",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-1",
+          "status": "rendered",
+          "knowledgeRefs": [
+            "hook:VALID",
+            "reframe:VALID"
+          ],
+          "_playbook": "Beat B: hook + reframe (the recognizable struggle).",
+          "output": "out/campaigns/playbook-validation-aa/spike/S4.png",
+          "thumb": "out/campaigns/playbook-validation-aa/spike/S4.png",
+          "renderedAt": "2026-06-01T01:45:21.361Z"
+        },
+        {
+          "id": "S5",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-1",
+          "status": "rendered",
+          "knowledgeRefs": [
+            "mechanism:VALID",
+            "stat:VALID"
+          ],
+          "_playbook": "Beat C: mechanism (dominant) + stat support.",
+          "output": "out/campaigns/playbook-validation-aa/spike/S5.png",
+          "thumb": "out/campaigns/playbook-validation-aa/spike/S5.png",
+          "renderedAt": "2026-06-01T01:45:24.583Z"
+        },
+        {
+          "id": "S6",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-1",
+          "status": "rendered",
+          "knowledgeRefs": [
+            "reframe:VALID"
+          ],
+          "_playbook": "Beat D ★ AA signature: reframe epiphany (centered) + microscript anchor.",
+          "output": "out/campaigns/playbook-validation-aa/spike/S6.png",
+          "thumb": "out/campaigns/playbook-validation-aa/spike/S6.png",
+          "renderedAt": "2026-06-01T01:45:27.930Z"
+        },
+        {
+          "id": "S7",
+          "beat": "A — Stop the scroll (UGC-style)",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-1",
+          "status": "rendered",
+          "knowledgeRefs": [
+            "hook:VALID"
+          ],
+          "_playbook": "Tests the UGC-hybrid flag: raw caption-style hook vs polished.",
+          "output": "out/campaigns/playbook-validation-aa/spike/S7.png",
+          "thumb": "out/campaigns/playbook-validation-aa/spike/S7.png",
+          "renderedAt": "2026-06-01T01:45:31.708Z"
+        },
+        {
+          "id": "CAR1",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-1",
+          "status": "rendered",
+          "knowledgeRefs": [
+            "hook:VALID"
+          ],
+          "_playbook": "Carousel card 1/3 — hook. Tests paginated multi-beat axis.",
+          "output": "out/campaigns/playbook-validation-aa/spike/CAR1.png",
+          "thumb": "out/campaigns/playbook-validation-aa/spike/CAR1.png",
+          "renderedAt": "2026-06-01T01:45:35.281Z"
+        },
+        {
+          "id": "CAR2",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-1",
+          "status": "rendered",
+          "knowledgeRefs": [
+            "stat:VALID",
+            "proof:VALID"
+          ],
+          "_playbook": "Carousel card 2/3 — proof.",
+          "output": "out/campaigns/playbook-validation-aa/spike/CAR2.png",
+          "thumb": "out/campaigns/playbook-validation-aa/spike/CAR2.png",
+          "renderedAt": "2026-06-01T01:45:38.128Z"
+        },
+        {
+          "id": "CAR3",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-1",
+          "status": "rendered",
+          "knowledgeRefs": [
+            "offer:VALID",
+            "guarantee:VALID",
+            "cta:VALID"
+          ],
+          "_playbook": "Carousel card 3/3 — offer.",
+          "output": "out/campaigns/playbook-validation-aa/spike/CAR3.png",
+          "thumb": "out/campaigns/playbook-validation-aa/spike/CAR3.png",
+          "renderedAt": "2026-06-01T01:45:41.448Z"
+        },
+        {
+          "id": "S8",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-1",
+          "status": "rendered",
+          "knowledgeRefs": [
+            "offer:VALID",
+            "guarantee:VALID",
+            "cta:VALID"
+          ],
+          "_playbook": "Eyebrow-fix demo: red chip eyebrow vs S3's thin red mono.",
+          "output": "out/campaigns/playbook-validation-aa/spike/S8.png",
+          "thumb": "out/campaigns/playbook-validation-aa/spike/S8.png",
+          "renderedAt": "2026-06-01T01:52:18.391Z"
+        },
+        {
+          "id": "RT1",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-1",
+          "status": "rendered",
+          "headline": "GETTING FASTER? OR JUST MORE TIRED?",
+          "microscript": "THE LAST REP LIE",
+          "knowledgeRefs": [
+            "hook:VALID"
+          ],
+          "_playbook": "Role-path E2E test: NO edits file, so it renders through resolveStaticConfig + assemble(). Hook should route to headline_top; lockup PROGRAM/YOUTH retained.",
+          "output": "out/campaigns/playbook-validation-aa/spike/RT1.png",
+          "thumb": "out/campaigns/playbook-validation-aa/spike/RT1.png",
+          "renderedAt": "2026-06-01T11:48:00.027Z"
+        },
+        {
+          "id": "MT1",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "stat-reveal",
+          "status": "rendered",
+          "headline": "WE GUARANTEE RESULTS",
+          "microscript": "PROOF",
+          "knowledgeRefs": [
+            "claim:VALID"
+          ],
+          "_playbook": "Motion role-path test: NO templateData, so buildMotionData uses assemble(). Headline (beat E→claim) should route to title1.",
+          "output": "out/campaigns/playbook-validation-aa/spike/MT1.mp4",
+          "thumb": "out/campaigns/playbook-validation-aa/spike/MT1.mp4",
+          "renderedAt": "2026-06-01T12:02:14.421Z"
+        }
+      ]
+    }
+  ]
+}

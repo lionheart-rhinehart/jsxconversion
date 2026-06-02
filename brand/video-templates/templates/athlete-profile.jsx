@@ -31,7 +31,7 @@ function AthleteProfileReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', top: 110, left: 60, padding: '8px 16px', background: RED, fontFamily: '"JetBrains Mono", monospace', fontSize: 24, color: '#fff', letterSpacing: '0.16em', opacity: eT }}>// {eyebrow}</div>
+      <Eyebrow top={110} fontSize={24}>// {eyebrow}</Eyebrow>
       <div style={{ position: 'absolute', top: 200, left: 60, right: 60, fontFamily: 'Anton, sans-serif', fontSize: 150, color: '#fff', lineHeight: 0.88, opacity: tiT }}>{title1}<br/><span style={{color:RED}}>{title2}</span></div>
       <div style={{ position: 'absolute', top: 540, left: 60, right: 60, opacity: nT, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
         <div style={{ fontFamily: 'Anton, sans-serif', fontSize: 56, color: '#fff' }}>{athleteName}</div>
@@ -52,19 +52,111 @@ function AthleteProfileReel({ data = {} }) {
 }
 window.AthleteProfileReel = AthleteProfileReel;
 const ATHLETE_PROFILE_SPEC = { id:'athlete-profile', name:'ATHLETE PROFILE', fields:[
-  {key:'duration',label:'Length',type:'slider',default:7,min:4,max:15,step:0.5,unit:'s'},
-  {key:'eyebrow',label:'Eyebrow',type:'text',default:'ATHLETE PROFILE'},
-  {key:'title1',label:'Title 1',type:'text',default:'WHAT WE'},
-  {key:'title2',label:'Title 2 (red)',type:'text',default:'MEASURE.'},
-  {key:'athleteName',label:'Athlete',type:'text',default:'JORDAN K.'},
-  {key:'athleteMeta',label:'Meta',type:'text',default:'U17 · FB · CARMEL'},
-  {key:'speed',label:'Speed 0-100',type:'number',default:88,min:0,max:100,step:1},
-  {key:'strength',label:'Strength 0-100',type:'number',default:72,min:0,max:100,step:1},
-  {key:'power',label:'Power 0-100',type:'number',default:91,min:0,max:100,step:1},
-  {key:'agility',label:'Agility 0-100',type:'number',default:78,min:0,max:100,step:1},
-  {key:'stamina',label:'Stamina 0-100',type:'number',default:65,min:0,max:100,step:1},
-  {key:'mobility',label:'Mobility 0-100',type:'number',default:80,min:0,max:100,step:1},
-  {key:'insight',label:'Insight',type:'textarea',default:'We score every athlete on 6 axes. The weak link is the priority.'},
-  {key:'ctaText',label:'CTA',type:'text',default:'GET YOUR BASELINE →'},
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "ATHLETE PROFILE"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "WHAT WE"
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "MEASURE."
+  },
+  {
+    "key": "athleteName",
+    "label": "Athlete",
+    "type": "text",
+    "default": "JORDAN K."
+  },
+  {
+    "key": "athleteMeta",
+    "label": "Meta",
+    "type": "text",
+    "default": "U17 · FB · CARMEL"
+  },
+  {
+    "key": "speed",
+    "label": "Speed 0-100",
+    "type": "number",
+    "default": 88,
+    "min": 0,
+    "max": 100,
+    "step": 1
+  },
+  {
+    "key": "strength",
+    "label": "Strength 0-100",
+    "type": "number",
+    "default": 72,
+    "min": 0,
+    "max": 100,
+    "step": 1
+  },
+  {
+    "key": "power",
+    "label": "Power 0-100",
+    "type": "number",
+    "default": 91,
+    "min": 0,
+    "max": 100,
+    "step": 1
+  },
+  {
+    "key": "agility",
+    "label": "Agility 0-100",
+    "type": "number",
+    "default": 78,
+    "min": 0,
+    "max": 100,
+    "step": 1
+  },
+  {
+    "key": "stamina",
+    "label": "Stamina 0-100",
+    "type": "number",
+    "default": 65,
+    "min": 0,
+    "max": 100,
+    "step": 1
+  },
+  {
+    "key": "mobility",
+    "label": "Mobility 0-100",
+    "type": "number",
+    "default": 80,
+    "min": 0,
+    "max": 100,
+    "step": 1
+  },
+  {
+    "key": "insight",
+    "label": "Insight",
+    "type": "textarea",
+    "default": "We score every athlete on 6 axes. The weak link is the priority."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "GET YOUR BASELINE →"
+  }
 ]};
 window.ATHLETE_PROFILE_SPEC = ATHLETE_PROFILE_SPEC;

@@ -38,7 +38,7 @@
       "width": 757,
       "height": 1509,
       "fill": "transparent",
-      "border": "6px solid #ed1c24",
+      "border": "6px solid #c4141d",
       "z": 6
     },
     {
@@ -50,7 +50,7 @@
       "y": 108,
       "width": 513,
       "height": 345,
-      "fill": "#ed1c24",
+      "fill": "#c4141d",
       "z": 10
     },
     {
@@ -86,7 +86,15 @@
       "textTransform": "uppercase",
       "transform": "scaleX(0.74)",
       "transformOrigin": "center",
-      "z": 20
+      "z": 20,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 17
     },
     {
       "id": "headline_youth",
@@ -105,7 +113,15 @@
       "textTransform": "uppercase",
       "transform": "scaleX(0.78)",
       "transformOrigin": "center",
-      "z": 21
+      "z": 21,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 8
     },
     {
       "id": "headline_program",
@@ -125,7 +141,15 @@
       "transform": "scaleX(0.72)",
       "transformOrigin": "center",
       "textShadow": "3px 4px 5px rgba(0,0,0,0.22)",
-      "z": 22
+      "z": 22,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 10
     },
     {
       "id": "microscript",
@@ -142,7 +166,14 @@
       "color": "#f2f2f2",
       "letterSpacing": "0.04em",
       "textTransform": "uppercase",
-      "z": 23
+      "z": 23,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 30
     }
   ]
 }

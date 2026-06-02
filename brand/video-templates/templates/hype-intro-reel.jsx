@@ -29,6 +29,7 @@ function HypeIntroReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
+      <Eyebrow top={90} fontSize={34}>{data.eyebrow ?? "{city name} SPORT PARENT"}</Eyebrow>
       {photos.map((p, i) => {
         const active = t >= p.from && t <= p.to + 0.15;
         if (!active) return null;
@@ -80,17 +81,88 @@ function HypeIntroReel({ data = {} }) {
 }
 window.HypeIntroReel = HypeIntroReel;
 const HYPE_INTRO_REEL_SPEC = { id:'hype-intro-reel', name:'HYPE INTRO · REEL', fields:[
-  {key:'duration',label:'Length',type:'slider',default:6,min:4,max:12,step:0.5,unit:'s'},
-  {key:'tag1',label:'Tag line 1 (white)',type:'text',default:'THE DRIVE'},
-  {key:'tag2',label:'Tag line 2 (white)',type:'text',default:'IS THEIRS.'},
-  {key:'tag3',label:'Tag line 3 (red)',type:'text',default:'THE ATHLETE'},
-  {key:'tag4',label:'Tag line 4 (red)',type:'text',default:'IS OURS TO BUILD.'},
-  {key:'guarantee',label:'Guarantee',type:'text',default:'+1 MPH · +3" · 90 DAYS'},
-  {key:'wordmark1',label:'Wordmark (white)',type:'text',default:'ATHLETES'},
-  {key:'wordmark2',label:'Wordmark (red)',type:'text',default:'ACCELERATION'},
-  {key:'url',label:'URL',type:'text',default:'ATHLETESACCEL.COM'},
-  {key:'media1',label:'Cut 1',type:'image',default:'assets/hero-sprint-male.jpg'},
-  {key:'media2',label:'Cut 2',type:'image',default:'assets/photo-jump-male.jpg'},
-  {key:'media3',label:'Cut 3',type:'image',default:'assets/photo-squat.jpg'},
-]};
+    {
+      "key": "duration",
+      "label": "Length",
+      "type": "slider",
+      "default": 6,
+      "min": 4,
+      "max": 12,
+      "step": 0.5,
+      "unit": "s"
+    },
+    {
+      "key": "eyebrow",
+      "role": "eyebrow",
+      "label": "Eyebrow",
+      "type": "text",
+      "default": "{city name} SPORT PARENT"
+    },
+    {
+      "key": "tag1",
+      "label": "Tag line 1 (white)",
+      "type": "text",
+      "default": "THE DRIVE"
+    },
+    {
+      "key": "tag2",
+      "label": "Tag line 2 (white)",
+      "type": "text",
+      "default": "IS THEIRS."
+    },
+    {
+      "key": "tag3",
+      "label": "Tag line 3 (red)",
+      "type": "text",
+      "default": "THE ATHLETE"
+    },
+    {
+      "key": "tag4",
+      "label": "Tag line 4 (red)",
+      "type": "text",
+      "default": "IS OURS TO BUILD."
+    },
+    {
+      "key": "guarantee",
+      "label": "Guarantee",
+      "type": "text",
+      "default": "+1 MPH · +3\" · 90 DAYS"
+    },
+    {
+      "key": "wordmark1",
+      "label": "Wordmark (white)",
+      "type": "text",
+      "default": "ATHLETES"
+    },
+    {
+      "key": "wordmark2",
+      "label": "Wordmark (red)",
+      "type": "text",
+      "default": "ACCELERATION"
+    },
+    {
+      "key": "url",
+      "label": "URL",
+      "type": "text",
+      "default": "ATHLETESACCEL.COM"
+    },
+    {
+      "key": "media1",
+      "label": "Cut 1",
+      "type": "image",
+      "default": "assets/hero-sprint-male.jpg"
+    },
+    {
+      "key": "media2",
+      "label": "Cut 2",
+      "type": "image",
+      "default": "assets/photo-jump-male.jpg"
+    },
+    {
+      "key": "media3",
+      "label": "Cut 3",
+      "type": "image",
+      "default": "assets/photo-squat.jpg"
+    }
+  ]};
 window.HYPE_INTRO_REEL_SPEC = HYPE_INTRO_REEL_SPEC;

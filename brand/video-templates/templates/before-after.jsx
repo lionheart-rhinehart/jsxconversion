@@ -144,16 +144,7 @@ function BeforeAfterReel({ data = {} }) {
       </div>
 
       {/* Top eyebrow */}
-      <div style={{
-        position: 'absolute',
-        top: 100, left: 0, right: 0,
-        textAlign: 'center',
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 26, color: '#fff',
-        letterSpacing: '0.2em',
-        opacity: eyebrowT,
-        textShadow: '0 1px 8px rgba(0,0,0,0.8)',
-      }}>// {eyebrow}</div>
+      <Eyebrow top={100} fontSize={26}>// {eyebrow}</Eyebrow>
 
       {/* Bottom stat callout */}
       <div style={{

@@ -52,13 +52,13 @@ function StatRevealSquare({ data = {} }) {
       }}/>
 
       <TplText field="eyebrow" data={data}
-        base={{ position: 'absolute', top: 100, left: 100, right: 100 }}
+        base={{ position: 'absolute', top: 100, left: 100, padding: '10px 22px', background: '#fff', borderRadius: 8 }}
         style={{
-          fontFamily: '"JetBrains Mono", monospace', fontSize: 28, color: RED,
-          letterSpacing: '0.18em', opacity: eyebrowT, whiteSpace: 'nowrap',
+          fontFamily: '"JetBrains Mono", monospace', fontSize: 28, color: RED, fontWeight: 700,
+          letterSpacing: '0.08em', opacity: eyebrowT, whiteSpace: 'nowrap',
         }}
         maxWidth={880} fitKey={eyebrow}
-      >// {eyebrow}</TplText>
+      >{eyebrow}</TplText>
 
       <TplText field="title" data={data}
         base={{ position: 'absolute', top: 160, left: 100, right: 100 }}
@@ -139,36 +139,44 @@ const STAT_REVEAL_SPEC = {
   },
   {
     "key": "eyebrow",
+
+    "role": "eyebrow",
     "label": "Eyebrow tag",
     "type": "text",
     "default": "90-DAY GUARANTEE"
   },
   {
     "key": "title1",
+
+    "role": "claim",
     "label": "Title line 1",
     "type": "text",
     "default": "WE GUARANTEE"
   },
   {
     "key": "title2",
+
+    "role": "claim",
     "label": "Title line 2 (red)",
     "type": "text",
     "default": "RESULTS."
   },
   {
     "key": "ctaText",
+
+    "role": "cta",
     "label": "CTA text",
     "type": "text",
     "default": "BOOK YOUR FREE ASSESSMENT"
   },
-  { "key": "stat1Value", "label": "Stat 1 — number", "type": "number", "default": 1 },
-  { "key": "stat1Unit",  "label": "Stat 1 — unit",   "type": "text",   "default": " MPH" },
-  { "key": "stat1Label", "label": "Stat 1 — label",  "type": "text",   "default": "SPEED" },
-  { "key": "stat2Value", "label": "Stat 2 — number", "type": "number", "default": 3 },
-  { "key": "stat2Unit",  "label": "Stat 2 — unit",   "type": "text",   "default": "\"" },
-  { "key": "stat2Label", "label": "Stat 2 — label",  "type": "text",   "default": "VERTICAL" },
-  { "key": "freeLine1",  "label": "Free line 1",     "type": "text",   "default": "OR IT'S" },
-  { "key": "freeLine2",  "label": "Free line 2 (red)","type": "text",  "default": "FREE." }
+  { "key": "stat1Value", "role": "stat", "label": "Stat 1 — number", "type": "number", "default": 1 },
+  { "key": "stat1Unit",  "role": "stat", "label": "Stat 1 — unit",   "type": "text",   "default": " MPH" },
+  { "key": "stat1Label", "role": "stat", "label": "Stat 1 — label",  "type": "text",   "default": "SPEED" },
+  { "key": "stat2Value", "role": "stat", "label": "Stat 2 — number", "type": "number", "default": 3 },
+  { "key": "stat2Unit",  "role": "stat", "label": "Stat 2 — unit",   "type": "text",   "default": "\"" },
+  { "key": "stat2Label", "role": "stat", "label": "Stat 2 — label",  "type": "text",   "default": "VERTICAL" },
+  { "key": "freeLine1",  "role": "guarantee", "label": "Free line 1",     "type": "text",   "default": "OR IT'S" },
+  { "key": "freeLine2",  "role": "guarantee", "label": "Free line 2 (red)","type": "text",  "default": "FREE." }
 ],
 };
 window.STAT_REVEAL_SPEC = STAT_REVEAL_SPEC;

@@ -73,7 +73,15 @@
       "color": "#ffffff",
       "lineHeight": 1,
       "letterSpacing": "0.04em",
-      "z": 4
+      "z": 4,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 35
     },
     {
       "id": "microscript",
@@ -88,7 +96,14 @@
       "color": "rgba(255,255,255,0.82)",
       "letterSpacing": "0.02em",
       "textTransform": "uppercase",
-      "z": 5
+      "z": 5,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 27
     },
     {
       "id": "bottom_title",
@@ -105,7 +120,13 @@
       "color": "#ffffff",
       "lineHeight": 1,
       "letterSpacing": "0.01em",
-      "z": 6
+      "z": 6,
+      "role": "claim",
+      "accepts": [
+        "claim",
+        "brand"
+      ],
+      "maxChars": 37
     }
   ]
 }

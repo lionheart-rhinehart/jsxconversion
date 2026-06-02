@@ -108,14 +108,14 @@ const FRESH_SMOKE_SPEC = {
   id: 'fresh-smoke-motion',
   name: 'THE LAST REP LIE',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 8, min: 4, max: 12, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow tag', type: 'text', default: 'THE LAST REP LIE' },
-    { key: 'line1', label: 'Trait line 1', type: 'text', default: 'SHOWS UP.' },
-    { key: 'line2', label: 'Trait line 2', type: 'text', default: 'WORKS HARD.' },
-    { key: 'line3', label: 'Trait line 3', type: 'text', default: 'NEVER QUITS.' },
-    { key: 'punch', label: 'Pivot line (red)', type: 'text', default: 'STILL THE SAME SPEED.' },
-    { key: 'microscript', label: 'Microscript', type: 'text', default: "THIS ISN'T BAD LUCK. IT'S PHYSICS." },
-    { key: 'ctaText', label: 'CTA text', type: 'text', default: 'BOOK YOUR FREE ASSESSMENT' },
+    { "key": "duration", "label": "Length", "type": "slider", "default": 8, "min": 4, "max": 12, "step": 0.5, "unit": "s" },
+    { "key": "eyebrow", "role": "eyebrow", "label": "Eyebrow tag", "type": "text", "default": "THE LAST REP LIE" },
+    { "key": "line1", "role": "hook", "label": "Trait line 1", "type": "text", "default": "SHOWS UP." },
+    { "key": "line2", "role": "hook", "label": "Trait line 2", "type": "text", "default": "WORKS HARD." },
+    { "key": "line3", "role": "hook", "label": "Trait line 3", "type": "text", "default": "NEVER QUITS." },
+    { "key": "punch", "role": "hook", "label": "Pivot line (red)", "type": "text", "default": "STILL THE SAME SPEED." },
+    { "key": "microscript", "role": "reframe", "label": "Microscript", "type": "text", "default": "THIS ISN'T BAD LUCK. IT'S PHYSICS." },
+    { "key": "ctaText", "role": "cta", "label": "CTA text", "type": "text", "default": "BOOK YOUR FREE ASSESSMENT" }
   ],
 };
 window.FRESH_SMOKE_SPEC = FRESH_SMOKE_SPEC;

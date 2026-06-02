@@ -1,0 +1,7 @@
+{
+  "_comment": "Location tier — Carmel facility (Hamilton County). Supplies `city` for the locale anchor on assets using Carmel footage.",
+  "location": "carmel",
+  "tags": {
+    "city": "CARMEL, IN"
+  }
+}

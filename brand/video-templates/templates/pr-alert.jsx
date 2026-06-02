@@ -7,15 +7,71 @@ const PR_ALERT_SPEC = {
   id: 'pr-alert',
   name: 'PR ALERT',
   fields: [
-    { key: 'duration',   label: 'Length',         type: 'slider', default: 6, min: 3, max: 15, step: 0.5, unit: 's', sub: 'total loop length' },
-    { key: 'eyebrow',    label: 'Eyebrow tag',    type: 'text',   default: 'PR ALERT' },
-    { key: 'gainValue',  label: 'Gain value',     type: 'number', default: 3.0, step: 0.1, min: 0, sub: 'animates 0 → value' },
-    { key: 'gainUnit',   label: 'Unit',           type: 'select', default: '"', options: ['"', 'mph', 'lb', 's', 'reps'] },
-    { key: 'gainLabel',  label: 'Stat name',      type: 'text',   default: 'VERTICAL JUMP' },
-    { key: 'name',       label: 'Athlete name',   type: 'text',   default: 'MARCUS J.' },
-    { key: 'meta',       label: 'Meta line',      type: 'text',   default: 'U16 · SOCCER · 90-DAY GAIN' },
-    { key: 'photo',      label: 'Photo or video', type: 'image',  default: 'assets/photo-jump-male.jpg', sub: 'image or short video' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 6,
+    "min": 3,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s",
+    "sub": "total loop length"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow tag",
+    "type": "text",
+    "default": "PR ALERT"
+  },
+  {
+    "key": "gainValue",
+    "label": "Gain value",
+    "type": "number",
+    "default": 3,
+    "step": 0.1,
+    "min": 0,
+    "sub": "animates 0 → value"
+  },
+  {
+    "key": "gainUnit",
+    "label": "Unit",
+    "type": "select",
+    "default": "\"",
+    "options": [
+      "\"",
+      "mph",
+      "lb",
+      "s",
+      "reps"
+    ]
+  },
+  {
+    "key": "gainLabel",
+    "label": "Stat name",
+    "type": "text",
+    "default": "VERTICAL JUMP"
+  },
+  {
+    "key": "name",
+    "label": "Athlete name",
+    "type": "text",
+    "default": "MARCUS J."
+  },
+  {
+    "key": "meta",
+    "label": "Meta line",
+    "type": "text",
+    "default": "U16 · SOCCER · 90-DAY GAIN"
+  },
+  {
+    "key": "photo",
+    "label": "Photo or video",
+    "type": "image",
+    "default": "assets/photo-jump-male.jpg",
+    "sub": "image or short video"
+  }
+],
 };
 
 function PRAlertReel({ data = {} }) {
@@ -93,14 +149,7 @@ function PRAlertReel({ data = {} }) {
         paddingLeft: 80,
         boxShadow: '0 12px 40px rgba(196,20,29,0.5)',
       }}>
-        <div style={{
-          fontFamily: '"JetBrains Mono", monospace',
-          color: '#fff',
-          fontSize: 36,
-          fontWeight: 700,
-          letterSpacing: '0.12em',
-          opacity: eyebrowT,
-        }}>// {eyebrow}</div>
+        <Eyebrow top={150} fontSize={36}>// {eyebrow}</Eyebrow>
       </div>
 
       {/* Big number */}

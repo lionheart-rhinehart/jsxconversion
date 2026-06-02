@@ -1,0 +1,19 @@
+{
+  "_comment": "Config for the /creative-engine skill. krakenRoot is the local folder that holds raw media (images/clips/videos) per brand, one subfolder per brand slug. Prompted on first run and stored here. brands maps a spoken brand name to its slug + the data-tier file used for the cascade fill (data/brand.<dataTier>.json) and its brand-kit path in this repo.",
+  "krakenRoot": null,
+  "defaultKnobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": { "video": 0.6, "gif": 0.15, "static": 0.25 },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 3
+  },
+  "brands": {
+    "athletes-acceleration": {
+      "slug": "athletes-acceleration",
+      "aliases": ["athletes acceleration", "aa", "genesis", "genesis sports performance"],
+      "dataTier": "athletes-acceleration",
+      "brandKit": "brand/aa-design-system/project/README.md",
+      "krakenSubfolder": "athletes-acceleration"
+    }
+  }
+}

@@ -40,13 +40,7 @@ function CoachPOVReel({ data = {} }) {
       }}/>
 
       {/* Eyebrow */}
-      <div style={{
-        position: 'absolute', top: 100, left: 60,
-        padding: '8px 14px', background: RED,
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 22, color: '#fff', letterSpacing: '0.16em',
-        opacity: eyebrowT,
-      }}>// {eyebrow}</div>
+      <Eyebrow top={100} fontSize={22}>// {eyebrow}</Eyebrow>
 
       {/* Coach name plate top-right */}
       <div style={{
@@ -101,15 +95,65 @@ const COACH_POV_SPEC = {
   id: 'coach-pov',
   name: 'COACH POV',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow tag', type: 'text', default: 'COACH POV' },
-    { key: 'coachName', label: 'Coach name', type: 'text', default: 'COACH TORRES' },
-    { key: 'coachTitle', label: 'Coach title', type: 'text', default: 'DIRECTOR OF PERFORMANCE' },
-    { key: 'caption1', label: 'Caption 1', type: 'text', default: 'SPEED IS BUILT' },
-    { key: 'caption2', label: 'Caption 2', type: 'text', default: 'IN THE OFF SEASON' },
-    { key: 'caption3', label: 'Caption 3 (red)', type: 'text', default: 'NOT THE GAME.' },
-    { key: 'ctaText', label: 'CTA text', type: 'text', default: 'OFF-SEASON STARTS NOW →' },
-    { key: 'media', label: 'Background photo/video', type: 'image', default: 'assets/photo-coach-action.jpg', sub: 'drop your raw coaching footage' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow tag",
+    "type": "text",
+    "default": "COACH POV"
+  },
+  {
+    "key": "coachName",
+    "label": "Coach name",
+    "type": "text",
+    "default": "COACH TORRES"
+  },
+  {
+    "key": "coachTitle",
+    "label": "Coach title",
+    "type": "text",
+    "default": "DIRECTOR OF PERFORMANCE"
+  },
+  {
+    "key": "caption1",
+    "label": "Caption 1",
+    "type": "text",
+    "default": "SPEED IS BUILT"
+  },
+  {
+    "key": "caption2",
+    "label": "Caption 2",
+    "type": "text",
+    "default": "IN THE OFF SEASON"
+  },
+  {
+    "key": "caption3",
+    "label": "Caption 3 (red)",
+    "type": "text",
+    "default": "NOT THE GAME."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA text",
+    "type": "text",
+    "default": "OFF-SEASON STARTS NOW →"
+  },
+  {
+    "key": "media",
+    "label": "Background photo/video",
+    "type": "image",
+    "default": "assets/photo-coach-action.jpg",
+    "sub": "drop your raw coaching footage"
+  }
+],
 };
 window.COACH_POV_SPEC = COACH_POV_SPEC;

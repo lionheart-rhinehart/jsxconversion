@@ -59,14 +59,7 @@ function StoryPollReel({ data = {} }) {
       }}/>
 
       {/* Eyebrow */}
-      <div style={{
-        position: 'absolute', top: 220, left: 0, right: 0,
-        textAlign: 'center',
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 30, color: RED, letterSpacing: '0.18em',
-        opacity: eyebrowT,
-        textShadow: '0 1px 12px rgba(0,0,0,0.7)',
-      }}>// {eyebrow}</div>
+      <Eyebrow top={220} fontSize={30}>// {eyebrow}</Eyebrow>
 
       {/* Question two-line */}
       <div style={{

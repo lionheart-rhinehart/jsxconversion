@@ -11,7 +11,7 @@
       "y": 0,
       "width": 1080,
       "height": 1920,
-      "fill": "#fe3430",
+      "fill": "#c4141d",
       "z": 1
     },
     {
@@ -118,7 +118,12 @@
       "lineHeight": 1,
       "letterSpacing": "-0.01em",
       "textTransform": "uppercase",
-      "z": 30
+      "z": 30,
+      "role": "hook",
+      "accepts": [
+        "hook"
+      ],
+      "maxChars": 14
     },
     {
       "id": "subhead",
@@ -134,7 +139,13 @@
       "letterSpacing": "-0.01em",
       "textTransform": "uppercase",
       "whiteSpace": "pre-line",
-      "z": 31
+      "z": 31,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "eyebrow"
+      ],
+      "maxChars": 35
     },
     {
       "id": "headline",
@@ -152,7 +163,15 @@
       "letterSpacing": "-0.01em",
       "textTransform": "uppercase",
       "whiteSpace": "pre-line",
-      "z": 32
+      "z": 32,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 37
     },
     {
       "id": "microscript",
@@ -169,7 +188,14 @@
       "color": "#000000",
       "letterSpacing": "0",
       "textTransform": "uppercase",
-      "z": 33
+      "z": 33,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 27
     }
   ]
 }

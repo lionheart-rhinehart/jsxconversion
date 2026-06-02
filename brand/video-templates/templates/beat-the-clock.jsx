@@ -22,7 +22,7 @@ function BeatTheClockReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', top: 110, left: 60, padding: '8px 16px', background: RED, fontFamily: '"JetBrains Mono", monospace', fontSize: 24, color: '#fff', letterSpacing: '0.16em', opacity: eyebrowT }}>// {eyebrow}</div>
+      <Eyebrow top={110} fontSize={24}>// {eyebrow}</Eyebrow>
       <div style={{ position: 'absolute', top: 200, left: 60, right: 60, fontFamily: 'Anton, sans-serif', fontSize: 150, color: '#fff', lineHeight: 0.88, opacity: titleT }}>{title1}<br/><span style={{ color: RED }}>{title2}</span></div>
 
       <div style={{ position: 'absolute', top: 540, left: 60, right: 60, padding: '14px 20px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', borderLeft: `4px solid ${RED}`, fontFamily: '"JetBrains Mono", monospace', fontSize: 24, color: '#fff', letterSpacing: '0.08em', opacity: challT }}>{challenge}</div>
@@ -46,16 +46,74 @@ window.BeatTheClockReel = BeatTheClockReel;
 const BEAT_THE_CLOCK_SPEC = {
   id: 'beat-the-clock', name: 'BEAT THE CLOCK',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'BEAT THE CLOCK' },
-    { key: 'title1', label: 'Title 1', type: 'text', default: "YOU'VE GOT" },
-    { key: 'title2', label: 'Title 2 (red)', type: 'text', default: '12 SECONDS.' },
-    { key: 'challenge', label: 'Challenge name', type: 'text', default: 'BURPEES FOR TIME · 10 REPS' },
-    { key: 'targetSeconds', label: 'Your time (s)', type: 'number', default: 12.43, step: 0.01, min: 0 },
-    { key: 'recordValue', label: 'Record time (s)', type: 'number', default: 11.92, step: 0.01, min: 0 },
-    { key: 'recordLabel', label: 'Record label', type: 'text', default: 'GYM RECORD' },
-    { key: 'insight', label: 'Prompt text', type: 'textarea', default: 'Can you beat 11.92? Drop your time in the comments.' },
-    { key: 'ctaText', label: 'CTA', type: 'text', default: 'POST YOUR TIME ↓' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "BEAT THE CLOCK"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "YOU'VE GOT"
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "12 SECONDS."
+  },
+  {
+    "key": "challenge",
+    "label": "Challenge name",
+    "type": "text",
+    "default": "BURPEES FOR TIME · 10 REPS"
+  },
+  {
+    "key": "targetSeconds",
+    "label": "Your time (s)",
+    "type": "number",
+    "default": 12.43,
+    "step": 0.01,
+    "min": 0
+  },
+  {
+    "key": "recordValue",
+    "label": "Record time (s)",
+    "type": "number",
+    "default": 11.92,
+    "step": 0.01,
+    "min": 0
+  },
+  {
+    "key": "recordLabel",
+    "label": "Record label",
+    "type": "text",
+    "default": "GYM RECORD"
+  },
+  {
+    "key": "insight",
+    "label": "Prompt text",
+    "type": "textarea",
+    "default": "Can you beat 11.92? Drop your time in the comments."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "POST YOUR TIME ↓"
+  }
+],
 };
 window.BEAT_THE_CLOCK_SPEC = BEAT_THE_CLOCK_SPEC;

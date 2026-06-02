@@ -1,0 +1,66 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "_beat": "A — Stop the scroll, UGC-STYLE (COLD). Raw caption-style hook, minimal brand. Tests the UGC-hybrid flag.",
+  "media": {
+    "path": "./assets/photo-jump-male.jpg",
+    "type": "image",
+    "tag": "bg_photo",
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1.04,
+    "z": 0
+  },
+  "fixedDesign": [
+    {
+      "id": "wash",
+      "tag": "protect_gradient",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.35) 0%, rgba(10,11,13,0.1) 40%, rgba(10,11,13,0.1) 70%, rgba(10,11,13,0.5) 100%)",
+      "z": 5
+    }
+  ],
+  "elements": [
+    {
+      "id": "caption",
+      "tag": "headline",
+      "role": "hook",
+      "x": 90,
+      "y": 720,
+      "width": 900,
+      "textAlign": "center",
+      "text": "POV: your kid trains every\nday and STILL gets passed\nat the line",
+      "fontSize": 60,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 1.08,
+      "letterSpacing": "0.005em",
+      "whiteSpace": "pre-wrap",
+      "strokeWidth": 6,
+      "strokeColor": "#0a0b0d",
+      "textShadow": "0 3px 14px rgba(0,0,0,0.85)",
+      "z": 30
+    },
+    {
+      "id": "handle",
+      "tag": "handle",
+      "role": "byline",
+      "x": 60,
+      "y": 1808,
+      "width": 960,
+      "textAlign": "center",
+      "text": "@athletesacceleration",
+      "fontSize": 30,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 600,
+      "color": "#ffffff",
+      "letterSpacing": "0.06em",
+      "textShadow": "0 2px 10px rgba(0,0,0,0.95)",
+      "z": 30
+    }
+  ]
+}

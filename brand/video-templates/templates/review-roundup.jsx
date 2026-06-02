@@ -6,14 +6,53 @@ const REVIEW_ROUNDUP_SPEC = {
   id: 'review-roundup',
   name: 'REVIEW ROUNDUP',
   fields: [
-    { key: 'duration', label: 'Length',     type: 'slider', default: 8, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow',  label: 'Eyebrow',    type: 'text',   default: 'WHAT FAMILIES SAY' },
-    { key: 'avg',      label: 'Avg rating', type: 'text',   default: '4.9' },
-    { key: 'count',    label: 'Review count', type: 'text', default: '180+ REVIEWS' },
-    { key: 'r1',       label: 'Review 1',   type: 'text',   default: 'Coaches who actually know youth development. — JEN R.' },
-    { key: 'r2',       label: 'Review 2',   type: 'text',   default: 'My daughter is faster AND more confident. — MIKE T.' },
-    { key: 'r3',       label: 'Review 3',   type: 'text',   default: 'Worth every dollar. Real measurable gains. — PRIYA K.' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 8,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "WHAT FAMILIES SAY"
+  },
+  {
+    "key": "avg",
+    "label": "Avg rating",
+    "type": "text",
+    "default": "4.9"
+  },
+  {
+    "key": "count",
+    "label": "Review count",
+    "type": "text",
+    "default": "180+ REVIEWS"
+  },
+  {
+    "key": "r1",
+    "label": "Review 1",
+    "type": "text",
+    "default": "Coaches who actually know youth development. — JEN R."
+  },
+  {
+    "key": "r2",
+    "label": "Review 2",
+    "type": "text",
+    "default": "My daughter is faster AND more confident. — MIKE T."
+  },
+  {
+    "key": "r3",
+    "label": "Review 3",
+    "type": "text",
+    "default": "Worth every dollar. Real measurable gains. — PRIYA K."
+  }
+],
 };
 
 function ReviewRoundupReel({ data = {} }) {
@@ -36,10 +75,7 @@ function ReviewRoundupReel({ data = {} }) {
       <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(100% 60% at 50% 22%, rgba(245,158,11,0.12) 0%, rgba(10,11,13,0.7) 55%, #0a0b0d 100%)' }}/>
 
       {/* Eyebrow */}
-      <div style={{ position: 'absolute', top: 150, left: 0, right: 0, textAlign: 'center', opacity: eyebrowT,
-        transform: `translateY(${(1 - eyebrowT) * -14}px)` }}>
-        <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 34, color: RED, letterSpacing: '0.2em', fontWeight: 700 }}>// {eyebrow}</span>
-      </div>
+      <Eyebrow top={150} fontSize={34} style={{ left: 0, right: 0, textAlign: 'center', opacity: eyebrowT }}>{eyebrow}</Eyebrow>
 
       {/* Avg rating block */}
       <div style={{ position: 'absolute', top: 240, left: 0, right: 0, textAlign: 'center', opacity: avgT,

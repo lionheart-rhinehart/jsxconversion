@@ -26,12 +26,7 @@ function SprintBreakdownReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
-      <div style={{
-        position: 'absolute', top: 110, left: 60, right: 60,
-        opacity: eyebrowT,
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 28, color: RED, letterSpacing: '0.18em',
-      }}>// {eyebrow}</div>
+      <Eyebrow top={110} fontSize={28}>// {eyebrow}</Eyebrow>
 
       <div style={{
         position: 'absolute', top: 180, left: 60, right: 60,
@@ -118,18 +113,91 @@ const SPRINT_BREAKDOWN_SPEC = {
   id: 'sprint-breakdown',
   name: 'SPRINT BREAKDOWN',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 8, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow tag', type: 'text', default: 'YOUR 40 YARD BREAKDOWN' },
-    { key: 'title1', label: 'Title line 1', type: 'text', default: 'EVERY YARD' },
-    { key: 'title2', label: 'Title line 2 (red)', type: 'text', default: 'COUNTS.' },
-    { key: 'athleteName', label: 'Athlete name', type: 'text', default: 'JORDAN K.' },
-    { key: 'time40', label: '40yd time', type: 'text', default: '4.61s' },
-    { key: 'peakSpeed', label: 'Peak speed (mph)', type: 'number', default: 21.4, step: 0.1, min: 5, max: 40 },
-    { key: 'peakAt', label: 'Peak at (yards)', type: 'number', default: 30, step: 1, min: 5, max: 100 },
-    { key: 'distance', label: 'Total distance (yards)', type: 'number', default: 40, step: 5, min: 10, max: 120 },
-    { key: 'insightLabel', label: 'Insight tag', type: 'text', default: 'WHERE YOU WIN OR LOSE' },
-    { key: 'insight', label: 'Insight text', type: 'textarea', default: 'Top speed peaks at 30 yards. Beyond that, conditioning takes over.' },
-    { key: 'ctaText', label: 'CTA text', type: 'text', default: 'TIME YOURS →' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 8,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow tag",
+    "type": "text",
+    "default": "YOUR 40 YARD BREAKDOWN"
+  },
+  {
+    "key": "title1",
+    "label": "Title line 1",
+    "type": "text",
+    "default": "EVERY YARD"
+  },
+  {
+    "key": "title2",
+    "label": "Title line 2 (red)",
+    "type": "text",
+    "default": "COUNTS."
+  },
+  {
+    "key": "athleteName",
+    "label": "Athlete name",
+    "type": "text",
+    "default": "JORDAN K."
+  },
+  {
+    "key": "time40",
+    "label": "40yd time",
+    "type": "text",
+    "default": "4.61s"
+  },
+  {
+    "key": "peakSpeed",
+    "label": "Peak speed (mph)",
+    "type": "number",
+    "default": 21.4,
+    "step": 0.1,
+    "min": 5,
+    "max": 40
+  },
+  {
+    "key": "peakAt",
+    "label": "Peak at (yards)",
+    "type": "number",
+    "default": 30,
+    "step": 1,
+    "min": 5,
+    "max": 100
+  },
+  {
+    "key": "distance",
+    "label": "Total distance (yards)",
+    "type": "number",
+    "default": 40,
+    "step": 5,
+    "min": 10,
+    "max": 120
+  },
+  {
+    "key": "insightLabel",
+    "label": "Insight tag",
+    "type": "text",
+    "default": "WHERE YOU WIN OR LOSE"
+  },
+  {
+    "key": "insight",
+    "label": "Insight text",
+    "type": "textarea",
+    "default": "Top speed peaks at 30 yards. Beyond that, conditioning takes over."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA text",
+    "type": "text",
+    "default": "TIME YOURS →"
+  }
+],
 };
 window.SPRINT_BREAKDOWN_SPEC = SPRINT_BREAKDOWN_SPEC;

@@ -1,0 +1,182 @@
+{
+  "key": "01-market-product",
+  "sections": ["Target Market", "Product Details"],
+  "sourceFile": "campaigns/creative-engine-e2e-test-aa/brief.md",
+  "items": [
+    {
+      "id": "avatar:parents-youth-athletes-8-12",
+      "type": "avatar",
+      "text": "Parents of youth athletes ages 8–12, concentrated in Hamilton County, Indiana (Westfield, Fishers, Noblesville, Carmel).",
+      "sourceLines": "L3",
+      "notes": "Primary avatar"
+    },
+    {
+      "id": "avatar:burned-and-ready-segment",
+      "type": "avatar",
+      "text": "a high-conversion \"burned-and-ready\" segment — parents who have explicitly done the math ($10,000 on travel teams, nothing measurable to show), concluded the industry is broken, and are looking for the one provider who can prove categorical difference before asking for money.",
+      "sourceLines": "L3",
+      "notes": "High-conversion sub-segment"
+    },
+    {
+      "id": "avatar:childs-confidence-secondary",
+      "type": "avatar",
+      "text": "The secondary audience includes the child's confidence: 42 of 63 verified client testimonials cite confidence as the primary outcome, more than speed and strength combined.",
+      "sourceLines": "L3",
+      "notes": "Secondary audience / outcome emphasis"
+    },
+    {
+      "id": "demo:affluent-competitive-spend",
+      "type": "demo",
+      "text": "Affluent, competitive, invested heavily in their child's athletic future ($4,000–$15,000+/year on travel sports).",
+      "sourceLines": "L3",
+      "notes": "Income/spend demographic"
+    },
+    {
+      "id": "demo:hamilton-county-indiana",
+      "type": "demo",
+      "text": "concentrated in Hamilton County, Indiana (Westfield, Fishers, Noblesville, Carmel).",
+      "sourceLines": "L3",
+      "notes": "Geography"
+    },
+    {
+      "id": "demo:athletes-ages-8-12",
+      "type": "demo",
+      "text": "youth athletes ages 8–12",
+      "sourceLines": "L3",
+      "notes": "Age of the athlete (child of buyer)"
+    },
+    {
+      "id": "demo:stage-3-4-sophistication",
+      "type": "demo",
+      "text": "Stage 3–4 market sophistication — they have tried solutions (travel teams, speed camps, private coaches, Instagram trainers), been disappointed by all of them, and are actively skeptical of any new program that sounds like the ones they've already paid for.",
+      "sourceLines": "L3",
+      "notes": "Market sophistication level (psychographic)"
+    },
+    {
+      "id": "demo:away-from-motivated",
+      "type": "demo",
+      "text": "Predominantly Away-From motivated: they are not buying optimization, they are buying the end of helplessness.",
+      "sourceLines": "L3",
+      "notes": "Motivation orientation (psychographic)"
+    },
+    {
+      "id": "pain:anxiety-wrapped-in-guilt",
+      "type": "pain",
+      "text": "Their dominant emotional state is anxiety wrapped in guilt — watching a hard-working child not improve and not knowing who or what to blame.",
+      "sourceLines": "L3",
+      "notes": "Dominant emotional pain"
+    },
+    {
+      "id": "pain:hard-working-child-not-improving",
+      "type": "pain",
+      "text": "watching a hard-working child not improve and not knowing who or what to blame.",
+      "sourceLines": "L3",
+      "notes": "Core helplessness pain"
+    },
+    {
+      "id": "pain:money-spent-nothing-to-show",
+      "type": "pain",
+      "text": "parents who have explicitly done the math ($10,000 on travel teams, nothing measurable to show), concluded the industry is broken",
+      "sourceLines": "L3",
+      "notes": "Financial-waste pain"
+    },
+    {
+      "id": "desire:end-of-helplessness",
+      "type": "desire",
+      "text": "they are not buying optimization, they are buying the end of helplessness.",
+      "sourceLines": "L3",
+      "notes": "Core desire"
+    },
+    {
+      "id": "desire:confidence-as-primary-outcome",
+      "type": "desire",
+      "text": "42 of 63 verified client testimonials cite confidence as the primary outcome, more than speed and strength combined.",
+      "sourceLines": "L3",
+      "notes": "Confidence is the most-desired outcome"
+    },
+    {
+      "id": "desire:provable-categorical-difference",
+      "type": "desire",
+      "text": "looking for the one provider who can prove categorical difference before asking for money.",
+      "sourceLines": "L3",
+      "notes": "Desire for proof before commitment"
+    },
+    {
+      "id": "objection:skeptical-of-new-programs",
+      "type": "objection",
+      "text": "actively skeptical of any new program that sounds like the ones they've already paid for.",
+      "sourceLines": "L3",
+      "notes": "Skepticism objection from prior disappointment"
+    },
+    {
+      "id": "objection:industry-is-broken",
+      "type": "objection",
+      "text": "concluded the industry is broken",
+      "sourceLines": "L3",
+      "notes": "Belief that the whole category fails"
+    },
+    {
+      "id": "trigger:burned-and-ready-did-the-math",
+      "type": "trigger",
+      "text": "parents who have explicitly done the math ($10,000 on travel teams, nothing measurable to show), concluded the industry is broken, and are looking for the one provider who can prove categorical difference before asking for money.",
+      "sourceLines": "L3",
+      "notes": "Buying trigger: post-disappointment readiness to switch"
+    },
+    {
+      "id": "product:name-velocity-code-multi-sport",
+      "type": "product",
+      "text": "The Velocity Code™ / Multi-Sport Foundation Program",
+      "sourceLines": "L9",
+      "notes": "Exact product name(s); preserve ™"
+    },
+    {
+      "id": "product:what-it-does",
+      "type": "product",
+      "text": "Produces measurably faster (+1 mph sprint speed), more explosive (+3 inches vertical jump), and genuinely confident youth athletes ages 8–12 — proven by calibrated technology (timing gates to 0.001 seconds, force plates, bar velocity trackers to 0.01 m/s), guaranteed by a written performance contract, and delivered through a four-principle proprietary training system: Effort (verified by technology and pre-session readiness assessment), Intensity (Velocity-Based Training in the individual power zone 0.7–1.0 m/s), Speed (set ends at 10% velocity drop, strict rest protocols), and Confidence (real-time velocity display, weekly velocity profiles, objective PR tracking). Not general conditioning. Not sport-specific drilling. The science of speed and power applied during the single highest-return developmental window in an athlete's career.",
+      "sourceLines": "L11",
+      "notes": "What It Does — full verbatim"
+    },
+    {
+      "id": "product:four-principle-system",
+      "type": "product",
+      "text": "a four-principle proprietary training system: Effort (verified by technology and pre-session readiness assessment), Intensity (Velocity-Based Training in the individual power zone 0.7–1.0 m/s), Speed (set ends at 10% velocity drop, strict rest protocols), and Confidence (real-time velocity display, weekly velocity profiles, objective PR tracking).",
+      "sourceLines": "L11",
+      "notes": "The four principles (Effort/Intensity/Speed/Confidence)"
+    },
+    {
+      "id": "delivery:in-person-coach-led-groups",
+      "type": "delivery",
+      "text": "In-person, coach-led group training sessions at Genesis Sports Performance / Athletes Acceleration, Hamilton County facilities. Intentionally capped group sizes (coached, not supervised). Autorenewing monthly membership.",
+      "sourceLines": "L13",
+      "notes": "Delivery mechanism"
+    },
+    {
+      "id": "delivery:entry-funnel",
+      "type": "delivery",
+      "text": "Entry: lead form → admin qualification → free athletic assessment (baseline measurement with actual equipment before financial commitment) → enrollment.",
+      "sourceLines": "L13",
+      "notes": "Funnel / enrollment path"
+    },
+    {
+      "id": "firststep:free-athletic-assessment",
+      "type": "firststep",
+      "text": "free athletic assessment (baseline measurement with actual equipment before financial commitment)",
+      "sourceLines": "L13",
+      "notes": "First-step offer / lead magnet"
+    },
+    {
+      "id": "offer:adp-upsell",
+      "type": "offer",
+      "text": "Primary upsell: Athlete Development Program (ADP) — year-long flex membership that scales volume with competitive calendar.",
+      "sourceLines": "L13",
+      "notes": "Primary upsell offer"
+    },
+    {
+      "id": "offer:guarantee",
+      "type": "offer",
+      "text": "Guarantee: +1 mph / +3 inches / 90 days, or continued training at no additional cost until both benchmarks are achieved.",
+      "sourceLines": "L13",
+      "notes": "Performance guarantee (offer component); brief escapes plus signs as \\+"
+    }
+  ]
+}

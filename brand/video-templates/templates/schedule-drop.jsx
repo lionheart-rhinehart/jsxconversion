@@ -48,10 +48,7 @@ function ScheduleDropReel({ data = {} }) {
         position: 'absolute', top: 110, left: 60, right: 60,
         opacity: eyebrowT,
       }}>
-        <div style={{
-          fontFamily: '"JetBrains Mono", monospace',
-          fontSize: 28, color: RED, letterSpacing: '0.18em',
-        }}>// {eyebrow}</div>
+        <Eyebrow top={150} fontSize={28}>// {eyebrow}</Eyebrow>
       </div>
 
       <div style={{

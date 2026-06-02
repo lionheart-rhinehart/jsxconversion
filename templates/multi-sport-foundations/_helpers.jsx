@@ -46,7 +46,13 @@ export function MediaSlot({
   // ── CROP path ────────────────────────────────────────────────────────────
   // Wrap in overflow:hidden, size the inner image so the crop region cover-fits
   // the frame, then position it so the cropped region lands at the right spot.
-  if (crop && crop.width > 0 && crop.height > 0) {
+  // A crop is photo-specific: ignore one stamped for a DIFFERENT photo
+  // (crop.forPath) so a stale crop never applies to a swapped photo. Matches the
+  // editor's activeCrop guard, so preview and render agree on crop presence.
+  // Legacy crops (no forPath) still apply.
+  const cropActive =
+    crop && crop.width > 0 && crop.height > 0 && !(crop.forPath && crop.forPath !== path);
+  if (cropActive) {
     const applyCrop = (el) => {
       if (!el) return;
       const ready = isVideo ? el.videoWidth : el.naturalWidth;
@@ -105,16 +111,74 @@ export function MediaSlot({
     );
   }
 
-  // ── NO-CROP path (default — cover-fit with offsetX/Y/scale) ──────────────
-  const objPos =
-    objectPosition || `${50 - offsetX / 10.8}% ${50 - offsetY / 19.2}%`;
+  // ── NO-CROP path (cover-fit with offsetX/Y/scale) ────────────────────────
+  // HYBRID: offset-0 (the common case) uses declarative object-fit:cover — zero
+  // render-timing risk, byte-identical to before. A real pan (offset≠0) uses the
+  // same JS pixel-pan + clamp as the editor's repositionPhoto, so editor==render.
+  const ox = offsetX || 0;
+  const oy = offsetY || 0;
+
+  if (ox !== 0 || oy !== 0) {
+    const applyCover = (el) => {
+      if (!el) return;
+      const ready = isVideo ? el.videoWidth : el.naturalWidth;
+      if (!ready) return;
+      const nW = isVideo ? el.videoWidth : el.naturalWidth;
+      const nH = isVideo ? el.videoHeight : el.naturalHeight;
+      const coverScale = Math.max(width / nW, height / nH) * scale;
+      const coverW = nW * coverScale;
+      const coverH = nH * coverScale;
+      const maxOX = Math.max(0, (coverW - width) / 2);
+      const maxOY = Math.max(0, (coverH - height) / 2);
+      const px = Math.max(-maxOX, Math.min(maxOX, ox));
+      const py = Math.max(-maxOY, Math.min(maxOY, oy));
+      el.style.position = "absolute";
+      el.style.width = coverW + "px";
+      el.style.height = coverH + "px";
+      el.style.left = (width - coverW) / 2 + px + "px";
+      el.style.top = (height - coverH) / 2 + py + "px";
+    };
+    const wrapperStyle = { position: "absolute", inset: 0, overflow: "hidden", ...style };
+    if (isVideo) {
+      return (
+        <div style={wrapperStyle}>
+          <video
+            src={path}
+            autoPlay
+            muted
+            playsInline
+            loop
+            preload="auto"
+            ref={(el) => {
+              if (!el) return;
+              if (videoStartTime) el.currentTime = videoStartTime;
+              el.addEventListener("loadeddata", () => applyCover(el), { once: true });
+              if (el.videoWidth) applyCover(el);
+            }}
+          />
+        </div>
+      );
+    }
+    return (
+      <div style={wrapperStyle}>
+        <img
+          src={path}
+          alt=""
+          onLoad={(e) => applyCover(e.target)}
+          ref={(el) => el && el.complete && applyCover(el)}
+        />
+      </div>
+    );
+  }
+
+  // offset 0 → centered cover-fit (declarative). Unchanged from before.
   const baseStyle = {
     position: "absolute",
     inset: 0,
     width: "100%",
     height: "100%",
     objectFit,
-    objectPosition: objPos,
+    objectPosition: objectPosition || "50% 50%",
     transform: scale !== 1 ? `scale(${scale})` : undefined,
     transformOrigin: "center center",
     display: "block",
@@ -163,11 +227,17 @@ export function ArchedHeadline({
     typeof arch === "number"
       ? arch
       : ({ flat: 0, low: 0.25, med: 0.45, high: 0.7, extreme: 1.0 }[arch] ?? 0.45);
-  const baselineY = fontSize * 1.18;
-  const peakY = baselineY - fontSize * archDepth;
-  const pathD = `M ${padX} ${baselineY} Q ${width / 2} ${peakY} ${width - padX} ${baselineY}`;
-  const svgHeight = baselineY + fontSize * 0.4;
-  const id = `arc-${text.replace(/[^a-z0-9]/gi, "")}-${arch}`;
+  // Multi-line: split on typed newlines and stack one arch per line. Curved text
+  // rides a single SVG path, so a `\n` can't break within a path — instead each
+  // line gets its own path + textPath, offset vertically. lineStep grows with the
+  // arch (deeper curve lifts the center higher, needing more room). Spacing is
+  // derived from fontSize+archDepth only (NO lineHeight) so the editor preview
+  // (archSvg in editor.html) can mirror it exactly without threading extra props.
+  const lines = String(text == null ? "" : text).split("\n");
+  const lineStep = fontSize * (1.0 + archDepth * 0.7);
+  const baseY0 = fontSize * 1.18;
+  const svgHeight = baseY0 + (lines.length - 1) * lineStep + fontSize * 0.4;
+  const idBase = `arc-${String(text == null ? "" : text).replace(/[^a-z0-9]/gi, "")}-${arch}`;
   // `glow` wins; else honor `shadow`. `shadow` may be:
   //   • a string  → used verbatim as the CSS filter (e.g. a custom
   //                  "drop-shadow(5px 9px 7px rgba(0,0,0,0.45))" to match a
@@ -190,22 +260,36 @@ export function ArchedHeadline({
       style={{ display: "block", overflow: "visible" }}
     >
       <defs>
-        <path id={id} d={pathD} fill="none" />
+        {lines.map((ln, i) => {
+          const baselineY = baseY0 + i * lineStep;
+          const peakY = baselineY - fontSize * archDepth;
+          return (
+            <path
+              key={i}
+              id={`${idBase}-${i}`}
+              d={`M ${padX} ${baselineY} Q ${width / 2} ${peakY} ${width - padX} ${baselineY}`}
+              fill="none"
+            />
+          );
+        })}
       </defs>
-      <text
-        fill={color}
-        stroke={stroke ? strokeColor || color : undefined}
-        strokeWidth={stroke || undefined}
-        fontFamily={FONT_DISPLAY}
-        fontSize={fontSize}
-        fontWeight={fontWeight}
-        letterSpacing={letterSpacing}
-        style={{ filter, textTransform: "uppercase", paintOrder: "stroke" }}
-      >
-        <textPath href={`#${id}`} startOffset="50%" textAnchor="middle">
-          {text}
-        </textPath>
-      </text>
+      {lines.map((ln, i) => (
+        <text
+          key={i}
+          fill={color}
+          stroke={stroke ? strokeColor || color : undefined}
+          strokeWidth={stroke || undefined}
+          fontFamily={FONT_DISPLAY}
+          fontSize={fontSize}
+          fontWeight={fontWeight}
+          letterSpacing={letterSpacing}
+          style={{ filter, textTransform: "uppercase", paintOrder: "stroke" }}
+        >
+          <textPath href={`#${idBase}-${i}`} startOffset="50%" textAnchor="middle">
+            {ln}
+          </textPath>
+        </text>
+      ))}
     </svg>
   );
 }
@@ -669,6 +753,32 @@ export function renderTextLayer(el, key) {
   if (el.repeat && el.repeat > 1) {
     content = Array.from({ length: el.repeat }, () => el.text).join("\n");
     if (el.whiteSpace == null) style.whiteSpace = "pre";
+  }
+  // Optional "chip" treatment: a filled pill that hugs the text (e.g. the
+  // white-bg / red-text eyebrow that pops over footage). When `chipBg` is set,
+  // split the positioning onto an OUTER absolutely-positioned wrapper (which
+  // keeps left/top/width + textAlign so left- and center-aligned chips both
+  // work) and the visual text styling onto an INNER inline-block span carrying
+  // the background, padding and rounded corners. Inline-block + the wrapper's
+  // textAlign makes the pill shrink-to-fit its text. Inert when `chipBg` is
+  // absent → the element renders as the plain positioned div, byte-identical.
+  if (el.chipBg) {
+    const { position, left, top, width, textAlign, ...textStyle } = style;
+    const outerStyle = { position, left, top };
+    if (width != null) outerStyle.width = width;
+    if (textAlign != null) outerStyle.textAlign = textAlign;
+    const innerStyle = {
+      ...textStyle,
+      display: "inline-block",
+      background: el.chipBg,
+      padding: el.chipPad || "10px 22px",
+      borderRadius: el.chipRadius != null ? el.chipRadius : 8,
+    };
+    return (
+      <div key={key} style={outerStyle}>
+        <span style={innerStyle}>{content}</span>
+      </div>
+    );
   }
   return (
     <div key={key} style={style}>

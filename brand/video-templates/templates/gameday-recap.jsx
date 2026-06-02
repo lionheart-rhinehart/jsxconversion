@@ -29,14 +29,7 @@ function GameDayRecapReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
-      <div style={{
-        position: 'absolute', top: 110, left: 60,
-        padding: '8px 16px',
-        background: RED,
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 24, color: '#fff', letterSpacing: '0.16em',
-        opacity: eyebrowT,
-      }}>// {eyebrow}</div>
+      <Eyebrow top={110} fontSize={24}>// {eyebrow}</Eyebrow>
 
       <div style={{
         position: 'absolute', top: 200, left: 60, right: 60,
@@ -118,21 +111,104 @@ const GAMEDAY_RECAP_SPEC = {
   id: 'gameday-recap',
   name: 'GAME DAY RECAP',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow tag', type: 'text', default: 'FRIDAY NIGHT W' },
-    { key: 'title1', label: 'Title line 1', type: 'text', default: 'OUR ATHLETES' },
-    { key: 'title2', label: 'Title line 2 (red)', type: 'text', default: 'BALLED OUT.' },
-    { key: 'home', label: 'Home team abbr', type: 'text', default: 'CARMEL' },
-    { key: 'away', label: 'Away team abbr', type: 'text', default: 'NOBLE.' },
-    { key: 'homeScore', label: 'Home score', type: 'number', default: 34, step: 1, min: 0 },
-    { key: 'awayScore', label: 'Away score', type: 'number', default: 21, step: 1, min: 0 },
-    { key: 'period', label: 'Period label', type: 'text', default: 'FINAL' },
-    { key: 'clock', label: 'Clock', type: 'text', default: '00:00' },
-    { key: 'highlight1', label: 'Star 1 name', type: 'text', default: 'JORDAN K.' },
-    { key: 'highlight1Stat', label: 'Star 1 stat', type: 'text', default: '2 TDs · 110 YDS RUSHING' },
-    { key: 'highlight2', label: 'Star 2 name', type: 'text', default: 'TYLER S.' },
-    { key: 'highlight2Stat', label: 'Star 2 stat', type: 'text', default: '12 TACKLES · 1 SACK' },
-    { key: 'ctaText', label: 'CTA text', type: 'text', default: 'GET FASTER. GET STRONGER.' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow tag",
+    "type": "text",
+    "default": "FRIDAY NIGHT W"
+  },
+  {
+    "key": "title1",
+    "label": "Title line 1",
+    "type": "text",
+    "default": "OUR ATHLETES"
+  },
+  {
+    "key": "title2",
+    "label": "Title line 2 (red)",
+    "type": "text",
+    "default": "BALLED OUT."
+  },
+  {
+    "key": "home",
+    "label": "Home team abbr",
+    "type": "text",
+    "default": "CARMEL"
+  },
+  {
+    "key": "away",
+    "label": "Away team abbr",
+    "type": "text",
+    "default": "NOBLE."
+  },
+  {
+    "key": "homeScore",
+    "label": "Home score",
+    "type": "number",
+    "default": 34,
+    "step": 1,
+    "min": 0
+  },
+  {
+    "key": "awayScore",
+    "label": "Away score",
+    "type": "number",
+    "default": 21,
+    "step": 1,
+    "min": 0
+  },
+  {
+    "key": "period",
+    "label": "Period label",
+    "type": "text",
+    "default": "FINAL"
+  },
+  {
+    "key": "clock",
+    "label": "Clock",
+    "type": "text",
+    "default": "00:00"
+  },
+  {
+    "key": "highlight1",
+    "label": "Star 1 name",
+    "type": "text",
+    "default": "JORDAN K."
+  },
+  {
+    "key": "highlight1Stat",
+    "label": "Star 1 stat",
+    "type": "text",
+    "default": "2 TDs · 110 YDS RUSHING"
+  },
+  {
+    "key": "highlight2",
+    "label": "Star 2 name",
+    "type": "text",
+    "default": "TYLER S."
+  },
+  {
+    "key": "highlight2Stat",
+    "label": "Star 2 stat",
+    "type": "text",
+    "default": "12 TACKLES · 1 SACK"
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA text",
+    "type": "text",
+    "default": "GET FASTER. GET STRONGER."
+  }
+],
 };
 window.GAMEDAY_RECAP_SPEC = GAMEDAY_RECAP_SPEC;

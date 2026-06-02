@@ -33,7 +33,7 @@ function LastDayOfferReel({ data = {} }) {
       <div style={{ position: 'absolute', top: -200, left: -200, width: 600, height: 600, background: `radial-gradient(circle, ${RED}${Math.round(flash * 50 + 25).toString(16)} 0%, transparent 60%)`, filter: 'blur(40px)' }}/>
       <div style={{ position: 'absolute', bottom: -200, right: -200, width: 600, height: 600, background: `radial-gradient(circle, ${RED}${Math.round(flash * 50 + 25).toString(16)} 0%, transparent 60%)`, filter: 'blur(40px)' }}/>
 
-      <div style={{ position: 'absolute', top: 110, left: 60, padding: '8px 16px', background: RED, fontFamily: '"JetBrains Mono", monospace', fontSize: 26, color: '#fff', letterSpacing: '0.18em', opacity: eyebrowT, boxShadow: `0 0 ${16 + flash * 24}px rgba(196,20,29,${0.4 + flash * 0.5})` }}>⚠️ // {eyebrow}</div>
+      <Eyebrow top={110} fontSize={26}>⚠️ // {eyebrow}</Eyebrow>
 
       <div style={{ position: 'absolute', top: 200, left: 60, right: 60, fontFamily: 'Anton, sans-serif', fontSize: 180, color: '#fff', lineHeight: 0.88, opacity: titleT }}>{title1}<br/><span style={{ color: RED, textShadow: `0 0 ${20 + flash * 30}px rgba(196,20,29,${0.4 + flash * 0.4})` }}>{title2}</span></div>
 
@@ -67,17 +67,82 @@ window.LastDayOfferReel = LastDayOfferReel;
 const LAST_DAY_OFFER_SPEC = {
   id: 'last-day-offer', name: 'LAST DAY',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'LAST CHANCE' },
-    { key: 'title1', label: 'Title 1', type: 'text', default: 'TODAY.' },
-    { key: 'title2', label: 'Title 2 (red)', type: 'text', default: 'OR NEVER.' },
-    { key: 'offerLabel', label: 'Offer label', type: 'text', default: 'THE DEAL' },
-    { key: 'offerHeadline', label: 'Offer headline', type: 'text', default: '50% OFF' },
-    { key: 'offerSub', label: 'Offer sub', type: 'text', default: 'FIRST MONTH · NEW MEMBERS ONLY' },
-    { key: 'closeAtHours', label: 'Hours left', type: 'number', default: 11, step: 1, min: 0, max: 99 },
-    { key: 'closeAtMins', label: 'Mins left', type: 'number', default: 59, step: 1, min: 0, max: 59 },
-    { key: 'closingNote', label: 'Closing line', type: 'text', default: 'CLOCK STOPS AT MIDNIGHT.' },
-    { key: 'ctaText', label: 'CTA', type: 'text', default: 'CLAIM IT' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "LAST CHANCE"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "TODAY."
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "OR NEVER."
+  },
+  {
+    "key": "offerLabel",
+    "label": "Offer label",
+    "type": "text",
+    "default": "THE DEAL"
+  },
+  {
+    "key": "offerHeadline",
+    "label": "Offer headline",
+    "type": "text",
+    "default": "50% OFF"
+  },
+  {
+    "key": "offerSub",
+    "label": "Offer sub",
+    "type": "text",
+    "default": "FIRST MONTH · NEW MEMBERS ONLY"
+  },
+  {
+    "key": "closeAtHours",
+    "label": "Hours left",
+    "type": "number",
+    "default": 11,
+    "step": 1,
+    "min": 0,
+    "max": 99
+  },
+  {
+    "key": "closeAtMins",
+    "label": "Mins left",
+    "type": "number",
+    "default": 59,
+    "step": 1,
+    "min": 0,
+    "max": 59
+  },
+  {
+    "key": "closingNote",
+    "label": "Closing line",
+    "type": "text",
+    "default": "CLOCK STOPS AT MIDNIGHT."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "CLAIM IT"
+  }
+],
 };
 window.LAST_DAY_OFFER_SPEC = LAST_DAY_OFFER_SPEC;

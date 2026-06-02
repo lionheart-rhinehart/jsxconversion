@@ -42,13 +42,7 @@ function PlayOfWeekReel({ data = {} }) {
         background: 'linear-gradient(180deg, rgba(10,11,13,0.5) 0%, rgba(10,11,13,0.95) 100%)',
       }}/>
 
-      <div style={{
-        position: 'absolute', top: 110, left: 60,
-        padding: '8px 16px', background: RED,
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 24, color: '#fff', letterSpacing: '0.16em',
-        opacity: eyebrowT,
-      }}>// {eyebrow}</div>
+      <Eyebrow top={110} fontSize={24}>// {eyebrow}</Eyebrow>
 
       <div style={{
         position: 'absolute', top: 200, left: 60, right: 60,
@@ -108,20 +102,100 @@ const PLAY_OF_WEEK_SPEC = {
   id: 'play-of-week',
   name: 'PLAY OF THE WEEK',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'PLAY OF THE WEEK' },
-    { key: 'title1', label: 'Title 1', type: 'text', default: 'WHEN TRAINING' },
-    { key: 'title2', label: 'Title 2 (red)', type: 'text', default: 'SHOWS UP.' },
-    { key: 'athleteName', label: 'Athlete name', type: 'text', default: 'JORDAN K.' },
-    { key: 'athleteMeta', label: 'Athlete meta', type: 'text', default: 'U17 · 32 YARD TD RUN' },
-    { key: 'distance', label: 'Trajectory distance', type: 'number', default: 65, step: 1, min: 5, max: 200 },
-    { key: 'height', label: 'Peak height', type: 'number', default: 22, step: 1, min: 1, max: 100 },
-    { key: 'trajUnit', label: 'Unit', type: 'text', default: 'YDS' },
-    { key: 'trajLabel', label: 'Trajectory label', type: 'text', default: 'PLAY DISTANCE' },
-    { key: 'endLabel', label: 'End-zone label', type: 'text', default: 'END ZONE' },
-    { key: 'insight', label: 'Insight text', type: 'textarea', default: 'Built in the weight room. Delivered on Friday night.' },
-    { key: 'ctaText', label: 'CTA text', type: 'text', default: 'BUILD YOURS →' },
-    { key: 'media', label: 'Background photo/video', type: 'image', default: 'assets/photo-running.jpg' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "PLAY OF THE WEEK"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "WHEN TRAINING"
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "SHOWS UP."
+  },
+  {
+    "key": "athleteName",
+    "label": "Athlete name",
+    "type": "text",
+    "default": "JORDAN K."
+  },
+  {
+    "key": "athleteMeta",
+    "label": "Athlete meta",
+    "type": "text",
+    "default": "U17 · 32 YARD TD RUN"
+  },
+  {
+    "key": "distance",
+    "label": "Trajectory distance",
+    "type": "number",
+    "default": 65,
+    "step": 1,
+    "min": 5,
+    "max": 200
+  },
+  {
+    "key": "height",
+    "label": "Peak height",
+    "type": "number",
+    "default": 22,
+    "step": 1,
+    "min": 1,
+    "max": 100
+  },
+  {
+    "key": "trajUnit",
+    "label": "Unit",
+    "type": "text",
+    "default": "YDS"
+  },
+  {
+    "key": "trajLabel",
+    "label": "Trajectory label",
+    "type": "text",
+    "default": "PLAY DISTANCE"
+  },
+  {
+    "key": "endLabel",
+    "label": "End-zone label",
+    "type": "text",
+    "default": "END ZONE"
+  },
+  {
+    "key": "insight",
+    "label": "Insight text",
+    "type": "textarea",
+    "default": "Built in the weight room. Delivered on Friday night."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA text",
+    "type": "text",
+    "default": "BUILD YOURS →"
+  },
+  {
+    "key": "media",
+    "label": "Background photo/video",
+    "type": "image",
+    "default": "assets/photo-running.jpg"
+  }
+],
 };
 window.PLAY_OF_WEEK_SPEC = PLAY_OF_WEEK_SPEC;

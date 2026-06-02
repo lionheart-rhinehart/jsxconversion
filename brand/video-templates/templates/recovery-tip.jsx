@@ -6,13 +6,67 @@ const RECOVERY_TIP_SPEC = {
   id: 'recovery-tip',
   name: 'RECOVERY TIP',
   fields: [
-    { key: 'duration', label: 'Length',    type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'category', label: 'Category',  type: 'select', default: 'SLEEP', options: ['SLEEP', 'HYDRATION', 'MOBILITY', 'NUTRITION', 'STRESS'] },
-    { key: 'stat',     label: 'Big stat',  type: 'text',   default: '8–10' },
-    { key: 'unit',     label: 'Stat unit', type: 'text',   default: 'HOURS / NIGHT' },
-    { key: 'headline', label: 'Headline',  type: 'text',   default: 'SLEEP IS THE #1 PERFORMANCE DRUG' },
-    { key: 'detail',   label: 'Detail',    type: 'textarea', default: 'Growth hormone peaks in deep sleep. Skimp on it and you blunt every adaptation you trained for today.' },
-    { key: 'photo',    label: 'Photo (bg)', type: 'image', default: 'assets/photo-conditioning.jpg', sub: 'shown dimmed behind' },
+    {
+      "key": "duration",
+      "label": "Length",
+      "type": "slider",
+      "default": 7,
+      "min": 4,
+      "max": 15,
+      "step": 0.5,
+      "unit": "s"
+    },
+    {
+      "key": "eyebrow",
+      "role": "eyebrow",
+      "label": "Eyebrow",
+      "type": "text",
+      "default": "{city name} SPORT PARENT"
+    },
+    {
+      "key": "category",
+      "label": "Category",
+      "type": "select",
+      "default": "SLEEP",
+      "options": [
+        "SLEEP",
+        "HYDRATION",
+        "MOBILITY",
+        "NUTRITION",
+        "STRESS"
+      ]
+    },
+    {
+      "key": "stat",
+      "label": "Big stat",
+      "type": "text",
+      "default": "8–10"
+    },
+    {
+      "key": "unit",
+      "label": "Stat unit",
+      "type": "text",
+      "default": "HOURS / NIGHT"
+    },
+    {
+      "key": "headline",
+      "label": "Headline",
+      "type": "text",
+      "default": "SLEEP IS THE #1 PERFORMANCE DRUG"
+    },
+    {
+      "key": "detail",
+      "label": "Detail",
+      "type": "textarea",
+      "default": "Growth hormone peaks in deep sleep. Skimp on it and you blunt every adaptation you trained for today."
+    },
+    {
+      "key": "photo",
+      "label": "Photo (bg)",
+      "type": "image",
+      "default": "assets/photo-conditioning.jpg",
+      "sub": "shown dimmed behind"
+    }
   ],
 };
 
@@ -37,6 +91,7 @@ function RecoveryTipReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
+      <Eyebrow top={90} fontSize={34}>{data.eyebrow ?? "{city name} SPORT PARENT"}</Eyebrow>
       <img src={photo} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
         opacity: 0.2, filter: 'grayscale(0.5) brightness(0.6)' }}/>
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.85) 0%, rgba(10,11,13,0.55) 45%, rgba(10,11,13,0.95) 100%)' }}/>

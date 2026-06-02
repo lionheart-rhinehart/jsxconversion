@@ -36,12 +36,7 @@ function PickYourWorkoutReel({ data = {} }) {
         background: `radial-gradient(circle at 80% 20%, ${RED}22 0%, transparent 60%)`,
       }}/>
 
-      <div style={{
-        position: 'absolute', top: 110, left: 60, right: 60,
-        opacity: eyebrowT,
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 28, color: RED, letterSpacing: '0.18em',
-      }}>// {eyebrow}</div>
+      <Eyebrow top={110} fontSize={28}>// {eyebrow}</Eyebrow>
 
       <div style={{
         position: 'absolute', top: 180, left: 60, right: 60,
@@ -99,19 +94,88 @@ const PICK_WORKOUT_SPEC = {
   id: 'pick-workout',
   name: 'PICK YOUR WORKOUT',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow tag', type: 'text', default: "TODAY'S WORKOUT" },
-    { key: 'title1', label: 'Title line 1', type: 'text', default: "DON'T THINK." },
-    { key: 'title2', label: 'Title line 2 (red)', type: 'text', default: 'JUST TRAIN.' },
-    { key: 'slotLabel', label: 'Slot label', type: 'text', default: 'TODAY YOU TRAIN' },
-    { key: 'pick1', label: 'Reel 1 result', type: 'text', default: 'LEGS' },
-    { key: 'pick2', label: 'Reel 2 result', type: 'text', default: 'EXPLOSIVE' },
-    { key: 'pick3', label: 'Reel 3 result', type: 'text', default: 'TUESDAY' },
-    { key: 'reel1Csv', label: 'Reel 1 options (comma)', type: 'text', default: 'LEGS,PUSH,PULL,CORE,SPEED' },
-    { key: 'reel2Csv', label: 'Reel 2 options (comma)', type: 'text', default: 'HEAVY,EXPLOSIVE,BUILD,BURN,BLAST' },
-    { key: 'reel3Csv', label: 'Reel 3 options (comma)', type: 'text', default: 'MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY' },
-    { key: 'finalLine', label: 'Subline', type: 'text', default: "TOMORROW'S WORKOUT? DROPS IN 24 HRS." },
-    { key: 'ctaText', label: 'CTA text', type: 'text', default: 'BOOK A SESSION →' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow tag",
+    "type": "text",
+    "default": "TODAY'S WORKOUT"
+  },
+  {
+    "key": "title1",
+    "label": "Title line 1",
+    "type": "text",
+    "default": "DON'T THINK."
+  },
+  {
+    "key": "title2",
+    "label": "Title line 2 (red)",
+    "type": "text",
+    "default": "JUST TRAIN."
+  },
+  {
+    "key": "slotLabel",
+    "label": "Slot label",
+    "type": "text",
+    "default": "TODAY YOU TRAIN"
+  },
+  {
+    "key": "pick1",
+    "label": "Reel 1 result",
+    "type": "text",
+    "default": "LEGS"
+  },
+  {
+    "key": "pick2",
+    "label": "Reel 2 result",
+    "type": "text",
+    "default": "EXPLOSIVE"
+  },
+  {
+    "key": "pick3",
+    "label": "Reel 3 result",
+    "type": "text",
+    "default": "TUESDAY"
+  },
+  {
+    "key": "reel1Csv",
+    "label": "Reel 1 options (comma)",
+    "type": "text",
+    "default": "LEGS,PUSH,PULL,CORE,SPEED"
+  },
+  {
+    "key": "reel2Csv",
+    "label": "Reel 2 options (comma)",
+    "type": "text",
+    "default": "HEAVY,EXPLOSIVE,BUILD,BURN,BLAST"
+  },
+  {
+    "key": "reel3Csv",
+    "label": "Reel 3 options (comma)",
+    "type": "text",
+    "default": "MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY"
+  },
+  {
+    "key": "finalLine",
+    "label": "Subline",
+    "type": "text",
+    "default": "TOMORROW'S WORKOUT? DROPS IN 24 HRS."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA text",
+    "type": "text",
+    "default": "BOOK A SESSION →"
+  }
+],
 };
 window.PICK_WORKOUT_SPEC = PICK_WORKOUT_SPEC;

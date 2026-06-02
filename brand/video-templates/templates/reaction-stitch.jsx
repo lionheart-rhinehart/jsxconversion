@@ -61,15 +61,7 @@ function ReactionStitchReel({ data = {} }) {
         background: RED,
         boxShadow: `0 0 24px ${RED}`,
       }}/>
-      <div style={{
-        position: 'absolute', top: 'calc(48% - 22px)', left: '50%',
-        transform: 'translateX(-50%)',
-        padding: '6px 14px',
-        background: RED,
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 18, color: '#fff', fontWeight: 700,
-        letterSpacing: '0.16em',
-      }}>// {eyebrow}</div>
+      <Eyebrow top={150} fontSize={18}>// {eyebrow}</Eyebrow>
 
       {/* Bottom half: photo backdrop + response */}
       {window.TrimmedMedia && <window.TrimmedMedia
@@ -131,17 +123,76 @@ const REACTION_STITCH_SPEC = {
   id: 'reaction-stitch',
   name: 'REACTION STITCH',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Divider tag', type: 'text', default: 'REACTION' },
-    { key: 'sourceLabel', label: 'Source label', type: 'text', default: 'WHAT THEY SAID:' },
-    { key: 'sourceQuote', label: 'Source quote', type: 'textarea', default: '"YOUTH ATHLETES CAN\'T HANDLE HEAVY LIFTING."' },
-    { key: 'sourceMeta', label: 'Source meta', type: 'text', default: 'INTERNET COMMENT · 2024' },
-    { key: 'responseLabel', label: 'Response label', type: 'text', default: 'OUR RESPONSE:' },
-    { key: 'responseLine1', label: 'Response line 1', type: 'text', default: "WE'VE COACHED" },
-    { key: 'responseLine2', label: 'Response line 2', type: 'text', default: '412 ATHLETES.' },
-    { key: 'responseLine3', label: 'Response line 3 (red)', type: 'text', default: '0 INJURIES.' },
-    { key: 'ctaText', label: 'CTA text', type: 'text', default: 'COME WATCH A SESSION →' },
-    { key: 'media', label: 'Bottom-half photo/video', type: 'image', default: 'assets/photo-lifting.jpg' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Divider tag",
+    "type": "text",
+    "default": "REACTION"
+  },
+  {
+    "key": "sourceLabel",
+    "label": "Source label",
+    "type": "text",
+    "default": "WHAT THEY SAID:"
+  },
+  {
+    "key": "sourceQuote",
+    "label": "Source quote",
+    "type": "textarea",
+    "default": "\"YOUTH ATHLETES CAN'T HANDLE HEAVY LIFTING.\""
+  },
+  {
+    "key": "sourceMeta",
+    "label": "Source meta",
+    "type": "text",
+    "default": "INTERNET COMMENT · 2024"
+  },
+  {
+    "key": "responseLabel",
+    "label": "Response label",
+    "type": "text",
+    "default": "OUR RESPONSE:"
+  },
+  {
+    "key": "responseLine1",
+    "label": "Response line 1",
+    "type": "text",
+    "default": "WE'VE COACHED"
+  },
+  {
+    "key": "responseLine2",
+    "label": "Response line 2",
+    "type": "text",
+    "default": "412 ATHLETES."
+  },
+  {
+    "key": "responseLine3",
+    "label": "Response line 3 (red)",
+    "type": "text",
+    "default": "0 INJURIES."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA text",
+    "type": "text",
+    "default": "COME WATCH A SESSION →"
+  },
+  {
+    "key": "media",
+    "label": "Bottom-half photo/video",
+    "type": "image",
+    "default": "assets/photo-lifting.jpg"
+  }
+],
 };
 window.REACTION_STITCH_SPEC = REACTION_STITCH_SPEC;

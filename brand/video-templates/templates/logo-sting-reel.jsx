@@ -17,6 +17,7 @@ function LogoStingReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
+      <Eyebrow top={90} fontSize={34}>{data.eyebrow ?? "{city name} SPORT PARENT"}</Eyebrow>
       <div style={{ position: 'absolute', inset: 0, background: RED, opacity: flashOp, transform: `scaleY(${1 - Math.max(0,(t-0.15)/0.35)})`, transformOrigin: 'center' }}/>
 
       <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', opacity: fadeOut, padding: '0 60px' }}>
@@ -31,10 +32,46 @@ function LogoStingReel({ data = {} }) {
 }
 window.LogoStingReel = LogoStingReel;
 const LOGO_STING_REEL_SPEC = { id:'logo-sting-reel', name:'LOGO STING · REEL', fields:[
-  {key:'duration',label:'Length',type:'slider',default:3,min:2,max:8,step:0.5,unit:'s'},
-  {key:'wordmark1',label:'Wordmark (white)',type:'text',default:'ATHLETES'},
-  {key:'wordmark2',label:'Wordmark (red)',type:'text',default:'ACCELERATION'},
-  {key:'tagline',label:'Tagline',type:'textarea',default:'THE DRIVE IS THEIRS.\nWE BUILD THE ATHLETE.'},
-  {key:'url',label:'URL',type:'text',default:'ATHLETESACCEL.COM'},
-]};
+    {
+      "key": "duration",
+      "label": "Length",
+      "type": "slider",
+      "default": 3,
+      "min": 2,
+      "max": 8,
+      "step": 0.5,
+      "unit": "s"
+    },
+    {
+      "key": "eyebrow",
+      "role": "eyebrow",
+      "label": "Eyebrow",
+      "type": "text",
+      "default": "{city name} SPORT PARENT"
+    },
+    {
+      "key": "wordmark1",
+      "label": "Wordmark (white)",
+      "type": "text",
+      "default": "ATHLETES"
+    },
+    {
+      "key": "wordmark2",
+      "label": "Wordmark (red)",
+      "type": "text",
+      "default": "ACCELERATION"
+    },
+    {
+      "key": "tagline",
+      "label": "Tagline",
+      "type": "textarea",
+      "default": "THE DRIVE IS THEIRS.\nWE BUILD THE ATHLETE."
+    },
+    {
+      "key": "url",
+      "label": "URL",
+      "type": "text",
+      "default": "ATHLETESACCEL.COM"
+    }
+  ]};
 window.LOGO_STING_REEL_SPEC = LOGO_STING_REEL_SPEC;

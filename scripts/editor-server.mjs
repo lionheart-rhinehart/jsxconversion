@@ -28,8 +28,9 @@ import {
 import { join, resolve, extname, basename, dirname } from "node:path";
 import { spawn } from "node:child_process";
 import { resolveStaticConfig } from "./lib/fill-core.mjs";
+import { fieldRole, BEAT_HEADLINE_ROLE, beatLetter } from "./lib/roles.mjs";
 
-const PORT = 5173;
+const PORT = Number(process.env.EDITOR_PORT) || 5173;
 const PROJECT_ROOT = resolve(".");
 const TEMPLATES_DIR = join(PROJECT_ROOT, "templates/multi-sport-foundations");
 const OUT_DIR = join(PROJECT_ROOT, "out");
@@ -40,11 +41,15 @@ const DATA_DIR = join(PROJECT_ROOT, "data");
 const VIDEO_DIR = join(PROJECT_ROOT, "brand/video-templates");
 const VIDEO_TEMPLATES_DIR = join(VIDEO_DIR, "templates");
 // Brand media library — photos/clips/audio selectable in the video edit pickers.
+// brand/kraken-cache holds raw media pulled from The Kraken Content Library
+// (scripts/kraken-pull.mjs) — kept FLAT because the /media route reads each root
+// with a single non-recursive readdirSync.
 const MEDIA_ROOTS = [
   join(PROJECT_ROOT, "brand/aa-design-system/project/uploads"),
   join(PROJECT_ROOT, "brand/aa-design-system/project/assets"),
   join(VIDEO_DIR, "assets"),
   join(PROJECT_ROOT, "music-library"),
+  join(PROJECT_ROOT, "brand/kraken-cache"),
 ];
 const PHOTO_EXT = new Set([".jpg", ".jpeg", ".png", ".webp"]);
 const CLIP_EXT = new Set([".mp4", ".mov", ".webm"]);
@@ -126,6 +131,11 @@ const MIME = {
   ".js": "application/javascript",
   ".mjs": "application/javascript",
   ".css": "text/css",
+  ".mp4": "video/mp4",
+  ".gif": "image/gif",
+  ".webp": "image/webp",
+  ".mov": "video/quicktime",
+  ".webm": "video/webm",
 };
 
 function send(res, status, body, contentType = "application/json") {
@@ -306,6 +316,7 @@ const server = createServer(async (req, res) => {
     const ALLOWED = [
       "status", "notes", "flags", "headline", "microscript", "output", "thumb",
       "editedAt", "renderedAt", "templateData", "clip", "photo", "audio", "template",
+      "kraken", // Content-Library writeback from kraken-export.mjs ({id,url,folder})
     ];
     for (const k of ALLOWED) if (k in patch) asset[k] = patch[k];
     writeFileSync(p, JSON.stringify(plan, null, 2));
@@ -325,16 +336,22 @@ const server = createServer(async (req, res) => {
       const plan = JSON.parse(readFileSync(planFile, "utf8"));
       const microscript = new Set(), headline = new Set(), all = new Set();
       const byKey = {};
+      const byRole = {};                                              // copy-role pool (P5)
       const add = (set, v) => { if (typeof v === "string" && v.trim()) { set.add(v); all.add(v); } };
+      const addRole = (role, v) => { if (role && typeof v === "string" && v.trim()) (byRole[role] = byRole[role] || new Set()).add(v); };
       for (const ang of plan.angles || []) {
         for (const a of ang.assets || []) {
           add(microscript, a.microscript);
           add(headline, a.headline);
+          // Role buckets: headline routed by beat, microscript → reframe.
+          addRole(BEAT_HEADLINE_ROLE[beatLetter(a.beat)] || "hook", a.headline);
+          addRole("reframe", a.microscript);
           if (a.templateData && typeof a.templateData === "object") {  // H1 guard
             for (const [k, v] of Object.entries(a.templateData)) {
               if (k.startsWith("_")) continue;                          // skip _overrides etc.
               if (typeof v !== "string" || !v.trim()) continue;
               (byKey[k] = byKey[k] || new Set()).add(v);
+              addRole(fieldRole(k), v);                                 // role bucket by field name
               all.add(v);
             }
           }
@@ -342,8 +359,11 @@ const server = createServer(async (req, res) => {
       }
       const byKeyArr = {};
       for (const k of Object.keys(byKey)) byKeyArr[k] = [...byKey[k]];
+      const byRoleArr = {};
+      for (const r of Object.keys(byRole)) byRoleArr[r] = [...byRole[r]];
       sendJson(res, 200, {
-        microscript: [...microscript], headline: [...headline], byKey: byKeyArr, all: [...all],
+        microscript: [...microscript], headline: [...headline],
+        byKey: byKeyArr, byRole: byRoleArr, all: [...all],
       });
     } catch (e) {
       sendJson(res, 500, { error: e.message });
@@ -374,8 +394,9 @@ const server = createServer(async (req, res) => {
         sendJson(res, 400, { error: `asset "${assetId}" is not a static cluster template (template=${asset.template})` });
         return;
       }
+      const location = asset.location || (angle && angle.location) || plan.location || null;
       const config = resolveStaticConfig({
-        clusterId: asset.template, asset, brand: plan.brand,
+        clusterId: asset.template, asset, brand: plan.brand, location, campaign,
         templateDir: TEMPLATES_DIR, dataDir: DATA_DIR,
       });
       if (!config) { sendJson(res, 404, { error: `could not resolve config for ${asset.template}` }); return; }
@@ -478,6 +499,42 @@ const server = createServer(async (req, res) => {
     return;
   }
 
+  // POST /media-into-template { src } — copy a chosen brand-library photo into
+  // templates/multi-sport-foundations/library/ and return "./library/<name>".
+  // WHY: MediaSlot renders src={path} verbatim, resolved relative to
+  // TEMPLATE_DIR, so a library photo must be copied in (a /media-file URL would
+  // preview but render BLANK). The "./library/<name>" path resolves identically
+  // in the editor preview (/templates/...) AND the PNG render (relative to dir).
+  if (path === "/media-into-template" && req.method === "POST") {
+    try {
+      const { src } = JSON.parse((await readBody(req)) || "{}");
+      if (!src) { sendJson(res, 400, { error: "missing src" }); return; }
+      const from = resolve(join(PROJECT_ROOT, src));
+      // Guard: source must live under a known brand-media root.
+      if (!MEDIA_ROOTS.some((r) => from.startsWith(resolve(r))) || !existsSync(from)) {
+        sendJson(res, 404, { error: "source media not found in a brand media root" });
+        return;
+      }
+      // MUST live under assets/: the static renderer (static-react.mjs) copies
+      // ONLY the sibling assets/ dir into its temp render dir, so a photo under
+      // any other subdir renders BLACK. Match the proven "./assets/<name>"
+      // convention. Prefix "swap-" to stay identifiable + avoid clobbering
+      // curated assets. Slug the name (brand photos have spaces/parens) so it's
+      // URL-safe in the editor preview regardless of decoding.
+      const assetsDir = join(TEMPLATES_DIR, "assets");
+      mkdirSync(assetsDir, { recursive: true });
+      const ext = extname(from).toLowerCase();
+      const slug = basename(from, extname(from))
+        .replace(/[^a-z0-9]+/gi, "-").replace(/^-+|-+$/g, "").toLowerCase() || "photo";
+      const name = "swap-" + slug + ext;
+      copyFileSync(from, join(assetsDir, name));
+      sendJson(res, 200, { path: "./assets/" + name });
+    } catch (e) {
+      sendJson(res, 500, { error: String((e && e.message) || e) });
+    }
+    return;
+  }
+
   // GET /media-file/<project-relative-path> — serve a brand-media file from a
   // guarded root (MEDIA_ROOTS only).
   if (path.startsWith("/media-file/") && req.method === "GET") {
@@ -526,7 +583,8 @@ const server = createServer(async (req, res) => {
 
   // GET /templates/... → serve template assets (photos, SVGs, etc.)
   if (path.startsWith("/templates/") && req.method === "GET") {
-    const filePath = join(PROJECT_ROOT, path.slice(1));
+    // Decode so asset names with spaces/parens resolve (url.pathname keeps %20).
+    const filePath = join(PROJECT_ROOT, decodeURIComponent(path.slice(1)));
     // Security: ensure resolved path stays under TEMPLATES_DIR
     const resolved = resolve(filePath);
     if (resolved.startsWith(resolve(TEMPLATES_DIR)) && existsSync(resolved)) {

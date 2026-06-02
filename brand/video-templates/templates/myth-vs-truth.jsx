@@ -28,14 +28,7 @@ function MythVsTruthReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
-      <div style={{
-        position: 'absolute', top: 110, left: 60,
-        padding: '8px 16px',
-        background: RED,
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 24, color: '#fff', letterSpacing: '0.16em',
-        opacity: eyebrowT,
-      }}>// {eyebrow}</div>
+      <Eyebrow top={110} fontSize={24}>// {eyebrow}</Eyebrow>
 
       {/* MYTH block */}
       <div style={{
@@ -138,15 +131,64 @@ const MYTH_VS_TRUTH_SPEC = {
   id: 'myth-vs-truth',
   name: 'MYTH VS TRUTH',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow tag', type: 'text', default: 'TRAINING MYTH BUSTED' },
-    { key: 'mythLabel', label: 'Myth label', type: 'text', default: "YOU'VE BEEN TOLD" },
-    { key: 'myth', label: 'The myth', type: 'textarea', default: 'LIFTING WEIGHTS WILL STUNT YOUR GROWTH.' },
-    { key: 'truthLabel', label: 'Truth label', type: 'text', default: 'THE TRUTH' },
-    { key: 'truth', label: 'The truth', type: 'textarea', default: 'PROPERLY COACHED LIFTING IS THE SAFEST SPORT FOR YOUTH ATHLETES.' },
-    { key: 'sourceLabel', label: 'Source label', type: 'text', default: 'SOURCE' },
-    { key: 'source', label: 'Source citation', type: 'text', default: 'NSCA POSITION STATEMENT · 2024' },
-    { key: 'ctaText', label: 'CTA text', type: 'text', default: 'STOP BELIEVING THE BS →' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow tag",
+    "type": "text",
+    "default": "TRAINING MYTH BUSTED"
+  },
+  {
+    "key": "mythLabel",
+    "label": "Myth label",
+    "type": "text",
+    "default": "YOU'VE BEEN TOLD"
+  },
+  {
+    "key": "myth",
+    "label": "The myth",
+    "type": "textarea",
+    "default": "LIFTING WEIGHTS WILL STUNT YOUR GROWTH."
+  },
+  {
+    "key": "truthLabel",
+    "label": "Truth label",
+    "type": "text",
+    "default": "THE TRUTH"
+  },
+  {
+    "key": "truth",
+    "label": "The truth",
+    "type": "textarea",
+    "default": "PROPERLY COACHED LIFTING IS THE SAFEST SPORT FOR YOUTH ATHLETES."
+  },
+  {
+    "key": "sourceLabel",
+    "label": "Source label",
+    "type": "text",
+    "default": "SOURCE"
+  },
+  {
+    "key": "source",
+    "label": "Source citation",
+    "type": "text",
+    "default": "NSCA POSITION STATEMENT · 2024"
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA text",
+    "type": "text",
+    "default": "STOP BELIEVING THE BS →"
+  }
+],
 };
 window.MYTH_VS_TRUTH_SPEC = MYTH_VS_TRUTH_SPEC;

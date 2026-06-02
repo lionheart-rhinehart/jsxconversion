@@ -29,7 +29,7 @@ function ReferralHeroReel({ data = {} }) {
       {window.TrimmedMedia && <window.TrimmedMedia src={media} clipStart={data.media_clipStart} clipEnd={data.media_clipEnd} muted={!data.media_audio} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.3) saturate(0.85) contrast(1.1)' }}/>}
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.55) 0%, rgba(10,11,13,0.95) 100%)' }}/>
 
-      <div style={{ position: 'absolute', top: 110, left: 60, padding: '8px 16px', background: RED, fontFamily: '"JetBrains Mono", monospace', fontSize: 24, color: '#fff', letterSpacing: '0.16em', opacity: eT }}>// {eyebrow}</div>
+      <Eyebrow top={110} fontSize={24}>// {eyebrow}</Eyebrow>
       <div style={{ position: 'absolute', top: 200, left: 60, right: 60, fontFamily: 'Anton, sans-serif', fontSize: 130, color: '#fff', lineHeight: 0.88, opacity: tiT }}>{title1}<br/><span style={{color:RED}}>{title2}</span></div>
 
       <div style={{ position: 'absolute', top: 560, left: 60, right: 60, padding: '18px 22px', background: 'rgba(31,34,39,0.85)', borderLeft: `4px solid ${RED}`, opacity: hT }}>
@@ -65,18 +65,87 @@ function ReferralHeroReel({ data = {} }) {
 }
 window.ReferralHeroReel = ReferralHeroReel;
 const REFERRAL_HERO_SPEC = { id:'referral-hero', name:'REFERRAL HERO', fields:[
-  {key:'duration',label:'Length',type:'slider',default:7,min:4,max:15,step:0.5,unit:'s'},
-  {key:'eyebrow',label:'Eyebrow',type:'text',default:'REFERRAL HERO'},
-  {key:'title1',label:'Title 1',type:'text',default:'BRING A FRIEND.'},
-  {key:'title2',label:'Title 2 (red)',type:'text',default:'GET A MONTH.'},
-  {key:'hero',label:'Hero name',type:'text',default:'JORDAN K.'},
-  {key:'heroMeta',label:'Hero meta',type:'text',default:'U17 · 2 REFERRALS THIS MONTH'},
-  {key:'rewardAmount',label:'Reward',type:'text',default:'FREE MONTH'},
-  {key:'rewardSub',label:'Reward sub',type:'text',default:'PER FRIEND WHO SIGNS UP'},
-  {key:'friendsLabel',label:'Friends label',type:'text',default:'FRIENDS WHO TRAIN'},
-  {key:'friend1',label:'Friend 1',type:'text',default:'TYLER S.'},
-  {key:'friend2',label:'Friend 2',type:'text',default:'MARCUS R.'},
-  {key:'ctaText',label:'CTA',type:'text',default:'GET YOUR CODE'},
-  {key:'media',label:'Background photo/video',type:'image',default:'assets/hero-sprint-male.jpg'},
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "REFERRAL HERO"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "BRING A FRIEND."
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "GET A MONTH."
+  },
+  {
+    "key": "hero",
+    "label": "Hero name",
+    "type": "text",
+    "default": "JORDAN K."
+  },
+  {
+    "key": "heroMeta",
+    "label": "Hero meta",
+    "type": "text",
+    "default": "U17 · 2 REFERRALS THIS MONTH"
+  },
+  {
+    "key": "rewardAmount",
+    "label": "Reward",
+    "type": "text",
+    "default": "FREE MONTH"
+  },
+  {
+    "key": "rewardSub",
+    "label": "Reward sub",
+    "type": "text",
+    "default": "PER FRIEND WHO SIGNS UP"
+  },
+  {
+    "key": "friendsLabel",
+    "label": "Friends label",
+    "type": "text",
+    "default": "FRIENDS WHO TRAIN"
+  },
+  {
+    "key": "friend1",
+    "label": "Friend 1",
+    "type": "text",
+    "default": "TYLER S."
+  },
+  {
+    "key": "friend2",
+    "label": "Friend 2",
+    "type": "text",
+    "default": "MARCUS R."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "GET YOUR CODE"
+  },
+  {
+    "key": "media",
+    "label": "Background photo/video",
+    "type": "image",
+    "default": "assets/hero-sprint-male.jpg"
+  }
 ]};
 window.REFERRAL_HERO_SPEC = REFERRAL_HERO_SPEC;

@@ -1,0 +1,239 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
+      "z": 1
+    },
+    {
+      "id": "divider_1",
+      "tag": "divider_1",
+      "type": "rect",
+      "x": 90,
+      "y": 792,
+      "width": 300,
+      "height": 8,
+      "fill": "#c4141d",
+      "z": 15
+    },
+    {
+      "id": "brand_rule",
+      "tag": "brand_rule",
+      "type": "rect",
+      "x": 90,
+      "y": 1628,
+      "width": 150,
+      "height": 6,
+      "fill": "#c4141d",
+      "z": 16
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor chip (auto-filled)",
+      "x": 90,
+      "y": 170,
+      "textAlign": "left",
+      "text": "INDIANAPOLIS SPORTS PARENTS",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#c4141d",
+      "chipBg": "#ffffff",
+      "chipPad": "12px 24px",
+      "chipRadius": 8,
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 34,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "stat1_value",
+      "tag": "stat1_value",
+      "label": "Big stat numeral 1",
+      "x": 78,
+      "y": 296,
+      "width": 924,
+      "textAlign": "left",
+      "text": "6",
+      "fontSize": 320,
+      "fontFamily": "Anton",
+      "color": "#c4141d",
+      "lineHeight": 0.9,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "z": 21,
+      "role": "stat",
+      "accepts": [
+        "stat"
+      ],
+      "maxChars": 6,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "stat1_label",
+      "tag": "stat1_label",
+      "label": "Stat 1 label",
+      "x": 90,
+      "y": 636,
+      "width": 924,
+      "textAlign": "left",
+      "text": "MONTHS IN",
+      "fontSize": 76,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.95,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "z": 22,
+      "role": "stat",
+      "accepts": [
+        "stat",
+        "claim"
+      ],
+      "maxChars": 26,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "stat2_value",
+      "tag": "stat2_value",
+      "label": "Big stat numeral 2",
+      "x": 78,
+      "y": 846,
+      "width": 924,
+      "textAlign": "left",
+      "text": "0",
+      "fontSize": 210,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.9,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "z": 23,
+      "role": "stat",
+      "accepts": [
+        "stat"
+      ],
+      "maxChars": 6,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "stat2_label",
+      "tag": "stat2_label",
+      "label": "Stat 2 label",
+      "x": 90,
+      "y": 1066,
+      "width": 924,
+      "textAlign": "left",
+      "text": "MPH FASTER",
+      "fontSize": 60,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.95,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "z": 24,
+      "role": "stat",
+      "accepts": [
+        "stat",
+        "claim"
+      ],
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "proof_citation",
+      "tag": "proof_citation",
+      "label": "Study citation",
+      "x": 90,
+      "y": 1290,
+      "width": 924,
+      "textAlign": "left",
+      "text": "EVERY PRACTICE · NEVER QUIT",
+      "fontSize": 33,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 400,
+      "color": "#9aa0a6",
+      "letterSpacing": "0.05em",
+      "textTransform": "uppercase",
+      "z": 25,
+      "role": "proof",
+      "accepts": [
+        "proof",
+        "byline"
+      ],
+      "maxChars": 40,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "claim_line",
+      "tag": "claim_line",
+      "label": "Supporting claim line",
+      "x": 90,
+      "y": 1378,
+      "width": 912,
+      "textAlign": "left",
+      "text": "THAT'S NOT BAD LUCK.\nIT'S PHYSICS.",
+      "fontSize": 78,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.95,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "whiteSpace": "pre-line",
+      "z": 26,
+      "role": "claim",
+      "accepts": [
+        "claim",
+        "reframe"
+      ],
+      "maxChars": 44,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark",
+      "x": 90,
+      "y": 1664,
+      "width": 900,
+      "textAlign": "left",
+      "text": "ATHLETES ACCELERATION",
+      "fontSize": 34,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 500,
+      "color": "#ffffff",
+      "letterSpacing": "0.14em",
+      "textTransform": "uppercase",
+      "z": 27,
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    }
+  ],
+  "media": {
+    "path": "./assets/batch-media/ms-hurdle.jpg",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1
+  }
+}

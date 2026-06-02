@@ -34,7 +34,7 @@ function StatRevealReel({ data = {} }) {
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
       <div style={{ position: 'absolute', top: -200, right: -200, width: 600, height: 600, background: `radial-gradient(circle, ${RED}22 0%, transparent 60%)`, filter: 'blur(20px)' }}/>
 
-      <div style={{ position: 'absolute', top: 130, left: 60, padding: '8px 16px', background: RED, fontFamily: '"JetBrains Mono", monospace', fontSize: 26, color: '#fff', letterSpacing: '0.16em', opacity: eyebrowT }}>// {eyebrow}</div>
+      <Eyebrow top={130} fontSize={26}>// {eyebrow}</Eyebrow>
 
       <div style={{ position: 'absolute', top: 230, left: 60, right: 60, fontFamily: 'Anton, sans-serif', fontSize: 170, color: '#fff', lineHeight: 0.9, opacity: eyebrowT }}>{title1}<br/><span style={{color:RED}}>{title2}</span></div>
 
@@ -55,10 +55,39 @@ function StatRevealReel({ data = {} }) {
 }
 window.StatRevealReel = StatRevealReel;
 const STAT_REVEAL_REEL_SPEC = { id:'stat-reveal-reel', name:'STAT REVEAL · REEL', fields:[
-  {key:'duration',label:'Length',type:'slider',default:6,min:3,max:15,step:0.5,unit:'s'},
-  {key:'eyebrow',label:'Eyebrow',type:'text',default:'90-DAY GUARANTEE'},
-  {key:'title1',label:'Title 1',type:'text',default:'WE GUARANTEE'},
-  {key:'title2',label:'Title 2 (red)',type:'text',default:'RESULTS.'},
-  {key:'ctaText',label:'CTA',type:'text',default:'BOOK YOUR FREE ASSESSMENT'},
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 6,
+    "min": 3,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "90-DAY GUARANTEE"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "WE GUARANTEE"
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "RESULTS."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "BOOK YOUR FREE ASSESSMENT"
+  }
 ]};
 window.STAT_REVEAL_REEL_SPEC = STAT_REVEAL_REEL_SPEC;

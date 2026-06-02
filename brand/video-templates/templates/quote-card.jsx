@@ -58,10 +58,10 @@ function QuoteCardSquare({ data = {} }) {
 
       {/* Eyebrow */}
       <TplText field="eyebrow" data={data}
-        base={{ position: 'absolute', top: 100, left: 100 }}
-        style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 26, color: RED, letterSpacing: '0.18em', opacity: eyebrowT }}
+        base={{ position: 'absolute', top: 100, left: 100, padding: '10px 22px', background: '#fff', borderRadius: 8 }}
+        style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 26, color: RED, fontWeight: 700, letterSpacing: '0.08em', opacity: eyebrowT }}
         fitKey={eyebrow}
-      >// {eyebrow}</TplText>
+      >{eyebrow}</TplText>
 
       {/* Big quote mark */}
       <div style={{
@@ -189,12 +189,16 @@ const QUOTE_CARD_SPEC = {
   },
   {
     "key": "eyebrow",
+
+    "role": "eyebrow",
     "label": "Eyebrow tag",
     "type": "text",
     "default": "PARENT TESTIMONIAL"
   },
   {
     "key": "quoteText",
+
+    "role": "testimonial",
     "label": "Quote (one line)",
     "type": "textarea",
     "default": "MY KID GAINED 4 INCHES ON HIS VERTICAL IN 8 WEEKS.",
@@ -202,24 +206,32 @@ const QUOTE_CARD_SPEC = {
   },
   {
     "key": "bylineName",
+
+    "role": "byline",
     "label": "Quoted by",
     "type": "text",
     "default": "SARAH M."
   },
   {
     "key": "bylineMeta",
+
+    "role": "byline",
     "label": "Byline meta",
     "type": "text",
     "default": "PARENT · U14 BASKETBALL · NOBLESVILLE"
   },
   {
     "key": "statsLabel",
+
+    "role": "eyebrow",
     "label": "Stats label",
     "type": "text",
     "default": "HER ATHLETE'S 90-DAY DATA"
   },
   {
     "key": "stats",
+
+    "role": "stat",
     "label": "Stat chips (value|label · …)",
     "type": "text",
     "default": "+4.2\"|VERT · −0.4s|40YD · +25LB|BENCH"

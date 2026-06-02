@@ -30,13 +30,7 @@ function Top10LeaderboardReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
-      <div style={{
-        position: 'absolute', top: 110, left: 60,
-        padding: '8px 16px', background: RED,
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 24, color: '#fff', letterSpacing: '0.16em',
-        opacity: eyebrowT,
-      }}>// {eyebrow}</div>
+      <Eyebrow top={110} fontSize={24}>// {eyebrow}</Eyebrow>
 
       <div style={{
         position: 'absolute', top: 200, left: 60, right: 60,
@@ -75,28 +69,142 @@ const TOP10_LEADERBOARD_SPEC = {
   id: 'top10-leaderboard',
   name: 'TOP 10 LEADERBOARD',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: "THIS WEEK'S FASTEST" },
-    { key: 'title1', label: 'Title 1', type: 'text', default: 'TOP 5' },
-    { key: 'title2', label: 'Title 2 (red)', type: 'text', default: '40 YD DASH.' },
-    { key: 'boardLabel', label: 'Board label', type: 'text', default: '40 YARD DASH · TOP 5' },
-    { key: 'boardUnit', label: 'Unit', type: 'text', default: 's' },
-    { key: 'e1n', label: '#1 name', type: 'text', default: 'JORDAN K.' },
-    { key: 'e1v', label: '#1 value', type: 'text', default: '4.42' },
-    { key: 'e1m', label: '#1 meta', type: 'text', default: 'U17 · FB' },
-    { key: 'e2n', label: '#2 name', type: 'text', default: 'MAYA R.' },
-    { key: 'e2v', label: '#2 value', type: 'text', default: '4.51' },
-    { key: 'e2m', label: '#2 meta', type: 'text', default: 'U16 · TF' },
-    { key: 'e3n', label: '#3 name', type: 'text', default: 'TYLER S.' },
-    { key: 'e3v', label: '#3 value', type: 'text', default: '4.58' },
-    { key: 'e3m', label: '#3 meta', type: 'text', default: 'U17 · SOC' },
-    { key: 'e4n', label: '#4 name', type: 'text', default: 'JENNA W.' },
-    { key: 'e4v', label: '#4 value', type: 'text', default: '4.65' },
-    { key: 'e4m', label: '#4 meta', type: 'text', default: 'U15 · BB' },
-    { key: 'e5n', label: '#5 name', type: 'text', default: 'CHRIS M.' },
-    { key: 'e5v', label: '#5 value', type: 'text', default: '4.71' },
-    { key: 'e5m', label: '#5 meta', type: 'text', default: 'U16 · FB' },
-    { key: 'ctaText', label: 'CTA text', type: 'text', default: 'NEXT WEEK = YOU.' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "THIS WEEK'S FASTEST"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "TOP 5"
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "40 YD DASH."
+  },
+  {
+    "key": "boardLabel",
+    "label": "Board label",
+    "type": "text",
+    "default": "40 YARD DASH · TOP 5"
+  },
+  {
+    "key": "boardUnit",
+    "label": "Unit",
+    "type": "text",
+    "default": "s"
+  },
+  {
+    "key": "e1n",
+    "label": "#1 name",
+    "type": "text",
+    "default": "JORDAN K."
+  },
+  {
+    "key": "e1v",
+    "label": "#1 value",
+    "type": "text",
+    "default": "4.42"
+  },
+  {
+    "key": "e1m",
+    "label": "#1 meta",
+    "type": "text",
+    "default": "U17 · FB"
+  },
+  {
+    "key": "e2n",
+    "label": "#2 name",
+    "type": "text",
+    "default": "MAYA R."
+  },
+  {
+    "key": "e2v",
+    "label": "#2 value",
+    "type": "text",
+    "default": "4.51"
+  },
+  {
+    "key": "e2m",
+    "label": "#2 meta",
+    "type": "text",
+    "default": "U16 · TF"
+  },
+  {
+    "key": "e3n",
+    "label": "#3 name",
+    "type": "text",
+    "default": "TYLER S."
+  },
+  {
+    "key": "e3v",
+    "label": "#3 value",
+    "type": "text",
+    "default": "4.58"
+  },
+  {
+    "key": "e3m",
+    "label": "#3 meta",
+    "type": "text",
+    "default": "U17 · SOC"
+  },
+  {
+    "key": "e4n",
+    "label": "#4 name",
+    "type": "text",
+    "default": "JENNA W."
+  },
+  {
+    "key": "e4v",
+    "label": "#4 value",
+    "type": "text",
+    "default": "4.65"
+  },
+  {
+    "key": "e4m",
+    "label": "#4 meta",
+    "type": "text",
+    "default": "U15 · BB"
+  },
+  {
+    "key": "e5n",
+    "label": "#5 name",
+    "type": "text",
+    "default": "CHRIS M."
+  },
+  {
+    "key": "e5v",
+    "label": "#5 value",
+    "type": "text",
+    "default": "4.71"
+  },
+  {
+    "key": "e5m",
+    "label": "#5 meta",
+    "type": "text",
+    "default": "U16 · FB"
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA text",
+    "type": "text",
+    "default": "NEXT WEEK = YOU."
+  }
+],
 };
 window.TOP10_LEADERBOARD_SPEC = TOP10_LEADERBOARD_SPEC;

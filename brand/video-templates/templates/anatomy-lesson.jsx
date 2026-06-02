@@ -40,12 +40,7 @@ function AnatomyLessonReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
-      <div style={{
-        position: 'absolute', top: 110, left: 60, right: 60,
-        opacity: eyebrowT,
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 28, color: RED, letterSpacing: '0.18em',
-      }}>// {eyebrow}</div>
+      <Eyebrow top={110} fontSize={28}>// {eyebrow}</Eyebrow>
 
       <div style={{
         position: 'absolute', top: 180, left: 60, right: 60,
@@ -113,25 +108,148 @@ const ANATOMY_LESSON_SPEC = {
   id: 'anatomy-lesson',
   name: 'ANATOMY LESSON',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 8, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow tag', type: 'text', default: 'ANATOMY LESSON' },
-    { key: 'title1', label: 'Title line 1', type: 'text', default: 'WHAT MAKES YOU' },
-    { key: 'title2', label: 'Title line 2 (red)', type: 'text', default: 'FAST.' },
-    { key: 'movement', label: 'Movement label', type: 'text', default: 'THE SPRINT' },
-    { key: 'callout1Label', label: 'Callout 1 label', type: 'text', default: 'CORE' },
-    { key: 'callout1X', label: 'Callout 1 X %', type: 'number', default: 50, step: 1, min: 0, max: 100 },
-    { key: 'callout1Y', label: 'Callout 1 Y %', type: 'number', default: 32, step: 1, min: 0, max: 100 },
-    { key: 'callout2Label', label: 'Callout 2 label', type: 'text', default: 'GLUTES' },
-    { key: 'callout2X', label: 'Callout 2 X %', type: 'number', default: 60, step: 1, min: 0, max: 100 },
-    { key: 'callout2Y', label: 'Callout 2 Y %', type: 'number', default: 58, step: 1, min: 0, max: 100 },
-    { key: 'callout3Label', label: 'Callout 3 label', type: 'text', default: 'HAMSTRING' },
-    { key: 'callout3X', label: 'Callout 3 X %', type: 'number', default: 40, step: 1, min: 0, max: 100 },
-    { key: 'callout3Y', label: 'Callout 3 Y %', type: 'number', default: 70, step: 1, min: 0, max: 100 },
-    { key: 'callout4Label', label: 'Callout 4 label', type: 'text', default: 'CALF' },
-    { key: 'callout4X', label: 'Callout 4 X %', type: 'number', default: 62, step: 1, min: 0, max: 100 },
-    { key: 'callout4Y', label: 'Callout 4 Y %', type: 'number', default: 84, step: 1, min: 0, max: 100 },
-    { key: 'insight', label: 'Insight', type: 'textarea', default: 'Power flows hip → knee → ground. Train the chain, not the parts.' },
-    { key: 'ctaText', label: 'CTA text', type: 'text', default: 'TRAIN THE CHAIN →' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 8,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow tag",
+    "type": "text",
+    "default": "ANATOMY LESSON"
+  },
+  {
+    "key": "title1",
+    "label": "Title line 1",
+    "type": "text",
+    "default": "WHAT MAKES YOU"
+  },
+  {
+    "key": "title2",
+    "label": "Title line 2 (red)",
+    "type": "text",
+    "default": "FAST."
+  },
+  {
+    "key": "movement",
+    "label": "Movement label",
+    "type": "text",
+    "default": "THE SPRINT"
+  },
+  {
+    "key": "callout1Label",
+    "label": "Callout 1 label",
+    "type": "text",
+    "default": "CORE"
+  },
+  {
+    "key": "callout1X",
+    "label": "Callout 1 X %",
+    "type": "number",
+    "default": 50,
+    "step": 1,
+    "min": 0,
+    "max": 100
+  },
+  {
+    "key": "callout1Y",
+    "label": "Callout 1 Y %",
+    "type": "number",
+    "default": 32,
+    "step": 1,
+    "min": 0,
+    "max": 100
+  },
+  {
+    "key": "callout2Label",
+    "label": "Callout 2 label",
+    "type": "text",
+    "default": "GLUTES"
+  },
+  {
+    "key": "callout2X",
+    "label": "Callout 2 X %",
+    "type": "number",
+    "default": 60,
+    "step": 1,
+    "min": 0,
+    "max": 100
+  },
+  {
+    "key": "callout2Y",
+    "label": "Callout 2 Y %",
+    "type": "number",
+    "default": 58,
+    "step": 1,
+    "min": 0,
+    "max": 100
+  },
+  {
+    "key": "callout3Label",
+    "label": "Callout 3 label",
+    "type": "text",
+    "default": "HAMSTRING"
+  },
+  {
+    "key": "callout3X",
+    "label": "Callout 3 X %",
+    "type": "number",
+    "default": 40,
+    "step": 1,
+    "min": 0,
+    "max": 100
+  },
+  {
+    "key": "callout3Y",
+    "label": "Callout 3 Y %",
+    "type": "number",
+    "default": 70,
+    "step": 1,
+    "min": 0,
+    "max": 100
+  },
+  {
+    "key": "callout4Label",
+    "label": "Callout 4 label",
+    "type": "text",
+    "default": "CALF"
+  },
+  {
+    "key": "callout4X",
+    "label": "Callout 4 X %",
+    "type": "number",
+    "default": 62,
+    "step": 1,
+    "min": 0,
+    "max": 100
+  },
+  {
+    "key": "callout4Y",
+    "label": "Callout 4 Y %",
+    "type": "number",
+    "default": 84,
+    "step": 1,
+    "min": 0,
+    "max": 100
+  },
+  {
+    "key": "insight",
+    "label": "Insight",
+    "type": "textarea",
+    "default": "Power flows hip → knee → ground. Train the chain, not the parts."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA text",
+    "type": "text",
+    "default": "TRAIN THE CHAIN →"
+  }
+],
 };
 window.ANATOMY_LESSON_SPEC = ANATOMY_LESSON_SPEC;

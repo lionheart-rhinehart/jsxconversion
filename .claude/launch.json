@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "editor-server",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["scripts/editor-server.mjs"],
+      "port": 5173,
+      "autoPort": false
+    },
+    {
+      "name": "review",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["brand/video-templates/serve.mjs"],
+      "port": 5599,
+      "autoPort": false
+    }
+  ]
+}

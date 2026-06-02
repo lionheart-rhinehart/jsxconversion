@@ -1,0 +1,481 @@
+{
+  "schemaVersion": 1,
+  "campaign": "multisport-foundations",
+  "brand": "athletes-acceleration",
+  "knobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": {
+      "video": 0.6,
+      "gif": 0.15,
+      "static": 0.25
+    },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 3
+  },
+  "_planNotes": {
+    "rebuild": "Regenerated through the FIXED engine (brand-kit sync, placeholder suppression, locale anchor, motion tiers). Statics moved off the foreign cluster-1..22 test templates onto the clean AA-native bank cluster-30..37. Distinct template per beat; repetitionCap respected (cluster-34 and cluster-35 each used 3x across different beats).",
+    "locale": "angle.location = hamilton-county → every creative's eyebrow auto-anchors '// AGES 8-12 · HAMILTON COUNTY, IN' from the cascade (S4/S5). Set a per-asset location for per-facility variants.",
+    "copy": "Every line stands alone (audience+topic anchor + complete-thought hook). Guarantee verbatim + locked. No emoji / exclamation / em-dash.",
+    "footage": "A2 (cluster-33) takes a frame-grabbed Carmel sprint still. E1 (meet-coach) binds a coach clip. The rest are clean data/typographic cards (the E2 style) — no placeholder photos."
+  },
+  "angles": [
+    {
+      "id": "grind-trap",
+      "name": "My kid tries hard (The Grind Trap / The Last Rep Lie)",
+      "location": "hamilton-county",
+      "mechanism": "UMP Mechanism 1 — The Velocity Drop: fatigued reps encode slowness. Fix = the set ends the instant speed drops 10%.",
+      "emotionalJob": "End the parent's guilt. It's not your kid, not you — it's the unmeasured rep.",
+      "voice": "Head-coach-to-parent, declarative, metric-driven. No emoji / exclamation / em dash.",
+      "assets": [
+        {
+          "id": "A1",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "gif",
+          "source": "template",
+          "template": "fresh-multisport-foundations-grind-trap-A1",
+          "templateData": {
+            "duration": 3
+          },
+          "knowledgeRefs": [
+            "microscripts_dsi1_grind_trap.lines[0]"
+          ],
+          "status": "rendered",
+          "notes": "3s motion hook: 'The tired rep isn't effort. It's instruction.' Eyebrow auto-anchors.",
+          "output": "out/campaigns/multisport-foundations/grind-trap/A1.gif",
+          "thumb": "out/campaigns/multisport-foundations/grind-trap/A1.gif",
+          "renderedAt": "2026-06-01T19:55:18.750Z"
+        },
+        {
+          "id": "A2",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-33",
+          "templateData": {
+            "hook": "WORKS HARD. STILL THE SAME SPEED."
+          },
+          "knowledgeRefs": [
+            "ad_copy_series_1.ads[0]"
+          ],
+          "flags": [
+            "needs-kraken-path"
+          ],
+          "status": "rendered",
+          "notes": "AR2 lower-third hook over a Carmel sprint still (bg_photo).",
+          "output": "out/campaigns/multisport-foundations/grind-trap/A2.png",
+          "thumb": "out/campaigns/multisport-foundations/grind-trap/A2.png",
+          "renderedAt": "2026-06-01T19:55:21.729Z"
+        },
+        {
+          "id": "A3",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-34",
+          "templateData": {
+            "phrase": "TWO MORE\nREPS?",
+            "support": "Those last slow reps train slowness into your athlete."
+          },
+          "knowledgeRefs": [
+            "microscripts_dsi1_grind_trap.lines[2]"
+          ],
+          "status": "rendered",
+          "notes": "AR1b phrase-kill. Names the enemy coaching phrase, then the consequence.",
+          "output": "out/campaigns/multisport-foundations/grind-trap/A3.png",
+          "thumb": "out/campaigns/multisport-foundations/grind-trap/A3.png",
+          "renderedAt": "2026-06-01T19:55:24.638Z"
+        },
+        {
+          "id": "A4",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-35",
+          "templateData": {
+            "line1": "GRIND HARDER?",
+            "line2": "THE TIRED REP IS THE ONE THE BODY REMEMBERS."
+          },
+          "knowledgeRefs": [
+            "microscripts_dsi1_grind_trap.lines[1]"
+          ],
+          "status": "rendered",
+          "notes": "AR3 split red/black band. Grind-ethos attack.",
+          "output": "out/campaigns/multisport-foundations/grind-trap/A4.png",
+          "thumb": "out/campaigns/multisport-foundations/grind-trap/A4.png",
+          "renderedAt": "2026-06-01T19:55:27.722Z"
+        },
+        {
+          "id": "B1",
+          "beat": "B — Name the moment",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-35",
+          "templateData": {
+            "line1": "IT'S WORKING.",
+            "line2": "THE PROBLEM IS WHAT IT'S TEACHING."
+          },
+          "knowledgeRefs": [
+            "ad_copy_series_1.alt_hooks[1]"
+          ],
+          "status": "rendered",
+          "notes": "AR3 split band (≠ A4 copy). The recognizable struggle as a verdict.",
+          "output": "out/campaigns/multisport-foundations/grind-trap/B1.png",
+          "thumb": "out/campaigns/multisport-foundations/grind-trap/B1.png",
+          "renderedAt": "2026-06-01T19:55:30.565Z"
+        },
+        {
+          "id": "B2",
+          "beat": "B — Name the moment",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-30",
+          "templateData": {
+            "stat1_value": "6",
+            "stat1_label": "MONTHS IN",
+            "stat2_value": "0",
+            "stat2_label": "MPH FASTER",
+            "proof_citation": "EVERY PRACTICE · NEVER QUIT",
+            "claim_line": "THAT'S NOT BAD LUCK.\nIT'S PHYSICS."
+          },
+          "knowledgeRefs": [
+            "ad_copy_series_1.alt_hooks[3]",
+            "problem_mechanism.epiphany"
+          ],
+          "status": "rendered",
+          "notes": "AR1 giant-number reframing: 6 months in, 0 mph faster.",
+          "output": "out/campaigns/multisport-foundations/grind-trap/B2.png",
+          "thumb": "out/campaigns/multisport-foundations/grind-trap/B2.png",
+          "renderedAt": "2026-06-01T20:02:53.119Z"
+        },
+        {
+          "id": "C1",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "velocity-drop",
+          "templateData": {
+            "duration": 9,
+            "claim": "THE SET ENDS THE SECOND SPEED DROPS.",
+            "coachName": "COACH GRAHAM WILKERSON",
+            "credentials": "CSCS · NFL-TRAINED"
+          },
+          "knowledgeRefs": [
+            "problem_mechanism.solution_fix",
+            "named_ip.solution_ip"
+          ],
+          "status": "rendered",
+          "notes": "Velocity-drop animation SHOWS the set ending at the 10% cutoff. Coach as lower-third.",
+          "output": "out/campaigns/multisport-foundations/grind-trap/C1.mp4",
+          "thumb": "out/campaigns/multisport-foundations/grind-trap/C1.mp4",
+          "renderedAt": "2026-06-01T19:55:59.806Z"
+        },
+        {
+          "id": "C2",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-37",
+          "templateData": {
+            "claim": "NOT MORE REPS. THE RIGHT ONES, MEASURED."
+          },
+          "knowledgeRefs": [
+            "product_details",
+            "named_ip.solution_ip"
+          ],
+          "status": "rendered",
+          "notes": "AR6 mechanism velocity-chart (bars + 10% cutoff carry the mechanism).",
+          "output": "out/campaigns/multisport-foundations/grind-trap/C2.png",
+          "thumb": "out/campaigns/multisport-foundations/grind-trap/C2.png",
+          "renderedAt": "2026-06-01T19:56:02.607Z"
+        },
+        {
+          "id": "C3",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-34",
+          "templateData": {
+            "phrase": "THE SET ENDS\nWHEN SPEED DROPS.",
+            "support": "No two more. Every rep your athlete does stays fast."
+          },
+          "knowledgeRefs": [
+            "named_ip.solution_ip",
+            "problem_mechanism.solution_fix"
+          ],
+          "status": "rendered",
+          "notes": "AR1b phrase-kill stating the 10% rule (≠ C2 chart).",
+          "output": "out/campaigns/multisport-foundations/grind-trap/C3.png",
+          "thumb": "out/campaigns/multisport-foundations/grind-trap/C3.png",
+          "renderedAt": "2026-06-01T19:56:05.222Z"
+        },
+        {
+          "id": "D1",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-36",
+          "templateData": {
+            "reframe": "THEY'RE NOT FALLING BEHIND. THEIR TRAINING IS PUSHING THEM BACK."
+          },
+          "knowledgeRefs": [
+            "microscripts_dsi1_grind_trap.lines[4]",
+            "problem_mechanism.reframe_of_blame"
+          ],
+          "status": "rendered",
+          "notes": "AR4 centered epiphany. Emotional close of DSI #1.",
+          "output": "out/campaigns/multisport-foundations/grind-trap/D1.png",
+          "thumb": "out/campaigns/multisport-foundations/grind-trap/D1.png",
+          "renderedAt": "2026-06-01T19:56:07.763Z"
+        },
+        {
+          "id": "D2",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-35",
+          "templateData": {
+            "line1": "THIS WAS NEVER",
+            "line2": "YOUR KID'S FAULT. OR YOURS."
+          },
+          "knowledgeRefs": [
+            "problem_mechanism.reframe_of_blame",
+            "ad_copy_series_1.ads[2]"
+          ],
+          "status": "rendered",
+          "notes": "AR3 split band (≠ A4/B1 copy). Blame removal from AD3.",
+          "output": "out/campaigns/multisport-foundations/grind-trap/D2.png",
+          "thumb": "out/campaigns/multisport-foundations/grind-trap/D2.png",
+          "renderedAt": "2026-06-01T19:56:10.324Z"
+        },
+        {
+          "id": "D3",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-34",
+          "templateData": {
+            "phrase": "IT'S NOT\nYOUR KID.",
+            "support": "It's the unmeasured rep. Train the fast one, measured."
+          },
+          "knowledgeRefs": [
+            "problem_mechanism.reframe_of_blame",
+            "problem_mechanism.name"
+          ],
+          "status": "rendered",
+          "notes": "AR1b phrase-kill (≠ D1/D2). Names the true culprit.",
+          "output": "out/campaigns/multisport-foundations/grind-trap/D3.png",
+          "thumb": "out/campaigns/multisport-foundations/grind-trap/D3.png",
+          "renderedAt": "2026-06-01T19:56:12.763Z"
+        },
+        {
+          "id": "E1",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "meet-coach",
+          "clip": "brand/video-templates/assets/e1-coach-action.mp4",
+          "templateData": {
+            "eyebrow": "WHY HARD WORK ISN'T ENOUGH",
+            "coachFirst": "COACH GRAHAM",
+            "coachLast": "WILKERSON.",
+            "coachTitle": "FOUNDER · ATHLETES ACCELERATION",
+            "quote": "WE END THE SET THE SECOND SPEED DROPS. EVERY REP STAYS FAST.",
+            "credentials": "CSCS · TRAINED ZACK MARTIN, TED KARRAS, NICK MARTIN",
+            "facts": "224%|GREATER VERTICAL (WANG 2026) · 28%|LESS FATIGUE · 8-12|THE WINDOW",
+            "ctaText": "BOOK THE ATHLETE ANALYSIS",
+            "ctaMicro": "FREE · REAL NUMBERS, NOT A PITCH"
+          },
+          "knowledgeRefs": [
+            "credentials",
+            "proof_studies[0]",
+            "the_offer"
+          ],
+          "flags": [
+            "needs-kraken-path"
+          ],
+          "status": "rendered",
+          "notes": "Coach VSL (proof). Binds a real coach clip. Differentiated from E3.",
+          "output": "out/campaigns/multisport-foundations/grind-trap/E1.mp4",
+          "thumb": "out/campaigns/multisport-foundations/grind-trap/E1.mp4",
+          "renderedAt": "2026-06-01T19:57:13.045Z"
+        },
+        {
+          "id": "E2",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-30",
+          "templateData": {
+            "stat1_value": "224%",
+            "stat1_label": "GREATER VERTICAL JUMP",
+            "stat2_value": "28%",
+            "stat2_label": "LESS TOTAL FATIGUE",
+            "proof_citation": "WANG 2026 · FRONTIERS IN PHYSIOLOGY",
+            "claim_line": "LESS WORK. MORE SPEED.\nTHAT'S PHYSICS."
+          },
+          "knowledgeRefs": [
+            "proof_studies[0]"
+          ],
+          "status": "rendered",
+          "notes": "AR1 stat card (Cody-approved). ≠ B2 copy.",
+          "output": "out/campaigns/multisport-foundations/grind-trap/E2.png",
+          "thumb": "out/campaigns/multisport-foundations/grind-trap/E2.png",
+          "renderedAt": "2026-06-01T20:02:56.176Z"
+        },
+        {
+          "id": "E3",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-31",
+          "templateData": {
+            "coach_name": "COACH GRAHAM\nWILKERSON",
+            "coach_title": "CSCS · FOUNDER, ATHLETES ACCELERATION",
+            "proof_hero": "TRAINED NFL\nPRO BOWLERS",
+            "proof_names": "ZACK MARTIN · TED KARRAS · NICK MARTIN",
+            "claim_line": "THE SAME TECH THAT BUILT A 7X PRO BOWLER. NOW ON THE 8 TO 12 WINDOW."
+          },
+          "knowledgeRefs": [
+            "credentials"
+          ],
+          "status": "rendered",
+          "notes": "AR5 credential verdict (static). ≠ E1 (video) and E2 (stat).",
+          "output": "out/campaigns/multisport-foundations/grind-trap/E3.png",
+          "thumb": "out/campaigns/multisport-foundations/grind-trap/E3.png",
+          "renderedAt": "2026-06-01T20:02:59.078Z"
+        },
+        {
+          "id": "F1",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "stat-reveal",
+          "templateData": {
+            "eyebrow": "90-DAY GUARANTEE",
+            "title1": "WE GUARANTEE",
+            "title2": "RESULTS.",
+            "stat1Value": 1,
+            "stat1Unit": " MPH",
+            "stat1Label": "SPEED",
+            "stat2Value": 3,
+            "stat2Unit": "\"",
+            "stat2Label": "VERTICAL",
+            "freeLine1": "OR IT'S",
+            "freeLine2": "FREE.",
+            "ctaText": "BOOK YOUR FREE ATHLETE ANALYSIS"
+          },
+          "knowledgeRefs": [
+            "guarantee",
+            "the_offer"
+          ],
+          "status": "rendered",
+          "notes": "Guarantee reveal video. ≠ F3.",
+          "output": "out/campaigns/multisport-foundations/grind-trap/F1.mp4",
+          "thumb": "out/campaigns/multisport-foundations/grind-trap/F1.mp4",
+          "renderedAt": "2026-06-01T19:57:41.763Z"
+        },
+        {
+          "id": "F2",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-32",
+          "templateData": {
+            "offer_headline": "FREE ATHLETE\nANALYSIS",
+            "offer_detail": "Real sprint and jump numbers. Not a pitch. A data set you keep.",
+            "cta": "BOOK YOUR FREE ASSESSMENT"
+          },
+          "knowledgeRefs": [
+            "the_offer",
+            "guarantee"
+          ],
+          "status": "rendered",
+          "notes": "AR7 offer card. Guarantee band verbatim-locked.",
+          "output": "out/campaigns/multisport-foundations/grind-trap/F2.png",
+          "thumb": "out/campaigns/multisport-foundations/grind-trap/F2.png",
+          "renderedAt": "2026-06-01T20:03:01.882Z"
+        },
+        {
+          "id": "F3",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "season-clock",
+          "templateData": {
+            "duration": 7
+          },
+          "knowledgeRefs": [
+            "the_offer",
+            "guarantee"
+          ],
+          "status": "rendered",
+          "notes": "Season-clock retarget: another season, same speed → see the number first + guarantee. ≠ F1.",
+          "output": "out/campaigns/multisport-foundations/grind-trap/F3.mp4",
+          "thumb": "out/campaigns/multisport-foundations/grind-trap/F3.mp4",
+          "renderedAt": "2026-06-01T19:58:06.009Z"
+        },
+        {
+          "id": "FA1",
+          "beat": "A→F full arc",
+          "temperature": "warm-hot",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-multisport-foundations-grind-trap-FA1",
+          "templateData": {
+            "duration": 30
+          },
+          "knowledgeRefs": [
+            "ad_copy_series_1.ads[2]",
+            "problem_mechanism",
+            "proof_studies[0]",
+            "guarantee",
+            "the_offer"
+          ],
+          "status": "rendered",
+          "notes": "30s full-arc VSL. Opens with the self-contextualizing subject hook + locale anchor.",
+          "output": "out/campaigns/multisport-foundations/grind-trap/FA1.mp4",
+          "thumb": "out/campaigns/multisport-foundations/grind-trap/FA1.mp4",
+          "renderedAt": "2026-06-01T19:59:32.921Z"
+        },
+        {
+          "id": "BR1",
+          "beat": null,
+          "temperature": "any",
+          "format": "video",
+          "source": "template",
+          "template": "logo-sting",
+          "templateData": {
+            "wordmark1": "ATHLETES",
+            "wordmark2": "ACCELERATION",
+            "tagline": "THE RIGHT REPS. MEASURED.",
+            "url": "ATHLETESACCEL.COM"
+          },
+          "knowledgeRefs": [],
+          "status": "rendered",
+          "notes": "Brand bumper.",
+          "output": "out/campaigns/multisport-foundations/grind-trap/BR1.mp4",
+          "thumb": "out/campaigns/multisport-foundations/grind-trap/BR1.mp4",
+          "renderedAt": "2026-06-01T19:59:57.543Z"
+        }
+      ]
+    }
+  ]
+}

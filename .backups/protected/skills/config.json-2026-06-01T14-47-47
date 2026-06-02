@@ -1,0 +1,23 @@
+{
+  "_comment": "Config for the /creative-engine skill. The `kraken` block is connection-level only: The Kraken's Content Library is a Supabase store (content_outputs + Storage buckets), NOT local folders. Source/destination folders and the workspace (AA location) are chosen PER RUN and saved to campaigns/<name>/kraken.json — never here. supabaseHost is stored WITHOUT scheme. credentialsEnvPath points at The Kraken's gitignored .env.local; the service-role + anon keys are read from there at runtime and never copied into this repo. brands maps a spoken brand name to its slug + the data-tier file used for the cascade fill (data/brand.<dataTier>.json) and its brand-kit path.",
+  "kraken": {
+    "supabaseHost": "xdszlcvmfjdjvqxhyxly.supabase.co",
+    "credentialsEnvPath": "D:/Claude CODE/The Kraken/.env.local",
+    "workspacesFile": "~/.claude/client-workspaces.json"
+  },
+  "defaultKnobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": { "video": 0.6, "gif": 0.15, "static": 0.25 },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 3
+  },
+  "brands": {
+    "athletes-acceleration": {
+      "slug": "athletes-acceleration",
+      "aliases": ["athletes acceleration", "aa", "genesis", "genesis sports performance"],
+      "dataTier": "athletes-acceleration",
+      "brandKit": "brand/aa-design-system/project/README.md",
+      "krakenSubfolder": "athletes-acceleration"
+    }
+  }
+}

@@ -27,7 +27,7 @@ function QACardReel({ data = {} }) {
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
       {/* Top half: question on dark with eyebrow */}
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '52%', background: '#15171a', padding: '110px 60px 60px', boxSizing: 'border-box' }}>
-        <div style={{ padding: '8px 16px', background: RED, display: 'inline-block', fontFamily: '"JetBrains Mono", monospace', fontSize: 24, color: '#fff', letterSpacing: '0.16em', opacity: eyebrowT }}>// {eyebrow}</div>
+        <Eyebrow top={150} fontSize={24}>// {eyebrow}</Eyebrow>
         <div style={{ marginTop: 28, fontFamily: '"JetBrains Mono", monospace', fontSize: 22, color: '#969ca7', letterSpacing: '0.12em', opacity: qLabelT }}>{askedBy}</div>
         <div style={{ marginTop: 16, fontFamily: 'Anton, sans-serif', fontSize: 92, color: '#fff', lineHeight: 0.95, opacity: qT, transform: `translateY(${(1 - qT) * 14}px)` }}>"{question}"</div>
       </div>
@@ -61,17 +61,76 @@ window.QACardReel = QACardReel;
 const QA_CARD_SPEC = {
   id: 'qa-card', name: 'Q & A CARD',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'ASK THE COACH' },
-    { key: 'askedBy', label: 'Asked by', type: 'text', default: '@DM FROM A PARENT' },
-    { key: 'question', label: 'Question', type: 'textarea', default: 'WHEN SHOULD MY 12-YEAR-OLD START LIFTING?' },
-    { key: 'answerLabel', label: 'Answer label', type: 'text', default: "COACH'S ANSWER:" },
-    { key: 'answerLine1', label: 'Answer line 1 (red)', type: 'text', default: 'YESTERDAY.' },
-    { key: 'answerLine2', label: 'Answer line 2', type: 'text', default: 'WITH PROPER COACHING.' },
-    { key: 'answerNote', label: 'Answer note', type: 'textarea', default: 'The risk is bad coaching, not the age. Start now with someone who knows.' },
-    { key: 'coachName', label: 'Coach signature', type: 'text', default: 'COACH TORRES' },
-    { key: 'ctaText', label: 'CTA', type: 'text', default: 'GOT A QUESTION? DM US.' },
-    { key: 'media', label: 'Coach photo/video', type: 'image', default: 'assets/photo-coach-action.jpg' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "ASK THE COACH"
+  },
+  {
+    "key": "askedBy",
+    "label": "Asked by",
+    "type": "text",
+    "default": "@DM FROM A PARENT"
+  },
+  {
+    "key": "question",
+    "label": "Question",
+    "type": "textarea",
+    "default": "WHEN SHOULD MY 12-YEAR-OLD START LIFTING?"
+  },
+  {
+    "key": "answerLabel",
+    "label": "Answer label",
+    "type": "text",
+    "default": "COACH'S ANSWER:"
+  },
+  {
+    "key": "answerLine1",
+    "label": "Answer line 1 (red)",
+    "type": "text",
+    "default": "YESTERDAY."
+  },
+  {
+    "key": "answerLine2",
+    "label": "Answer line 2",
+    "type": "text",
+    "default": "WITH PROPER COACHING."
+  },
+  {
+    "key": "answerNote",
+    "label": "Answer note",
+    "type": "textarea",
+    "default": "The risk is bad coaching, not the age. Start now with someone who knows."
+  },
+  {
+    "key": "coachName",
+    "label": "Coach signature",
+    "type": "text",
+    "default": "COACH TORRES"
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "GOT A QUESTION? DM US."
+  },
+  {
+    "key": "media",
+    "label": "Coach photo/video",
+    "type": "image",
+    "default": "assets/photo-coach-action.jpg"
+  }
+],
 };
 window.QA_CARD_SPEC = QA_CARD_SPEC;

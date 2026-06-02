@@ -1,0 +1,156 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "bg",
+      "tag": "bg_fill",
+      "label": "Ink background",
+      "type": "rect",
+      "x": 0, "y": 0, "width": 1080, "height": 1920,
+      "fill": "#0a0b0d",
+      "z": 0
+    },
+    {
+      "id": "glow",
+      "tag": "glow",
+      "label": "Red corner glow",
+      "type": "rect",
+      "x": 620, "y": -160, "width": 620, "height": 620,
+      "fill": "radial-gradient(circle, rgba(196,20,29,0.22) 0%, rgba(196,20,29,0) 62%)",
+      "z": 1
+    },
+    {
+      "id": "panel",
+      "tag": "panel",
+      "label": "Terminal card",
+      "type": "rect",
+      "x": 60, "y": 520, "width": 960, "height": 900,
+      "fill": "rgba(8,9,11,0.85)",
+      "border": "1px solid rgba(255,255,255,0.14)",
+      "z": 2
+    },
+    {
+      "id": "bottom_strip",
+      "tag": "accent_strip",
+      "label": "Bottom red strip",
+      "type": "rect",
+      "x": 0, "y": 1890, "width": 1080, "height": 30,
+      "fill": "#c4141d",
+      "z": 15
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Eyebrow (mono, red box)",
+      "x": 64, "y": 150, "width": 952,
+      "textAlign": "left",
+      "text": "// THE MECHANISM",
+      "fontSize": 30,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#ffffff",
+      "letterSpacing": "0.14em",
+      "textTransform": "uppercase",
+      "z": 20
+    },
+    {
+      "id": "headline",
+      "tag": "title",
+      "label": "Headline (Anton)",
+      "x": 64, "y": 250, "width": 952,
+      "textAlign": "left",
+      "text": "THE LAST REP\nWRITES SLOW CODE.",
+      "fontSize": 104,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.92,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "whiteSpace": "pre-line",
+      "z": 21
+    },
+    {
+      "id": "chain1",
+      "tag": "chain1",
+      "label": "Chain step 1",
+      "x": 110, "y": 600, "width": 860,
+      "textAlign": "center",
+      "text": "TIRED REP",
+      "fontSize": 96,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 1,
+      "textTransform": "uppercase",
+      "z": 22
+    },
+    {
+      "id": "arrow1",
+      "label": "down arrow 1",
+      "x": 110, "y": 730, "width": 860,
+      "textAlign": "center",
+      "text": "↓",
+      "fontSize": 70,
+      "fontFamily": "JetBrains Mono",
+      "color": "#5b606b",
+      "z": 22
+    },
+    {
+      "id": "chain2",
+      "tag": "chain2",
+      "label": "Chain step 2 (red)",
+      "x": 110, "y": 840, "width": 860,
+      "textAlign": "center",
+      "text": "SLOW CODE",
+      "fontSize": 110,
+      "fontFamily": "Anton",
+      "color": "#c4141d",
+      "lineHeight": 1,
+      "textTransform": "uppercase",
+      "textShadow": "0 0 28px rgba(196,20,29,0.45)",
+      "z": 22
+    },
+    {
+      "id": "arrow2",
+      "label": "down arrow 2",
+      "x": 110, "y": 990, "width": 860,
+      "textAlign": "center",
+      "text": "↓",
+      "fontSize": 70,
+      "fontFamily": "JetBrains Mono",
+      "color": "#5b606b",
+      "z": 22
+    },
+    {
+      "id": "chain3",
+      "tag": "chain3",
+      "label": "Chain step 3",
+      "x": 110, "y": 1100, "width": 860,
+      "textAlign": "center",
+      "text": "SLOW ATHLETE",
+      "fontSize": 96,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 1,
+      "textTransform": "uppercase",
+      "z": 22
+    },
+    {
+      "id": "microscript",
+      "tag": "microscript",
+      "label": "Microscript (mono)",
+      "x": 64, "y": 1520, "width": 952,
+      "textAlign": "center",
+      "text": "THE VELOCITY CODE™",
+      "fontSize": 40,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#ffffff",
+      "letterSpacing": "0.1em",
+      "textTransform": "uppercase",
+      "z": 23
+    }
+  ]
+}

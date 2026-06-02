@@ -53,15 +53,7 @@ function DrillHowToReel({ data = {} }) {
           background: 'linear-gradient(180deg, rgba(10,11,13,0.4) 0%, rgba(10,11,13,0) 30%, rgba(10,11,13,0.9) 100%)',
         }}/>
         {/* Eyebrow over photo */}
-        <div style={{
-          position: 'absolute', top: 80, left: 60,
-          fontFamily: '"JetBrains Mono", monospace',
-          fontSize: 26, color: '#fff',
-          background: RED,
-          padding: '8px 16px',
-          letterSpacing: '0.18em',
-          opacity: eyebrowT,
-        }}>// DRILL HOW-TO</div>
+        <Eyebrow top={80} left={60} fontSize={26} style={{ opacity: eyebrowT }}>{eyebrow}</Eyebrow>
         {/* Title */}
         <div style={{
           position: 'absolute', bottom: 60, left: 60, right: 60,

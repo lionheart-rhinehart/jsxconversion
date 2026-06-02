@@ -93,7 +93,18 @@ function encodeFrames(framesDir, params, outPath) {
       "-framerate", String(params.FPS),
       "-i", join(framesDir, "f_%06d.png"),
       "-c:v", "libx264",
+      // Color correctness: the input PNG frames are full-range sRGB. Without
+      // explicit signaling, swscale converts RGB->YUV with its DEFAULT matrix
+      // (BT.601) and writes color_space=unknown, so players (which assume BT.709
+      // for HD) decode with the wrong matrix and shift saturated colors — the
+      // brand red visibly desaturated/orange vs the static PNGs. Force a BT.709
+      // conversion AND tag it BT.709 so the encode matrix == the decode matrix.
+      "-vf", "scale=in_range=full:out_range=tv:out_color_matrix=bt709,format=yuv420p",
       "-pix_fmt", "yuv420p",
+      "-colorspace", "bt709",
+      "-color_primaries", "bt709",
+      "-color_trc", "bt709",
+      "-color_range", "tv",
       "-movflags", "+faststart",
       "-preset", "medium",
       "-crf", "20",
@@ -193,35 +204,44 @@ ${fontsCssPath ? '<link rel="stylesheet" href="./fonts.css">' : ""}
   })();
 </script></body></html>`);
 
-  const puppeteer = (await import("puppeteer")).default;
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage",
-      "--font-render-hinting=none", "--disable-gpu", `--window-size=${params.WIDTH},${params.HEIGHT}`],
-    defaultViewport: { width: params.WIDTH, height: params.HEIGHT, deviceScaleFactor: 1 },
-  });
-  const page = await browser.newPage();
-  page.on("pageerror", (e) => console.error("[page error]", e.message));
-  await page.goto(pathToFileURL(html).href, { waitUntil: "load" });
-  await page.waitForFunction("window.__ready === true", { timeout: 15000 });
-  await page.evaluate(async () => { if (document.fonts && document.fonts.ready) await document.fonts.ready; });
-  await page.evaluate(() => window.__renderAt(0));
-  await new Promise((r) => setTimeout(r, 250));
-
   const totalFrames = Math.round(params.DURATION_SECONDS * params.FPS);
   const framesDir = join(tmp, "frames");
   mkdirSync(framesDir, { recursive: true });
-  for (let i = 0; i < totalFrames; i++) {
-    const t = i / params.FPS;
-    await page.evaluate((time) => window.__renderAt(time), t);
-    await page.screenshot({
-      path: join(framesDir, `f_${String(i).padStart(6, "0")}.png`),
-      omitBackground: false,
-      clip: { x: 0, y: 0, width: params.WIDTH, height: params.HEIGHT },
+
+  const puppeteer = (await import("puppeteer")).default;
+  // Wrap the whole browser lifecycle in try/finally so a waitForFunction
+  // timeout (or any screenshot error) can NEVER skip browser.close() and orphan
+  // Chrome. Mirrors the shipped path in claude-design.mjs. encodeFrames runs
+  // AFTER the finally — it needs the captured PNGs, not the live browser.
+  let browser;
+  try {
+    browser = await puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage",
+        "--font-render-hinting=none", "--disable-gpu", `--window-size=${params.WIDTH},${params.HEIGHT}`],
+      defaultViewport: { width: params.WIDTH, height: params.HEIGHT, deviceScaleFactor: 1 },
     });
-    if (i % params.FPS === 0 || i === totalFrames - 1) console.error(`[render] frame ${i + 1}/${totalFrames}`);
+    const page = await browser.newPage();
+    page.on("pageerror", (e) => console.error("[page error]", e.message));
+    await page.goto(pathToFileURL(html).href, { waitUntil: "load" });
+    await page.waitForFunction("window.__ready === true", { timeout: 15000 });
+    await page.evaluate(async () => { if (document.fonts && document.fonts.ready) await document.fonts.ready; });
+    await page.evaluate(() => window.__renderAt(0));
+    await new Promise((r) => setTimeout(r, 250));
+
+    for (let i = 0; i < totalFrames; i++) {
+      const t = i / params.FPS;
+      await page.evaluate((time) => window.__renderAt(time), t);
+      await page.screenshot({
+        path: join(framesDir, `f_${String(i).padStart(6, "0")}.png`),
+        omitBackground: false,
+        clip: { x: 0, y: 0, width: params.WIDTH, height: params.HEIGHT },
+      });
+      if (i % params.FPS === 0 || i === totalFrames - 1) console.error(`[render] frame ${i + 1}/${totalFrames}`);
+    }
+  } finally {
+    if (browser) await browser.close().catch(() => {});
   }
-  await browser.close();
   await encodeFrames(framesDir, params, outPath);
 }
 

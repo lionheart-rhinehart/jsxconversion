@@ -6,14 +6,57 @@ const MEMBER_MILESTONE_SPEC = {
   id: 'member-milestone',
   name: 'MEMBER MILESTONE',
   fields: [
-    { key: 'duration', label: 'Length',    type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow',  label: 'Eyebrow',   type: 'text',   default: 'CONSISTENCY WINS' },
-    { key: 'count',    label: 'Count',     type: 'number', default: 100, min: 1, step: 1, sub: 'counts up to this' },
-    { key: 'label',    label: 'Count label', type: 'text', default: 'SESSIONS LOGGED' },
-    { key: 'name',     label: 'Name',      type: 'text',   default: 'DEVIN CARTER' },
-    { key: 'note',     label: 'Note',      type: 'text',   default: 'Showed up. Did the work. Every single time.' },
-    { key: 'photo',    label: 'Photo (bg)', type: 'image', default: 'assets/photo-lifting.jpg', sub: 'shown dimmed behind' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "CONSISTENCY WINS"
+  },
+  {
+    "key": "count",
+    "label": "Count",
+    "type": "number",
+    "default": 100,
+    "min": 1,
+    "step": 1,
+    "sub": "counts up to this"
+  },
+  {
+    "key": "label",
+    "label": "Count label",
+    "type": "text",
+    "default": "SESSIONS LOGGED"
+  },
+  {
+    "key": "name",
+    "label": "Name",
+    "type": "text",
+    "default": "DEVIN CARTER"
+  },
+  {
+    "key": "note",
+    "label": "Note",
+    "type": "text",
+    "default": "Showed up. Did the work. Every single time."
+  },
+  {
+    "key": "photo",
+    "label": "Photo (bg)",
+    "type": "image",
+    "default": "assets/photo-lifting.jpg",
+    "sub": "shown dimmed behind"
+  }
+],
 };
 
 function MemberMilestoneReel({ data = {} }) {
@@ -41,11 +84,7 @@ function MemberMilestoneReel({ data = {} }) {
       <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(110% 70% at 50% 42%, rgba(245,158,11,0.14) 0%, rgba(10,11,13,0.6) 50%, rgba(10,11,13,0.97) 100%)' }}/>
 
       {/* Eyebrow */}
-      <div style={{ position: 'absolute', top: 180, left: 0, right: 0, textAlign: 'center', opacity: eyebrowT,
-        transform: `translateY(${(1 - eyebrowT) * -14}px)` }}>
-        <span style={{ display: 'inline-block', background: RED, color: '#fff', padding: '14px 38px',
-          fontFamily: '"JetBrains Mono", monospace', fontSize: 36, fontWeight: 700, letterSpacing: '0.18em' }}>// {eyebrow}</span>
-      </div>
+      <Eyebrow top={180} fontSize={36} style={{ left: 0, right: 0, textAlign: 'center', opacity: eyebrowT }}>{eyebrow}</Eyebrow>
 
       {/* Streak flame + count */}
       <div style={{ position: 'absolute', top: 420, left: 0, right: 0, display: 'flex', justifyContent: 'center',

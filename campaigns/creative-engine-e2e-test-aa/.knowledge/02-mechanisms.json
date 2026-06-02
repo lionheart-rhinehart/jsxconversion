@@ -1,0 +1,392 @@
+{
+  "key": "02-mechanisms",
+  "sections": ["UMP", "UMS"],
+  "sourceFile": "campaigns/creative-engine-e2e-test-aa/brief.md",
+  "items": [
+    {
+      "id": "mechanism:velocity-drop-problem",
+      "type": "problem-mechanism",
+      "text": "Mechanism 1 — The Velocity Drop Problem (Primary): The nervous system encodes movement patterns at the speed they actually occur — not the speed they were intended to occur. When an athlete is fatigued and their sprint drops from 100% to 70% velocity, the nervous system does not record \"worked hard at speed.\" It records the speed that happened. Every subsequent rep below the velocity threshold installs that slower movement pattern as the new default. The result: athletes who train harder and longer actively program their nervous systems toward slower movement. This is not stagnation. It is anti-training — negative adaptation in proportion to the volume of fatigued reps accumulated.",
+      "sourceLines": "L21-22",
+      "notes": "Primary problem mechanism. Cause→effect: fatigue → velocity drop → nervous system encodes slow pattern → slower default."
+    },
+    {
+      "id": "mechanism:intensity-mismatch-problem",
+      "type": "problem-mechanism",
+      "text": "Mechanism 2 — The Intensity Mismatch Problem: The force-velocity relationship establishes a specific load zone (0.7–1.0 m/s in the Speed-Strength / maximum power zone) where force and velocity intersect to produce maximum explosive power. Training too heavy produces force without velocity (strength without speed). Training too light produces velocity without sufficient force (movement without power). The power zone is individual — two athletes in the same program may need different loads to hit the same velocity target. Without real-time velocity measurement, every load prescription is a guess, and the guess misses the power zone most of the time.",
+      "sourceLines": "L24-25",
+      "notes": "Power zone 0.7–1.0 m/s."
+    },
+    {
+      "id": "mechanism:unverified-effort-problem",
+      "type": "problem-mechanism",
+      "text": "Mechanism 3 — The Unverified Effort Problem: Without technology, neither coach nor parent can confirm that true maximal explosive intent occurred on any given rep. Sweat, grimacing, labored breathing, and visible strain are metabolic stress markers — indicators of aerobic work, not explosive neuromuscular output. A visibly exhausted athlete may be producing as little as 40–60% of their explosive capacity on the reps that coaches count as \"productive.\" Only velocity data tells the truth.",
+      "sourceLines": "L27-28",
+      "notes": "40–60% explosive capacity on supposedly productive reps."
+    },
+    {
+      "id": "mechanism:readiness-failure",
+      "type": "problem-mechanism",
+      "text": "Mechanism 4 — The Readiness Failure: An athlete who is not physically, neurologically, and mentally prepared cannot produce true maximal explosive output regardless of effort applied. Starting a session with an unprepared athlete installs submaximal movement patterns as the neural template for that session — regardless of how hard the athlete tries. No program in this market assesses readiness before every single session.",
+      "sourceLines": "L30-31",
+      "notes": ""
+    },
+    {
+      "id": "mechanism:developmental-window-problem",
+      "type": "problem-mechanism",
+      "text": "Mechanism 5 — The Developmental Window Problem: Ages 8–12 represents the period of highest neural plasticity for movement pattern acquisition in the pre-PHV athlete. The nervous system during this window is actively forming — not refining — foundational movement templates for speed, coordination, and explosive output. These templates become the neurological baseline for every athletic year that follows. After PHV, development shifts from pattern formation to pattern correction. Formation and correction are not equivalent processes: correction costs more time, requires more specialized input, and produces incomplete results. Generic conditioning during the formation window doesn't just waste time — it installs inferior patterns that must be expensively overwritten later.",
+      "sourceLines": "L33-34",
+      "notes": "Ages 8–12, pre-PHV. Formation vs. correction distinction."
+    },
+    {
+      "id": "ums:velocity-code-overview",
+      "type": "solution-mechanism",
+      "text": "The Velocity Code™ — Four Integrated Principles",
+      "sourceLines": "L40",
+      "notes": "Named solution mechanism, trademark preserved. Four principles follow."
+    },
+    {
+      "id": "ums:principle-1-effort",
+      "type": "ums-principle",
+      "text": "Principle 1 — EFFORT: Verified, Not Assumed. Pre-session readiness assessment determines physical, neurological, and mental preparedness before the first rep. If readiness is 10% below baseline, session volume and intensity adjust. If readiness is 10%+ below baseline, the session is redesigned entirely. Technology verifies actual explosive output per rep: Dashr dual-beam timing gates (0.001-second accuracy), GymAware bar velocity trackers (0.01 m/s accuracy), force/jump plates. Nothing is assumed. Everything is confirmed. An athlete who hasn't cleared readiness doesn't train to failure — they train to their verified capacity.",
+      "sourceLines": "L42-43",
+      "notes": "EFFORT pillar. Dashr 0.001s, GymAware 0.01 m/s."
+    },
+    {
+      "id": "ums:principle-2-intensity",
+      "type": "ums-principle",
+      "text": "Principle 2 — INTENSITY: The Power Sweet Spot. Velocity-Based Training identifies each athlete's individual load-velocity profile at program entry. Training is prescribed at the specific barbell load that produces 0.7–1.0 m/s velocity (Speed-Strength Zone / maximum power zone) for that athlete, adjusted in real time session by session. Not percentage-of-max estimates. Not coach's intuition. Actual bar speed, measured on every rep, with load adjusted to keep every athlete in their personal power zone.",
+      "sourceLines": "L45-46",
+      "notes": "INTENSITY pillar. Power zone 0.7–1.0 m/s."
+    },
+    {
+      "id": "ums:principle-3-speed",
+      "type": "ums-principle",
+      "text": "Principle 3 — SPEED: Protected at All Costs. The moment bar velocity drops 10% below the fastest rep of the set — the set ends. No exceptions. No \"two more.\" No \"push through.\" The physics changed: below the threshold, the training stimulus has shifted from speed development to fatigue tolerance encoding. Rest protocols are non-negotiable biological prerequisites, not comfort breaks: sprints 60–120 seconds, maximum jump efforts 3–5 minutes, power lifts 2–4 minutes. The set ending is not the interruption of training — it is the training.",
+      "sourceLines": "L48-49",
+      "notes": "SPEED pillar. The 10% Rule. Rest: sprints 60–120s, jumps 3–5min, power lifts 2–4min."
+    },
+    {
+      "id": "ums:principle-4-confidence",
+      "type": "ums-principle",
+      "text": "Principle 4 — CONFIDENCE: Built on Proof, Not Praise. Real-time velocity display after every rep. Weekly velocity profiles documenting objective session-over-session improvement in bar speed, sprint time, and jump height. Personal velocity PRs tracked and celebrated at milestones. When an athlete's bar speed moves from 0.7 to 0.9 m/s over eight weeks, that is not a feeling, not an opinion, not a coach's encouragement — it is a fact the athlete owns permanently, and the foundation of the only type of confidence that survives competition pressure.",
+      "sourceLines": "L51-52",
+      "notes": "CONFIDENCE pillar."
+    },
+    {
+      "id": "ums:logical-outcome-guarantee",
+      "type": "solution-outcome",
+      "text": "The Logical Outcome: A written performance contract. +1 mph sprint speed improvement. +3 inch vertical jump improvement. 90 days. Or training continues at no additional cost until both benchmarks are hit. This guarantee exists not as a marketing device but as the inevitable output of a system that measures everything and adjusts in real time.",
+      "sourceLines": "L54",
+      "notes": "Guarantee verbatim: +1 mph / +3 inches / 90 days."
+    },
+    {
+      "id": "ump:discovery-narrative-nfl-transfer",
+      "type": "ump-discovery-narrative",
+      "text": "Option 1 — The NFL-to-Youth Transfer: \"I was working with an NFL athlete and tracking bar velocity to the hundredth of a meter per second on every rep. Then I watched a group of 10-year-olds finish a conditioning session running their slowest laps. And I thought: they're programming themselves to be slower. And no one knows it.\" [CONFIRM WITH GRAHAM] \"I've used this same technology to help build a 7× Pro Bowl offensive lineman. I'm now using it on 9-year-olds. The science is the same. The window of opportunity is better.\"",
+      "sourceLines": "L421-424",
+      "notes": "[CONFIRM WITH GRAHAM]"
+    },
+    {
+      "id": "ump:discovery-narrative-direct-observation",
+      "type": "ump-discovery-narrative",
+      "text": "Option 2 — Direct Observation of the Mechanism: \"I stood there watching a kid run his ninth lap slower than the eighth, and the coach was yelling 'great effort.' By the science, that last lap wasn't effort. It was installation. The nervous system was learning: this is how fast I run.\" [CONFIRM WITH GRAHAM]",
+      "sourceLines": "L426-427",
+      "notes": "[CONFIRM WITH GRAHAM]"
+    },
+    {
+      "id": "ump:discovery-narrative-first-velocity-readout",
+      "type": "ump-discovery-narrative",
+      "text": "Option 3 — The First Velocity Readout: \"The moment I saw the velocity readout on a 10-year-old's first rep versus their fifth rep, I understood exactly why every program before this had a ceiling.\" The readout showed velocity dropping from 0.92 m/s on rep one to 0.71 m/s by rep five — a 23% velocity drop, invisible to the naked eye, documented by the sensor. Under conventional training, reps six through eight would be counted as productive. By the science, they were encoding a 23% slower movement standard. [CONFIRM WITH GRAHAM]",
+      "sourceLines": "L429-430",
+      "notes": "0.92→0.71 m/s = 23% drop. [CONFIRM WITH GRAHAM]"
+    },
+    {
+      "id": "ump:trigger-wang-2026",
+      "type": "ump-trigger",
+      "text": "UMP Trigger: The scientific inciting incident: Wang et al. (2026), Frontiers in Physiology — adolescent sprinters trained at a 10% velocity loss threshold versus a 30% velocity loss threshold over 6 weeks. The 10% group (fewer reps, velocity protected) showed 224% greater CMJ improvement (+4.93cm vs. +1.52cm, p<0.05) with 28% less accumulated fatigue (284 AU vs. 364 AU sRPE). More volume — to the point of velocity degradation — did not just produce inferior results. It actively suppressed adaptation. The mechanism: the nervous system encodes movement at the speed it actually occurs. The set that ends at 10% velocity drop teaches speed. The set that continues to 30% velocity drop teaches the slower speed of a fatigued athlete. Paired with: Pareja-Blanco et al. (2017) documenting histologically measured conversion of Type IIX fast-twitch muscle fibers to slower Type IIA fibers in the high-fatigue group — literally changing muscle composition toward a slower phenotype through excess training volume.",
+      "sourceLines": "L434-437",
+      "notes": "Hero stat: 224% greater CMJ improvement, 28% less fatigue."
+    },
+    {
+      "id": "ump:explanation-nervous-system-recording",
+      "type": "ump-explanation",
+      "text": "UMP Explanation: \"The nervous system learns movement patterns at the speed they actually occur. Not at the speed they were intended to occur. When a child is exhausted and their sprint slows from full speed down to a labored jog, the nervous system doesn't record 'worked hard at speed.' It records the speed that actually happened. That slower, tired movement pattern gets encoded as normal. As default. As the movement speed that gets recalled under the conditions of a game, when fatigue is real and stakes are high. Every tired rep isn't a rep that didn't help. It's a rep that taught the nervous system to be slower. This is why your athlete can attend every practice, run every drill, never quit — and still be at exactly the same speed six months later. It's not that training didn't work. It's that training worked perfectly. The nervous system learned exactly what it was taught. The problem is what it was taught.\"",
+      "sourceLines": "L439-440",
+      "notes": "Core mechanism narrative."
+    },
+    {
+      "id": "ump:proof-wang-2026",
+      "type": "ump-proof",
+      "text": "Wang et al. 2026, Frontiers in Physiology: VLT 10% group: +4.93cm CMJ improvement, 284 AU sRPE. VLT 30% group: +1.52cm CMJ improvement, 364 AU sRPE. 224% greater improvement, 28% less fatigue. p<0.05. (Verified primary source)",
+      "sourceLines": "L444",
+      "notes": "Verified primary source."
+    },
+    {
+      "id": "ump:proof-pareja-blanco-2017",
+      "type": "ump-proof",
+      "text": "Pareja-Blanco et al. 2017, Scandinavian Journal of Medicine & Science in Sports: VL20% group: 40% fewer repetitions, 9.5% CMJ improvement, Type IIX fibers preserved. VL40% group: standard volume, 3.5% CMJ improvement, histologically measured Type IIX → Type IIA fiber conversion. 146% greater improvement with fewer reps. (Verified primary source)",
+      "sourceLines": "L445",
+      "notes": "Verified primary source. Type IIX→IIA fiber conversion."
+    },
+    {
+      "id": "ump:proof-bogdanis-2019",
+      "type": "ump-proof",
+      "text": "Bogdanis et al. 2019, Sports (Basel): RCT, n=50 female athletes ages 7–9, 8 weeks, 2×/week. 20m sprint ES d=1.14 (p=0.011) — large effect. Control: no improvement. (Verified primary source)",
+      "sourceLines": "L446",
+      "notes": "Verified primary source."
+    },
+    {
+      "id": "ump:proof-weakley-mann-2021",
+      "type": "ump-proof",
+      "text": "Weakley/Mann et al. 2021, NSCA Strength & Conditioning Journal: Velocity feedback training, adolescent athletes: 10m sprint ES=0.69, 20m sprint ES=0.71 within 4 weeks. (Verified primary source)",
+      "sourceLines": "L447",
+      "notes": "Verified primary source."
+    },
+    {
+      "id": "ump:proof-lloyd-2016",
+      "type": "ump-proof",
+      "text": "Lloyd et al. 2016, JSCR: Pre-PHV athletes on identical training programs showed greater improvements in speed, squat jump, and reactive strength index than post-PHV athletes across all variables. (Verified primary source — specific figures require full text confirmation)",
+      "sourceLines": "L448",
+      "notes": "Verified primary source — specific figures require full text confirmation."
+    },
+    {
+      "id": "ump:proof-ma-2025",
+      "type": "ump-proof",
+      "text": "Ma et al. 2025, JSSM meta-analysis: Complex training +5.0cm CMJ vs. plyometrics alone +2.0cm vs. resistance alone +2.2cm. Complex training SUCRA=0.98 (98% probability of being superior). (Verified primary source)",
+      "sourceLines": "L449",
+      "notes": "Verified primary source."
+    },
+    {
+      "id": "ump:surprising-culprit-unmeasured-rep",
+      "type": "ump-surprising-culprit",
+      "text": "Surprising Culprit: \"The culprit hiding inside every conventional youth speed program is not laziness. It's the rep that comes after the velocity drops — the one no one is measuring.\" The problem behind the problem is not that coaches are bad, not that parents are making wrong choices, not that athletes lack character. The problem is a measurement vacuum. Without a linear position transducer or timing system on every rep, a coach cannot detect the exact moment at which the training stimulus shifts from speed development to fatigue encoding. That threshold moment — when bar velocity drops 10% below the fastest rep of the set — is invisible to the human eye. The coach sees the rep completed. They see effort. They count it as productive. The velocity data tells a completely different story. \"Every training session that doesn't monitor bar velocity allows athletes to train through velocity degradation — installing a slower neural template without anyone knowing it's happening. The surprising culprit is not the athlete. It's the unmeasured rep.\"",
+      "sourceLines": "L455-460",
+      "notes": "Primary culprit: the unmeasured rep / measurement vacuum."
+    },
+    {
+      "id": "ump:secondary-culprit-guessed-load",
+      "type": "ump-culprit",
+      "text": "Secondary culprit: The guessed load. Without individual load-velocity profiling, no coach can confirm that any given athlete is training in the power zone (0.7–1.0 m/s). Every load prescription without velocity feedback is a guess. The guessed load misses the power zone most of the time, producing athletes who get stronger (too heavy) or more conditioned (too light) but not more explosive.",
+      "sourceLines": "L462",
+      "notes": "Secondary culprit."
+    },
+    {
+      "id": "ump:tertiary-culprit-unassessed-session",
+      "type": "ump-culprit",
+      "text": "Tertiary culprit: The unassessed session. Training an athlete who is not neurologically or physically ready to produce maximal explosive output means the entire session produces submaximal patterns — regardless of the athlete's effort or the coach's intent.",
+      "sourceLines": "L464",
+      "notes": "Tertiary culprit."
+    },
+    {
+      "id": "ump:why-it-didnt-exist-before",
+      "type": "ump-why-not-before",
+      "text": "Why It Didn't Exist Before: \"Youth athletic development has historically operated with three available tools: a stopwatch, a measuring tape, and a coach's eye. VBT technology — GymAware linear position transducers accurate to 0.01 m/s, Dashr dual-beam timing gates accurate to 0.001 seconds, force and jump plates — has moved these precision measurement tools from professional sports environments into accessible coaching facilities. The Velocity Code™ represents the application of this technology at the youth developmental level where, by the science, it produces the highest return. The landscape has changed. The training model serving most Hamilton County youth athletes has not.\"",
+      "sourceLines": "L466-467",
+      "notes": ""
+    },
+    {
+      "id": "ump:adversary-1-conditioning-culture",
+      "type": "ump-adversary",
+      "text": "Adversary 1 — The Conditioning Culture: The \"hard work builds character\" paradigm that equates visible fatigue with productive adaptation. It is culturally dominant, emotionally resonant for coaches and parents, and by the VBT science, systematically counterproductive for explosive development. The culture sets the trap. The athlete walks into it. The parent cheers from the sideline. \"Every coach who said 'want it more' was missing a measurement problem.\"",
+      "sourceLines": "L473-474",
+      "notes": ""
+    },
+    {
+      "id": "ump:adversary-2-guessing-coach",
+      "type": "ump-adversary",
+      "text": "Adversary 2 — The Guessing Coach: Any program that prescribes load by percentage without daily velocity measurement is guessing at each athlete's optimal power zone. This is not a character failure — it is a technology gap. It was the industry standard until VBT devices became accessible at the youth level. But the technology exists now. Guessing when measurement is available is no longer an acceptable defense.",
+      "sourceLines": "L476-477",
+      "notes": ""
+    },
+    {
+      "id": "ump:adversary-3-specialization-trap",
+      "type": "ump-adversary",
+      "text": "Adversary 3 — The Specialization Trap: Youth sports organizations, travel team systems, and private coaching programs that push single-sport focus before age 12 are narrowing the athletic foundation at the moment the nervous system is most capable of expanding it. The AAOS/AOSSM OneSport Injury campaign explicitly identifies high-SES families as those most likely to over-specialize and suffer the overuse injury consequences.",
+      "sourceLines": "L479-480",
+      "notes": ""
+    },
+    {
+      "id": "ump:adversary-4-youth-sports-industrial-complex",
+      "type": "ump-adversary",
+      "text": "Adversary 4 — The Youth Sports Industrial Complex: \"$40 billion a year flows into youth sports. 70% of the children it's spent on quit by age 13. The spend is not the problem. The method is.\" The industry generates revenue from competition exposure (travel teams, tournaments, uniforms) packaged as athletic development — when athletic development and competition exposure are two entirely different products that have been deliberately bundled. \"These 'functional' trainers primarily aim to market products to unsuspecting parents who may not be familiar with fitness.\" — r/Homeplate. \"Many people with a whistle and a pair of sneakers claim to be coaches.\" — r/basketballcoach.",
+      "sourceLines": "L482-483",
+      "notes": "$40B/yr, 70% quit by 13."
+    },
+    {
+      "id": "ump:adversary-5-developmental-window-clock",
+      "type": "ump-adversary",
+      "text": "Adversary 5 — The Developmental Window Clock: \"Ages 8–12 is the window. After PHV, the process shifts from pattern formation to pattern correction. These are not equivalent in time or outcome.\" The clock is the most neutral adversary — it doesn't intend harm — but it operates on a fixed schedule regardless of whether the right training was applied during it. The clock is what makes inaction as costly as wrong action.",
+      "sourceLines": "L485-486",
+      "notes": ""
+    },
+    {
+      "id": "ump:elaboration-individual-differences",
+      "type": "ump-elaboration",
+      "text": "Individual Differences: \"No two athletes have the same load-velocity profile. The specific barbell load that places one athlete at 0.85 m/s (optimal power zone) may place another at 0.65 m/s (too heavy, pure strength) or 1.1 m/s (too light, insufficient force). Without measurement, this individualization is impossible. The Velocity Code™ profiles each athlete individually and adjusts load in real time to maintain the power zone, session by session, rep by rep.\" Even athletes on the same program type (VBT) show dramatically different adaptive responses based on which velocity loss threshold they train at. Wang et al. (2026) documented the 10% vs. 30% comparison; even within those parameters, individual athletes responded differently based on their baseline profiles. Generic group programming with fixed loads ignores this biological reality entirely.",
+      "sourceLines": "L492-495",
+      "notes": ""
+    },
+    {
+      "id": "ump:elaboration-changing-landscape",
+      "type": "ump-elaboration",
+      "text": "Changing Landscape: \"Youth athletic development has historically operated with three available tools: a stopwatch, a measuring tape, and a coach's eye. VBT technology has moved precision measurement from professional sports into accessible coaching facilities. The Velocity Code™ represents the application of this technology at the youth developmental level where, by the science, it produces the highest return. The landscape has changed. The training model serving most Hamilton County youth athletes has not.\" Per Aspen Institute Project Play (2025): the average U.S. sports family spent $1,016 on their child's primary sport in 2024 — a 46% increase over five years, twice the general inflation rate. Families at the affluent end spend $4,000–$15,000+ annually on programs that, by the research, cannot confirm verified explosive output on any given rep. The spending has accelerated. The measurement has not arrived.",
+      "sourceLines": "L497-500",
+      "notes": "Aspen Institute $1,016 avg / +46% over 5yr."
+    },
+    {
+      "id": "ump:elaboration-unspoken-truth",
+      "type": "ump-elaboration",
+      "text": "Unspoken Truth: \"The grind culture doesn't want you to know this because it would mean admitting that every 'push through' command, every 'two more!', every long conditioning session run to exhaustion, has been actively working against speed development. They'd rather keep selling the exhaustion — keep running athletes through drills until they're visibly destroyed and calling that proof of a productive session — than acknowledge that the science says the opposite. The industry is built on the appearance of hard work. The science is built on the measurement of actual explosive output. Those are different products. Most families are buying one and getting the other.\" \"The most dangerous advice in youth athletics isn't 'lift weights, you'll stunt their growth.' The most dangerous advice is 'push through it' — because it is delivered by coaches who genuinely believe it, reinforced by a culture that rewards visible suffering, and executed by athletes who trust the system. Nobody is lying. Everybody is wrong. And the velocity sensor is what proves it.\"",
+      "sourceLines": "L502-505",
+      "notes": ""
+    },
+    {
+      "id": "ums:trigger-first-velocity-readout",
+      "type": "ums-trigger",
+      "text": "Option 1 — The First Velocity Readout: \"The moment I saw the velocity readout on a 10-year-old's first rep versus their fifth rep, I understood exactly why every program before this had a ceiling.\" [CONFIRM WITH GRAHAM] The display showed 0.92 m/s on rep one, 0.71 m/s by rep five — a 23% velocity drop. Under conventional training, reps six, seven, and eight would be counted as productive. Under The Velocity Code™, the set ends at 10% velocity drop. The athlete's reps five through eight — the ones most coaches count as proof of hard work — were the ones encoding a slower default.",
+      "sourceLines": "L558-559",
+      "notes": "[CONFIRM WITH GRAHAM]"
+    },
+    {
+      "id": "ums:trigger-benchmark-prediction",
+      "type": "ums-trigger",
+      "text": "Option 2 — The Benchmark Prediction: \"The velocity data told us the athlete was improving three weeks before the sprint timer did. The parents had been ready to quit. The numbers told us to stay the course.\" [CONFIRM WITH GRAHAM] An athlete showing no visible improvement for weeks — then the weekly velocity profile shows bar speed moved from 0.72 to 0.81 m/s: 12.5% improvement in explosive output before any visible change in sprint time. Neural adaptation precedes measurable sprint improvement. The data showed improvement before anyone could see it.",
+      "sourceLines": "L561-562",
+      "notes": "[CONFIRM WITH GRAHAM]. 0.72→0.81 m/s = 12.5%."
+    },
+    {
+      "id": "ums:trigger-nfl-comparison",
+      "type": "ums-trigger",
+      "text": "Option 3 — The NFL Comparison: \"I've worked with some of the most decorated offensive linemen in the NFL. The numbers I'm seeing from 9-year-olds in the pre-PHV window are, by effect size standards, more impressive. The window is that powerful.\" [CONFIRM WITH GRAHAM] Lloyd et al. (2016): pre-PHV athletes responded more dramatically than post-PHV athletes on identical programs. Bogdanis et al. (2019): d=1.14 on 20m sprint in 7–9 year old female athletes from 8-week intervention — larger than most adult studies achieve on sprint performance.",
+      "sourceLines": "L564-565",
+      "notes": "[CONFIRM WITH GRAHAM]"
+    },
+    {
+      "id": "ums:core-explanation-rep-that-ends-the-set",
+      "type": "ums-explanation",
+      "text": "Core Explanation: The Velocity Code™ system is built on one foundational principle that every other program in this market ignores: the rep that ends the set is the training, not the interruption of training. When the set ends at 10% velocity drop, the nervous system has only received high-quality explosive pattern input. When the set continues to 20%, 30%, or failure, the nervous system receives progressively degraded pattern input — each rep writing slower code into the movement library. \"Here's what happens at the cellular level when you push past the velocity loss threshold: Fast-twitch Type IIX muscle fibers — the PURE speed fibers — begin converting to Type IIA fibers. Type IIA is still 'fast,' but it's slower and more endurance-oriented. This conversion is measurable under a microscope. It's not theory. So every time a coach pushes your kid through 'just 3 more reps' past the point of speed decay — they're literally remodeling their muscle tissue to be SLOWER. That's not training. That's erosion.\" The solution is four principles working together: Readiness assessment ensures the athlete's system can produce explosive output before the first rep. VBT power zone training ensures every rep is occurring at the exact intersection of force and velocity that produces maximum explosive power. Velocity drop cutoff ensures every rep in every set is a productive rep. Data-based confidence ensures the athlete has an irrefutable evidence base for their own improvement.",
+      "sourceLines": "L571-583",
+      "notes": "UMS foundational principle. Type IIX→IIA fiber conversion ('erosion')."
+    },
+    {
+      "id": "ums:multiplicative-effect-complex-training",
+      "type": "ums-argument",
+      "text": "The Multiplicative Effect (Complex Training): \"Combining strength work and plyometrics in the same session — the complex training model at the core of The Velocity Code™ — produces 2.5× greater CMJ improvement than either method alone. This is not additive benefit. It is synergistic: heavy resistance work acutely potentiates the nervous system (post-activation potentiation), allowing the subsequent explosive movement to recruit a greater percentage of available motor units. Ma et al. (2025), a network meta-analysis of 1,342 athletes across 44 studies: complex training +5.0cm CMJ vs. plyometrics alone +2.0cm vs. resistance alone +2.2cm. SUCRA 0.98 — 98% probability of being the superior intervention.\"",
+      "sourceLines": "L585-586",
+      "notes": "2.5× via post-activation potentiation."
+    },
+    {
+      "id": "ums:reframe-1-rest-is-the-training",
+      "type": "ums-taboo-reframe",
+      "text": "Reframe 1 — Rest IS the Training: \"In most programs, rest is when you stop training. In The Velocity Code™, rest is when the nervous system prepares to produce the next quality rep. Without the rest, there is no next quality rep — there is only fatigue encoding. What looks like standing around doing nothing — three minutes between jump sets, two minutes between power lifts, 90 seconds between sprints — is actually the phosphocreatine system fully reloading. A rep attempted before the window closes is a fatigue-pattern rep. Rest isn't a break. It's the most productive part of the session that nobody can see.\"",
+      "sourceLines": "L592-593",
+      "notes": ""
+    },
+    {
+      "id": "ums:reframe-2-fewer-reps-better-results",
+      "type": "ums-taboo-reframe",
+      "text": "Reframe 2 — Fewer Reps, Better Results: \"The child who does fewer reps in a session may be getting dramatically more out of it. Velocity protection — ending sets at 10% velocity drop — is not 'going easy.' It is the highest-precision training protocol available, supported by more research than any high-rep conditioning program in the market. The program that looks softer is the one producing harder results. The set that looks like it ended too early is the one that ended at exactly the right moment.\"",
+      "sourceLines": "L595-596",
+      "notes": ""
+    },
+    {
+      "id": "ums:reframe-3-stopping-is-the-coaching-skill",
+      "type": "ums-taboo-reframe",
+      "text": "Reframe 3 — Stopping Is the Coaching Skill: \"The hardest part of developing a fast athlete isn't pushing them harder — it's knowing exactly when to stop. And knowing when to stop requires a technology that the human eye cannot replicate. The coach who stops a set at 10% velocity drop isn't being easy on your athlete. They're doing the most precise thing in all of athletic development.\"",
+      "sourceLines": "L598-599",
+      "notes": ""
+    },
+    {
+      "id": "ums:tip-1-the-10-percent-rule",
+      "type": "ums-tip",
+      "text": "Tip 1 — The 10% Rule: \"The moment bar velocity drops 10% below the fastest rep of the set, the set ends. Not when the athlete looks tired. Not when they fail the lift. The moment the velocity drops 10%. Wang et al. (2026): the 10% group achieved 224% greater CMJ improvement with 28% less fatigue. The set that 'felt easy' to end — that's the set that built the nervous system correctly. You can apply this as a parent watching practice: if the last sprint was visibly slower than the first, the set should have ended before that rep.\"",
+      "sourceLines": "L605-606",
+      "notes": ""
+    },
+    {
+      "id": "ums:tip-2-rest-is-training-infrastructure",
+      "type": "ums-tip",
+      "text": "Tip 2 — Rest Is Training Infrastructure: \"Rest windows in The Velocity Code™ are not optional. Sprints: 60–120 seconds minimum. Max jump efforts: 3–5 minutes. Power lifts: 2–4 minutes. These windows allow phosphocreatine resynthesis, neural recovery, and explosive intent restoration. A rep attempted before these windows complete is a fatigue-pattern rep. The 3-minute rest isn't your child relaxing. It's the nervous system reloading. You can apply this immediately: count the rest between sprints at your child's next practice. If it's under 60 seconds, the next sprint can't be a maximal sprint.\"",
+      "sourceLines": "L608-609",
+      "notes": ""
+    },
+    {
+      "id": "ums:tip-3-check-readiness-before-first-rep",
+      "type": "ums-tip",
+      "text": "Tip 3 — Check Readiness Before the First Rep: \"Pre-session readiness assessment tells the coach whether the athlete is prepared to produce maximal explosive output that day. If velocity is 10% below baseline, the session is modified. If 10%+ below baseline, the session changes entirely. Your child's program starts the session at the scheduled time — regardless of whether your child is ready to produce a single explosive rep. Ask them this question: 'Before you started today's session, did anyone check whether you were ready to train explosively?' The answer will tell you everything.\"",
+      "sourceLines": "L611-612",
+      "notes": ""
+    },
+    {
+      "id": "ums:tip-4-power-zone-must-be-found",
+      "type": "ums-tip",
+      "text": "Tip 4 — The Power Zone Must Be Found, Not Assumed: \"The load that produces maximum explosive output is different for every athlete and changes as the athlete develops. It exists at approximately 0.75–1.0 m/s — the intersection of sufficient force and sufficient velocity to produce maximum power. Too heavy: force without velocity, builds slow strength. Too light: speed without force, produces unloaded movement. The power zone requires individual profiling and real-time adjustment. Most programs guess at the right training load. Velocity tracking finds it. For every athlete. Every session.\"",
+      "sourceLines": "L614-615",
+      "notes": "Note: tip cites 0.75–1.0 m/s; elsewhere brief uses 0.7–1.0 m/s."
+    },
+    {
+      "id": "ums:tip-5-data-builds-confidence",
+      "type": "ums-tip",
+      "text": "Tip 5 — Data Builds Confidence That Praise Cannot: \"When an athlete sees their bar velocity move from 0.72 m/s to 0.89 m/s over eight weeks, that number is a fact. It cannot be taken away by a bad game, a judgmental teammate, or a discouraging coach. Objective velocity PRs create confidence that is data-based, not praise-based. 'Great job today' disappears the moment the car door closes. A bar speed improvement of 0.17 m/s is a permanent, verifiable fact your child owns forever. Per Weakley/Mann (NSCA): quantitative velocity feedback produces greater performance improvements than qualitative feedback including video review. The mechanism is competitive drive activation — data engages the athlete's internal motivation in a way that external praise cannot replicate.\"",
+      "sourceLines": "L617-618",
+      "notes": "0.72→0.89 m/s = +0.17 m/s improvement."
+    },
+    {
+      "id": "ums:tip-6-complex-training-sum-of-parts",
+      "type": "ums-tip",
+      "text": "Tip 6 — Complex Training Is More Than the Sum of Its Parts: \"Combining strength work and plyometrics in the same session produces 2.5× greater CMJ improvement than either method alone. This is not an additive effect — it is synergistic. Heavy resistance work primes the nervous system for maximum motor unit recruitment, which the subsequent explosive movement can then utilize at a higher level than it could cold. The sequence matters: strength first, then explosive. Ma et al. (2025), 1,342 athletes, 44 studies: complex training +5.0cm CMJ vs. plyometrics alone +2.0cm vs. resistance alone +2.2cm.\"",
+      "sourceLines": "L620-621",
+      "notes": "Sequence: strength first, then explosive."
+    },
+    {
+      "id": "ums:tip-7-multi-sport-foundation",
+      "type": "ums-tip",
+      "text": "Tip 7 — The Multi-Sport Foundation Produces Better Single-Sport Athletes: \"Multi-sport development during ages 8–12 doesn't dilute athletic potential — it expands the neural and movement foundation on which sport-specific excellence is later built. Jayanthi et al. (2019): high sport specialization before 12 carries OR=2.25 serious overuse injury risk. The Aspen Institute recommends multi-sport participation until at least age 12. Most NFL players who reach high draft status played multiple sports through adolescence. The multi-sport athlete isn't falling behind. They're building a foundation the specialist never has.\"",
+      "sourceLines": "L623-624",
+      "notes": ""
+    },
+    {
+      "id": "ums:creating-framework-1-technology-gap-discovery",
+      "type": "ums-creating-solution",
+      "text": "Framework 1 — The Technology Gap Discovery: [CONFIRM WITH GRAHAM — plausible framework only] Graham attempted to apply adult-calibrated VBT protocols directly to youth athletes and discovered that load prescriptions, velocity thresholds, and rest protocols required developmental calibration. A 10% velocity threshold that works for a 24-year-old NFL lineman needs contextual adjustment for a pre-PHV 10-year-old whose baseline velocity and power output are categorically different. The solution: individual profiling at program entry, continuous readiness assessment, and session-specific load adjustment.",
+      "sourceLines": "L676-677",
+      "notes": "[CONFIRM WITH GRAHAM — plausible framework only]"
+    },
+    {
+      "id": "ums:creating-framework-2-readiness-assessment-failure",
+      "type": "ums-creating-solution",
+      "text": "Framework 2 — The Readiness Assessment Failure: [CONFIRM WITH GRAHAM — plausible framework only] Early program design assumed athletes showed up ready to produce explosive effort. School stress, insufficient sleep, and prior-day sport schedules created daily variance in readiness that standard programming couldn't account for. Athletes trained on low-readiness days were encoding submaximal movement patterns as their default — regardless of effort applied. Implementing the pre-session velocity readiness check eliminated this problem.",
+      "sourceLines": "L679-680",
+      "notes": "[CONFIRM WITH GRAHAM — plausible framework only]"
+    },
+    {
+      "id": "ums:creating-framework-3-nfl-transfer",
+      "type": "ums-creating-solution",
+      "text": "Framework 3 — The NFL Transfer: The same velocity thresholds, rest protocols, and objective readiness assessment that protected explosive development in NFL-level athletes were calibrated for the pre-PHV window — and produced, by effect size standards, even more dramatic results. Lloyd et al. (2016) confirmed this scientifically: pre-PHV athletes respond more dramatically to training than post-PHV athletes on identical programs.",
+      "sourceLines": "L682-683",
+      "notes": ""
+    },
+    {
+      "id": "ums:first-user-success",
+      "type": "ums-creating-solution",
+      "text": "First User Success: The Session 1 conversion pattern is documented across nearly every testimonial in the Genesis client base: children who were initially reluctant to attend came home after the first session as enthusiastic converts. \"Didn't want to go. Came home completely committed.\" This pattern is documented as the most powerful sales event in the entire funnel — the program itself is its most effective marketing tool. Andy Johnson's testimony is the clearest articulation: \"We were with another facility for 2 years. After just 1 week with Genesis, my son said this was the best he'd ever had.\" — This is the zero-to-hero transition in a single week. Chrissie Davis's son: before — shy, quiet, unwilling to join any team. After — physically and mentally stronger, confident, playing on a team. The transformation that has nothing to do with sprint times and everything to do with what this market is actually purchasing.",
+      "sourceLines": "L687-692",
+      "notes": "Session 1 conversion pattern."
+    },
+    {
+      "id": "ums:unsolicited-requests",
+      "type": "ums-creating-solution",
+      "text": "Unsolicited Requests: External coaches calling parents to ask what changed after unexpected improvements: \"Her coach calls me all the time about how strong she's gotten.\" — M.J. Children asking to add a third session per week. Children bringing friends to the free assessment. Parents actively telling other parents on sidelines. \"He gained more from that $2000 than the over $10,000 we spent on club ball\" — market-level unsolicited validation appearing organically in Reddit discussions.",
+      "sourceLines": "L696-702",
+      "notes": ""
+    },
+    {
+      "id": "ums:zero-to-hero-testimonials",
+      "type": "ums-creating-solution",
+      "text": "Zero to Hero Testimonials: \"'Genesis has been a life-changing experience for my family. My boys have trained here for several years now — they LOVE it. They helped my son put on 25+ pounds for football season. The healthy way. He just accepted a D2 football scholarship offer.' — Jennifer Feeney. From 'needs to gain weight for football' to Division 2 scholarship offer. That's the long game.\" \"'My son was shy and quiet. He didn't want to be a part of any sport team... He now has the confidence and strength to play on a team.' — Chrissie Davis. He walked in unable to join a team. He walks out a team player.\" \"'We were with another facility for 2 years. After just 1 week with Genesis, my son said this was the best he'd ever had.' — Andy Johnson. Two years. Then one week. The child knew the difference immediately.\" \"'My 9 year old son has loved training here for the past 3 seasons. He is getting bigger, faster, and stronger!' — Ashley Tidd. Three seasons. Same athlete. Still coming back.\"",
+      "sourceLines": "L706-714",
+      "notes": "Testimonials verbatim."
+    }
+  ]
+}

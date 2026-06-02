@@ -63,18 +63,7 @@ function CountdownReel({ data = {} }) {
       }}/>
 
       {/* Eyebrow */}
-      <div style={{
-        position: 'absolute',
-        top: 220, left: 0, right: 0,
-        textAlign: 'center',
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 32,
-        color: RED,
-        letterSpacing: '0.18em',
-        fontWeight: 600,
-        opacity: eyebrowT,
-        transform: `translateY(${(1 - eyebrowT) * 12}px)`,
-      }}>// {eyebrow}</div>
+      <Eyebrow top={220} fontSize={32}>// {eyebrow}</Eyebrow>
 
       {/* Title two-line */}
       <div style={{

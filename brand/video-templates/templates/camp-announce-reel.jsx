@@ -28,7 +28,7 @@ function CampAnnounceReel({ data = {} }) {
       {window.TrimmedMedia && <window.TrimmedMedia src={media} clipStart={data.media_clipStart} clipEnd={data.media_clipEnd} muted={!data.media_audio} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${photoScale})`, filter: 'brightness(0.32) saturate(0.7) contrast(1.1)' }}/>}
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.6) 0%, rgba(10,11,13,0.9) 100%)' }}/>
 
-      <div style={{ position: 'absolute', top: 130, left: 60, padding: '8px 16px', background: RED, fontFamily: '"JetBrains Mono", monospace', fontSize: 24, color: '#fff', letterSpacing: '0.16em', opacity: eyebrowT }}>// {eyebrow}</div>
+      <Eyebrow top={130} fontSize={24}>// {eyebrow}</Eyebrow>
 
       <div style={{ position: 'absolute', top: 250, left: 60, right: 60, opacity: titleT, transform: `translateY(${(1-titleT)*18}px)` }}>
         <div style={{ fontFamily: 'Anton, sans-serif', fontSize: 240, color: '#fff', lineHeight: 0.82 }}>{title1}</div>
@@ -63,16 +63,77 @@ function CampAnnounceReel({ data = {} }) {
 }
 window.CampAnnounceReel = CampAnnounceReel;
 const CAMP_ANNOUNCE_REEL_SPEC = { id:'camp-announce-reel', name:'CAMP ANNOUNCE · REEL', fields:[
-  {key:'duration',label:'Length',type:'slider',default:7,min:4,max:15,step:0.5,unit:'s'},
-  {key:'eyebrow',label:'Eyebrow',type:'text',default:'SUMMER 2026'},
-  {key:'title1',label:'Title 1',type:'text',default:'SPEED'},
-  {key:'title2',label:'Title 2 (red)',type:'text',default:'CAMP.'},
-  {key:'subhead',label:'Subhead',type:'text',default:'5 DAYS · 10 HOURS · 1 PR'},
-  {key:'dates',label:'Dates',type:'text',default:'JUN 24–28'},
-  {key:'hours',label:'Hours',type:'text',default:'9A–11A'},
-  {key:'ages',label:'Ages',type:'text',default:'11–14'},
-  {key:'totalSpots',label:'Total spots',type:'number',default:24,step:1,min:1},
-  {key:'ctaText',label:'CTA',type:'text',default:'RESERVE YOUR SPOT'},
-  {key:'media',label:'Background photo/video',type:'image',default:'assets/photo-group-coaching.jpg'},
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "SUMMER 2026"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "SPEED"
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "CAMP."
+  },
+  {
+    "key": "subhead",
+    "label": "Subhead",
+    "type": "text",
+    "default": "5 DAYS · 10 HOURS · 1 PR"
+  },
+  {
+    "key": "dates",
+    "label": "Dates",
+    "type": "text",
+    "default": "JUN 24–28"
+  },
+  {
+    "key": "hours",
+    "label": "Hours",
+    "type": "text",
+    "default": "9A–11A"
+  },
+  {
+    "key": "ages",
+    "label": "Ages",
+    "type": "text",
+    "default": "11–14"
+  },
+  {
+    "key": "totalSpots",
+    "label": "Total spots",
+    "type": "number",
+    "default": 24,
+    "step": 1,
+    "min": 1
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "RESERVE YOUR SPOT"
+  },
+  {
+    "key": "media",
+    "label": "Background photo/video",
+    "type": "image",
+    "default": "assets/photo-group-coaching.jpg"
+  }
 ]};
 window.CAMP_ANNOUNCE_REEL_SPEC = CAMP_ANNOUNCE_REEL_SPEC;

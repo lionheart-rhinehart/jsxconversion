@@ -6,16 +6,66 @@ const NOW_HIRING_SPEC = {
   id: 'now-hiring',
   name: 'NOW HIRING',
   fields: [
-    { key: 'duration', label: 'Length',     type: 'slider', default: 7, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow',  label: 'Eyebrow',    type: 'text',   default: "WE'RE HIRING" },
-    { key: 'role',     label: 'Role',       type: 'text',   default: 'STRENGTH & SPEED COACH' },
-    { key: 'type',     label: 'Type tag',   type: 'text',   default: 'FULL-TIME · ON-SITE' },
-    { key: 'detail1',  label: 'Detail 1',   type: 'text',   default: 'CSCS OR EQUIVALENT PREFERRED' },
-    { key: 'detail2',  label: 'Detail 2',   type: 'text',   default: '2+ YRS COACHING YOUTH ATHLETES' },
-    { key: 'detail3',  label: 'Detail 3',   type: 'text',   default: 'PASSION FOR DEVELOPMENT > EGO' },
-    { key: 'cta',      label: 'CTA',        type: 'text',   default: 'APPLY → ATHLETESACCEL.COM/JOBS' },
-    { key: 'photo',    label: 'Photo (bg)', type: 'image',  default: 'assets/photo-group-coaching.jpg', sub: 'shown dimmed behind' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "WE'RE HIRING"
+  },
+  {
+    "key": "role",
+    "label": "Role",
+    "type": "text",
+    "default": "STRENGTH & SPEED COACH"
+  },
+  {
+    "key": "type",
+    "label": "Type tag",
+    "type": "text",
+    "default": "FULL-TIME · ON-SITE"
+  },
+  {
+    "key": "detail1",
+    "label": "Detail 1",
+    "type": "text",
+    "default": "CSCS OR EQUIVALENT PREFERRED"
+  },
+  {
+    "key": "detail2",
+    "label": "Detail 2",
+    "type": "text",
+    "default": "2+ YRS COACHING YOUTH ATHLETES"
+  },
+  {
+    "key": "detail3",
+    "label": "Detail 3",
+    "type": "text",
+    "default": "PASSION FOR DEVELOPMENT > EGO"
+  },
+  {
+    "key": "cta",
+    "label": "CTA",
+    "type": "text",
+    "default": "APPLY → ATHLETESACCEL.COM/JOBS"
+  },
+  {
+    "key": "photo",
+    "label": "Photo (bg)",
+    "type": "image",
+    "default": "assets/photo-group-coaching.jpg",
+    "sub": "shown dimmed behind"
+  }
+],
 };
 
 function NowHiringReel({ data = {} }) {
@@ -48,7 +98,7 @@ function NowHiringReel({ data = {} }) {
       <div style={{ position: 'absolute', top: 200, left: 0, display: 'flex', overflow: 'hidden' }}>
         <div style={{ background: RED, padding: '20px 60px', transform: `translateX(${(1 - eyebrowT) * -120}%)`,
           clipPath: 'polygon(0 0, 100% 0, 94% 100%, 0 100%)', boxShadow: '0 16px 48px rgba(196,20,29,0.5)' }}>
-          <div style={{ fontFamily: 'Anton, sans-serif', color: '#fff', fontSize: 92, letterSpacing: '0.02em', lineHeight: 0.9 }}>{eyebrow}</div>
+          <Eyebrow top={150} fontSize={92}>{eyebrow}</Eyebrow>
         </div>
       </div>
 

@@ -62,10 +62,10 @@ function MeetCoachReel({ data = {} }) {
 
         {/* Eyebrow */}
         <TplText field="eyebrow" data={data}
-          base={{ position: 'absolute', top: 100, left: 60, padding: '8px 16px', background: RED }}
-          style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 24, color: '#fff', letterSpacing: '0.16em', opacity: eyebrowT }}
+          base={{ position: 'absolute', top: 100, left: 60, padding: '10px 22px', background: '#fff', borderRadius: 8 }}
+          style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 24, color: RED, fontWeight: 700, letterSpacing: '0.08em', opacity: eyebrowT }}
           fitKey={eyebrow}
-        >// {eyebrow}</TplText>
+        >{eyebrow}</TplText>
       </div>
 
       {/* Name */}
@@ -196,54 +196,72 @@ const MEET_COACH_SPEC = {
   },
   {
     "key": "eyebrow",
+
+    "role": "eyebrow",
     "label": "Eyebrow tag",
     "type": "text",
     "default": "MEET YOUR COACH"
   },
   {
     "key": "coachFirst",
+
+    "role": "byline",
     "label": "Coach first name",
     "type": "text",
     "default": "COACH"
   },
   {
     "key": "coachLast",
+
+    "role": "byline",
     "label": "Coach last name (red)",
     "type": "text",
     "default": "TORRES."
   },
   {
     "key": "coachTitle",
+
+    "role": "claim",
     "label": "Title",
     "type": "text",
     "default": "DIRECTOR OF PERFORMANCE"
   },
   {
     "key": "quote",
+
+    "role": "testimonial",
     "label": "Quote (types word-by-word)",
     "type": "textarea",
     "default": "I DON’T COACH POTENTIAL. I COACH WHAT YOU SHOW ME."
   },
   {
     "key": "credentials",
+
+    "role": "proof",
     "label": "Credential chips (· separated)",
     "type": "text",
     "default": "CSCS · USATF L2 · 15 YRS · NCAA D1 · PhD KIN"
   },
   {
     "key": "facts",
+
+    "role": "stat",
     "label": "Quick facts (value|label · …)",
     "type": "text",
     "default": "237|ATHLETES · 12|D1 COMMITS · 8 YRS|AT AA"
   },
   {
     "key": "ctaText",
+
+    "role": "cta",
     "label": "CTA text",
     "type": "text",
     "default": "TRAIN WITH HIM →"
   },
   {
     "key": "ctaMicro",
+
+    "role": "cta",
     "label": "CTA microcopy",
     "type": "text",
     "default": "BOOK FREE ASSESSMENT"

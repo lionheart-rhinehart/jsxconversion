@@ -70,7 +70,7 @@
     main {
       flex: 1;
       display: grid;
-      grid-template-columns: 1fr 300px;
+      grid-template-columns: 1fr 440px;
       min-height: 0;
     }
 
@@ -89,6 +89,11 @@
          edge; you just see the clipped result, which is the truth. */
       overflow: hidden;
       background: #000;
+      /* The frame is a flex child of .stage; without this it gets SHRUNK to the
+         stage width whenever the stage is < 1080px, clipping the right side of
+         the 1080-wide design. The CSS transform already scales it to fit, so the
+         box must keep its true 1080×1920 size. */
+      flex-shrink: 0;
     }
     .frame-outline {
       position: absolute;
@@ -385,6 +390,37 @@
     .element-list li.selected { border-color: var(--red); background: rgba(196, 20, 29, 0.15); }
     .element-list .coords { color: var(--muted); font-size: 10px; }
     .panel-block { background: var(--panel-2); padding: 10px; border-radius: 6px; }
+    /* Tabbed panel (mirrors the video editor's .vm-tabs feel) so the image editor
+       navigates the same way. Tabs are user-driven; selecting a layer does NOT
+       switch tabs (selectElement fires mid-drag — switching would yank the view). */
+    .ed-tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+    .ed-tab {
+      flex: 1; min-width: 58px;
+      background: var(--panel-2); border: 1px solid var(--border); color: var(--muted);
+      font-family: ui-monospace, Menlo, monospace; font-size: 11px;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      padding: 6px 8px; border-radius: 4px; cursor: pointer;
+    }
+    .ed-tab.on { background: var(--red); border-color: var(--red); color: #fff; }
+    .ed-tabbody { display: flex; flex-direction: column; gap: 12px; }
+    .ed-pane { display: flex; flex-direction: column; gap: 12px; }
+    .ed-pane[hidden] { display: none; }
+    .ed-empty { font-size: 11px; color: var(--muted); padding: 2px; line-height: 1.4; }
+    /* Background-photo swap grid (MEDIA tab) */
+    .ed-photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-top: 8px; max-height: 520px; overflow-y: auto; }
+    .ed-photo-grid[hidden] { display: none; }
+    /* Definite height (NOT aspect-ratio): the img's height:100% needs a real
+       parent height, else the button collapses to a thin band. 2 columns ×
+       ~230px ≈ 4× the area of the old 3-col/120px tiles. */
+    .ed-photo-tile { padding: 0; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; cursor: pointer; background: var(--bg); height: 230px; line-height: 0; }
+    .ed-photo-tile img { width: 100%; height: 230px; object-fit: cover; display: block; }
+    .ed-photo-tile:hover { border-color: var(--muted); }
+    .ed-photo-tile.on { border-color: var(--red); }
+    /* All-copy list rows (COPY tab) */
+    .copy-row { display: flex; flex-direction: column; gap: 4px; padding: 8px; background: var(--panel-2); border-radius: 6px; margin-bottom: 8px; }
+    .copy-row-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-family: ui-monospace, Menlo, monospace; }
+    .copy-row textarea, .copy-row select { width: 100%; box-sizing: border-box; background: var(--bg); border: 1px solid var(--border); color: var(--fg); padding: 6px 8px; border-radius: 3px; font-family: ui-monospace, monospace; font-size: 12px; }
+    .copy-row textarea { resize: vertical; min-height: 40px; line-height: 1.3; white-space: pre-wrap; }
     .field {
       display: flex;
       align-items: center;
@@ -482,57 +518,90 @@
         </datalist>
       </div>
 
-      <div class="panel-block" id="propsPanel" style="display: none;">
-        <h3 class="sec-title">Text: <span id="selName">—</span></h3>
-        <div class="field"><label>x</label><input type="number" id="propX" /></div>
-        <div class="field"><label>y</label><input type="number" id="propY" /></div>
-        <div class="field"><label>fontSize</label><input type="number" id="propFontSize" /></div>
-        <div class="field"><label>text</label><textarea id="propText" rows="2" title="Enter inserts a line break"></textarea></div>
-        <div class="field"><label>swap</label><select id="propTextSwap" title="Swap in another value from this campaign"><option value="">— campaign copy —</option></select></div>
-        <div class="field"><label>color</label><input type="text" id="propColor" placeholder="#ffffff" /></div>
-        <div class="field"><label>weight</label><input type="number" id="propFontWeight" placeholder="400" /></div>
-        <div class="field"><label>lineH</label><input type="number" id="propLineHeight" step="0.05" placeholder="1.0" /></div>
-        <div class="field"><label>letterSp</label><input type="text" id="propLetterSpacing" placeholder="-0.01em" /></div>
-        <div class="field"><label>transform</label><input type="text" id="propTextTransform" placeholder="uppercase / none" /></div>
-        <div class="field"><label>strokeW</label><input type="number" id="propStrokeWidth" placeholder="0" /></div>
-        <div class="field"><label>strokeC</label><input type="text" id="propStrokeColor" placeholder="#ffffff" /></div>
-        <div class="field"><label>outline only</label><input type="checkbox" id="propOutlineOnly" title="Transparent fill + white stroke (knockout outline)" /></div>
-        <button id="splitSolidOutlineBtn" type="button" title="Make a solid copy behind the subject + a white-outline copy in front" style="width:100%;margin-top:6px;font-size:11px;cursor:pointer">⧉⊟ Split into solid + outline</button>
+      <div class="ed-tabs">
+        <button class="ed-tab on" data-tab="copy">Copy</button>
+        <button class="ed-tab" data-tab="media">Media</button>
+        <button class="ed-tab" data-tab="position">Position</button>
       </div>
 
-      <div class="panel-block" id="shapePanel" style="display: none;">
-        <h3 class="sec-title">Shape: <span id="shapeName">—</span></h3>
-        <div id="shapeFields"></div>
-      </div>
-
-      <div class="panel-block" id="mediaPanel" style="display: none;">
-        <h3 class="sec-title">Media (background)</h3>
-        <div class="field"><label>path</label><input type="text" id="mediaPath" /></div>
-        <div class="field"><label>offsetX</label><input type="number" id="mediaOffsetX" /></div>
-        <div class="field"><label>offsetY</label><input type="number" id="mediaOffsetY" /></div>
-        <div class="field"><label>scale</label><input type="number" id="mediaScale" step="0.05" min="1" max="5" /></div>
-        <div class="field"><label>video t</label><input type="number" id="mediaVideoStart" step="0.1" min="0" /></div>
-        <div style="font-size: 10px; color: var(--muted); margin: 4px 0 8px 0;">
-          Click + drag photo to pan · scroll wheel to zoom
+      <div class="ed-tabbody">
+        <!-- COPY: edit text + swap in another campaign value (microscript / headline / …) -->
+        <div class="ed-pane" data-pane="copy">
+          <h3 class="sec-title">Copy — all text layers</h3>
+          <div id="copyList"></div>
+          <div class="ed-empty" id="copyEmpty" style="display:none;">No text layers in this design.</div>
+          <!-- Vestigial single-layer fields: kept hidden so the existing bindings
+               + renderProps (which set these by id) stay valid. The all-copy list
+               above is the real COPY editor. -->
+          <div class="panel-block" id="copyPanel" style="display: none;">
+            <h3 class="sec-title">Copy: <span id="selName">—</span></h3>
+            <div class="field"><label>text</label><textarea id="propText" rows="3" title="Enter inserts a line break"></textarea></div>
+            <div class="field"><label>swap</label><select id="propTextSwap" title="Swap in another value from this campaign"><option value="">— campaign copy —</option></select></div>
+            <div class="field"><label>color</label><input type="text" id="propColor" placeholder="#ffffff" /></div>
+          </div>
         </div>
-        <button id="resetCropBtn" style="width: 100%; font-size: 11px;">Reset Crop (use full photo)</button>
-      </div>
 
-      <div class="panel-block" id="fgPanel" style="display: none;">
-        <h3 class="sec-title">Foreground (cutout)</h3>
-        <div class="field"><label>path</label><input type="text" id="fgPath" /></div>
-        <div class="field"><label>offsetX</label><input type="number" id="fgOffsetX" /></div>
-        <div class="field"><label>offsetY</label><input type="number" id="fgOffsetY" /></div>
-        <div class="field"><label>scale</label><input type="number" id="fgScale" step="0.05" min="0.2" max="5" /></div>
-        <div class="field"><label>blend</label><input type="text" id="fgBlend" /></div>
-        <div style="font-size: 10px; color: var(--muted); margin: 4px 0 0 0;">
-          Click + drag cutout to move · scroll wheel to zoom
+        <!-- MEDIA: background photo / foreground cutout -->
+        <div class="ed-pane" data-pane="media" hidden>
+          <div class="panel-block" id="photoSwapPanel">
+            <h3 class="sec-title">Swap background photo</h3>
+            <button id="browsePhotosBtn" type="button" style="width:100%;font-size:11px;cursor:pointer">Browse brand photos ▾</button>
+            <div class="ed-photo-grid" id="photoGrid" hidden></div>
+          </div>
+          <div class="panel-block" id="mediaPanel" style="display: none;">
+            <h3 class="sec-title">Media (background)</h3>
+            <div class="field"><label>path</label><input type="text" id="mediaPath" /></div>
+            <div class="field"><label>offsetX</label><input type="number" id="mediaOffsetX" /></div>
+            <div class="field"><label>offsetY</label><input type="number" id="mediaOffsetY" /></div>
+            <div class="field"><label>scale</label><input type="number" id="mediaScale" step="0.05" min="1" max="5" /></div>
+            <div class="field"><label>video t</label><input type="number" id="mediaVideoStart" step="0.1" min="0" /></div>
+            <div style="font-size: 10px; color: var(--muted); margin: 4px 0 8px 0;">
+              Click + drag photo to pan · scroll wheel to zoom
+            </div>
+            <button id="resetCropBtn" style="width: 100%; font-size: 11px;">Reset Crop (use full photo)</button>
+          </div>
+          <div class="panel-block" id="fgPanel" style="display: none;">
+            <h3 class="sec-title">Foreground (cutout)</h3>
+            <div class="field"><label>path</label><input type="text" id="fgPath" /></div>
+            <div class="field"><label>offsetX</label><input type="number" id="fgOffsetX" /></div>
+            <div class="field"><label>offsetY</label><input type="number" id="fgOffsetY" /></div>
+            <div class="field"><label>scale</label><input type="number" id="fgScale" step="0.05" min="0.2" max="5" /></div>
+            <div class="field"><label>blend</label><input type="text" id="fgBlend" /></div>
+            <div style="font-size: 10px; color: var(--muted); margin: 4px 0 0 0;">
+              Click + drag cutout to move · scroll wheel to zoom
+            </div>
+          </div>
+          <div class="ed-empty" id="mediaEmpty">Select the background or foreground layer to swap, pan, or zoom it.</div>
+        </div>
+
+        <!-- POSITION: geometry + style for the selected text / shape -->
+        <div class="ed-pane" data-pane="position" hidden>
+          <div class="panel-block" id="propsPanel" style="display: none;">
+            <h3 class="sec-title">Position &amp; style: <span id="selNameGeom">—</span></h3>
+            <div class="field"><label>x</label><input type="number" id="propX" /></div>
+            <div class="field"><label>y</label><input type="number" id="propY" /></div>
+            <div class="field"><label>fontSize</label><input type="number" id="propFontSize" /></div>
+            <div class="field"><label>weight</label><input type="number" id="propFontWeight" placeholder="400" /></div>
+            <div class="field"><label>lineH</label><input type="number" id="propLineHeight" step="0.05" placeholder="1.0" /></div>
+            <div class="field"><label>letterSp</label><input type="text" id="propLetterSpacing" placeholder="-0.01em" /></div>
+            <div class="field"><label>transform</label><input type="text" id="propTextTransform" placeholder="uppercase / none" /></div>
+            <div class="field"><label>strokeW</label><input type="number" id="propStrokeWidth" placeholder="0" /></div>
+            <div class="field"><label>strokeC</label><input type="text" id="propStrokeColor" placeholder="#ffffff" /></div>
+            <div class="field"><label>outline only</label><input type="checkbox" id="propOutlineOnly" title="Transparent fill + white stroke (knockout outline)" /></div>
+            <button id="splitSolidOutlineBtn" type="button" title="Make a solid copy behind the subject + a white-outline copy in front" style="width:100%;margin-top:6px;font-size:11px;cursor:pointer">⧉⊟ Split into solid + outline</button>
+          </div>
+          <div class="panel-block" id="shapePanel" style="display: none;">
+            <h3 class="sec-title">Shape: <span id="shapeName">—</span></h3>
+            <div id="shapeFields"></div>
+          </div>
+          <div class="ed-empty" id="posEmpty">Select a layer to move, resize, or restyle it — drag on the canvas or use x / y / fontSize.</div>
         </div>
       </div>
 
       <div class="panel-block kbd-hints">
         <h3 class="sec-title">Shortcuts</h3>
         Click + drag to move<br>
+        <kbd>Shift</kbd> + click — multi-select, then drag to move together<br>
         <kbd>←↑→↓</kbd> nudge 1px<br>
         <kbd>Shift</kbd> + <kbd>←↑→↓</kbd> nudge 10px<br>
         <kbd>+</kbd> / <kbd>-</kbd> font size ±2<br>
@@ -550,6 +619,7 @@
       cluster: null,
       config: null,
       selectedId: null,
+      selectedIds: [], // group selection (text layers) for multi-move; primary stays selectedId
       scale: 1,
       drag: null,
       resize: null, // { id, kind, startMouseX, startMouseY, startW, startH, node }
@@ -617,14 +687,19 @@
     // Map a layer's field name to the relevant value pool: microscript-ish tags
     // → all microscripts, title/headline-ish → all headlines, plus any values
     // other assets used for the exact same key; fall back to everything.
-    function valuesForTag(tag, vals) {
+    function valuesForTag(el, vals) {
       if (!vals) return [];
+      // Accept an element {role,tag} (preferred) or a bare tag string (back-compat).
+      const role = el && typeof el === 'object' ? el.role : null;
+      const tag = el && typeof el === 'object' ? el.tag : el;
       const t = String(tag || '').toLowerCase();
+      // Role-aware first: a slot with a role shows that role's pool ("all hooks").
+      const roled = (role && vals.byRole && vals.byRole[role]) || [];
       let pool = [];
       if (/eyebrow|micro|byline|attribution|credential|role|label|tag/.test(t)) pool = vals.microscript || [];
       else if (/title|head|quote|claim|primary|cta|tagline|subtext|name/.test(t)) pool = vals.headline || [];
       const keyed = (vals.byKey && vals.byKey[tag]) || [];
-      const merged = [...new Set([...keyed, ...pool])];
+      const merged = [...new Set([...roled, ...keyed, ...pool])];
       return merged.length ? merged : (vals.all || []);
     }
     async function populateTextSwap(el) {
@@ -635,7 +710,7 @@
       const def = document.createElement('option');
       def.value = ''; def.textContent = '— campaign copy —';
       sel.appendChild(def);
-      for (const v of valuesForTag(el.tag, vals)) {
+      for (const v of valuesForTag(el, vals)) {
         const o = document.createElement('option');
         o.value = v;                                   // full value (preserves \n)
         o.textContent = v.length > 60 ? v.slice(0, 57) + '…' : v;
@@ -736,13 +811,17 @@
         setStatus(sh.id + ' (' + Math.round(sh.x) + ', ' + Math.round(sh.y) + ')');
         return;
       }
-      const el = state.config.elements.find(el => el.id === d.elId);
-      if (!el) return;
-      el.x = d.startElX + dx;
-      el.y = d.startElY + dy;
-      // Design-pixel coords (parent CSS scale visually applies)
-      d.boxEl.style.left = el.x + 'px';
-      d.boxEl.style.top = el.y + 'px';
+      if (d.group) {
+        for (const it of d.group) {
+          const el = state.config.elements.find(x => x.id === it.id);
+          if (!el) continue;
+          el.x = it.startX + dx;
+          el.y = it.startY + dy;
+          // Design-pixel coords (parent CSS scale visually applies)
+          if (it.boxEl) { it.boxEl.style.left = el.x + 'px'; it.boxEl.style.top = el.y + 'px'; }
+        }
+        if (d.group.length > 1) setStatus('Moving ' + d.group.length + ' layers');
+      }
     });
     document.addEventListener('mouseup', () => {
       const d = state.drag;
@@ -762,11 +841,10 @@
       } else if (d.kind === 'shape') {
         const sh = (state.config.fixedDesign || []).find(s => s.id === d.id);
         if (sh) { sh.x = Math.round(sh.x); sh.y = Math.round(sh.y); }
-      } else {
-        const el = state.config.elements.find(el => el.id === d.elId);
-        if (el) {
-          el.x = Math.round(el.x);
-          el.y = Math.round(el.y);
+      } else if (d.group) {
+        for (const it of d.group) {
+          const el = state.config.elements.find(x => x.id === it.id);
+          if (el) { el.x = Math.round(el.x); el.y = Math.round(el.y); }
         }
       }
       state.drag = null;
@@ -1068,6 +1146,11 @@
         const cleanPath = media.path.replace(/^\.\//, '');
         img.src = '/templates/multi-sport-foundations/' + cleanPath;
         img.onload = () => repositionPhoto(img);
+        // On a stage RE-render the img is cached, so onload often never fires and
+        // the photo would stay at natural size / top-left (zoomed, right cut off).
+        // decode() resolves even from cache; repositionPhoto needs only
+        // naturalWidth (not DOM), so the cover-fit always applies.
+        if (img.decode) img.decode().then(() => repositionPhoto(img)).catch(() => {});
       } else {
         // No media.path → use the last rendered composite as a positioning
         // reference. For campaign assets that's the campaign output path, not
@@ -1144,13 +1227,23 @@
       }, { passive: false });
     }
 
+    // A crop is photo-specific: ignore one stamped for a DIFFERENT photo
+    // (crop.forPath), so a stale crop never applies to a swapped photo. Legacy
+    // crops (no forPath) still apply. The renderer's MediaSlot uses the SAME
+    // guard, so editor preview and render can never disagree on crop presence.
+    function activeCrop(media) {
+      const c = media && media.crop;
+      if (!c || !(c.width > 0) || !(c.height > 0)) return null;
+      if (c.forPath && c.forPath !== media.path) return null;
+      return c;
+    }
+
     // Effective "natural" dimensions for the editor — if a crop is set,
     // those become the dimensions of the visible region (since cropping
     // effectively redefines the source photo).
     function effectiveNatural(media, img) {
-      if (media?.crop && media.crop.width > 0 && media.crop.height > 0) {
-        return { width: media.crop.width, height: media.crop.height };
-      }
+      const c = activeCrop(media);
+      if (c) return { width: c.width, height: c.height };
       return { width: img.naturalWidth, height: img.naturalHeight };
     }
 
@@ -1178,10 +1271,10 @@
 
       // If crop is set, show only the cropped region cover-fit to the frame,
       // matching the renderer's CROP path in _helpers.jsx MediaSlot.
-      if (media.crop && media.crop.width > 0 && media.crop.height > 0) {
+      const crop = activeCrop(media);
+      if (crop) {
         const nW = img.naturalWidth;
         const nH = img.naturalHeight;
-        const crop = media.crop;
         const cropAspect = crop.width / crop.height;
         const frameAspect = W / H;
         const s = (cropAspect > frameAspect ? H / crop.height : W / crop.width) * (media.scale || 1);
@@ -1402,7 +1495,9 @@
 
         // Initialize crop if none exists — default to a 9:16 frame-aspect
         // rectangle centered in the photo (much more intuitive than full-photo).
-        if (!media.crop) {
+        // Fresh default crop if none active for THIS photo (a stale crop stamped
+        // for a different photo is replaced, not reused).
+        if (!activeCrop(media)) {
           const W = state.config.width || 1080;
           const H = state.config.height || 1920;
           const frameAspect = W / H;
@@ -1420,6 +1515,7 @@
             y: Math.round((nH - cropH) / 2),
             width: cropW,
             height: cropH,
+            forPath: media.path,
           };
         }
         const crop = media.crop;
@@ -1556,7 +1652,7 @@
     function makeElementBox(el, scale) {
       const box = document.createElement('div');
       box.className = 'element-box';
-      if (el.id === state.selectedId) box.classList.add('selected');
+      if (state.selectedIds.includes(el.id) || el.id === state.selectedId) box.classList.add('selected');
       // Design-pixel coordinates — parent .stage-inner applies CSS scale
       box.style.left = el.x + 'px';
       box.style.top = el.y + 'px';
@@ -1637,6 +1733,18 @@
         text.style.webkitTextFillColor = 'transparent';
         text.style.color = 'transparent';
       }
+      // Optional "chip" treatment — mirror renderTextLayer: a filled pill that
+      // hugs the text (the white-bg / red-text eyebrow). The box is the
+      // positioned wrapper; the inner text span carries the background, padding
+      // and rounded corners (inline-block so it shrinks to fit). Inert when
+      // chipBg is absent → plain text unchanged.
+      if (el.chipBg) {
+        text.style.display = 'inline-block';
+        text.style.background = el.chipBg;
+        text.style.padding = el.chipPad || '10px 22px';
+        const r = el.chipRadius != null ? el.chipRadius : 8;
+        text.style.borderRadius = (typeof r === 'number' ? r + 'px' : r);
+      }
       // Optional tiled/repeated watermark: mirror renderTextLayer — repeat the
       // text on `repeat` stacked lines so a tagged microscript fills the
       // background "all the way down". Default whiteSpace to 'pre' when the
@@ -1670,11 +1778,14 @@
       const archDepth = typeof el.arch === 'number'
         ? el.arch
         : (presets[el.arch] != null ? presets[el.arch] : 0.45);
-      const baselineY = fontSize * 1.18;
-      const peakY = baselineY - fontSize * archDepth;
-      const pathD = 'M ' + padX + ' ' + baselineY + ' Q ' + (width / 2) + ' ' + peakY + ' ' + (width - padX) + ' ' + baselineY;
-      const svgHeight = baselineY + fontSize * 0.4;
-      const id = 'arc-' + String(el.id || el.text || '').replace(/[^a-z0-9]/gi, '');
+      // Multi-line arched text: split on \n and stack one arch per line. Mirrors
+      // _helpers.jsx ArchedHeadline EXACTLY (lineStep from fontSize+archDepth, no
+      // lineHeight) so the preview matches the PNG render.
+      const lines = String(el.text == null ? '' : el.text).split('\n');
+      const lineStep = fontSize * (1.0 + archDepth * 0.7);
+      const baseY0 = fontSize * 1.18;
+      const svgHeight = baseY0 + (lines.length - 1) * lineStep + fontSize * 0.4;
+      const idBase = 'arc-' + String(el.id || el.text || '').replace(/[^a-z0-9]/gi, '');
       const glow = !!el.glow;
       // `shadow` may be a string (verbatim CSS filter — matches a Canva export's
       // baked offset-shadow "layer"), true (subtle built-in), or false (none).
@@ -1691,11 +1802,20 @@
       const fontWeight = el.fontWeight != null ? el.fontWeight : 400;
       const letterSpacing = el.letterSpacing != null ? el.letterSpacing : '-0.01em';
       const strokeAttrs = stroke ? ' stroke="' + strokeColor + '" stroke-width="' + stroke + '"' : '';
+      let defs = '';
+      let texts = '';
+      lines.forEach((ln, i) => {
+        const baselineY = baseY0 + i * lineStep;
+        const peakY = baselineY - fontSize * archDepth;
+        const pathD = 'M ' + padX + ' ' + baselineY + ' Q ' + (width / 2) + ' ' + peakY + ' ' + (width - padX) + ' ' + baselineY;
+        const id = idBase + '-' + i;
+        defs += '<path id="' + id + '" d="' + pathD + '" fill="none"></path>';
+        texts += '<text fill="' + color + '"' + strokeAttrs + ' font-family="\'Anton\',\'Oswald\',sans-serif" font-size="' + fontSize + '" font-weight="' + fontWeight + '" letter-spacing="' + letterSpacing + '" style="filter:' + filter + ';text-transform:uppercase;paint-order:stroke">'
+          + '<textPath href="#' + id + '" startOffset="50%" text-anchor="middle">' + escapeHtml(ln) + '</textPath>'
+          + '</text>';
+      });
       return '<svg width="' + width + '" height="' + svgHeight + '" viewBox="0 0 ' + width + ' ' + svgHeight + '" style="display:block;overflow:visible">'
-        + '<defs><path id="' + id + '" d="' + pathD + '" fill="none"></path></defs>'
-        + '<text fill="' + color + '"' + strokeAttrs + ' font-family="\'Anton\',\'Oswald\',sans-serif" font-size="' + fontSize + '" font-weight="' + fontWeight + '" letter-spacing="' + letterSpacing + '" style="filter:' + filter + ';text-transform:uppercase;paint-order:stroke">'
-        + '<textPath href="#' + id + '" startOffset="50%" text-anchor="middle">' + escapeHtml(el.text || '') + '</textPath>'
-        + '</text></svg>';
+        + '<defs>' + defs + '</defs>' + texts + '</svg>';
     }
 
     function escapeHtml(s) {
@@ -1747,7 +1867,7 @@
       for (const layer of layers) {
         const li = document.createElement('li');
         li.dataset.id = layer.id;
-        if (layer.id === state.selectedId) li.classList.add('selected');
+        if (state.selectedIds.includes(layer.id) || layer.id === state.selectedId) li.classList.add('selected');
 
         const head = document.createElement('div');
         head.className = 'lyr-head';
@@ -1828,54 +1948,125 @@
         }
         li.appendChild(controls);
 
-        li.addEventListener('click', () => selectElement(layer.id));
+        li.addEventListener('click', (e) => {
+          if (e.shiftKey && layer.kind === 'text') toggleGroup(layer.id);
+          else selectElement(layer.id);
+        });
         list.appendChild(li);
+      }
+      renderCopyList();
+    }
+
+    // ── All-copy list (COPY tab): every text layer's copy + swap in one view, so
+    // you edit all copy without selecting each layer (like the video editor). ──
+    async function renderCopyList() {
+      const host = $('copyList');
+      if (!host) return;
+      const els = (state.config && state.config.elements) || [];
+      $('copyEmpty').style.display = els.length ? 'none' : '';
+      host.innerHTML = '';
+      const vals = await loadCampaignValues();
+      // Guard against an out-of-order rebuild (e.g. layer added while awaiting):
+      if (((state.config && state.config.elements) || []) !== els) return;
+      for (const el of els) {
+        const row = document.createElement('div');
+        row.className = 'copy-row';
+        const head = document.createElement('div');
+        head.className = 'copy-row-label';
+        head.textContent = el.tag || el.id;
+        row.appendChild(head);
+        const ta = document.createElement('textarea');
+        ta.rows = 2; ta.value = el.text || ''; ta.title = 'Enter inserts a line break';
+        ta.addEventListener('input', () => {
+          el.text = ta.value;
+          if (ta.value.includes('\n') && el.whiteSpace == null) el.whiteSpace = 'pre-wrap';
+          renderStage();
+        });
+        row.appendChild(ta);
+        const opts = valuesForTag(el, vals);
+        if (opts.length) {
+          const sel = document.createElement('select');
+          const def = document.createElement('option');
+          def.value = ''; def.textContent = '— swap campaign copy —';
+          sel.appendChild(def);
+          for (const v of opts) {
+            const o = document.createElement('option');
+            o.value = v; o.textContent = v.length > 50 ? v.slice(0, 47) + '…' : v;
+            if (v === el.text) o.selected = true;
+            sel.appendChild(o);
+          }
+          sel.addEventListener('change', () => {
+            if (!sel.value) return;
+            snapshotForUndo();
+            el.text = sel.value;
+            if (sel.value.includes('\n') && el.whiteSpace == null) el.whiteSpace = 'pre-wrap';
+            ta.value = sel.value;
+            renderStage();
+          });
+          row.appendChild(sel);
+        }
+        host.appendChild(row);
       }
     }
 
     function renderProps() {
       const panel = $('propsPanel');
+      const copyPanel = $('copyPanel');
       const mediaPanel = $('mediaPanel');
       const fgPanel = $('fgPanel');
       const shapePanel = $('shapePanel');
       panel.style.display = 'none';
+      copyPanel.style.display = 'none';
       mediaPanel.style.display = 'none';
       fgPanel.style.display = 'none';
       shapePanel.style.display = 'none';
+      // Per-tab empty hints: a tab shows its hint when it has nothing to edit for
+      // the current selection. Tabs are user-driven, so each independently
+      // reflects the same selection (copy fields live in COPY, geometry in
+      // POSITION, media in MEDIA).
+      const refreshEmpties = () => {
+        const setShown = (id, on) => { const e = $(id); if (e) e.style.display = on ? '' : 'none'; };
+        // copyEmpty is owned by renderCopyList (the all-copy list), not selection.
+        setShown('mediaEmpty', mediaPanel.style.display === 'none' && fgPanel.style.display === 'none');
+        setShown('posEmpty', panel.style.display === 'none' && shapePanel.style.display === 'none');
+      };
 
-      if (!state.selectedId) return;
+      if (!state.selectedId) { refreshEmpties(); return; }
 
       if (state.selectedId === '_media') {
         const m = state.config.media;
-        if (!m) return;
+        if (!m) { refreshEmpties(); return; }
         mediaPanel.style.display = '';
         $('mediaPath').value = m.path || '';
         $('mediaOffsetX').value = Math.round(m.offsetX || 0);
         $('mediaOffsetY').value = Math.round(m.offsetY || 0);
         $('mediaScale').value = m.scale ?? 1;
         $('mediaVideoStart').value = m.videoStartTime ?? 0;
-        return;
+        refreshEmpties(); return;
       }
 
       if (state.selectedId === '_foreground') {
         const f = state.config.foregroundMedia;
-        if (!f) return;
+        if (!f) { refreshEmpties(); return; }
         fgPanel.style.display = '';
         $('fgPath').value = f.path || '';
         $('fgOffsetX').value = Math.round(f.offsetX || 0);
         $('fgOffsetY').value = Math.round(f.offsetY || 0);
         $('fgScale').value = f.scale ?? 1;
         $('fgBlend').value = f.blendMode || 'normal';
-        return;
+        refreshEmpties(); return;
       }
 
       const shape = (state.config.fixedDesign || []).find(s => s.id === state.selectedId);
-      if (shape) { renderShapeProps(shape); return; }
+      if (shape) { renderShapeProps(shape); refreshEmpties(); return; }
 
       const el = (state.config.elements || []).find(e => e.id === state.selectedId);
-      if (!el) return;
+      if (!el) { refreshEmpties(); return; }
+      // copyPanel stays hidden — the all-copy list is the COPY editor; these
+      // fields are set only to keep the (hidden) bindings in sync.
       panel.style.display = '';
       $('selName').textContent = el.id;
+      const geomName = $('selNameGeom'); if (geomName) geomName.textContent = el.id;
       $('propX').value = Math.round(el.x);
       $('propY').value = Math.round(el.y);
       $('propFontSize').value = el.fontSize || '';
@@ -1889,6 +2080,7 @@
       $('propStrokeWidth').value = el.strokeWidth != null ? el.strokeWidth : '';
       $('propStrokeColor').value = el.strokeColor != null ? el.strokeColor : '';
       $('propOutlineOnly').checked = isOutlineOnly(el);
+      refreshEmpties();
     }
     // Outline-only = transparent/none fill (the visible stroke is the outline).
     function isOutlineOnly(el) {
@@ -1992,35 +2184,58 @@
       });
     }
 
-    function selectElement(id) {
-      state.selectedId = id;
-      // Update class on boxes + shapes + list WITHOUT re-rendering the stage,
-      // so an in-progress drag and input focus are preserved.
+    // Apply the '.selected' class from the current selection WITHOUT re-rendering
+    // the stage (preserves an in-progress drag + input focus). Text boxes + their
+    // layer rows honor the whole group (selectedIds); shapes/media use the primary.
+    function applySelectionClasses() {
+      const ids = state.selectedIds;
       document.querySelectorAll('.element-box').forEach(b => {
-        b.classList.toggle('selected', b.dataset.id === id);
+        b.classList.toggle('selected', ids.includes(b.dataset.id));
       });
       document.querySelectorAll('.shape-box').forEach(b => {
-        b.classList.toggle('selected', b.dataset.id === id);
+        b.classList.toggle('selected', b.dataset.id === state.selectedId);
       });
       const fgEl = document.querySelector('.fg-layer');
-      if (fgEl) fgEl.classList.toggle('selected', id === '_foreground');
+      if (fgEl) fgEl.classList.toggle('selected', state.selectedId === '_foreground');
       document.querySelectorAll('#elementList li').forEach((li) => {
-        li.classList.toggle('selected', li.dataset.id === id);
+        li.classList.toggle('selected', ids.includes(li.dataset.id) || li.dataset.id === state.selectedId);
       });
+    }
+    function selectElement(id) {
+      state.selectedId = id;
+      state.selectedIds = id ? [id] : [];
+      applySelectionClasses();
+      renderProps();
+    }
+    // Shift-click: toggle a text layer in/out of the move group (primary follows
+    // the last added). Only text-element ids participate in group move.
+    function toggleGroup(id) {
+      const i = state.selectedIds.indexOf(id);
+      if (i >= 0) {
+        state.selectedIds.splice(i, 1);
+        if (state.selectedId === id) state.selectedId = state.selectedIds[state.selectedIds.length - 1] || null;
+      } else {
+        state.selectedIds.push(id);
+        state.selectedId = id;
+      }
+      applySelectionClasses();
       renderProps();
     }
 
     function attachDragHandler(box, el) {
       box.addEventListener('mousedown', (e) => {
-        selectElement(el.id);
-        state.drag = {
-          elId: el.id,
-          startMouseX: e.clientX,
-          startMouseY: e.clientY,
-          startElX: el.x,
-          startElY: el.y,
-          boxEl: box,
-        };
+        if (e.shiftKey) { toggleGroup(el.id); e.preventDefault(); return; }
+        // Plain click on a layer outside the current group → make it the sole
+        // selection. Clicking a member of the group keeps the group (move all).
+        if (!state.selectedIds.includes(el.id)) selectElement(el.id);
+        const group = state.selectedIds
+          .map((id) => state.config.elements.find((x) => x.id === id))
+          .filter(Boolean)
+          .map((x) => ({
+            id: x.id, startX: x.x, startY: x.y,
+            boxEl: document.querySelector('.element-box[data-id="' + x.id + '"]'),
+          }));
+        state.drag = { group, startMouseX: e.clientX, startMouseY: e.clientY };
         e.preventDefault();
       });
     }
@@ -2179,6 +2394,83 @@
     $('addTextBtn').onclick = () => { if (state.config) addText(); };
     $('addRectBtn').onclick = () => { if (state.config) addRect(); };
 
+    // Tab bar (Copy / Media / Position). User-driven view switch — selecting a
+    // layer does NOT change tabs, because selectElement fires on canvas
+    // drag-start and switching would yank the Position view mid-drag.
+    function setEditorTab(name) {
+      state.tab = name;
+      document.querySelectorAll('.ed-tab').forEach((b) => b.classList.toggle('on', b.dataset.tab === name));
+      document.querySelectorAll('.ed-pane').forEach((p) => { p.hidden = p.dataset.pane !== name; });
+    }
+    document.querySelectorAll('.ed-tab').forEach((b) => {
+      b.addEventListener('click', () => setEditorTab(b.dataset.tab));
+    });
+    state.tab = 'copy';
+
+    // ── Background-photo swap (MEDIA tab) ──────────────────────────────────────
+    // Editor is same-origin on :5173, so fetch the brand library directly. On
+    // pick, the server copies the photo into the template dir and returns a
+    // "./library/<name>" path that resolves in BOTH the preview and the render.
+    let _photoItems = null;
+    async function loadPhotoGrid() {
+      if (_photoItems) return; // fetch once
+      const grid = $('photoGrid');
+      grid.innerHTML = '<div class="ed-empty">Loading photos…</div>';
+      try {
+        const r = await fetch('/media?kind=photo');
+        const j = await r.json();
+        _photoItems = j.items || [];
+      } catch (_) { _photoItems = []; }
+      grid.innerHTML = '';
+      if (!_photoItems.length) { grid.innerHTML = '<div class="ed-empty">No brand photos found.</div>'; return; }
+      for (const it of _photoItems) {
+        const t = document.createElement('button');
+        t.type = 'button'; t.className = 'ed-photo-tile'; t.title = it.name;
+        const img = document.createElement('img');
+        img.loading = 'lazy'; img.src = it.url; img.alt = '';
+        t.appendChild(img);
+        t.addEventListener('click', () => swapBackgroundPhoto(it, t));
+        grid.appendChild(t);
+      }
+    }
+    async function swapBackgroundPhoto(item, tile) {
+      if (!state.config) return;
+      setStatus('Copying photo…');
+      let newPath;
+      try {
+        const r = await fetch('/media-into-template', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ src: item.path }),
+        });
+        const j = await r.json();
+        if (!r.ok || !j.path) throw new Error(j.error || 'copy failed');
+        newPath = j.path;
+      } catch (e) { setStatus('Photo swap failed: ' + e.message); return; }
+      snapshotForUndo();
+      setMediaPhoto(newPath); // resets pan/zoom + drops the old photo's crop
+      document.querySelectorAll('.ed-photo-tile').forEach((el) => el.classList.toggle('on', el === tile));
+      setStatus('Background swapped. Save + Render to persist.');
+    }
+    $('browsePhotosBtn').onclick = () => {
+      const grid = $('photoGrid');
+      grid.hidden = !grid.hidden;
+      if (!grid.hidden) loadPhotoGrid();
+    };
+
+    // Point the background at a new photo. A crop/pan belongs to ONE photo, so
+    // reset framing (clear crop, recenter, scale 1) whenever the photo changes.
+    // Shared by the swap-photo grid AND the mediaPath field.
+    function setMediaPhoto(newPath) {
+      if (!state.config) return;
+      if (!state.config.media) state.config.media = { offsetX: 0, offsetY: 0, scale: 1, z: 0 };
+      const m = state.config.media;
+      m.path = newPath;
+      m.offsetX = 0; m.offsetY = 0; m.scale = 1;
+      delete m.crop;
+      renderStage();
+      renderProps();
+    }
+
     // Media-specific input bindings
     function bindMediaInput(inputId, propName, parser) {
       $(inputId).addEventListener('input', () => {
@@ -2190,7 +2482,18 @@
         media[propName] = v;
       });
     }
-    bindMediaInput('mediaPath', 'path', String);
+    // Path changes go through setMediaPhoto (resets framing) on COMMIT (change),
+    // not per-keystroke — typing a path shouldn't wipe the crop mid-edit.
+    let _mediaPathBefore = '';
+    $('mediaPath').addEventListener('focus', () => { _mediaPathBefore = $('mediaPath').value; });
+    $('mediaPath').addEventListener('change', () => {
+      if (!state.config?.media) return;
+      const v = $('mediaPath').value;
+      if (v === _mediaPathBefore) return;
+      snapshotForUndo();
+      setMediaPhoto(v);
+      setStatus('Photo changed — crop/pan reset. Save + Render to persist.');
+    });
     bindMediaInput('mediaOffsetX', 'offsetX', (v) => parseInt(v, 10));
     bindMediaInput('mediaOffsetY', 'offsetY', (v) => parseInt(v, 10));
     bindMediaInput('mediaScale', 'scale', (v) => Math.max(1.0, parseFloat(v) || 1));

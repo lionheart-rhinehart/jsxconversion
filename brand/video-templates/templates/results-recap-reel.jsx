@@ -29,7 +29,7 @@ function ResultsRecapReel({ data = {} }) {
       <div style={{ position: 'absolute', top: -200, right: -200, width: 600, height: 600, background: `radial-gradient(circle, ${GREEN}22 0%, transparent 60%)`, filter: 'blur(30px)' }}/>
 
       <div style={{ position: 'absolute', top: 130, left: 60, right: 60, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-        <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 26, color: RED, letterSpacing: '0.18em', opacity: eT }}>// {eyebrow}</div>
+        <Eyebrow top={150} fontSize={26}>// {eyebrow}</Eyebrow>
         <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 22, color: '#969ca7', letterSpacing: '0.12em', opacity: eT }}>{dateLabel}</div>
       </div>
 
@@ -72,16 +72,147 @@ function ResultsRecapReel({ data = {} }) {
 }
 window.ResultsRecapReel = ResultsRecapReel;
 const RESULTS_RECAP_REEL_SPEC = { id:'results-recap-reel', name:'RESULTS RECAP · REEL', fields:[
-  {key:'duration',label:'Length',type:'slider',default:7,min:4,max:15,step:0.5,unit:'s'},
-  {key:'eyebrow',label:'Eyebrow',type:'text',default:'SCOREBOARD'},
-  {key:'dateLabel',label:'Date label',type:'text',default:'WEEKEND · MAY 24'},
-  {key:'title1',label:'Title 1',type:'text',default:'OUR ATHLETES'},
-  {key:'title2',label:'Title 2 (red)',type:'text',default:'HIT.'},
-  {key:'r1n',label:'#1 name',type:'text',default:'JORDAN K.'},{key:'r1s',label:'#1 score',type:'text',default:'34-21'},{key:'r1r',label:'#1 result',type:'text',default:'W'},{key:'r1h',label:'#1 highlight',type:'text',default:'VARSITY FB · 2 TDs · 110 YDS'},
-  {key:'r2n',label:'#2 name',type:'text',default:'MAYA R.'},{key:'r2s',label:'#2 score',type:'text',default:'3-1'},{key:'r2r',label:'#2 result',type:'text',default:'W'},{key:'r2h',label:'#2 highlight',type:'text',default:'CLUB SOCCER · HAT TRICK'},
-  {key:'r3n',label:'#3 name',type:'text',default:'TYLER S.'},{key:'r3s',label:'#3 score',type:'text',default:'10.92'},{key:'r3r',label:'#3 result',type:'text',default:'PR'},{key:'r3h',label:'#3 highlight',type:'text',default:'TRACK · −0.4s SEASON'},
-  {key:'r4n',label:'#4 name',type:'text',default:'JENNA W.'},{key:'r4s',label:'#4 score',type:'text',default:'58-45'},{key:'r4r',label:'#4 result',type:'text',default:'W'},{key:'r4h',label:'#4 highlight',type:'text',default:'JV BBALL · 18 PTS · 7 REB'},
-  {key:'ctaText',label:'CTA',type:'text',default:"WHO'S NEXT? →"},
-  {key:'ctaMicro',label:'CTA microcopy',type:'text',default:'BUILD YOUR EDGE · ATHLETESACCEL.COM'},
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "SCOREBOARD"
+  },
+  {
+    "key": "dateLabel",
+    "label": "Date label",
+    "type": "text",
+    "default": "WEEKEND · MAY 24"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "OUR ATHLETES"
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "HIT."
+  },
+  {
+    "key": "r1n",
+    "label": "#1 name",
+    "type": "text",
+    "default": "JORDAN K."
+  },
+  {
+    "key": "r1s",
+    "label": "#1 score",
+    "type": "text",
+    "default": "34-21"
+  },
+  {
+    "key": "r1r",
+    "label": "#1 result",
+    "type": "text",
+    "default": "W"
+  },
+  {
+    "key": "r1h",
+    "label": "#1 highlight",
+    "type": "text",
+    "default": "VARSITY FB · 2 TDs · 110 YDS"
+  },
+  {
+    "key": "r2n",
+    "label": "#2 name",
+    "type": "text",
+    "default": "MAYA R."
+  },
+  {
+    "key": "r2s",
+    "label": "#2 score",
+    "type": "text",
+    "default": "3-1"
+  },
+  {
+    "key": "r2r",
+    "label": "#2 result",
+    "type": "text",
+    "default": "W"
+  },
+  {
+    "key": "r2h",
+    "label": "#2 highlight",
+    "type": "text",
+    "default": "CLUB SOCCER · HAT TRICK"
+  },
+  {
+    "key": "r3n",
+    "label": "#3 name",
+    "type": "text",
+    "default": "TYLER S."
+  },
+  {
+    "key": "r3s",
+    "label": "#3 score",
+    "type": "text",
+    "default": "10.92"
+  },
+  {
+    "key": "r3r",
+    "label": "#3 result",
+    "type": "text",
+    "default": "PR"
+  },
+  {
+    "key": "r3h",
+    "label": "#3 highlight",
+    "type": "text",
+    "default": "TRACK · −0.4s SEASON"
+  },
+  {
+    "key": "r4n",
+    "label": "#4 name",
+    "type": "text",
+    "default": "JENNA W."
+  },
+  {
+    "key": "r4s",
+    "label": "#4 score",
+    "type": "text",
+    "default": "58-45"
+  },
+  {
+    "key": "r4r",
+    "label": "#4 result",
+    "type": "text",
+    "default": "W"
+  },
+  {
+    "key": "r4h",
+    "label": "#4 highlight",
+    "type": "text",
+    "default": "JV BBALL · 18 PTS · 7 REB"
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "WHO'S NEXT? →"
+  },
+  {
+    "key": "ctaMicro",
+    "label": "CTA microcopy",
+    "type": "text",
+    "default": "BUILD YOUR EDGE · ATHLETESACCEL.COM"
+  }
 ]};
 window.RESULTS_RECAP_REEL_SPEC = RESULTS_RECAP_REEL_SPEC;

@@ -6,13 +6,64 @@ const FIVE_STAR_REVIEW_SPEC = {
   id: 'five-star-review',
   name: 'FIVE-STAR REVIEW',
   fields: [
-    { key: 'duration', label: 'Length',    type: 'slider', default: 8, min: 4, max: 15, step: 0.5, unit: 's' },
-    { key: 'source',   label: 'Source tag', type: 'text',  default: 'GOOGLE REVIEW' },
-    { key: 'rating',   label: 'Rating',    type: 'slider', default: 5, min: 1, max: 5, step: 0.5, unit: '★' },
-    { key: 'quote',    label: 'Quote',     type: 'textarea', default: 'My son added 4 inches to his vertical in one season. The coaches actually care — best decision we made for his athletic career.' },
-    { key: 'reviewer', label: 'Reviewer',  type: 'text',   default: 'SARAH M.' },
-    { key: 'meta',     label: 'Reviewer meta', type: 'text', default: 'PARENT · 2 SEASONS' },
-    { key: 'photo',    label: 'Photo (bg)', type: 'image',  default: 'assets/photo-group-coaching.jpg', sub: 'shown dimmed behind' },
+    {
+      "key": "duration",
+      "label": "Length",
+      "type": "slider",
+      "default": 8,
+      "min": 4,
+      "max": 15,
+      "step": 0.5,
+      "unit": "s"
+    },
+    {
+      "key": "eyebrow",
+      "role": "eyebrow",
+      "label": "Eyebrow",
+      "type": "text",
+      "default": "{city name} SPORT PARENT"
+    },
+    {
+      "key": "source",
+      "label": "Source tag",
+      "type": "text",
+      "default": "GOOGLE REVIEW"
+    },
+    {
+      "key": "rating",
+      "label": "Rating",
+      "type": "slider",
+      "default": 5,
+      "min": 1,
+      "max": 5,
+      "step": 0.5,
+      "unit": "★"
+    },
+    {
+      "key": "quote",
+      "label": "Quote",
+      "type": "textarea",
+      "default": "My son added 4 inches to his vertical in one season. The coaches actually care — best decision we made for his athletic career."
+    },
+    {
+      "key": "reviewer",
+      "label": "Reviewer",
+      "type": "text",
+      "default": "SARAH M."
+    },
+    {
+      "key": "meta",
+      "label": "Reviewer meta",
+      "type": "text",
+      "default": "PARENT · 2 SEASONS"
+    },
+    {
+      "key": "photo",
+      "label": "Photo (bg)",
+      "type": "image",
+      "default": "assets/photo-group-coaching.jpg",
+      "sub": "shown dimmed behind"
+    }
   ],
 };
 
@@ -40,6 +91,7 @@ function FiveStarReviewReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
+      <Eyebrow top={90} fontSize={34}>{data.eyebrow ?? "{city name} SPORT PARENT"}</Eyebrow>
       <img src={photo} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
         opacity: 0.16, filter: 'grayscale(0.45) brightness(0.6)' }}/>
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.85) 0%, rgba(10,11,13,0.55) 45%, rgba(10,11,13,0.96) 100%)' }}/>

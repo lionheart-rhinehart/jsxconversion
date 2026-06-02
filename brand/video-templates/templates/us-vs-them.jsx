@@ -23,7 +23,7 @@ function UsVsThemReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', top: 110, left: 60, padding: '8px 16px', background: RED, fontFamily: '"JetBrains Mono", monospace', fontSize: 24, color: '#fff', letterSpacing: '0.16em', opacity: eT }}>// {eyebrow}</div>
+      <Eyebrow top={110} fontSize={24}>// {eyebrow}</Eyebrow>
       <div style={{ position: 'absolute', top: 200, left: 60, right: 60, fontFamily: 'Anton, sans-serif', fontSize: 130, color: '#fff', lineHeight: 0.88, opacity: tiT }}>{title1}<br/><span style={{color:RED}}>{title2}</span></div>
       <div style={{ position: 'absolute', top: 620, left: 40, right: 40, height: 880, opacity: cT, background: 'rgba(15,17,21,0.85)', border: '1px solid rgba(255,255,255,0.08)' }}>
         {window.ComparisonSlider && <window.ComparisonSlider leftLabel={leftLabel} rightLabel={rightLabel} leftValue={leftValue} rightValue={rightValue} unit={unit} metric={metric} lowerIsBetter={lowerIsBetter}/>}
@@ -40,17 +40,85 @@ function UsVsThemReel({ data = {} }) {
 }
 window.UsVsThemReel = UsVsThemReel;
 const US_VS_THEM_SPEC = { id:'us-vs-them', name:'US VS THEM', fields:[
-  {key:'duration',label:'Length',type:'slider',default:7,min:4,max:15,step:0.5,unit:'s'},
-  {key:'eyebrow',label:'Eyebrow',type:'text',default:'THE DIFFERENCE'},
-  {key:'title1',label:'Title 1',type:'text',default:'AVG SENIOR.'},
-  {key:'title2',label:'Title 2 (red)',type:'text',default:'AA SENIOR.'},
-  {key:'metric',label:'Metric label',type:'text',default:'40 YD DASH · 12-MONTH AVG'},
-  {key:'leftLabel',label:'Left label',type:'text',default:'NO TRAINING'},
-  {key:'rightLabel',label:'Right label',type:'text',default:'WITH AA'},
-  {key:'leftValue',label:'Left value',type:'number',default:5.62,step:0.01,min:0},
-  {key:'rightValue',label:'Right value',type:'number',default:4.91,step:0.01,min:0},
-  {key:'unit',label:'Unit',type:'text',default:'s'},
-  {key:'insight',label:'Insight',type:'textarea',default:'Same age. Same school. Different system.'},
-  {key:'ctaText',label:'CTA',type:'text',default:'BUILD YOUR DIFFERENCE →'},
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 7,
+    "min": 4,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "THE DIFFERENCE"
+  },
+  {
+    "key": "title1",
+    "label": "Title 1",
+    "type": "text",
+    "default": "AVG SENIOR."
+  },
+  {
+    "key": "title2",
+    "label": "Title 2 (red)",
+    "type": "text",
+    "default": "AA SENIOR."
+  },
+  {
+    "key": "metric",
+    "label": "Metric label",
+    "type": "text",
+    "default": "40 YD DASH · 12-MONTH AVG"
+  },
+  {
+    "key": "leftLabel",
+    "label": "Left label",
+    "type": "text",
+    "default": "NO TRAINING"
+  },
+  {
+    "key": "rightLabel",
+    "label": "Right label",
+    "type": "text",
+    "default": "WITH AA"
+  },
+  {
+    "key": "leftValue",
+    "label": "Left value",
+    "type": "number",
+    "default": 5.62,
+    "step": 0.01,
+    "min": 0
+  },
+  {
+    "key": "rightValue",
+    "label": "Right value",
+    "type": "number",
+    "default": 4.91,
+    "step": 0.01,
+    "min": 0
+  },
+  {
+    "key": "unit",
+    "label": "Unit",
+    "type": "text",
+    "default": "s"
+  },
+  {
+    "key": "insight",
+    "label": "Insight",
+    "type": "textarea",
+    "default": "Same age. Same school. Different system."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA",
+    "type": "text",
+    "default": "BUILD YOUR DIFFERENCE →"
+  }
 ]};
 window.US_VS_THEM_SPEC = US_VS_THEM_SPEC;

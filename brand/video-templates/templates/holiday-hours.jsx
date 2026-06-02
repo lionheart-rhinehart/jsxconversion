@@ -6,16 +6,77 @@ const HOLIDAY_HOURS_SPEC = {
   id: 'holiday-hours',
   name: 'HOLIDAY HOURS',
   fields: [
-    { key: 'duration', label: 'Length',    type: 'slider', default: 6, min: 3, max: 15, step: 0.5, unit: 's' },
-    { key: 'holiday',  label: 'Holiday',   type: 'text',   default: 'HOLIDAY HOURS' },
-    { key: 'subtitle', label: 'Subtitle',  type: 'text',   default: 'PLAN YOUR TRAINING AROUND THE BREAK' },
-    { key: 'd1day',    label: 'Row 1 day', type: 'text',   default: 'DEC 24 — EVE' },
-    { key: 'd1hrs',    label: 'Row 1 hrs', type: 'text',   default: '6AM – 12PM' },
-    { key: 'd2day',    label: 'Row 2 day', type: 'text',   default: 'DEC 25 — DAY' },
-    { key: 'd2hrs',    label: 'Row 2 hrs', type: 'text',   default: 'CLOSED' },
-    { key: 'd3day',    label: 'Row 3 day', type: 'text',   default: 'DEC 26 — 31' },
-    { key: 'd3hrs',    label: 'Row 3 hrs', type: 'text',   default: '8AM – 4PM' },
-    { key: 'reopen',   label: 'Reopen note', type: 'text', default: 'FULL SCHEDULE RESUMES JAN 2' },
+    {
+      "key": "duration",
+      "label": "Length",
+      "type": "slider",
+      "default": 6,
+      "min": 3,
+      "max": 15,
+      "step": 0.5,
+      "unit": "s"
+    },
+    {
+      "key": "eyebrow",
+      "role": "eyebrow",
+      "label": "Eyebrow",
+      "type": "text",
+      "default": "{city name} SPORT PARENT"
+    },
+    {
+      "key": "holiday",
+      "label": "Holiday",
+      "type": "text",
+      "default": "HOLIDAY HOURS"
+    },
+    {
+      "key": "subtitle",
+      "label": "Subtitle",
+      "type": "text",
+      "default": "PLAN YOUR TRAINING AROUND THE BREAK"
+    },
+    {
+      "key": "d1day",
+      "label": "Row 1 day",
+      "type": "text",
+      "default": "DEC 24 — EVE"
+    },
+    {
+      "key": "d1hrs",
+      "label": "Row 1 hrs",
+      "type": "text",
+      "default": "6AM – 12PM"
+    },
+    {
+      "key": "d2day",
+      "label": "Row 2 day",
+      "type": "text",
+      "default": "DEC 25 — DAY"
+    },
+    {
+      "key": "d2hrs",
+      "label": "Row 2 hrs",
+      "type": "text",
+      "default": "CLOSED"
+    },
+    {
+      "key": "d3day",
+      "label": "Row 3 day",
+      "type": "text",
+      "default": "DEC 26 — 31"
+    },
+    {
+      "key": "d3hrs",
+      "label": "Row 3 hrs",
+      "type": "text",
+      "default": "8AM – 4PM"
+    },
+    {
+      "key": "reopen",
+      "label": "Reopen note",
+      "type": "text",
+      "default": "FULL SCHEDULE RESUMES JAN 2"
+    }
   ],
 };
 
@@ -40,6 +101,7 @@ function HolidayHoursReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
+      <Eyebrow top={90} fontSize={34}>{data.eyebrow ?? "{city name} SPORT PARENT"}</Eyebrow>
       <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(120% 70% at 50% 18%, rgba(196,20,29,0.16) 0%, rgba(10,11,13,0.7) 55%, #0a0b0d 100%)' }}/>
       {/* corner ticks */}
       <div style={{ position: 'absolute', top: 80, left: 60, width: 70, height: 70, borderTop: `5px solid ${RED}`, borderLeft: `5px solid ${RED}` }}/>

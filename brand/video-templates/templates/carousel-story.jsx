@@ -76,13 +76,7 @@ function CarouselStoryReel({ data = {} }) {
         );
       })}
 
-      <div style={{
-        position: 'absolute', top: 110, left: 60,
-        padding: '8px 14px', background: RED,
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 22, color: '#fff', letterSpacing: '0.16em',
-        opacity: eyebrowT,
-      }}>// {eyebrow}</div>
+      <Eyebrow top={110} fontSize={22}>// {eyebrow}</Eyebrow>
 
       {/* Final line */}
       {t > 6.3 && (
@@ -121,18 +115,82 @@ const CAROUSEL_STORY_SPEC = {
   id: 'carousel-story',
   name: 'CAROUSEL STORY',
   fields: [
-    { key: 'duration', label: 'Length', type: 'slider', default: 9, min: 6, max: 15, step: 0.5, unit: 's' },
-    { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'OUR STORY · 90 SECONDS' },
-    { key: 'slide1Caption', label: 'Slide 1 caption', type: 'text', default: 'WE STARTED IN ONE GYM.' },
-    { key: 'slide1Media',   label: 'Slide 1 photo/video', type: 'image', default: 'assets/photo-gym-wide.jpg' },
-    { key: 'slide2Caption', label: 'Slide 2 caption', type: 'text', default: 'WITH ONE BELIEF.' },
-    { key: 'slide2Media',   label: 'Slide 2 photo/video', type: 'image', default: 'assets/photo-group-coaching.jpg' },
-    { key: 'slide3Caption', label: 'Slide 3 caption', type: 'text', default: 'KIDS DESERVE BETTER COACHING.' },
-    { key: 'slide3Media',   label: 'Slide 3 photo/video', type: 'image', default: 'assets/photo-lifting.jpg' },
-    { key: 'slide4Caption', label: 'Slide 4 caption', type: 'text', default: '412 ATHLETES LATER...' },
-    { key: 'slide4Media',   label: 'Slide 4 photo/video', type: 'image', default: 'assets/hero-sprint-male.jpg' },
-    { key: 'finalLine', label: 'Final line', type: 'text', default: "WE'RE JUST WARMING UP." },
-    { key: 'ctaText', label: 'CTA text', type: 'text', default: 'BE PART OF IT →' },
-  ],
+  {
+    "key": "duration",
+    "label": "Length",
+    "type": "slider",
+    "default": 9,
+    "min": 6,
+    "max": 15,
+    "step": 0.5,
+    "unit": "s"
+  },
+  {
+    "key": "eyebrow",
+    "label": "Eyebrow",
+    "type": "text",
+    "default": "OUR STORY · 90 SECONDS"
+  },
+  {
+    "key": "slide1Caption",
+    "label": "Slide 1 caption",
+    "type": "text",
+    "default": "WE STARTED IN ONE GYM."
+  },
+  {
+    "key": "slide1Media",
+    "label": "Slide 1 photo/video",
+    "type": "image",
+    "default": "assets/photo-gym-wide.jpg"
+  },
+  {
+    "key": "slide2Caption",
+    "label": "Slide 2 caption",
+    "type": "text",
+    "default": "WITH ONE BELIEF."
+  },
+  {
+    "key": "slide2Media",
+    "label": "Slide 2 photo/video",
+    "type": "image",
+    "default": "assets/photo-group-coaching.jpg"
+  },
+  {
+    "key": "slide3Caption",
+    "label": "Slide 3 caption",
+    "type": "text",
+    "default": "KIDS DESERVE BETTER COACHING."
+  },
+  {
+    "key": "slide3Media",
+    "label": "Slide 3 photo/video",
+    "type": "image",
+    "default": "assets/photo-lifting.jpg"
+  },
+  {
+    "key": "slide4Caption",
+    "label": "Slide 4 caption",
+    "type": "text",
+    "default": "412 ATHLETES LATER..."
+  },
+  {
+    "key": "slide4Media",
+    "label": "Slide 4 photo/video",
+    "type": "image",
+    "default": "assets/hero-sprint-male.jpg"
+  },
+  {
+    "key": "finalLine",
+    "label": "Final line",
+    "type": "text",
+    "default": "WE'RE JUST WARMING UP."
+  },
+  {
+    "key": "ctaText",
+    "label": "CTA text",
+    "type": "text",
+    "default": "BE PART OF IT →"
+  }
+],
 };
 window.CAROUSEL_STORY_SPEC = CAROUSEL_STORY_SPEC;

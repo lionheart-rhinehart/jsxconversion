@@ -11,6 +11,10 @@ templates/**/*.fill.jsx
 templates/**/*.camp-*
 brand/video-templates/_camp-*
 brand/video-templates/__render/
+# Raw media pulled from The Kraken Content Library (local cache, not source)
+brand/kraken-cache/
+# Kraken photos swapped into static templates via /media-into-template (client media)
+templates/**/assets/swap-*
 *.log
 .DS_Store
 __render/

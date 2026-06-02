@@ -43,7 +43,15 @@
       "fontFamily": "Anton",
       "color": "#ffffff",
       "arch": 1.9,
-      "z": 20
+      "z": 20,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 17
     },
     {
       "id": "headline_youth",
@@ -57,7 +65,15 @@
       "fontFamily": "Anton",
       "color": "#ffffff",
       "arch": -0.45,
-      "z": 21
+      "z": 21,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 8
     },
     {
       "id": "headline_program",
@@ -71,7 +87,15 @@
       "fontFamily": "Anton",
       "color": "#ffffff",
       "arch": -0.45,
-      "z": 22
+      "z": 22,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 10
     },
     {
       "id": "headline_top_outline",
@@ -87,7 +111,15 @@
       "strokeColor": "#ffffff",
       "strokeWidth": 4,
       "arch": 1.9,
-      "z": 60
+      "z": 60,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 17
     },
     {
       "id": "headline_youth_outline",
@@ -103,7 +135,15 @@
       "strokeColor": "#ffffff",
       "strokeWidth": 4,
       "arch": -0.45,
-      "z": 61
+      "z": 61,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 8
     },
     {
       "id": "headline_program_outline",
@@ -119,7 +159,15 @@
       "strokeColor": "#ffffff",
       "strokeWidth": 4,
       "arch": -0.45,
-      "z": 62
+      "z": 62,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 10
     }
   ]
 }
