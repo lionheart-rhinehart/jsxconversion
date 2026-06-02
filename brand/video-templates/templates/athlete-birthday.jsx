@@ -6,48 +6,55 @@ const ATHLETE_BIRTHDAY_SPEC = {
   id: 'athlete-birthday',
   name: 'ATHLETE BIRTHDAY',
   fields: [
-  {
-    "key": "duration",
-    "label": "Length",
-    "type": "slider",
-    "default": 7,
-    "min": 4,
-    "max": 15,
-    "step": 0.5,
-    "unit": "s"
-  },
-  {
-    "key": "greeting",
-    "label": "Greeting",
-    "type": "text",
-    "default": "HAPPY BIRTHDAY"
-  },
-  {
-    "key": "name",
-    "label": "Name",
-    "type": "text",
-    "default": "TYLER B."
-  },
-  {
-    "key": "ageline",
-    "label": "Age / tag",
-    "type": "text",
-    "default": "TURNING 15 · 3 YEARS STRONG"
-  },
-  {
-    "key": "message",
-    "label": "Message",
-    "type": "text",
-    "default": "Keep chasing it. The whole AA family is behind you."
-  },
-  {
-    "key": "photo",
-    "label": "Photo or video",
-    "type": "image",
-    "default": "assets/photo-medball-female.jpg",
-    "sub": "image or short video"
-  }
-],
+    {
+      "key": "duration",
+      "label": "Length",
+      "type": "slider",
+      "default": 7,
+      "min": 4,
+      "max": 15,
+      "step": 0.5,
+      "unit": "s"
+    },
+    {
+      "key": "eyebrow",
+      "role": "eyebrow",
+      "label": "Eyebrow",
+      "type": "text",
+      "default": "// ATHLETES ACCELERATION"
+    },
+    {
+      "key": "greeting",
+      "label": "Greeting",
+      "type": "text",
+      "default": "HAPPY BIRTHDAY"
+    },
+    {
+      "key": "name",
+      "label": "Name",
+      "type": "text",
+      "default": "TYLER B."
+    },
+    {
+      "key": "ageline",
+      "label": "Age / tag",
+      "type": "text",
+      "default": "TURNING 15 · 3 YEARS STRONG"
+    },
+    {
+      "key": "message",
+      "label": "Message",
+      "type": "text",
+      "default": "Keep chasing it. The whole AA family is behind you."
+    },
+    {
+      "key": "photo",
+      "label": "Photo or video",
+      "type": "image",
+      "default": "assets/photo-medball-female.jpg",
+      "sub": "image or short video"
+    }
+  ],
 };
 
 function AthleteBirthdayReel({ data = {} }) {
@@ -70,6 +77,7 @@ function AthleteBirthdayReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
+      <div data-eyebrow style={{ position: 'absolute', top: 90, left: 90, right: 90, fontFamily: '"JetBrains Mono", monospace', fontSize: 34, color: '#c4141d', letterSpacing: '0.06em', textTransform: 'uppercase', zIndex: 5 }}>{data.eyebrow ?? "// ATHLETES ACCELERATION"}</div>
       {window.TrimmedMedia ? (
         <window.TrimmedMedia src={photo} clipStart={data.photo_clipStart} clipEnd={data.photo_clipEnd} muted={!data.photo_audio}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',

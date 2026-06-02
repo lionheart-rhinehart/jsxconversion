@@ -6,54 +6,61 @@ const NEW_YEAR_SPEC = {
   id: 'new-year',
   name: 'NEW YEAR',
   fields: [
-  {
-    "key": "duration",
-    "label": "Length",
-    "type": "slider",
-    "default": 7,
-    "min": 4,
-    "max": 15,
-    "step": 0.5,
-    "unit": "s"
-  },
-  {
-    "key": "year",
-    "label": "Year",
-    "type": "text",
-    "default": "2027"
-  },
-  {
-    "key": "line1",
-    "label": "Headline 1",
-    "type": "text",
-    "default": "NEW YEAR"
-  },
-  {
-    "key": "line2",
-    "label": "Headline 2",
-    "type": "text",
-    "default": "NEW SPEED"
-  },
-  {
-    "key": "promise",
-    "label": "Promise",
-    "type": "text",
-    "default": "Resolutions fade. Programs deliver. Start January with a plan that measures every rep."
-  },
-  {
-    "key": "cta",
-    "label": "CTA",
-    "type": "text",
-    "default": "JAN INTAKE OPEN → LINK IN BIO"
-  },
-  {
-    "key": "photo",
-    "label": "Photo or video",
-    "type": "image",
-    "default": "assets/hero-sprint-male.jpg",
-    "sub": "image or short video"
-  }
-],
+    {
+      "key": "duration",
+      "label": "Length",
+      "type": "slider",
+      "default": 7,
+      "min": 4,
+      "max": 15,
+      "step": 0.5,
+      "unit": "s"
+    },
+    {
+      "key": "eyebrow",
+      "role": "eyebrow",
+      "label": "Eyebrow",
+      "type": "text",
+      "default": "// ATHLETES ACCELERATION"
+    },
+    {
+      "key": "year",
+      "label": "Year",
+      "type": "text",
+      "default": "2027"
+    },
+    {
+      "key": "line1",
+      "label": "Headline 1",
+      "type": "text",
+      "default": "NEW YEAR"
+    },
+    {
+      "key": "line2",
+      "label": "Headline 2",
+      "type": "text",
+      "default": "NEW SPEED"
+    },
+    {
+      "key": "promise",
+      "label": "Promise",
+      "type": "text",
+      "default": "Resolutions fade. Programs deliver. Start January with a plan that measures every rep."
+    },
+    {
+      "key": "cta",
+      "label": "CTA",
+      "type": "text",
+      "default": "JAN INTAKE OPEN → LINK IN BIO"
+    },
+    {
+      "key": "photo",
+      "label": "Photo or video",
+      "type": "image",
+      "default": "assets/hero-sprint-male.jpg",
+      "sub": "image or short video"
+    }
+  ],
 };
 
 function NewYearReel({ data = {} }) {
@@ -81,6 +88,7 @@ function NewYearReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
+      <div data-eyebrow style={{ position: 'absolute', top: 90, left: 90, right: 90, fontFamily: '"JetBrains Mono", monospace', fontSize: 34, color: '#c4141d', letterSpacing: '0.06em', textTransform: 'uppercase', zIndex: 5 }}>{data.eyebrow ?? "// ATHLETES ACCELERATION"}</div>
       {window.TrimmedMedia ? (
         <window.TrimmedMedia src={photo} clipStart={data.photo_clipStart} clipEnd={data.photo_clipEnd} muted={!data.photo_audio}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',

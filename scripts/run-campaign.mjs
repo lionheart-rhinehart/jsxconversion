@@ -37,6 +37,7 @@ import {
 } from "./lib/fill-core.mjs";
 import { assemble } from "./lib/assemble.mjs";
 import { fieldRole } from "./lib/roles.mjs";
+import { validateTemplateSource } from "./validate-templates.mjs";
 
 const PROJECT_ROOT = resolve(".");
 const CAMPAIGNS_DIR = join(PROJECT_ROOT, "campaigns");
@@ -276,6 +277,12 @@ async function renderTemplateMotion(asset, angleId, wantGif) {
   }
   // Discover the window component + spec names the template registers.
   const src = readFileSync(tmplPath, "utf8");
+  // ENFORCED template contract (no raw <video>, eyebrow present) — a render of a
+  // non-compliant template fails here, so the rules can't be silently skipped.
+  const tplErrs = validateTemplateSource(src, tmpl);
+  if (tplErrs.length) {
+    return { ok: false, error: `template "${tmpl}" fails the contract — ${tplErrs.join("; ")} (run: node scripts/validate-templates.mjs ${tmpl})` };
+  }
   const compM = src.match(/window\.([A-Za-z_$][\w$]*)\s*=\s*[A-Za-z_$][\w$]*\s*;/g) || [];
   const compName = (src.match(/window\.([A-Za-z_$][\w$]*Reel)\s*=/) ||
     src.match(/window\.([A-Za-z_$][\w$]*)\s*=\s*[A-Za-z_$][\w$]*\s*;/) || [])[1];

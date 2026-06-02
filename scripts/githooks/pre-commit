@@ -1,0 +1,14 @@
+#!/bin/sh
+# Enforce the motion-template contract before every commit:
+#   - no raw <video> (must use <SyncedVideo>/<TrimmedMedia> — deterministic render)
+#   - every template has an eyebrow (field + rendered)
+# Activated by `core.hooksPath=scripts/githooks` (set on npm install via the
+# "prepare" script, or manually: git config core.hooksPath scripts/githooks).
+# The render pipeline (run-campaign) enforces the same rules, so even a
+# --no-verify commit can't actually render a non-compliant template.
+node scripts/validate-templates.mjs || {
+  echo "" >&2
+  echo "commit blocked: a video template violates the contract (details above)." >&2
+  echo "fix it, or re-run validation: node scripts/validate-templates.mjs" >&2
+  exit 1
+}

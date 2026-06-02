@@ -22,6 +22,7 @@ function CoachLowerThirdsReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
+      <div data-eyebrow style={{ position: 'absolute', top: 90, left: 90, right: 90, fontFamily: '"JetBrains Mono", monospace', fontSize: 34, color: '#c4141d', letterSpacing: '0.06em', textTransform: 'uppercase', zIndex: 5 }}>{data.eyebrow ?? "// ATHLETES ACCELERATION"}</div>
       {window.TrimmedMedia && <window.TrimmedMedia src={media} clipStart={data.media_clipStart} clipEnd={data.media_clipEnd} muted={!data.media_audio} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'contrast(1.05) saturate(0.9) brightness(0.7)' }}/>}
 
       {/* Helper hint top-right */}
@@ -53,39 +54,46 @@ function CoachLowerThirdsReel({ data = {} }) {
 }
 window.CoachLowerThirdsReel = CoachLowerThirdsReel;
 const COACH_LT_REEL_SPEC = { id:'coach-lt-reel', name:'COACH LOWER-THIRDS · REEL', fields:[
-  {
-    "key": "duration",
-    "label": "Length",
-    "type": "slider",
-    "default": 6,
-    "min": 4,
-    "max": 15,
-    "step": 0.5,
-    "unit": "s"
-  },
-  {
-    "key": "coachName",
-    "label": "Coach name",
-    "type": "text",
-    "default": "COACH MIKE TORRES"
-  },
-  {
-    "key": "coachTitle",
-    "label": "Title (typed in)",
-    "type": "text",
-    "default": "DIRECTOR OF PERFORMANCE"
-  },
-  {
-    "key": "credsCsv",
-    "label": "Credentials (comma)",
-    "type": "text",
-    "default": "CSCS,USATF L2,15 YRS,NCAA D1"
-  },
-  {
-    "key": "media",
-    "label": "Background photo/video",
-    "type": "image",
-    "default": "assets/photo-group-coaching.jpg"
-  }
-]};
+    {
+      "key": "duration",
+      "label": "Length",
+      "type": "slider",
+      "default": 6,
+      "min": 4,
+      "max": 15,
+      "step": 0.5,
+      "unit": "s"
+    },
+    {
+      "key": "eyebrow",
+      "role": "eyebrow",
+      "label": "Eyebrow",
+      "type": "text",
+      "default": "// ATHLETES ACCELERATION"
+    },
+    {
+      "key": "coachName",
+      "label": "Coach name",
+      "type": "text",
+      "default": "COACH MIKE TORRES"
+    },
+    {
+      "key": "coachTitle",
+      "label": "Title (typed in)",
+      "type": "text",
+      "default": "DIRECTOR OF PERFORMANCE"
+    },
+    {
+      "key": "credsCsv",
+      "label": "Credentials (comma)",
+      "type": "text",
+      "default": "CSCS,USATF L2,15 YRS,NCAA D1"
+    },
+    {
+      "key": "media",
+      "label": "Background photo/video",
+      "type": "image",
+      "default": "assets/photo-group-coaching.jpg"
+    }
+  ]};
 window.COACH_LT_REEL_SPEC = COACH_LT_REEL_SPEC;

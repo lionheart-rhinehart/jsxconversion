@@ -29,6 +29,7 @@ function LogoSting({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
+      <div data-eyebrow style={{ position: 'absolute', top: 90, left: 90, right: 90, fontFamily: '"JetBrains Mono", monospace', fontSize: 34, color: '#c4141d', letterSpacing: '0.06em', textTransform: 'uppercase', zIndex: 5 }}>{data.eyebrow ?? "// ATHLETES ACCELERATION"}</div>
       {/* Initial red flash */}
       <div style={{
         position: 'absolute', inset: 0,
@@ -102,48 +103,51 @@ const LOGO_STING_SPEC = {
   id: 'logo-sting',
   name: 'LOGO STING',
   fields: [
-  {
-    "key": "duration",
-    "label": "Length",
-    "type": "slider",
-    "default": 3,
-    "min": 2,
-    "max": 8,
-    "step": 0.5,
-    "unit": "s"
-  },
-  {
-    "key": "wordmark1",
-
-    "role": "brand",
-    "label": "Wordmark (white)",
-    "type": "text",
-    "default": "ATHLETES"
-  },
-  {
-    "key": "wordmark2",
-
-    "role": "brand",
-    "label": "Wordmark (red)",
-    "type": "text",
-    "default": "ACCELERATION"
-  },
-  {
-    "key": "tagline",
-
-    "role": "claim",
-    "label": "Tagline",
-    "type": "text",
-    "default": "THE DRIVE IS THEIRS. WE BUILD THE ATHLETE."
-  },
-  {
-    "key": "url",
-
-    "role": "byline",
-    "label": "URL",
-    "type": "text",
-    "default": "ATHLETESACCEL.COM"
-  }
-],
+    {
+      "key": "duration",
+      "label": "Length",
+      "type": "slider",
+      "default": 3,
+      "min": 2,
+      "max": 8,
+      "step": 0.5,
+      "unit": "s"
+    },
+    {
+      "key": "eyebrow",
+      "role": "eyebrow",
+      "label": "Eyebrow",
+      "type": "text",
+      "default": "// ATHLETES ACCELERATION"
+    },
+    {
+      "key": "wordmark1",
+      "role": "brand",
+      "label": "Wordmark (white)",
+      "type": "text",
+      "default": "ATHLETES"
+    },
+    {
+      "key": "wordmark2",
+      "role": "brand",
+      "label": "Wordmark (red)",
+      "type": "text",
+      "default": "ACCELERATION"
+    },
+    {
+      "key": "tagline",
+      "role": "claim",
+      "label": "Tagline",
+      "type": "text",
+      "default": "THE DRIVE IS THEIRS. WE BUILD THE ATHLETE."
+    },
+    {
+      "key": "url",
+      "role": "byline",
+      "label": "URL",
+      "type": "text",
+      "default": "ATHLETESACCEL.COM"
+    }
+  ],
 };
 window.LOGO_STING_SPEC = LOGO_STING_SPEC;
