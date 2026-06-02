@@ -1,13 +1,11 @@
 {
   "_comment": "Brand kit for Athletes Acceleration. Keys under `tags` map a layer's field name (its `tag`) to the value that replaces the layer's content at fill time. Built incrementally — add tags as templates surface them. Campaign/location overlays (data/campaign.*.json, data/location.*.json) override these per launch.",
   "brand": "Athletes Acceleration",
+  "_note": "BRAND-LEVEL identity only. Campaign-specific values (city, subhead, microscript, attention) live in data/campaign.*.json and data/location.*.json so they don't bleed across campaigns. Colors are left to each template (per-template gradients/tints); do not blanket-override them here.",
   "tags": {
-    "city": "FORT WAYNE",
-    "guarantee": "+1 MPH SPEED, +3\" VERTICAL, 90 DAYS, OR TRAINING IS FREE",
-    "attention": "ATTENTION:",
-    "subhead": "PARENTS OF YOUTH ATHLETES",
-    "microscript": "AGES 8-18 · FORT WAYNE, IN",
-    "url": "athletesacceleration.com",
-    "phone": "(260) 555-0199"
+    "logo": "./assets/aa-logo.png",
+    "brand_name": "ATHLETES ACCELERATION",
+    "guarantee": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us.",
+    "url": "athletesaccel.com"
   }
 }

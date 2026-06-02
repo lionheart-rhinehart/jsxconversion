@@ -532,6 +532,10 @@ load();
 <script type="text/babel" src="templates/before-after.jsx"></script>
 <script type="text/babel" src="templates/story-poll.jsx"></script>
 <script type="text/babel" src="templates/stat-reveal.jsx"></script>
+<script type="text/babel" src="templates/velocity-drop.jsx"></script>
+<script type="text/babel" src="templates/season-clock.jsx"></script>
+<script type="text/babel" src="templates/fresh-multisport-foundations-grind-trap-A1.jsx"></script>
+<script type="text/babel" src="templates/fresh-multisport-foundations-grind-trap-FA1.jsx"></script>
 <script type="text/babel" src="templates/quote-card.jsx"></script>
 <script type="text/babel" src="templates/hype-intro.jsx"></script>
 <script type="text/babel" src="templates/coach-lower-thirds.jsx"></script>
@@ -846,6 +850,7 @@ function VideoEditModal({ angleId, assetId, onClose }) {
   const [notes, setNotes] = useState(asset ? asset.notes || "" : "");
   const [busy, setBusy] = useState(null);
   const [tab, setTab] = useState("copy");
+  const [outVer, setOutVer] = useState(0); // cache-bust the rendered-output preview after a re-render
 
   useEffect(() => {
     fetch(apiBase() + "/bank?type=motion").then((r) => r.json())
@@ -972,7 +977,11 @@ function VideoEditModal({ angleId, assetId, onClose }) {
         const rj = await rr.json();
         if (rj.exitCode !== 0) throw new Error((rj.stderr || "render failed").slice(-200));
       }
-      setBusy(null); bridge.reload(); onClose();
+      setBusy(null); bridge.reload();
+      // On Render: keep the modal open and bust the preview cache so the user
+      // sees the new output. Plain Save keeps the prior close behavior.
+      if (render && !isFresh) setOutVer((n) => n + 1);
+      else onClose();
     } catch (e) {
       setBusy(null);
       alert((render ? "Render" : "Save") + " failed: " + e.message);
@@ -991,16 +1000,33 @@ function VideoEditModal({ angleId, assetId, onClose }) {
         </div>
         <div className="vmodal-body">
           <div className="vmodal-stage" ref={stageRef}>
-            {isFresh
-              ? <div className="vm-fresh">Fresh render pending<br/><span>(compose-creative not built yet)</span></div>
-              : (Comp && window.Stage
-                  ? <window.Stage key={template + ":" + (Number(data.duration) || 8)}
-                      width={1080} height={1920} duration={Number(data.duration) || 8}
-                      background="#0a0b0d" autoplay loop>
-                      <Comp data={data} />
-                      {window.ExtrasLayer && <window.ExtrasLayer data={data} />}
-                    </window.Stage>
-                  : <div className="vm-fresh">Loading preview…</div>)}
+            {(() => {
+              if (isFresh) return <div className="vm-fresh">Fresh render pending<br/><span>(compose-creative not built yet)</span></div>;
+              // Prefer the ALREADY-RENDERED output (robust) over the live Stage
+              // remount; keep live Stage only for the position tab (drag handles
+              // need it) + as last-resort fallback.
+              const live = bridge.findAsset(angleId, assetId) || asset;
+              const out = live && (live.output || live.thumb);
+              const outUrl = out ? (apiBase() + (out.startsWith("/") ? out : "/" + out)) : null;
+              const wantLive = tab === "position";
+              if (!wantLive && outUrl) {
+                const busted = outUrl + (outUrl.includes("?") ? "&" : "?") + "v=" + outVer;
+                return /\.mp4(\?|$)/i.test(outUrl)
+                  ? <video key={busted} src={busted} muted loop autoPlay playsInline style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                  : <img key={busted} src={busted} alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />;
+              }
+              if (Comp && window.Stage) return (
+                <window.Stage key={template + ":" + (Number(data.duration) || 8)}
+                    width={1080} height={1920} duration={Number(data.duration) || 8}
+                    background="#0a0b0d" autoplay loop>
+                  <Comp data={data} />
+                  {window.ExtrasLayer && <window.ExtrasLayer data={data} />}
+                </window.Stage>
+              );
+              return outUrl
+                ? <div className="vm-fresh">Showing last render. Save + Re-render to update.</div>
+                : <div className="vm-fresh">Loading preview…</div>;
+            })()}
             {!isFresh && tab === "position" && Comp && window.Stage &&
               <DragOverlay stageRef={stageRef} data={data} setOverride={setOverride}
                 selected={selected} setSelected={setSelected} />}

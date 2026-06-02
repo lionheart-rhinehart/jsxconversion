@@ -1,0 +1,7 @@
+{
+  "_comment": "Location tier — Noblesville facility (Hamilton County). Supplies `city` for the locale anchor on assets using Noblesville footage.",
+  "location": "noblesville",
+  "tags": {
+    "city": "NOBLESVILLE, IN"
+  }
+}

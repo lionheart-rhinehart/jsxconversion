@@ -97,9 +97,25 @@ section produced output** before planning; re-run any that came back empty.
   with `node scripts/build-template-index.mjs` when templates changed): pick a role-ready template
   of the right `format` whose `roles` expose the beat's required roles (or whose `accepts` can hold
   them — a hijackable slot). **Fit-first:** only mark `source:"fresh"` when nothing fits. If the
-  index is missing, fall back to reading specs / judgment.
+  index is missing, fall back to reading specs / judgment. **Prefer the clean AA-native bank**
+  (statics `cluster-30..37`, motion `stat-reveal`/`velocity-drop`/`season-clock`/`meet-coach`/
+  `logo-sting`) — the legacy `cluster-1..22` are reskinnable but only render correctly once the
+  brand-kit sync (data tiers) replaces their logo/city/name.
+- **Variety — ENFORCE, don't just hope (the #1 past failure).** Track templates used in this angle.
+  Do NOT reuse a skeleton beyond `knobs.repetitionCap` (default 3), and use a **distinct skeleton for
+  each asset WITHIN a beat** (A2≠A3≠A4; D1≠D2≠D3; F1≠F3). When the best-fit template is already taken,
+  drop to the next-best role-fit; mark `source:"fresh"` only when no distinct fit remains. Two assets
+  that share a skeleton AND look alike is the bug to avoid.
 - Bind a headline + microscript pulled/derived from `campaign-knowledge.json` to the beat, format,
   and image source. Validate tag→layer-type before binding an image tag.
+- **Stands alone — EVERY non-`null`-beat asset (the #2 past failure).** A creative must read on its
+  own (who it's for + what it's about) WITHOUT the ad's body copy. (a) Set `angle.location` (or
+  per-asset `location`); the cascade auto-injects an audience+locale **eyebrow** anchor (e.g.
+  `// AGES 8-12 · HAMILTON COUNTY, IN`) into a clean eyebrow slot from the location/campaign tiers —
+  leave the eyebrow unset so it fills automatically. (b) The hook/headline must be a **complete
+  thought**, never a bare brand-IP fragment ("THE LAST REP LIE" is a tag, not a hook — pair it with
+  a self-contextualizing line). Brand identity (logo/city/name) syncs from the data tiers — never
+  hand-paste a city or rely on a template's placeholder.
 
 **Constraint priority** when they conflict: brand-voice & guarantee > beat & role correctness >
 beat coverage (A–F spread) > the knobs (motionRatio / freshnessFloor / repetitionCap).

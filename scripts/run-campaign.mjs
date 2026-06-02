@@ -33,6 +33,7 @@ import { resolve, join, dirname } from "node:path";
 import { spawn, spawnSync } from "node:child_process";
 import {
   emitVariant, renderJsx, resolveStaticConfig, buildCopyByRole,
+  loadTier, mergeTiers,
 } from "./lib/fill-core.mjs";
 import { assemble } from "./lib/assemble.mjs";
 import { fieldRole } from "./lib/roles.mjs";
@@ -132,7 +133,7 @@ function templateDataKeys(src) {
 // otherwise a small heuristic maps headline/microscript onto sensible fields so
 // an un-mapped asset still renders campaign-ish copy instead of pure defaults.
 // Unknown keys (not in the template's real contract) are warned, not dropped.
-function buildMotionData(asset, dataKeys) {
+function buildMotionData(asset, dataKeys, tierTags = {}) {
   let data = {};
   if (asset.templateData && typeof asset.templateData === "object") {
     data = { ...asset.templateData };
@@ -154,6 +155,17 @@ function buildMotionData(asset, dataKeys) {
         if (target) data[target] = asset.headline;
       }
     }
+  }
+  // S5 — identity sync from the brand-kit cascade. Fill ONLY unset fields whose
+  // role is brand/eyebrow (never content/numeric — a string in a stat field
+  // would NaN the count-up at render). Explicit templateData already populated
+  // `data`, so this only touches keys it didn't set ("explicit wins").
+  const anchor = `// ${tierTags.audience || "AGES 8-12"}${tierTags.city ? ` · ${tierTags.city}` : ""}`;
+  for (const k of dataKeys) {
+    if (k in data) continue;
+    const role = fieldRole(k);
+    if (role === "eyebrow") data[k] = anchor;
+    else if (role === "brand" && typeof tierTags.brand_name === "string") data[k] = tierTags.brand_name;
   }
   if (dataKeys.length) {
     // `_`-prefixed keys (e.g. _overrides) and added-text keys (data._extras,
@@ -190,8 +202,20 @@ async function renderTemplateStatic(asset, angleId) {
   if (existsSync(editsPath)) {
     config = JSON.parse(readFileSync(editsPath, "utf8"));
   } else {
-    config = resolveStaticConfig({ clusterId, asset, brand, templateDir: TEMPLATE_DIR, dataDir: DATA_DIR });
+    const ang = (plan.angles || []).find((a) => a.id === angleId);
+    const location = asset.location || (ang && ang.location) || plan.location || null;
+    config = resolveStaticConfig({ clusterId, asset, brand, location, campaign, templateDir: TEMPLATE_DIR, dataDir: DATA_DIR });
     if (!config) return { ok: false, error: `could not resolve config for "${clusterId}"` };
+    // Optional background media (opt-in via asset.media): a full-frame image/clip
+    // behind everything + a legibility scrim below the text. Lets the same design
+    // run with footage behind it. A video still-frames in the static renderer.
+    if (asset.media) {
+      config.media = { path: asset.media, tag: "bg_media", z: 0, videoStartTime: asset.mediaStart || 1 };
+      config.fixedDesign = config.fixedDesign || [];
+      config.fixedDesign.unshift({ id: "_bg_scrim", tag: "_bg_scrim", type: "rect", x: 0, y: 0,
+        width: config.width || 1080, height: config.height || 1920,
+        fill: "linear-gradient(180deg, rgba(10,11,13,0.50) 0%, rgba(10,11,13,0.38) 45%, rgba(10,11,13,0.82) 100%)", z: 1 });
+    }
     mkdirSync(dirname(editsPath), { recursive: true });
     writeFileSync(editsPath, JSON.stringify(config, null, 2));
   }
@@ -230,7 +254,16 @@ async function renderTemplateMotion(asset, angleId, wantGif) {
   const dataPath = join(VIDEO_DIR, `${base}.data.json`);
   // Map campaign copy onto the template's REAL field keys (*_SPEC-driven adapter).
   const dataKeys = templateDataKeys(src);
-  const data = buildMotionData(asset, dataKeys);
+  // Brand-kit cascade for motion too (S5): identity fields (brand/eyebrow) auto-
+  // sync from the tiers. Same location resolution as the static path.
+  const angM = (plan.angles || []).find((a) => a.id === angleId);
+  const motionLocation = asset.location || (angM && angM.location) || plan.location || null;
+  const motionTiers = mergeTiers(
+    loadTier("brand", brand, DATA_DIR).tags,
+    loadTier("location", motionLocation, DATA_DIR).tags,
+    loadTier("campaign", campaign, DATA_DIR).tags,
+  );
+  const data = buildMotionData(asset, dataKeys, motionTiers);
 
   // Hand-picked media from the video edit surface (Part 4). asset.clip/photo are
   // REAL served paths under a tracked dir (B10), relative to PROJECT_ROOT. Stage

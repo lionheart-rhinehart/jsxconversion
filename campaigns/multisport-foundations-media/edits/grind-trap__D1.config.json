@@ -1,0 +1,104 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.50) 0%, rgba(10,11,13,0.38) 45%, rgba(10,11,13,0.82) 100%)",
+      "z": 1
+    },
+    {
+      "id": "center_rule",
+      "tag": "center_rule",
+      "type": "rect",
+      "x": 440,
+      "y": 1200,
+      "width": 200,
+      "height": 8,
+      "fill": "#c4141d",
+      "z": 15
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor (auto-filled, centered)",
+      "x": 0,
+      "y": 360,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "// AGES 8-12 · HAMILTON COUNTY, IN",
+      "fontSize": 38,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 500,
+      "color": "#c4141d",
+      "letterSpacing": "0.06em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 34
+    },
+    {
+      "id": "reframe",
+      "tag": "reframe",
+      "label": "Centered epiphany",
+      "x": 60,
+      "y": 720,
+      "width": 960,
+      "textAlign": "center",
+      "text": "THEY'RE NOT FALLING BEHIND. THEIR TRAINING IS PUSHING THEM BACK.",
+      "fontSize": 104,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 1,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "z": 21,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "claim"
+      ],
+      "maxChars": 92
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark (centered)",
+      "x": 0,
+      "y": 1680,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "ATHLETES ACCELERATION",
+      "fontSize": 34,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 500,
+      "color": "#ffffff",
+      "letterSpacing": "0.14em",
+      "textTransform": "uppercase",
+      "z": 22,
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 24
+    }
+  ],
+  "media": {
+    "path": "./assets/batch-media/sprint-m.jpg",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1
+  }
+}

@@ -165,27 +165,63 @@ function buildExplicit(asset, slots) {
 //   brand       brand slug for the brand data tier
 //   templateDir absolute path to templates/multi-sport-foundations
 //   dataDir     absolute path to the project's data/ dir
-export function resolveStaticConfig({ clusterId, asset, brand, templateDir, dataDir }) {
+export function resolveStaticConfig({ clusterId, asset, brand, location, campaign, templateDir, dataDir }) {
   const configPath = join(templateDir, `${clusterId}.config.json`);
   if (!existsSync(configPath)) return null;
   const sourceConfig = JSON.parse(readFileSync(configPath, "utf8"));
+  // Full cascade (campaign > location > brand). loadTier is null-safe, so an
+  // omitted location/campaign degrades to brand-only (back-compat). This is what
+  // syncs the chosen brand kit's identity (logo/brand_name) + the per-launch
+  // locale (city) onto the template's tagged slots.
   const brandTier = loadTier("brand", brand, dataDir);
+  const locationTier = loadTier("location", location, dataDir);
+  const campaignTier = loadTier("campaign", campaign, dataDir);
+  const tierTags = mergeTiers(brandTier.tags, locationTier.tags, campaignTier.tags);
 
   const slots = collectTextSlots(sourceConfig);
   const roleAware = slots.some((s) => s.role);
 
   if (roleAware) {
-    // Role-aware path: brand-tier tags fill media/logo by tag first, then the
+    // Role-aware path: tier tags fill media/logo/city by tag first, then the
     // role→slot JOIN fills the text slots by id (so duplicate tags can't collide
     // and copy lands by marketing function, not by look).
-    const { config } = applySubstitutions(sourceConfig, mergeTiers(brandTier.tags, {}, {}));
+    const { config, subs } = applySubstitutions(sourceConfig, tierTags);
+    const tierFilledIds = new Set(subs.map((s) => s.id));
+    const explicit = buildExplicit(asset, slots);
+    // S4 — auto-inject the audience+locale context anchor into a clean eyebrow
+    // slot so every creative self-contextualizes ("// AGES 8-12 · CARMEL, IN").
+    // Null-guarded (no city → audience only); skips city-tagged eyebrow slots
+    // (the big stacked city graphic), tier-filled slots, and any eyebrow the
+    // planner set explicitly or via copyByRole.
+    const audience = tierTags.audience || "AGES 8-12";
+    const anchor = `// ${audience}${tierTags.city ? ` · ${tierTags.city}` : ""}`;
+    if (!(asset.copyByRole && asset.copyByRole.eyebrow)) {
+      const eyeSlot = slots.find(
+        (s) => s.role === "eyebrow" && s.tag !== "city" && !s.locked
+          && !tierFilledIds.has(s.id) && !(s.id in explicit),
+      );
+      if (eyeSlot) explicit[eyeSlot.id] = anchor;
+    }
     const { bySlotId, warnings } = assemble({
       slots,
       copyByRole: buildCopyByRole(asset),
-      explicit: buildExplicit(asset, slots),
+      explicit,
     });
     for (const w of warnings) {
       console.error(`[fill] ${asset.id || clusterId} overflow: slot "${w.id}" (${w.role}) ${w.len} > maxChars ${w.maxChars}`);
+    }
+    // Placeholder suppression (schema-aligned anti-bleed): a CONTENT-role slot
+    // that got no campaign copy AND no tier value would otherwise render the
+    // template's hardcoded placeholder (e.g. "PARENTS IN PORTLAND"). Blank it
+    // instead. Identity/structural roles (brand/eyebrow/byline/cta) and locked
+    // (guarantee) keep their defaults; tier-filled slots (city/logo) are untouched.
+    const CONTENT_ROLES = new Set(["hook", "claim", "mechanism", "reframe", "offer", "stat", "testimonial"]);
+    for (const s of slots) {
+      if (s.id in bySlotId || s.locked || tierFilledIds.has(s.id)) continue;
+      if (CONTENT_ROLES.has(s.role)) {
+        bySlotId[s.id] = "";
+        console.error(`[fill] ${asset.id || clusterId} suppressed unfilled ${s.role} slot "${s.id}" (no copy/tier value — placeholder blanked)`);
+      }
     }
     applyById(config, bySlotId);
     return config;
@@ -200,7 +236,7 @@ export function resolveStaticConfig({ clusterId, asset, brand, templateDir, data
     if (asset.headline) { overrides.title = asset.headline; overrides.headline = asset.headline; }
     if (asset.microscript) overrides.microscript = asset.microscript;
   }
-  const resolved = mergeTiers(brandTier.tags, {}, overrides);
+  const resolved = mergeTiers(tierTags, {}, overrides);
   const { config } = applySubstitutions(sourceConfig, resolved);
   return config;
 }

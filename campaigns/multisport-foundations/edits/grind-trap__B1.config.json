@@ -1,176 +1,113 @@
 {
   "width": 1080,
   "height": 1920,
-  "media": {
-    "path": "./assets/cluster-8-bg.jpg",
-    "type": "image",
-    "tag": "bg_photo",
-    "offsetX": 0,
-    "offsetY": 0,
-    "scale": 1,
-    "videoStartTime": 0,
-    "videoEndTime": null,
-    "z": 0,
-    "crop": {
-      "x": 464,
-      "y": 91,
-      "width": 306,
-      "height": 510
-    }
-  },
-  "foregroundMedia": {
-    "path": "./assets/cluster-8-foreground.png",
-    "tag": "talent_photo",
-    "offsetX": -143,
-    "offsetY": 224,
-    "scale": 1.2999999999999998,
-    "blendMode": "normal",
-    "z": 50,
-    "note": "True-alpha RGBA cutout — composited from Canva photo + SVG mask via scripts/extract-cutout.mjs. Subject is fully opaque; background is fully transparent."
-  },
   "fixedDesign": [
     {
-      "id": "red_tint",
-      "tag": "brand_tint",
+      "id": "red_band",
+      "tag": "red_band",
       "type": "rect",
       "x": 0,
-      "y": 0,
+      "y": 1140,
       "width": 1080,
-      "height": 1920,
-      "fill": "rgba(196, 20, 29, 0.65)",
-      "z": 10
+      "height": 780,
+      "fill": "#c4141d",
+      "z": 5
     }
   ],
   "elements": [
     {
-      "id": "city_1",
-      "tag": "city",
-      "label": "City row 1 (solid)",
-      "x": 160,
-      "y": 290,
-      "text": "HAMILTON CO",
-      "fontSize": 220,
-      "fontFamily": "Anton",
-      "color": "#ffffff",
-      "z": 20,
-      "lineHeight": 0.9,
-      "letterSpacing": "-0.02em",
-      "textTransform": "uppercase",
-      "role": "eyebrow",
-      "accepts": [
-        "eyebrow",
-        "brand"
-      ],
-      "maxChars": 12
-    },
-    {
-      "id": "city_2",
-      "tag": "city",
-      "label": "City row 2 (outlined)",
-      "x": 143,
-      "y": 709,
-      "text": "HAMILTON CO",
-      "fontSize": 220,
-      "fontFamily": "Anton",
-      "color": "transparent",
-      "strokeWidth": 4,
-      "strokeColor": "#ffffff",
-      "z": 21,
-      "lineHeight": 0.9,
-      "letterSpacing": "-0.02em",
-      "textTransform": "uppercase",
-      "role": "eyebrow",
-      "accepts": [
-        "eyebrow",
-        "brand"
-      ],
-      "maxChars": 12
-    },
-    {
-      "id": "city_3",
-      "tag": "city",
-      "label": "City row 3 (outlined)",
-      "x": 140,
-      "y": 1165,
-      "text": "HAMILTON CO",
-      "fontSize": 220,
-      "fontFamily": "Anton",
-      "color": "transparent",
-      "strokeWidth": 4,
-      "strokeColor": "#ffffff",
-      "z": 22,
-      "lineHeight": 0.9,
-      "letterSpacing": "-0.02em",
-      "textTransform": "uppercase",
-      "role": "eyebrow",
-      "accepts": [
-        "eyebrow",
-        "brand"
-      ],
-      "maxChars": 12
-    },
-    {
-      "id": "attention",
-      "tag": "attention",
-      "label": "ATTENTION:",
-      "x": 356,
-      "y": 1593,
-      "text": "IT'S WORKING.",
-      "fontSize": 88,
-      "fontFamily": "Anton",
-      "color": "#ffffff",
-      "z": 60,
-      "lineHeight": 1,
-      "letterSpacing": "-0.01em",
-      "textTransform": "uppercase",
-      "role": "hook",
-      "accepts": [
-        "hook"
-      ],
-      "maxChars": 14
-    },
-    {
-      "id": "subhead",
-      "tag": "subhead",
-      "label": "Subhead",
-      "x": 79,
-      "y": 1700,
-      "text": "The problem is what it's teaching.",
-      "fontSize": 88,
-      "fontFamily": "Anton",
-      "color": "#ffffff",
-      "z": 61,
-      "lineHeight": 1,
-      "letterSpacing": "-0.01em",
-      "textTransform": "uppercase",
-      "role": "reframe",
-      "accepts": [
-        "reframe",
-        "eyebrow"
-      ],
-      "maxChars": 35
-    },
-    {
-      "id": "microscript",
-      "tag": "microscript",
-      "label": "Microscript",
-      "x": 360,
-      "y": 1830,
-      "text": "THE LAST REP LIE",
-      "fontSize": 30,
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor (auto-filled)",
+      "x": 90,
+      "y": 170,
+      "width": 900,
+      "textAlign": "left",
+      "text": "// AGES 8-12 · HAMILTON COUNTY, IN",
+      "fontSize": 38,
       "fontFamily": "JetBrains Mono",
-      "color": "#ffffff",
-      "z": 62,
-      "fontWeight": 600,
-      "letterSpacing": "0.04em",
+      "fontWeight": 500,
+      "color": "#c4141d",
+      "letterSpacing": "0.06em",
       "textTransform": "uppercase",
-      "role": "reframe",
+      "z": 20,
+      "role": "eyebrow",
       "accepts": [
-        "reframe",
         "eyebrow",
         "proof"
       ],
-      "maxChars": 27
+      "maxChars": 34
+    },
+    {
+      "id": "line1",
+      "tag": "line1",
+      "label": "Hook (dark half)",
+      "x": 86,
+      "y": 560,
+      "width": 924,
+      "textAlign": "left",
+      "text": "IT'S WORKING.",
+      "fontSize": 150,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.9,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "whiteSpace": "pre-line",
+      "z": 21,
+      "role": "hook",
+      "accepts": [
+        "hook",
+        "claim",
+        "reframe"
+      ],
+      "maxChars": 26
+    },
+    {
+      "id": "line2",
+      "tag": "line2",
+      "label": "Claim (red band)",
+      "x": 90,
+      "y": 1280,
+      "width": 912,
+      "textAlign": "left",
+      "text": "THE PROBLEM IS WHAT IT'S TEACHING.",
+      "fontSize": 92,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.96,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "z": 22,
+      "role": "claim",
+      "accepts": [
+        "claim",
+        "reframe",
+        "proof"
+      ],
+      "maxChars": 52
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark (red band)",
+      "x": 90,
+      "y": 1812,
+      "width": 900,
+      "textAlign": "left",
+      "text": "ATHLETES ACCELERATION",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 500,
+      "color": "#ffffff",
+      "letterSpacing": "0.14em",
+      "textTransform": "uppercase",
+      "z": 23,
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 24
     }
   ]
 }
