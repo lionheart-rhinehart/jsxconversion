@@ -117,6 +117,26 @@ const TimelineContext = React.createContext({ time: 0, duration: 10, playing: fa
 const useTime = () => React.useContext(TimelineContext).time;
 const useTimeline = () => React.useContext(TimelineContext);
 
+// ── LoopRemap ─────────────────────────────────────────────────────────────────
+// Replays a template's intrinsic L-second animation to fill a longer clip.
+// Templates animate on absolute useTime() thresholds tuned to a fixed "N-second
+// loop" (the SPEC duration `default`). Without this, a clip longer than L just
+// holds — or, for templates with a loop-seam fade like logo-sting, fades to black —
+// on a frozen tail, which reads as "the animation stuck on a short loop". LoopRemap
+// re-provides the timeline with `time` wrapped to [0, L), so a 3s sting in a 12s
+// clip plays 4 clean loops. loopLength <= 0 (or a clip no longer than one loop) is
+// a no-op. Used identically by the render wrapper (run-campaign) and the review-page
+// preview (review.html) so preview == render.
+function LoopRemap({ loopLength, children }) {
+  const tl = useTimeline();
+  const L = Number(loopLength) || 0;
+  const value = React.useMemo(
+    () => (L > 0 ? { ...tl, time: tl.time % L } : tl),
+    [tl, L],
+  );
+  return React.createElement(TimelineContext.Provider, { value }, children);
+}
+
 // ── Sprite ──────────────────────────────────────────────────────────────────
 // Renders children only when the playhead is inside [start, end]. Provides
 // a sub-context with `localTime` (seconds since start) and `progress` (0..1).
@@ -765,7 +785,7 @@ function IconButton({ children, onClick, title }) {
 
 Object.assign(window, {
   Easing, interpolate, animate, clamp,
-  TimelineContext, useTime, useTimeline,
+  TimelineContext, useTime, useTimeline, LoopRemap,
   Sprite, SpriteContext, useSprite,
   TextSprite, ImageSprite, RectSprite,
   Stage, PlaybackBar,

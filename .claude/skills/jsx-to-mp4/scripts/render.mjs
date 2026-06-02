@@ -93,7 +93,18 @@ function encodeFrames(framesDir, params, outPath) {
       "-framerate", String(params.FPS),
       "-i", join(framesDir, "f_%06d.png"),
       "-c:v", "libx264",
+      // Color correctness: the input PNG frames are full-range sRGB. Without
+      // explicit signaling, swscale converts RGB->YUV with its DEFAULT matrix
+      // (BT.601) and writes color_space=unknown, so players (which assume BT.709
+      // for HD) decode with the wrong matrix and shift saturated colors — the
+      // brand red visibly desaturated/orange vs the static PNGs. Force a BT.709
+      // conversion AND tag it BT.709 so the encode matrix == the decode matrix.
+      "-vf", "scale=in_range=full:out_range=tv:out_color_matrix=bt709,format=yuv420p",
       "-pix_fmt", "yuv420p",
+      "-colorspace", "bt709",
+      "-color_primaries", "bt709",
+      "-color_trc", "bt709",
+      "-color_range", "tv",
       "-movflags", "+faststart",
       "-preset", "medium",
       "-crf", "20",

@@ -239,9 +239,19 @@
     }
   ],
   "media": {
-    "path": "./assets/batch-media/ms-boxjump.jpg",
+    "path": "./assets/swap-dsc09089.jpg",
     "tag": "bg_media",
     "z": 0,
-    "videoStartTime": 1
+    "videoStartTime": 1,
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1,
+    "crop": {
+      "x": 1324,
+      "y": 0,
+      "width": 1593,
+      "height": 2637,
+      "forPath": "./assets/swap-dsc09089.jpg"
+    }
   }
 }
