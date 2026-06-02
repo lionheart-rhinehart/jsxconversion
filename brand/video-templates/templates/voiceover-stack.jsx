@@ -52,12 +52,7 @@ function VoiceoverStackReel({ data = {} }) {
         />}
       </div>
 
-      <div style={{
-        position: 'absolute', top: 340, left: 60, right: 60,
-        opacity: eyebrowT,
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 26, color: RED, letterSpacing: '0.18em',
-      }}>// {eyebrow}</div>
+      <Eyebrow top={340} fontSize={26}>// {eyebrow}</Eyebrow>
 
       <div style={{
         position: 'absolute', top: 400, left: 60, right: 60,

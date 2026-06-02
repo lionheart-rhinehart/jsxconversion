@@ -102,7 +102,7 @@ function SigningDayReel({ data = {} }) {
       <div style={{ position: 'absolute', top: 150, left: 0, right: 0, display: 'flex', justifyContent: 'center', overflow: 'hidden' }}>
         <div style={{ background: RED, padding: '20px 52px', transform: `translateY(${(1 - bannerT) * -120}px)`,
           boxShadow: '0 16px 48px rgba(196,20,29,0.5)', clipPath: 'polygon(4% 0, 100% 0, 96% 100%, 0 100%)' }}>
-          <div style={{ fontFamily: '"JetBrains Mono", monospace', color: '#fff', fontSize: 40, fontWeight: 700, letterSpacing: '0.16em' }}>// {eyebrow}</div>
+          <Eyebrow top={150} fontSize={40}>// {eyebrow}</Eyebrow>
         </div>
       </div>
 

@@ -149,14 +149,7 @@ function PRAlertReel({ data = {} }) {
         paddingLeft: 80,
         boxShadow: '0 12px 40px rgba(196,20,29,0.5)',
       }}>
-        <div style={{
-          fontFamily: '"JetBrains Mono", monospace',
-          color: '#fff',
-          fontSize: 36,
-          fontWeight: 700,
-          letterSpacing: '0.12em',
-          opacity: eyebrowT,
-        }}>// {eyebrow}</div>
+        <Eyebrow top={150} fontSize={36}>// {eyebrow}</Eyebrow>
       </div>
 
       {/* Big number */}

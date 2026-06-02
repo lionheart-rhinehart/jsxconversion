@@ -27,7 +27,7 @@
 // ============================================================================
 
 import {
-  existsSync, mkdirSync, readFileSync, writeFileSync, renameSync, copyFileSync, rmSync,
+  existsSync, mkdirSync, readFileSync, writeFileSync, renameSync, copyFileSync, rmSync, readdirSync,
 } from "node:fs";
 import { resolve, join, dirname } from "node:path";
 import { spawn, spawnSync } from "node:child_process";
@@ -37,6 +37,7 @@ import {
 } from "./lib/fill-core.mjs";
 import { assemble } from "./lib/assemble.mjs";
 import { fieldRole } from "./lib/roles.mjs";
+import { validateTemplateSource } from "./validate-templates.mjs";
 
 const PROJECT_ROOT = resolve(".");
 const CAMPAIGNS_DIR = join(PROJECT_ROOT, "campaigns");
@@ -128,6 +129,30 @@ function templateDataKeys(src) {
   return [...keys];
 }
 
+// The template's `duration` SPEC field, parsed from its *_SPEC `fields:` array
+// (same brace-match + JSON.parse the editor-server uses). Its `default` is the
+// template's intrinsic animation/loop length L — the "N-second loop" the template
+// is authored around; `min`/`max` are the per-template clip-length bounds. Returns
+// null if there's no parseable duration field.
+function durationField(src) {
+  const at = src.indexOf("fields:");
+  if (at < 0) return null;
+  const open = src.indexOf("[", at);
+  if (open < 0) return null;
+  let depth = 0;
+  for (let i = open; i < src.length; i++) {
+    if (src[i] === "[") depth++;
+    else if (src[i] === "]" && --depth === 0) {
+      try {
+        const fields = JSON.parse(src.slice(open, i + 1));
+        const f = Array.isArray(fields) && fields.find((x) => x && x.key === "duration");
+        return f && typeof f.default === "number" ? f : null;
+      } catch { return null; }
+    }
+  }
+  return null;
+}
+
 // Build the `data` object a motion template receives via window.__CONFIG__.
 // Priority: asset.templateData (the planner's explicit, key-accurate map) wins;
 // otherwise a small heuristic maps headline/microscript onto sensible fields so
@@ -160,12 +185,18 @@ function buildMotionData(asset, dataKeys, tierTags = {}) {
   // role is brand/eyebrow (never content/numeric — a string in a stat field
   // would NaN the count-up at render). Explicit templateData already populated
   // `data`, so this only touches keys it didn't set ("explicit wins").
-  const anchor = `// ${tierTags.audience || "AGES 8-12"}${tierTags.city ? ` · ${tierTags.city}` : ""}`;
+  // Locale eyebrow anchor: "<CITY> SPORT PARENT" (city from the location tier, state
+  // suffix stripped). Falls back to the "{city name}" placeholder when no location/
+  // city is resolved, so an un-located campaign renders an obvious fill-me token.
+  const cityName = String(tierTags.city || "").split(",")[0].trim();
+  const anchor = cityName ? `${cityName} SPORT PARENT` : "{city name} SPORT PARENT";
   for (const k of dataKeys) {
-    if (k in data) continue;
     const role = fieldRole(k);
-    if (role === "eyebrow") data[k] = anchor;
-    else if (role === "brand" && typeof tierTags.brand_name === "string") data[k] = tierTags.brand_name;
+    // The eyebrow is the brand's locale anchor on EVERY design — force it, overriding
+    // any per-template tagline (e.g. "// THE 10% RULE") or stale copy.
+    if (role === "eyebrow") { data[k] = anchor; continue; }
+    if (k in data) continue;
+    if (role === "brand" && typeof tierTags.brand_name === "string") data[k] = tierTags.brand_name;
   }
   if (dataKeys.length) {
     // `_`-prefixed keys (e.g. _overrides) and added-text keys (data._extras,
@@ -252,6 +283,12 @@ async function renderTemplateMotion(asset, angleId, wantGif) {
   }
   // Discover the window component + spec names the template registers.
   const src = readFileSync(tmplPath, "utf8");
+  // ENFORCED template contract (no raw <video>, eyebrow present) — a render of a
+  // non-compliant template fails here, so the rules can't be silently skipped.
+  const tplErrs = validateTemplateSource(src, tmpl);
+  if (tplErrs.length) {
+    return { ok: false, error: `template "${tmpl}" fails the contract — ${tplErrs.join("; ")} (run: node scripts/validate-templates.mjs ${tmpl})` };
+  }
   const compM = src.match(/window\.([A-Za-z_$][\w$]*)\s*=\s*[A-Za-z_$][\w$]*\s*;/g) || [];
   const compName = (src.match(/window\.([A-Za-z_$][\w$]*Reel)\s*=/) ||
     src.match(/window\.([A-Za-z_$][\w$]*)\s*=\s*[A-Za-z_$][\w$]*\s*;/) || [])[1];
@@ -279,12 +316,44 @@ async function renderTemplateMotion(asset, angleId, wantGif) {
   // and bind it to the template's media key. (Motion media in render is verified
   // in the deferred live-render pass; the wiring is here.)
   let stagedMedia = null;
+  let bgFramesDir = null;        // set when a VIDEO bg is pre-extracted to frames
+  let bgFramesInfo = null;       // { base, count, fps, key } → window.__bgFrames in the wrapper
   const picked = asset.photo || asset.clip;
   if (picked) {
     const abs = join(PROJECT_ROOT, picked);
     if (existsSync(abs)) {
       const mediaKey = dataKeys.find((k) => /(clip|photo|image|video|media|bg|src|poster|background)/i.test(k));
-      if (mediaKey) {
+      const isVideo = /\.(mp4|mov|webm|m4v|mkv)$/i.test(picked);
+      if (mediaKey && isVideo) {
+        // Deterministic video background: a browser <video> can't be reliably
+        // seeked frame-by-frame in the headless capture (it hyperloops or freezes),
+        // so pre-extract the clip to PNG frames at render FPS and let SyncedVideo
+        // show the right frame as an <img> per render frame (window.__bgFrames).
+        bgFramesDir = join(VIDEO_DIR, `${base}.bgframes`);
+        rmSync(bgFramesDir, { recursive: true, force: true });
+        mkdirSync(bgFramesDir, { recursive: true });
+        // Honor the trim window the user set in the Media tab (data.<key>_clipStart/_clipEnd,
+        // editing.jsx convention): extract only [clipStart, clipEnd] so the front/back of the
+        // clip is cropped. -ss before -i = fast seek; -t limits the span. No trim → full clip.
+        const cs = Math.max(0, Number(data[`${mediaKey}_clipStart`]) || 0);
+        const ceRaw = data[`${mediaKey}_clipEnd`];
+        const ce = (typeof ceRaw === "number" && ceRaw > cs) ? ceRaw : null;
+        const ffArgs = ["-y"];
+        if (cs > 0) ffArgs.push("-ss", String(cs));
+        ffArgs.push("-i", abs);
+        if (ce != null) ffArgs.push("-t", String(ce - cs));
+        ffArgs.push("-vf", "fps=30", join(bgFramesDir, "%05d.png"));
+        const ex = spawnSync("ffmpeg", ffArgs, { stdio: "ignore" });
+        const frames = ex.status === 0 ? readdirSync(bgFramesDir).filter((f) => f.endsWith(".png")).length : 0;
+        if (frames > 0) {
+          bgFramesInfo = { base: `./${base}.bgframes/`, count: frames, fps: 30, key: mediaKey };
+          data[mediaKey] = bgFramesInfo.base;     // truthy → template renders SyncedVideo
+          console.error(`[render]   ${asset.id} bg clip → ${frames} frames @ 30fps (deterministic <img> sequence).`);
+        } else {
+          console.error(`[render]   note: ${asset.id} bg-frame extraction failed; rendering without background.`);
+          rmSync(bgFramesDir, { recursive: true, force: true }); bgFramesDir = null;
+        }
+      } else if (mediaKey) {
         const ext = picked.split(".").pop();
         stagedMedia = join(VIDEO_DIR, `${base}.media.${ext}`);
         copyFileSync(abs, stagedMedia);
@@ -316,7 +385,18 @@ async function renderTemplateMotion(asset, angleId, wantGif) {
   // the wrapper as a numeric literal — readStageProps (claude-design.mjs) only
   // accepts /^[0-9.]+$/ in `duration={...}`; a quoted/NaN value would silently
   // fall back to DEFAULTS (8s). Fall back to 8 when unset.
-  const D = Math.max(1, Number(asset.templateData?.duration) || 8);
+  // L = the template's intrinsic animation/loop length (SPEC duration `default`);
+  // D = the exported clip length, clamped to the template's per-template bounds so
+  // a stale plan value can't exceed what the template is meant to do. When D > L the
+  // wrapper loops the L-second animation to fill D (LoopRemap); when no duration
+  // field exists, L falls back to D (no looping, prior behavior).
+  const dField = durationField(src);
+  const L = dField ? dField.default : 0;
+  let D = Math.max(1, Number(asset.templateData?.duration) || L || 8);
+  if (dField) {
+    if (typeof dField.min === "number") D = Math.max(dField.min, D);
+    if (typeof dField.max === "number") D = Math.min(dField.max, D);
+  }
   const wrapperName = `CampWrap_${slug(asset.id).replace(/-/g, "_")}`;
   const wrapper = `// Auto-generated motion wrapper for campaign "${campaign}" asset ${asset.id}.
 // Renders bank template ${tmpl} (window.${compName}) inside a Stage with __CONFIG__ data.
@@ -328,14 +408,68 @@ const _FONT_PREFLIGHT = {
 function ${wrapperName}({ data }) {
   const Inner = window.${compName};
   if (!Inner) return null;
+  const Loop = window.LoopRemap || (function (p) { return p.children; });
   return (
     <Stage width={${W}} height={${H}} duration={${D}} fps={${FPS}} background="#0a0b0d">
-      <Inner data={data || {}} />
-      {window.ExtrasLayer ? <window.ExtrasLayer data={data || {}} /> : null}
+      <Loop loopLength={${L}}>
+        <Inner data={data || {}} />
+        {window.ExtrasLayer ? <window.ExtrasLayer data={data || {}} /> : null}
+      </Loop>
     </Stage>
   );
 }
 window.${wrapperName} = ${wrapperName};
+
+// Pre-extracted background frames (set by run-campaign when the asset has a video
+// clip). SyncedVideo renders a stable <img data-bgframe> and the patch below fills
+// its src per render frame — deterministic, decode-awaited, no flaky <video> seek.
+window.__bgFrames = ${bgFramesInfo ? JSON.stringify(bgFramesInfo) : "null"};
+
+// ─── deterministic background sync ─────────────────────────────────────────
+// The headless renderer screenshots each frame after \`await window.__setRenderTime(t)\`.
+// We wrap it so it imperatively sets the background <img> to the frame for time t and
+// AWAITS img.decode() (img decode is reliable; browser <video> seeking in this capture
+// hyperlooped or froze). The renderer's await then blocks until the correct background
+// frame is decoded before the screenshot. Render-only (the live preview never loads this).
+(function () {
+  if (typeof window === "undefined" || window.__videoSyncPatched) return;
+  function pad5(n) { n = String(n); while (n.length < 5) n = "0" + n; return n; }
+  function install() {
+    if (typeof window.__setRenderTime !== "function") { setTimeout(install, 0); return; }
+    if (window.__videoSyncPatched) return;
+    window.__videoSyncPatched = true;
+    var orig = window.__setRenderTime;
+    window.__setRenderTime = function (t) {
+      orig(t);
+      var ps = [];
+      var bf = window.__bgFrames;
+      if (bf && bf.base && bf.count > 0) {
+        var idx = Math.round(t * bf.fps) % bf.count; if (idx < 0) idx += bf.count;
+        var url = bf.base + pad5(idx + 1) + ".png";
+        var imgs = document.querySelectorAll("img[data-bgframe]");
+        Array.prototype.forEach.call(imgs, function (im) {
+          if (im.getAttribute("src") !== url) im.setAttribute("src", url);
+          if (im.decode) ps.push(im.decode().catch(function () {}));
+        });
+      }
+      // Fallback: any real <video> still present → seek + await its presented frame.
+      var vids = document.querySelectorAll("video");
+      Array.prototype.forEach.call(vids, function (v) {
+        if (!v || !v.duration || !isFinite(v.duration) || v.duration <= 0) return;
+        var target = ((t % v.duration) + v.duration) % v.duration;
+        ps.push(new Promise(function (res) {
+          var done = false, fin = function () { if (done) return; done = true; res(); };
+          try { v.currentTime = target; } catch (e) { return fin(); }
+          if (typeof v.requestVideoFrameCallback === "function") v.requestVideoFrameCallback(function () { fin(); });
+          v.addEventListener("seeked", fin, { once: true });
+          setTimeout(fin, 1000);
+        }));
+      });
+      return Promise.all(ps);
+    };
+  }
+  install();
+})();
 
 // ─── inlined bank template: ${tmpl} ───────────────────────────────────────
 ${src}
@@ -361,6 +495,7 @@ ${src}
     rmSync(wrapperPath, { force: true });
     rmSync(dataPath, { force: true });
     if (stagedMedia) rmSync(stagedMedia, { force: true });
+    if (bgFramesDir) rmSync(bgFramesDir, { recursive: true, force: true });
     rmSync(join(VIDEO_DIR, "__render"), { recursive: true, force: true });
   }
   return result;

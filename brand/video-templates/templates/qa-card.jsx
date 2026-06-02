@@ -27,7 +27,7 @@ function QACardReel({ data = {} }) {
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
       {/* Top half: question on dark with eyebrow */}
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '52%', background: '#15171a', padding: '110px 60px 60px', boxSizing: 'border-box' }}>
-        <div style={{ padding: '8px 16px', background: RED, display: 'inline-block', fontFamily: '"JetBrains Mono", monospace', fontSize: 24, color: '#fff', letterSpacing: '0.16em', opacity: eyebrowT }}>// {eyebrow}</div>
+        <Eyebrow top={150} fontSize={24}>// {eyebrow}</Eyebrow>
         <div style={{ marginTop: 28, fontFamily: '"JetBrains Mono", monospace', fontSize: 22, color: '#969ca7', letterSpacing: '0.12em', opacity: qLabelT }}>{askedBy}</div>
         <div style={{ marginTop: 16, fontFamily: 'Anton, sans-serif', fontSize: 92, color: '#fff', lineHeight: 0.95, opacity: qT, transform: `translateY(${(1 - qT) * 14}px)` }}>"{question}"</div>
       </div>

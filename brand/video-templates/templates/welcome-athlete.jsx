@@ -86,8 +86,7 @@ function WelcomeAthleteReel({ data = {} }) {
       <div style={{ position: 'absolute', top: 230, left: 0, height: 90, background: RED, overflow: 'hidden',
         width: `${wipeT * 760}px`, display: 'flex', alignItems: 'center', paddingLeft: 60,
         boxShadow: '0 12px 40px rgba(196,20,29,0.45)' }}>
-        <div style={{ fontFamily: '"JetBrains Mono", monospace', color: '#fff', fontSize: 34, fontWeight: 700,
-          letterSpacing: '0.14em', whiteSpace: 'nowrap', opacity: wipeT > 0.6 ? 1 : 0 }}>// {eyebrow}</div>
+        <Eyebrow top={150} fontSize={34}>// {eyebrow}</Eyebrow>
       </div>
 
       {/* WELCOME */}

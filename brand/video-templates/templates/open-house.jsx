@@ -56,14 +56,7 @@ function OpenHouseReel({ data = {} }) {
       }}/>
 
       {/* Eyebrow */}
-      <div style={{
-        position: 'absolute', top: 130, left: 60,
-        padding: '8px 16px',
-        background: RED,
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 24, color: '#fff', letterSpacing: '0.16em',
-        opacity: eyebrowT,
-      }}>// {eyebrow}</div>
+      <Eyebrow top={130} fontSize={24}>// {eyebrow}</Eyebrow>
 
       {/* Big title */}
       <div style={{

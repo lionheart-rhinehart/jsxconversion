@@ -6,48 +6,55 @@ const COMMITTED_SPEC = {
   id: 'committed',
   name: 'COMMITTED',
   fields: [
-  {
-    "key": "duration",
-    "label": "Length",
-    "type": "slider",
-    "default": 7,
-    "min": 4,
-    "max": 15,
-    "step": 0.5,
-    "unit": "s"
-  },
-  {
-    "key": "name",
-    "label": "Athlete name",
-    "type": "text",
-    "default": "ALEX MORGAN"
-  },
-  {
-    "key": "sport",
-    "label": "Sport · pos",
-    "type": "text",
-    "default": "WOMEN’S SOCCER · MIDFIELD"
-  },
-  {
-    "key": "school",
-    "label": "School",
-    "type": "text",
-    "default": "NORTHGATE COLLEGE"
-  },
-  {
-    "key": "season",
-    "label": "Season tag",
-    "type": "text",
-    "default": "FALL 2026"
-  },
-  {
-    "key": "photo",
-    "label": "Photo or video",
-    "type": "image",
-    "default": "assets/hero-sprint-female.jpg",
-    "sub": "image or short video"
-  }
-],
+    {
+      "key": "duration",
+      "label": "Length",
+      "type": "slider",
+      "default": 7,
+      "min": 4,
+      "max": 15,
+      "step": 0.5,
+      "unit": "s"
+    },
+    {
+      "key": "eyebrow",
+      "role": "eyebrow",
+      "label": "Eyebrow",
+      "type": "text",
+      "default": "{city name} SPORT PARENT"
+    },
+    {
+      "key": "name",
+      "label": "Athlete name",
+      "type": "text",
+      "default": "ALEX MORGAN"
+    },
+    {
+      "key": "sport",
+      "label": "Sport · pos",
+      "type": "text",
+      "default": "WOMEN’S SOCCER · MIDFIELD"
+    },
+    {
+      "key": "school",
+      "label": "School",
+      "type": "text",
+      "default": "NORTHGATE COLLEGE"
+    },
+    {
+      "key": "season",
+      "label": "Season tag",
+      "type": "text",
+      "default": "FALL 2026"
+    },
+    {
+      "key": "photo",
+      "label": "Photo or video",
+      "type": "image",
+      "default": "assets/hero-sprint-female.jpg",
+      "sub": "image or short video"
+    }
+  ],
 };
 
 function CommittedReel({ data = {} }) {
@@ -74,6 +81,7 @@ function CommittedReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
+      <Eyebrow top={90} fontSize={34}>{data.eyebrow ?? "{city name} SPORT PARENT"}</Eyebrow>
       {window.TrimmedMedia ? (
         <window.TrimmedMedia src={photo} clipStart={data.photo_clipStart} clipEnd={data.photo_clipEnd} muted={!data.photo_audio}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',

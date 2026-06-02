@@ -53,7 +53,7 @@ function DayAtAAReel({ data = {} }) {
       {/* Front matter (until ~1.3s) */}
       {t < 1.4 && (
         <>
-          <div style={{ position: 'absolute', top: 110, left: 60, padding: '8px 16px', background: RED, fontFamily: '"JetBrains Mono", monospace', fontSize: 24, color: '#fff', letterSpacing: '0.16em', opacity: eyebrowT }}>// {eyebrow}</div>
+          <Eyebrow top={110} fontSize={24}>// {eyebrow}</Eyebrow>
           <div style={{ position: 'absolute', top: 220, left: 60, right: 60, fontFamily: 'Anton, sans-serif', fontSize: 140, color: '#fff', lineHeight: 0.88, opacity: titleT }}>{title1}<br/><span style={{ color: RED }}>{title2}</span></div>
         </>
       )}

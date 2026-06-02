@@ -58,10 +58,10 @@ function QuoteCardSquare({ data = {} }) {
 
       {/* Eyebrow */}
       <TplText field="eyebrow" data={data}
-        base={{ position: 'absolute', top: 100, left: 100 }}
-        style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 26, color: RED, letterSpacing: '0.18em', opacity: eyebrowT }}
+        base={{ position: 'absolute', top: 100, left: 100, padding: '10px 22px', background: '#fff', borderRadius: 8 }}
+        style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 26, color: RED, fontWeight: 700, letterSpacing: '0.08em', opacity: eyebrowT }}
         fitKey={eyebrow}
-      >// {eyebrow}</TplText>
+      >{eyebrow}</TplText>
 
       {/* Big quote mark */}
       <div style={{

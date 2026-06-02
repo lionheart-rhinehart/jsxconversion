@@ -24,7 +24,7 @@ function DidYouKnowReel({ data = {} }) {
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
       <div style={{ position: 'absolute', top: -200, right: -150, width: 500, height: 500, background: `radial-gradient(circle, ${RED}33 0%, transparent 60%)`, filter: 'blur(40px)' }}/>
-      <div style={{ position: 'absolute', top: 110, left: 60, padding: '8px 16px', background: RED, fontFamily: '"JetBrains Mono", monospace', fontSize: 24, color: '#fff', letterSpacing: '0.16em', opacity: eT }}>// {eyebrow}</div>
+      <Eyebrow top={110} fontSize={24}>// {eyebrow}</Eyebrow>
 
       <div style={{ position: 'absolute', top: 280, left: 60, right: 60, fontFamily: 'Anton, sans-serif', fontSize: 80, color: '#fff', lineHeight: 0.95, opacity: p1T }}>{factPrefix}</div>
       <div style={{ position: 'absolute', top: 440, left: 60, right: 60, fontFamily: 'Anton, sans-serif', fontSize: 200, color: RED, lineHeight: 0.85, opacity: b1T, transform: `scale(${0.92 + 0.08*b1T})`, textShadow: `0 0 36px rgba(196,20,29,0.5)` }}>{factBig}</div>

@@ -39,14 +39,7 @@ function ManifestoReel({ data = {} }) {
         background: 'linear-gradient(180deg, rgba(10,11,13,0.5) 0%, rgba(10,11,13,0.85) 100%)',
       }}/>
 
-      <div style={{
-        position: 'absolute', top: 110, left: 60,
-        padding: '8px 16px',
-        background: RED,
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 24, color: '#fff', letterSpacing: '0.16em',
-        opacity: eyebrowT,
-      }}>// {eyebrow}</div>
+      <Eyebrow top={110} fontSize={24}>// {eyebrow}</Eyebrow>
 
       {/* Kinetic lines stacked vertically center-screen */}
       <div style={{

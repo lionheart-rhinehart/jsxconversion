@@ -41,11 +41,7 @@ function ResultsRecapSquare({ data = {} }) {
         position: 'absolute', top: 70, left: 70, right: 70,
         display: 'flex', alignItems: 'baseline', justifyContent: 'space-between',
       }}>
-        <div style={{
-          fontFamily: '"JetBrains Mono", monospace',
-          fontSize: 22, color: RED, letterSpacing: '0.18em',
-          opacity: eyebrowT,
-        }}>// {eyebrow}</div>
+        <Eyebrow top={150} fontSize={22}>// {eyebrow}</Eyebrow>
         <div style={{
           fontFamily: '"JetBrains Mono", monospace',
           fontSize: 18, color: '#969ca7', letterSpacing: '0.12em',

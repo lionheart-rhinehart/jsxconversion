@@ -41,14 +41,7 @@ function LimitedSpotsReel({ data = {} }) {
         filter: 'blur(40px)',
       }}/>
 
-      <div style={{
-        position: 'absolute', top: 110, left: 60,
-        padding: '8px 16px', background: RED,
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 24, color: '#fff', letterSpacing: '0.16em',
-        opacity: eyebrowT,
-        boxShadow: `0 0 ${20 + pulse * 20}px rgba(196,20,29,${0.4 + pulse * 0.4})`,
-      }}>// {eyebrow}</div>
+      <Eyebrow top={110} fontSize={24}>// {eyebrow}</Eyebrow>
 
       <div style={{
         position: 'absolute', top: 200, left: 60, right: 60,

@@ -117,6 +117,71 @@ const TimelineContext = React.createContext({ time: 0, duration: 10, playing: fa
 const useTime = () => React.useContext(TimelineContext).time;
 const useTimeline = () => React.useContext(TimelineContext);
 
+// ── LoopRemap ─────────────────────────────────────────────────────────────────
+// Replays a template's intrinsic L-second animation to fill a longer clip.
+// Templates animate on absolute useTime() thresholds tuned to a fixed "N-second
+// loop" (the SPEC duration `default`). Without this, a clip longer than L just
+// holds — or, for templates with a loop-seam fade like logo-sting, fades to black —
+// on a frozen tail, which reads as "the animation stuck on a short loop". LoopRemap
+// re-provides the timeline with `time` wrapped to [0, L), so a 3s sting in a 12s
+// clip plays 4 clean loops. loopLength <= 0 (or a clip no longer than one loop) is
+// a no-op. Used identically by the render wrapper (run-campaign) and the review-page
+// preview (review.html) so preview == render.
+function LoopRemap({ loopLength, children }) {
+  const tl = useTimeline();
+  const L = Number(loopLength) || 0;
+  const value = React.useMemo(
+    () => (L > 0 ? { ...tl, time: tl.time % L } : tl),
+    [tl, L],
+  );
+  return React.createElement(TimelineContext.Provider, { value }, children);
+}
+
+// ── SyncedVideo ───────────────────────────────────────────────────────────────
+// A normal autoplaying background <video>. Determinism for the render is handled at
+// the RENDER level (the run-campaign wrapper wraps window.__setRenderTime to seek
+// every <video> to the frame's time and await the presented frame). We deliberately
+// KEEP autoplay+loop here so the video's decode pipeline stays warm — a never-played
+// paused <video>, when seeked in headless Chrome, only ever shows frame 0 (that was
+// the "frozen background" bug). Playing it keeps frames decoding; the render's
+// per-frame seek then pins it to the deterministic time. In the live editor preview
+// it simply plays in real time. Drop-in replacement for <video src={bgClip} …/>.
+function SyncedVideo({ src, loopSeconds, ...rest }) {
+  // In the headless render, run-campaign pre-extracts the clip to PNG frames and sets
+  // window.__bgFrames; we render a stable <img data-bgframe> that the render driver fills
+  // with the correct frame per render-frame (deterministic, decode-awaited). Everywhere
+  // else (live editor preview), play a normal autoplaying <video>.
+  const bf = (typeof window !== "undefined") ? window.__bgFrames : null;
+  if (bf && bf.base && bf.count > 0) {
+    return React.createElement("img", { "data-bgframe": "1", ...rest });
+  }
+  return React.createElement("video", {
+    src, autoPlay: true, muted: true, loop: true, playsInline: true, preload: "auto", ...rest,
+  });
+}
+
+// ── Eyebrow ───────────────────────────────────────────────────────────────────
+// The brand's locale eyebrow: red text on a WHITE pill, mono, uppercase. This is
+// the single source of truth for the eyebrow look — every template renders its
+// eyebrow through <Eyebrow> (enforced by scripts/validate-templates.mjs), so the
+// white background can never silently drift away again. `top`/`left` position it.
+function Eyebrow({ children, top = 150, left = 90, fontSize = 38, style = {} }) {
+  return React.createElement(
+    "div",
+    { "data-eyebrow": "1", style: { position: "absolute", top, left, zIndex: 6, ...style } },
+    React.createElement(
+      "span",
+      { style: {
+        display: "inline-block", background: "#ffffff", color: "#c4141d",
+        fontFamily: '"JetBrains Mono", monospace', fontSize, fontWeight: 700,
+        letterSpacing: "0.04em", textTransform: "uppercase",
+        padding: "10px 22px", borderRadius: 8, whiteSpace: "nowrap",
+      } },
+      children,
+    ),
+  );
+}
+
 // ── Sprite ──────────────────────────────────────────────────────────────────
 // Renders children only when the playhead is inside [start, end]. Provides
 // a sub-context with `localTime` (seconds since start) and `progress` (0..1).
@@ -266,6 +331,21 @@ function TplText({ field, data, base = {}, style = {}, maxWidth, maxHeight, minS
   // wrapping/collapsing spaces like normal. base/style can override (e.g.
   // 'nowrap' fields for single-line width auto-fit).
   const merged = { whiteSpace: 'pre-line', ...base, ...style, fontSize: size, transform };
+  // Eyebrow is the brand locale anchor: ALWAYS red text on a WHITE pill, rendered
+  // from data.eyebrow (the forced "<CITY> SPORT PARENT" value), so it matches the
+  // shared <Eyebrow> component. Ignores the template's inline text/colour so the
+  // white background can't be styled away per-template.
+  if (field === 'eyebrow') {
+    const txt = (data && data.eyebrow != null && data.eyebrow !== '') ? data.eyebrow : children;
+    const box = { ...merged, background: 'transparent', padding: 0, color: undefined };
+    return (
+      <div ref={ref} data-ov-key={field} style={box}>
+        <span style={{ display: 'inline-block', background: '#ffffff', color: '#c4141d',
+          fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase',
+          padding: '8px 18px', borderRadius: 8, whiteSpace: 'nowrap' }}>{txt}</span>
+      </div>
+    );
+  }
   return <div ref={ref} data-ov-key={field} style={merged}>{children}</div>;
 }
 window.TplText = TplText;
@@ -765,7 +845,7 @@ function IconButton({ children, onClick, title }) {
 
 Object.assign(window, {
   Easing, interpolate, animate, clamp,
-  TimelineContext, useTime, useTimeline,
+  TimelineContext, useTime, useTimeline, LoopRemap, SyncedVideo, Eyebrow,
   Sprite, SpriteContext, useSprite,
   TextSprite, ImageSprite, RectSprite,
   Stage, PlaybackBar,

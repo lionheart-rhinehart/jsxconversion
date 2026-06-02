@@ -84,15 +84,7 @@ function AthleteSpotlightReel({ data = {} }) {
       }}/>
 
       {/* Top tag */}
-      <div style={{
-        position: 'absolute',
-        top: 140, left: 60,
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 30,
-        color: RED,
-        letterSpacing: '0.16em',
-        opacity: tagT,
-      }}>// ATHLETE SPOTLIGHT</div>
+      <Eyebrow top={140} left={60} fontSize={30} style={{ opacity: tagT }}>{eyebrow}</Eyebrow>
 
       {/* Name */}
       <div style={{

@@ -47,10 +47,7 @@ function WorkoutOfWeekReel({ data = {} }) {
         position: 'absolute', top: 110, left: 60, right: 60,
         opacity: headerT,
       }}>
-        <div style={{
-          fontFamily: '"JetBrains Mono", monospace',
-          fontSize: 28, color: RED, letterSpacing: '0.18em',
-        }}>// WORKOUT OF THE WEEK</div>
+        <Eyebrow fontSize={28} style={{ position: 'static' }}>{eyebrow}</Eyebrow>
         <div style={{
           marginTop: 8,
           fontFamily: '"JetBrains Mono", monospace',

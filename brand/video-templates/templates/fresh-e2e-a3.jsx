@@ -26,6 +26,7 @@ function FreshE2eA3Reel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
+      <Eyebrow top={90} fontSize={34}>{data.eyebrow ?? "{city name} SPORT PARENT"}</Eyebrow>
       {/* red glow that pulses on the B (tired) face */}
       <div style={{
         position: 'absolute', top: '38%', left: '50%', width: 900, height: 900,
@@ -63,34 +64,41 @@ window.FreshE2eA3Reel = FreshE2eA3Reel;
 const FRESH_E2E_A3_SPEC = {
   id: 'fresh-e2e-a3', name: 'A3 — FASTER / TIRED FLIP',
   fields: [
-      {
-        "key": "duration",
-        "label": "Length",
-        "type": "slider",
-        "default": 6,
-        "min": 3,
-        "max": 9,
-        "step": 0.5,
-        "unit": "s"
-      },
-      {
-        "key": "questionA",
-        "label": "Question A (white)",
-        "type": "text",
-        "default": "GETTING FASTER?"
-      },
-      {
-        "key": "questionB",
-        "label": "Question B (red)",
-        "type": "text",
-        "default": "OR JUST MORE TIRED?"
-      },
-      {
-        "key": "microscript",
-        "label": "Microscript",
-        "type": "text",
-        "default": "TRAIN FAST TO BE FAST"
-      }
-    ],
+    {
+      "key": "duration",
+      "label": "Length",
+      "type": "slider",
+      "default": 6,
+      "min": 3,
+      "max": 9,
+      "step": 0.5,
+      "unit": "s"
+    },
+    {
+      "key": "eyebrow",
+      "role": "eyebrow",
+      "label": "Eyebrow",
+      "type": "text",
+      "default": "{city name} SPORT PARENT"
+    },
+    {
+      "key": "questionA",
+      "label": "Question A (white)",
+      "type": "text",
+      "default": "GETTING FASTER?"
+    },
+    {
+      "key": "questionB",
+      "label": "Question B (red)",
+      "type": "text",
+      "default": "OR JUST MORE TIRED?"
+    },
+    {
+      "key": "microscript",
+      "label": "Microscript",
+      "type": "text",
+      "default": "TRAIN FAST TO BE FAST"
+    }
+  ],
 };
 window.FRESH_E2E_A3_SPEC = FRESH_E2E_A3_SPEC;

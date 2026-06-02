@@ -143,9 +143,16 @@ function isVideoSrc(src) {
 function TrimmedMedia({ src, clipStart = 0, clipEnd = null, muted = true, style = {}, alt = '' }) {
   const videoRef = React.useRef(null);
   const isVideo = isVideoSrc(src);
+  // Deterministic render: when run-campaign pre-extracted the clip to frames
+  // (window.__bgFrames, already trimmed to [clipStart,clipEnd]), render a stable
+  // <img data-bgframe> the render driver fills per frame — a wall-clock <video>
+  // hyperloops/freezes in the headless frame-by-frame capture. Live preview keeps
+  // the normal <video> below.
+  const bf = (typeof window !== 'undefined') ? window.__bgFrames : null;
+  const useFrames = isVideo && bf && bf.base && bf.count > 0;
 
   React.useEffect(() => {
-    if (!isVideo || !videoRef.current) return;
+    if (useFrames || !isVideo || !videoRef.current) return;
     const v = videoRef.current;
     const onMeta = () => {
       if (clipStart > 0) {
@@ -165,8 +172,11 @@ function TrimmedMedia({ src, clipStart = 0, clipEnd = null, muted = true, style 
       v.removeEventListener('loadedmetadata', onMeta);
       v.removeEventListener('timeupdate', onTime);
     };
-  }, [isVideo, clipStart, clipEnd, src]);
+  }, [isVideo, clipStart, clipEnd, src, useFrames]);
 
+  if (useFrames) {
+    return <img data-bgframe="1" alt={alt} style={style}/>;
+  }
   if (isVideo) {
     return <video ref={videoRef} src={src} autoPlay loop muted={muted} playsInline style={style}/>;
   }

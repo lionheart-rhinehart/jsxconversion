@@ -76,13 +76,7 @@ function CarouselStoryReel({ data = {} }) {
         );
       })}
 
-      <div style={{
-        position: 'absolute', top: 110, left: 60,
-        padding: '8px 14px', background: RED,
-        fontFamily: '"JetBrains Mono", monospace',
-        fontSize: 22, color: '#fff', letterSpacing: '0.16em',
-        opacity: eyebrowT,
-      }}>// {eyebrow}</div>
+      <Eyebrow top={110} fontSize={22}>// {eyebrow}</Eyebrow>
 
       {/* Final line */}
       {t > 6.3 && (
