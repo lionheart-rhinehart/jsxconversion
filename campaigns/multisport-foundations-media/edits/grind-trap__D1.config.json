@@ -30,8 +30,8 @@
       "id": "eyebrow",
       "tag": "eyebrow",
       "label": "Context anchor chip (auto-filled, centered)",
-      "x": 0,
-      "y": 360,
+      "x": 76,
+      "y": 104,
       "width": 1080,
       "textAlign": "center",
       "text": "INDIANAPOLIS SPORTS PARENTS",
@@ -102,9 +102,12 @@
     }
   ],
   "media": {
-    "path": "./assets/batch-media/ms-jumping.jpg",
+    "path": "./assets/swap-athletes-acceleration-group-shot-posing-high-school-male-athletes-acceleration-ind-1ec5d373.jpg",
     "tag": "bg_media",
     "z": 0,
-    "videoStartTime": 1
+    "videoStartTime": 1,
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1
   }
 }

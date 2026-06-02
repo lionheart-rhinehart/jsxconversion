@@ -137,6 +137,38 @@ function LoopRemap({ loopLength, children }) {
   return React.createElement(TimelineContext.Provider, { value }, children);
 }
 
+// ── SyncedVideo ───────────────────────────────────────────────────────────────
+// A background <video> whose playback is tied to the timeline (useTime) instead of
+// the wall clock. WHY: the headless renderer steps a virtual clock and screenshots
+// frame-by-frame, which takes far longer than real time; a raw <video autoPlay loop>
+// keeps playing on the wall clock during that slow capture, so its motion gets
+// packed into the output = "hyperloop" (the background races/loops many times).
+// In RENDER mode (window.__renderTime is set by the render driver) we disable
+// autoplay/loop and seek currentTime = t % duration each frame, so the background
+// advances exactly 1s per output second. In the LIVE editor preview (__renderTime
+// undefined) we keep normal autoplay/loop so the preview stays smooth (it already
+// plays in real time there). Drop-in replacement for <video src={bgClip} …/>.
+function SyncedVideo({ src, loopSeconds, ...rest }) {
+  const t = useTime();
+  const ref = React.useRef(null);
+  const isRender = typeof window !== "undefined" && typeof window.__renderTime === "number";
+  React.useLayoutEffect(() => {
+    const v = ref.current;
+    if (!v || !isRender) return;
+    const dur = (loopSeconds && loopSeconds > 0) ? loopSeconds : v.duration;
+    if (!dur || !isFinite(dur) || dur <= 0) return;
+    try {
+      v.pause();
+      const target = ((t % dur) + dur) % dur;
+      if (Math.abs(v.currentTime - target) > 1e-3) v.currentTime = target;
+    } catch (e) { /* seek before metadata — ignored, next frame retries */ }
+  });
+  return React.createElement("video", {
+    ref, src, muted: true, playsInline: true, preload: "auto",
+    autoPlay: !isRender, loop: !isRender, ...rest,
+  });
+}
+
 // ── Sprite ──────────────────────────────────────────────────────────────────
 // Renders children only when the playhead is inside [start, end]. Provides
 // a sub-context with `localTime` (seconds since start) and `progress` (0..1).
@@ -785,7 +817,7 @@ function IconButton({ children, onClick, title }) {
 
 Object.assign(window, {
   Easing, interpolate, animate, clamp,
-  TimelineContext, useTime, useTimeline, LoopRemap,
+  TimelineContext, useTime, useTimeline, LoopRemap, SyncedVideo,
   Sprite, SpriteContext, useSprite,
   TextSprite, ImageSprite, RectSprite,
   Stage, PlaybackBar,

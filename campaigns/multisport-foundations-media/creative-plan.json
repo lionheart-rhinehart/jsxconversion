@@ -33,10 +33,10 @@
           "templateData": {
             "duration": 3
           },
-          "status": "rendering",
+          "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/A1.gif",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/A1.gif",
-          "renderedAt": "2026-06-02T18:08:05.549Z"
+          "renderedAt": "2026-06-02T18:27:33.605Z"
         },
         {
           "id": "A2",
@@ -144,7 +144,7 @@
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/C1.mp4",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/C1.mp4",
-          "renderedAt": "2026-06-02T18:17:53.296Z"
+          "renderedAt": "2026-06-02T18:30:35.831Z"
         },
         {
           "id": "C2",
@@ -354,7 +354,7 @@
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/F3.mp4",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/F3.mp4",
-          "renderedAt": "2026-06-02T18:15:46.158Z"
+          "renderedAt": "2026-06-02T18:32:09.008Z"
         },
         {
           "id": "FA1",
@@ -370,7 +370,7 @@
           "status": "rendered",
           "output": "out/campaigns/multisport-foundations-media/grind-trap/FA1.mp4",
           "thumb": "out/campaigns/multisport-foundations-media/grind-trap/FA1.mp4",
-          "renderedAt": "2026-06-02T18:23:03.597Z"
+          "renderedAt": "2026-06-02T18:38:57.608Z"
         },
         {
           "id": "BR1",
