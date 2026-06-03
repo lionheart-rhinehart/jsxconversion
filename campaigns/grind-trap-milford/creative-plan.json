@@ -54,14 +54,14 @@
           "status": "rendered",
           "notes": "3s motion hook from the ad's opening lines.",
           "clip": "brand/kraken-cache/athletes-acceleration-action-clip-sprinting-mixed-male-athletes-acceleration-indy--6402a4e5.mp4",
-          "kraken": {
-            "id": "80d66660-bb06-46b1-bc03-fe73b3eb7b28",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/grind-trap-milford-grind-trap-A1-1780501473063.mp4",
-            "folder": "ANGLE 1"
-          },
           "output": "out/campaigns/grind-trap-milford/grind-trap/A1.mp4",
           "thumb": "out/campaigns/grind-trap-milford/grind-trap/A1.mp4",
-          "renderedAt": "2026-06-03T16:08:48.000Z"
+          "renderedAt": "2026-06-03T16:08:48.000Z",
+          "kraken": {
+            "id": "8a227018-bbe1-4a97-8c17-e388f81ffead",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/grind-trap-milford-grind-trap-A1-1780505071401.mp4",
+            "folder": "ANGLE 1"
+          }
         },
         {
           "id": "A2",
@@ -222,14 +222,14 @@
           "status": "rendered",
           "notes": "Velocity-drop animation shows the set ending at the cutoff while your rule reads on screen.",
           "clip": "brand/video-templates/assets/msf-A1.mp4",
-          "kraken": {
-            "id": "52da059f-9ba7-478b-8283-3976af93d236",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/grind-trap-milford-grind-trap-C1-1780501481150.mp4",
-            "folder": "ANGLE 1"
-          },
           "output": "out/campaigns/grind-trap-milford/grind-trap/C1.mp4",
           "thumb": "out/campaigns/grind-trap-milford/grind-trap/C1.mp4",
-          "renderedAt": "2026-06-03T16:11:10.809Z"
+          "renderedAt": "2026-06-03T16:11:10.809Z",
+          "kraken": {
+            "id": "c0df5a9a-4c10-4440-938f-11174f862296",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/grind-trap-milford-grind-trap-C1-1780505075795.mp4",
+            "folder": "ANGLE 1"
+          }
         },
         {
           "id": "C2",
@@ -392,14 +392,14 @@
           "copySource": "All verbatim: ad Headline (eyebrow), AD3 quote \"a fast rep is the only thing worth rehearsing\", credentials, Wang 2026 numbers, Athlete Analysis offer.",
           "status": "rendered",
           "notes": "Coach proof VSL. Binds a real coach clip — hand-place in the editor.",
-          "kraken": {
-            "id": "5881d6b3-c28e-43de-bb05-11eb3c837fef",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/grind-trap-milford-grind-trap-E1-1780501489075.mp4",
-            "folder": "ANGLE 1"
-          },
           "output": "out/campaigns/grind-trap-milford/grind-trap/E1.mp4",
           "thumb": "out/campaigns/grind-trap-milford/grind-trap/E1.mp4",
-          "renderedAt": "2026-06-03T16:12:21.691Z"
+          "renderedAt": "2026-06-03T16:12:21.691Z",
+          "kraken": {
+            "id": "7c5f98a3-22db-4bbd-8859-4703edfdf3f3",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/grind-trap-milford-grind-trap-E1-1780505079219.mp4",
+            "folder": "ANGLE 1"
+          }
         },
         {
           "id": "E2",
@@ -515,14 +515,14 @@
           "copySource": "Verbatim numbers (+1 mph, +3 inches, 90 days) + AD3 line \"the promise no other program in this market will make.\" Guarantee role renders the LOCKED brand wording — see guaranteeFlag.",
           "status": "rendered",
           "notes": "Guarantee reveal video. Guarantee band is verbatim-locked to the brand canonical.",
-          "kraken": {
-            "id": "eaf7bed1-5849-413f-87b1-df528a02d6a9",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/grind-trap-milford-grind-trap-F1-1780501493748.mp4",
-            "folder": "ANGLE 1"
-          },
           "output": "out/campaigns/grind-trap-milford/grind-trap/F1.mp4",
           "thumb": "out/campaigns/grind-trap-milford/grind-trap/F1.mp4",
-          "renderedAt": "2026-06-03T16:12:39.704Z"
+          "renderedAt": "2026-06-03T16:12:39.704Z",
+          "kraken": {
+            "id": "e02dda66-55e6-4389-bd6f-e94ca5ead1c0",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/grind-trap-milford-grind-trap-F1-1780505082153.mp4",
+            "folder": "ANGLE 1"
+          }
         },
         {
           "id": "F2",
@@ -579,14 +579,14 @@
           "status": "rendered",
           "notes": "Season-clock retarget (≠ F1). Guarantee verbatim-locked.",
           "clip": "brand/video-templates/assets/msf-F3.mp4",
-          "kraken": {
-            "id": "c227b836-a110-484d-bffe-5a633fecf304",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/grind-trap-milford-grind-trap-F3-1780501496700.mp4",
-            "folder": "ANGLE 1"
-          },
           "output": "out/campaigns/grind-trap-milford/grind-trap/F3.mp4",
           "thumb": "out/campaigns/grind-trap-milford/grind-trap/F3.mp4",
-          "renderedAt": "2026-06-03T16:14:36.646Z"
+          "renderedAt": "2026-06-03T16:14:36.646Z",
+          "kraken": {
+            "id": "79c71d3d-4a69-45b6-8162-4454b8ef01fd",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/grind-trap-milford-grind-trap-F3-1780505085302.mp4",
+            "folder": "ANGLE 1"
+          }
         },
         {
           "id": "FA1",
@@ -618,14 +618,14 @@
           "status": "rendered",
           "notes": "Full-arc VSL. Its baked captions were paraphrased last run; templateData here forces your verbatim lines.",
           "clip": "brand/video-templates/assets/msf-FA1.mp4",
-          "kraken": {
-            "id": "c683bfb9-370b-4a87-b6e3-e8c85fb64342",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/grind-trap-milford-grind-trap-FA1-1780501502689.mp4",
-            "folder": "ANGLE 1"
-          },
           "output": "out/campaigns/grind-trap-milford/grind-trap/FA1.mp4",
           "thumb": "out/campaigns/grind-trap-milford/grind-trap/FA1.mp4",
-          "renderedAt": "2026-06-03T16:22:44.353Z"
+          "renderedAt": "2026-06-03T16:22:44.353Z",
+          "kraken": {
+            "id": "115f7285-b9b1-44d0-be87-dbffc9acd033",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/grind-trap-milford-grind-trap-FA1-1780505088043.mp4",
+            "folder": "ANGLE 1"
+          }
         },
         {
           "id": "BR1",
