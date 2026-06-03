@@ -1,7 +1,12 @@
 # AA Creative Playbook
 *What copy goes where on a creative — per funnel beat. The author's reference for templates + the rulebook the engine validates against. Validated against 13 statics + 2 videos in the playbook spike (see `docs/creative-playbook-research.md` for the full research + sources).*
 
-## The 5 laws (non-negotiable)
+## The 6 laws (non-negotiable)
+0. **Every creative carries real media.** No exceptions — static, GIF, or video, each asset is
+   backed by a real image / video / clip (Kraken source still/clip, client photo, or AA brand
+   photo). A pure typographic/data card is not a finished creative. Media is **hand-placed**
+   (never auto-placed), each asset gets a **distinct** clip/still (no reuse), and an asset is not
+   approvable/renderable until its media is placed. (Mirrors SKILL.md hard rule 6.)
 1. **Beat picks the roles & how many; the reading sequence picks placement** — *space* for static (top→bottom), *time* for video (0s→end).
 2. **Hook first/top · proof in the first half · offer+CTA last/bottom.**
 3. **Emotional hook opens, rational proof closes.** (AA is a considered, high-ticket purchase — data matters, but emotion earns the look.)

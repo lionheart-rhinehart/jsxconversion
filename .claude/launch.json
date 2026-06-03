@@ -14,6 +14,13 @@
       "runtimeArgs": ["brand/video-templates/serve.mjs"],
       "port": 5599,
       "autoPort": false
+    },
+    {
+      "name": "review-wt",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["brand/video-templates/serve.mjs", "5710"],
+      "port": 5710,
+      "autoPort": false
     }
   ]
 }

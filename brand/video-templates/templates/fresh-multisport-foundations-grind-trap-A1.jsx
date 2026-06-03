@@ -28,27 +28,29 @@ function GrindHookReel({ data = {} }) {
       <div style={{ position: 'absolute', bottom: -220, left: -160, width: 640, height: 640,
         background: `radial-gradient(circle, ${RED}22 0%, transparent 60%)`, filter: 'blur(20px)' }} />
 
-      <Eyebrow top={690} fontSize={40} style={{ opacity: eyeT }}>{eyebrow}</Eyebrow>
+      <TplText field="eyebrow" data={data} base={{ position: 'absolute', top: 690, left: 90 }} style={{ fontSize: 40, opacity: eyeT }}>{eyebrow}</TplText>
 
-      <div style={{ position: 'absolute', top: 790, left: 86, right: 86,
-        fontFamily: 'Anton, sans-serif', fontSize: 138, color: '#ffffff', lineHeight: 0.9,
-        letterSpacing: '0.005em', textTransform: 'uppercase', whiteSpace: 'pre-line',
-        opacity: l1T, transform: `translateY(${(1 - l1T) * 16}px)` }}>
-        {line1}
-      </div>
+      <TplText field="line1" data={data}
+        base={{ position: 'absolute', top: 790, left: 86, right: 86 }}
+        style={{ fontFamily: 'Anton, sans-serif', fontSize: 138, color: '#ffffff', lineHeight: 0.9,
+          letterSpacing: '0.005em', textTransform: 'uppercase',
+          opacity: l1T, transform: `translateY(${(1 - l1T) * 16}px)` }}
+        maxHeight={300} fitKey={line1}
+      >{line1}</TplText>
 
-      <div style={{ position: 'absolute', top: 1090, left: 86, right: 86,
-        fontFamily: 'Anton, sans-serif', fontSize: 138, color: RED, lineHeight: 0.9,
-        letterSpacing: '0.005em', textTransform: 'uppercase',
-        opacity: l2T, transform: `translateY(${(1 - l2T) * 18}px)` }}>
-        {line2}
-      </div>
+      <TplText field="line2" data={data}
+        base={{ position: 'absolute', top: 1090, left: 86, right: 86 }}
+        style={{ fontFamily: 'Anton, sans-serif', fontSize: 138, color: RED, lineHeight: 0.9,
+          letterSpacing: '0.005em', textTransform: 'uppercase',
+          opacity: l2T, transform: `translateY(${(1 - l2T) * 18}px)` }}
+        maxHeight={340} fitKey={line2}
+      >{line2}</TplText>
 
-      <div style={{ position: 'absolute', bottom: 110, left: 90, right: 90,
-        fontFamily: '"JetBrains Mono", monospace', fontSize: 32, color: '#ffffff',
-        letterSpacing: '0.14em', textTransform: 'uppercase', opacity: brandT }}>
-        {brand}
-      </div>
+      <TplText field="brand" data={data}
+        base={{ position: 'absolute', bottom: 110, left: 90, right: 90 }}
+        style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 32, color: '#ffffff',
+          letterSpacing: '0.14em', textTransform: 'uppercase', opacity: brandT }}
+      >{brand}</TplText>
     </div>
   );
 }

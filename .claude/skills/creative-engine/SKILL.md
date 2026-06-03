@@ -44,6 +44,39 @@ already exists on disk for the campaign and resumes from there.
    angles and the brief, and compose visuals around it. You may derive slot-level
    fragments (a short microscript variant) only from the brief, flagged for
    approval — never invent claims.
+6. **Every creative carries real media.** EVERY asset in the plan — static, GIF, or
+   video, no exceptions — must end up backed by a real image / video / clip (a Kraken
+   source still or clip, a client photo, or an AA brand photo). There are no
+   "type-only" cards: a pure typographic card is NOT a finished creative. The Kraken
+   pull is therefore **mandatory on every campaign** (the old "lazy" exception is
+   retired). Concretely: at plan time, give every asset a `media`/`clip`/`photo`
+   binding OR flag it `needs-kraken-path`; and **no asset is approvable/renderable
+   until its media is hand-placed** (placement clears the flag). This composes with
+   rule 2 (the human still places it — never auto-placed) and with the
+   no-media-reuse / distinct-clip-per-asset variety rule in Step 4. If media for an
+   asset genuinely cannot be sourced, surface it — do not silently ship a bare card.
+7. **Copy lands by ROLE — the copy-role schema is the REQUIRED fill procedure, not
+   optional.** Every asset's copy MUST be applied through the role→slot join
+   (`scripts/lib/roles.mjs` + `scripts/lib/assemble.mjs` + `buildCopyByRole` in
+   `fill-core.mjs`), NOT by raw `templateData`-only slot-guessing. On each plan asset:
+   - Put the **dominant line** in `headline` (the join routes it to the beat's role-slot
+     via `BEAT_HEADLINE_ROLE`: A→`hook`, B→`hook`/`claim`, C→`mechanism`, D→`reframe`,
+     E→`proof`, F→`offer`) and any epiphany / blame-remove line in `microscript` (→ `reframe`).
+   - For an asset with several distinct role-lines (claim+support, proof+stat, …) set an
+     explicit **`copyByRole`** map keyed by the closed 13-role enum
+     (`{hook,claim,mechanism,reframe,proof,stat,testimonial,byline,offer,guarantee,cta,brand,eyebrow}`);
+     `copyByRole` merges straight into the join.
+   - Use **`templateData`** ONLY for multi-field templates whose slots the role-join can't
+     reach (`stat-reveal`, `meet-coach`, `quote-card`, `cluster-30/31/32`, …). Explicit
+     `templateData` still wins where used; prefer keying it by the slot **id**.
+   - EVERY copy line MUST be role-tagged in **`knowledgeRefs`** (`hook:`, `reframe:`,
+     `proof:`, `offer:`, `testimonial:`, `stat:`, …) so copy is traceable to its source and
+     the editor's swap-by-role pools populate.
+   - The `guarantee` role is locked to `GUARANTEE_TEXT` — never hand-paste it.
+   A plan whose assets carry only raw `templateData` (no `headline`/`copyByRole`, no
+   role-tagged `knowledgeRefs`) is **NON-CONFORMANT** — fix it before the Review gate. The
+   rendered output may look identical, but copy MUST land by role + id (the duplicate-`tag`
+   bug, editor role-swap, and source traceability all depend on it).
 
 ## The flow
 
@@ -76,9 +109,10 @@ store, NOT local folders; connector is `scripts/lib/kraken.mjs`):
    caches the media into `brand/kraken-cache/` and saves the picks to
    `campaigns/<name>/kraken.json`.
 
-**Kraken is lazy.** Don't block a template-only or jsx-render campaign on a Kraken pull —
-only do the location + source-folder pull when the plan actually contains an asset whose
-image `source` is `library` or `client` (i.e. raw media is genuinely needed at render time).
+**Kraken pull is MANDATORY (per hard rule 6).** Every campaign sources media, because every
+creative must carry a real image/clip. Always do the location + source-folder pull — there is
+no template-only / jsx-only exception any more. Pull enough distinct media that every planned
+asset can be backed by its own source still or clip (the no-media-reuse rule still applies).
 
 Pulled media appears in the editor `/media` picker (motion) and via `/media-into-template`
 (statics) for **hand placement** — pulling surfaces media, it does not auto-place it, and does
@@ -148,14 +182,21 @@ section produced output** before planning; re-run any that came back empty.
 beat coverage (A–F spread) > the knobs (motionRatio / freshnessFloor / repetitionCap).
 Write `campaigns/<name>/creative-plan.json` (schema in `docs/PROCESS.md`).
 
-**`templateData` — precise per-slot fill (selection ≠ fill).** The role-index only *picks* a
-template; copy then lands two ways. (a) The **role-aware auto-join** now routes `headline` → the
-beat's role-slot and `microscript` → the `reframe` slot automatically, so a simple template fills
-with no `templateData`. (b) **`templateData`** gives precise/complete control — still required for
-multi-field templates (e.g. `stat-reveal`'s eyebrow/title1/title2/stat*/cta) which otherwise show
-stock defaults. Key it by the slot's **`id`** (precise) or its tag/field name (back-compat);
-explicit `templateData` always wins. The `guarantee` slot is **locked** (renders the verbatim
-guarantee, won't auto-fill — don't override). Find the keys by reading the template:
+**Apply copy by ROLE — REQUIRED (hard rule 7); selection ≠ fill.** The role-index only *picks* a
+template; copy lands by the **role→slot join**, which you MUST drive on every asset:
+- **Primary:** set the asset's **`headline`** (routes to the beat's role-slot) + **`microscript`**
+  (→ `reframe`), and/or an explicit **`copyByRole`** map for assets with multiple role-lines. This
+  is the default, required path — `buildCopyByRole` → `assemble` fills by **role + id** (kills the
+  duplicate-`tag` bug, populates the editor's swap-by-role pool, warns on `maxChars`).
+- **Role-tag the source:** every copy line gets a role-prefixed **`knowledgeRefs`** entry
+  (`hook:`, `reframe:`, `proof:`, `offer:`, `testimonial:`, `stat:`, …).
+- **Exception — `templateData`:** ONLY for multi-field templates the join can't reach (e.g.
+  `stat-reveal`'s eyebrow/title1/title2/stat*/cta, `meet-coach`, `quote-card`, `cluster-30/31/32`)
+  which otherwise show stock defaults. Key it by the slot's **`id`** (precise) or tag (back-compat);
+  explicit `templateData` always wins. Do NOT use `templateData` as the *only* mechanism — a
+  templateData-only plan is non-conformant.
+- The `guarantee` slot is **locked** (renders `GUARANTEE_TEXT`, won't auto-fill — don't override).
+Find the keys by reading the template:
 - **Motion** (`brand/video-templates/templates/<t>.jsx`): the keys are the
   `data.<key>` reads (and the `*_SPEC.fields[].key` list). Examples:
   `stat-reveal` → `{eyebrow,title1,title2,ctaText}`; `quote-card` →

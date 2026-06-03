@@ -1,0 +1,147 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
+      "z": 1
+    },
+    {
+      "id": "side_bar",
+      "tag": "side_bar",
+      "type": "rect",
+      "x": 0,
+      "y": 560,
+      "width": 26,
+      "height": 820,
+      "fill": "#c4141d",
+      "z": 5
+    },
+    {
+      "id": "brand_rule",
+      "tag": "brand_rule",
+      "type": "rect",
+      "x": 90,
+      "y": 1628,
+      "width": 150,
+      "height": 6,
+      "fill": "#c4141d",
+      "z": 16
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor chip (auto-filled)",
+      "x": 90,
+      "y": 170,
+      "textAlign": "left",
+      "text": "INDIANAPOLIS SPORT PARENTS",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#c4141d",
+      "chipBg": "#ffffff",
+      "chipPad": "12px 24px",
+      "chipRadius": 8,
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 34,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "claim",
+      "tag": "claim",
+      "label": "Mechanism claim",
+      "x": 96,
+      "y": 600,
+      "width": 912,
+      "textAlign": "left",
+      "text": "The hardest part isn't watching them lose.",
+      "fontSize": 128,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.92,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "z": 21,
+      "role": "mechanism",
+      "accepts": [
+        "mechanism",
+        "claim",
+        "reframe",
+        "hook"
+      ],
+      "maxChars": 60,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "support",
+      "tag": "support",
+      "label": "Support line",
+      "x": 96,
+      "y": 1200,
+      "width": 880,
+      "textAlign": "left",
+      "text": "It's watching them stop believing they can win.",
+      "fontSize": 46,
+      "fontFamily": "Geist",
+      "fontWeight": 500,
+      "color": "#c4141d",
+      "lineHeight": 1.12,
+      "z": 22,
+      "role": "mechanism",
+      "accepts": [
+        "mechanism",
+        "claim",
+        "proof",
+        "reframe"
+      ],
+      "maxChars": 90,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark",
+      "x": 90,
+      "y": 1664,
+      "width": 900,
+      "textAlign": "left",
+      "text": "ATHLETES ACCELERATION",
+      "fontSize": 34,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 500,
+      "color": "#ffffff",
+      "letterSpacing": "0.14em",
+      "textTransform": "uppercase",
+      "z": 23,
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    }
+  ],
+  "media": {
+    "path": "./assets/conf-B1.jpg",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1
+  }
+}

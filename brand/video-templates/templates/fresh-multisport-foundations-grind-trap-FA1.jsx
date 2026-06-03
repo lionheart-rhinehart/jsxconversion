@@ -37,11 +37,10 @@ function GrindArcVSL({ data = {} }) {
   ];
   const activeBeat = beats.reduce((acc, b) => (t >= b.s ? b.k : acc), 'A');
 
-  const cap = {
-    position: 'absolute', left: 86, right: 86, top: 720,
+  const capBase = { position: 'absolute', left: 86, right: 86, top: 720 };
+  const capStyle = {
     fontFamily: 'Anton, sans-serif', fontSize: 130, lineHeight: 0.92,
-    letterSpacing: '0.005em', textTransform: 'uppercase', whiteSpace: 'pre-line',
-    color: '#ffffff',
+    letterSpacing: '0.005em', textTransform: 'uppercase', color: '#ffffff',
   };
 
   return (
@@ -61,48 +60,50 @@ function GrindArcVSL({ data = {} }) {
       </div>
 
       {/* A — context anchor + hook */}
-      <Eyebrow top={540} fontSize={34} style={{ opacity: fade(A[0], A[1]) }}>{eyebrow}</Eyebrow>
-      <div style={{ ...cap, opacity: fade(A[0], A[1]), transform: `translateY(${rise(A[0])}px)` }}>{hook}</div>
+      <TplText field="eyebrow" data={data} base={{ position: 'absolute', top: 540, left: 90 }} style={{ fontSize: 34, opacity: fade(A[0], A[1]) }}>{eyebrow}</TplText>
+      <TplText field="hook" data={data} base={capBase} style={{ ...capStyle, opacity: fade(A[0], A[1]), transform: `translateY(${rise(A[0])}px)` }} maxHeight={560} fitKey={hook}>{hook}</TplText>
 
       {/* C — mechanism (two beats) */}
-      <div style={{ ...cap, opacity: fade(C1[0], C1[1]), transform: `translateY(${rise(C1[0])}px)` }}>
+      <TplText field="mech1" data={data} base={capBase} style={{ ...capStyle, opacity: fade(C1[0], C1[1]), transform: `translateY(${rise(C1[0])}px)` }} maxHeight={560} fitKey={mech1}>
         {mech1.split('\n').map((ln, i) => <div key={i}>{i === 1 ? <span style={{ color: RED }}>{ln}</span> : ln}</div>)}
-      </div>
-      <div style={{ ...cap, opacity: fade(C2[0], C2[1]), transform: `translateY(${rise(C2[0])}px)` }}>{mech2}</div>
+      </TplText>
+      <TplText field="mech2" data={data} base={capBase} style={{ ...capStyle, opacity: fade(C2[0], C2[1]), transform: `translateY(${rise(C2[0])}px)` }} maxHeight={560} fitKey={mech2}>{mech2}</TplText>
 
       {/* D — reframe */}
-      <div style={{ ...cap, opacity: fade(D[0], D[1]), transform: `translateY(${rise(D[0])}px)` }}>{reframe}</div>
+      <TplText field="reframe" data={data} base={capBase} style={{ ...capStyle, opacity: fade(D[0], D[1]), transform: `translateY(${rise(D[0])}px)` }} maxHeight={560} fitKey={reframe}>{reframe}</TplText>
 
       {/* E — proof */}
       <div style={{ position: 'absolute', left: 86, right: 86, top: 640, opacity: fade(E[0], E[1]) }}>
-        <div style={{ fontFamily: 'Anton, sans-serif', fontSize: 300, lineHeight: 0.9, color: RED,
-          letterSpacing: '-0.01em', transform: `translateY(${rise(E[0])}px)` }}>{statValue}</div>
-        <div style={{ fontFamily: 'Anton, sans-serif', fontSize: 72, lineHeight: 0.95, color: '#ffffff',
-          textTransform: 'uppercase', marginTop: 12 }}>{statLabel}</div>
-        <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 34, color: '#9aa0a6',
-          letterSpacing: '0.05em', textTransform: 'uppercase', marginTop: 40 }}>{proofCite}</div>
+        <TplText field="statValue" data={data} base={{}} style={{ fontFamily: 'Anton, sans-serif', fontSize: 300, lineHeight: 0.9, color: RED,
+          letterSpacing: '-0.01em', transform: `translateY(${rise(E[0])}px)` }}>{statValue}</TplText>
+        <TplText field="statLabel" data={data} base={{ marginTop: 12 }} style={{ fontFamily: 'Anton, sans-serif', fontSize: 72, lineHeight: 0.95, color: '#ffffff',
+          textTransform: 'uppercase' }}>{statLabel}</TplText>
+        <TplText field="proofCite" data={data} base={{ marginTop: 40 }} style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 34, color: '#9aa0a6',
+          letterSpacing: '0.05em', textTransform: 'uppercase' }}>{proofCite}</TplText>
       </div>
 
       {/* F — guarantee (red band) */}
       <div style={{ position: 'absolute', left: 70, right: 70, top: 820, padding: '46px 54px',
         background: RED, opacity: fade(F[0], F[1]), transform: `translateY(${rise(F[0])}px)` }}>
-        <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 52, fontWeight: 700,
-          lineHeight: 1.25, color: '#ffffff', whiteSpace: 'pre-line' }}>{guarantee}</div>
+        <TplText field="guarantee" data={data} base={{}} style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 52, fontWeight: 700,
+          lineHeight: 1.25, color: '#ffffff' }}>{guarantee}</TplText>
       </div>
 
       {/* CTA + brand */}
       <div style={{ position: 'absolute', left: 86, right: 86, top: 780, opacity: fade(CTA[0], CTA[1]),
         transform: `translateY(${rise(CTA[0])}px)` }}>
-        <div style={{ fontFamily: 'Anton, sans-serif', fontSize: 120, lineHeight: 0.92, color: '#ffffff',
-          textTransform: 'uppercase', whiteSpace: 'pre-line' }}>{cta}</div>
+        <TplText field="cta" data={data} base={{}} style={{ fontFamily: 'Anton, sans-serif', fontSize: 120, lineHeight: 0.92, color: '#ffffff',
+          textTransform: 'uppercase' }}>{cta}</TplText>
         <div style={{ marginTop: 48, display: 'inline-block', background: RED, padding: '24px 40px',
           fontFamily: 'Anton, sans-serif', fontSize: 44, color: '#ffffff', letterSpacing: '0.02em' }}>FREE · NO PITCH →</div>
       </div>
 
       {/* brand wordmark (always, lower) */}
-      <div style={{ position: 'absolute', bottom: 120, left: 90, right: 90,
-        fontFamily: '"JetBrains Mono", monospace', fontSize: 30, color: '#ffffff',
-        letterSpacing: '0.14em', textTransform: 'uppercase', opacity: 0.85 }}>{brand}</div>
+      <TplText field="brand" data={data}
+        base={{ position: 'absolute', bottom: 120, left: 90, right: 90 }}
+        style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 30, color: '#ffffff',
+          letterSpacing: '0.14em', textTransform: 'uppercase', opacity: 0.85 }}
+      >{brand}</TplText>
 
       {/* progress bar */}
       <div style={{ position: 'absolute', bottom: 60, left: 90, right: 90, height: 5, background: '#26282c' }}>

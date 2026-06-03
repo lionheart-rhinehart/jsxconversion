@@ -31,10 +31,13 @@ function SeasonClock({ data = {} }) {
       {bgClip ? <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.55) 0%, rgba(10,11,13,0.45) 45%, rgba(10,11,13,0.85) 100%)' }} /> : null}
       {/* SCENE 1 — the season that changed nothing */}
       <div style={{ position: 'absolute', inset: 0, opacity: s1 }}>
-        <Eyebrow top={150} fontSize={38} style={{ opacity: ease((t - 0.05) / 0.3) }}>{eyebrow}</Eyebrow>
-        <div style={{ position: 'absolute', top: 620, left: 86, right: 86,
-          fontFamily: 'Anton, sans-serif', fontSize: 150, color: '#fff', lineHeight: 0.9,
-          textTransform: 'uppercase', opacity: ease((t - 0.3) / 0.4) }}>{line1}</div>
+        <TplText field="eyebrow" data={data} base={{ position: 'absolute', top: 150, left: 90 }} style={{ fontSize: 38, opacity: ease((t - 0.05) / 0.3) }}>{eyebrow}</TplText>
+        <TplText field="line1" data={data}
+          base={{ position: 'absolute', top: 620, left: 86, right: 86 }}
+          style={{ fontFamily: 'Anton, sans-serif', fontSize: 150, color: '#fff', lineHeight: 0.9,
+            textTransform: 'uppercase', opacity: ease((t - 0.3) / 0.4) }}
+          maxHeight={300} fitKey={line1}
+        >{line1}</TplText>
 
         {/* season track */}
         <div style={{ position: 'absolute', left: TRACK_X, top: TRACK_Y, width: TRACK_W, height: 10, background: '#26282c' }} />
@@ -43,35 +46,45 @@ function SeasonClock({ data = {} }) {
           <div key={i} style={{ position: 'absolute', left: TRACK_X + (TRACK_W / 11) * i - 2, top: TRACK_Y - 8, width: 4, height: 26,
             background: (fill * 11 >= i) ? RED : '#3a3d42' }} />
         ))}
-        <div style={{ position: 'absolute', left: TRACK_X, top: TRACK_Y + 40,
-          fontFamily: '"JetBrains Mono", monospace', fontSize: 28, color: '#9aa0a6', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-          12 MONTHS · MORE GAMES · MORE REPS
-        </div>
+        <TplText field="trackLabel" data={data}
+          base={{ position: 'absolute', left: TRACK_X, top: TRACK_Y + 40 }}
+          style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 28, color: '#9aa0a6', letterSpacing: '0.06em', textTransform: 'uppercase' }}
+        >12 MONTHS · MORE GAMES · MORE REPS</TplText>
 
-        <div style={{ position: 'absolute', top: 1120, left: 86, right: 86,
-          fontFamily: 'Anton, sans-serif', fontSize: 150, color: RED, lineHeight: 0.9,
-          textTransform: 'uppercase', opacity: stamp, transform: `scale(${0.9 + stamp * 0.1})` }}>{line2}</div>
+        <TplText field="line2" data={data}
+          base={{ position: 'absolute', top: 1120, left: 86, right: 86 }}
+          style={{ fontFamily: 'Anton, sans-serif', fontSize: 150, color: RED, lineHeight: 0.9,
+            textTransform: 'uppercase', opacity: stamp, transform: `scale(${0.9 + stamp * 0.1})` }}
+          maxHeight={300} fitKey={line2}
+        >{line2}</TplText>
       </div>
 
       {/* SCENE 2 — the offer */}
       <div style={{ position: 'absolute', inset: 0, opacity: s2 }}>
-        <div style={{ position: 'absolute', top: 360, left: 86, right: 86,
-          fontFamily: 'Anton, sans-serif', fontSize: 132, color: '#fff', lineHeight: 0.92,
-          textTransform: 'uppercase' }}>{offer}</div>
+        <TplText field="offer" data={data}
+          base={{ position: 'absolute', top: 360, left: 86, right: 86 }}
+          style={{ fontFamily: 'Anton, sans-serif', fontSize: 132, color: '#fff', lineHeight: 0.92,
+            textTransform: 'uppercase' }}
+          maxHeight={380} fitKey={offer}
+        >{offer}</TplText>
         <div style={{ position: 'absolute', top: 820, left: 70, right: 70, padding: '46px 54px', background: RED }}>
-          <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 50, fontWeight: 700,
-            lineHeight: 1.25, color: '#fff', whiteSpace: 'pre-line' }}>{guarantee}</div>
+          <TplText field="guarantee" data={data} base={{}}
+            style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 50, fontWeight: 700,
+              lineHeight: 1.25, color: '#fff' }}
+          >{guarantee}</TplText>
         </div>
         <div style={{ position: 'absolute', top: 1300, left: 70, right: 70, padding: '34px 40px', background: RED,
           display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <span style={{ fontFamily: 'Anton, sans-serif', fontSize: 50, color: '#fff', letterSpacing: '0.01em' }}>{cta}</span>
+          <TplText field="cta" data={data} base={{}} style={{ fontFamily: 'Anton, sans-serif', fontSize: 50, color: '#fff', letterSpacing: '0.01em' }}>{cta}</TplText>
           <span style={{ fontFamily: 'Anton, sans-serif', fontSize: 50, color: '#fff' }}>→</span>
         </div>
       </div>
 
-      <div style={{ position: 'absolute', bottom: 70, left: 90, right: 90,
-        fontFamily: '"JetBrains Mono", monospace', fontSize: 28, color: '#fff',
-        letterSpacing: '0.14em', textTransform: 'uppercase', opacity: 0.85 }}>{brand}</div>
+      <TplText field="brand" data={data}
+        base={{ position: 'absolute', bottom: 70, left: 90, right: 90 }}
+        style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 28, color: '#fff',
+          letterSpacing: '0.14em', textTransform: 'uppercase', opacity: 0.85 }}
+      >{brand}</TplText>
     </div>
   );
 }
