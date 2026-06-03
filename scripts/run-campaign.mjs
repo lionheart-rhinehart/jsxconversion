@@ -546,8 +546,44 @@ async function renderFresh(asset, angleId) {
     : renderTemplateMotion(asset, angleId, asset.format === "gif");
 }
 
+// ── uniqueness guard ─────────────────────────────────────────────────────────
+// Within each angle, every creative should be a DISTINCT design — a unique
+// skeleton AND a unique source clip/image. `knobs.repetitionCap` controls
+// strictness: `1` = "strict, every-asset-distinct" mode (any reuse of a template
+// OR a media path is a HARD ERROR that aborts the run before rendering); any higher
+// value (default 3) only WARNS, so legacy campaigns that intentionally reuse a
+// skeleton up to the cap still render. Media reuse always warns; in strict mode it
+// throws. Validates the authored plan as a whole (independent of --only).
+function validateUniqueness(plan) {
+  const cap = (plan.knobs && plan.knobs.repetitionCap) || 3;
+  const strict = cap === 1;
+  const push = (map, k, v) => { if (!map.has(k)) map.set(k, []); map.get(k).push(v); };
+  const problems = [];
+  for (const angle of plan.angles || []) {
+    const assets = angle.assets || [];
+    const mediaMap = new Map();
+    const tplMap = new Map();
+    for (const a of assets) {
+      const m = a.media || a.clip || a.photo;
+      if (m) push(mediaMap, m, a.id);
+      if (a.template) push(tplMap, a.template, a.id);
+    }
+    for (const [m, ids] of mediaMap) {
+      if (ids.length > 1) problems.push(`[${angle.id}] media "${m}" reused by ${ids.join(", ")}`);
+    }
+    for (const [tpl, ids] of tplMap) {
+      if (ids.length > cap) problems.push(`[${angle.id}] template "${tpl}" used ${ids.length}× (cap ${cap}) by ${ids.join(", ")}`);
+    }
+  }
+  if (!problems.length) return;
+  const msg = `uniqueness check failed:\n  - ${problems.join("\n  - ")}`;
+  if (strict) throw new Error(msg);
+  console.error(`[campaign] WARNING (repetitionCap=${cap}, non-strict) ${msg}`);
+}
+
 // ── main ─────────────────────────────────────────────────────────────────────
 async function main() {
+  validateUniqueness(plan);
   const useServer = await serverUp();
   console.error(`[campaign] plan: ${planPath}`);
   console.error(`[campaign] plan patching via ${useServer ? "editor-server (:5173)" : "direct file write"}`);
