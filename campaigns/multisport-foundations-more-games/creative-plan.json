@@ -35,7 +35,7 @@
           "id": "A1",
           "beat": "A — Stop the scroll",
           "temperature": "cold",
-          "format": "gif",
+          "format": "video",
           "source": "template",
           "template": "fresh-multisport-foundations-grind-trap-A1",
           "clip": "brand/video-templates/assets/mg-A1.mp4",
@@ -50,9 +50,14 @@
           "flags": [
             "candidate-media"
           ],
-          "output": "out/campaigns/multisport-foundations-more-games/more-games/A1.gif",
-          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/A1.gif",
-          "renderedAt": "2026-06-03T15:35:42.292Z"
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/A1.mp4",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/A1.mp4",
+          "renderedAt": "2026-06-03T17:42:28.365Z",
+          "kraken": {
+            "id": "2d0e87e7-1886-46a7-b880-6487a7896f80",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-more-games-more-games-A1-1780508685845.mp4",
+            "folder": "ANGLE 3"
+          }
         },
         {
           "id": "A2",
@@ -81,7 +86,12 @@
           ],
           "output": "out/campaigns/multisport-foundations-more-games/more-games/A2.mp4",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/A2.mp4",
-          "renderedAt": "2026-06-03T17:26:35.273Z"
+          "renderedAt": "2026-06-03T17:26:35.273Z",
+          "kraken": {
+            "id": "8190a7f3-9331-4c9c-8557-36de2e60462e",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-more-games-more-games-A2-1780508688335.mp4",
+            "folder": "ANGLE 3"
+          }
         },
         {
           "id": "A3",
@@ -97,7 +107,12 @@
           "notes": "Two-segment mechanism hook stacked.",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/A3.png",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/A3.png",
-          "renderedAt": "2026-06-03T14:46:48.118Z"
+          "renderedAt": "2026-06-03T14:46:48.118Z",
+          "kraken": {
+            "id": "b61c36a6-a312-4af0-8dcd-49d60b8c3aec",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-more-games-more-games-A3-1780508690087.png",
+            "folder": "ANGLE 3"
+          }
         },
         {
           "id": "A4",
@@ -118,7 +133,12 @@
           "notes": "Claim + support = the on-image headline pair.",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/A4.png",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/A4.png",
-          "renderedAt": "2026-06-03T14:47:21.306Z"
+          "renderedAt": "2026-06-03T14:47:21.306Z",
+          "kraken": {
+            "id": "1cd4c53e-4351-4a76-a55d-36eafac96eb7",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-more-games-more-games-A4-1780508691208.png",
+            "folder": "ANGLE 3"
+          }
         },
         {
           "id": "B1",
@@ -138,13 +158,18 @@
           "notes": "KICKER CARD — full stacked hook from three verbatim sentences.",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/B1.png",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/B1.png",
-          "renderedAt": "2026-06-03T14:47:39.259Z"
+          "renderedAt": "2026-06-03T14:47:39.259Z",
+          "kraken": {
+            "id": "8a8ebf2b-630e-476e-9f0b-f09d28c53b47",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-more-games-more-games-B1-1780508692668.png",
+            "folder": "ANGLE 3"
+          }
         },
         {
           "id": "B2",
           "beat": "B — Name the moment",
           "temperature": "cold",
-          "format": "gif",
+          "format": "video",
           "source": "template",
           "template": "fresh-multisport-foundations-grind-trap-A1",
           "clip": "brand/video-templates/assets/mg-B2.mp4",
@@ -159,9 +184,14 @@
           "flags": [
             "candidate-media"
           ],
-          "output": "out/campaigns/multisport-foundations-more-games/more-games/B2.gif",
-          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/B2.gif",
-          "renderedAt": "2026-06-03T15:55:11.204Z"
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/B2.mp4",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/B2.mp4",
+          "renderedAt": "2026-06-03T17:43:26.821Z",
+          "kraken": {
+            "id": "714e2869-440d-487e-8205-5c12bda60d6d",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-more-games-more-games-B2-1780508694893.mp4",
+            "folder": "ANGLE 3"
+          }
         },
         {
           "id": "C1",
@@ -188,13 +218,18 @@
           ],
           "output": "out/campaigns/multisport-foundations-more-games/more-games/C1.mp4",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/C1.mp4",
-          "renderedAt": "2026-06-03T16:26:19.132Z"
+          "renderedAt": "2026-06-03T16:26:19.132Z",
+          "kraken": {
+            "id": "55cdf6f5-e548-4647-b2a4-fc5b762776ce",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-more-games-more-games-C1-1780508696894.mp4",
+            "folder": "ANGLE 3"
+          }
         },
         {
           "id": "C2",
           "beat": "C — Reveal mechanism",
           "temperature": "warm",
-          "format": "gif",
+          "format": "video",
           "source": "template",
           "template": "fresh-multisport-foundations-grind-trap-A1",
           "clip": "brand/video-templates/assets/mg-C2.mp4",
@@ -209,9 +244,14 @@
           "flags": [
             "candidate-media"
           ],
-          "output": "out/campaigns/multisport-foundations-more-games/more-games/C2.gif",
-          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/C2.gif",
-          "renderedAt": "2026-06-03T15:42:26.790Z"
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/C2.mp4",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/C2.mp4",
+          "renderedAt": "2026-06-03T17:44:13.697Z",
+          "kraken": {
+            "id": "86d3e292-e4b9-4974-966a-9d720a174989",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-more-games-more-games-C2-1780508698889.mp4",
+            "folder": "ANGLE 3"
+          }
         },
         {
           "id": "C3",
@@ -232,7 +272,12 @@
           ],
           "output": "out/campaigns/multisport-foundations-more-games/more-games/C3.png",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/C3.png",
-          "renderedAt": "2026-06-03T17:29:53.656Z"
+          "renderedAt": "2026-06-03T17:29:53.656Z",
+          "kraken": {
+            "id": "b3c76c5d-a662-4a30-ba28-ad5ccc75aaae",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-more-games-more-games-C3-1780508700454.png",
+            "folder": "ANGLE 3"
+          }
         },
         {
           "id": "D1",
@@ -256,7 +301,12 @@
           ],
           "output": "out/campaigns/multisport-foundations-more-games/more-games/D1.mp4",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/D1.mp4",
-          "renderedAt": "2026-06-03T16:28:39.022Z"
+          "renderedAt": "2026-06-03T16:28:39.022Z",
+          "kraken": {
+            "id": "39daddf4-5b1d-4456-a297-3579e92f5821",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-more-games-more-games-D1-1780508702129.mp4",
+            "folder": "ANGLE 3"
+          }
         },
         {
           "id": "D2",
@@ -274,7 +324,12 @@
           "notes": "The cost named plainly (distinct from C1).",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/D2.png",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/D2.png",
-          "renderedAt": "2026-06-03T14:48:48.447Z"
+          "renderedAt": "2026-06-03T14:48:48.447Z",
+          "kraken": {
+            "id": "d40b113f-865f-4449-9f5b-4fbd64bacebb",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-more-games-more-games-D2-1780508703351.png",
+            "folder": "ANGLE 3"
+          }
         },
         {
           "id": "D3",
@@ -295,7 +350,12 @@
           ],
           "output": "out/campaigns/multisport-foundations-more-games/more-games/D3.png",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/D3.png",
-          "renderedAt": "2026-06-03T17:26:46.064Z"
+          "renderedAt": "2026-06-03T17:26:46.064Z",
+          "kraken": {
+            "id": "6728d1fc-e192-4267-bf8e-c45bceeed79b",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-more-games-more-games-D3-1780508704311.png",
+            "folder": "ANGLE 3"
+          }
         },
         {
           "id": "E1",
@@ -321,7 +381,12 @@
           "notes": "Coach proof VSL over box-jump footage.",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/E1.mp4",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/E1.mp4",
-          "renderedAt": "2026-06-03T15:59:42.223Z"
+          "renderedAt": "2026-06-03T15:59:42.223Z",
+          "kraken": {
+            "id": "706433e0-83ee-44fc-aaa1-d0d49f8fb953",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-more-games-more-games-E1-1780508705863.mp4",
+            "folder": "ANGLE 3"
+          }
         },
         {
           "id": "E2",
@@ -343,7 +408,12 @@
           "notes": "Parent case-study quote card.",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/E2.mp4",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/E2.mp4",
-          "renderedAt": "2026-06-03T15:00:30.401Z"
+          "renderedAt": "2026-06-03T15:00:30.401Z",
+          "kraken": {
+            "id": "fd28dca7-8de0-4490-b969-a6ebbec2abd8",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-more-games-more-games-E2-1780508707560.mp4",
+            "folder": "ANGLE 3"
+          }
         },
         {
           "id": "E3",
@@ -367,7 +437,12 @@
           "notes": "Credential verdict (static; distinct from E1 video / E2 quote).",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/E3.png",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/E3.png",
-          "renderedAt": "2026-06-03T14:52:13.212Z"
+          "renderedAt": "2026-06-03T14:52:13.212Z",
+          "kraken": {
+            "id": "86dbe195-71a4-4498-bbf6-f8a691e1e028",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-more-games-more-games-E3-1780508708496.png",
+            "folder": "ANGLE 3"
+          }
         },
         {
           "id": "E4",
@@ -388,7 +463,12 @@
           "notes": "Testimonial card.",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/E4.png",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/E4.png",
-          "renderedAt": "2026-06-03T14:52:28.248Z"
+          "renderedAt": "2026-06-03T14:52:28.248Z",
+          "kraken": {
+            "id": "77536f9c-effc-4cb1-b86d-2a125778a391",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-more-games-more-games-E4-1780508709491.png",
+            "folder": "ANGLE 3"
+          }
         },
         {
           "id": "F1",
@@ -417,7 +497,12 @@
           "notes": "Guarantee reveal video.",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/F1.mp4",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/F1.mp4",
-          "renderedAt": "2026-06-03T14:52:49.573Z"
+          "renderedAt": "2026-06-03T14:52:49.573Z",
+          "kraken": {
+            "id": "5450d485-50cb-4023-b10f-43c37e88fdd0",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-more-games-more-games-F1-1780508711334.mp4",
+            "folder": "ANGLE 3"
+          }
         },
         {
           "id": "F2",
@@ -437,7 +522,12 @@
           "notes": "Offer card. Guarantee band verbatim-locked.",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/F2.png",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/F2.png",
-          "renderedAt": "2026-06-03T14:53:10.936Z"
+          "renderedAt": "2026-06-03T14:53:10.936Z",
+          "kraken": {
+            "id": "46dfd98a-2397-4aca-9015-303c15ce2dec",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-more-games-more-games-F2-1780508712208.png",
+            "folder": "ANGLE 3"
+          }
         },
         {
           "id": "F3",
@@ -463,7 +553,12 @@
           ],
           "output": "out/campaigns/multisport-foundations-more-games/more-games/F3.mp4",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/F3.mp4",
-          "renderedAt": "2026-06-03T15:18:00.154Z"
+          "renderedAt": "2026-06-03T15:18:00.154Z",
+          "kraken": {
+            "id": "20173106-c7e7-412f-b7cc-86bb7df1dfad",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-more-games-more-games-F3-1780508713893.mp4",
+            "folder": "ANGLE 3"
+          }
         },
         {
           "id": "BR1",
@@ -484,7 +579,12 @@
           "notes": "Brand bumper over sled-push footage.",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/BR1.mp4",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/BR1.mp4",
-          "renderedAt": "2026-06-03T14:53:23.874Z"
+          "renderedAt": "2026-06-03T14:53:23.874Z",
+          "kraken": {
+            "id": "33a68c7f-ab2e-44da-b8f8-5df9d9b24543",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-more-games-more-games-BR1-1780508715486.mp4",
+            "folder": "ANGLE 3"
+          }
         }
       ]
     }
