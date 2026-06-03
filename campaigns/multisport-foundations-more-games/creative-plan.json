@@ -63,6 +63,7 @@
           "template": "two-truths-lie",
           "templateData": {
             "duration": 8,
+            "eyebrow": "2 TRUTHS · 1 LIE",
             "title": "2 TRUTHS, 1 LIE.",
             "claim1": "A GAME DOESN'T DEVELOP AN ATHLETE. IT REVEALS ONE.",
             "claim2": "A GAME IS A TEST, NOT A TEACHER.",
@@ -79,7 +80,7 @@
           ],
           "output": "out/campaigns/multisport-foundations-more-games/more-games/A2.mp4",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/A2.mp4",
-          "renderedAt": "2026-06-03T16:05:39.248Z"
+          "renderedAt": "2026-06-03T16:11:19.470Z"
         },
         {
           "id": "A3",
@@ -167,22 +168,26 @@
           "temperature": "warm",
           "format": "video",
           "source": "template",
-          "template": "velocity-drop",
+          "template": "myth-vs-truth",
           "clip": "brand/video-templates/assets/mg-C1.mp4",
           "templateData": {
-            "claim": "The ceiling never moves, because nothing on a game field was ever designed to move it.",
-            "coachName": "COACH GRAHAM WILKERSON",
-            "credentials": "CSCS · NFL-TRAINED"
+            "mythLabel": "THE MYTH",
+            "myth": "MORE GAMES MAKE A KID FASTER.",
+            "truthLabel": "THE TRUTH",
+            "truth": "A GAME IS A TEST, NOT A TEACHER. SPEED GETS BUILT IN TRAINING.",
+            "sourceLabel": "WHERE IT'S BUILT",
+            "source": "TRAINING, NOT THE SCOREBOARD.",
+            "ctaText": "BOOK THE FREE ATHLETE ANALYSIS"
           },
-          "copySource": "claim = verbatim magnet (AD3 body) \"The ceiling never moves, because nothing on a game field was ever designed to move it.\" over squat-jump footage; coachName/credentials byline identity.",
+          "copySource": "Myth-vs-truth reframe (angle-matched, replaces the off-angle velocity-bar chart). myth = the angle's target misconception; truth = verbatim AD2 \"A game is a test, not a teacher.\" + the mechanism (speed built in training, AD2 bodyLine.3.1). Footage bg = squat-jump (the build). eyebrow auto-anchors.",
           "status": "rendered",
-          "notes": "MOTION (rebalance): velocity-drop mechanism over squat-jump footage (was static cluster-36). CANDIDATE CLIP mg-C1.mp4 (free squat-jump cc69c187).",
+          "notes": "MOTION (angle-fix): myth-vs-truth over squat-jump footage (was velocity-drop bar chart, off-angle). CANDIDATE CLIP mg-C1.mp4 (free squat-jump cc69c187).",
           "flags": [
             "candidate-media"
           ],
           "output": "out/campaigns/multisport-foundations-more-games/more-games/C1.mp4",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/C1.mp4",
-          "renderedAt": "2026-06-03T15:41:36.098Z"
+          "renderedAt": "2026-06-03T16:26:19.132Z"
         },
         {
           "id": "C2",
@@ -213,20 +218,20 @@
           "temperature": "warm",
           "format": "static",
           "source": "template",
-          "template": "cluster-37",
+          "template": "cluster-13",
           "media": "./assets/mg-C3.jpg",
           "copyRefs": {
             "claim": "ad-2.bodyLine.3.1"
           },
-          "copySource": "Verbatim magnet (AD2 body): \"The speed and power behind those plays gets built on purpose, in training, or it doesn't get built at all.\" — the build-or-nothing mechanism (distinct from C1 ceiling / C2 speed-on-field).",
-          "status": "planned",
-          "notes": "Mechanism: built on purpose or not at all (cluster-37 velocity-chart, distinct skeleton from C1/C2). MEDIA PENDING — hand-place ./assets/mg-C3.jpg via the Kraken bar; the static render injects it as a full-frame bg + scrim behind the chart (current PNG is a text-only placeholder).",
+          "copySource": "Verbatim magnet (AD2 body): \"The speed and power behind those plays gets built on purpose, in training, or it doesn't get built at all.\" — the build-or-nothing mechanism (distinct from C1 myth-vs-truth / C2 speed-on-field).",
+          "status": "rendered",
+          "notes": "Mechanism: built on purpose or not at all (cluster-13 clean claim card over footage; replaced cluster-37 velocity-chart, off-angle). MEDIA PENDING — hand-place ./assets/mg-C3.jpg via the Kraken bar; the static render injects it as a full-frame bg + scrim (current PNG is a text-only placeholder).",
           "flags": [
             "needs-media"
           ],
           "output": "out/campaigns/multisport-foundations-more-games/more-games/C3.png",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/C3.png",
-          "renderedAt": "2026-06-03T15:08:01.234Z"
+          "renderedAt": "2026-06-03T16:26:25.330Z"
         },
         {
           "id": "D1",
@@ -234,22 +239,23 @@
           "temperature": "warm",
           "format": "video",
           "source": "template",
-          "template": "velocity-drop",
+          "template": "fresh-e2e-d1",
           "clip": "brand/video-templates/assets/mg-D1.mp4",
           "templateData": {
-            "claim": "None of that playing time was wasted, and you weren't wrong to want it.",
-            "coachName": "COACH GRAHAM WILKERSON",
-            "credentials": "CSCS · NFL-TRAINED"
+            "line1": "Games matter.",
+            "line2": "None of that playing time was wasted.",
+            "line3": "And you weren't wrong to want it.",
+            "microscript": "A game just can't build the engine. Training does."
           },
-          "copySource": "claim = verbatim blame-removal magnet (AD3 bodyLine.4.1, preamble 'And here's something worth saying plainly:' trimmed) over sprint footage; coachName/credentials byline identity.",
+          "copySource": "Blame-lift, line by line (fresh-e2e-d1, angle-matched, replaces the off-angle velocity-bar chart). line1-3 = verbatim AD3 blame-removal (bodyLine.4.2 'Games matter.' + 4.1 'none of that playing time was wasted, and you weren't wrong to want it'). microscript = the mechanism reframe. Footage bg over sprint clip. eyebrow auto-anchors.",
           "status": "rendered",
-          "notes": "MOTION (rebalance): velocity-drop blame-removal over sprint footage (was static cluster-43 kicker card). CANDIDATE CLIP mg-D1.mp4 (free sprinting 60e664e6).",
+          "notes": "MOTION (angle-fix): fresh-e2e-d1 blame-lift over sprint footage (was velocity-drop bar chart, off-angle). CANDIDATE CLIP mg-D1.mp4 (free sprinting 60e664e6).",
           "flags": [
             "candidate-media"
           ],
           "output": "out/campaigns/multisport-foundations-more-games/more-games/D1.mp4",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/D1.mp4",
-          "renderedAt": "2026-06-03T15:44:43.317Z"
+          "renderedAt": "2026-06-03T16:28:39.022Z"
         },
         {
           "id": "D2",

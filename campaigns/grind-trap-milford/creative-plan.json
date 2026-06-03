@@ -219,7 +219,7 @@
             "credentials"
           ],
           "copySource": "Mechanism line (verbatim AD1): \"The set ends the second speed drops.\"; credential fact.",
-          "status": "rendering",
+          "status": "rendered",
           "notes": "Velocity-drop animation shows the set ending at the cutoff while your rule reads on screen.",
           "clip": "brand/video-templates/assets/msf-A1.mp4",
           "kraken": {
@@ -229,7 +229,7 @@
           },
           "output": "out/campaigns/grind-trap-milford/grind-trap/C1.mp4",
           "thumb": "out/campaigns/grind-trap-milford/grind-trap/C1.mp4",
-          "renderedAt": "2026-06-03T15:43:02.044Z"
+          "renderedAt": "2026-06-03T16:11:10.809Z"
         },
         {
           "id": "C2",
@@ -399,7 +399,7 @@
           },
           "output": "out/campaigns/grind-trap-milford/grind-trap/E1.mp4",
           "thumb": "out/campaigns/grind-trap-milford/grind-trap/E1.mp4",
-          "renderedAt": "2026-06-03T15:43:02.044Z"
+          "renderedAt": "2026-06-03T16:12:21.691Z"
         },
         {
           "id": "E2",
@@ -522,7 +522,7 @@
           },
           "output": "out/campaigns/grind-trap-milford/grind-trap/F1.mp4",
           "thumb": "out/campaigns/grind-trap-milford/grind-trap/F1.mp4",
-          "renderedAt": "2026-06-03T15:43:02.044Z"
+          "renderedAt": "2026-06-03T16:12:39.704Z"
         },
         {
           "id": "F2",
@@ -586,7 +586,7 @@
           },
           "output": "out/campaigns/grind-trap-milford/grind-trap/F3.mp4",
           "thumb": "out/campaigns/grind-trap-milford/grind-trap/F3.mp4",
-          "renderedAt": "2026-06-03T15:43:02.044Z"
+          "renderedAt": "2026-06-03T16:14:36.646Z"
         },
         {
           "id": "FA1",
@@ -625,7 +625,7 @@
           },
           "output": "out/campaigns/grind-trap-milford/grind-trap/FA1.mp4",
           "thumb": "out/campaigns/grind-trap-milford/grind-trap/FA1.mp4",
-          "renderedAt": "2026-06-03T15:43:02.044Z"
+          "renderedAt": "2026-06-03T16:22:44.353Z"
         },
         {
           "id": "BR1",
