@@ -109,7 +109,7 @@
       "y": 610,
       "width": 880,
       "textAlign": "left",
-      "text": "Real sprint and jump numbers. Not a pitch. A data set you keep.",
+      "text": "Real sprint and jump numbers. Real data you keep.",
       "fontSize": 42,
       "fontFamily": "Geist",
       "fontWeight": 500,
@@ -198,6 +198,8 @@
     "path": "./assets/batch-media/ms-stretch.jpg",
     "tag": "bg_media",
     "z": 0,
-    "videoStartTime": 1
+    "videoStartTime": 1,
+    "offsetX": 0,
+    "offsetY": 0
   }
 }

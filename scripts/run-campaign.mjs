@@ -39,6 +39,8 @@ import {
 } from "./lib/fill-core.mjs";
 import { assemble } from "./lib/assemble.mjs";
 import { fieldRole, buildEyebrowAnchor } from "./lib/roles.mjs";
+import { loadCopyLibrary } from "./lib/copy-library.mjs";
+import { buildRefPools, verbatimGuard } from "./lib/copy-resolve.mjs";
 import { validateTemplateSource } from "./validate-templates.mjs";
 
 const PROJECT_ROOT = resolve(".");
@@ -70,6 +72,10 @@ if (!existsSync(planPath)) {
 }
 const plan = JSON.parse(readFileSync(planPath, "utf8"));
 const brand = plan.brand || null;
+
+// Cody's verbatim copy library (null when the campaign has no ad-copy.md → the
+// legacy authored-copy path renders, preserving back-compat).
+const COPY_LIBRARY = loadCopyLibrary(join(CAMPAIGNS_DIR, campaign));
 
 const campaignOut = join(OUT_DIR, "campaigns", campaign);
 mkdirSync(campaignOut, { recursive: true });
@@ -166,12 +172,25 @@ function buildMotionData(asset, dataKeys, tierTags = {}) {
     data = { ...asset.templateData };
   } else {
     // Role-aware JOIN: infer each field's role from its name, then match the
-    // asset's copy (headline routed by beat, microscript → reframe) to fields by
-    // role — replacing the old hardcoded regex guess.
+    // asset's copy to fields by role. Copy comes by REFERENCE (verbatim, from the
+    // copy-library) when the asset carries copyRefs/hookRef; else the legacy path.
+    // Motion has no maxChars, so the hook still splits but there's no length-based
+    // alt-hook fallback (known gap — static-only fit).
     const slots = dataKeys.map((k) => ({ id: k, role: fieldRole(k), accepts: [] }));
     if (slots.some((s) => s.role)) {
-      const { bySlotId } = assemble({ slots, copyByRole: buildCopyByRole(asset) });
+      const refPools = COPY_LIBRARY
+        ? buildRefPools(asset, { library: COPY_LIBRARY, tierTags, warn: (m) => console.error(`[copy] ${m}`) })
+        : null;
+      const copyByRole = refPools ? refPools.pools : buildCopyByRole(asset);
+      const { bySlotId } = assemble({ slots, copyByRole });
       data = { ...bySlotId };
+      if (COPY_LIBRARY) {
+        const placedBySlot = {};
+        for (const s of slots) if (bySlotId[s.id]) placedBySlot[s.id] = { role: s.role, text: bySlotId[s.id] };
+        for (const v of verbatimGuard({ placedBySlot, provenance: refPools ? refPools.provenance : new Set(), library: COPY_LIBRARY, asset })) {
+          console.error(`[copy] VERBATIM VIOLATION ${asset.id} field "${v.slotId}" (${v.role}): not from copy-library — "${String(v.text).slice(0, 60)}"`);
+        }
+      }
     } else {
       // Fallback for templates with no role-ish field names.
       if (asset.microscript && dataKeys.includes("eyebrow")) data.eyebrow = asset.microscript;
@@ -527,8 +546,44 @@ async function renderFresh(asset, angleId) {
     : renderTemplateMotion(asset, angleId, asset.format === "gif");
 }
 
+// ── uniqueness guard ─────────────────────────────────────────────────────────
+// Within each angle, every creative should be a DISTINCT design — a unique
+// skeleton AND a unique source clip/image. `knobs.repetitionCap` controls
+// strictness: `1` = "strict, every-asset-distinct" mode (any reuse of a template
+// OR a media path is a HARD ERROR that aborts the run before rendering); any higher
+// value (default 3) only WARNS, so legacy campaigns that intentionally reuse a
+// skeleton up to the cap still render. Media reuse always warns; in strict mode it
+// throws. Validates the authored plan as a whole (independent of --only).
+function validateUniqueness(plan) {
+  const cap = (plan.knobs && plan.knobs.repetitionCap) || 3;
+  const strict = cap === 1;
+  const push = (map, k, v) => { if (!map.has(k)) map.set(k, []); map.get(k).push(v); };
+  const problems = [];
+  for (const angle of plan.angles || []) {
+    const assets = angle.assets || [];
+    const mediaMap = new Map();
+    const tplMap = new Map();
+    for (const a of assets) {
+      const m = a.media || a.clip || a.photo;
+      if (m) push(mediaMap, m, a.id);
+      if (a.template) push(tplMap, a.template, a.id);
+    }
+    for (const [m, ids] of mediaMap) {
+      if (ids.length > 1) problems.push(`[${angle.id}] media "${m}" reused by ${ids.join(", ")}`);
+    }
+    for (const [tpl, ids] of tplMap) {
+      if (ids.length > cap) problems.push(`[${angle.id}] template "${tpl}" used ${ids.length}× (cap ${cap}) by ${ids.join(", ")}`);
+    }
+  }
+  if (!problems.length) return;
+  const msg = `uniqueness check failed:\n  - ${problems.join("\n  - ")}`;
+  if (strict) throw new Error(msg);
+  console.error(`[campaign] WARNING (repetitionCap=${cap}, non-strict) ${msg}`);
+}
+
 // ── main ─────────────────────────────────────────────────────────────────────
 async function main() {
+  validateUniqueness(plan);
   const useServer = await serverUp();
   console.error(`[campaign] plan: ${planPath}`);
   console.error(`[campaign] plan patching via ${useServer ? "editor-server (:5173)" : "direct file write"}`);

@@ -72,12 +72,12 @@
       "id": "reframe",
       "tag": "reframe",
       "label": "Blame-removal reframe",
-      "x": 90,
-      "y": 640,
+      "x": 100,
+      "y": 619,
       "width": 912,
       "textAlign": "left",
-      "text": "IT'S NOT\nYOUR KID.",
-      "fontSize": 150,
+      "text": "We don't tell them they're improving. We show them the number.",
+      "fontSize": 130,
       "fontFamily": "Anton",
       "color": "#ffffff",
       "lineHeight": 0.92,
@@ -98,11 +98,11 @@
       "id": "support",
       "tag": "support",
       "label": "Support line",
-      "x": 92,
-      "y": 1230,
+      "x": 128,
+      "y": 1319,
       "width": 880,
       "textAlign": "left",
-      "text": "It's the unmeasured rep. Train the fast one, measured.",
+      "text": "We measure to the hundredth. Everyone else guesses.",
       "fontSize": 46,
       "fontFamily": "Geist",
       "fontWeight": 500,
@@ -144,9 +144,12 @@
     }
   ],
   "media": {
-    "path": "./assets/batch-media/ms-band.jpg",
+    "path": "./assets/swap-photo-running.jpg",
     "tag": "bg_media",
     "z": 0,
-    "videoStartTime": 1
+    "videoStartTime": 1,
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1
   }
 }

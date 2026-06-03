@@ -6,9 +6,12 @@
 //  the editor/planner can filter by them. See docs/creative-playbook.md.
 // ============================================================================
 
-// The 13 funnel-function roles. Closed — don't fragment (one `hook`, not three).
+// The funnel-function roles. Closed — don't fragment (one `hook`, not three).
+// `kicker` is the small lead-in line ABOVE the headline (the slot the eyebrow used
+// to occupy before the eyebrow became the {CITY} SPORT PARENTS audience anchor); it
+// carries the top segment of a hook. See splitHook + docs/creative-playbook.md.
 export const ROLES = [
-  "eyebrow", "hook", "claim", "mechanism", "reframe", "proof",
+  "eyebrow", "kicker", "hook", "claim", "mechanism", "reframe", "proof",
   "stat", "testimonial", "byline", "offer", "guarantee", "cta", "brand",
 ];
 
@@ -46,7 +49,8 @@ export function beatLetter(beat) {
 // fill role-aware without hand-annotating every *_SPEC. First match wins.
 const FIELD_ROLE_PATTERNS = [
   [/guarantee|^free|freeline/i, "guarantee"],
-  [/eyebrow|kicker|overline/i, "eyebrow"],
+  [/kicker|overline/i, "kicker"],
+  [/eyebrow/i, "eyebrow"],
   [/\bhook\b/i, "hook"],
   [/quote|testimonial/i, "testimonial"],
   [/credential|proof/i, "proof"],
@@ -68,7 +72,7 @@ export function fieldRole(name) {
 
 // Build the standalone eyebrow anchor from the merged tier tags. The eyebrow
 // orients the viewer — WHO it's for + WHERE — as a chip at the top of the
-// creative. Pattern: "{CITY} SPORT PARENTS" with the state suffix stripped
+// creative. Pattern: "{CITY} SPORT PARENT" with the state suffix stripped
 // ("CARMEL, IN" → "CARMEL"). `city` is the per-campaign placeholder, set via the
 // location/campaign data tier. Null-guarded: no city → a generic fallback so the
 // slot never renders "undefined". Single source for BOTH the static
@@ -79,4 +83,34 @@ export function buildEyebrowAnchor(tierTags = {}) {
     .replace(/,\s*[A-Za-z]{2}\.?$/, "")
     .trim();
   return cityLabel ? `${cityLabel} SPORT PARENTS` : "{city name} SPORT PARENTS";
+}
+
+// Lay a single VERBATIM hook across the three hook slots (top→bottom):
+//   kicker (small lead-in) · headline (the main thought) · subhead (the rest).
+// Splitting only chooses BREAK POINTS — it never alters words. The concatenation
+// of the returned segments reproduces the hook's words in order. Deterministic
+// (no guessing): break on sentence boundaries, then distribute sentences into 3
+// ordered buckets; fall back to clause punctuation, then to headline-only.
+// Returns a partial map ({ headline } at minimum); falsy input → {}.
+export function splitHook(text) {
+  const t = typeof text === "string" ? text.trim() : "";
+  if (!t) return {};
+
+  // sentence-ish segments (keep terminal punctuation with the segment)
+  let segs = t.split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter(Boolean);
+  // single sentence → try clause punctuation so a long line can still spread
+  if (segs.length === 1) {
+    segs = t.split(/\s*[—–:;]\s+|,\s+(?=[A-Z])/).map((s) => s.trim()).filter(Boolean);
+  }
+  if (segs.length <= 1) return { headline: t };
+  if (segs.length === 2) return { headline: segs[0], subhead: segs[1] };
+
+  // 3+ → three ordered buckets, near-equal by segment count.
+  const per = Math.ceil(segs.length / 3);
+  const join = (a) => a.join(" ");
+  return {
+    kicker: join(segs.slice(0, per)),
+    headline: join(segs.slice(per, per * 2)),
+    subhead: join(segs.slice(per * 2)),
+  };
 }

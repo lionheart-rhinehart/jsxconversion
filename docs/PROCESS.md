@@ -16,9 +16,12 @@ and it renders the approved ones in the background while you move to the next an
 ```
 /creative-engine
   1. BRAND      → pick AA LOCATION → Kraken workspace; pull SOURCE-folder raw media
-                  (kraken-pull.mjs → brand/kraken-cache/) + data tier + brand kit
+                  (kraken-pull.mjs --per-campaign → brand/kraken-cache/<campaign>/,
+                   OR browse+pull right in the review page) + data tier + brand kit
   2. INTAKE     → campaigns/<name>/{brief.md, ad-copy.md, microscripts.md, named templates}
-  3. DEEP READ  → 1 sub-agent per doc/section → campaign-knowledge.json (quoted, auditable)
+  2b.COPY LIB   → intake-copy.mjs: ad-copy.md + microscripts.md → copy-library.json
+                  (verbatim units, by id — the ONLY copy allowed on a creative)
+  3. DEEP READ  → 1 sub-agent per doc/section → campaign-knowledge.json (quoted, auditable; strategy only)
   4. PLAN       → creative-plan.json (angles × assets: format, source, copy, microscript, image, flags)
   5. REVIEW     → review.html (served): approve / note / tweak / edit          ── STOPS HERE
   6. RENDER     → run-campaign.mjs: approved only, background, render-then-move
@@ -43,7 +46,8 @@ run** and saved to `campaigns/<name>/kraken.json` — not hardcoded.
 | Single-template CLI | `scripts/fill-template.mjs` | Thin CLI over fill-core. |
 | Campaign runner | `scripts/run-campaign.mjs` | Renders approved assets; render-then-move; gif post-step; manifest. |
 | Kraken connector | `scripts/lib/kraken.mjs` | Supabase Content-Library client (PostgREST + Storage + ingest edge fn); workspace resolve; creds from Kraken `.env.local`. |
-| Kraken pull | `scripts/kraken-pull.mjs` | Caches a source-folder's raw media into `brand/kraken-cache/` for hand placement. |
+| Kraken pull | `scripts/kraken-pull.mjs` | Caches a source-folder's raw media for hand placement; `--per-campaign` → `brand/kraken-cache/<campaign>/`. Also driven in-page via `POST /kraken/pull`. |
+| Kraken list | `scripts/kraken-list.mjs` | Read-only JSON lister (`workspaces` / `folders`) the review page's folder browser spawns via `/kraken/workspaces` + `/kraken/folders`. |
 | Kraken export | `scripts/kraken-export.mjs` | Pushes rendered creatives into a destination Content-Library folder (dedup + folder PATCH). |
 | Review API | `scripts/editor-server.mjs` (:5173) | `/plan`, `/plan/:campaign/:angle/:asset` (single writer), `/render`, static `/out`. |
 | Review page | `brand/video-templates/review.html` (:5599 via `serve.mjs`) | Card grid by angle→beat; badges; dashboard; approve/note/edit. |
@@ -86,7 +90,9 @@ the campaign tier, or campaign would always win).
 { schemaVersion, campaign, brand, knobs{assetsPerAngle, motionRatio, freshnessFloor, repetitionCap},
   angles: [ { id, name, location?, mechanism, emotionalJob, voice,
     assets: [ { id, beat, format(video|gif|static), source(template|fresh),
-      template, templateQuery, freshConcept, headline, microscript, visual, location?,
+      template, templateQuery, freshConcept,
+      copyRefs{role: copy-library id|[ids]}, hookRef(copy-library id → kicker/headline/subhead),
+      headline, microscript, visual, location?,   // headline/microscript = LEGACY (back-compat); prefer copyRefs
       image{tag,source,ref}, media?(static bg image/clip), clip?(motion bg), audio, flags[],
       status(planned|approved|changes|rendering|rendered|failed), notes, output, thumb,
       knowledgeRefs[] } ] } ] }
@@ -97,9 +103,14 @@ runner's media key.
 
 ## Image sources (the four)
 1. **library** — raw media in The Kraken **Content Library** (Supabase, per-AA-location
-   workspace). Pulled at intake into `brand/kraken-cache/` via `kraken-pull.mjs` and placed
-   by hand in the editor (`/media` picker for motion; `/media-into-template` swap for statics).
-2. **client** — campaign/location-specific media the client supplies.
+   workspace). Pulled into `brand/kraken-cache/<campaign>/` and placed by hand in the editor
+   (`/media` picker for motion; `/media-into-template` swap for statics). The review page and the
+   position editor have a **built-in Kraken bar**: browse the location's folder tree, pull a chosen
+   folder into the campaign, and tiles tag their `source` (`kraken`/`uploaded`/`brand`). No CLI step
+   needed (the CLI `kraken-pull.mjs --per-campaign` remains for scripted/bulk pulls).
+2. **client** — campaign/location-specific media the client supplies. **Upload from computer**
+   straight into the campaign via the Kraken bar's Upload button (`POST /media-upload`), tagged
+   `uploaded`.
 3. **jsx-render** — render a sub-template to PNG, then use it as another creative's
    image layer (compositional). Memoized; cycle-guarded.
 4. **ai-gen** — *stub seam* (nano-banana, future). Uses a `fallback` and logs
@@ -151,8 +162,9 @@ authoritative** — they persist and survive re-render.
 - **Video/gif** edit in a React modal lifted from the gallery: a live `<Stage>`
   preview (mounting the same component the runner wraps → preview == render), copy
   fields (the bank's `EditPanel`, driven by asset-id-keyed state — **not**
-  `useTemplateEdits`/localStorage), a clip/photo picker (`GET /media` → a real served
-  path), an audio picker, and a template-swap dropdown (`GET /bank`). Save writes
+  `useTemplateEdits`/localStorage), a clip/photo picker (`GET /media?campaign=` → a real served
+  path, with the campaign-scoped Kraken browse/pull/upload bar above it), an audio picker, and a
+  template-swap dropdown (`GET /bank`). Save writes
   `templateData`/`clip`/`photo`/`audio`/`template` to the plan via the single-writer
   `/plan` route, then `POST /render-asset`. Picked media must be a **real served
   path** (never a `blob:`/dataURL — those can't be headlessly rendered).
@@ -185,6 +197,12 @@ coach-lower-thirds / logo-sting / meet-coach for worked examples):
 
 ## Non-negotiables
 - **No skim**: deep-read via sub-agents into `campaign-knowledge.json`.
+- **Copy is verbatim — select, never write**: the on-creative copy comes ONLY from
+  `campaigns/<name>/copy-library.json` (parsed from `ad-copy.md` + `microscripts.md`),
+  referenced by id (`asset.copyRefs` / `asset.hookRef`). The engine never authors,
+  paraphrases, reswords, or truncates copy. Too-long → shorter alt-hook → split across
+  kicker/headline/subhead → flag. `verbatimGuard` (`scripts/lib/copy-resolve.mjs`)
+  reports any on-creative text that isn't the user's. The brief is strategy-only.
 - **Hand placement sacred**: fill/generate set data only.
 - **Voice**: no emoji, no exclamation points; guarantee verbatim.
 - **Approval gate**: only approved assets render.

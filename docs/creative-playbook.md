@@ -13,10 +13,11 @@
 4. **Captions are structural** (~85% watch muted) · hierarchy lives in **size** (1.5–2× jumps).
 5. **Integrity = advantage:** no pro/scholarship dream, no parent guilt, no fake urgency. AA's no-hype, coach-to-parent voice converts *because* of this, not despite it.
 
-## The 13 roles (closed enum)
+## The 14 roles (closed enum)
 | Role | Does | Static zone | maxChars (guide) | Treatment notes | AA example |
 |---|---|---|---|---|---|
-| `eyebrow` | context label, orients (WHO + WHERE) | top kicker | 34 | **White-bg / red-text chip** (a filled pill that hugs the text) — pops over footage, far stronger than thin red mono. Set via `el.chipBg`/`chipPad`/`chipRadius` in `renderTextLayer`. Copy pattern: **`{CITY} SPORTS PARENTS`** (auto-filled from the location tier; state suffix stripped) | "CARMEL SPORTS PARENTS" |
+| `eyebrow` | context label, orients (WHO + WHERE) | top chip | 34 | **White-bg / red-text chip** (a filled pill that hugs the text) — pops over footage, far stronger than thin red mono. Set via `el.chipBg`/`chipPad`/`chipRadius` in `renderTextLayer`. Copy pattern: **`{CITY} SPORT PARENTS`** (auto-filled from the location tier; state suffix stripped) | "CARMEL SPORT PARENTS" |
+| `kicker` | small lead-in above the headline (carries the TOP of a hook) | just above the headline | 30 | smaller than the headline; the slot the eyebrow used to be before it became the audience anchor | "Six months. Every practice." |
 | `hook` | stops the scroll | top third *or* lower-third-over-gradient (see lone-hook note) | 40–60 | display, large, apex of hierarchy | "Getting faster? Or just more tired?" |
 | `claim` | the promise | upper-mid | 40 | display | "Foundational youth program" |
 | `mechanism` | *why* it works | mid | 60 | display | "The right reps, measured" |
@@ -30,7 +31,9 @@
 | `cta` | the action | bottom (often in a red bar) | 24 | display | "Book your free assessment" |
 | `brand` | lockup / identity | bottom or lockup | 24 | display/mono | "ATHLETES ACCELERATION" |
 
-Notes: 13 is the *dictionary*; a typical frame uses 3–5. `mechanism` has no current copy — reserved. `guarantee` is verbatim-locked everywhere: **`+1 mph speed. +3" vertical. 90 days. Or your training is on us.`**
+Notes: 14 is the *dictionary*; a typical frame uses 3–5. `guarantee` is verbatim-locked everywhere: **`+1 mph speed. +3" vertical. 90 days. Or your training is on us.`**
+
+**The hook layout standard (no guessing):** a hook is ONE verbatim unit laid across **`kicker` → `headline` → `subhead`** (top→bottom), split at clause boundaries by `splitHook` (`roles.mjs`) — words never change, only line breaks. This is how a long hook fits on screen. The author's docs often pre-split it: `IMAGE DIRECTION → Headline on image` / `Sub-headline on image` map straight to `headline` / `subhead`. Copy is selected by reference (`asset.copyRefs` / `asset.hookRef` into `copy-library.json`), never authored.
 
 ## How many roles? (decided by beat + stage, not taste)
 **1** = beat A pure scroll-stop (TOF). **2** = branded awareness (A/B) or a simple offer (F). **3** = consideration that must teach + prove (C/D/E). **4+** = rare. Model it as **1 dominant + up to ~2 supporting** (hierarchy keeps one message on top).

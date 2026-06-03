@@ -132,7 +132,7 @@
       "x": 90,
       "y": 170,
       "textAlign": "left",
-      "text": "INDIANAPOLIS SPORTS PARENTS",
+      "text": "INDIANAPOLIS SPORT PARENTS",
       "fontSize": 32,
       "fontFamily": "JetBrains Mono",
       "fontWeight": 700,
@@ -159,7 +159,7 @@
       "y": 380,
       "width": 924,
       "textAlign": "left",
-      "text": "NOT MORE REPS. THE RIGHT ONES, MEASURED.",
+      "text": "Speed claimed isn't speed. Speed measured is.",
       "fontSize": 104,
       "fontFamily": "Anton",
       "color": "#ffffff",
@@ -239,19 +239,12 @@
     }
   ],
   "media": {
-    "path": "./assets/swap-dsc09089.jpg",
+    "path": "./assets/swap-action-image-agility-drill-high-school-mixed-genesis-4.jpg",
     "tag": "bg_media",
     "z": 0,
     "videoStartTime": 1,
     "offsetX": 0,
     "offsetY": 0,
-    "scale": 1,
-    "crop": {
-      "x": 1324,
-      "y": 0,
-      "width": 1593,
-      "height": 2637,
-      "forPath": "./assets/swap-dsc09089.jpg"
-    }
+    "scale": 1
   }
 }
