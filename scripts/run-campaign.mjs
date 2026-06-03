@@ -29,7 +29,7 @@
 // ============================================================================
 
 import {
-  existsSync, mkdirSync, readFileSync, writeFileSync, renameSync, copyFileSync, rmSync, readdirSync,
+  existsSync, mkdirSync, readFileSync, writeFileSync, renameSync, copyFileSync, rmSync, readdirSync, statSync,
 } from "node:fs";
 import { resolve, join, dirname } from "node:path";
 import { spawn, spawnSync } from "node:child_process";
@@ -43,6 +43,8 @@ import { loadCopyLibrary } from "./lib/copy-library.mjs";
 import { buildRefPools, verbatimGuard } from "./lib/copy-resolve.mjs";
 import { validateTemplateSource } from "./validate-templates.mjs";
 import { BANK_AUTHORING_PALETTE, COLOR_TOKEN_KEYS } from "./lib/palette.mjs";
+import { validatePlan, writeValidationReport } from "./validate-plan.mjs";
+import { verifyRender } from "./lib/render-qa.mjs";
 import { loadBrandFile } from "./lib/brand-kit.mjs";
 import { stageKitFonts } from "./lib/fonts-stage.mjs";
 
@@ -546,6 +548,7 @@ ${src}
   } else {
     result = { ok: true, produced: producedMp4, ext: "mp4" };
   }
+  if (result.ok) result.expectSeconds = D;  // render-QA duration check (G3a)
   if (!keepVariants) {
     rmSync(wrapperPath, { force: true });
     rmSync(dataPath, { force: true });
@@ -618,6 +621,25 @@ function validateUniqueness(plan) {
 // ── main ─────────────────────────────────────────────────────────────────────
 async function main() {
   validateUniqueness(plan);
+
+  // ── Compliance gate (validate-plan.mjs) — refuse to render anything out of
+  // spec. FAIL-CLOSED: a thrown validator counts as blocking. --force-unsafe is
+  // the deliberately-awkward escape hatch.
+  let report;
+  try {
+    report = validatePlan(plan, { campaign });
+  } catch (e) {
+    console.error(`[campaign] validation crashed (treated as BLOCKING): ${e.message}`);
+    process.exit(2);
+  }
+  try { writeValidationReport(CAMPAIGNS_DIR, campaign, report, new Date().toISOString()); } catch { /* report write is best-effort */ }
+  if (report.blocking > 0 && !flag("force-unsafe")) {
+    console.error(`[campaign] ${report.summaryText}`);
+    console.error(`[campaign] BLOCKED — ${report.blocking} hard violation(s). Run: node scripts/validate-plan.mjs ${campaign}  (or see campaigns/${campaign}/validation.json). Fix them, or re-run with --force-unsafe.`);
+    process.exit(2);
+  }
+  if (report.blocking > 0) console.error(`[campaign] --force-unsafe set: proceeding despite ${report.blocking} blocking violation(s).`);
+
   const useServer = await serverUp();
   console.error(`[campaign] plan: ${planPath}`);
   console.error(`[campaign] plan patching via ${useServer ? "editor-server (:5173)" : "direct file write"}`);
@@ -661,12 +683,24 @@ async function main() {
         const destRel = `out/campaigns/${campaign}/${angle.id}/${asset.id}.${res.ext}`;
         const dest = join(PROJECT_ROOT, destRel);
         renameSync(res.produced, dest);
-        await patchAsset(useServer, angle.id, asset.id, {
-          status: "rendered", output: destRel, thumb: destRel,
-          renderedAt: new Date().toISOString(),
-        });
-        row.status = "rendered"; row.output = destRel; ok++;
-        console.error(`[render] ${tag} ✓ → ${destRel}`);
+        // Render-truth QA (G3a): a file that EXISTS can still be black/frozen/blank.
+        const qa = verifyRender(dest, { kind: res.ext, expectSeconds: res.expectSeconds });
+        if (!qa.ok) {
+          await patchAsset(useServer, angle.id, asset.id, { status: "failed", notes: `[render-qa] ${qa.reason}` });
+          row.status = "failed"; row.error = `render-qa: ${qa.reason}`; row.qa = qa; failed++;
+          console.error(`[render] ${tag} ✗ QA: ${qa.reason}`);
+        } else {
+          await patchAsset(useServer, angle.id, asset.id, {
+            status: "rendered", output: destRel, thumb: destRel,
+            renderedAt: new Date().toISOString(),
+          });
+          let fileSize = null; try { fileSize = statSync(dest).size; } catch { /* ignore */ }
+          row.status = "rendered"; row.output = destRel; ok++;
+          if (qa.durationSec) row.durationSec = qa.durationSec;
+          if (fileSize != null) row.fileSize = fileSize;
+          if (qa.skipped) row.qaSkipped = true;
+          console.error(`[render] ${tag} ✓ → ${destRel}${qa.skipped ? " (qa skipped: no ffmpeg)" : ""}`);
+        }
       } else if (res.pending) {
         await patchAsset(useServer, angle.id, asset.id, { status: "approved" }); // leave for later
         row.status = "pending"; row.error = res.error; pending++;

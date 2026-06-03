@@ -33,6 +33,7 @@ import { spawn } from "node:child_process";
 import { resolveStaticConfig } from "./lib/fill-core.mjs";
 import { fieldRole, BEAT_HEADLINE_ROLE, beatLetter } from "./lib/roles.mjs";
 import { loadCopyLibrary } from "./lib/copy-library.mjs";
+import { validatePlan } from "./validate-plan.mjs";
 
 const PORT = Number(process.env.EDITOR_PORT) || 5173;
 const PROJECT_ROOT = resolve(".");
@@ -352,6 +353,26 @@ const server = createServer(async (req, res) => {
       return;
     }
     send(res, 200, readFileSync(p, "utf8"));
+    return;
+  }
+
+  // GET /validation?campaign=<name> — live compliance report for the review page.
+  // Re-runs validate-plan against the on-disk plan (so in-page edits reflect at
+  // once). Exception-safe (S7): never crash the server; on error return ok:false
+  // with the error so the page degrades to "validation unavailable" + leaves
+  // Approve enabled rather than locking the user out.
+  if (path === "/validation" && req.method === "GET") {
+    try {
+      const campaign = url.searchParams.get("campaign") || firstCampaign();
+      if (!campaign) { sendJson(res, 200, { ok: false, error: "no campaign" }); return; }
+      const planFile = join(CAMPAIGNS_DIR, campaign, "creative-plan.json");
+      if (!existsSync(planFile)) { sendJson(res, 200, { ok: false, error: `no plan for "${campaign}"` }); return; }
+      const plan = JSON.parse(readFileSync(planFile, "utf8"));
+      const report = validatePlan(plan, { campaign });
+      sendJson(res, 200, report);
+    } catch (e) {
+      sendJson(res, 200, { ok: false, error: String((e && e.message) || e) });
+    }
     return;
   }
 
