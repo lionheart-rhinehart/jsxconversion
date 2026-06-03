@@ -7,12 +7,13 @@
 //  Usage:
 //    node scripts/kraken-list.mjs workspaces
 //    node scripts/kraken-list.mjs folders --workspace <name|uuid>
+//    node scripts/kraken-list.mjs files   --workspace <name|uuid> --folder <name|uuid>
 //
 //  Prints ONE JSON object to stdout (errors as {error,...}). Human logs, if any,
 //  go to stderr so stdout stays parse-clean for the spawning server.
 // ============================================================================
 
-import { loadWorkspaces, resolveWorkspaceId, listFolders } from "./lib/kraken.mjs";
+import { loadWorkspaces, resolveWorkspaceId, listFolders, resolveFolder, listFolderMedia } from "./lib/kraken.mjs";
 
 const args = process.argv.slice(2);
 const cmd = args.find((a) => !a.startsWith("--"));
@@ -52,7 +53,29 @@ async function main() {
     return;
   }
 
-  out({ error: `unknown command "${cmd || ""}" (use: workspaces | folders)` });
+  if (cmd === "files") {
+    // The individual media items WITHIN a folder (for per-file pull / direct
+    // placement). Folder accepts a NAME or UUID; the browser passes the id.
+    const ws = opt("workspace");
+    const folderArg = opt("folder");
+    if (!ws || !folderArg) { out({ error: "missing --workspace and/or --folder" }); process.exit(2); }
+    const wsId = resolveWorkspaceId(ws);
+    if (!wsId) { out({ error: `unknown workspace "${ws}"`, known: Object.keys(loadWorkspaces()) }); process.exit(2); }
+    const folder = await resolveFolder(wsId, folderArg);
+    if (!folder) { out({ error: `folder "${folderArg}" not found in "${ws}"` }); process.exit(2); }
+    const media = await listFolderMedia(wsId, folder.id); // [{id,type,title,content,metadata}]
+    out({
+      workspace: ws, workspaceId: wsId, folder: folder.id, folderName: folder.name,
+      files: media.map((m) => ({
+        id: m.id, type: m.type, title: m.title || null,
+        mime: (m.metadata && m.metadata.mime_type) || null,
+        url: m.content, // public CDN url → browser thumbnails (image tiles)
+      })),
+    });
+    return;
+  }
+
+  out({ error: `unknown command "${cmd || ""}" (use: workspaces | folders | files)` });
   process.exit(2);
 }
 

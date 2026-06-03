@@ -571,6 +571,7 @@
                 <input id="kbFile" type="file" multiple hidden accept="image/*,video/*,audio/*">
               </div>
               <div id="kbTree" class="kbar-tree" hidden></div>
+              <div id="kbFiles" class="ed-photo-grid" hidden></div>
               <div id="kbMsg" class="kbar-msg"></div>
             </div>
             <button id="browsePhotosBtn" type="button" style="width:100%;font-size:11px;cursor:pointer">Browse brand photos ▾</button>
@@ -2508,6 +2509,7 @@
       bar.hidden = false;
       const wsSel = $('kbWorkspace'), tree = $('kbTree'), msg = $('kbMsg');
       const pullBtn = $('kbPull'), upBtn = $('kbUpload'), fileInput = $('kbFile');
+      const filesEl = $('kbFiles');
       let workspaces = [], folders = [], picked = null, expanded = {}, busy = false;
 
       const setMsg = (m) => { msg.textContent = m || ''; };
@@ -2534,7 +2536,7 @@
             const tw = document.createElement('span'); tw.className = 'kbar-tw';
             if (n.children.length) { tw.textContent = expanded[n.id] ? '▾' : '▸'; tw.onclick = () => { expanded[n.id] = !expanded[n.id]; renderTree(); }; }
             const name = document.createElement('span'); name.className = 'kbar-fname'; name.textContent = n.name; name.title = n.name;
-            name.onclick = () => { picked = { id: n.id, name: n.name }; renderTree(); syncButtons(); };
+            name.onclick = () => { picked = { id: n.id, name: n.name }; renderTree(); syncButtons(); loadFiles(picked); };
             row.appendChild(tw); row.appendChild(name);
             tree.appendChild(row);
             if (n.children.length && expanded[n.id]) addNodes(n.children, depth + 1);
@@ -2551,7 +2553,7 @@
       }
 
       wsSel.addEventListener('change', () => {
-        picked = null; expanded = {}; syncButtons();
+        picked = null; expanded = {}; syncButtons(); loadFiles(null);
         if (wsSel.value) loadFolders(wsSel.value); else { tree.hidden = true; tree.innerHTML = ''; }
       });
 
@@ -2601,6 +2603,60 @@
         if (lastPhoto) swapBackgroundPhoto(lastPhoto, null);
       });
 
+      // Per-file pull: list the picked folder's files as tiles; click one to pull
+      // just that item and place it on the static background (no whole-folder pull).
+      async function loadFiles(folder) {
+        if (!folder) { filesEl.hidden = true; filesEl.innerHTML = ''; return; }
+        filesEl.hidden = false;
+        filesEl.innerHTML = '<div class="ed-empty">Loading files in ' + folder.name + '…</div>';
+        let files = [];
+        try {
+          const wsName = (workspaces.find((w) => w.id === wsSel.value) || {}).name || wsSel.value;
+          const j = await fetch('/kraken/files?workspace=' + encodeURIComponent(wsName) + '&folder=' + encodeURIComponent(folder.id)).then((r) => r.json());
+          files = j.files || [];
+        } catch (_) { files = []; }
+        filesEl.innerHTML = '';
+        if (!files.length) { filesEl.innerHTML = '<div class="ed-empty">No image/video files here. (Use Pull for the whole folder.)</div>'; return; }
+        for (const f of files) {
+          const t = document.createElement('button');
+          t.type = 'button'; t.className = 'ed-photo-tile'; t.title = f.title || f.id;
+          const badge = document.createElement('span');
+          badge.className = 'ed-srcbadge kraken'; badge.textContent = f.type === 'video' ? 'vid' : 'kr';
+          t.appendChild(badge);
+          if (f.type === 'image' && f.url) {
+            const img = document.createElement('img'); img.loading = 'lazy'; img.src = f.url; img.alt = '';
+            t.appendChild(img);
+          } else {
+            const lab = document.createElement('div');
+            lab.style.cssText = 'padding:10px;font:11px ui-monospace,monospace;color:var(--muted);';
+            lab.textContent = (f.type || 'file') + ' · ' + (f.title || f.id);
+            t.appendChild(lab);
+          }
+          t.addEventListener('click', () => placeKrakenFile(folder, f, t));
+          filesEl.appendChild(t);
+        }
+      }
+      async function placeKrakenFile(folder, file, tile) {
+        if (file.type !== 'image') { setMsg('Statics use a photo background — pick an image.'); return; }
+        setBusy(true); setMsg('Placing ' + (file.title || file.id) + '…');
+        try {
+          const wsName = (workspaces.find((w) => w.id === wsSel.value) || {}).name || wsSel.value;
+          const r = await fetch('/kraken/pull-file', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ campaign: camp.campaign, workspace: wsName, folder: folder.id, file: file.id }),
+          });
+          const j = await r.json();
+          if (!r.ok || !j.file) throw new Error(j.error || (j.stderr || '').slice(-160) || 'pull failed');
+          resetPhotoGrid();
+          // swapBackgroundPhoto copies the cached file into the template assets dir
+          // and points config.media at it. krakenId/krakenUrl ride along for the
+          // durable-static-media step.
+          await swapBackgroundPhoto({ path: j.file.path, krakenId: j.file.krakenId, krakenUrl: j.file.krakenUrl }, tile);
+          setMsg('Placed ' + (j.file.title || j.file.name));
+        } catch (e) { setMsg('Place failed: ' + e.message); }
+        setBusy(false);
+      }
+
       // Load workspaces + the campaign's saved default location.
       (async () => {
         try {
@@ -2633,8 +2689,17 @@
       } catch (e) { setStatus('Photo swap failed: ' + e.message); return; }
       snapshotForUndo();
       setMediaPhoto(newPath); // resets pan/zoom + drops the old photo's crop
+      // Durable ref: stamp where this photo came from in the Kraken so a fresh
+      // checkout re-fetches it at render (the swap-* file is gitignored). Present
+      // for a Kraken tile / per-file pull; absent for an uploaded or manual photo.
+      if (state.config.media) {
+        if (item.krakenId) state.config.media.krakenId = item.krakenId; else delete state.config.media.krakenId;
+        if (item.krakenUrl) state.config.media.krakenUrl = item.krakenUrl; else delete state.config.media.krakenUrl;
+      }
       document.querySelectorAll('.ed-photo-tile').forEach((el) => el.classList.toggle('on', el === tile));
-      setStatus('Background swapped. Save + Render to persist. (Photo is local to this checkout until committed; re-pull restores it.)');
+      setStatus(item.krakenUrl
+        ? 'Background swapped — durable (re-fetches from the Kraken on a fresh checkout). Save + Render to persist.'
+        : 'Background swapped. Save + Render to persist. (Local to this checkout until committed; re-pull restores it.)');
     }
     $('browsePhotosBtn').onclick = () => {
       const grid = $('photoGrid');

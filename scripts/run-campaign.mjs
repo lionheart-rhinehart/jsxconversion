@@ -279,6 +279,28 @@ async function renderTemplateStatic(asset, angleId) {
     mkdirSync(dirname(editsPath), { recursive: true });
     writeFileSync(editsPath, JSON.stringify(config, null, 2));
   }
+  // Durable static media: if the config points at a media file that's missing
+  // locally (e.g. a gitignored swap-* in a fresh worktree) but carries a Kraken
+  // ref, re-fetch it from the Content Library so the render isn't black. Mirrors
+  // how motion re-extracts asset.clip from the (also gitignored) cache.
+  const med = config && config.media;
+  if (med && med.path && med.krakenUrl) {
+    const medAbs = join(TEMPLATE_DIR, String(med.path).replace(/^\.\//, ""));
+    if (!existsSync(medAbs)) {
+      try {
+        const rr = await fetch(med.krakenUrl);
+        if (rr.ok) {
+          mkdirSync(dirname(medAbs), { recursive: true });
+          writeFileSync(medAbs, Buffer.from(await rr.arrayBuffer()));
+          console.error(`[render]   ${asset.id} restored static media from Kraken → ${med.path}`);
+        } else {
+          console.error(`[render]   note: ${asset.id} media restore failed (${rr.status}); rendering without it.`);
+        }
+      } catch (e) {
+        console.error(`[render]   note: ${asset.id} media restore error: ${e.message}`);
+      }
+    }
+  }
   const { fillJsxPath } = emitVariant({ clusterId, config, templateDir: TEMPLATE_DIR, suffix });
   const basename = `${clusterId}${suffix}`;
   const r = await renderJsx({ jsxPath: fillJsxPath, projectRoot: PROJECT_ROOT, renderer: RENDERER, inherit: false });
