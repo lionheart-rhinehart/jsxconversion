@@ -1190,7 +1190,18 @@
         img.style.left = '0';
         img.style.top = '0';
       }
-      img.onerror = () => { img.alt = 'No image'; img.style.background = '#222'; };
+      img.onerror = () => {
+        // If a live media path failed (e.g. a gitignored swap-* photo that never
+        // travelled to this checkout), fall back to the last rendered composite so
+        // the editor shows the real photo instead of a blank. Guard the loop.
+        const camp = parseCampId(state.cluster);
+        if (camp && media.path && img.dataset.fellBack !== '1') {
+          img.dataset.fellBack = '1';
+          img.src = campOutputPng(camp);
+          return;
+        }
+        img.alt = 'No image'; img.style.background = '#222';
+      };
       img.style.cursor = 'move';
       img.style.pointerEvents = 'auto';
       attachMediaImgHandlers(img);
@@ -2446,7 +2457,14 @@
     function resetPhotoGrid() {
       _photoItems = null;
       const g = $('photoGrid');
-      if (g && !g.hidden) loadPhotoGrid();
+      if (!g) return;
+      // After a pull/upload, REVEAL the grid (it is collapsed by default behind
+      // the Browse-photos toggle) and scroll to it, so the freshly-available
+      // media is actually visible. The old code only reloaded an already-open
+      // grid, so a pull looked like a dead end.
+      g.hidden = false;
+      loadPhotoGrid();
+      try { g.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (_) {}
     }
     async function loadPhotoGrid() {
       if (_photoItems) return; // fetch once (reset via resetPhotoGrid)
@@ -2559,21 +2577,28 @@
       fileInput.addEventListener('change', async () => {
         const files = [...fileInput.files]; if (!files.length) return;
         setBusy(true); setMsg('Uploading ' + files.length + ' file(s)…');
-        let ok = 0, fail = 0;
+        let ok = 0, fail = 0, lastErr = '', lastPhoto = null;
         for (const f of files) {
           const ext = '.' + (f.name.split('.').pop() || '').toLowerCase();
           const kind = ['.mp4', '.mov', '.webm'].includes(ext) ? 'clip'
             : ['.mp3', '.wav', '.m4a', '.aac', '.ogg'].includes(ext) ? 'audio' : 'photo';
           try {
             const r = await fetch('/media-upload?campaign=' + encodeURIComponent(camp.campaign) + '&kind=' + kind + '&name=' + encodeURIComponent(f.name), { method: 'POST', body: f });
-            if (!r.ok) throw new Error('upload failed');
+            const j = await r.json().catch(() => ({}));
+            if (!r.ok) throw new Error(j.error || 'upload failed');
+            if (kind === 'photo' && j.path) lastPhoto = { name: j.name || f.name, path: j.path, url: j.url, source: 'uploaded' };
             ok++;
-          } catch (_) { fail++; }
+          } catch (e) { console.error('[upload]', f.name, e); fail++; lastErr = e.message || String(e); }
         }
-        setMsg('Uploaded ' + ok + ' file(s)' + (fail ? ', ' + fail + ' failed' : ''));
+        setMsg('Uploaded ' + ok + ' file(s)' + (fail ? ', ' + fail + ' failed: ' + lastErr : ''));
         fileInput.value = '';
         setBusy(false);
         resetPhotoGrid();
+        // Statics are photo-backed: auto-place the uploaded photo onto the
+        // background so "upload" actually applies (copies into the template
+        // assets dir + points config.media at it). Videos/audio are saved to the
+        // cache but a static has no clip slot to place them in.
+        if (lastPhoto) swapBackgroundPhoto(lastPhoto, null);
       });
 
       // Load workspaces + the campaign's saved default location.
@@ -2609,7 +2634,7 @@
       snapshotForUndo();
       setMediaPhoto(newPath); // resets pan/zoom + drops the old photo's crop
       document.querySelectorAll('.ed-photo-tile').forEach((el) => el.classList.toggle('on', el === tile));
-      setStatus('Background swapped. Save + Render to persist.');
+      setStatus('Background swapped. Save + Render to persist. (Photo is local to this checkout until committed; re-pull restores it.)');
     }
     $('browsePhotosBtn').onclick = () => {
       const grid = $('photoGrid');

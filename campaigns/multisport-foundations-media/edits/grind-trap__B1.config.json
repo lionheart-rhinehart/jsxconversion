@@ -14,15 +14,15 @@
       "z": 1
     },
     {
-      "id": "accent_underline",
-      "tag": "accent_underline",
+      "id": "side_bar",
+      "tag": "side_bar",
       "type": "rect",
-      "x": 96,
-      "y": 720,
-      "width": 420,
-      "height": 14,
+      "x": 0,
+      "y": 560,
+      "width": 26,
+      "height": 820,
       "fill": "#c4141d",
-      "z": 15
+      "z": 5
     },
     {
       "id": "brand_rule",
@@ -44,7 +44,7 @@
       "x": 90,
       "y": 170,
       "textAlign": "left",
-      "text": "INDIANAPOLIS SPORTS PARENTS",
+      "text": "INDIANAPOLIS SPORT PARENTS",
       "fontSize": 32,
       "fontFamily": "JetBrains Mono",
       "fontWeight": 700,
@@ -64,53 +64,54 @@
       "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
-      "id": "claim_line1",
-      "tag": "claim_line1",
-      "label": "Recognition line",
-      "x": 92,
-      "y": 470,
+      "id": "claim",
+      "tag": "claim",
+      "label": "Mechanism claim",
+      "x": 96,
+      "y": 440,
       "width": 912,
       "textAlign": "left",
-      "text": "IT'S WORKING.",
-      "fontSize": 150,
+      "text": "Speed claimed isn't speed. Speed measured is.",
+      "fontSize": 128,
       "fontFamily": "Anton",
       "color": "#ffffff",
-      "lineHeight": 0.9,
+      "lineHeight": 0.92,
       "letterSpacing": "0.005em",
       "textTransform": "uppercase",
       "z": 21,
-      "role": "hook",
+      "role": "mechanism",
       "accepts": [
-        "hook",
+        "mechanism",
         "claim",
-        "reframe"
+        "reframe",
+        "hook"
       ],
-      "maxChars": 22,
+      "maxChars": 60,
       "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
-      "id": "claim_line2",
-      "tag": "claim_line2",
-      "label": "The twist",
-      "x": 92,
-      "y": 820,
-      "width": 912,
+      "id": "support",
+      "tag": "support",
+      "label": "Support line",
+      "x": 96,
+      "y": 1253,
+      "width": 880,
       "textAlign": "left",
-      "text": "THE PROBLEM IS WHAT IT'S TEACHING.",
-      "fontSize": 104,
-      "fontFamily": "Anton",
+      "text": "We guarantee it because we measure it.",
+      "fontSize": 70,
+      "fontFamily": "Geist",
+      "fontWeight": 500,
       "color": "#c4141d",
-      "lineHeight": 0.95,
-      "letterSpacing": "0.005em",
-      "textTransform": "uppercase",
+      "lineHeight": 1.12,
       "z": 22,
-      "role": "claim",
+      "role": "mechanism",
       "accepts": [
+        "mechanism",
         "claim",
-        "reframe",
-        "mechanism"
+        "proof",
+        "reframe"
       ],
-      "maxChars": 60,
+      "maxChars": 90,
       "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
@@ -138,9 +139,19 @@
     }
   ],
   "media": {
-    "path": "./assets/batch-media/ms-agility.jpg",
+    "path": "./assets/swap-dsc04252.jpg",
     "tag": "bg_media",
     "z": 0,
-    "videoStartTime": 1
+    "videoStartTime": 1,
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1,
+    "crop": {
+      "x": 1324,
+      "y": 0,
+      "width": 1593,
+      "height": 2638,
+      "forPath": "./assets/swap-dsc04252.jpg"
+    }
   }
 }

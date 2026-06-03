@@ -67,11 +67,11 @@
       "id": "claim",
       "tag": "claim",
       "label": "Mechanism claim",
-      "x": 96,
-      "y": 600,
+      "x": 100,
+      "y": 397,
       "width": 912,
       "textAlign": "left",
-      "text": "THE SET ENDS WHEN SPEED DROPS.",
+      "text": "We measure to the hundredth. Everyone else guesses.",
       "fontSize": 128,
       "fontFamily": "Anton",
       "color": "#ffffff",
@@ -93,12 +93,12 @@
       "id": "support",
       "tag": "support",
       "label": "Support line",
-      "x": 96,
-      "y": 1200,
+      "x": 92,
+      "y": 978,
       "width": 880,
       "textAlign": "left",
-      "text": "No two more. Every rep your athlete does stays fast.",
-      "fontSize": 46,
+      "text": "They watch your child train. We measure what actually happens.",
+      "fontSize": 62,
       "fontFamily": "Geist",
       "fontWeight": 500,
       "color": "#c4141d",
@@ -139,9 +139,19 @@
     }
   ],
   "media": {
-    "path": "./assets/batch-media/ms-hipthrust.jpg",
+    "path": "./assets/swap-dsc08885.jpg",
     "tag": "bg_media",
     "z": 0,
-    "videoStartTime": 1
+    "videoStartTime": 1,
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1,
+    "crop": {
+      "x": 1324,
+      "y": 0,
+      "width": 1593,
+      "height": 2643,
+      "forPath": "./assets/swap-dsc08885.jpg"
+    }
   }
 }

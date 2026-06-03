@@ -719,6 +719,7 @@ function CampaignSwap({ fields, setField, campaign }) {
 // campaign: scopes the picker to brand-kit + this campaign's pulled/uploaded media.
 function MediaPicker({ kind, current, onPick, campaign, reloadKey }) {
   const [items, setItems] = useState(null);
+  const [filter, setFilter] = useState("");
   useEffect(() => {
     let live = true;
     setItems(null);
@@ -730,22 +731,35 @@ function MediaPicker({ kind, current, onPick, campaign, reloadKey }) {
   }, [kind, campaign, reloadKey]);
   if (items === null) return <div className="vm-hint">Loading {kind}…</div>;
   if (!items.length) return <div className="vm-hint">No {kind} yet — pull from the Kraken or upload above.</div>;
+  const q = filter.trim().toLowerCase();
+  const shown = q ? items.filter((it) => (it.name || "").toLowerCase().includes(q)) : items;
   return (
-    <div className={"vm-grid vm-grid-" + kind}>
-      {items.map((it) => (
-        <button key={it.path} type="button" title={it.name + (it.source ? " · " + it.source : "")}
-          className={"vm-tile" + (current === it.path ? " on" : "")}
-          onClick={() => onPick(it)}>
-          {it.source && it.source !== "brand" &&
-            <span className={"vm-srcbadge " + it.source}>{it.source === "uploaded" ? "up" : "kr"}</span>}
-          {kind === "audio"
-            ? <span className="vm-audio-name">{it.name}</span>
-            : kind === "clip"
-              ? <video src={apiBase() + encodeURI(it.url)} muted preload="metadata" />
-              : <img src={apiBase() + encodeURI(it.url)} alt="" loading="lazy" />}
-        </button>
-      ))}
-    </div>
+    <React.Fragment>
+      <input type="text" value={filter} onChange={(e) => setFilter(e.target.value)}
+        placeholder={"Filter " + items.length + " " + kind + "… (click a tile to place it)"}
+        style={{ width: "100%", margin: "4px 0 8px", padding: "5px 8px", fontSize: 12,
+          background: "#15171a", color: "#e6e8ea", border: "1px solid #2a2d31", borderRadius: 4 }} />
+      <div className={"vm-grid vm-grid-" + kind}>
+        {shown.map((it) => (
+          <button key={it.path} type="button" title={it.name + (it.source ? " · " + it.source : "")}
+            className={"vm-tile" + (current === it.path ? " on" : "")}
+            onClick={() => onPick(it)}>
+            {it.source && it.source !== "brand" &&
+              <span className={"vm-srcbadge " + it.source}>{it.source === "uploaded" ? "up" : "kr"}</span>}
+            {kind === "audio"
+              ? <span className="vm-audio-name">{it.name}</span>
+              : kind === "clip"
+                ? <video src={apiBase() + encodeURI(it.url)} muted preload="none" />
+                : <img src={apiBase() + encodeURI(it.url)} alt="" loading="lazy" />}
+            {kind !== "audio" &&
+              <span style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "2px 4px",
+                fontSize: 9, lineHeight: 1.2, color: "#cfd2d6", background: "rgba(10,11,13,0.78)",
+                whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{it.name}</span>}
+          </button>
+        ))}
+        {!shown.length && <div className="vm-hint">No {kind} matches "{filter}".</div>}
+      </div>
+    </React.Fragment>
   );
 }
 
@@ -775,7 +789,7 @@ function FolderTree({ nodes, picked, setPicked, expanded, setExpanded, depth }) 
 // pull a folder's media into THIS campaign, or upload from the computer. Calls
 // onChanged() after a pull/upload so the MediaPickers refetch. Hidden when there
 // is no campaign (a per-campaign pull would be meaningless).
-function KrakenBar({ campaign, onChanged }) {
+function KrakenBar({ campaign, onChanged, onUploaded }) {
   const [workspaces, setWorkspaces] = useState(null);
   const [ws, setWs] = useState("");
   const [folders, setFolders] = useState(null);
@@ -853,7 +867,8 @@ function KrakenBar({ campaign, onChanged }) {
   async function upload(files) {
     if (!campaign || !files || !files.length) return;
     setBusy("Uploading " + files.length + " file(s)…");
-    let ok = 0, fail = 0;
+    let ok = 0, fail = 0, lastErr = "";
+    const uploaded = [];
     for (const f of files) {
       const ext = "." + (f.name.split(".").pop() || "").toLowerCase();
       const kind = [".mp4", ".mov", ".webm"].includes(ext) ? "clip"
@@ -861,14 +876,20 @@ function KrakenBar({ campaign, onChanged }) {
       try {
         const q = `/media-upload?campaign=${encodeURIComponent(campaign)}&kind=${kind}&name=${encodeURIComponent(f.name)}`;
         const r = await fetch(apiBase() + q, { method: "POST", body: f });
-        if (!r.ok) throw new Error(((await r.json().catch(() => ({}))).error) || "upload failed");
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(j.error || "upload failed");
+        uploaded.push({ name: j.name || f.name, path: j.path, url: j.url, source: "uploaded", kind });
         ok++;
-      } catch (_) { fail++; }
+      } catch (e) { console.error("[upload]", f.name, e); fail++; lastErr = e.message || String(e); }
     }
-    setMsg(`Uploaded ${ok} file(s)${fail ? `, ${fail} failed` : ""}`);
+    setMsg(`Uploaded ${ok} file(s)${fail ? `, ${fail} failed: ${lastErr}` : ""}`);
     if (fileRef.current) fileRef.current.value = "";
     setBusy(null);
     onChanged();
+    // Auto-place the uploaded file(s) so "upload" actually applies (the parent
+    // routes by kind → pickPhoto/pickClip/pickAudio, which set the clip/photo
+    // STATE the renderer reads — not just the preview field).
+    if (uploaded.length && onUploaded) onUploaded(uploaded);
   }
 
   if (!campaign) return null;
@@ -1238,7 +1259,17 @@ function VideoEditModal({ angleId, assetId, onClose }) {
                 {/* Kraken bar stays mounted across media+audio (preserves the
                     folder selection); hidden on the other tabs. */}
                 <div style={{ display: (tab === "media" || tab === "audio") ? "block" : "none" }}>
-                  <KrakenBar campaign={plan.campaign} onChanged={() => setMediaReload((n) => n + 1)} />
+                  <KrakenBar campaign={plan.campaign} onChanged={() => setMediaReload((n) => n + 1)}
+                    onUploaded={(items) => {
+                      const it = items[items.length - 1];
+                      if (!it) return;
+                      // Route by kind. pickPhoto/pickClip set the clip/photo STATE
+                      // (→ asset.clip on save) AND data[imageKey] for the preview.
+                      if (it.kind === "audio") pickAudio(it);
+                      else if (imageKey) { it.kind === "clip" ? pickClip(it) : pickPhoto(it); }
+                      // No imageKey → the template has no media slot; the media-tab
+                      // hint already explains it; nothing to place.
+                    }} />
                 </div>
                 <div className="vm-tabbody">
                   {tab === "copy" && (window.EditPanel

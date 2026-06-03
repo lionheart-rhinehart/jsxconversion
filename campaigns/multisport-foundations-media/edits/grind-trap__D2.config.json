@@ -69,11 +69,11 @@
       "tag": "reframe",
       "label": "Framed reframe (centered, two-line)",
       "x": 60,
-      "y": 760,
+      "y": 722,
       "width": 960,
       "textAlign": "center",
-      "text": "THIS WAS NEVER\nYOUR KID'S FAULT. OR YOURS.",
-      "fontSize": 96,
+      "text": "The speed window is open right now. It closes at puberty.",
+      "fontSize": 120,
       "fontFamily": "Anton",
       "color": "#ffffff",
       "lineHeight": 1,
@@ -118,6 +118,8 @@
     "path": "./assets/batch-media/ms-lunge.jpg",
     "tag": "bg_media",
     "z": 0,
-    "videoStartTime": 1
+    "videoStartTime": 1,
+    "offsetX": 0,
+    "offsetY": 0
   }
 }
