@@ -65,7 +65,7 @@ const NEW_YEAR_SPEC = {
 
 function NewYearReel({ data = {} }) {
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const year    = data.year    ?? '2027';
   const line1   = data.line1   ?? 'NEW YEAR';

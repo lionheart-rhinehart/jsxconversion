@@ -4,7 +4,7 @@
 
 function VelocityMeter({ value = 0.85, max = 1.2, label = 'BAR SPEED', unit = 'm/s', target = 0.8, animateMs = 1800 }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
   const GREEN = '#15a34a';
   const AMBER = '#f59e0b';
 

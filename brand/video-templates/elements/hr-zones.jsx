@@ -9,7 +9,7 @@ function HRZones({
   label = 'HEART RATE',
 }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   // Generate plausible BPM curve: rest → ramp → plateau with oscillation
   const samples = 60;
@@ -36,7 +36,7 @@ function HRZones({
     { from: 0.6, to: 0.7, color: '#15a34a', label: 'Z2' },
     { from: 0.7, to: 0.8, color: '#f59e0b', label: 'Z3' },
     { from: 0.8, to: 0.9, color: '#ea580c', label: 'Z4' },
-    { from: 0.9, to: 1.0, color: '#c4141d', label: 'Z5' },
+    { from: 0.9, to: 1.0, color: (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d'), label: 'Z5' },
   ];
 
   const prog = Math.max(0, Math.min(1, t / 2.4));

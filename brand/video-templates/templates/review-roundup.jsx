@@ -57,7 +57,7 @@ const REVIEW_ROUNDUP_SPEC = {
 
 function ReviewRoundupReel({ data = {} }) {
   const t = useTime();
-  const RED = '#c4141d', AMBER = '#f59e0b';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d'), AMBER = '#f59e0b';
 
   const eyebrow = data.eyebrow ?? 'WHAT FAMILIES SAY';
   const avg     = data.avg     ?? '4.9';

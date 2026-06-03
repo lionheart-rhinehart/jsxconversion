@@ -1,7 +1,7 @@
 // LOGO STING · REEL — 9:16 conversion
 function LogoStingReel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
   const wordmark1 = data.wordmark1 ?? 'ATHLETES';
   const wordmark2 = data.wordmark2 ?? 'ACCELERATION';
   const tagline = data.tagline ?? 'THE DRIVE IS THEIRS.\nWE BUILD THE ATHLETE.';

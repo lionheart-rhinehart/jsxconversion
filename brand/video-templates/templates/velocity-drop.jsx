@@ -13,7 +13,7 @@ function VelocityDrop({ data = {} }) {
   const bgClip = data.bgClip ?? null;
 
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
   const clamp = (x) => Math.max(0, Math.min(1, x));
   const ease = (x) => Easing.easeOutCubic(clamp(x));
 

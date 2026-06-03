@@ -17,7 +17,7 @@ function StatRevealSquare({ data = {} }) {
   const freeLine2 = data.freeLine2 ?? 'FREE.';
 
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   // Three stat reveals
   const s1T = Easing.easeOutCubic(Math.max(0, Math.min(1, (t - 0.8) / 0.5)));

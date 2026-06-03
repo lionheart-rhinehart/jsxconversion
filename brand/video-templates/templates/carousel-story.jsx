@@ -2,7 +2,7 @@
 // Voiceover-ready: 4 images Ken-burnsed with overlay captions, paced ~2s each
 function CarouselStoryReel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const eyebrow = data.eyebrow ?? 'OUR STORY · 90 SECONDS';
   const slides = [

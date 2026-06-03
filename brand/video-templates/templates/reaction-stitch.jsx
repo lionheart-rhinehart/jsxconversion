@@ -2,7 +2,7 @@
 // Unique element: top-half video + bottom-half pull-quote response card
 function ReactionStitchReel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const eyebrow = data.eyebrow ?? 'REACTION';
   const sourceLabel = data.sourceLabel ?? 'WHAT THEY SAID:';

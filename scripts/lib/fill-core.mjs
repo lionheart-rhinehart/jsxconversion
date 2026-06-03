@@ -18,6 +18,7 @@ import { assemble } from "./assemble.mjs";
 import { BEAT_HEADLINE_ROLE, beatLetter, buildEyebrowAnchor } from "./roles.mjs";
 import { loadCopyLibrary } from "./copy-library.mjs";
 import { buildRefPools, verbatimGuard } from "./copy-resolve.mjs";
+import { buildPaletteMap, remapConfigColors } from "./palette.mjs";
 
 // ---------------------------------------------------------------------------
 // Data tiers
@@ -59,6 +60,7 @@ export function fillField(item, value) {
 export function applySubstitutions(sourceConfig, resolved) {
   const config = structuredClone(sourceConfig);
   const subs = [];
+  const styleSubs = [];
   const skipped = [];
 
   const walk = (arr) => {
@@ -71,8 +73,29 @@ export function applySubstitutions(sourceConfig, resolved) {
       else skipped.push({ id: item.id, tag: item.tag, reason: "no fillable field" });
     }
   };
+  // Brand-token STYLE pass: a color token fills an element's `.fill` (`fillTag`)
+  // and/or its text `.color` (`colorTag`) — WITHOUT touching copy. Kept separate
+  // from the `tag`→fillField walk on purpose: it must never write a hex into a
+  // text slot's `.text`, and it must NOT feed `subs` (the role path derives
+  // `tierFilledIds` from `subs`; a color token there would suppress a headline's
+  // copy). Color tokens flow only through `styleSubs`. When a token is absent
+  // from the tier, the element's literal `fill`/`color` survives as the fallback.
+  const walkStyle = (arr) => {
+    for (const item of arr || []) {
+      if (item.fillTag && item.fillTag in resolved) {
+        item.fill = resolved[item.fillTag];
+        styleSubs.push({ id: item.id, tag: item.fillTag, field: "fill", value: item.fill });
+      }
+      if (item.colorTag && item.colorTag in resolved) {
+        item.color = resolved[item.colorTag];
+        styleSubs.push({ id: item.id, tag: item.colorTag, field: "color", value: item.color });
+      }
+    }
+  };
   walk(config.elements);
   walk(config.fixedDesign);
+  walkStyle(config.elements);
+  walkStyle(config.fixedDesign);
   // media / foreground are taggable too — fill their .path if a tag resolves.
   for (const slot of ["media", "foregroundMedia"]) {
     const m = config[slot];
@@ -82,10 +105,9 @@ export function applySubstitutions(sourceConfig, resolved) {
     }
   }
 
-  const unusedTags = Object.keys(resolved).filter(
-    (t) => !subs.some((s) => s.tag === t),
-  );
-  return { config, subs, skipped, unusedTags };
+  const usedTags = new Set([...subs, ...styleSubs].map((s) => s.tag));
+  const unusedTags = Object.keys(resolved).filter((t) => !usedTags.has(t));
+  return { config, subs, styleSubs, skipped, unusedTags };
 }
 
 // ---------------------------------------------------------------------------
@@ -179,6 +201,10 @@ export function resolveStaticConfig({ clusterId, asset, brand, location, campaig
   const locationTier = loadTier("location", location, dataDir);
   const campaignTier = loadTier("campaign", campaign, dataDir);
   const tierTags = mergeTiers(brandTier.tags, locationTier.tags, campaignTier.tags);
+  // Brand-color remap: rewrite the bank's authoring colors to the ACTIVE kit's
+  // (hex + rgba tints). Identity/no-op for the AA kit (0-diff); full recolor for
+  // any other brand. Applied to the final filled config just before return.
+  const paletteMap = buildPaletteMap(tierTags);
 
   // Cody's verbatim copy library (campaigns/<campaign>/copy-library.json). null
   // for campaigns with no ad-copy.md → the legacy authored-headline path is used.
@@ -252,6 +278,7 @@ export function resolveStaticConfig({ clusterId, asset, brand, location, campaig
         console.error(`[copy] VERBATIM VIOLATION ${asset.id || clusterId} slot "${v.slotId}" (${v.role}): not from copy-library — "${String(v.text).slice(0, 60)}"`);
       }
     }
+    remapConfigColors(config, paletteMap);
     return config;
   }
 
@@ -266,6 +293,7 @@ export function resolveStaticConfig({ clusterId, asset, brand, location, campaig
   }
   const resolved = mergeTiers(tierTags, {}, overrides);
   const { config } = applySubstitutions(sourceConfig, resolved);
+  remapConfigColors(config, paletteMap);
   return config;
 }
 

@@ -9,7 +9,7 @@ function TrajectoryArc({
   endLabel = 'GOAL',
 }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   // Draw arc from t=0.3 to t=1.8
   const prog = Math.max(0, Math.min(1, (t - 0.3) / 1.5));

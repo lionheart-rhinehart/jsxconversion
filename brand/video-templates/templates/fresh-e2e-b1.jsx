@@ -6,7 +6,7 @@
 function FreshE2eB1Reel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
   const E = window.Easing || { easeOutCubic: (x) => x, easeInOutCubic: (x) => x };
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const eyebrow = data.eyebrow ?? 'THE VELOCITY DROP';
   const headline = data.headline ?? "Every coach says 'two more.' Here's what those two reps are teaching.";

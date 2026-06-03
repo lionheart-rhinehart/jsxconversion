@@ -2,7 +2,7 @@
 // Props: days, label, unit, color, animateMs, size
 // Flame is a single teardrop path + inner core; pulses with playback.
 
-function StreakFlame({ days = 100, label = 'DAY STREAK', color = '#f59e0b', coreColor = '#c4141d', animateMs = 1500, size = 360 }) {
+function StreakFlame({ days = 100, label = 'DAY STREAK', color = '#f59e0b', coreColor = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d'), animateMs = 1500, size = 360 }) {
   const t = window.useTime ? window.useTime() : 0;
   const Easing = window.Easing || { easeOutCubic: (x) => x };
 

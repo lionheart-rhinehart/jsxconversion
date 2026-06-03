@@ -1,7 +1,7 @@
 // HYPE INTRO · REEL — 9:16 conversion of 16:9 Hype Intro
 function HypeIntroReel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
   const tag1 = data.tag1 ?? 'THE DRIVE';
   const tag2 = data.tag2 ?? 'IS THEIRS.';
   const tag3 = data.tag3 ?? 'THE ATHLETE';

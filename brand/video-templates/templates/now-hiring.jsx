@@ -70,7 +70,7 @@ const NOW_HIRING_SPEC = {
 
 function NowHiringReel({ data = {} }) {
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const eyebrow = data.eyebrow ?? "WE'RE HIRING";
   const role    = data.role    ?? 'STRENGTH & SPEED COACH';

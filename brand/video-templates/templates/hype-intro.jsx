@@ -14,7 +14,7 @@ function HypeIntro({ data = {} }) {
   const media3 = data.media3 ?? 'assets/photo-squat.jpg';
 
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   // Fast-cut sequence of photos with quick swaps
   // 0.0-0.3 : black + red wipe

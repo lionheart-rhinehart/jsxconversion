@@ -104,7 +104,7 @@ function PRAlertReel({ data = {} }) {
   const nameT  = Easing.easeOutCubic(Math.max(0, Math.min(1, (t - 3.5) / 0.6)));
   const logoT  = Math.max(0, Math.min(1, (t - 4.8) / 0.6));
 
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>

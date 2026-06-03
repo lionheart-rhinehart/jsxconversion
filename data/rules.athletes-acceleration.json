@@ -1,0 +1,22 @@
+{
+  "_comment": "Brand-agnostic creative-engine enforcement rules for Athletes Acceleration. Consumed by scripts/validate-plan.mjs via loadRules(). Brand #2 ships its own data/rules.<brand>.json; absent file falls back to DEFAULT_RULES in validate-plan.mjs.",
+  "brand": "athletes-acceleration",
+  "aspect": { "width": 1080, "height": 1920 },
+  "mediaExempt": ["logo-sting", "stat-reveal"],
+  "verbatim": "substring",
+  "verbatimRoles": ["hook", "claim", "mechanism", "reframe", "kicker", "testimonial"],
+  "cityModel": "clone",
+  "locationRotation": { "enabled": false },
+  "voice": { "noEmoji": true, "noExclamation": true },
+  "bannedWords": ["scholarship", "dream", "guaranteed", "limited time", "act now", "spots left", "don't miss"],
+  "eyebrowPattern": "{CITY} SPORT PARENTS",
+  "_beatRolesNote": "anyOf = the beat's VALID role set; an asset must carry >=1 (playbook: 1 dominant + ~2 supporting, ONE dominant beat per static). guarantee is enforced separately (guaranteeDrift), not as a required F role.",
+  "beatRoles": {
+    "A": { "anyOf": ["hook"] },
+    "B": { "anyOf": ["hook", "claim", "reframe"] },
+    "C": { "anyOf": ["mechanism", "reframe", "stat"] },
+    "D": { "anyOf": ["reframe", "testimonial", "claim"] },
+    "E": { "anyOf": ["proof", "stat", "testimonial"] },
+    "F": { "anyOf": ["offer", "cta"] }
+  }
+}

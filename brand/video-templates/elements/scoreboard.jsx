@@ -3,7 +3,7 @@
 
 function Scoreboard({ home = 'HOME', away = 'AWAY', homeFinal = 34, awayFinal = 21, period = 'FINAL', clock = '00:00' }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   // Animate scores climbing 0 → final over 1.8s
   const prog = Math.max(0, Math.min(1, t / 1.8));

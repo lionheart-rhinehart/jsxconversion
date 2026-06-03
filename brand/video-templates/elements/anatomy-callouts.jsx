@@ -12,7 +12,7 @@ function AnatomyCallouts({
   figure = 'full',
 }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   // Sequential reveal — one callout every 0.5s starting at 0.4s
   const revealAt = (i) => 0.4 + i * 0.5;

@@ -1,7 +1,7 @@
 // DID YOU KNOW — 9:16 — single big fact reveal with source citation
 function DidYouKnowReel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
   const eyebrow = data.eyebrow ?? 'DID YOU KNOW';
   const factPrefix = data.factPrefix ?? 'YOUTH ATHLETES WHO LIFT';
   const factBig = data.factBig ?? '4× PER WEEK';

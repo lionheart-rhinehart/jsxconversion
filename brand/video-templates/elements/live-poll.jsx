@@ -9,10 +9,10 @@ function LivePoll({
   ],
   totalVotes = 1247,
   label = 'WHAT DO YOU TRAIN MOST?',
-  winnerColor = '#c4141d',
+  winnerColor = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d'),
 }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   // Bars fill over 2.0s
   const prog = Math.max(0, Math.min(1, t / 2.0));

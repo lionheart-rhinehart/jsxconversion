@@ -9,7 +9,7 @@ function DrillHowToReel({ data = {} }) {
   const media = data.media ?? 'assets/photo-box-jump.jpg';
 
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const photoScale = 1.06 + 0.04 * (t / 8);
   const eyebrowT = Math.max(0, Math.min(1, (t - 0.3) / 0.4));

@@ -1,7 +1,7 @@
 // TOP 10 LEADERBOARD — 9:16 Reel — uses <Leaderboard>
 function Top10LeaderboardReel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const eyebrow = data.eyebrow ?? 'THIS WEEK\'S FASTEST';
   const title1 = data.title1 ?? 'TOP 5';

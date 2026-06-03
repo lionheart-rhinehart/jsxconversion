@@ -39,7 +39,7 @@ function CountdownReel({ data = {} }) {
   // CTA at 5.5s
   const ctaT = Easing.easeOutBack(Math.max(0, Math.min(1, (t - 5.3) / 0.5)));
 
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>

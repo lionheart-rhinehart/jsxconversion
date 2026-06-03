@@ -59,7 +59,7 @@ const COMMITTED_SPEC = {
 
 function CommittedReel({ data = {} }) {
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const name   = data.name   ?? 'ALEX MORGAN';
   const sport  = data.sport  ?? 'WOMEN’S SOCCER · MIDFIELD';
@@ -123,7 +123,7 @@ function CommittedReel({ data = {} }) {
       </div>
 
       {window.ConfettiBurst && t > 0.8 && (
-        <window.ConfettiBurst count={50} burstAt={0.9} fieldW={1080} fieldH={1920} colors={['#c4141d', '#ffffff', '#f59e0b']}/>
+        <window.ConfettiBurst count={50} burstAt={0.9} fieldW={1080} fieldH={1920} colors={[(window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d'), '#ffffff', '#f59e0b']}/>
       )}
     </div>
   );

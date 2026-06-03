@@ -10,7 +10,7 @@ function CoachLowerThirds({ data = {} }) {
   const media = data.media ?? 'assets/photo-group-coaching.jpg';
 
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   // Slide in 0.3-1.0, hold to 4.5, slide out 4.5-5.5
   let panelX = 0;

@@ -42,6 +42,9 @@ import { fieldRole, buildEyebrowAnchor } from "./lib/roles.mjs";
 import { loadCopyLibrary } from "./lib/copy-library.mjs";
 import { buildRefPools, verbatimGuard } from "./lib/copy-resolve.mjs";
 import { validateTemplateSource } from "./validate-templates.mjs";
+import { BANK_AUTHORING_PALETTE, COLOR_TOKEN_KEYS } from "./lib/palette.mjs";
+import { loadBrandFile } from "./lib/brand-kit.mjs";
+import { stageKitFonts } from "./lib/fonts-stage.mjs";
 
 const PROJECT_ROOT = resolve(".");
 const CAMPAIGNS_DIR = join(PROJECT_ROOT, "campaigns");
@@ -352,6 +355,12 @@ async function renderTemplateMotion(asset, angleId, wantGif) {
     loadTier("campaign", campaign, DATA_DIR).tags,
   );
   const data = buildMotionData(asset, dataKeys, motionTiers);
+  // Active brand-kit color tokens for motion. The tokenized bank templates/
+  // elements read window.__BRAND__.<token> (with their literal as fallback), so
+  // a non-AA kit recolors every motion creative; AA resolves to the same hexes
+  // (0-diff). Any token the kit omits falls back to the authoring palette.
+  const brandPalette = {};
+  for (const k of COLOR_TOKEN_KEYS) brandPalette[k] = motionTiers[k] || BANK_AUTHORING_PALETTE[k];
 
   // Hand-picked media from the video edit surface (Part 4). asset.clip/photo are
   // REAL served paths under a tracked dir (B10), relative to PROJECT_ROOT. Stage
@@ -443,6 +452,9 @@ async function renderTemplateMotion(asset, angleId, wantGif) {
   const wrapperName = `CampWrap_${slug(asset.id).replace(/-/g, "_")}`;
   const wrapper = `// Auto-generated motion wrapper for campaign "${campaign}" asset ${asset.id}.
 // Renders bank template ${tmpl} (window.${compName}) inside a Stage with __CONFIG__ data.
+// Active brand-kit color tokens — tokenized bank templates/elements read these via
+// window.__BRAND__ (literal fallbacks keep AA + the editor preview correct when unset).
+window.__BRAND__ = ${JSON.stringify(brandPalette)};
 const _FONT_PREFLIGHT = {
   display: { fontFamily: "'Anton', sans-serif" },
   mono: { fontFamily: "'JetBrains Mono', monospace" },
@@ -614,6 +626,13 @@ async function main() {
   const manifest = { campaign, generatedFrom: planPath, cells: [], summary: {} };
   let ok = 0, failed = 0, pending = 0, skipped = 0;
 
+  // FONTS follow the active brand kit: stage the kit's custom font files under the
+  // bank family names so the preflight resolves to them (no source/renderer edits).
+  // No-op for AA / any brand that keeps the bank fonts. Removed in finally.
+  const brandFile = brand ? loadBrandFile(brand, DATA_DIR).json : null;
+  const cleanupFonts = stageKitFonts({ brandFile, projectRoot: PROJECT_ROOT, projectDirs: [TEMPLATE_DIR, VIDEO_DIR] });
+  try {
+
   for (const angle of plan.angles || []) {
     if (onlyAngle && angle.id !== onlyAngle) continue;
     const angleOut = join(campaignOut, angle.id);
@@ -659,6 +678,10 @@ async function main() {
       }
       manifest.cells.push(row);
     }
+  }
+
+  } finally {
+    cleanupFonts();
   }
 
   manifest.summary = { ok, failed, pending, skipped, total: manifest.cells.length };

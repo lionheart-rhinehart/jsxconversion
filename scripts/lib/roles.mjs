@@ -70,19 +70,50 @@ export function fieldRole(name) {
   return null;
 }
 
+// The default audience-anchor pattern (AA). `{CITY}` is the placeholder. A brand
+// can override this via data/rules.<brand>.json `eyebrowPattern` (consumed by
+// validate-plan's city parser); the render path uses this default unless a caller
+// passes one. KEEP brand-specific wording OUT of code paths — pass the pattern in.
+export const DEFAULT_EYEBROW_PATTERN = "{CITY} SPORT PARENTS";
+
+// "CARMEL, IN" → "CARMEL" (strip a trailing 2-letter state suffix, trim). Shared
+// by the anchor builder AND the leak parser so they normalize cities identically.
+export function cityLabel(city) {
+  return String(city || "").replace(/,\s*[A-Za-z]{2}\.?$/, "").trim();
+}
+
 // Build the standalone eyebrow anchor from the merged tier tags. The eyebrow
 // orients the viewer — WHO it's for + WHERE — as a chip at the top of the
-// creative. Pattern: "{CITY} SPORT PARENT" with the state suffix stripped
-// ("CARMEL, IN" → "CARMEL"). `city` is the per-campaign placeholder, set via the
-// location/campaign data tier. Null-guarded: no city → a generic fallback so the
-// slot never renders "undefined". Single source for BOTH the static
-// (fill-core resolveStaticConfig) and motion (run-campaign buildMotionData) paths
-// so they can never drift.
-export function buildEyebrowAnchor(tierTags = {}) {
-  const cityLabel = String(tierTags.city || "")
-    .replace(/,\s*[A-Za-z]{2}\.?$/, "")
-    .trim();
-  return cityLabel ? `${cityLabel} SPORT PARENTS` : "{city name} SPORT PARENTS";
+// creative. `city` is the per-campaign placeholder, set via the location/campaign
+// data tier. Null-guarded: no city → a generic fallback so the slot never renders
+// "undefined". Single source for BOTH the static (fill-core resolveStaticConfig)
+// and motion (run-campaign buildMotionData) paths so they can never drift.
+// `pattern` defaults to the AA anchor; brand-agnostic callers pass rules.eyebrowPattern.
+export function buildEyebrowAnchor(tierTags = {}, pattern = DEFAULT_EYEBROW_PATTERN) {
+  const label = cityLabel(tierTags.city);
+  if (!label) return pattern.replace("{CITY}", "{city name}");
+  return pattern.replace("{CITY}", label);
+}
+
+// Inverse of buildEyebrowAnchor: pull the CITY out of a rendered eyebrow string,
+// given the brand's pattern. Returns the normalized-uppercase city or null. Used
+// by validate-plan's city-leak check (e.g. a "-milford" clone whose static edits
+// config froze "CARMEL SPORT PARENTS" must be caught). Builds a regex from the
+// pattern: escape literals, turn {CITY} into a capture group.
+export function parseCityFromEyebrow(text, pattern = DEFAULT_EYEBROW_PATTERN) {
+  const t = String(text || "").trim();
+  if (!t) return null;
+  // Build a TOLERANT regex from the pattern: flexible whitespace, and the final
+  // word of the suffix may be singular OR plural (real data drifts between
+  // "SPORT PARENT" and "SPORT PARENTS"). Escape literals, then relax.
+  const [preRaw, postRaw = ""] = pattern.split("{CITY}");
+  const escFlex = (s) => s.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\s+/g, "\\s+");
+  const pre = escFlex(preRaw);
+  let post = escFlex(postRaw);
+  if (/s$/i.test(postRaw.trim())) post = post.replace(/s$/i, "") + "s?"; // tolerate singular/plural
+  const rx = new RegExp("^\\s*" + pre + "\\s*(.+?)\\s*" + post + "\\s*$", "i");
+  const m = t.match(rx);
+  return m ? m[1].trim().toUpperCase() : null;
 }
 
 // Lay a single VERBATIM hook across the three hook slots (top→bottom):

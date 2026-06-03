@@ -1,7 +1,7 @@
 // REFERRAL HERO — 9:16 — credit current athlete for bringing a friend
 function ReferralHeroReel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
   const GREEN = '#15a34a';
   const eyebrow = data.eyebrow ?? 'REFERRAL HERO';
   const title1 = data.title1 ?? 'BRING A FRIEND.';

@@ -1,7 +1,7 @@
 // STAT REVEAL · REEL — 9:16 conversion of 1:1 Stat Reveal
 function StatRevealReel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
   const eyebrow = data.eyebrow ?? '90-DAY GUARANTEE';
   const title1 = data.title1 ?? 'WE GUARANTEE';
   const title2 = data.title2 ?? 'RESULTS.';

@@ -1,7 +1,7 @@
 // Q&A CARD — 9:16 Reel — talking head Q&A frame (custom layout, no shared element)
 function QACardReel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const eyebrow = data.eyebrow ?? 'ASK THE COACH';
   const askedBy = data.askedBy ?? '@DM FROM A PARENT';

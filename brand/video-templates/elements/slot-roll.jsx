@@ -12,7 +12,7 @@ function SlotRoll({
   label = 'TODAY YOU TRAIN',
 }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   // Reels stop at 1.4, 1.9, 2.4
   const stops = [1.4, 1.9, 2.4];

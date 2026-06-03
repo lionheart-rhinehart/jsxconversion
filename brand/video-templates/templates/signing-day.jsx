@@ -67,7 +67,7 @@ const SIGNING_DAY_SPEC = {
 
 function SigningDayReel({ data = {} }) {
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const eyebrow = data.eyebrow ?? 'SIGNING DAY';
   const name    = data.name    ?? 'JORDAN REESE';
