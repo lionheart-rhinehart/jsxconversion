@@ -22,7 +22,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve, join } from "node:path";
 import {
   resolveWorkspaceId, loadWorkspaces, listFolders, resolveFolder,
-  listFolderMedia, downloadToCache,
+  listFolderMedia, downloadToCache, cacheFileName,
 } from "./lib/kraken.mjs";
 
 const PROJECT_ROOT = resolve(".");
@@ -35,6 +35,7 @@ const campaign = args.find((a) => !a.startsWith("--"));
 const opt = (n) => { const i = args.indexOf(`--${n}`); return i >= 0 ? args[i + 1] : null; };
 const PER_CAMPAIGN = args.includes("--per-campaign"); // editor-server passes this
 const JSON_OUT = args.includes("--json");             // emit one __PULL_JSON__ line on stdout
+const FILE_ID = opt("file");                          // pull ONE content item (per-file pull) instead of the whole folder
 if (!campaign) {
   console.error('Usage: node scripts/kraken-pull.mjs <campaign> --workspace <loc> [--folder "<name|uuid>"] [--per-campaign] [--json]');
   process.exit(1);
@@ -57,6 +58,25 @@ function saveSidecar(patch) {
   const next = { ...sidecar, ...patch };
   writeFileSync(sidecarPath, JSON.stringify(next, null, 2));
   return next;
+}
+
+// ── cache manifest: filename → durable Kraken ref ──────────────────────────────
+// Maps each cached file to its Kraken content {id,url,...} so the editor /media
+// route can surface a durable reference and the static renderer can re-fetch a
+// missing photo (durability mirrors how motion re-extracts asset.clip). Lives
+// next to the cached bytes at <CACHE_DIR>/.manifest.json.
+const manifestPath = join(CACHE_DIR, ".manifest.json");
+function loadManifest() {
+  try { return JSON.parse(readFileSync(manifestPath, "utf8")); } catch (_) { return {}; }
+}
+function recordManifest(man, row, folderId) {
+  const fn = cacheFileName(row, brandPrefix);
+  man[fn] = {
+    id: row.id, url: row.content, title: row.title || null,
+    mime: (row.metadata && row.metadata.mime_type) || null,
+    type: row.type, folderId: folderId || null,
+  };
+  return fn;
 }
 
 async function main() {
@@ -93,45 +113,73 @@ async function main() {
   }
   console.error(`[pull] source folder "${folder.name}" → ${folder.id}`);
 
-  // 3. List media + cache it (flat dir, skip already-cached).
-  const media = await listFolderMedia(wsId, folder.id);
+  // 3. List media. For a per-file pull, narrow to the chosen content id.
+  let media = await listFolderMedia(wsId, folder.id);
+  if (FILE_ID) {
+    const one = media.find((r) => r.id === FILE_ID);
+    if (!one) {
+      console.error(`[pull] file "${FILE_ID}" not found in folder "${folder.name}".`);
+      process.exit(2);
+    }
+    media = [one];
+  }
   if (!media.length) {
     console.error(`[pull] folder "${folder.name}" has no image/video media.`);
   }
   mkdirSync(CACHE_DIR, { recursive: true });
+  const man = loadManifest();
   let cached = 0, skipped = 0, failed = 0, imgs = 0, vids = 0;
+  let onePath = null, oneFile = null; // for the per-file JSON output
   for (const row of media) {
     try {
-      const { skipped: was } = await downloadToCache(row, CACHE_DIR, { prefix: brandPrefix });
+      const { path: dest, skipped: was } = await downloadToCache(row, CACHE_DIR, { prefix: brandPrefix });
       if (was) skipped++; else cached++;
       if (row.type === "image") imgs++; else if (row.type === "video") vids++;
+      oneFile = recordManifest(man, row, folder.id); // filename → durable ref
+      onePath = dest;
     } catch (e) {
       failed++;
       console.error(`[pull]   ✗ ${row.title || row.id}: ${e.message}`);
     }
   }
+  // Persist the filename→ref manifest next to the cached bytes.
+  try { writeFileSync(manifestPath, JSON.stringify(man, null, 2)); }
+  catch (e) { console.error("[pull] manifest write failed:", e.message); }
 
-  // 4. Persist the picks so a resumed run doesn't re-ask.
-  saveSidecar({
-    workspace: wsName, workspaceId: wsId,
-    sourceFolder: folder.name, sourceFolderId: folder.id,
-  });
+  // 4. Persist the folder picks (resume) — NOT for an ad-hoc per-file pull.
+  if (!FILE_ID) {
+    saveSidecar({
+      workspace: wsName, workspaceId: wsId,
+      sourceFolder: folder.name, sourceFolderId: folder.id,
+    });
+  }
 
+  const rel = (p) => p.slice(PROJECT_ROOT.length + 1).replace(/\\/g, "/");
   console.error(
     `[pull] done — ${cached} new, ${skipped} already cached, ${failed} failed ` +
     `(${imgs} image, ${vids} video) → ${CACHE_DIR}`,
   );
-  console.error(`[pull] sidecar: ${sidecarPath}`);
+  if (!FILE_ID) console.error(`[pull] sidecar: ${sidecarPath}`);
   console.error("[pull] open the editor and place these by hand (hand placement is sacred).");
 
   // Machine-readable summary for the spawning editor-server (one clean stdout
   // line; all the human logs above went to stderr).
   if (JSON_OUT) {
-    process.stdout.write("__PULL_JSON__ " + JSON.stringify({
+    const summary = {
       cached, skipped, failed, imgs, vids,
       sourceFolder: folder.name, sourceFolderId: folder.id,
-      cacheDir: CACHE_DIR.slice(PROJECT_ROOT.length + 1).replace(/\\/g, "/"),
-    }) + "\n");
+      cacheDir: rel(CACHE_DIR),
+    };
+    // Per-file pull: include the placed file's relative path + Kraken ref so the
+    // editor can place it directly (and statics can stamp a durable reference).
+    if (FILE_ID && onePath) {
+      const ref = man[oneFile] || {};
+      summary.file = {
+        name: oneFile, path: rel(onePath), type: ref.type,
+        krakenId: ref.id, krakenUrl: ref.url, mime: ref.mime, title: ref.title,
+      };
+    }
+    process.stdout.write("__PULL_JSON__ " + JSON.stringify(summary) + "\n");
   }
   process.exit(failed > 0 ? 1 : 0);
 }
