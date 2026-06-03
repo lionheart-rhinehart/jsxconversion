@@ -1,7 +1,7 @@
 // BEAT THE CLOCK — 9:16 Reel — uses <Stopwatch>
 function BeatTheClockReel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const eyebrow = data.eyebrow ?? 'BEAT THE CLOCK';
   const title1 = data.title1 ?? "YOU'VE GOT";

@@ -11,7 +11,7 @@ function DrillOfDayReel({ data = {} }) {
   const media = data.media ?? 'assets/photo-band-work.jpg';
 
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const photoScale = 1.08 - 0.05 * Math.min(1, t / 7);
 

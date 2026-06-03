@@ -52,7 +52,7 @@ const WELCOME_ATHLETE_SPEC = {
 
 function WelcomeAthleteReel({ data = {} }) {
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const eyebrow = data.eyebrow ?? 'NEW TO THE TEAM';
   const name    = data.name    ?? 'MAYA CHEN';

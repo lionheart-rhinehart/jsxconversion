@@ -82,7 +82,7 @@ const HOLIDAY_HOURS_SPEC = {
 
 function HolidayHoursReel({ data = {} }) {
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const holiday  = data.holiday  ?? 'HOLIDAY HOURS';
   const subtitle = data.subtitle ?? 'PLAN YOUR TRAINING AROUND THE BREAK';

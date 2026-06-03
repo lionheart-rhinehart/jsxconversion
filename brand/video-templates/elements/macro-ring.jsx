@@ -5,7 +5,7 @@
 function MacroRing({ protein = 40, carbs = 55, fat = 18, calories = 560, animateMs = 1600, size = 360 }) {
   const t = window.useTime ? window.useTime() : 0;
   const Easing = window.Easing || { easeOutCubic: (x) => x };
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
   const GREEN = '#15a34a';
   const AMBER = '#f59e0b';
 

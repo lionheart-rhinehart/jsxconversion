@@ -13,7 +13,7 @@ function YearInReviewHorizontal({ data = {} }) {
   const media3 = data.media3 ?? 'assets/photo-jump-female.jpg';
 
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const eyebrowT = Math.max(0, Math.min(1, (t - 0.2) / 0.4));
   const titleT = Easing.easeOutCubic(Math.max(0, Math.min(1, (t - 0.5) / 0.5)));

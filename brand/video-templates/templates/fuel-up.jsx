@@ -78,7 +78,7 @@ const FUEL_UP_SPEC = {
 
 function FuelUpReel({ data = {} }) {
   const t = useTime();
-  const RED = '#c4141d', AMBER = '#f59e0b', GREEN = '#15a34a';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d'), AMBER = '#f59e0b', GREEN = '#15a34a';
 
   const eyebrow  = data.eyebrow  ?? 'FUEL UP';
   const meal     = data.meal     ?? 'POST-LIFT RECOVERY BOWL';

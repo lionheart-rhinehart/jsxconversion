@@ -1,7 +1,7 @@
 // A DAY AT AA — 9:16 Reel — timestamp-driven montage walkthrough
 function DayAtAAReel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const eyebrow = data.eyebrow ?? 'A DAY AT AA';
   const title1 = data.title1 ?? 'HERE\'S WHAT';

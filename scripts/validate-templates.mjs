@@ -52,6 +52,30 @@ export function validateTemplateSource(src, name) {
     errs.push("does not render its eyebrow through the white-pill components — use <Eyebrow top={…}>{data.eyebrow ?? '{city name} SPORT PARENT'}</Eyebrow> (or <TplText field=\"eyebrow\">). Both render red text on a white background.");
   }
 
+  // 3. Brand red must FOLLOW THE ACTIVE KIT — a bare literal would ignore a
+  //    franchisee's color. Allowed only as the fallback in the tokenized read
+  //    `(window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d')`.
+  errs.push(...hardcodedRedErrors(src));
+
+  return errs;
+}
+
+// Brand-red literals that are NOT the fallback of a window.__BRAND__ read. A new
+// bank file with a bare `#c4141d` would silently render AA red under any brand —
+// this rule makes tokenization non-optional. Shared by templates AND elements.
+export function hardcodedRedErrors(src) {
+  const errs = [];
+  for (const [hex, token] of [["#c4141d", "brand_red"], ["#a30f17", "brand_red_deep"]]) {
+    const re = new RegExp(`['"]${hex}['"]`, "gi");
+    let m;
+    while ((m = re.exec(src)) !== null) {
+      const before = src.slice(Math.max(0, m.index - 48), m.index);
+      if (!new RegExp(`${token}\\s*\\|\\|\\s*$`).test(before)) {
+        errs.push(`hardcoded brand red ${hex} — read the active kit: (window.__BRAND__ && window.__BRAND__.${token} || '${hex}')`);
+        break; // one report per color is enough
+      }
+    }
+  }
   return errs;
 }
 
@@ -73,6 +97,17 @@ function main() {
   for (const f of files) {
     const errs = validateTemplateFile(f);
     if (errs.length) failures.push({ name: basename(f), errs });
+  }
+  // Also enforce the brand-red kit rule on ELEMENTS (full-suite run only) — they
+  // aren't full templates (no eyebrow/SPEC) but must still follow the active kit.
+  if (!arg) {
+    const ELEMENTS_DIR = join(dirname(TEMPLATES_DIR), "elements");
+    if (existsSync(ELEMENTS_DIR)) {
+      for (const f of readdirSync(ELEMENTS_DIR).filter((n) => n.endsWith(".jsx"))) {
+        const errs = hardcodedRedErrors(readFileSync(join(ELEMENTS_DIR, f), "utf8"));
+        if (errs.length) failures.push({ name: `elements/${f}`, errs });
+      }
+    }
   }
   if (failures.length) {
     console.error(`\n✗ template validation FAILED — ${failures.length}/${files.length} template(s):\n`);

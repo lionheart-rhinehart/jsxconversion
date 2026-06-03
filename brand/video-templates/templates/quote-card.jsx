@@ -14,7 +14,7 @@ function QuoteCardSquare({ data = {} }) {
   const _quoteWords = wordTokens(quoteText);
 
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const words = _quoteWords;
   // word-by-word from 1.2s, 0.18s per word

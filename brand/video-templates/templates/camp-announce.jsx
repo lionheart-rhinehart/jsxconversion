@@ -14,7 +14,7 @@ function CampAnnounceSquare({ data = {} }) {
   const media = data.media ?? 'assets/photo-group-coaching.jpg';
 
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const photoScale = 1.05 + 0.04 * (t / 7);
   const eyebrowT = Math.max(0, Math.min(1, (t - 0.2) / 0.4));

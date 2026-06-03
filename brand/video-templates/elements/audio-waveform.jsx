@@ -4,7 +4,7 @@
 
 function AudioWaveform({
   barCount = 32,
-  color = '#c4141d',
+  color = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d'),
   label = '// VOICEOVER',
   frequency = 1.0,
 }) {

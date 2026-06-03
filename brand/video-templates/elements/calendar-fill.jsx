@@ -3,7 +3,7 @@
 
 function CalendarFill({ total = 30, label = 'DAY', streakLabel = '🔥 STREAK', missDays = [] }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
   const GREEN = '#15a34a';
 
   // Fill across 3.5 seconds

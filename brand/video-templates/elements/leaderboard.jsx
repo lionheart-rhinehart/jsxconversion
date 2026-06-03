@@ -14,7 +14,7 @@ function Leaderboard({
   highlightTop = 1,
 }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
   const GOLD = '#facc15';
 
   // Shuffle until 1.6s, then lock.

@@ -15,7 +15,7 @@ function FreshSmokeReel({ data = {} }) {
   const ctaText = data.ctaText ?? 'BOOK YOUR FREE ASSESSMENT';
 
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const clamp01 = (x) => Math.max(0, Math.min(1, x));
   // Staggered trait reveals, then the pivot, microscript, and CTA banner.

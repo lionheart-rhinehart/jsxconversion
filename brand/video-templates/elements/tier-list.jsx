@@ -4,7 +4,7 @@
 
 function TierList({
   tiers = [
-    { tier: 'S', label: 'GOD TIER',     items: ['DEADLIFT', 'SPRINT'], color: '#c4141d' },
+    { tier: 'S', label: 'GOD TIER',     items: ['DEADLIFT', 'SPRINT'], color: (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d') },
     { tier: 'A', label: 'GREAT',         items: ['SQUAT', 'BOX JUMP', 'CLEAN'],     color: '#f59e0b' },
     { tier: 'B', label: 'GOOD',          items: ['BENCH', 'ROW'],                    color: '#15a34a' },
     { tier: 'C', label: 'SITUATIONAL',   items: ['CURLS', 'CALF RAISE'],            color: '#6b727f' },

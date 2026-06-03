@@ -6,7 +6,7 @@
 function FreshE2eC1Reel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
   const E = window.Easing || { easeOutCubic: (x) => x };
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const eyebrow = data.eyebrow ?? 'THE RECORDING';
   const headline = data.headline ?? 'The nervous system records the speed that actually happens. Not the speed you meant.';

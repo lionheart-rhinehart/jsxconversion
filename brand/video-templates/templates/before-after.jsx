@@ -15,7 +15,7 @@ function BeforeAfterReel({ data = {} }) {
   const mediaAfter = data.mediaAfter ?? 'assets/hero-sprint-male.jpg';
 
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   // Wipe sweeps right at 1.0-2.6s, holds, sweeps back at 4.6-5.6s
   const cycle = t;

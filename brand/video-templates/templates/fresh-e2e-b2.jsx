@@ -6,7 +6,7 @@
 function FreshE2eB2Reel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
   const E = window.Easing || { easeOutCubic: (x) => x };
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const eyebrow = data.eyebrow ?? 'THE 10% RULE';
   const headline = data.headline ?? '0.92 m/s, then 0.71. A 23% drop.';

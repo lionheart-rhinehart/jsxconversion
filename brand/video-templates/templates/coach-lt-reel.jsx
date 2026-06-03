@@ -1,7 +1,7 @@
 // COACH LOWER-THIRDS · REEL — 9:16 conversion (overlay on raw vertical footage)
 function CoachLowerThirdsReel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
   const coachName = data.coachName ?? 'COACH MIKE TORRES';
   const coachTitle = data.coachTitle ?? 'DIRECTOR OF PERFORMANCE';
   const credsCsv = data.credsCsv ?? 'CSCS,USATF L2,15 YRS,NCAA D1';

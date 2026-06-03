@@ -12,7 +12,7 @@ function RadarChart({
   athleteName = 'JORDAN K.',
 }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
   const prog = Math.max(0, Math.min(1, t / 1.8));
   const eased = window.Easing ? window.Easing.easeOutCubic(prog) : prog;
 

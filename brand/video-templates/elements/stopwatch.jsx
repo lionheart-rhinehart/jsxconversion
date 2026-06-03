@@ -9,7 +9,7 @@ function Stopwatch({
   recordLabel = 'CURRENT RECORD',
 }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   // Sweep over 2 seconds
   const sweepDur = 2.0;

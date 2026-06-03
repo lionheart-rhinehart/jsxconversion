@@ -59,7 +59,7 @@ const ATHLETE_BIRTHDAY_SPEC = {
 
 function AthleteBirthdayReel({ data = {} }) {
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const greeting = data.greeting ?? 'HAPPY BIRTHDAY';
   const name     = data.name     ?? 'TYLER B.';

@@ -1,7 +1,7 @@
 // PARENT QUOTE · REEL — 9:16 conversion of 1:1 Quote Card
 function QuoteCardReel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
   const eyebrow = data.eyebrow ?? 'PARENT TESTIMONIAL';
   const quoteText = data.quoteText ?? 'MY KID GAINED 4 INCHES ON HIS VERTICAL IN 8 WEEKS.';
   const bylineName = data.bylineName ?? 'SARAH M.';

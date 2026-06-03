@@ -69,7 +69,7 @@ const FIVE_STAR_REVIEW_SPEC = {
 
 function FiveStarReviewReel({ data = {} }) {
   const t = useTime();
-  const RED = '#c4141d', AMBER = '#f59e0b';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d'), AMBER = '#f59e0b';
 
   const source   = data.source   ?? 'GOOGLE REVIEW';
   const rating   = Number(data.rating ?? 5);

@@ -1,11 +1,21 @@
 {
   "_comment": "Brand kit for Athletes Acceleration. Keys under `tags` map a layer's field name (its `tag`) to the value that replaces the layer's content at fill time. Built incrementally — add tags as templates surface them. Campaign/location overlays (data/campaign.*.json, data/location.*.json) override these per launch.",
   "brand": "Athletes Acceleration",
-  "_note": "BRAND-LEVEL identity only. Campaign-specific values (city, subhead, microscript, attention) live in data/campaign.*.json and data/location.*.json so they don't bleed across campaigns. Colors are left to each template (per-template gradients/tints); do not blanket-override them here.",
+  "_note": "Identity + brand tokens. Color/font tokens below are byte-exact to templates/multi-sport-foundations/_helpers.jsx and the motion `const RED` literals — they are the FALLBACK values, so AA renders identically while any other brand kit overrides. brand_tint is intentionally absent: AA's photo tints are rgba red at varying alpha (cluster-8/8a/11/12), which a solid token can't represent; franchisee tints are recolored RGB-component-wise at clone time instead.",
+  "kitPath": "brand/aa-design-system",
+  "logo_src": "templates/multi-sport-foundations/assets/aa-logo.png",
   "tags": {
     "logo": "./assets/aa-logo.png",
     "brand_name": "ATHLETES ACCELERATION",
     "guarantee": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us.",
-    "url": "athletesaccel.com"
+    "url": "athletesaccel.com",
+    "brand_red": "#c4141d",
+    "brand_red_deep": "#a30f17",
+    "ink_950": "#0a0b0d",
+    "ink_900": "#15171a",
+    "white": "#ffffff",
+    "font_display": "'Anton', 'Oswald', 'Arial Narrow', sans-serif",
+    "font_body": "'Geist', 'Inter', system-ui, sans-serif",
+    "font_mono": "'JetBrains Mono', ui-monospace, Menlo, monospace"
   }
 }

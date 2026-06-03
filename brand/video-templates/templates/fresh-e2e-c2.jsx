@@ -6,7 +6,7 @@
 function FreshE2eC2Reel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
   const E = window.Easing || { easeOutCubic: (x) => x };
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
   const GREEN = '#6da354';
 
   const eyebrow = data.eyebrow ?? 'SLOW CODE';

@@ -15,7 +15,7 @@ function MeetCoachReel({ data = {} }) {
   const media = data.media ?? 'assets/photo-coach-action.jpg';
 
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const credChips = credentials.split(/\s*·\s*/).filter(Boolean);
   const factPairs = factsText.split(/\s*·\s*/).map((p) => p.split('|')).filter((p) => p[0]);

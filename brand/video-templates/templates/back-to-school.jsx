@@ -64,7 +64,7 @@ const BACK_TO_SCHOOL_SPEC = {
 
 function BackToSchoolReel({ data = {} }) {
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const eyebrow  = data.eyebrow  ?? 'BACK-TO-SCHOOL SEASON';
   const headline = data.headline ?? 'SHOW UP FASTER THAN YOU LEFT';

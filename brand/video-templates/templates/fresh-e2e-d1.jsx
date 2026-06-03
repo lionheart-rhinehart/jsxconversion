@@ -6,7 +6,7 @@
 function FreshE2eD1Reel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
   const E = window.Easing || { easeOutCubic: (x) => x };
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const eyebrow = data.eyebrow ?? 'YOUR KID ISN’T THE PROBLEM';
   const line1 = data.line1 ?? 'It was never your kid’s fault.';

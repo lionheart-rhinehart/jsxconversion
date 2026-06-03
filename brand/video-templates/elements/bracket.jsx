@@ -7,7 +7,7 @@ function Bracket({
   label = 'WHAT MATTERS MOST?',
 }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
   // Reveal: r1 at 0.3, r2 at 1.8, champion at 3.2
   const r1T = (i) => Math.max(0, Math.min(1, (t - (0.3 + i * 0.1)) / 0.3));
   const r2T = (i) => Math.max(0, Math.min(1, (t - (1.8 + i * 0.2)) / 0.4));

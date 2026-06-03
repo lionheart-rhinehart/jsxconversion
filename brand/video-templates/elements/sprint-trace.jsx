@@ -3,7 +3,7 @@
 
 function SprintTrace({ peakSpeed = 21.4, peakAt = 30, distance = 40, unit = 'MPH', label = 'SPRINT SPEED' }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   // Animate draw over 2.4s
   const prog = Math.max(0, Math.min(1, t / 2.4));

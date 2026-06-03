@@ -66,6 +66,20 @@ Read `.claude/skills/creative-engine/config.json` → `brands` and pick the bran
 - **Unknown name / none match** → ask for the brand's slug + data tier and add it to
   `config.json`.
 
+**Registering a NEW brand kit (franchisee intake).** When the user hands you a new brand
+(colors / logo / name / url / fonts), register it so templates can follow it — this is the
+single place a kit is created, and `/repurpose-campaign` consumes the same tier:
+1. Write `data/brand.<slug>.json` carrying the **full token contract** under `tags`:
+   identity (`logo`, `brand_name`, `url`, `guarantee` — may be `""` if the brand has none) +
+   **color tokens** (`brand_red`, `brand_red_deep`, `ink_950`, `ink_900`, `white`) + **font
+   tokens** (`font_display`, `font_body`, `font_mono`); plus top-level `kitPath`
+   (`brand/<slug>`) and `logo_src` (the canonical logo file).
+2. Scaffold the kit folder `brand/<slug>/assets/` and place the logo there.
+3. Validate it: `node -e "import('./scripts/lib/brand-kit.mjs').then(m=>console.log(m.validateKit('<slug>',{dataDir:'data',projectRoot:'.'})))"`
+   — fix every reported error before planning (the kit must be complete or renders fall back).
+   Color/identity then flow automatically: the bank's authoring colors are remapped to the
+   kit's at render time (`scripts/lib/palette.mjs`); AA's kit is unchanged.
+
 The resolved brand gives:
 - the **data tier** for the cascade fill (`data/brand.<dataTier>.json`);
 - the brand kit path (read it before composing anything fresh).
@@ -151,9 +165,13 @@ section produced output** before planning; re-run any that came back empty.
   validates this per angle and HARD-FAILS on any duplicate path (always, regardless of repetitionCap).
   Pull distinct scenes from the Kraken cache; prefer the campaign's school level (middle-school for the
   8–12 foundations work) and clips with no competitor equipment branding.
-- **One red.** The brand red is `#c4141d` (`--aa-red-600`, "matches logo"). Never introduce another red
-  (the legacy clusters once carried `#ed1c24`/`#fe3430` — normalized out). New skeletons use `AA_RED`
-  from `_helpers.jsx` (statics) or `const RED = '#c4141d'` (motion).
+- **One red — and it comes from the active kit.** A creative carries exactly one brand red; never
+  introduce a second (the legacy clusters once carried `#ed1c24`/`#fe3430` — normalized out). The red
+  is NOT hardcoded: the bank's authoring red `#c4141d` (`--aa-red-600`) is the AA kit's value AND the
+  fallback, and it is remapped to whatever the active brand kit's `brand_red` is at render/clone time
+  (`scripts/lib/palette.mjs`). New skeletons keep using `AA_RED` from `_helpers.jsx` (statics) or
+  `const RED = (window.__BRAND__ && window.__BRAND__.brand_red) || '#c4141d'` (motion) — the literal
+  is the AA fallback, the kit overrides it.
 - **Bind copy by REFERENCE, never by authoring.** Set `asset.copyRefs` (a `{role: id}` map,
   e.g. `{proof:"ad-2.altHook.3"}`) and/or `asset.hookRef` (one copy-library id) pointing at
   units in `copy-library.json`. The resolver lays a `hookRef` across **kicker → headline →

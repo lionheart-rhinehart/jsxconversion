@@ -1,7 +1,7 @@
 // RESULTS RECAP · REEL — 9:16 conversion
 function ResultsRecapReel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
   const GREEN = '#15a34a';
   const eyebrow = data.eyebrow ?? 'SCOREBOARD';
   const dateLabel = data.dateLabel ?? 'WEEKEND · MAY 24';

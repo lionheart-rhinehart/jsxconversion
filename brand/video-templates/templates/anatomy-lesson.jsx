@@ -3,7 +3,7 @@
 
 function AnatomyLessonReel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const eyebrow = data.eyebrow ?? 'ANATOMY LESSON';
   const title1 = data.title1 ?? 'WHAT MAKES YOU';

@@ -6,7 +6,7 @@
 function FreshE2eA1Reel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
   const E = window.Easing || { easeOutBack: (x) => x, easeOutCubic: (x) => x };
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const eyebrow = data.eyebrow ?? 'THE LAST REP LIE';
   const line1 = data.line1 ?? 'SHOWS UP.';

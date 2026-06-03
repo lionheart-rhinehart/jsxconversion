@@ -29,7 +29,7 @@ function AthleteSpotlightReel({ data = {} }) {
   // 90-day banner at 4.8
   const bannerT = Easing.easeOutBack(Math.max(0, Math.min(1, (t - 4.8) / 0.5)));
 
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const StatRow = ({ label, before, after, gain, reveal, delay }) => {
     // count-up inside the row

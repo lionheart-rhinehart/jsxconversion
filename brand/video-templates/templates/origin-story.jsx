@@ -1,7 +1,7 @@
 // ORIGIN STORY — 9:16 — timeline year-by-year reveal of brand milestones
 function OriginStoryReel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
   const eyebrow = data.eyebrow ?? 'OUR STORY';
   const title1 = data.title1 ?? 'STARTED IN';
   const title2 = data.title2 ?? 'A GARAGE.';

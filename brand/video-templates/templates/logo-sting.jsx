@@ -9,7 +9,7 @@ function LogoSting({ data = {} }) {
   const url = data.url ?? 'ATHLETESACCEL.COM';
 
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   // 0.0-0.15  : red flash takes screen
   // 0.15-0.5  : flash collapses to a band, logo zooms in

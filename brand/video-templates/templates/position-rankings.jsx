@@ -1,7 +1,7 @@
 // POSITION RANKINGS — 9:16 Reel — uses <TierList>
 function PositionRankingsReel({ data = {} }) {
   const t = window.useTime ? window.useTime() : 0;
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const eyebrow = data.eyebrow ?? 'OPINIONATED RANKINGS';
   const title1 = data.title1 ?? 'EVERY LIFT';
@@ -19,7 +19,7 @@ function PositionRankingsReel({ data = {} }) {
 
   const parseCsv = (s) => s.split(',').map((x) => x.trim()).filter(Boolean);
   const tiers = [
-    { tier: 'S', label: sLabel, items: parseCsv(sCsv), color: '#c4141d' },
+    { tier: 'S', label: sLabel, items: parseCsv(sCsv), color: (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d') },
     { tier: 'A', label: aLabel, items: parseCsv(aCsv), color: '#f59e0b' },
     { tier: 'B', label: bLabel, items: parseCsv(bCsv), color: '#15a34a' },
     { tier: 'C', label: cLabel, items: parseCsv(cCsv), color: '#6b727f' },

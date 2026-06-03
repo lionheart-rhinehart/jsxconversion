@@ -72,7 +72,7 @@ const RECOVERY_TIP_SPEC = {
 
 function RecoveryTipReel({ data = {} }) {
   const t = useTime();
-  const RED = '#c4141d';
+  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
 
   const category = data.category ?? 'SLEEP';
   const stat     = data.stat     ?? '8–10';

@@ -4,7 +4,7 @@
 
 function ConfettiBurst({ count = 60, colors, burstAt = 0.2, size = 1, gravity = 1, fieldW = 1080, fieldH = 1920 }) {
   const t = window.useTime ? window.useTime() : 0;
-  const PALETTE = colors || ['#c4141d', '#f59e0b', '#15a34a', '#ffffff', '#1d6fb8'];
+  const PALETTE = colors || [(window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d'), '#f59e0b', '#15a34a', '#ffffff', '#1d6fb8'];
 
   // simple deterministic pseudo-random from an integer seed
   const rand = (seed) => {
