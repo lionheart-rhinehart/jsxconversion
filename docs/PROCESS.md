@@ -211,12 +211,28 @@ coach-lower-thirds / logo-sting / meet-coach for worked examples):
   folder, so concurrent/background renders never collide in `out/` or `.tmp/`.
 
 ## Run it
+
+**Run from the MAIN checkout** (e.g. `D:\Claude CODE\jsxconversion`), not an old git
+worktree — a worktree can be behind `main`, so you'd be running stale code. After a deploy,
+`/full-deploy-light` fast-forwards the main checkout for you.
+
 ```
-node scripts/editor-server.mjs            # :5173 plan API + render
-node "brand/video-templates/serve.mjs"    # :5599 serves the review page
+npm run dev                               # BOTH servers, editor on --watch (auto-reload)
+# → :5173 plan API + render, :5599 review page; Ctrl+C stops both
 # open http://localhost:5599/review.html?campaign=<name>
 node scripts/run-campaign.mjs <name>      # render approved (background-friendly)
 ```
+
+**Why `npm run dev` (not bare `node`):** `editor-server.mjs` (:5173) is a plain Node process
+and does NOT hot-reload — without `--watch` you must Ctrl+C and restart it by hand after every
+server-side change (the recurring "my fix isn't live" trap). `npm run dev` runs it under
+`node --watch`, so editing `editor-server.mjs` (or its in-process imports `fill-core.mjs` /
+`roles.mjs`) — or a deploy syncing the main checkout — restarts it automatically. The review
+page, `.jsx`, `editor.html`, and the spawned Kraken CLIs are already live per request / per
+spawn and never need a restart.
+
+Individual servers if you prefer two terminals: `npm run dev:editor` (--watch) + `npm run dev:review`.
+Bare `node scripts/editor-server.mjs` still works but you must restart it manually on changes.
 
 ## Deferred (future stages)
 - ffmpeg **audio-mux** into video (renders are silent for now).

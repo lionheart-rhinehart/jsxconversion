@@ -931,24 +931,10 @@ function KrakenBar({ campaign, onChanged, onUploaded, onPlaced }) {
     return roots;
   }, [folders]);
 
-  async function pull() {
-    if (!campaign || !ws || !picked) return;
-    setBusy("Pulling " + picked.name + "…");
-    try {
-      // Send the readable workspace NAME (sidecar stays human-readable); the
-      // FOLDER goes by id so duplicate names can't pull the wrong one.
-      const wsName = (workspaces.find((w) => w.id === ws) || {}).name || ws;
-      const r = await fetch(apiBase() + "/kraken/pull", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ campaign, workspace: wsName, folder: picked.id }),
-      });
-      const j = await r.json();
-      if (!r.ok) throw new Error(j.error || (j.stderr || "").slice(-160) || "pull failed");
-      setMsg(`Pulled ${picked.name}: ${j.cached || 0} new, ${j.skipped || 0} cached (${j.imgs || 0} img, ${j.vids || 0} vid)`);
-      onChanged();
-    } catch (e) { setMsg("Pull failed: " + e.message); }
-    setBusy(null);
-  }
+  // NOTE: whole-folder "Pull" was removed from the UI — it bulk-downloaded every
+  // file (e.g. IG Stories = 207 videos) and hung. Browse the folder's thumbnails
+  // and click ONE to place it (pullFile → /kraken/pull-file downloads just that
+  // file). The /kraken/pull endpoint still exists for CLI/bulk use.
 
   async function upload(files) {
     if (!campaign || !files || !files.length) return;
@@ -1009,7 +995,6 @@ function KrakenBar({ campaign, onChanged, onUploaded, onPlaced }) {
           <option value="">{workspaces === null ? "Loading locations…" : (workspaces.length ? "— AA location —" : "No locations configured")}</option>
           {(workspaces || []).map((w) => <option key={w.id} value={w.id}>{w.name}</option>)}
         </select>
-        <button className="vm-tab" disabled={!picked || !!busy} onClick={pull} title={picked ? "Pull " + picked.name : "Pick a folder first"}>{busy ? "…" : "Pull"}</button>
         <button className="vm-tab" disabled={!!busy} onClick={() => fileRef.current && fileRef.current.click()}>Upload</button>
         <input ref={fileRef} type="file" multiple style={{ display: "none" }}
           accept="image/*,video/*,audio/*" onChange={(e) => upload([...e.target.files])} />
