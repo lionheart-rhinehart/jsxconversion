@@ -14,11 +14,12 @@
   },
   "_planNotes": {
     "angle": "Angle 2 — 'proof = confidence' (Pain state #2, the kid whose confidence is shrinking). Mechanism = UMS Principle 4: two kinds of confidence — praise is fragile (on loan), data-built confidence is durable. PROOF for this angle is the 'shy kid' case study + the visible-numbers mechanism + credentials + the guarantee — it deliberately does NOT use the Wang 224% stat (that proves velocity/jump, not confidence).",
-    "copyRule": "VERBATIM ONLY — same as angle 1. Every templateData value is a line Cody wrote (ad Headline/Description, image headline/sub-headline, the alternative hooks, or sentences from the proof=confidence AD bodies / case study). Two-sentence lines are split only at their own period. No microscripts (Cody's preference), no paraphrase, no stitching.",
-    "media": "EVERY creative is media-backed (hard rule 6). Statics set asset.media (./assets/conf-<id>.jpg — a distinct Hamilton County frame-grab); motion sets asset.clip (brand/video-templates/assets/conf-<id>.mp4). Sources are the HC IG-Stories clips angle 1 did NOT use — distinct per asset, no reuse. Note: the middle-school clips were mostly spent on angle 1, so angle 2 leans on high-school action footage (same Indianapolis-area facilities); swap to MS footage in the editor if you prefer.",
-    "eyebrow": "location = indianapolis → eyebrow auto-anchors 'INDIANAPOLIS SPORT PARENTS' (white chip) on every card.",
-    "guaranteeFlag": "guarantee role is brand-locked to the canonical wording on F1/F2; your ad-copy phrasing ('Or we keep training them free') differs — locked canonical renders. Same flag as angle 1.",
-    "status": "All 'pending' — NEW separate campaign (multisport-foundations-confidence). Awaiting your approval on the review page; nothing renders until you approve."
+    "copyRule": "BY REFERENCE, VERBATIM. The role-slot cards (A1–A4, B1–B2, C1–C2, D1–D2, E4) bind copy by id into copy-library.json via copyRefs/hookRef — no inline text, every word traces to a magnet Cody wrote; verbatimGuard is CLEAN on all of these. The 'cut more magnets' upgrade (scripts/lib/copy-library.mjs) splits each ad body into bodyPara/bodyLine units, so proof/blame/offer lines are now referenceable too. Multi-field templates (E1 meet-coach, E2 quote-card, E3 cluster-31 credentials, F1 stat-reveal, F2 cluster-32, BR1 logo-sting) keep templateData by design (per SKILL.md). KNOWN EXCEPTION: E3's credential card carries 3 proof/claim labels (the NFL names + 'the same credential D1 and NFL strength coaches carry') that are verbatim FACTS from AD3 reformatted as uppercase card labels, so the report-only guard flags them — not a rewrite (proper nouns + a capitalized clause), just not a whole-sentence magnet. 16 of 17 cards trace 100% clean.",
+    "layout": "Hook cards use the role-upgrade stack: eyebrow (INDIANAPOLIS SPORT PARENTS, white chip, top) → kicker (lead-in, above headline) → headline → subhead. cluster-43 is the stacked-hook template (A4/B1/D2). A hookRef auto-splits a 2–3 segment line across kicker/headline/subhead via splitHook; a copyRefs binds a single magnet to one slot.",
+    "media": "EVERY creative is media-backed (hard rule 6). Statics set asset.media (./assets/conf-<id>.jpg); the runner injects it as a full-frame bg + legibility scrim + text shadows. Motion sets asset.clip. Distinct source per asset, no reuse.",
+    "eyebrow": "location = indianapolis → eyebrow auto-anchors 'INDIANAPOLIS SPORT PARENTS' (white chip) on every card; never hand-set.",
+    "guaranteeFlag": "guarantee role is brand-locked to the canonical wording on F1/F2; renders the canonical string.",
+    "status": "All 'pending' — re-authored by reference; awaiting approval on the review page. Clear campaigns/multisport-foundations-confidence/edits/ before re-render (stale sidecars override the plan)."
   },
   "angles": [
     {
@@ -37,18 +38,15 @@
           "source": "template",
           "template": "cluster-33",
           "media": "./assets/conf-A1.jpg",
-          "copySource": "Verbatim (AD body): \"There are two kinds of confidence.\"",
+          "copyRefs": {
+            "hook": "ad-1-version-a-consequence-depth-short.bodyLine.2.2"
+          },
+          "copySource": "Verbatim magnet (AD1A body): \"There are two kinds of confidence.\"",
           "status": "rendered",
           "notes": "Lone hook over training footage.",
-          "copyByRole": {
-            "hook": "There are two kinds of confidence."
-          },
-          "knowledgeRefs": [
-            "hook: ad_copy_series_2.body"
-          ],
           "output": "out/campaigns/multisport-foundations-confidence/proof-confidence/A1.png",
           "thumb": "out/campaigns/multisport-foundations-confidence/proof-confidence/A1.png",
-          "renderedAt": "2026-06-03T03:52:20.416Z"
+          "renderedAt": "2026-06-03T12:34:27.780Z"
         },
         {
           "id": "A2",
@@ -58,20 +56,16 @@
           "source": "template",
           "template": "cluster-35",
           "media": "./assets/conf-A2.jpg",
-          "copySource": "Ad Headline (verbatim) + Description (verbatim): \"When They Stop Believing\" / \"Confidence from proof.\"",
-          "status": "rendered",
-          "notes": "Split card: headline + description.",
-          "copyByRole": {
-            "hook": "When They Stop Believing",
-            "claim": "Confidence from proof."
+          "copyRefs": {
+            "hook": "ad-1-version-b-emotional-depth-short.headline",
+            "claim": "ad-1-version-a-consequence-depth-short.description"
           },
-          "knowledgeRefs": [
-            "hook: ad_copy_series_2.headlines",
-            "claim: ad_copy_series_2.headlines"
-          ],
+          "copySource": "Verbatim magnets: ad Headline \"When They Stop Believing\" (hook) + Description \"Confidence from proof.\" (claim).",
+          "status": "rendered",
+          "notes": "Split card: headline + claim.",
           "output": "out/campaigns/multisport-foundations-confidence/proof-confidence/A2.png",
           "thumb": "out/campaigns/multisport-foundations-confidence/proof-confidence/A2.png",
-          "renderedAt": "2026-06-03T03:52:23.990Z"
+          "renderedAt": "2026-06-03T12:34:31.770Z"
         },
         {
           "id": "A3",
@@ -81,18 +75,15 @@
           "source": "template",
           "template": "cluster-42",
           "media": "./assets/conf-A3.jpg",
-          "copySource": "AD1 alt hook (verbatim Mechanism): \"Your kid doesn't need to be told they're good. They need to see it.\"",
+          "copyRefs": {
+            "reframe": "ad-1-version-a-consequence-depth-short.altHook.3"
+          },
+          "copySource": "Verbatim magnet (AD1A alt hook, Mechanism): \"Your kid doesn't need to be told they're good. They need to see it.\"",
           "status": "rendered",
           "notes": "Centered reframe.",
-          "copyByRole": {
-            "reframe": "Your kid doesn't need to be told they're good. They need to see it."
-          },
-          "knowledgeRefs": [
-            "reframe: ad_copy_series_2.alt_hooks"
-          ],
           "output": "out/campaigns/multisport-foundations-confidence/proof-confidence/A3.png",
           "thumb": "out/campaigns/multisport-foundations-confidence/proof-confidence/A3.png",
-          "renderedAt": "2026-06-03T03:52:27.544Z"
+          "renderedAt": "2026-06-03T12:34:35.448Z"
         },
         {
           "id": "A4",
@@ -100,20 +91,18 @@
           "temperature": "cold",
           "format": "static",
           "source": "template",
-          "template": "cluster-36",
+          "template": "cluster-43",
           "media": "./assets/conf-A4.jpg",
-          "copySource": "Image headline (verbatim) + image sub-headline (verbatim), stacked.",
-          "status": "rendered",
-          "notes": "Your on-image headline + sub-headline.",
-          "copyByRole": {
-            "reframe": "Here's Why Most Young Athletes Lose Confidence\n(And What Actually Rebuilds It)"
+          "copyRefs": {
+            "hook": "ad-1-version-a-consequence-depth-short.imageHeadline",
+            "reframe": "ad-1-version-a-consequence-depth-short.imageSubhead"
           },
-          "knowledgeRefs": [
-            "reframe: ad_copy_series_2.image_headline"
-          ],
+          "copySource": "Verbatim magnets: image headline \"Here's Why Most Young Athletes Lose Confidence\" (headline) + image sub-headline \"(And What Actually Rebuilds It)\" (subhead).",
+          "status": "rendered",
+          "notes": "Stacked layout: headline + subhead (kicker empty).",
           "output": "out/campaigns/multisport-foundations-confidence/proof-confidence/A4.png",
           "thumb": "out/campaigns/multisport-foundations-confidence/proof-confidence/A4.png",
-          "renderedAt": "2026-06-03T03:52:31.268Z"
+          "renderedAt": "2026-06-03T12:34:40.042Z"
         },
         {
           "id": "B1",
@@ -121,21 +110,15 @@
           "temperature": "cold",
           "format": "static",
           "source": "template",
-          "template": "cluster-39",
+          "template": "cluster-43",
           "media": "./assets/conf-B1.jpg",
-          "templateData": {
-            "claim": "The hardest part isn't watching them lose.",
-            "support": "It's watching them stop believing they can win."
-          },
-          "copySource": "AD1B alt hook (verbatim Mirror): \"The hardest part isn't watching them lose. It's watching them stop believing they can win.\"",
+          "hookRef": "ad-1-version-b-emotional-depth-short.altHook.2",
+          "copySource": "Verbatim magnet (AD1B alt hook, Mirror): \"The hardest part isn't watching them lose. It's watching them stop believing they can win.\" — auto-split headline + subhead.",
           "status": "rendered",
-          "notes": "Headline + support = the two sentences of your Mirror hook.",
-          "knowledgeRefs": [
-            "hook: ad_copy_series_2.alt_hooks"
-          ],
+          "notes": "Two-segment hook stacked (headline + subhead).",
           "output": "out/campaigns/multisport-foundations-confidence/proof-confidence/B1.png",
           "thumb": "out/campaigns/multisport-foundations-confidence/proof-confidence/B1.png",
-          "renderedAt": "2026-06-03T03:52:34.262Z"
+          "renderedAt": "2026-06-03T12:35:09.685Z"
         },
         {
           "id": "B2",
@@ -145,19 +128,18 @@
           "source": "template",
           "template": "cluster-40",
           "media": "./assets/conf-B2.jpg",
-          "templateData": {
-            "reframe": "Praise is on loan.",
-            "support": "It goes quiet exactly when your kid reaches for it."
+          "copyRefs": {
+            "reframe": [
+              "ad-3-version-a-consequence-depth-long.bodyLine.3.1",
+              "ad-3-version-a-consequence-depth-long.bodyLine.3.4"
+            ]
           },
-          "copySource": "Verbatim (AD2 body): \"Praise is on loan...\" + \"so it goes quiet exactly when your kid reaches for it\".",
+          "copySource": "Verbatim magnets (AD3A body): \"Praise is on loan.\" (reframe) + \"It was never really theirs.\" (support).",
           "status": "rendered",
-          "notes": "Quote-style reframe + support.",
-          "knowledgeRefs": [
-            "reframe: ad_copy_series_2.body"
-          ],
+          "notes": "Quote-style reframe + support, both verbatim sentences.",
           "output": "out/campaigns/multisport-foundations-confidence/proof-confidence/B2.png",
           "thumb": "out/campaigns/multisport-foundations-confidence/proof-confidence/B2.png",
-          "renderedAt": "2026-06-03T03:52:37.527Z"
+          "renderedAt": "2026-06-03T12:35:35.043Z"
         },
         {
           "id": "C1",
@@ -167,18 +149,15 @@
           "source": "template",
           "template": "cluster-36",
           "media": "./assets/conf-C1.jpg",
-          "copySource": "Verbatim (AD body): \"Only one of them holds up when the game is on the line, and it isn't the one made of words.\"",
-          "status": "rendered",
-          "notes": "The two-kinds mechanism (≠ A4 copy).",
-          "copyByRole": {
-            "reframe": "Only one of them holds up when the game is on the line. And it isn't the one made of words."
+          "copyRefs": {
+            "reframe": "ad-2-version-a-consequence-depth-medium.bodyLine.2.4"
           },
-          "knowledgeRefs": [
-            "reframe: ad_copy_series_2.body"
-          ],
+          "copySource": "Verbatim magnet (AD2A body): \"Only one of them holds up when the play is on the line, and it isn't the one made of words.\"",
+          "status": "rendered",
+          "notes": "The two-kinds mechanism (distinct copy from A4).",
           "output": "out/campaigns/multisport-foundations-confidence/proof-confidence/C1.png",
           "thumb": "out/campaigns/multisport-foundations-confidence/proof-confidence/C1.png",
-          "renderedAt": "2026-06-03T03:52:40.738Z"
+          "renderedAt": "2026-06-03T12:35:48.919Z"
         },
         {
           "id": "C2",
@@ -188,19 +167,18 @@
           "source": "template",
           "template": "cluster-40",
           "media": "./assets/conf-C2.jpg",
-          "templateData": {
-            "reframe": "They have to see it.",
-            "support": "You can't hand it to them, and a coach can't shout it into them."
+          "copyRefs": {
+            "reframe": [
+              "ad-3-version-b-emotional-depth-long.bodyLine.3.4",
+              "ad-3-version-b-emotional-depth-long.bodyLine.3.3"
+            ]
           },
-          "copySource": "Verbatim (AD3B body): \"You can't hand it to them, and a coach can't shout it into them. They have to see it.\"",
+          "copySource": "Verbatim magnets (AD3B body): \"They have to see it.\" (reframe) + \"You can't hand it to them, and a coach can't shout it into them.\" (support).",
           "status": "rendered",
-          "notes": "Mechanism reframe (≠ B2 copy).",
-          "knowledgeRefs": [
-            "reframe: ad_copy_series_2.body"
-          ],
+          "notes": "Mechanism reframe (distinct copy from B2).",
           "output": "out/campaigns/multisport-foundations-confidence/proof-confidence/C2.png",
           "thumb": "out/campaigns/multisport-foundations-confidence/proof-confidence/C2.png",
-          "renderedAt": "2026-06-03T03:52:44.008Z"
+          "renderedAt": "2026-06-03T12:36:00.689Z"
         },
         {
           "id": "D1",
@@ -208,20 +186,17 @@
           "temperature": "warm",
           "format": "static",
           "source": "template",
-          "template": "cluster-42",
+          "template": "cluster-36",
           "media": "./assets/conf-D1.jpg",
-          "copySource": "Verbatim (AD3 body): \"you didn't do anything wrong by encouraging them.\"",
-          "status": "rendered",
-          "notes": "Blame removal (≠ A3 copy).",
-          "copyByRole": {
-            "reframe": "You didn't do anything wrong by encouraging them."
+          "copyRefs": {
+            "reframe": "ad-3-version-a-consequence-depth-long.bodyLine.4.1"
           },
-          "knowledgeRefs": [
-            "reframe: ad_copy_series_2.body"
-          ],
+          "copySource": "Verbatim magnet (AD3A body): \"And here's the part worth saying plainly: you didn't do anything wrong by encouraging them.\"",
+          "status": "rendered",
+          "notes": "Blame removal (distinct copy from A3).",
           "output": "out/campaigns/multisport-foundations-confidence/proof-confidence/D1.png",
           "thumb": "out/campaigns/multisport-foundations-confidence/proof-confidence/D1.png",
-          "renderedAt": "2026-06-03T03:52:47.257Z"
+          "renderedAt": "2026-06-03T12:36:15.265Z"
         },
         {
           "id": "D2",
@@ -229,20 +204,18 @@
           "temperature": "warm",
           "format": "static",
           "source": "template",
-          "template": "cluster-36",
+          "template": "cluster-43",
           "media": "./assets/conf-D2.jpg",
-          "copySource": "Verbatim (AD3 body): \"confidence problems don't get solved with words. They get solved with evidence.\"",
-          "status": "rendered",
-          "notes": "The pivot to proof (≠ A4/C1 copy).",
-          "copyByRole": {
-            "reframe": "Confidence problems don't get solved with words. They get solved with evidence."
+          "copyRefs": {
+            "hook": "ad-3-version-a-consequence-depth-long.bodyLine.4.3",
+            "reframe": "ad-3-version-a-consequence-depth-long.bodyLine.4.4"
           },
-          "knowledgeRefs": [
-            "reframe: ad_copy_series_2.body"
-          ],
+          "copySource": "Verbatim magnets (AD3A body): \"It just isn't the tool that fixes this, because confidence problems don't get solved with words.\" (headline) + \"They get solved with evidence.\" (subhead).",
+          "status": "rendered",
+          "notes": "The pivot to proof, stacked (distinct copy from C1).",
           "output": "out/campaigns/multisport-foundations-confidence/proof-confidence/D2.png",
           "thumb": "out/campaigns/multisport-foundations-confidence/proof-confidence/D2.png",
-          "renderedAt": "2026-06-03T03:52:50.428Z"
+          "renderedAt": "2026-06-03T12:36:32.940Z"
         },
         {
           "id": "E1",
@@ -263,17 +236,12 @@
             "ctaText": "BOOK THE ATHLETE ANALYSIS",
             "ctaMicro": "FREE. NOT A PEP TALK. A DATA SET."
           },
-          "copySource": "Verbatim: AD Description (eyebrow), AD3 line \"confidence problems don't get solved with words. They get solved with evidence\" (coach quote), credentials, \"Not a pep talk. A data set.\" (cta micro).",
+          "copySource": "Multi-field template (templateData by design). Verbatim values: AD Description (eyebrow), AD3 line \"confidence problems don't get solved with words. They get solved with evidence\" (quote), credentials verbatim, \"Not a pep talk. A data set.\" (cta micro).",
           "status": "rendered",
           "notes": "Coach proof VSL. Binds a distinct coach/training clip.",
-          "knowledgeRefs": [
-            "proof: credentials",
-            "reframe: ad_copy_series_2.body",
-            "offer: the_offer"
-          ],
           "output": "out/campaigns/multisport-foundations-confidence/proof-confidence/E1.mp4",
           "thumb": "out/campaigns/multisport-foundations-confidence/proof-confidence/E1.mp4",
-          "renderedAt": "2026-06-03T03:53:17.035Z"
+          "renderedAt": "2026-06-03T12:37:18.469Z"
         },
         {
           "id": "E2",
@@ -290,16 +258,12 @@
             "bylineMeta": "INDIANAPOLIS · ATHLETES ACCELERATION",
             "statsLabel": "THE STRENGTH CAME FIRST. THE BELIEF GREW OUT OF IT."
           },
-          "copySource": "Verbatim case study (AD2A 'one mom'): \"He got physically stronger here first, and the confidence followed it, and now he plays.\" + \"The strength came first. The belief grew out of it.\"",
+          "copySource": "Multi-field template (templateData by design). Verbatim case study (AD2A 'one mom'): \"He got physically stronger here first, and the confidence followed it, and now he plays.\" + \"The strength came first. The belief grew out of it.\"",
           "status": "rendered",
           "notes": "Parent case-study quote card.",
-          "knowledgeRefs": [
-            "testimonial: ad_copy_series_2.case_study",
-            "byline: ad_copy_series_2.case_study"
-          ],
           "output": "out/campaigns/multisport-foundations-confidence/proof-confidence/E2.mp4",
           "thumb": "out/campaigns/multisport-foundations-confidence/proof-confidence/E2.mp4",
-          "renderedAt": "2026-06-03T03:53:38.750Z"
+          "renderedAt": "2026-06-03T12:38:10.619Z"
         },
         {
           "id": "E3",
@@ -316,15 +280,12 @@
             "proof_names": "ZACK MARTIN · TED KARRAS · NICK MARTIN",
             "claim_line": "The same credential D1 and NFL strength coaches carry."
           },
-          "copySource": "Verbatim credential facts (AD3): Coach Graham Wilkerson, CSCS, trained Zack Martin / Ted Karras / Nick Martin; \"the same credential D1 and NFL strength coaches carry.\"",
+          "copySource": "Multi-field credential template (templateData by design). Verbatim facts (AD3): Coach Graham Wilkerson, CSCS, trained Zack Martin / Ted Karras / Nick Martin; \"the same credential D1 and NFL strength coaches carry.\"",
           "status": "rendered",
-          "notes": "Credential verdict (static, ≠ E1 video / E2 quote).",
-          "knowledgeRefs": [
-            "proof: credentials"
-          ],
+          "notes": "Credential verdict (static, distinct from E1 video / E2 quote).",
           "output": "out/campaigns/multisport-foundations-confidence/proof-confidence/E3.png",
           "thumb": "out/campaigns/multisport-foundations-confidence/proof-confidence/E3.png",
-          "renderedAt": "2026-06-03T03:53:42.112Z"
+          "renderedAt": "2026-06-03T12:38:17.743Z"
         },
         {
           "id": "E4",
@@ -334,20 +295,18 @@
           "source": "template",
           "template": "fresh-e2e-e5-testimonial",
           "media": "./assets/conf-E4.jpg",
-          "copySource": "Verbatim case study (AD2B 'one mom'): \"He got physically stronger here first, and then something bigger followed, he got confident, and now he plays.\"",
-          "status": "rendered",
-          "notes": "Testimonial card (≠ E2 wording — uses the AD2B variant).",
-          "copyByRole": {
-            "testimonial": "He got physically stronger here first, and then something bigger followed, he got confident, and now he plays.",
+          "copyRefs": {
+            "testimonial": "ad-2-version-b-emotional-depth-medium.bodyLine.5.3"
+          },
+          "templateData": {
             "byline": "A PARENT · INDIANAPOLIS"
           },
-          "knowledgeRefs": [
-            "testimonial: ad_copy_series_2.case_study",
-            "byline: ad_copy_series_2.case_study"
-          ],
+          "copySource": "Verbatim magnet (AD2B 'one mom'): \"He got physically stronger here first, and then something bigger followed, he got confident, and now he plays.\" (testimonial). Byline is an identity slot (templateData).",
+          "status": "rendered",
+          "notes": "Testimonial card (AD2B variant; distinct wording from E2).",
           "output": "out/campaigns/multisport-foundations-confidence/proof-confidence/E4.png",
           "thumb": "out/campaigns/multisport-foundations-confidence/proof-confidence/E4.png",
-          "renderedAt": "2026-06-03T03:53:45.691Z"
+          "renderedAt": "2026-06-03T12:38:26.390Z"
         },
         {
           "id": "F1",
@@ -371,16 +330,12 @@
             "freeLine2": "DAYS",
             "ctaText": "BOOK YOUR FREE ATHLETE ANALYSIS"
           },
-          "copySource": "Verbatim numbers (+1 mph, +3\", 90 days) + AD3 line \"the promise no other program in this market will make.\" Guarantee band is brand-locked.",
+          "copySource": "Multi-field template (templateData by design). Verbatim numbers (+1 mph, +3\", 90 days) + AD3 line \"the promise no other program in this market will make.\" Guarantee band is brand-locked.",
           "status": "rendered",
           "notes": "Guarantee reveal video.",
-          "knowledgeRefs": [
-            "guarantee: guarantee",
-            "offer: the_offer"
-          ],
           "output": "out/campaigns/multisport-foundations-confidence/proof-confidence/F1.mp4",
           "thumb": "out/campaigns/multisport-foundations-confidence/proof-confidence/F1.mp4",
-          "renderedAt": "2026-06-03T03:54:04.542Z"
+          "renderedAt": "2026-06-03T12:38:45.728Z"
         },
         {
           "id": "F2",
@@ -393,18 +348,14 @@
           "templateData": {
             "offer_headline": "FREE ATHLETE\nANALYSIS",
             "offer_detail": "Not a pep talk. A data set.",
-            "cta": "BOOK THE ATHLETE ANALYSIS"
+            "cta_text": "BOOK THE ATHLETE ANALYSIS"
           },
-          "copySource": "Verbatim (AD): Athlete Analysis offer; \"Not a pep talk. A data set.\"; \"book the Athlete Analysis.\" Guarantee band auto-locked.",
+          "copySource": "Multi-field offer template (templateData by design). Verbatim: Athlete Analysis offer; \"Not a pep talk. A data set.\" Guarantee band auto-locked.",
           "status": "rendered",
           "notes": "Offer card. Guarantee band verbatim-locked.",
-          "knowledgeRefs": [
-            "offer: the_offer",
-            "guarantee: guarantee"
-          ],
           "output": "out/campaigns/multisport-foundations-confidence/proof-confidence/F2.png",
           "thumb": "out/campaigns/multisport-foundations-confidence/proof-confidence/F2.png",
-          "renderedAt": "2026-06-03T03:54:07.685Z"
+          "renderedAt": "2026-06-03T12:38:51.087Z"
         },
         {
           "id": "BR1",
@@ -423,12 +374,9 @@
           "copySource": "Brand lockup + verbatim ad Description as tagline (\"Confidence from proof.\").",
           "status": "rendered",
           "notes": "Brand bumper over footage.",
-          "knowledgeRefs": [
-            "brand: named_ip"
-          ],
           "output": "out/campaigns/multisport-foundations-confidence/proof-confidence/BR1.mp4",
           "thumb": "out/campaigns/multisport-foundations-confidence/proof-confidence/BR1.mp4",
-          "renderedAt": "2026-06-03T03:54:18.662Z"
+          "renderedAt": "2026-06-03T12:39:02.812Z"
         }
       ]
     }

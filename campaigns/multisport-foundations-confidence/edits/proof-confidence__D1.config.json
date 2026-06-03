@@ -14,24 +14,13 @@
       "z": 1
     },
     {
-      "id": "rule_top",
-      "tag": "rule_top",
+      "id": "center_rule",
+      "tag": "center_rule",
       "type": "rect",
-      "x": 240,
-      "y": 690,
-      "width": 600,
-      "height": 6,
-      "fill": "#c4141d",
-      "z": 15
-    },
-    {
-      "id": "rule_bottom",
-      "tag": "rule_bottom",
-      "type": "rect",
-      "x": 240,
-      "y": 1230,
-      "width": 600,
-      "height": 6,
+      "x": 440,
+      "y": 1200,
+      "width": 200,
+      "height": 8,
       "fill": "#c4141d",
       "z": 15
     }
@@ -42,7 +31,7 @@
       "tag": "eyebrow",
       "label": "Context anchor chip (auto-filled, centered)",
       "x": 0,
-      "y": 340,
+      "y": 360,
       "width": 1080,
       "textAlign": "center",
       "text": "INDIANAPOLIS SPORT PARENTS",
@@ -65,29 +54,51 @@
       "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
+      "id": "kicker",
+      "tag": "kicker",
+      "label": "Kicker — hook lead-in (auto from splitHook; blank if 2-seg)",
+      "type": "text",
+      "x": 0,
+      "y": 600,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "",
+      "fontSize": 56,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.95,
+      "letterSpacing": "0.01em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "kicker",
+      "accepts": [
+        "kicker"
+      ],
+      "maxChars": 30,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
       "id": "reframe",
       "tag": "reframe",
-      "label": "Framed reframe (centered, two-line)",
+      "label": "Centered epiphany",
       "x": 60,
-      "y": 760,
+      "y": 720,
       "width": 960,
       "textAlign": "center",
-      "text": "You didn't do anything wrong by encouraging them.",
-      "fontSize": 96,
+      "text": "And here's the part worth saying plainly: you didn't do anything wrong by encouraging them.",
+      "fontSize": 104,
       "fontFamily": "Anton",
       "color": "#ffffff",
       "lineHeight": 1,
       "letterSpacing": "0.005em",
       "textTransform": "uppercase",
-      "whiteSpace": "pre-line",
       "z": 21,
       "role": "reframe",
       "accepts": [
         "reframe",
-        "claim",
-        "hook"
+        "claim"
       ],
-      "maxChars": 80,
+      "maxChars": 92,
       "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {

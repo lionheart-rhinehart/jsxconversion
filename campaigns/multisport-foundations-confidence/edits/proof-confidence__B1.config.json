@@ -14,24 +14,13 @@
       "z": 1
     },
     {
-      "id": "side_bar",
-      "tag": "side_bar",
-      "type": "rect",
-      "x": 0,
-      "y": 560,
-      "width": 26,
-      "height": 820,
-      "fill": "#c4141d",
-      "z": 5
-    },
-    {
       "id": "brand_rule",
       "tag": "brand_rule",
       "type": "rect",
       "x": 90,
-      "y": 1628,
-      "width": 150,
-      "height": 6,
+      "y": 1786,
+      "width": 120,
+      "height": 5,
       "fill": "#c4141d",
       "z": 16
     }
@@ -64,78 +53,101 @@
       "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
-      "id": "claim",
-      "tag": "claim",
-      "label": "Mechanism claim",
-      "x": 96,
+      "id": "kicker",
+      "tag": "kicker",
+      "label": "Kicker — hook lead-in (top segment of splitHook; blank if 2-seg)",
+      "x": 86,
+      "y": 430,
+      "width": 912,
+      "textAlign": "left",
+      "text": "",
+      "fontSize": 54,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.98,
+      "letterSpacing": "0.01em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 10px rgba(0,0,0,0.6)",
+      "z": 21,
+      "role": "kicker",
+      "accepts": [
+        "kicker"
+      ],
+      "maxChars": 44
+    },
+    {
+      "id": "headline",
+      "tag": "headline",
+      "label": "Headline — main thought of the hook",
+      "x": 86,
       "y": 600,
       "width": 912,
       "textAlign": "left",
       "text": "The hardest part isn't watching them lose.",
-      "fontSize": 128,
+      "fontSize": 92,
       "fontFamily": "Anton",
       "color": "#ffffff",
       "lineHeight": 0.92,
       "letterSpacing": "0.005em",
       "textTransform": "uppercase",
-      "z": 21,
-      "role": "mechanism",
+      "textShadow": "0 3px 14px rgba(0,0,0,0.6)",
+      "z": 22,
+      "role": "hook",
       "accepts": [
-        "mechanism",
+        "hook",
         "claim",
         "reframe",
-        "hook"
+        "mechanism"
       ],
-      "maxChars": 60,
-      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+      "maxChars": 130
     },
     {
-      "id": "support",
-      "tag": "support",
-      "label": "Support line",
-      "x": 96,
-      "y": 1200,
-      "width": 880,
+      "id": "subhead",
+      "tag": "subhead",
+      "label": "Subhead — the rest of the hook",
+      "x": 86,
+      "y": 1180,
+      "width": 912,
       "textAlign": "left",
       "text": "It's watching them stop believing they can win.",
-      "fontSize": 46,
-      "fontFamily": "Geist",
-      "fontWeight": 500,
+      "fontSize": 64,
+      "fontFamily": "Anton",
       "color": "#c4141d",
-      "lineHeight": 1.12,
-      "z": 22,
-      "role": "mechanism",
+      "lineHeight": 0.96,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 10px rgba(0,0,0,0.6)",
+      "z": 23,
+      "role": "reframe",
       "accepts": [
-        "mechanism",
+        "reframe",
         "claim",
-        "proof",
-        "reframe"
+        "proof"
       ],
-      "maxChars": 90,
-      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+      "maxChars": 56
     },
     {
       "id": "brand_wordmark",
       "tag": "brand",
       "label": "Brand wordmark",
       "x": 90,
-      "y": 1664,
+      "y": 1812,
       "width": 900,
       "textAlign": "left",
       "text": "ATHLETES ACCELERATION",
-      "fontSize": 34,
+      "fontSize": 32,
       "fontFamily": "JetBrains Mono",
       "fontWeight": 500,
       "color": "#ffffff",
       "letterSpacing": "0.14em",
       "textTransform": "uppercase",
-      "z": 23,
+      "textShadow": "0 2px 8px rgba(0,0,0,0.8)",
+      "z": 24,
       "role": "brand",
       "accepts": [
         "brand"
       ],
-      "maxChars": 24,
-      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+      "maxChars": 24
     }
   ],
   "media": {

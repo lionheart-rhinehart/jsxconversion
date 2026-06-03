@@ -35,6 +35,8 @@ Notes: 14 is the *dictionary*; a typical frame uses 3–5. `guarantee` is verbat
 
 **The hook layout standard (no guessing):** a hook is ONE verbatim unit laid across **`kicker` → `headline` → `subhead`** (top→bottom), split at clause boundaries by `splitHook` (`roles.mjs`) — words never change, only line breaks. This is how a long hook fits on screen. The author's docs often pre-split it: `IMAGE DIRECTION → Headline on image` / `Sub-headline on image` map straight to `headline` / `subhead`. Copy is selected by reference (`asset.copyRefs` / `asset.hookRef` into `copy-library.json`), never authored.
 
+**The whole body is magnets, not just the hooks.** `intake-copy` cuts each ad's `PRIMARY TEXT` into referenceable units at two grains: **`bodyPara`** (one blank-line paragraph, whole) and **`bodyLine`** (one sentence, split at `.!?` only — words never change). So a proof line, a blame-removal line, a case-study sentence, or the offer line is a first-class magnet you bind like any hook — `copyRefs: { reframe: "<ad>.bodyLine.3.4" }` drops one sentence in one slot; `hookRef: "<ad>.bodyPara.2"` auto-splits a short paragraph across kicker/headline/subhead. Use a `bodyLine` when you want a clean standalone sentence and a mid-sentence clip would be a rewrite. This is what lets an *entire* angle (not just its A-beat hooks) bind by reference with a clean `verbatimGuard`.
+
 ## How many roles? (decided by beat + stage, not taste)
 **1** = beat A pure scroll-stop (TOF). **2** = branded awareness (A/B) or a simple offer (F). **3** = consideration that must teach + prove (C/D/E). **4+** = rare. Model it as **1 dominant + up to ~2 supporting** (hierarchy keeps one message on top).
 

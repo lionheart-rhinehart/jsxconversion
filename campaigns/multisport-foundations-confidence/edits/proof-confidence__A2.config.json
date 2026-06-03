@@ -53,6 +53,30 @@
       "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     },
     {
+      "id": "kicker",
+      "tag": "kicker",
+      "label": "Kicker — hook lead-in (auto from splitHook; blank if 2-seg)",
+      "type": "text",
+      "x": 86,
+      "y": 430,
+      "width": 900,
+      "textAlign": "left",
+      "text": "",
+      "fontSize": 56,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.95,
+      "letterSpacing": "0.01em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "kicker",
+      "accepts": [
+        "kicker"
+      ],
+      "maxChars": 30,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
       "id": "line1",
       "tag": "line1",
       "label": "Hook (dark half)",
