@@ -152,6 +152,22 @@
   .vm-grid-audio { grid-template-columns: 1fr; }
   .vm-grid-audio .vm-tile { aspect-ratio: auto; padding: 8px 10px; text-align: left; }
   .vm-audio-name { font-family: var(--font-mono, monospace); font-size: 11px; color: #fff; }
+  /* Source badge on a media tile (kraken / uploaded; brand tiles are unbadged) */
+  .vm-tile { position: relative; }
+  .vm-srcbadge { position: absolute; top: 2px; left: 2px; z-index: 2; font-family: var(--font-mono, monospace); font-size: 8px; line-height: 1; padding: 2px 3px; text-transform: uppercase; letter-spacing: 0.04em; color: #fff; border-radius: 2px; pointer-events: none; }
+  .vm-srcbadge.kraken { background: rgba(196,20,29,0.92); }
+  .vm-srcbadge.uploaded { background: rgba(37,99,140,0.95); }
+  /* Kraken browser bar (workspace + folder tree + pull + upload) */
+  .kbar { border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.02); padding: 8px; margin-bottom: 10px; }
+  .kbar-row { display: flex; gap: 6px; align-items: center; }
+  .kbar-row .tp-select { flex: 1; min-width: 0; }
+  .kbar-tree { max-height: 160px; overflow-y: auto; margin-top: 8px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 6px; }
+  .kbar-folder { display: flex; align-items: center; gap: 4px; font-family: var(--font-mono, monospace); font-size: 11px; color: var(--aa-ink-300, #b8bdc6); padding: 2px 0; }
+  .kbar-folder.on { color: #fff; }
+  .kbar-folder.on .kbar-fname { background: var(--aa-red-600, #c4141d); }
+  .kbar-tw { width: 12px; display: inline-block; text-align: center; cursor: pointer; color: var(--aa-ink-400, #969ca7); flex: none; }
+  .kbar-fname { cursor: pointer; padding: 1px 5px; border-radius: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .kbar-msg { font-family: var(--font-mono, monospace); font-size: 10px; color: var(--aa-ink-400, #969ca7); margin-top: 6px; }
   .vm-copy label { display: block; font-family: var(--font-mono, monospace); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--aa-ink-300, #b8bdc6); margin-bottom: 12px; }
   .vm-copy input, .vm-copy textarea { display: block; width: 100%; margin-top: 5px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); color: #fff; font-family: var(--font-mono, monospace); font-size: 12px; padding: 8px 10px; box-sizing: border-box; }
   .vmodal-actions { display: flex; gap: 8px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); }
@@ -699,23 +715,29 @@ function CampaignSwap({ fields, setField, campaign }) {
   );
 }
 
-function MediaPicker({ kind, current, onPick }) {
+// reloadKey: bump from the parent (after a Kraken pull / upload) to refetch.
+// campaign: scopes the picker to brand-kit + this campaign's pulled/uploaded media.
+function MediaPicker({ kind, current, onPick, campaign, reloadKey }) {
   const [items, setItems] = useState(null);
   useEffect(() => {
     let live = true;
-    fetch(apiBase() + "/media?kind=" + kind)
+    setItems(null);
+    const q = "/media?kind=" + kind + (campaign ? "&campaign=" + encodeURIComponent(campaign) : "");
+    fetch(apiBase() + q)
       .then((r) => r.json()).then((j) => { if (live) setItems(j.items || []); })
       .catch(() => { if (live) setItems([]); });
     return () => { live = false; };
-  }, [kind]);
+  }, [kind, campaign, reloadKey]);
   if (items === null) return <div className="vm-hint">Loading {kind}…</div>;
-  if (!items.length) return <div className="vm-hint">No {kind} in the brand library.</div>;
+  if (!items.length) return <div className="vm-hint">No {kind} yet — pull from the Kraken or upload above.</div>;
   return (
     <div className={"vm-grid vm-grid-" + kind}>
       {items.map((it) => (
-        <button key={it.path} type="button" title={it.name}
+        <button key={it.path} type="button" title={it.name + (it.source ? " · " + it.source : "")}
           className={"vm-tile" + (current === it.path ? " on" : "")}
           onClick={() => onPick(it)}>
+          {it.source && it.source !== "brand" &&
+            <span className={"vm-srcbadge " + it.source}>{it.source === "uploaded" ? "up" : "kr"}</span>}
           {kind === "audio"
             ? <span className="vm-audio-name">{it.name}</span>
             : kind === "clip"
@@ -723,6 +745,155 @@ function MediaPicker({ kind, current, onPick }) {
               : <img src={apiBase() + encodeURI(it.url)} alt="" loading="lazy" />}
         </button>
       ))}
+    </div>
+  );
+}
+
+// Nested folder tree, built client-side from the flat /kraken/folders list.
+function FolderTree({ nodes, picked, setPicked, expanded, setExpanded, depth }) {
+  return (
+    <React.Fragment>
+      {nodes.map((n) => (
+        <div key={n.id}>
+          <div className={"kbar-folder" + (picked && picked.id === n.id ? " on" : "")}
+            style={{ paddingLeft: 6 + depth * 14 }}>
+            {n.children.length > 0
+              ? <span className="kbar-tw" onClick={() => setExpanded((x) => ({ ...x, [n.id]: !x[n.id] }))}>{expanded[n.id] ? "▾" : "▸"}</span>
+              : <span className="kbar-tw" />}
+            <span className="kbar-fname" onClick={() => setPicked({ id: n.id, name: n.name })} title={n.name}>{n.name}</span>
+          </div>
+          {n.children.length > 0 && expanded[n.id] &&
+            <FolderTree nodes={n.children} picked={picked} setPicked={setPicked}
+              expanded={expanded} setExpanded={setExpanded} depth={depth + 1} />}
+        </div>
+      ))}
+    </React.Fragment>
+  );
+}
+
+// The campaign-level Kraken bar: pick an AA location, browse its folder tree,
+// pull a folder's media into THIS campaign, or upload from the computer. Calls
+// onChanged() after a pull/upload so the MediaPickers refetch. Hidden when there
+// is no campaign (a per-campaign pull would be meaningless).
+function KrakenBar({ campaign, onChanged }) {
+  const [workspaces, setWorkspaces] = useState(null);
+  const [ws, setWs] = useState("");
+  const [folders, setFolders] = useState(null);
+  const [expanded, setExpanded] = useState({});
+  const [picked, setPicked] = useState(null);
+  const [busy, setBusy] = useState(null);
+  const [msg, setMsg] = useState("");
+  const fileRef = React.useRef(null);
+
+  // Workspaces + the campaign's saved default location, in parallel.
+  useEffect(() => {
+    let live = true;
+    Promise.all([
+      fetch(apiBase() + "/kraken/workspaces").then((r) => r.json()).catch(() => ({ workspaces: [] })),
+      fetch(apiBase() + "/kraken/state?campaign=" + encodeURIComponent(campaign)).then((r) => r.json()).catch(() => ({})),
+    ]).then(([wj, sj]) => {
+      if (!live) return;
+      const list = wj.workspaces || [];
+      setWorkspaces(list);
+      if (sj && sj.sourceFolder) setMsg("Source: " + sj.sourceFolder);
+      // Match on the saved UUID first — the sidecar stores an alias ("genesis")
+      // that won't equal the dropdown's canonical name ("genesis-sports-performance").
+      const def = list.find((w) => w.id === (sj && sj.workspaceId)) ||
+                  list.find((w) => w.name === (sj && sj.workspace)) ||
+                  list.find((w) => w.id === (sj && sj.workspace)) || null;
+      if (def) setWs(def.id);
+    });
+    return () => { live = false; };
+  }, [campaign]);
+
+  // Folders for the selected workspace.
+  useEffect(() => {
+    if (!ws) { setFolders(null); return; }
+    let live = true;
+    setFolders(null);
+    fetch(apiBase() + "/kraken/folders?workspace=" + encodeURIComponent(ws))
+      .then((r) => r.json()).then((j) => { if (live) setFolders(j.folders || []); })
+      .catch(() => { if (live) setFolders([]); });
+    return () => { live = false; };
+  }, [ws]);
+
+  // Flat → nested. Orphans (parent not in the set) surface at root so nothing hides.
+  const tree = React.useMemo(() => {
+    const list = folders || [];
+    const byId = new Map(list.map((f) => [f.id, { ...f, children: [] }]));
+    const roots = [];
+    for (const f of byId.values()) {
+      const parent = f.parent_id && byId.get(f.parent_id);
+      if (parent) parent.children.push(f); else roots.push(f);
+    }
+    const sortRec = (ns) => { ns.sort((a, b) => a.name.localeCompare(b.name)); ns.forEach((n) => sortRec(n.children)); };
+    sortRec(roots);
+    return roots;
+  }, [folders]);
+
+  async function pull() {
+    if (!campaign || !ws || !picked) return;
+    setBusy("Pulling " + picked.name + "…");
+    try {
+      // Send the readable workspace NAME (sidecar stays human-readable); the
+      // FOLDER goes by id so duplicate names can't pull the wrong one.
+      const wsName = (workspaces.find((w) => w.id === ws) || {}).name || ws;
+      const r = await fetch(apiBase() + "/kraken/pull", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ campaign, workspace: wsName, folder: picked.id }),
+      });
+      const j = await r.json();
+      if (!r.ok) throw new Error(j.error || (j.stderr || "").slice(-160) || "pull failed");
+      setMsg(`Pulled ${picked.name}: ${j.cached || 0} new, ${j.skipped || 0} cached (${j.imgs || 0} img, ${j.vids || 0} vid)`);
+      onChanged();
+    } catch (e) { setMsg("Pull failed: " + e.message); }
+    setBusy(null);
+  }
+
+  async function upload(files) {
+    if (!campaign || !files || !files.length) return;
+    setBusy("Uploading " + files.length + " file(s)…");
+    let ok = 0, fail = 0;
+    for (const f of files) {
+      const ext = "." + (f.name.split(".").pop() || "").toLowerCase();
+      const kind = [".mp4", ".mov", ".webm"].includes(ext) ? "clip"
+        : [".mp3", ".wav", ".m4a", ".aac", ".ogg"].includes(ext) ? "audio" : "photo";
+      try {
+        const q = `/media-upload?campaign=${encodeURIComponent(campaign)}&kind=${kind}&name=${encodeURIComponent(f.name)}`;
+        const r = await fetch(apiBase() + q, { method: "POST", body: f });
+        if (!r.ok) throw new Error(((await r.json().catch(() => ({}))).error) || "upload failed");
+        ok++;
+      } catch (_) { fail++; }
+    }
+    setMsg(`Uploaded ${ok} file(s)${fail ? `, ${fail} failed` : ""}`);
+    if (fileRef.current) fileRef.current.value = "";
+    setBusy(null);
+    onChanged();
+  }
+
+  if (!campaign) return null;
+
+  return (
+    <div className="kbar">
+      <div className="kbar-row">
+        <select className="tp-input tp-select" value={ws}
+          onChange={(e) => { setWs(e.target.value); setPicked(null); setExpanded({}); }}>
+          <option value="">{workspaces === null ? "Loading locations…" : (workspaces.length ? "— AA location —" : "No locations configured")}</option>
+          {(workspaces || []).map((w) => <option key={w.id} value={w.id}>{w.name}</option>)}
+        </select>
+        <button className="vm-tab" disabled={!picked || !!busy} onClick={pull} title={picked ? "Pull " + picked.name : "Pick a folder first"}>{busy ? "…" : "Pull"}</button>
+        <button className="vm-tab" disabled={!!busy} onClick={() => fileRef.current && fileRef.current.click()}>Upload</button>
+        <input ref={fileRef} type="file" multiple style={{ display: "none" }}
+          accept="image/*,video/*,audio/*" onChange={(e) => upload([...e.target.files])} />
+      </div>
+      {ws && (
+        <div className="kbar-tree">
+          {folders === null ? <div className="vm-hint">Loading folders…</div>
+            : !tree.length ? <div className="vm-hint">No folders in this location.</div>
+              : <FolderTree nodes={tree} picked={picked} setPicked={setPicked} expanded={expanded} setExpanded={setExpanded} depth={0} />}
+        </div>
+      )}
+      {(busy || msg) && <div className="kbar-msg">{busy || msg}</div>}
     </div>
   );
 }
@@ -855,6 +1026,7 @@ function VideoEditModal({ angleId, assetId, onClose }) {
   const [busy, setBusy] = useState(null);
   const [tab, setTab] = useState("copy");
   const [outVer, setOutVer] = useState(0); // cache-bust the rendered-output preview after a re-render
+  const [mediaReload, setMediaReload] = useState(0); // bump → MediaPickers refetch after a Kraken pull/upload
 
   useEffect(() => {
     fetch(apiBase() + "/bank?type=motion").then((r) => r.json())
@@ -1063,6 +1235,11 @@ function VideoEditModal({ angleId, assetId, onClose }) {
                   {["copy", "media", "audio", "swap", "position"].map((t) =>
                     <button key={t} className={"vm-tab" + (tab === t ? " on" : "")} onClick={() => setTab(t)}>{t}</button>)}
                 </div>
+                {/* Kraken bar stays mounted across media+audio (preserves the
+                    folder selection); hidden on the other tabs. */}
+                <div style={{ display: (tab === "media" || tab === "audio") ? "block" : "none" }}>
+                  <KrakenBar campaign={plan.campaign} onChanged={() => setMediaReload((n) => n + 1)} />
+                </div>
                 <div className="vm-tabbody">
                   {tab === "copy" && (window.EditPanel
                     ? <React.Fragment>
@@ -1074,8 +1251,8 @@ function VideoEditModal({ angleId, assetId, onClose }) {
                     : <div className="vm-hint">Loading editor…</div>)}
                   {tab === "media" && (imageKey
                     ? <React.Fragment>
-                        <div className="vm-sub">Photo</div><MediaPicker kind="photo" current={photo} onPick={pickPhoto} />
-                        <div className="vm-sub">Clip</div><MediaPicker kind="clip" current={clip} onPick={pickClip} />
+                        <div className="vm-sub">Photo</div><MediaPicker kind="photo" current={photo} onPick={pickPhoto} campaign={plan.campaign} reloadKey={mediaReload} />
+                        <div className="vm-sub">Clip</div><MediaPicker kind="clip" current={clip} onPick={pickClip} campaign={plan.campaign} reloadKey={mediaReload} />
                         {window.MediaField && window.isVideoSrc && window.isVideoSrc(data[imageKey]) &&
                           <React.Fragment>
                             <div className="vm-sub">Trim clip — crop front/back</div>
@@ -1086,8 +1263,8 @@ function VideoEditModal({ angleId, assetId, onClose }) {
                       </React.Fragment>
                     : <div className="vm-hint">This template has no photo/clip slot.</div>)}
                   {tab === "audio" && <React.Fragment>
-                    <MediaPicker kind="audio" current={audio && audio.src} onPick={pickAudio} />
-                    <div className="vm-note">Audio choice persists but the render is silent for now (mux deferred).</div>
+                    <MediaPicker kind="audio" current={audio && audio.src} onPick={pickAudio} campaign={plan.campaign} reloadKey={mediaReload} />
+                    <div className="vm-note">Upload audio above to use it here. The Kraken pull brings in images/clips only, and the render is silent for now (mux deferred).</div>
                   </React.Fragment>}
                   {tab === "swap" && <React.Fragment>
                     <div className="vm-sub">Swap template</div>
