@@ -416,6 +416,24 @@
     .ed-photo-tile img { width: 100%; height: 230px; object-fit: cover; display: block; }
     .ed-photo-tile:hover { border-color: var(--muted); }
     .ed-photo-tile.on { border-color: var(--red); }
+    .ed-photo-tile { position: relative; }
+    .ed-srcbadge { position: absolute; top: 3px; left: 3px; z-index: 2; font-size: 8px; line-height: 1; padding: 2px 3px; text-transform: uppercase; color: #fff; border-radius: 2px; font-family: ui-monospace, monospace; }
+    .ed-srcbadge.kraken { background: rgba(196,20,29,0.92); }
+    .ed-srcbadge.uploaded { background: rgba(37,99,140,0.95); }
+    /* Kraken browser bar (in-editor folder browse + pull + upload) */
+    .kbar { border: 1px solid var(--border); background: var(--panel-2); padding: 8px; margin: 8px 0; }
+    .kbar[hidden] { display: none; }
+    .kbar-row { display: flex; gap: 6px; align-items: center; }
+    .kbar-row select { flex: 1; min-width: 0; background: var(--bg); border: 1px solid var(--border); color: var(--fg); font-size: 11px; padding: 5px 6px; border-radius: 3px; font-family: ui-monospace, monospace; }
+    .kbar-row button { font-size: 11px; padding: 5px 10px; cursor: pointer; background: var(--panel-2); border: 1px solid var(--border); color: var(--fg); border-radius: 3px; }
+    .kbar-row button:disabled { opacity: 0.5; cursor: default; }
+    .kbar-tree { max-height: 180px; overflow-y: auto; margin-top: 8px; border-top: 1px solid var(--border); padding-top: 6px; }
+    .kbar-tree[hidden] { display: none; }
+    .kbar-folder { display: flex; align-items: center; gap: 4px; font-family: ui-monospace, monospace; font-size: 11px; color: var(--fg); padding: 2px 0; }
+    .kbar-tw { width: 12px; display: inline-block; text-align: center; cursor: pointer; color: var(--muted); flex: none; }
+    .kbar-fname { cursor: pointer; padding: 1px 5px; border-radius: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .kbar-folder.on .kbar-fname { background: var(--red); color: #fff; }
+    .kbar-msg { font-size: 10px; color: var(--muted); margin-top: 6px; font-family: ui-monospace, monospace; }
     /* All-copy list rows (COPY tab) */
     .copy-row { display: flex; flex-direction: column; gap: 4px; padding: 8px; background: var(--panel-2); border-radius: 6px; margin-bottom: 8px; }
     .copy-row-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-family: ui-monospace, Menlo, monospace; }
@@ -545,6 +563,16 @@
         <div class="ed-pane" data-pane="media" hidden>
           <div class="panel-block" id="photoSwapPanel">
             <h3 class="sec-title">Swap background photo</h3>
+            <div id="krakenBar" class="kbar" hidden>
+              <div class="kbar-row">
+                <select id="kbWorkspace"><option value="">— AA location —</option></select>
+                <button id="kbPull" type="button" disabled>Pull</button>
+                <button id="kbUpload" type="button">Upload</button>
+                <input id="kbFile" type="file" multiple hidden accept="image/*,video/*,audio/*">
+              </div>
+              <div id="kbTree" class="kbar-tree" hidden></div>
+              <div id="kbMsg" class="kbar-msg"></div>
+            </div>
             <button id="browsePhotosBtn" type="button" style="width:100%;font-size:11px;cursor:pointer">Browse brand photos ▾</button>
             <div class="ed-photo-grid" id="photoGrid" hidden></div>
           </div>
@@ -2412,26 +2440,158 @@
     // pick, the server copies the photo into the template dir and returns a
     // "./library/<name>" path that resolves in BOTH the preview and the render.
     let _photoItems = null;
+    // After a Kraken pull / upload: drop the fetch-once cache so the grid reloads
+    // (without this, the picker keeps showing the pre-pull media — the very bug
+    // we're fixing). Reloads immediately only if the grid is currently open.
+    function resetPhotoGrid() {
+      _photoItems = null;
+      const g = $('photoGrid');
+      if (g && !g.hidden) loadPhotoGrid();
+    }
     async function loadPhotoGrid() {
-      if (_photoItems) return; // fetch once
+      if (_photoItems) return; // fetch once (reset via resetPhotoGrid)
       const grid = $('photoGrid');
       grid.innerHTML = '<div class="ed-empty">Loading photos…</div>';
+      const camp = parseCampId(state.cluster);
+      const q = '/media?kind=photo' + (camp ? '&campaign=' + encodeURIComponent(camp.campaign) : '');
       try {
-        const r = await fetch('/media?kind=photo');
+        const r = await fetch(q);
         const j = await r.json();
         _photoItems = j.items || [];
       } catch (_) { _photoItems = []; }
       grid.innerHTML = '';
-      if (!_photoItems.length) { grid.innerHTML = '<div class="ed-empty">No brand photos found.</div>'; return; }
+      if (!_photoItems.length) { grid.innerHTML = '<div class="ed-empty">No photos found — pull from the Kraken or upload above.</div>'; return; }
       for (const it of _photoItems) {
         const t = document.createElement('button');
-        t.type = 'button'; t.className = 'ed-photo-tile'; t.title = it.name;
+        t.type = 'button'; t.className = 'ed-photo-tile'; t.title = it.name + (it.source ? ' · ' + it.source : '');
+        if (it.source && it.source !== 'brand') {
+          const badge = document.createElement('span');
+          badge.className = 'ed-srcbadge ' + it.source;
+          badge.textContent = it.source === 'uploaded' ? 'up' : 'kr';
+          t.appendChild(badge);
+        }
         const img = document.createElement('img');
         img.loading = 'lazy'; img.src = it.url; img.alt = '';
         t.appendChild(img);
         t.addEventListener('click', () => swapBackgroundPhoto(it, t));
         grid.appendChild(t);
       }
+    }
+
+    // ── Kraken browser bar (workspace + nested folder tree + pull + upload) ──
+    // Same surface as the review page, in vanilla DOM. Only meaningful for a
+    // campaign asset (per-campaign cache) — hidden otherwise. Call AFTER the
+    // campaign cluster is loaded (state.cluster set), from the init block.
+    function initKrakenBar() {
+      const bar = $('krakenBar');
+      if (!bar) return;
+      const camp = parseCampId(state.cluster);
+      if (!camp) { bar.hidden = true; return; } // standalone cluster edit → no campaign
+      bar.hidden = false;
+      const wsSel = $('kbWorkspace'), tree = $('kbTree'), msg = $('kbMsg');
+      const pullBtn = $('kbPull'), upBtn = $('kbUpload'), fileInput = $('kbFile');
+      let workspaces = [], folders = [], picked = null, expanded = {}, busy = false;
+
+      const setMsg = (m) => { msg.textContent = m || ''; };
+      const syncButtons = () => { pullBtn.disabled = busy || !picked || !wsSel.value; upBtn.disabled = busy; };
+      const setBusy = (b) => { busy = b; syncButtons(); };
+
+      const buildTree = () => {
+        const byId = new Map(folders.map((f) => [f.id, { ...f, children: [] }]));
+        const roots = [];
+        for (const f of byId.values()) { const p = f.parent_id && byId.get(f.parent_id); if (p) p.children.push(f); else roots.push(f); }
+        const sortRec = (ns) => { ns.sort((a, b) => a.name.localeCompare(b.name)); ns.forEach((n) => sortRec(n.children)); };
+        sortRec(roots);
+        return roots;
+      };
+      const renderTree = () => {
+        tree.innerHTML = '';
+        const roots = buildTree();
+        if (!roots.length) { tree.innerHTML = '<div class="ed-empty">No folders in this location.</div>'; return; }
+        const addNodes = (nodes, depth) => {
+          for (const n of nodes) {
+            const row = document.createElement('div');
+            row.className = 'kbar-folder' + (picked && picked.id === n.id ? ' on' : '');
+            row.style.paddingLeft = (6 + depth * 14) + 'px';
+            const tw = document.createElement('span'); tw.className = 'kbar-tw';
+            if (n.children.length) { tw.textContent = expanded[n.id] ? '▾' : '▸'; tw.onclick = () => { expanded[n.id] = !expanded[n.id]; renderTree(); }; }
+            const name = document.createElement('span'); name.className = 'kbar-fname'; name.textContent = n.name; name.title = n.name;
+            name.onclick = () => { picked = { id: n.id, name: n.name }; renderTree(); syncButtons(); };
+            row.appendChild(tw); row.appendChild(name);
+            tree.appendChild(row);
+            if (n.children.length && expanded[n.id]) addNodes(n.children, depth + 1);
+          }
+        };
+        addNodes(roots, 0);
+      };
+
+      async function loadFolders(wsId) {
+        tree.hidden = false; tree.innerHTML = '<div class="ed-empty">Loading folders…</div>';
+        try { folders = (await fetch('/kraken/folders?workspace=' + encodeURIComponent(wsId)).then((r) => r.json())).folders || []; }
+        catch (_) { folders = []; }
+        renderTree();
+      }
+
+      wsSel.addEventListener('change', () => {
+        picked = null; expanded = {}; syncButtons();
+        if (wsSel.value) loadFolders(wsSel.value); else { tree.hidden = true; tree.innerHTML = ''; }
+      });
+
+      pullBtn.addEventListener('click', async () => {
+        if (!picked || !wsSel.value) return;
+        setBusy(true); setMsg('Pulling ' + picked.name + '…');
+        try {
+          // Readable workspace NAME for the sidecar; FOLDER by id (exact).
+          const wsName = (workspaces.find((w) => w.id === wsSel.value) || {}).name || wsSel.value;
+          const r = await fetch('/kraken/pull', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ campaign: camp.campaign, workspace: wsName, folder: picked.id }),
+          });
+          const j = await r.json();
+          if (!r.ok) throw new Error(j.error || (j.stderr || '').slice(-160) || 'pull failed');
+          setMsg('Pulled ' + picked.name + ': ' + (j.cached || 0) + ' new, ' + (j.skipped || 0) + ' cached (' + (j.imgs || 0) + ' img, ' + (j.vids || 0) + ' vid)');
+          resetPhotoGrid();
+        } catch (e) { setMsg('Pull failed: ' + e.message); }
+        setBusy(false);
+      });
+
+      upBtn.addEventListener('click', () => fileInput.click());
+      fileInput.addEventListener('change', async () => {
+        const files = [...fileInput.files]; if (!files.length) return;
+        setBusy(true); setMsg('Uploading ' + files.length + ' file(s)…');
+        let ok = 0, fail = 0;
+        for (const f of files) {
+          const ext = '.' + (f.name.split('.').pop() || '').toLowerCase();
+          const kind = ['.mp4', '.mov', '.webm'].includes(ext) ? 'clip'
+            : ['.mp3', '.wav', '.m4a', '.aac', '.ogg'].includes(ext) ? 'audio' : 'photo';
+          try {
+            const r = await fetch('/media-upload?campaign=' + encodeURIComponent(camp.campaign) + '&kind=' + kind + '&name=' + encodeURIComponent(f.name), { method: 'POST', body: f });
+            if (!r.ok) throw new Error('upload failed');
+            ok++;
+          } catch (_) { fail++; }
+        }
+        setMsg('Uploaded ' + ok + ' file(s)' + (fail ? ', ' + fail + ' failed' : ''));
+        fileInput.value = '';
+        setBusy(false);
+        resetPhotoGrid();
+      });
+
+      // Load workspaces + the campaign's saved default location.
+      (async () => {
+        try {
+          const [wj, sj] = await Promise.all([
+            fetch('/kraken/workspaces').then((r) => r.json()).catch(() => ({ workspaces: [] })),
+            fetch('/kraken/state?campaign=' + encodeURIComponent(camp.campaign)).then((r) => r.json()).catch(() => ({})),
+          ]);
+          workspaces = wj.workspaces || [];
+          wsSel.innerHTML = '<option value="">' + (workspaces.length ? '— AA location —' : 'No locations configured') + '</option>';
+          for (const w of workspaces) { const o = document.createElement('option'); o.value = w.id; o.textContent = w.name; wsSel.appendChild(o); }
+          if (sj && sj.sourceFolder) setMsg('Source: ' + sj.sourceFolder);
+          const def = workspaces.find((w) => w.id === (sj && sj.workspaceId)) ||
+                      workspaces.find((w) => w.name === (sj && sj.workspace)) || null;
+          if (def) { wsSel.value = def.id; loadFolders(def.id); }
+        } catch (_) {}
+      })();
     }
     async function swapBackgroundPhoto(item, tile) {
       if (!state.config) return;
@@ -2630,11 +2790,14 @@
       if (initial && parseCampId(initial)) {
         // Campaign asset — not present in the cluster <select>; load directly
         // (B5: the cluster-membership gate would otherwise drop a camp: hash).
-        loadCluster(initial);
+        await loadCluster(initial);
       } else if (initial && r.clusters.includes(initial)) {
         select.value = initial;
-        loadCluster(initial);
+        await loadCluster(initial);
       }
+      // Wire the Kraken bar AFTER state.cluster (and its campaign) is set — await
+      // above is required: loadCluster sets state.cluster past an internal await.
+      initKrakenBar();
     })();
 
     window.addEventListener('resize', () => state.config && renderStage());

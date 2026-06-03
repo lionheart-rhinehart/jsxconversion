@@ -16,7 +16,8 @@ and it renders the approved ones in the background while you move to the next an
 ```
 /creative-engine
   1. BRAND      → pick AA LOCATION → Kraken workspace; pull SOURCE-folder raw media
-                  (kraken-pull.mjs → brand/kraken-cache/) + data tier + brand kit
+                  (kraken-pull.mjs --per-campaign → brand/kraken-cache/<campaign>/,
+                   OR browse+pull right in the review page) + data tier + brand kit
   2. INTAKE     → campaigns/<name>/{brief.md, ad-copy.md, microscripts.md, named templates}
   2b.COPY LIB   → intake-copy.mjs: ad-copy.md + microscripts.md → copy-library.json
                   (verbatim units, by id — the ONLY copy allowed on a creative)
@@ -45,7 +46,8 @@ run** and saved to `campaigns/<name>/kraken.json` — not hardcoded.
 | Single-template CLI | `scripts/fill-template.mjs` | Thin CLI over fill-core. |
 | Campaign runner | `scripts/run-campaign.mjs` | Renders approved assets; render-then-move; gif post-step; manifest. |
 | Kraken connector | `scripts/lib/kraken.mjs` | Supabase Content-Library client (PostgREST + Storage + ingest edge fn); workspace resolve; creds from Kraken `.env.local`. |
-| Kraken pull | `scripts/kraken-pull.mjs` | Caches a source-folder's raw media into `brand/kraken-cache/` for hand placement. |
+| Kraken pull | `scripts/kraken-pull.mjs` | Caches a source-folder's raw media for hand placement; `--per-campaign` → `brand/kraken-cache/<campaign>/`. Also driven in-page via `POST /kraken/pull`. |
+| Kraken list | `scripts/kraken-list.mjs` | Read-only JSON lister (`workspaces` / `folders`) the review page's folder browser spawns via `/kraken/workspaces` + `/kraken/folders`. |
 | Kraken export | `scripts/kraken-export.mjs` | Pushes rendered creatives into a destination Content-Library folder (dedup + folder PATCH). |
 | Review API | `scripts/editor-server.mjs` (:5173) | `/plan`, `/plan/:campaign/:angle/:asset` (single writer), `/render`, static `/out`. |
 | Review page | `brand/video-templates/review.html` (:5599 via `serve.mjs`) | Card grid by angle→beat; badges; dashboard; approve/note/edit. |
@@ -101,9 +103,14 @@ runner's media key.
 
 ## Image sources (the four)
 1. **library** — raw media in The Kraken **Content Library** (Supabase, per-AA-location
-   workspace). Pulled at intake into `brand/kraken-cache/` via `kraken-pull.mjs` and placed
-   by hand in the editor (`/media` picker for motion; `/media-into-template` swap for statics).
-2. **client** — campaign/location-specific media the client supplies.
+   workspace). Pulled into `brand/kraken-cache/<campaign>/` and placed by hand in the editor
+   (`/media` picker for motion; `/media-into-template` swap for statics). The review page and the
+   position editor have a **built-in Kraken bar**: browse the location's folder tree, pull a chosen
+   folder into the campaign, and tiles tag their `source` (`kraken`/`uploaded`/`brand`). No CLI step
+   needed (the CLI `kraken-pull.mjs --per-campaign` remains for scripted/bulk pulls).
+2. **client** — campaign/location-specific media the client supplies. **Upload from computer**
+   straight into the campaign via the Kraken bar's Upload button (`POST /media-upload`), tagged
+   `uploaded`.
 3. **jsx-render** — render a sub-template to PNG, then use it as another creative's
    image layer (compositional). Memoized; cycle-guarded.
 4. **ai-gen** — *stub seam* (nano-banana, future). Uses a `fallback` and logs
@@ -155,8 +162,9 @@ authoritative** — they persist and survive re-render.
 - **Video/gif** edit in a React modal lifted from the gallery: a live `<Stage>`
   preview (mounting the same component the runner wraps → preview == render), copy
   fields (the bank's `EditPanel`, driven by asset-id-keyed state — **not**
-  `useTemplateEdits`/localStorage), a clip/photo picker (`GET /media` → a real served
-  path), an audio picker, and a template-swap dropdown (`GET /bank`). Save writes
+  `useTemplateEdits`/localStorage), a clip/photo picker (`GET /media?campaign=` → a real served
+  path, with the campaign-scoped Kraken browse/pull/upload bar above it), an audio picker, and a
+  template-swap dropdown (`GET /bank`). Save writes
   `templateData`/`clip`/`photo`/`audio`/`template` to the plan via the single-writer
   `/plan` route, then `POST /render-asset`. Picked media must be a **real served
   path** (never a `blob:`/dataURL — those can't be headlessly rendered).

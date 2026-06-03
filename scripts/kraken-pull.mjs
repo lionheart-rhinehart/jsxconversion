@@ -27,16 +27,23 @@ import {
 
 const PROJECT_ROOT = resolve(".");
 const CAMPAIGNS_DIR = join(PROJECT_ROOT, "campaigns");
-const CACHE_DIR = join(PROJECT_ROOT, "brand/kraken-cache");
+const CACHE_ROOT = join(PROJECT_ROOT, "brand/kraken-cache");
 
 // ── CLI ───────────────────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
 const campaign = args.find((a) => !a.startsWith("--"));
 const opt = (n) => { const i = args.indexOf(`--${n}`); return i >= 0 ? args[i + 1] : null; };
+const PER_CAMPAIGN = args.includes("--per-campaign"); // editor-server passes this
+const JSON_OUT = args.includes("--json");             // emit one __PULL_JSON__ line on stdout
 if (!campaign) {
-  console.error('Usage: node scripts/kraken-pull.mjs <campaign> --workspace <loc> [--folder "<name>"]');
+  console.error('Usage: node scripts/kraken-pull.mjs <campaign> --workspace <loc> [--folder "<name|uuid>"] [--per-campaign] [--json]');
   process.exit(1);
 }
+
+// Per-campaign cache isolates each campaign's pulled media (the editor /media
+// route reads brand/kraken-cache/<campaign>/); --flat keeps the legacy shared
+// dir. Either way the dir is FLAT inside (no nesting) so the picker sees it.
+const CACHE_DIR = PER_CAMPAIGN ? join(CACHE_ROOT, campaign) : CACHE_ROOT;
 
 const planPath = join(CAMPAIGNS_DIR, campaign, "creative-plan.json");
 const sidecarPath = join(CAMPAIGNS_DIR, campaign, "kraken.json");
@@ -116,6 +123,16 @@ async function main() {
   );
   console.error(`[pull] sidecar: ${sidecarPath}`);
   console.error("[pull] open the editor and place these by hand (hand placement is sacred).");
+
+  // Machine-readable summary for the spawning editor-server (one clean stdout
+  // line; all the human logs above went to stderr).
+  if (JSON_OUT) {
+    process.stdout.write("__PULL_JSON__ " + JSON.stringify({
+      cached, skipped, failed, imgs, vids,
+      sourceFolder: folder.name, sourceFolderId: folder.id,
+      cacheDir: CACHE_DIR.slice(PROJECT_ROOT.length + 1).replace(/\\/g, "/"),
+    }) + "\n");
+  }
   process.exit(failed > 0 ? 1 : 0);
 }
 

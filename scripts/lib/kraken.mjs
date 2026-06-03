@@ -13,15 +13,17 @@
 //  The Kraken's scripts/lib/workspace-credentials.js (apikey+Bearer reads) and
 //  scripts/upload-image-to-content-library.js (storage upload + ingest-content).
 //
-//  SECRET SAFETY (non-negotiable): this module is imported ONLY by the two
-//  standalone CLI scripts. It is NEVER imported by fill-core/assemble/roles or a
-//  template (those feed the headless render bundle — run-campaign.mjs inlines
-//  template source). Credentials are read LAZILY at call time from the Kraken
-//  .env.local (never copied into this repo, never a module-level literal), and
-//  the service-role key is masked in all output.
+//  SECRET SAFETY (non-negotiable): this module is imported ONLY by the standalone
+//  CLI scripts (kraken-pull.mjs, kraken-export.mjs, kraken-list.mjs). It is NEVER
+//  imported by fill-core/assemble/roles, a template, OR the editor-server (those
+//  feed — or could feed — the headless render bundle; run-campaign.mjs inlines
+//  template source). The editor-server reaches the Kraken only by SPAWNING these
+//  CLIs. Credentials are read LAZILY at call time from the Kraken .env.local
+//  (never copied into this repo, never a module-level literal), and the
+//  service-role key is masked in all output.
 // ============================================================================
 
-import { existsSync, readFileSync, createWriteStream } from "node:fs";
+import { existsSync, readFileSync, createWriteStream, renameSync, rmSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { homedir } from "node:os";
 import { fileURLToPath } from "node:url";
@@ -274,7 +276,17 @@ export async function downloadToCache(row, destDir, { prefix = "", skipExisting 
   if (skipExisting && existsSync(dest)) return { path: dest, skipped: true };
   const r = await fetch(row.content);
   if (!r.ok || !r.body) throw new Error(`download ${r.status} for ${String(row.content).slice(0, 80)}`);
-  await pipeline(Readable.fromWeb(r.body), createWriteStream(dest));
+  // Write to <dest>.part then rename, so a crash/abort mid-download never leaves
+  // a TRUNCATED file at `dest` that skipExisting would then skip forever (→ a
+  // permanently broken render). The rename is atomic on the same filesystem.
+  const part = dest + ".part";
+  try {
+    await pipeline(Readable.fromWeb(r.body), createWriteStream(part));
+    renameSync(part, dest);
+  } catch (e) {
+    try { rmSync(part, { force: true }); } catch (_) {}
+    throw e;
+  }
   return { path: dest, skipped: false };
 }
 

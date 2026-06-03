@@ -76,18 +76,25 @@ store, NOT local folders; connector is `scripts/lib/kraken.mjs`):
    Noblesville/Westfield/Milford each map to a DIFFERENT workspace in
    `~/.claude/client-workspaces.json` (bare `athletes-acceleration` → Milford). Never assume
    Genesis. The location decides the whole library you read and write.
-2. **Pick the SOURCE folder.** Run `node scripts/kraken-pull.mjs <campaign> --workspace <loc>`.
-   With no `--folder` it prints that workspace's live folder list and exits — show it to the
-   user and ask which folder holds the raw media, then re-run with `--folder "<name>"`. It
-   caches the media into `brand/kraken-cache/` and saves the picks to
-   `campaigns/<name>/kraken.json`.
+2. **Pick the SOURCE folder.** Two equivalent paths:
+   - **In the review page (preferred for the user)** — the media picker (video edit modal) and the
+     position editor both have a **Kraken bar**: pick the AA location, browse its folder TREE, and
+     **Pull** the chosen folder into this campaign. It also has an **Upload** button to add media
+     straight from the computer. No CLI needed. (Folders are pulled by id, so duplicate folder names
+     can't pull the wrong one; the editor-server reaches the Kraken only by spawning the CLIs.)
+   - **CLI (scripted/bulk)** — `node scripts/kraken-pull.mjs <campaign> --workspace <loc> --per-campaign`.
+     With no `--folder` it prints that workspace's live folder list and exits — show it to the user
+     and ask which folder holds the raw media, then re-run with `--folder "<name|uuid>"`.
+   Either path caches media into `brand/kraken-cache/<campaign>/` (isolated per campaign) and saves
+   the picks to `campaigns/<name>/kraken.json`.
 
 **Kraken is lazy.** Don't block a template-only or jsx-render campaign on a Kraken pull —
 only do the location + source-folder pull when the plan actually contains an asset whose
 image `source` is `library` or `client` (i.e. raw media is genuinely needed at render time).
 
-Pulled media appears in the editor `/media` picker (motion) and via `/media-into-template`
-(statics) for **hand placement** — pulling surfaces media, it does not auto-place it, and does
+Pulled (and uploaded) media appears in the editor `/media` picker (motion) and via
+`/media-into-template` (statics) for **hand placement**, each tile tagged by `source`
+(`kraken`/`uploaded`/`brand`) — pulling/uploading surfaces media, it does not auto-place it, and does
 not auto-clear `needs-kraken-path` (a human placement does).
 
 ### Step 2 — Collect inputs + build the copy library

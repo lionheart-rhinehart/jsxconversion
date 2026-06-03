@@ -24,6 +24,8 @@ import {
   readdirSync,
   mkdirSync,
   renameSync,
+  rmSync,
+  createWriteStream,
 } from "node:fs";
 import { join, resolve, extname, basename, dirname } from "node:path";
 import { spawn } from "node:child_process";
@@ -42,9 +44,10 @@ const DATA_DIR = join(PROJECT_ROOT, "data");
 const VIDEO_DIR = join(PROJECT_ROOT, "brand/video-templates");
 const VIDEO_TEMPLATES_DIR = join(VIDEO_DIR, "templates");
 // Brand media library — photos/clips/audio selectable in the video edit pickers.
-// brand/kraken-cache holds raw media pulled from The Kraken Content Library
-// (scripts/kraken-pull.mjs) — kept FLAT because the /media route reads each root
-// with a single non-recursive readdirSync.
+// Each root is read with a single non-recursive readdirSync, so each stays FLAT.
+// brand/kraken-cache holds raw media pulled from The Kraken Content Library — now
+// isolated PER CAMPAIGN in brand/kraken-cache/<campaign>/ (the /media route reads
+// that subfolder when ?campaign= is given; see the campaign-aware /media handler).
 const MEDIA_ROOTS = [
   join(PROJECT_ROOT, "brand/aa-design-system/project/uploads"),
   join(PROJECT_ROOT, "brand/aa-design-system/project/assets"),
@@ -56,6 +59,39 @@ const PHOTO_EXT = new Set([".jpg", ".jpeg", ".png", ".webp"]);
 const CLIP_EXT = new Set([".mp4", ".mov", ".webm"]);
 const AUDIO_EXT = new Set([".mp3", ".wav", ".m4a", ".aac", ".ogg"]);
 const EXT_FOR_KIND = { photo: PHOTO_EXT, clip: CLIP_EXT, audio: AUDIO_EXT };
+
+// Kraken cache: raw media pulled from The Kraken Content Library lands here,
+// isolated per campaign (brand/kraken-cache/<campaign>/). The legacy flat dir is
+// still read for back-compat. This IS one of the MEDIA_ROOTS, so the existing
+// /media-file + /media-into-template path guards already cover its subfolders.
+const KRAKEN_CACHE_ROOT = join(PROJECT_ROOT, "brand/kraken-cache");
+const UPLOAD_MAX_BYTES = 500 * 1024 * 1024; // hard cap so one runaway upload can't fill the disk
+function campaignCacheDir(campaign) {
+  return join(KRAKEN_CACHE_ROOT, campaign);
+}
+// The Kraken SOURCE folder name recorded for this campaign (for the picker label).
+function krakenSidecarFolder(campaign) {
+  try {
+    const p = join(CAMPAIGNS_DIR, campaign, "kraken.json");
+    if (!existsSync(p)) return null;
+    return JSON.parse(readFileSync(p, "utf8")).sourceFolder || null;
+  } catch (_) {
+    return null;
+  }
+}
+// Spawn a node CLI and collect its output. SECRET SAFETY: editor-server reaches
+// The Kraken ONLY by spawning the standalone CLIs (kraken-list / kraken-pull) —
+// it never imports lib/kraken.mjs, so credentials never enter this process.
+function runNode(scriptArgs) {
+  return new Promise((resolveP) => {
+    const proc = spawn("node", scriptArgs, { cwd: PROJECT_ROOT });
+    let stdout = "", stderr = "";
+    proc.stdout.on("data", (d) => (stdout += d));
+    proc.stderr.on("data", (d) => (stderr += d));
+    proc.on("exit", (code) => resolveP({ code, stdout, stderr }));
+    proc.on("error", (e) => resolveP({ code: -1, stdout, stderr: stderr + String(e) }));
+  });
+}
 
 // Per-asset authoritative static config — MUST match run-campaign.mjs so the
 // editor writes and the runner reads the same file (B1/B2).
@@ -495,22 +531,189 @@ const server = createServer(async (req, res) => {
     return;
   }
 
-  // GET /media?kind=photo|clip|audio — selectable brand media (served paths).
+  // GET /media?kind=photo|clip|audio[&campaign=<name>] — selectable media.
+  // Tags each item by source: "brand" (shared brand-kit roots), "kraken" (pulled
+  // from the campaign's Kraken folder), or "uploaded" (dropped from a computer).
+  // Back-compat: with no ?campaign=, returns the same shape as before (plus the
+  // additive `source` field) from the brand roots + the legacy flat cache.
   if (path === "/media" && req.method === "GET") {
-    const kind = url.searchParams.get("kind") || "photo";
-    const exts = EXT_FOR_KIND[kind] || PHOTO_EXT;
-    const items = [];
-    for (const root of MEDIA_ROOTS) {
-      let files = [];
-      try { files = readdirSync(root); } catch (_) { continue; }
-      for (const f of files) {
-        if (!exts.has(extname(f).toLowerCase())) continue;
-        const abs = join(root, f);
-        const rel = abs.slice(PROJECT_ROOT.length + 1).replace(/\\/g, "/");
-        items.push({ name: f, path: rel, url: "/media-file/" + rel });
+    try {
+      const kind = url.searchParams.get("kind") || "photo";
+      const campaign = url.searchParams.get("campaign") || null;
+      const exts = EXT_FOR_KIND[kind] || PHOTO_EXT;
+      const items = [];
+      const seen = new Set();
+      const addFrom = (root, source) => {
+        let files = [];
+        try { files = readdirSync(root); } catch (_) { return; }
+        for (const f of files) {
+          if (!exts.has(extname(f).toLowerCase())) continue;
+          const abs = join(root, f);
+          const rel = abs.slice(PROJECT_ROOT.length + 1).replace(/\\/g, "/");
+          if (seen.has(rel)) continue;
+          seen.add(rel);
+          // Files in a kraken cache dir are uploads if prefixed "upload-", else pulled.
+          const src = source === "kraken-dir"
+            ? (f.startsWith("upload-") ? "uploaded" : "kraken")
+            : source;
+          items.push({ name: f, path: rel, url: "/media-file/" + rel, source: src });
+        }
+      };
+      // Shared brand-kit roots — everything EXCEPT the kraken cache root.
+      for (const root of MEDIA_ROOTS) {
+        if (resolve(root) === resolve(KRAKEN_CACHE_ROOT)) continue; // handled below
+        addFrom(root, "brand");
       }
+      // The campaign's pulled media + its uploads, then the legacy flat cache.
+      if (campaign) addFrom(campaignCacheDir(campaign), "kraken-dir");
+      addFrom(KRAKEN_CACHE_ROOT, "kraken-dir");
+      sendJson(res, 200, {
+        kind, campaign,
+        krakenFolder: campaign ? krakenSidecarFolder(campaign) : null,
+        items,
+      });
+    } catch (e) {
+      sendJson(res, 500, { error: String((e && e.message) || e) });
     }
-    sendJson(res, 200, { kind, items });
+    return;
+  }
+
+  // ── Kraken browser API (in-page folder browse + pull + computer upload) ──
+  // editor-server never imports lib/kraken.mjs; it SPAWNS the standalone CLIs.
+
+  // GET /kraken/workspaces — { workspaces: [{name,id}] }. Degrades to an empty
+  // list (never 500s the picker) if creds/config are missing.
+  if (path === "/kraken/workspaces" && req.method === "GET") {
+    try {
+      const { code, stdout, stderr } = await runNode(["scripts/kraken-list.mjs", "workspaces"]);
+      let j = {};
+      try { j = JSON.parse((stdout || "").trim() || "{}"); } catch (_) {}
+      if (code !== 0 || j.error) {
+        sendJson(res, 200, { workspaces: [], error: j.error || stderr.slice(-300) });
+        return;
+      }
+      sendJson(res, 200, { workspaces: j.workspaces || [] });
+    } catch (e) {
+      sendJson(res, 200, { workspaces: [], error: String((e && e.message) || e) });
+    }
+    return;
+  }
+
+  // GET /kraken/state?campaign=<name> — the campaign's saved Kraken picks
+  // (sidecar workspace + source folder) so the browser bar can default sensibly.
+  if (path === "/kraken/state" && req.method === "GET") {
+    try {
+      const campaign = url.searchParams.get("campaign");
+      if (!campaign) { sendJson(res, 400, { error: "missing ?campaign=" }); return; }
+      let sc = {};
+      try {
+        const p = join(CAMPAIGNS_DIR, campaign, "kraken.json");
+        if (existsSync(p)) sc = JSON.parse(readFileSync(p, "utf8"));
+      } catch (_) {}
+      sendJson(res, 200, {
+        campaign,
+        workspace: sc.workspace || null,
+        workspaceId: sc.workspaceId || null, // match the dropdown by id (aliases differ)
+        sourceFolder: sc.sourceFolder || null,
+      });
+    } catch (e) {
+      sendJson(res, 500, { error: String((e && e.message) || e) });
+    }
+    return;
+  }
+
+  // GET /kraken/folders?workspace=<name|uuid> — { workspace, workspaceId,
+  // folders:[{id,name,parent_id}] }. The client assembles the nested tree.
+  if (path === "/kraken/folders" && req.method === "GET") {
+    try {
+      const ws = url.searchParams.get("workspace");
+      if (!ws) { sendJson(res, 400, { error: "missing ?workspace=" }); return; }
+      const { code, stdout, stderr } = await runNode(["scripts/kraken-list.mjs", "folders", "--workspace", ws]);
+      let j = null;
+      try { j = JSON.parse((stdout || "").trim() || "{}"); } catch (_) {}
+      if (!j || j.error) {
+        sendJson(res, code === 2 ? 404 : 502, j || { error: stderr.slice(-300) || "folder list failed" });
+        return;
+      }
+      sendJson(res, 200, j);
+    } catch (e) {
+      sendJson(res, 502, { error: String((e && e.message) || e) });
+    }
+    return;
+  }
+
+  // POST /kraken/pull { campaign, workspace, folder } — folder is a UUID (the
+  // tree sends ids so duplicate folder NAMES can't pull the wrong one). Spawns
+  // kraken-pull, parses its __PULL_JSON__ summary line.
+  if (path === "/kraken/pull" && req.method === "POST") {
+    try {
+      let body;
+      try { body = JSON.parse((await readBody(req)) || "{}"); }
+      catch (e) { sendJson(res, 400, { error: "bad JSON: " + e.message }); return; }
+      const { campaign, workspace, folder } = body;
+      if (!campaign || !workspace || !folder) {
+        sendJson(res, 400, { error: "need campaign, workspace, folder" });
+        return;
+      }
+      const { code, stdout, stderr } = await runNode([
+        "scripts/kraken-pull.mjs", campaign,
+        "--workspace", workspace, "--folder", folder, "--per-campaign", "--json",
+      ]);
+      let summary = null;
+      const m = (stdout || "").match(/__PULL_JSON__ (.+)/);
+      if (m) { try { summary = JSON.parse(m[1]); } catch (_) {} }
+      sendJson(res, code === 0 ? 200 : 500, {
+        exitCode: code, ...(summary || {}), stderr: stderr.slice(-2000),
+      });
+    } catch (e) {
+      sendJson(res, 500, { error: String((e && e.message) || e) });
+    }
+    return;
+  }
+
+  // POST /media-upload?campaign=&kind=&name= — raw file bytes in the body.
+  // Streams req → <dest>.part → rename (NEVER readBody: it stringifies bytes).
+  // Metadata rides in the query string so the cross-origin preflight stays simple.
+  if (path === "/media-upload" && req.method === "POST") {
+    try {
+      const campaign = url.searchParams.get("campaign");
+      const kind = url.searchParams.get("kind") || "photo";
+      const rawName = url.searchParams.get("name") || "upload";
+      if (!campaign) { sendJson(res, 400, { error: "missing ?campaign=" }); return; }
+      const exts = EXT_FOR_KIND[kind];
+      if (!exts) { sendJson(res, 400, { error: `bad kind "${kind}"` }); return; }
+      const ext = extname(rawName).toLowerCase();
+      if (!exts.has(ext)) { sendJson(res, 400, { error: `extension "${ext}" not allowed for ${kind}` }); return; }
+      const slug = basename(rawName, extname(rawName))
+        .replace(/[^a-z0-9]+/gi, "-").replace(/^-+|-+$/g, "").toLowerCase() || "file";
+      const destDir = campaignCacheDir(campaign);
+      mkdirSync(destDir, { recursive: true });
+      const name = "upload-" + slug + ext;
+      const dest = join(destDir, name);
+      const part = dest + ".part";
+      const ws = createWriteStream(part);
+      let size = 0, aborted = false;
+      const cleanup = () => { try { rmSync(part, { force: true }); } catch (_) {} };
+      req.on("data", (chunk) => {
+        size += chunk.length;
+        if (size > UPLOAD_MAX_BYTES && !aborted) {
+          aborted = true;
+          ws.destroy(); req.destroy(); cleanup();
+          if (!res.headersSent) sendJson(res, 413, { error: "file too large (>500MB)" });
+        }
+      });
+      ws.on("error", () => { if (aborted) return; cleanup(); if (!res.headersSent) sendJson(res, 500, { error: "write failed" }); });
+      ws.on("finish", () => {
+        if (aborted) return;
+        try { renameSync(part, dest); }
+        catch (e) { cleanup(); if (!res.headersSent) sendJson(res, 500, { error: "rename failed: " + e.message }); return; }
+        const rel = dest.slice(PROJECT_ROOT.length + 1).replace(/\\/g, "/");
+        sendJson(res, 200, { name, path: rel, url: "/media-file/" + rel, source: "uploaded" });
+      });
+      req.pipe(ws);
+    } catch (e) {
+      if (!res.headersSent) sendJson(res, 500, { error: String((e && e.message) || e) });
+    }
     return;
   }
 
