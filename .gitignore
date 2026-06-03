@@ -15,6 +15,8 @@ brand/video-templates/__render/
 brand/kraken-cache/
 # Kraken photos swapped into static templates via /media-into-template (client media)
 templates/**/assets/swap-*
+# Per-checkout dev server ports (written by scripts/dev.mjs; machine-local)
+.dev-ports.json
 *.log
 .DS_Store
 __render/

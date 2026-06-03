@@ -54,7 +54,18 @@ const TEMPLATE_DIR = join(PROJECT_ROOT, "templates/multi-sport-foundations");
 const VIDEO_DIR = join(PROJECT_ROOT, "brand/video-templates");
 const OUT_DIR = join(PROJECT_ROOT, "out");
 const RENDERER = ".claude/skills/jsx-to-mp4/scripts/render.mjs";
-const SERVER = process.env.EDITOR_SERVER || `http://localhost:${process.env.EDITOR_PORT || 5173}`;
+// Talk to THIS checkout's editor-server. Env wins; else read the port dev.mjs wrote
+// for this workspace (.dev-ports.json) so a worktree never stamps another chat's
+// server; else the historical default.
+function devEditorPort() {
+  try {
+    const f = join(PROJECT_ROOT, ".dev-ports.json");
+    if (existsSync(f)) return JSON.parse(readFileSync(f, "utf8")).editor || null;
+  } catch { /* ignore — fall through to default */ }
+  return null;
+}
+const SERVER = process.env.EDITOR_SERVER
+  || `http://localhost:${process.env.EDITOR_PORT || devEditorPort() || 5173}`;
 
 // ── CLI ─────────────────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
