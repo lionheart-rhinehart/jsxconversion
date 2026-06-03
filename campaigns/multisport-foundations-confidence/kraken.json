@@ -2,5 +2,7 @@
   "workspace": "genesis",
   "workspaceId": "79872791-0804-4fd8-833c-6c8c61ec2956",
   "sourceFolder": "IG Stories",
-  "sourceFolderId": "3d0d56b2-fe0a-4aef-b2f4-a5f15bd63308"
+  "sourceFolderId": "3d0d56b2-fe0a-4aef-b2f4-a5f15bd63308",
+  "destFolder": "ANGLE 2 -",
+  "destFolderId": "3306a478-b47b-46f1-bb9f-ff351b75eac8"
 }
