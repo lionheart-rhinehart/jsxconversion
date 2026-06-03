@@ -1,6 +1,18 @@
 # AA Creative Playbook
 *What copy goes where on a creative — per funnel beat. The author's reference for templates + the rulebook the engine validates against. Validated against 13 statics + 2 videos in the playbook spike (see `docs/creative-playbook-research.md` for the full research + sources).*
 
+> **Enforced by the engine (not just prose).** `scripts/validate-plan.mjs` is a hard gate that
+> checks the bytes that actually render (the static edits config when present, motion templateData
+> otherwise) against the rules in `data/rules.<brand>.json`. It **blocks** the render
+> (`run-campaign.mjs` exits 2) on: a creative with no media (Law #0), copy not traced to the
+> copy-library (verbatim, persuasive roles), a missing/wrong eyebrow city for the campaign clone,
+> off-voice copy (emoji / exclamation / banned words), a paraphrased guarantee, or a non-9:16 static.
+> It **warns** on beat-role fit and beat-coverage/copy-reuse. The review page surfaces every
+> violation and disables Approve on blocked cards; after render, `lib/render-qa.mjs` fails black/
+> frozen/wrong-duration outputs. Existing campaigns are grandfathered to verbatim-warn via
+> `campaigns/<name>/validation.config.json`; new campaigns get the hard block. Run it yourself:
+> `node scripts/validate-plan.mjs <campaign>`.
+
 ## The 6 laws (non-negotiable)
 0. **Every creative carries real media.** No exceptions — static, GIF, or video, each asset is
    backed by a real image / video / clip (Kraken source still/clip, client photo, or AA brand

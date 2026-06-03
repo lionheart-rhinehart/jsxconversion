@@ -22,10 +22,17 @@ and it renders the approved ones in the background while you move to the next an
   2b.COPY LIB   → intake-copy.mjs: ad-copy.md + microscripts.md → copy-library.json
                   (verbatim units, by id — the ONLY copy allowed on a creative)
   3. DEEP READ  → 1 sub-agent per doc/section → campaign-knowledge.json (quoted, auditable; strategy only)
+  3b.KNOW GATE  → validate-knowledge.mjs: every deep-read section produced output (else fix before planning)
   4. PLAN       → creative-plan.json (angles × assets: format, source, copy, microscript, image, flags)
-  5. REVIEW     → review.html (served): approve / note / tweak / edit          ── STOPS HERE
-  6. RENDER     → run-campaign.mjs: approved only, background, render-then-move
-                  → out/campaigns/<name>/<angle>/<id>.<ext> + manifest.json
+  4b.PLAN GATE  → validate-plan.mjs: HARD compliance gate (media, eyebrow/city, verbatim, voice,
+                  guarantee, ratio; warns: beat-role, coverage). The skill loop-fixes to clean
+                  BEFORE opening REVIEW; report → campaigns/<name>/validation.json
+  5. REVIEW     → review.html (served): per-card compliance badges; Approve DISABLED on blocked
+                  cards; campaign banner; approve / note / tweak / edit          ── STOPS HERE
+  6. RENDER     → run-campaign.mjs: re-runs the gate (exit 2 on any block unless --force-unsafe),
+                  approved only, render-then-move, THEN render-QA (lib/render-qa.mjs: black/frozen/
+                  wrong-duration → failed, not rendered)
+                  → out/campaigns/<name>/<angle>/<id>.<ext> + manifest.json (+ durationSec/fileSize)
                   → good fresh assets ⇒ promote into the bank
   7. EXPORT     → kraken-export.mjs: push rendered creatives into the chosen
                   DESTINATION folder in the Kraken Content Library (idempotent)
@@ -44,7 +51,10 @@ run** and saved to `campaigns/<name>/kraken.json` — not hardcoded.
 | Renderer | `.claude/skills/jsx-to-mp4/scripts/render.mjs` (+ `claude-design.mjs`, `static-react.mjs`) | Classifies + renders. `claude-design.mjs` injects `window.__CONFIG__`. |
 | Static fill core | `scripts/lib/fill-core.mjs` | Cascade + substitution + variant-emit + render. Shared by CLI + runner. |
 | Single-template CLI | `scripts/fill-template.mjs` | Thin CLI over fill-core. |
-| Campaign runner | `scripts/run-campaign.mjs` | Renders approved assets; render-then-move; gif post-step; manifest. |
+| Campaign runner | `scripts/run-campaign.mjs` | Renders approved assets; render-then-move; gif post-step; manifest. Runs the compliance gate first (exit 2 on block) + render-QA after. |
+| Compliance gate | `scripts/validate-plan.mjs` (+ `data/rules.<brand>.json`) | Brand-agnostic hard gate over the plan/edits-config bytes. `validation.json` report; served at `/validation`. |
+| Render-truth QA | `scripts/lib/render-qa.mjs` | Decoder-free post-render check: black/frozen frames, duration, blank stills. |
+| Knowledge gate | `scripts/validate-knowledge.mjs` | Deep-read completeness (every section produced output) before planning. |
 | Kraken connector | `scripts/lib/kraken.mjs` | Supabase Content-Library client (PostgREST + Storage + ingest edge fn); workspace resolve; creds from Kraken `.env.local`. |
 | Kraken pull | `scripts/kraken-pull.mjs` | Caches a source-folder's raw media for hand placement; `--per-campaign` → `brand/kraken-cache/<campaign>/`. Also driven in-page via `POST /kraken/pull`. |
 | Kraken list | `scripts/kraken-list.mjs` | Read-only JSON lister (`workspaces` / `folders`) the review page's folder browser spawns via `/kraken/workspaces` + `/kraken/folders`. |

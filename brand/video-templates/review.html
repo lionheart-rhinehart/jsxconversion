@@ -90,6 +90,20 @@
   .act.changes.on { background: #f59e0b; border-color: #f59e0b; color: #1a1205; }
   .act.edit { flex: 0 0 auto; }
   .act:hover { border-color: rgba(255,255,255,0.4); }
+  .act[disabled] { opacity: 0.4; cursor: not-allowed; }
+  .act[disabled]:hover { border-color: rgba(255,255,255,0.16); }
+
+  /* Compliance badge (top row, after edit-tag) */
+  .b.comp { border: 1px solid transparent; }
+  .b.comp.bad { background: #c4141d; color: #fff; }
+  .b.comp.warn { background: #f59e0b; color: #1a1205; }
+  .b.comp.ok { background: rgba(74,222,128,0.85); color: #062911; }
+  /* Campaign compliance banner */
+  .val-banner { margin: 0 0 16px; padding: 12px 16px; border-left: 4px solid #c4141d; background: rgba(196,20,29,0.12); font-family: var(--font-mono, monospace); font-size: 12px; color: #ffd0d0; }
+  .val-banner.clean { border-left-color: #4ade80; background: rgba(74,222,128,0.10); color: #bff5d0; }
+  .val-banner b { color: #fff; }
+  .val-banner ul { margin: 6px 0 0; padding-left: 18px; }
+  .val-banner li { margin: 2px 0; }
 
   .empty { padding: 80px 20px; text-align: center; color: var(--aa-ink-400, #969ca7); font-family: var(--font-mono, monospace); }
   .err { color: #ff6b6b; }
@@ -291,6 +305,22 @@ const campaignParam = qs.get("campaign") || "";
 let PLAN = null;
 let FILTER = "all";
 let CAMPAIGNS = [];
+let VALIDATION = null;   // compliance report from /validation (null = unavailable → don't lock UI)
+
+// Live compliance report. Exception-tolerant: on any failure VALIDATION stays null
+// and the UI degrades (no badges, Approve NOT locked) rather than blocking the user.
+async function loadValidation() {
+  try {
+    const u = API + "/validation" + (PLAN && PLAN.campaign ? "?campaign=" + encodeURIComponent(PLAN.campaign) : "");
+    const r = await fetch(u);
+    const j = r.ok ? await r.json() : null;
+    VALIDATION = (j && j.assets) ? j : null;   // require the expected shape
+  } catch { VALIDATION = null; }
+}
+// Per-asset compliance entry (or null).
+function vEntry(angleId, assetId) {
+  return (VALIDATION && VALIDATION.assets) ? VALIDATION.assets[`${angleId}/${assetId}`] : null;
+}
 
 // Campaign switcher: list all campaigns (angles live in separate campaigns) so the
 // header dropdown can flip between angle 1 / 2 / 3 without hand-editing the URL.
@@ -309,6 +339,7 @@ async function load() {
     const r = await fetch(url);
     if (!r.ok) throw new Error("plan " + r.status + " — is editor-server running on :5173?");
     PLAN = await r.json();
+    await loadValidation();
     render();
     loadCampaigns();
   } catch (e) {
@@ -437,13 +468,33 @@ function cardHTML(a) {
   // Editability tag — so a thumbnail-less card still shows it can be edited.
   const editTag = st === "unmapped" ? ""
     : `<span class="b edit-tag ${st}">✎ ${st === "fresh" ? "copy" : "editable"}</span>`;
+  // Compliance badge from the validation report. Merge S8: a render/QA failure
+  // (status==="failed") counts as not-OK even if the pre-render rules passed.
+  const ve = vEntry(a._angle.id, a.id);
+  const renderFailed = a.status === "failed";
+  let compBadge = "", compTip = "", blocked = false;
+  if (ve || renderFailed) {
+    const blk = (ve ? ve.blocking : 0) + (renderFailed ? 1 : 0);
+    const wrn = ve ? ve.warnings : 0;
+    blocked = blk > 0;
+    const vios = (ve && ve.violations ? ve.violations : []).map((v) => `${v.severity === "block" ? "✗" : "⚠"} ${v.rule}: ${v.message}`);
+    if (renderFailed && a.notes) vios.unshift("✗ render: " + a.notes);
+    compTip = vios.join(" | ").replace(/"/g, "&quot;");
+    compBadge = blk > 0
+      ? `<span class="b comp bad" title="${compTip}">✗ ${blk}</span>`
+      : (wrn > 0 ? `<span class="b comp warn" title="${compTip}">⚠ ${wrn}</span>`
+                 : `<span class="b comp ok" title="compliant">✓</span>`);
+  }
+  // Approve is disabled while a card has a blocking violation (and isn't already
+  // approved — so you can still un-approve). Decision: enforce compliance at approval.
+  const approveDisabled = blocked && a.status !== "approved";
   return `
   <div class="card s-${a.status} as-${st}" data-angle="${a._angle.id}" data-asset="${a.id}">
     <div class="prev">
       ${previewHTML(a)}
       <div class="badges"><span class="b fmt">${fmtLabel(a.format)}</span>${srcBadge}<span class="b id">${a.id}</span></div>
       <span class="b status ${a.status}">${a.status}</span>
-      ${editTag}
+      ${editTag}${compBadge}
     </div>
     <div class="body">
       <div class="head">${(a.headline || "").replace(/</g, "&lt;")}</div>
@@ -454,12 +505,23 @@ function cardHTML(a) {
       ${needsRerender(a) ? `<div class="rerender">edited — re-render needed</div>` : ""}
       <textarea class="note" placeholder="notes…">${a.notes || ""}</textarea>
       <div class="actions">
-        <button class="act approve ${a.status === "approved" ? "on" : ""}" data-act="approve">Approve</button>
+        <button class="act approve ${a.status === "approved" ? "on" : ""}" data-act="approve"${approveDisabled ? ` disabled title="Fix ${compTip || "blocking violations"}"` : ""}>Approve</button>
         <button class="act changes ${a.status === "changes" ? "on" : ""}" data-act="changes">Changes</button>
         <button class="act edit" data-act="edit" title="Open in position editor">Edit</button>
       </div>
     </div>
   </div>`;
+}
+
+// Campaign-level compliance banner (blocking summary + campaign-wide violations).
+function valBannerHTML() {
+  if (!VALIDATION) return "";
+  const blk = VALIDATION.blocking || 0;
+  const cv = (VALIDATION.campaignViolations || []).map((v) => `<li>${v.severity === "block" ? "✗" : "⚠"} ${v.rule}: ${v.message}</li>`).join("");
+  if (blk > 0) {
+    return `<div class="val-banner"><b>Rendering is BLOCKED — ${blk} hard violation(s).</b> Fix the ✗ cards below (Approve is disabled on them) before rendering.${cv ? `<ul>${cv}</ul>` : ""}</div>`;
+  }
+  return `<div class="val-banner clean"><b>✓ Compliant</b> — 0 blocking${VALIDATION.warnings ? `, ${VALIDATION.warnings} warning(s)` : ""}. Safe to render.${cv ? `<ul>${cv}</ul>` : ""}</div>`;
 }
 
 function render() {
@@ -469,7 +531,7 @@ function render() {
   document.getElementById("title").innerHTML =
     (PLAN.angles && PLAN.angles[0] ? PLAN.angles[0].name : "Campaign") +
     ` <span class="accent">·</span>`;
-  let html = "";
+  let html = valBannerHTML();
   for (const ang of PLAN.angles || []) {
     const beats = {};
     for (const a of ang.assets || []) {
@@ -1051,7 +1113,9 @@ function KrakenBar({ campaign, onChanged, onUploaded, onPlaced }) {
 // {fontSize} (resize); TplText re-applies it live (preview == render).
 function DragOverlay({ stageRef, data, setOverride, selected, setSelected }) {
   const [boxes, setBoxes] = useState([]);
+  const [noDraggable, setNoDraggable] = useState(false); // template has no [data-ov-key] nodes
   const boxesRef = React.useRef([]);
+  const emptyRef = React.useRef(0);
   const dragRef = React.useRef(null);
 
   // rAF loop: re-measure every [data-ov-key] node so handles track the animation.
@@ -1074,6 +1138,10 @@ function DragOverlay({ stageRef, data, setOverride, selected, setSelected }) {
         });
         boxesRef.current = next;
         setBoxes(next);
+        // Detect a non-retrofitted template (no draggable nodes). Grace period of
+        // ~40 frames avoids flashing the message while the Stage is still mounting.
+        if (next.length) { emptyRef.current = 0; setNoDraggable(false); }
+        else if (++emptyRef.current >= 40) setNoDraggable(true);
       }
       raf = requestAnimationFrame(tick);
     };
@@ -1136,6 +1204,15 @@ function DragOverlay({ stageRef, data, setOverride, selected, setSelected }) {
     <div className="vm-drag-overlay"
       onWheel={(e) => { if (selected.length) { e.preventDefault(); bump(selected, e.deltaY < 0 ? 4 : -4); } }}
       onMouseDown={(e) => { if (e.target.classList.contains("vm-drag-overlay")) setSelected([]); }}>
+      {noDraggable && (
+        <div style={{ position: "absolute", left: "50%", top: 24, transform: "translateX(-50%)",
+          maxWidth: 460, padding: "10px 14px", background: "rgba(10,11,13,0.92)",
+          border: "1px solid #f59e0b", color: "#fbbf24", fontFamily: "monospace",
+          fontSize: 12, lineHeight: 1.4, textAlign: "center", pointerEvents: "none", zIndex: 5 }}>
+          This template isn't position-editable yet — its text layers aren't wrapped for dragging.
+          Edit wording in the <b>COPY</b> tab; this template needs a TplText retrofit to drag text.
+        </div>
+      )}
       {boxes.map((b) => (
         <div key={b.key} className={"vm-handle" + (selected.includes(b.key) ? " sel" : "")}
           style={{ left: b.left, top: b.top, width: b.w, height: b.h }}

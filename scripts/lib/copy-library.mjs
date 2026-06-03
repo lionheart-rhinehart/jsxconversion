@@ -208,6 +208,14 @@ export function parseAdCopy(md, { warn = () => {} } = {}) {
     const is = text.match(/Sub-?headline on image:\s*(.+)/i);
     if (is) push("imageSubhead", stripOuterQuotes(cleanLine(is[1])));
 
+    // Per-section drop detection (G3c): a section HEADER present in the source but
+    // yielding no unit means a formatting variance silently swallowed copy. These
+    // warnings carry "dropped section" so intake-copy can fail on them (a block
+    // that produced SOME units would otherwise pass the 0-units check).
+    if (/\*\*Headline:\*\*/i.test(text) && !hd) warn(`AD block "${block.label}" dropped section: Headline header present but did not parse`);
+    if (/\*\*PRIMARY TEXT:?\*\*/i.test(text) && !primary) warn(`AD block "${block.label}" dropped section: PRIMARY TEXT header present but body did not parse`);
+    if (/ALTERNATIVE HOOKS/i.test(text) && !altSec) warn(`AD block "${block.label}" dropped section: ALTERNATIVE HOOKS header present but no hooks parsed`);
+
     if (produced === 0) warn(`AD block "${block.label}" produced 0 units — check formatting`);
   }
   return units;
