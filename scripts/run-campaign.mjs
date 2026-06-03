@@ -17,9 +17,11 @@
 //  Dispatch (by source × format):
 //    template + static          → fill-core (cascade fill) → static render
 //    template + video|gif       → motion wrapper in brand/video-templates/ + __CONFIG__
-//    fresh    + static          → compose-creative output → static render   (needs P7)
-//    fresh    + video|gif       → compose-creative motion output            (needs P7)
+//    fresh    + static          → compose-creative authored config+jsx → static render
+//    fresh    + video|gif       → compose-creative authored Stage component → motion render
 //    *gif*                      → render mp4, then ffmpeg palettegen/paletteuse → .gif
+//  (fresh == a creative authored INTO the bank's shape; asset.template points at it,
+//   so it renders through the same static/motion paths as a bank template.)
 //
 //  Collision-safety: every cell renders under a UNIQUE basename so two cells
 //  of the same template never share out/<basename> or .tmp/<basename>.
@@ -37,6 +39,8 @@ import {
 } from "./lib/fill-core.mjs";
 import { assemble } from "./lib/assemble.mjs";
 import { fieldRole, buildEyebrowAnchor } from "./lib/roles.mjs";
+import { loadCopyLibrary } from "./lib/copy-library.mjs";
+import { buildRefPools, verbatimGuard } from "./lib/copy-resolve.mjs";
 import { validateTemplateSource } from "./validate-templates.mjs";
 
 const PROJECT_ROOT = resolve(".");
@@ -68,6 +72,10 @@ if (!existsSync(planPath)) {
 }
 const plan = JSON.parse(readFileSync(planPath, "utf8"));
 const brand = plan.brand || null;
+
+// Cody's verbatim copy library (null when the campaign has no ad-copy.md → the
+// legacy authored-copy path renders, preserving back-compat).
+const COPY_LIBRARY = loadCopyLibrary(join(CAMPAIGNS_DIR, campaign));
 
 const campaignOut = join(OUT_DIR, "campaigns", campaign);
 mkdirSync(campaignOut, { recursive: true });
@@ -164,12 +172,25 @@ function buildMotionData(asset, dataKeys, tierTags = {}) {
     data = { ...asset.templateData };
   } else {
     // Role-aware JOIN: infer each field's role from its name, then match the
-    // asset's copy (headline routed by beat, microscript → reframe) to fields by
-    // role — replacing the old hardcoded regex guess.
+    // asset's copy to fields by role. Copy comes by REFERENCE (verbatim, from the
+    // copy-library) when the asset carries copyRefs/hookRef; else the legacy path.
+    // Motion has no maxChars, so the hook still splits but there's no length-based
+    // alt-hook fallback (known gap — static-only fit).
     const slots = dataKeys.map((k) => ({ id: k, role: fieldRole(k), accepts: [] }));
     if (slots.some((s) => s.role)) {
-      const { bySlotId } = assemble({ slots, copyByRole: buildCopyByRole(asset) });
+      const refPools = COPY_LIBRARY
+        ? buildRefPools(asset, { library: COPY_LIBRARY, tierTags, warn: (m) => console.error(`[copy] ${m}`) })
+        : null;
+      const copyByRole = refPools ? refPools.pools : buildCopyByRole(asset);
+      const { bySlotId } = assemble({ slots, copyByRole });
       data = { ...bySlotId };
+      if (COPY_LIBRARY) {
+        const placedBySlot = {};
+        for (const s of slots) if (bySlotId[s.id]) placedBySlot[s.id] = { role: s.role, text: bySlotId[s.id] };
+        for (const v of verbatimGuard({ placedBySlot, provenance: refPools ? refPools.provenance : new Set(), library: COPY_LIBRARY, asset })) {
+          console.error(`[copy] VERBATIM VIOLATION ${asset.id} field "${v.slotId}" (${v.role}): not from copy-library — "${String(v.text).slice(0, 60)}"`);
+        }
+      }
     } else {
       // Fallback for templates with no role-ish field names.
       if (asset.microscript && dataKeys.includes("eyebrow")) data.eyebrow = asset.microscript;
@@ -501,14 +522,28 @@ ${src}
   return result;
 }
 
-// fresh: delegate to compose-creative (P7). Until that skill is wired, report
-// a clear pending status rather than failing the batch.
-async function renderFresh(asset) {
-  const gen = join(PROJECT_ROOT, ".claude/skills/compose-creative/scripts/generate.mjs");
-  if (!existsSync(gen)) {
-    return { ok: false, pending: true, error: "compose-creative generator not built yet (P7)" };
+// fresh: a creative `compose-creative` authored from scratch INTO the bank's own
+// file shape (static → templates/multi-sport-foundations/<t>.{config.json,jsx};
+// motion → brand/video-templates/templates/<t>.jsx). The compose step sets the
+// asset's `template` to that authored basename, so a fresh asset is structurally
+// identical to a bank-template asset at render time — we route it through the
+// SAME proven static/motion paths. If it hasn't been authored yet, report a
+// clear pending status (don't fail the batch): compose-creative runs first.
+async function renderFresh(asset, angleId) {
+  if (!asset.template) {
+    return { ok: false, pending: true,
+      error: "fresh asset not composed yet — run compose-creative to author it (it sets asset.template)" };
   }
-  return { ok: false, pending: true, error: "fresh generation wiring pending live test" };
+  const authored = asset.format === "static"
+    ? existsSync(join(TEMPLATE_DIR, `${asset.template}.config.json`))
+    : existsSync(join(VIDEO_DIR, "templates", `${asset.template}.jsx`));
+  if (!authored) {
+    return { ok: false, pending: true,
+      error: `fresh template "${asset.template}" not authored yet — run compose-creative first` };
+  }
+  return asset.format === "static"
+    ? renderTemplateStatic(asset, angleId)
+    : renderTemplateMotion(asset, angleId, asset.format === "gif");
 }
 
 // ── main ─────────────────────────────────────────────────────────────────────
@@ -537,7 +572,7 @@ async function main() {
 
       let res;
       try {
-        if (asset.source === "fresh") res = await renderFresh(asset);
+        if (asset.source === "fresh") res = await renderFresh(asset, angle.id);
         else if (asset.format === "static") res = await renderTemplateStatic(asset, angle.id);
         else res = await renderTemplateMotion(asset, angle.id, asset.format === "gif");
       } catch (e) {

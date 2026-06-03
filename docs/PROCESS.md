@@ -19,7 +19,9 @@ and it renders the approved ones in the background while you move to the next an
                   (kraken-pull.mjs --per-campaign → brand/kraken-cache/<campaign>/,
                    OR browse+pull right in the review page) + data tier + brand kit
   2. INTAKE     → campaigns/<name>/{brief.md, ad-copy.md, microscripts.md, named templates}
-  3. DEEP READ  → 1 sub-agent per doc/section → campaign-knowledge.json (quoted, auditable)
+  2b.COPY LIB   → intake-copy.mjs: ad-copy.md + microscripts.md → copy-library.json
+                  (verbatim units, by id — the ONLY copy allowed on a creative)
+  3. DEEP READ  → 1 sub-agent per doc/section → campaign-knowledge.json (quoted, auditable; strategy only)
   4. PLAN       → creative-plan.json (angles × assets: format, source, copy, microscript, image, flags)
   5. REVIEW     → review.html (served): approve / note / tweak / edit          ── STOPS HERE
   6. RENDER     → run-campaign.mjs: approved only, background, render-then-move
@@ -88,7 +90,9 @@ the campaign tier, or campaign would always win).
 { schemaVersion, campaign, brand, knobs{assetsPerAngle, motionRatio, freshnessFloor, repetitionCap},
   angles: [ { id, name, location?, mechanism, emotionalJob, voice,
     assets: [ { id, beat, format(video|gif|static), source(template|fresh),
-      template, templateQuery, freshConcept, headline, microscript, visual, location?,
+      template, templateQuery, freshConcept,
+      copyRefs{role: copy-library id|[ids]}, hookRef(copy-library id → kicker/headline/subhead),
+      headline, microscript, visual, location?,   // headline/microscript = LEGACY (back-compat); prefer copyRefs
       image{tag,source,ref}, media?(static bg image/clip), clip?(motion bg), audio, flags[],
       status(planned|approved|changes|rendering|rendered|failed), notes, output, thumb,
       knowledgeRefs[] } ] } ] }
@@ -193,6 +197,12 @@ coach-lower-thirds / logo-sting / meet-coach for worked examples):
 
 ## Non-negotiables
 - **No skim**: deep-read via sub-agents into `campaign-knowledge.json`.
+- **Copy is verbatim — select, never write**: the on-creative copy comes ONLY from
+  `campaigns/<name>/copy-library.json` (parsed from `ad-copy.md` + `microscripts.md`),
+  referenced by id (`asset.copyRefs` / `asset.hookRef`). The engine never authors,
+  paraphrases, reswords, or truncates copy. Too-long → shorter alt-hook → split across
+  kicker/headline/subhead → flag. `verbatimGuard` (`scripts/lib/copy-resolve.mjs`)
+  reports any on-creative text that isn't the user's. The brief is strategy-only.
 - **Hand placement sacred**: fill/generate set data only.
 - **Voice**: no emoji, no exclamation points; guarantee verbatim.
 - **Approval gate**: only approved assets render.

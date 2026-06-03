@@ -2,7 +2,6 @@
   "_comment": "Campaign tier for multisport-foundations (grind-trap). Merged campaign > location > brand (campaign is MOST specific). So per-location-VARYING values (city) must NOT live here — they live in data/location.*.json or campaign would always win and defeat per-location. This tier holds only NON-varying campaign values. Read via loadTier('campaign', ...).",
   "campaign": "multisport-foundations",
   "tags": {
-    "subhead": "PARENTS OF YOUTH ATHLETES 8-12",
     "audience": "AGES 8-12"
   }
 }

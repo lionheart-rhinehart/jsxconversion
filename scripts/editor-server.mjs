@@ -31,6 +31,7 @@ import { join, resolve, extname, basename, dirname } from "node:path";
 import { spawn } from "node:child_process";
 import { resolveStaticConfig } from "./lib/fill-core.mjs";
 import { fieldRole, BEAT_HEADLINE_ROLE, beatLetter } from "./lib/roles.mjs";
+import { loadCopyLibrary } from "./lib/copy-library.mjs";
 
 const PORT = Number(process.env.EDITOR_PORT) || 5173;
 const PROJECT_ROOT = resolve(".");
@@ -352,6 +353,7 @@ const server = createServer(async (req, res) => {
     const ALLOWED = [
       "status", "notes", "flags", "headline", "microscript", "output", "thumb",
       "editedAt", "renderedAt", "templateData", "clip", "photo", "audio", "template",
+      "copyRefs", "hookRef", "copyByRole", // verbatim copy-by-reference (copy-library)
       "kraken", // Content-Library writeback from kraken-export.mjs ({id,url,folder})
     ];
     for (const k of ALLOWED) if (k in patch) asset[k] = patch[k];
@@ -393,13 +395,26 @@ const server = createServer(async (req, res) => {
           }
         }
       }
+      // Verbatim copy-library (Cody's hand-written copy, by reference). Surfaced
+      // so the editor's copy picker offers his exact lines, not just whatever the
+      // plan already used. Each unit carries id/role so a pick can write copyRefs.
+      const lib = loadCopyLibrary(join(CAMPAIGNS_DIR, campaign));
+      const library = [];
+      if (lib && Array.isArray(lib.units)) {
+        for (const u of lib.units) {
+          if (typeof u.text !== "string" || !u.text.trim()) continue;
+          library.push({ id: u.id, role: u.role, kind: u.kind, text: u.text, chars: u.chars });
+          if (u.role) addRole(u.role, u.text);
+          all.add(u.text);
+        }
+      }
       const byKeyArr = {};
       for (const k of Object.keys(byKey)) byKeyArr[k] = [...byKey[k]];
       const byRoleArr = {};
       for (const r of Object.keys(byRole)) byRoleArr[r] = [...byRole[r]];
       sendJson(res, 200, {
         microscript: [...microscript], headline: [...headline],
-        byKey: byKeyArr, byRole: byRoleArr, all: [...all],
+        byKey: byKeyArr, byRole: byRoleArr, all: [...all], library,
       });
     } catch (e) {
       sendJson(res, 500, { error: e.message });

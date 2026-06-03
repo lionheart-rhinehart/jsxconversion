@@ -12,10 +12,12 @@
 // ============================================================================
 
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-import { join } from "node:path";
+import { join, dirname } from "node:path";
 import { spawn } from "node:child_process";
 import { assemble } from "./assemble.mjs";
 import { BEAT_HEADLINE_ROLE, beatLetter, buildEyebrowAnchor } from "./roles.mjs";
+import { loadCopyLibrary } from "./copy-library.mjs";
+import { buildRefPools, verbatimGuard } from "./copy-resolve.mjs";
 
 // ---------------------------------------------------------------------------
 // Data tiers
@@ -178,6 +180,11 @@ export function resolveStaticConfig({ clusterId, asset, brand, location, campaig
   const campaignTier = loadTier("campaign", campaign, dataDir);
   const tierTags = mergeTiers(brandTier.tags, locationTier.tags, campaignTier.tags);
 
+  // Cody's verbatim copy library (campaigns/<campaign>/copy-library.json). null
+  // for campaigns with no ad-copy.md → the legacy authored-headline path is used.
+  const projectRoot = dirname(dataDir);
+  const library = campaign ? loadCopyLibrary(join(projectRoot, "campaigns", campaign)) : null;
+
   const slots = collectTextSlots(sourceConfig);
   const roleAware = slots.some((s) => s.role);
 
@@ -201,11 +208,20 @@ export function resolveStaticConfig({ clusterId, asset, brand, location, campaig
       );
       if (eyeSlot) explicit[eyeSlot.id] = anchor;
     }
-    const { bySlotId, warnings } = assemble({
-      slots,
-      copyByRole: buildCopyByRole(asset),
-      explicit,
-    });
+    // Copy by REFERENCE (verbatim, from the copy-library) when the asset carries
+    // copyRefs/hookRef; otherwise the legacy authored headline/microscript path.
+    // The hook ladder's budget is the headline slot's maxChars (static only).
+    const headRole = BEAT_HEADLINE_ROLE[beatLetter(asset.beat)] || "hook";
+    const hookSlot = slots.find((s) => s.role === headRole || (s.accepts || []).includes("hook"));
+    const refPools = library
+      ? buildRefPools(asset, {
+          library, tierTags, maxChars: hookSlot && hookSlot.maxChars,
+          warn: (m) => console.error(`[copy] ${m}`),
+        })
+      : null;
+    const copyByRole = refPools ? refPools.pools : buildCopyByRole(asset);
+    const provenance = refPools ? refPools.provenance : null;
+    const { bySlotId, warnings } = assemble({ slots, copyByRole, explicit });
     for (const w of warnings) {
       console.error(`[fill] ${asset.id || clusterId} overflow: slot "${w.id}" (${w.role}) ${w.len} > maxChars ${w.maxChars}`);
     }
@@ -214,7 +230,7 @@ export function resolveStaticConfig({ clusterId, asset, brand, location, campaig
     // template's hardcoded placeholder (e.g. "PARENTS IN PORTLAND"). Blank it
     // instead. Identity/structural roles (brand/eyebrow/byline/cta) and locked
     // (guarantee) keep their defaults; tier-filled slots (city/logo) are untouched.
-    const CONTENT_ROLES = new Set(["hook", "claim", "mechanism", "reframe", "offer", "stat", "testimonial"]);
+    const CONTENT_ROLES = new Set(["kicker", "hook", "claim", "mechanism", "reframe", "offer", "stat", "testimonial"]);
     for (const s of slots) {
       if (s.id in bySlotId || s.locked || tierFilledIds.has(s.id)) continue;
       if (CONTENT_ROLES.has(s.role)) {
@@ -223,6 +239,19 @@ export function resolveStaticConfig({ clusterId, asset, brand, location, campaig
       }
     }
     applyById(config, bySlotId);
+
+    // Verbatim guard (report-only): a content-role slot whose text isn't Cody's
+    // (not from the copy-library and not a hand-edit) is the planner authoring copy.
+    if (library) {
+      const placedBySlot = {};
+      for (const s of slots) {
+        if (s.id in bySlotId && bySlotId[s.id]) placedBySlot[s.id] = { role: s.role, text: bySlotId[s.id] };
+      }
+      const violations = verbatimGuard({ placedBySlot, provenance: provenance || new Set(), library, asset });
+      for (const v of violations) {
+        console.error(`[copy] VERBATIM VIOLATION ${asset.id || clusterId} slot "${v.slotId}" (${v.role}): not from copy-library — "${String(v.text).slice(0, 60)}"`);
+      }
+    }
     return config;
   }
 

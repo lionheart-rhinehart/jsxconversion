@@ -1,0 +1,2093 @@
+{
+  "schemaVersion": 1,
+  "campaign": "multisport-foundations",
+  "generatedFrom": [
+    "ad-copy.md",
+    "microscripts.md"
+  ],
+  "count": 121,
+  "units": [
+    {
+      "id": "ad-1.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why Hard Work Isn't Enough",
+      "chars": 26,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.description",
+      "kind": "description",
+      "role": null,
+      "text": "See the number first.",
+      "chars": 21,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "Your athlete shows up. Works hard. Never quits. And hasn't gotten faster in six months. Here's the reason, and it's not them.\nHere's the brutal truth. It's those last few tired reps, the ones where they slow down but push through anyway. The nervous system works a lot like muscle memory, and it doesn't just memorize the movement. It memorizes the speed. So every slow, grinding rep at the end of a drill is teaching the body that slow is normal. We call it The Last Rep Lie. The reps that feel like the hardest work are the ones quietly making your kid slower.\nThat's what our Multi-Sport Foundation Program is built to stop. The set ends the second speed drops, so every rep your kid does is a fast one. And a fast rep is a first step that beats the defender to the ball, which turns into more touches every game, until the kid who used to blend in is the one coaches are asking about by name.\nThe first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real sprint time and jump numbers. Not a sales pitch. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1267,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Every coach says 'two more' at the end of every drill. Here's what those last two reps are actually doing to your athlete's speed.",
+      "chars": 130,
+      "ad": "AD 1",
+      "archetype": "Warning",
+      "code": "V1.1"
+    },
+    {
+      "id": "ad-1.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid's training is working perfectly. The problem is what it's teaching.",
+      "chars": 76,
+      "ad": "AD 1",
+      "archetype": "Paradox",
+      "code": "V1.5"
+    },
+    {
+      "id": "ad-1.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "What if getting slower at the end of practice isn't a sign they worked hard enough, but a sign something went wrong?",
+      "chars": 116,
+      "ad": "AD 1",
+      "archetype": "Verdict",
+      "code": "V1.11"
+    },
+    {
+      "id": "ad-1.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Stop Getting Faster",
+      "chars": 50,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What You Can Do About It)",
+      "chars": 30,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-2.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why Hard Work Isn't Enough",
+      "chars": 26,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.description",
+      "kind": "description",
+      "role": null,
+      "text": "See the number first.",
+      "chars": 21,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "Your athlete shows up. Works hard. Never quits. And hasn't gotten faster in six months. Here's the reason, and it's not them.\nHere's the brutal truth. It's those last few tired reps, the ones where they slow down but push through anyway. The nervous system works a lot like muscle memory, except it doesn't just memorize the movement, it memorizes the speed. So when a kid grinds out slow reps at the end of every drill, the body is rehearsing slow, and that's the speed it reaches for when the game is on the line.\nWe call it The Last Rep Lie. It's how a dedicated athlete can train for six months, do everything right, and end up in exactly the same place. The reps that feel like the hardest work are the ones quietly making them slower.\nThat's what our Multi-Sport Foundation Program is built to stop. The moment speed drops, the set ends, so every rep your athlete does stays fast.\nAnd a fast rep isn't just a number. It's the first step that beats the defender to the ball, which turns into more touches every game, which becomes the play that swings the score, until the kid who used to blend in is the one coaches are asking about by name.\nA 2026 study in Frontiers in Physiology found athletes who trained this way improved their vertical jump 224% more than the grind-it-out group, with less total fatigue. Less work. More speed. That's not motivation. That's physics.\nThe first step in is the Athlete Analysis. Same timing gates, same velocity trackers we use every session. You'll see your athlete's real sprint time and jump height before you decide anything. Not a sales pitch. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1743,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Every coach says 'two more' at the end of every drill. Here's what those last two reps are actually doing to your athlete's speed.",
+      "chars": 130,
+      "ad": "AD 2",
+      "archetype": "Warning",
+      "code": "V1.1"
+    },
+    {
+      "id": "ad-2.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Six months. Every practice. Every drill. Never quit. Still the same speed. This isn't bad luck. This is physics.",
+      "chars": 112,
+      "ad": "AD 2",
+      "archetype": "Paradox",
+      "code": "V2.2"
+    },
+    {
+      "id": "ad-2.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Nobody in youth sports will say this out loud: those last reps when your kid slows down are teaching their body to move slowly.",
+      "chars": 127,
+      "ad": "AD 2",
+      "archetype": "Mechanism",
+      "code": "V1.4"
+    },
+    {
+      "id": "ad-2.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Stop Getting Faster",
+      "chars": 50,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What You Can Do About It)",
+      "chars": 30,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-3.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why Hard Work Isn't Enough",
+      "chars": 26,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.description",
+      "kind": "description",
+      "role": null,
+      "text": "See the number first.",
+      "chars": 21,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "Your athlete shows up. Works hard. Never quits. And hasn't gotten faster in six months. Here's the reason, and it's not them.\nHere's the brutal truth. It's those last few tired reps at the end of a drill, the ones where they slow down but push through because that's what they've been taught to do. The nervous system works a lot like muscle memory. It doesn't just memorize the movement, it memorizes the speed that movement happened at. So every slow, grinding rep is rehearsal, and what it's rehearsing is slow. That's the speed the body reaches for in a game, when fatigue is real and the play is on the line.\nWe call it The Last Rep Lie. It's why the sweat and the sessions and the effort can all be real while the speed never moves. The training looked productive. It was Phantom Progress.\nSo here's something worth saying out loud: this was never your kid's fault, and it was never yours. The effort was real. It was just rehearsing the wrong thing, inside a model every program in town runs without ever questioning it.\nThat's exactly what our Multi-Sport Foundation Program was built to fix. It runs on The Velocity Code™, and underneath the whole system sits one rule. The instant speed drops, the set ends. No \"two more.\" Every rep your athlete does is a fast rep, because a fast rep is the only thing worth rehearsing.\nAnd a fast rep doesn't stay on the screen. It becomes the first step that beats the defender to the ball. That turns into more touches every single game. More touches become the plays that change the score, and those plays become the film a coach actually stops to watch, until one season in, the kid who used to blend into the roster is the one getting asked about by name.\nThe science backs every piece of this. A 2026 study in Frontiers in Physiology found athletes who protected their speed this way improved their vertical jump 224% more than the train-to-exhaustion group, and did it with 28% less total fatigue. A separate trial on kids ages 7 to 9 found speed gains of up to 1.2 mph in just eight weeks. Our program runs twelve. So +1 mph in 90 days isn't aggressive. The research says it's conservative.\nThe first step in is the Athlete Analysis. We run your athlete through the same Dashr timing gates and GymAware velocity trackers the NFL uses, and you leave with their real sprint time, real jump height, and a clear picture of where they stand. Not a sales presentation. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.\nCoach Graham Wilkerson built this. He's a CSCS, the same credential D1 and NFL strength coaches carry, and he trained NFL athletes Zack Martin, Ted Karras, and Nick Martin before adapting these same principles for the one developmental window, ages 8 to 12, where they matter most.\nHere's the promise no other program in this market will make. +1 mph. +3 inches. 90 days. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.\nTo your athlete's success, Coach {{user.first_name}}",
+      "chars": 3053,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Every coach says 'two more' at the end of every drill. Here's what those last two reps are actually doing to your athlete's speed.",
+      "chars": 130,
+      "ad": "AD 3",
+      "archetype": "Warning",
+      "code": "V1.1"
+    },
+    {
+      "id": "ad-3.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The most dedicated youth athletes are often the slowest developers. Not despite their work ethic. Because of what that work ethic is being applied to.",
+      "chars": 150,
+      "ad": "AD 3",
+      "archetype": "Paradox",
+      "code": "V2.3"
+    },
+    {
+      "id": "ad-3.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Nobody in youth sports will say this out loud: those last reps when your kid slows down are teaching their body to move slowly.",
+      "chars": 127,
+      "ad": "AD 3",
+      "archetype": "Mechanism",
+      "code": "V1.4"
+    },
+    {
+      "id": "ad-3.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Stop Getting Faster",
+      "chars": 50,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What You Can Do About It)",
+      "chars": 30,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why \"Great Job\" Isn't Working",
+      "chars": 29,
+      "ad": "AD 1 — VERSION A (Consequence depth) — Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 1 — VERSION A (Consequence depth) — Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times. And the second a game gets hard, it's gone.\nHere's the brutal truth. There are two kinds of confidence. The kind adults build by telling a kid they're doing great, and the kind a kid builds by looking at their own data and seeing they're getting faster. Only one of them holds up when the game is on the line, and it isn't the one made of words.\nThat's what our Multi-Sport Foundation Program is built on. Your athlete sees their real sprint time and jump height on a screen, every session, climbing. Proof they can't talk themselves out of, because it competes without hesitating, which means they make the play instead of second-guessing it, until they're the kid who plays like they belong out there.\nThe first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a pep talk. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1109,
+      "ad": "AD 1 — VERSION A (Consequence depth) — Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence in a young athlete. Only one of them survives a bad game.",
+      "chars": 91,
+      "ad": "AD 1 — VERSION A (Consequence depth) — Short",
+      "archetype": "Oracle",
+      "code": null
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The confidence you're building with encouragement is the kind that breaks first.",
+      "chars": 80,
+      "ad": "AD 1 — VERSION A (Consequence depth) — Short",
+      "archetype": "Warning",
+      "code": null
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid doesn't need to be told they're good. They need to see it.",
+      "chars": 67,
+      "ad": "AD 1 — VERSION A (Consequence depth) — Short",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 1 — VERSION A (Consequence depth) — Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 1 — VERSION A (Consequence depth) — Short"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth-short.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "When They Stop Believing",
+      "chars": 24,
+      "ad": "AD 1 — VERSION B (Emotional depth) — Short"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth-short.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 1 — VERSION B (Emotional depth) — Short"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth-short.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud. Your kid looks up and says some version of \"I'm not as good as the rest of them.\" And you don't know what to say back, because telling them they're great hasn't been landing for a while now.\nHere's the brutal truth. Encouragement can't fix a confidence problem, because the confidence built out of other people's words is the first thing to crack under pressure. What holds is the kind a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better.\nThat's what our Multi-Sport Foundation Program gives them. Real sprint times and jump heights on a screen, climbing every week. A kid who's seen that proof stops shrinking. They start competing like the play belongs to them, and somewhere in there they go from hoping they belong to knowing it.\nThe first step in is the Athlete Analysis. Same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a pep talk. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1167,
+      "ad": "AD 1 — VERSION B (Emotional depth) — Short"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth-short.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Telling your kid they're great stopped working a while ago. Here's what actually rebuilds it.",
+      "chars": 93,
+      "ad": "AD 1 — VERSION B (Emotional depth) — Short",
+      "archetype": "Oracle",
+      "code": null
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth-short.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The hardest part isn't watching them lose. It's watching them stop believing they can win.",
+      "chars": 90,
+      "ad": "AD 1 — VERSION B (Emotional depth) — Short",
+      "archetype": "Mirror",
+      "code": null
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth-short.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence. The kind that breaks under pressure, and the kind that doesn't.",
+      "chars": 98,
+      "ad": "AD 1 — VERSION B (Emotional depth) — Short",
+      "archetype": "Paradox",
+      "code": null
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth-short.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 1 — VERSION B (Emotional depth) — Short"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth-short.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 1 — VERSION B (Emotional depth) — Short"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why \"Great Job\" Isn't Working",
+      "chars": 29,
+      "ad": "AD 2 — VERSION A (Consequence depth) — Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 2 — VERSION A (Consequence depth) — Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times. And the second a game gets hard, it's gone.\nHere's the brutal truth. There are two kinds of confidence. The kind adults build by telling a kid they're doing great, and the kind a kid builds by looking at their own data and seeing they're getting faster. Only one of them holds up when the play is on the line, and it isn't the one made of words. Praise is on loan from whoever's saying it, so it goes quiet exactly when your kid reaches for it, on the bench, after a bad rep, when the game stops being easy.\nThat's what our Multi-Sport Foundation Program is built on. Every session your athlete sees their real sprint time and jump height on a screen, climbing. The improvement is measured, it's displayed, and it's theirs. Nobody can talk them out of a number they watched go up.\nAnd a kid who owns that proof competes without hesitating. That turns into making the play instead of second-guessing it, which turns into more reasons to trust themselves, until they're the one on the field who plays like they belong out there.\nWe've watched this happen with kids who didn't even want to be on a team. One mom told us her son was shy and quiet and wouldn't join anything. He got physically stronger here first, and the confidence followed it, and now he plays. The proof came before the belief, not the other way around.\nThe first step in is the Athlete Analysis. Same timing gates, same velocity trackers we use every session. You'll see your athlete's real numbers before you decide anything. Not a pep talk. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1720,
+      "ad": "AD 2 — VERSION A (Consequence depth) — Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence in a young athlete. Only one of them survives a bad game.",
+      "chars": 91,
+      "ad": "AD 2 — VERSION A (Consequence depth) — Medium",
+      "archetype": "Oracle",
+      "code": null
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The confidence you're building with encouragement is the kind that breaks first.",
+      "chars": 80,
+      "ad": "AD 2 — VERSION A (Consequence depth) — Medium",
+      "archetype": "Warning",
+      "code": null
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid doesn't need to be told they're good. They need to see it.",
+      "chars": 67,
+      "ad": "AD 2 — VERSION A (Consequence depth) — Medium",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 2 — VERSION A (Consequence depth) — Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 2 — VERSION A (Consequence depth) — Medium"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth-medium.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "When They Stop Believing",
+      "chars": 24,
+      "ad": "AD 2 — VERSION B (Emotional depth) — Medium"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth-medium.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 2 — VERSION B (Emotional depth) — Medium"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth-medium.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud. Your kid looks up and says some version of \"I'm not as good as the rest of them.\" And you don't know what to say back, because telling them they're great hasn't been landing for a while now.\nHere's the brutal truth. Encouragement can't fix this. The confidence built out of other people's words is the first thing to crack under pressure, on the bench, after a bad play, in the quiet car ride home. It belongs to whoever's saying it, so it leaves the moment they need it most.\nWhat holds is a different kind entirely. The confidence a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better. That's what our Multi-Sport Foundation Program gives them. Real sprint times and jump heights on a screen, climbing week after week, proof they earned that nobody can talk them out of.\nAnd a kid who's seen that proof changes. The bracing goes out of them. They stop waiting for the play to go wrong and start wanting it, and somewhere over a season they go from hoping they belong on that field to simply knowing they do.\nOne mom told us about exactly this. Her son was shy and quiet and wouldn't join any team. He got physically stronger here first, and then something bigger followed, he got confident, and now he plays. The strength came first. The belief grew out of it.\nThe first step in is the Athlete Analysis. Same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a pep talk. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1694,
+      "ad": "AD 2 — VERSION B (Emotional depth) — Medium"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth-medium.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Telling your kid they're great stopped working a while ago. Here's what actually rebuilds it.",
+      "chars": 93,
+      "ad": "AD 2 — VERSION B (Emotional depth) — Medium",
+      "archetype": "Oracle",
+      "code": null
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth-medium.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The hardest part isn't watching them lose. It's watching them stop believing they can win.",
+      "chars": 90,
+      "ad": "AD 2 — VERSION B (Emotional depth) — Medium",
+      "archetype": "Mirror",
+      "code": null
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth-medium.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence. The kind that breaks under pressure, and the kind that doesn't.",
+      "chars": 98,
+      "ad": "AD 2 — VERSION B (Emotional depth) — Medium",
+      "archetype": "Paradox",
+      "code": null
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth-medium.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 2 — VERSION B (Emotional depth) — Medium"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth-medium.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 2 — VERSION B (Emotional depth) — Medium"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why \"Great Job\" Isn't Working",
+      "chars": 29,
+      "ad": "AD 3 — VERSION A (Consequence depth) — Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 3 — VERSION A (Consequence depth) — Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times. And the second a game gets hard, it's gone.\nHere's the brutal truth. There are two kinds of confidence, and most of youth sports is built on the wrong one. The first gets handed to a kid by adults, in the form of encouragement and \"good job\" and trophies for showing up. The second a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting faster. Only one of them holds up when the play is on the line.\nPraise is on loan. It belongs to whoever's saying it, so it goes quiet exactly when your kid needs it, on the bench, after a bad rep, in the moment the game stops being easy. That's why the encouragement keeps not landing. It was never really theirs.\nAnd here's the part worth saying plainly: you didn't do anything wrong by encouraging them. Every good parent does. It just isn't the tool that fixes this, because confidence problems don't get solved with words. They get solved with evidence.\nThat's what our Multi-Sport Foundation Program is built on. It runs on The Velocity Code™, and every session your athlete sees their real sprint time and jump height on a screen, climbing. The improvement is measured, displayed, and theirs. Nobody can talk them out of a number they watched go up.\nAnd a kid who owns that proof competes without hesitating. That turns into making the play instead of second-guessing it. More plays made becomes more reasons to trust themselves, and that trust becomes the thing coaches notice from across the field, until the kid who used to shrink is the one who plays like the moment belongs to them.\nWe've watched it happen with kids who didn't even want to play. One mom told us her son was shy and quiet and wouldn't join any team. He got physically stronger here first, and then the bigger change followed, he got confident, and now he plays on a team. The physical proof came first, and the belief grew out of it. That's the order it works in, every time.\nThe first step in is the Athlete Analysis. We run your athlete through the same Dashr timing gates and GymAware velocity trackers the NFL uses, and you leave with their real sprint time, real jump height, and a clear picture of where they stand. Not a pep talk. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.\nCoach Graham Wilkerson built this. He's a CSCS, the same credential D1 and NFL strength coaches carry, and he trained NFL athletes Zack Martin, Ted Karras, and Nick Martin before adapting these principles for the developmental window where they matter most.\nHere's the promise no other program in this market will make. +1 mph. +3 inches. 90 days. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.\nTo your athlete's success, Coach {{user.first_name}}",
+      "chars": 2881,
+      "ad": "AD 3 — VERSION A (Consequence depth) — Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence in a young athlete. Only one of them survives a bad game.",
+      "chars": 91,
+      "ad": "AD 3 — VERSION A (Consequence depth) — Long",
+      "archetype": "Oracle",
+      "code": null
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The confidence you're building with encouragement is the kind that breaks first.",
+      "chars": 80,
+      "ad": "AD 3 — VERSION A (Consequence depth) — Long",
+      "archetype": "Warning",
+      "code": null
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid doesn't need to be told they're good. They need to see it.",
+      "chars": 67,
+      "ad": "AD 3 — VERSION A (Consequence depth) — Long",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 3 — VERSION A (Consequence depth) — Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 3 — VERSION A (Consequence depth) — Long"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth-long.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "When They Stop Believing",
+      "chars": 24,
+      "ad": "AD 3 — VERSION B (Emotional depth) — Long"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth-long.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 3 — VERSION B (Emotional depth) — Long"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth-long.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud. You're in the car after a game, and your kid goes quiet, and then comes some version of \"I'm not as good as the rest of them.\" And you don't know what to say, because telling them they're great hasn't been landing for a while now.\nHere's the brutal truth. Encouragement can't fix this, and it isn't your fault that it can't. The confidence built out of other people's words is the first thing to crack under pressure. It belongs to whoever's saying it, so it goes quiet on the bench, after the bad play, in exactly the moment your kid is reaching for it. It was never really theirs.\nWhat holds is a different kind entirely. The confidence a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better. You can't hand it to them, and a coach can't shout it into them. They have to see it.\nThat's what our Multi-Sport Foundation Program gives them. It runs on The Velocity Code™, and every session your athlete watches their real sprint time and jump height climb on a screen in front of them. The progress is measured and it's theirs. Nobody can talk them out of a number they watched go up themselves.\nAnd a kid who's seen that proof changes in a way you feel before you can measure it. The bracing goes out of them. They stop waiting for the play to go wrong and start wanting the ball, and somewhere across a season they cross the line from hoping they belong on that field to simply knowing they do.\nOne mom told us about exactly this kind of change. Her son was shy and quiet and wouldn't join any team. He got physically stronger here first, and then the bigger thing followed, he got confident, and now he plays. The strength came first. The belief grew out of it. That's almost always the order, the body gives a kid something real to stand on, and the belief follows.\nAnd the coaching behind it isn't guesswork. Coach Graham Wilkerson is a CSCS, the same credential D1 and NFL strength coaches carry, and he trained NFL athletes Zack Martin, Ted Karras, and Nick Martin before adapting these principles for the developmental window where they take hold deepest.\nThe first step in is the Athlete Analysis. We run your athlete through the same Dashr timing gates and GymAware velocity trackers the NFL uses, and you leave with their real numbers and a clear picture of where they stand. Not a pep talk. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.\nHere's the promise no other program in this market will make. +1 mph. +3 inches. 90 days. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.\nTo your athlete's success, Coach {{user.first_name}}",
+      "chars": 2773,
+      "ad": "AD 3 — VERSION B (Emotional depth) — Long"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth-long.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Telling your kid they're great stopped working a while ago. Here's what actually rebuilds it.",
+      "chars": 93,
+      "ad": "AD 3 — VERSION B (Emotional depth) — Long",
+      "archetype": "Oracle",
+      "code": null
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth-long.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The hardest part isn't watching them lose. It's watching them stop believing they can win.",
+      "chars": 90,
+      "ad": "AD 3 — VERSION B (Emotional depth) — Long",
+      "archetype": "Mirror",
+      "code": null
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth-long.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence. The kind that breaks under pressure, and the kind that doesn't.",
+      "chars": 98,
+      "ad": "AD 3 — VERSION B (Emotional depth) — Long",
+      "archetype": "Paradox",
+      "code": null
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth-long.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 3 — VERSION B (Emotional depth) — Long"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth-long.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 3 — VERSION B (Emotional depth) — Long"
+    },
+    {
+      "id": "ad-1-2.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why More Games Isn't Enough",
+      "chars": 27,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1-2.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1-2.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "More playing time feels like the answer. Another season, another team, more reps in real games. And a year later, the same kid, the same speed.\nHere's the brutal truth. A game doesn't develop an athlete. It reveals one. It shows you exactly what was built in training and nothing more, so playing more games just runs the same ceiling out there again and again under pressure.\nThat's the difference our Multi-Sport Foundation Program is built on. We develop the engine, the speed and power a game can only put on display, which means a first step that beats the defender to the ball, more touches every game, and the kind of play that makes coaches start asking who that kid is.\nThe first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real sprint time and jump numbers. Not a tryout. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1044,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1-2.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid can play a hundred games this year and finish exactly as fast as they started. Here's why.",
+      "chars": 99,
+      "ad": "AD 1",
+      "archetype": "Oracle",
+      "code": null
+    },
+    {
+      "id": "ad-1-2.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Games don't make athletes faster. They just show you how fast training already made them.",
+      "chars": 89,
+      "ad": "AD 1",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    {
+      "id": "ad-1-2.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "More game film won't fix a speed problem. It'll just record it in higher definition.",
+      "chars": 84,
+      "ad": "AD 1",
+      "archetype": "Warning",
+      "code": null
+    },
+    {
+      "id": "ad-1-2.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why More Games Won't Make Them Faster",
+      "chars": 44,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1-2.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Will)",
+      "chars": 24,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-2-2.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why More Games Isn't Enough",
+      "chars": 27,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2-2.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2-2.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "More playing time feels like the answer. Another season, another team, more reps in real games. And a year later, the same kid, the same speed.\nHere's the brutal truth. A game is a test, not a teacher. Everything your kid does out there, the first step, the closing burst, the jump for the ball, was built somewhere else, and the field just hands back a score on it. So another season of games measures the same athlete over and over while the number that actually matters, how fast and explosive they are, sits exactly where it started.\nThe speed and power behind those plays gets built on purpose, in training, or it doesn't get built at all. That's the part our Multi-Sport Foundation Program owns.\nAnd a bigger engine shows up everywhere the old one fell short. It's the first step that beats the defender to the ball, which turns into more touches every game, which becomes the play that swings the score, until the kid who used to blend in is the one coaches are asking about by name.\nOne dad told us his son had spent two years somewhere else before coming to us, and after a single week the kid said it was the best he'd ever had. He felt it immediately, because for once something was actually being built into him instead of just measured out of him.\nThe first step in is the Athlete Analysis. Same timing gates, same velocity trackers we use every session. You'll see your athlete's real numbers before you decide anything. Not a tryout. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1600,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2-2.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid can play a hundred games this year and finish exactly as fast as they started. Here's why.",
+      "chars": 99,
+      "ad": "AD 2",
+      "archetype": "Oracle",
+      "code": null
+    },
+    {
+      "id": "ad-2-2.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Games don't make athletes faster. They just show you how fast training already made them.",
+      "chars": 89,
+      "ad": "AD 2",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    {
+      "id": "ad-2-2.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "More game film won't fix a speed problem. It'll just record it in higher definition.",
+      "chars": 84,
+      "ad": "AD 2",
+      "archetype": "Warning",
+      "code": null
+    },
+    {
+      "id": "ad-2-2.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why More Games Won't Make Them Faster",
+      "chars": 44,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2-2.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Will)",
+      "chars": 24,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-3-2.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why More Games Isn't Enough",
+      "chars": 27,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3-2.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3-2.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "More playing time feels like the answer. Another season, another team, more reps in real games. And a year later, the same kid, the same speed.\nHere's the brutal truth. A game is a test, not a teacher. Everything your kid does on the field, the first step, the closing speed, the burst to the ball, got built somewhere else, and the game simply hands back the result. When a kid isn't fast enough, more games keep grading the same engine and reporting the same score. The ceiling never moves, because nothing on a game field was ever designed to move it.\nThat's why a whole season can pass with nothing to show for it. Your kid plays out the athlete they already were in September, and then does it again the following fall.\nAnd here's something worth saying plainly: none of that playing time was wasted, and you weren't wrong to want it. Games matter. They're where a kid competes, learns to read the field, and finds out what they're made of under pressure. They were just never the place an athlete gets built, and asking a game to make a kid faster is asking the scoreboard to do the work of the weight room.\nBuilding the engine is a separate job, and it's the one our Multi-Sport Foundation Program exists to do. It runs on The Velocity Code™, and every session we develop the real sprint speed and explosive power a game can only put on display, measured on purpose, rep by rep.\nThat kind of speed doesn't stay in the gym. It becomes the first step that beats the defender to the ball. That turns into more touches every single game. More touches become the plays that change the score, and those plays become the film a coach actually stops to watch, until one season in, the kid who used to blend into the roster is the one getting asked about by name.\nOne dad told us his son had been somewhere else for two years, and that a single week with us was enough for the kid to say it was the best he'd ever had. The reason was simple. He could feel that he was finally being built, not just put through his paces and sent home.\nThe first step in is the Athlete Analysis. We run your athlete through the same Dashr timing gates and GymAware velocity trackers the NFL uses, and you leave with their real sprint time, real jump height, and a clear picture of where they stand. Not a tryout. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.\nCoach Graham Wilkerson built this. He's a CSCS, the same credential D1 and NFL strength coaches carry, and he trained NFL athletes Zack Martin, Ted Karras, and Nick Martin before adapting these principles for the developmental window where they matter most.\nHere's the promise no other program in this market will make. +1 mph. +3 inches. 90 days. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.\nTo your athlete's success, Coach {{user.first_name}}",
+      "chars": 2906,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3-2.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid can play a hundred games this year and finish exactly as fast as they started. Here's why.",
+      "chars": 99,
+      "ad": "AD 3",
+      "archetype": "Oracle",
+      "code": null
+    },
+    {
+      "id": "ad-3-2.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Games don't make athletes faster. They just show you how fast training already made them.",
+      "chars": 89,
+      "ad": "AD 3",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    {
+      "id": "ad-3-2.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "More game film won't fix a speed problem. It'll just record it in higher definition.",
+      "chars": 84,
+      "ad": "AD 3",
+      "archetype": "Warning",
+      "code": null
+    },
+    {
+      "id": "ad-3-2.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why More Games Won't Make Them Faster",
+      "chars": 44,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3-2.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Will)",
+      "chars": 24,
+      "ad": "AD 3"
+    },
+    {
+      "id": "dsi-1-the-grind-trap.ms.1",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "The tired rep isn't effort. It's instruction.",
+      "chars": 45,
+      "dsi": "1 THE GRIND TRAP"
+    },
+    {
+      "id": "dsi-1-the-grind-trap.ms.2",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "The harder they grind, the deeper the slow groove.",
+      "chars": 50,
+      "dsi": "1 THE GRIND TRAP"
+    },
+    {
+      "id": "dsi-1-the-grind-trap.ms.3",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "'Push through it' programs exactly one thing: slow.",
+      "chars": 51,
+      "dsi": "1 THE GRIND TRAP"
+    },
+    {
+      "id": "dsi-1-the-grind-trap.ms.4",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "Working harder is writing slower code.",
+      "chars": 38,
+      "dsi": "1 THE GRIND TRAP"
+    },
+    {
+      "id": "dsi-1-the-grind-trap.ms.5",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "They're not falling behind. Their training is pushing them back.",
+      "chars": 64,
+      "dsi": "1 THE GRIND TRAP"
+    },
+    {
+      "id": "dsi-2-the-measurement-advantage.ms.1",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "No sensor. No proof. Just a coach's opinion.",
+      "chars": 44,
+      "dsi": "2 THE MEASUREMENT ADVANTAGE"
+    },
+    {
+      "id": "dsi-2-the-measurement-advantage.ms.2",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "We measure to the hundredth. Everyone else guesses.",
+      "chars": 51,
+      "dsi": "2 THE MEASUREMENT ADVANTAGE"
+    },
+    {
+      "id": "dsi-2-the-measurement-advantage.ms.3",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "Speed claimed isn't speed. Speed measured is.",
+      "chars": 45,
+      "dsi": "2 THE MEASUREMENT ADVANTAGE"
+    },
+    {
+      "id": "dsi-2-the-measurement-advantage.ms.4",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "Ask your coach for the number. We'll write ours down.",
+      "chars": 53,
+      "dsi": "2 THE MEASUREMENT ADVANTAGE"
+    },
+    {
+      "id": "dsi-2-the-measurement-advantage.ms.5",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "They watch your child train. We measure what actually happens.",
+      "chars": 62,
+      "dsi": "2 THE MEASUREMENT ADVANTAGE"
+    },
+    {
+      "id": "dsi-3-the-developmental-window.ms.1",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "The speed window is open right now. It closes at puberty.",
+      "chars": 57,
+      "dsi": "3 THE DEVELOPMENTAL WINDOW"
+    },
+    {
+      "id": "dsi-3-the-developmental-window.ms.2",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "Form it now, or spend years correcting it.",
+      "chars": 42,
+      "dsi": "3 THE DEVELOPMENTAL WINDOW"
+    },
+    {
+      "id": "dsi-3-the-developmental-window.ms.3",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "At age 9, the nervous system is writing blueprints. Not refinements.",
+      "chars": 68,
+      "dsi": "3 THE DEVELOPMENTAL WINDOW"
+    },
+    {
+      "id": "dsi-3-the-developmental-window.ms.4",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "They only build the foundation once.",
+      "chars": 36,
+      "dsi": "3 THE DEVELOPMENTAL WINDOW"
+    },
+    {
+      "id": "dsi-3-the-developmental-window.ms.5",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "After puberty, you rewrite. Before, you write. These are not the same job.",
+      "chars": 74,
+      "dsi": "3 THE DEVELOPMENTAL WINDOW"
+    },
+    {
+      "id": "dsi-4-the-written-guarantee.ms.1",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "+1 mph. +3 inches. 90 days. In writing.",
+      "chars": 39,
+      "dsi": "4 THE WRITTEN GUARANTEE"
+    },
+    {
+      "id": "dsi-4-the-written-guarantee.ms.2",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "Miss the number, train free until we don't.",
+      "chars": 43,
+      "dsi": "4 THE WRITTEN GUARANTEE"
+    },
+    {
+      "id": "dsi-4-the-written-guarantee.ms.3",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "A number. In writing. Before you spend a dollar.",
+      "chars": 48,
+      "dsi": "4 THE WRITTEN GUARANTEE"
+    },
+    {
+      "id": "dsi-4-the-written-guarantee.ms.4",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "We guarantee it because we measure it.",
+      "chars": 38,
+      "dsi": "4 THE WRITTEN GUARANTEE"
+    },
+    {
+      "id": "dsi-4-the-written-guarantee.ms.5",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "Ask them for the guarantee number. Then ask us for ours.",
+      "chars": 56,
+      "dsi": "4 THE WRITTEN GUARANTEE"
+    },
+    {
+      "id": "dsi-5-confidence-built-on-proof.ms.1",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "'Great job' disappears. A velocity PR is forever.",
+      "chars": 49,
+      "dsi": "5 CONFIDENCE BUILT ON PROOF"
+    },
+    {
+      "id": "dsi-5-confidence-built-on-proof.ms.2",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "We don't tell them they're improving. We show them the number.",
+      "chars": 62,
+      "dsi": "5 CONFIDENCE BUILT ON PROOF"
+    },
+    {
+      "id": "dsi-5-confidence-built-on-proof.ms.3",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "One number no bad game, no cut, no coach can take away.",
+      "chars": 55,
+      "dsi": "5 CONFIDENCE BUILT ON PROOF"
+    },
+    {
+      "id": "dsi-5-confidence-built-on-proof.ms.4",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "Data-proof confidence survives what praise never can.",
+      "chars": 53,
+      "dsi": "5 CONFIDENCE BUILT ON PROOF"
+    },
+    {
+      "id": "dsi-5-confidence-built-on-proof.ms.5",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "42 out of 63 parents said confidence first. More than speed.",
+      "chars": 60,
+      "dsi": "5 CONFIDENCE BUILT ON PROOF"
+    }
+  ],
+  "byId": {
+    "ad-1.headline": {
+      "id": "ad-1.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why Hard Work Isn't Enough",
+      "chars": 26,
+      "ad": "AD 1"
+    },
+    "ad-1.description": {
+      "id": "ad-1.description",
+      "kind": "description",
+      "role": null,
+      "text": "See the number first.",
+      "chars": 21,
+      "ad": "AD 1"
+    },
+    "ad-1.primaryText": {
+      "id": "ad-1.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "Your athlete shows up. Works hard. Never quits. And hasn't gotten faster in six months. Here's the reason, and it's not them.\nHere's the brutal truth. It's those last few tired reps, the ones where they slow down but push through anyway. The nervous system works a lot like muscle memory, and it doesn't just memorize the movement. It memorizes the speed. So every slow, grinding rep at the end of a drill is teaching the body that slow is normal. We call it The Last Rep Lie. The reps that feel like the hardest work are the ones quietly making your kid slower.\nThat's what our Multi-Sport Foundation Program is built to stop. The set ends the second speed drops, so every rep your kid does is a fast one. And a fast rep is a first step that beats the defender to the ball, which turns into more touches every game, until the kid who used to blend in is the one coaches are asking about by name.\nThe first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real sprint time and jump numbers. Not a sales pitch. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1267,
+      "ad": "AD 1"
+    },
+    "ad-1.altHook.1": {
+      "id": "ad-1.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Every coach says 'two more' at the end of every drill. Here's what those last two reps are actually doing to your athlete's speed.",
+      "chars": 130,
+      "ad": "AD 1",
+      "archetype": "Warning",
+      "code": "V1.1"
+    },
+    "ad-1.altHook.2": {
+      "id": "ad-1.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid's training is working perfectly. The problem is what it's teaching.",
+      "chars": 76,
+      "ad": "AD 1",
+      "archetype": "Paradox",
+      "code": "V1.5"
+    },
+    "ad-1.altHook.3": {
+      "id": "ad-1.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "What if getting slower at the end of practice isn't a sign they worked hard enough, but a sign something went wrong?",
+      "chars": 116,
+      "ad": "AD 1",
+      "archetype": "Verdict",
+      "code": "V1.11"
+    },
+    "ad-1.imageHeadline": {
+      "id": "ad-1.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Stop Getting Faster",
+      "chars": 50,
+      "ad": "AD 1"
+    },
+    "ad-1.imageSubhead": {
+      "id": "ad-1.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What You Can Do About It)",
+      "chars": 30,
+      "ad": "AD 1"
+    },
+    "ad-2.headline": {
+      "id": "ad-2.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why Hard Work Isn't Enough",
+      "chars": 26,
+      "ad": "AD 2"
+    },
+    "ad-2.description": {
+      "id": "ad-2.description",
+      "kind": "description",
+      "role": null,
+      "text": "See the number first.",
+      "chars": 21,
+      "ad": "AD 2"
+    },
+    "ad-2.primaryText": {
+      "id": "ad-2.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "Your athlete shows up. Works hard. Never quits. And hasn't gotten faster in six months. Here's the reason, and it's not them.\nHere's the brutal truth. It's those last few tired reps, the ones where they slow down but push through anyway. The nervous system works a lot like muscle memory, except it doesn't just memorize the movement, it memorizes the speed. So when a kid grinds out slow reps at the end of every drill, the body is rehearsing slow, and that's the speed it reaches for when the game is on the line.\nWe call it The Last Rep Lie. It's how a dedicated athlete can train for six months, do everything right, and end up in exactly the same place. The reps that feel like the hardest work are the ones quietly making them slower.\nThat's what our Multi-Sport Foundation Program is built to stop. The moment speed drops, the set ends, so every rep your athlete does stays fast.\nAnd a fast rep isn't just a number. It's the first step that beats the defender to the ball, which turns into more touches every game, which becomes the play that swings the score, until the kid who used to blend in is the one coaches are asking about by name.\nA 2026 study in Frontiers in Physiology found athletes who trained this way improved their vertical jump 224% more than the grind-it-out group, with less total fatigue. Less work. More speed. That's not motivation. That's physics.\nThe first step in is the Athlete Analysis. Same timing gates, same velocity trackers we use every session. You'll see your athlete's real sprint time and jump height before you decide anything. Not a sales pitch. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1743,
+      "ad": "AD 2"
+    },
+    "ad-2.altHook.1": {
+      "id": "ad-2.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Every coach says 'two more' at the end of every drill. Here's what those last two reps are actually doing to your athlete's speed.",
+      "chars": 130,
+      "ad": "AD 2",
+      "archetype": "Warning",
+      "code": "V1.1"
+    },
+    "ad-2.altHook.2": {
+      "id": "ad-2.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Six months. Every practice. Every drill. Never quit. Still the same speed. This isn't bad luck. This is physics.",
+      "chars": 112,
+      "ad": "AD 2",
+      "archetype": "Paradox",
+      "code": "V2.2"
+    },
+    "ad-2.altHook.3": {
+      "id": "ad-2.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Nobody in youth sports will say this out loud: those last reps when your kid slows down are teaching their body to move slowly.",
+      "chars": 127,
+      "ad": "AD 2",
+      "archetype": "Mechanism",
+      "code": "V1.4"
+    },
+    "ad-2.imageHeadline": {
+      "id": "ad-2.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Stop Getting Faster",
+      "chars": 50,
+      "ad": "AD 2"
+    },
+    "ad-2.imageSubhead": {
+      "id": "ad-2.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What You Can Do About It)",
+      "chars": 30,
+      "ad": "AD 2"
+    },
+    "ad-3.headline": {
+      "id": "ad-3.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why Hard Work Isn't Enough",
+      "chars": 26,
+      "ad": "AD 3"
+    },
+    "ad-3.description": {
+      "id": "ad-3.description",
+      "kind": "description",
+      "role": null,
+      "text": "See the number first.",
+      "chars": 21,
+      "ad": "AD 3"
+    },
+    "ad-3.primaryText": {
+      "id": "ad-3.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "Your athlete shows up. Works hard. Never quits. And hasn't gotten faster in six months. Here's the reason, and it's not them.\nHere's the brutal truth. It's those last few tired reps at the end of a drill, the ones where they slow down but push through because that's what they've been taught to do. The nervous system works a lot like muscle memory. It doesn't just memorize the movement, it memorizes the speed that movement happened at. So every slow, grinding rep is rehearsal, and what it's rehearsing is slow. That's the speed the body reaches for in a game, when fatigue is real and the play is on the line.\nWe call it The Last Rep Lie. It's why the sweat and the sessions and the effort can all be real while the speed never moves. The training looked productive. It was Phantom Progress.\nSo here's something worth saying out loud: this was never your kid's fault, and it was never yours. The effort was real. It was just rehearsing the wrong thing, inside a model every program in town runs without ever questioning it.\nThat's exactly what our Multi-Sport Foundation Program was built to fix. It runs on The Velocity Code™, and underneath the whole system sits one rule. The instant speed drops, the set ends. No \"two more.\" Every rep your athlete does is a fast rep, because a fast rep is the only thing worth rehearsing.\nAnd a fast rep doesn't stay on the screen. It becomes the first step that beats the defender to the ball. That turns into more touches every single game. More touches become the plays that change the score, and those plays become the film a coach actually stops to watch, until one season in, the kid who used to blend into the roster is the one getting asked about by name.\nThe science backs every piece of this. A 2026 study in Frontiers in Physiology found athletes who protected their speed this way improved their vertical jump 224% more than the train-to-exhaustion group, and did it with 28% less total fatigue. A separate trial on kids ages 7 to 9 found speed gains of up to 1.2 mph in just eight weeks. Our program runs twelve. So +1 mph in 90 days isn't aggressive. The research says it's conservative.\nThe first step in is the Athlete Analysis. We run your athlete through the same Dashr timing gates and GymAware velocity trackers the NFL uses, and you leave with their real sprint time, real jump height, and a clear picture of where they stand. Not a sales presentation. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.\nCoach Graham Wilkerson built this. He's a CSCS, the same credential D1 and NFL strength coaches carry, and he trained NFL athletes Zack Martin, Ted Karras, and Nick Martin before adapting these same principles for the one developmental window, ages 8 to 12, where they matter most.\nHere's the promise no other program in this market will make. +1 mph. +3 inches. 90 days. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.\nTo your athlete's success, Coach {{user.first_name}}",
+      "chars": 3053,
+      "ad": "AD 3"
+    },
+    "ad-3.altHook.1": {
+      "id": "ad-3.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Every coach says 'two more' at the end of every drill. Here's what those last two reps are actually doing to your athlete's speed.",
+      "chars": 130,
+      "ad": "AD 3",
+      "archetype": "Warning",
+      "code": "V1.1"
+    },
+    "ad-3.altHook.2": {
+      "id": "ad-3.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The most dedicated youth athletes are often the slowest developers. Not despite their work ethic. Because of what that work ethic is being applied to.",
+      "chars": 150,
+      "ad": "AD 3",
+      "archetype": "Paradox",
+      "code": "V2.3"
+    },
+    "ad-3.altHook.3": {
+      "id": "ad-3.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Nobody in youth sports will say this out loud: those last reps when your kid slows down are teaching their body to move slowly.",
+      "chars": 127,
+      "ad": "AD 3",
+      "archetype": "Mechanism",
+      "code": "V1.4"
+    },
+    "ad-3.imageHeadline": {
+      "id": "ad-3.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Stop Getting Faster",
+      "chars": 50,
+      "ad": "AD 3"
+    },
+    "ad-3.imageSubhead": {
+      "id": "ad-3.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What You Can Do About It)",
+      "chars": 30,
+      "ad": "AD 3"
+    },
+    "ad-1-version-a-consequence-depth-short.headline": {
+      "id": "ad-1-version-a-consequence-depth-short.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why \"Great Job\" Isn't Working",
+      "chars": 29,
+      "ad": "AD 1 — VERSION A (Consequence depth) — Short"
+    },
+    "ad-1-version-a-consequence-depth-short.description": {
+      "id": "ad-1-version-a-consequence-depth-short.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 1 — VERSION A (Consequence depth) — Short"
+    },
+    "ad-1-version-a-consequence-depth-short.primaryText": {
+      "id": "ad-1-version-a-consequence-depth-short.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times. And the second a game gets hard, it's gone.\nHere's the brutal truth. There are two kinds of confidence. The kind adults build by telling a kid they're doing great, and the kind a kid builds by looking at their own data and seeing they're getting faster. Only one of them holds up when the game is on the line, and it isn't the one made of words.\nThat's what our Multi-Sport Foundation Program is built on. Your athlete sees their real sprint time and jump height on a screen, every session, climbing. Proof they can't talk themselves out of, because it competes without hesitating, which means they make the play instead of second-guessing it, until they're the kid who plays like they belong out there.\nThe first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a pep talk. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1109,
+      "ad": "AD 1 — VERSION A (Consequence depth) — Short"
+    },
+    "ad-1-version-a-consequence-depth-short.altHook.1": {
+      "id": "ad-1-version-a-consequence-depth-short.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence in a young athlete. Only one of them survives a bad game.",
+      "chars": 91,
+      "ad": "AD 1 — VERSION A (Consequence depth) — Short",
+      "archetype": "Oracle",
+      "code": null
+    },
+    "ad-1-version-a-consequence-depth-short.altHook.2": {
+      "id": "ad-1-version-a-consequence-depth-short.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The confidence you're building with encouragement is the kind that breaks first.",
+      "chars": 80,
+      "ad": "AD 1 — VERSION A (Consequence depth) — Short",
+      "archetype": "Warning",
+      "code": null
+    },
+    "ad-1-version-a-consequence-depth-short.altHook.3": {
+      "id": "ad-1-version-a-consequence-depth-short.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid doesn't need to be told they're good. They need to see it.",
+      "chars": 67,
+      "ad": "AD 1 — VERSION A (Consequence depth) — Short",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    "ad-1-version-a-consequence-depth-short.imageHeadline": {
+      "id": "ad-1-version-a-consequence-depth-short.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 1 — VERSION A (Consequence depth) — Short"
+    },
+    "ad-1-version-a-consequence-depth-short.imageSubhead": {
+      "id": "ad-1-version-a-consequence-depth-short.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 1 — VERSION A (Consequence depth) — Short"
+    },
+    "ad-1-version-b-emotional-depth-short.headline": {
+      "id": "ad-1-version-b-emotional-depth-short.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "When They Stop Believing",
+      "chars": 24,
+      "ad": "AD 1 — VERSION B (Emotional depth) — Short"
+    },
+    "ad-1-version-b-emotional-depth-short.description": {
+      "id": "ad-1-version-b-emotional-depth-short.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 1 — VERSION B (Emotional depth) — Short"
+    },
+    "ad-1-version-b-emotional-depth-short.primaryText": {
+      "id": "ad-1-version-b-emotional-depth-short.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud. Your kid looks up and says some version of \"I'm not as good as the rest of them.\" And you don't know what to say back, because telling them they're great hasn't been landing for a while now.\nHere's the brutal truth. Encouragement can't fix a confidence problem, because the confidence built out of other people's words is the first thing to crack under pressure. What holds is the kind a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better.\nThat's what our Multi-Sport Foundation Program gives them. Real sprint times and jump heights on a screen, climbing every week. A kid who's seen that proof stops shrinking. They start competing like the play belongs to them, and somewhere in there they go from hoping they belong to knowing it.\nThe first step in is the Athlete Analysis. Same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a pep talk. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1167,
+      "ad": "AD 1 — VERSION B (Emotional depth) — Short"
+    },
+    "ad-1-version-b-emotional-depth-short.altHook.1": {
+      "id": "ad-1-version-b-emotional-depth-short.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Telling your kid they're great stopped working a while ago. Here's what actually rebuilds it.",
+      "chars": 93,
+      "ad": "AD 1 — VERSION B (Emotional depth) — Short",
+      "archetype": "Oracle",
+      "code": null
+    },
+    "ad-1-version-b-emotional-depth-short.altHook.2": {
+      "id": "ad-1-version-b-emotional-depth-short.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The hardest part isn't watching them lose. It's watching them stop believing they can win.",
+      "chars": 90,
+      "ad": "AD 1 — VERSION B (Emotional depth) — Short",
+      "archetype": "Mirror",
+      "code": null
+    },
+    "ad-1-version-b-emotional-depth-short.altHook.3": {
+      "id": "ad-1-version-b-emotional-depth-short.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence. The kind that breaks under pressure, and the kind that doesn't.",
+      "chars": 98,
+      "ad": "AD 1 — VERSION B (Emotional depth) — Short",
+      "archetype": "Paradox",
+      "code": null
+    },
+    "ad-1-version-b-emotional-depth-short.imageHeadline": {
+      "id": "ad-1-version-b-emotional-depth-short.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 1 — VERSION B (Emotional depth) — Short"
+    },
+    "ad-1-version-b-emotional-depth-short.imageSubhead": {
+      "id": "ad-1-version-b-emotional-depth-short.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 1 — VERSION B (Emotional depth) — Short"
+    },
+    "ad-2-version-a-consequence-depth-medium.headline": {
+      "id": "ad-2-version-a-consequence-depth-medium.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why \"Great Job\" Isn't Working",
+      "chars": 29,
+      "ad": "AD 2 — VERSION A (Consequence depth) — Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.description": {
+      "id": "ad-2-version-a-consequence-depth-medium.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 2 — VERSION A (Consequence depth) — Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.primaryText": {
+      "id": "ad-2-version-a-consequence-depth-medium.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times. And the second a game gets hard, it's gone.\nHere's the brutal truth. There are two kinds of confidence. The kind adults build by telling a kid they're doing great, and the kind a kid builds by looking at their own data and seeing they're getting faster. Only one of them holds up when the play is on the line, and it isn't the one made of words. Praise is on loan from whoever's saying it, so it goes quiet exactly when your kid reaches for it, on the bench, after a bad rep, when the game stops being easy.\nThat's what our Multi-Sport Foundation Program is built on. Every session your athlete sees their real sprint time and jump height on a screen, climbing. The improvement is measured, it's displayed, and it's theirs. Nobody can talk them out of a number they watched go up.\nAnd a kid who owns that proof competes without hesitating. That turns into making the play instead of second-guessing it, which turns into more reasons to trust themselves, until they're the one on the field who plays like they belong out there.\nWe've watched this happen with kids who didn't even want to be on a team. One mom told us her son was shy and quiet and wouldn't join anything. He got physically stronger here first, and the confidence followed it, and now he plays. The proof came before the belief, not the other way around.\nThe first step in is the Athlete Analysis. Same timing gates, same velocity trackers we use every session. You'll see your athlete's real numbers before you decide anything. Not a pep talk. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1720,
+      "ad": "AD 2 — VERSION A (Consequence depth) — Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.altHook.1": {
+      "id": "ad-2-version-a-consequence-depth-medium.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence in a young athlete. Only one of them survives a bad game.",
+      "chars": 91,
+      "ad": "AD 2 — VERSION A (Consequence depth) — Medium",
+      "archetype": "Oracle",
+      "code": null
+    },
+    "ad-2-version-a-consequence-depth-medium.altHook.2": {
+      "id": "ad-2-version-a-consequence-depth-medium.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The confidence you're building with encouragement is the kind that breaks first.",
+      "chars": 80,
+      "ad": "AD 2 — VERSION A (Consequence depth) — Medium",
+      "archetype": "Warning",
+      "code": null
+    },
+    "ad-2-version-a-consequence-depth-medium.altHook.3": {
+      "id": "ad-2-version-a-consequence-depth-medium.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid doesn't need to be told they're good. They need to see it.",
+      "chars": 67,
+      "ad": "AD 2 — VERSION A (Consequence depth) — Medium",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    "ad-2-version-a-consequence-depth-medium.imageHeadline": {
+      "id": "ad-2-version-a-consequence-depth-medium.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 2 — VERSION A (Consequence depth) — Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.imageSubhead": {
+      "id": "ad-2-version-a-consequence-depth-medium.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 2 — VERSION A (Consequence depth) — Medium"
+    },
+    "ad-2-version-b-emotional-depth-medium.headline": {
+      "id": "ad-2-version-b-emotional-depth-medium.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "When They Stop Believing",
+      "chars": 24,
+      "ad": "AD 2 — VERSION B (Emotional depth) — Medium"
+    },
+    "ad-2-version-b-emotional-depth-medium.description": {
+      "id": "ad-2-version-b-emotional-depth-medium.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 2 — VERSION B (Emotional depth) — Medium"
+    },
+    "ad-2-version-b-emotional-depth-medium.primaryText": {
+      "id": "ad-2-version-b-emotional-depth-medium.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud. Your kid looks up and says some version of \"I'm not as good as the rest of them.\" And you don't know what to say back, because telling them they're great hasn't been landing for a while now.\nHere's the brutal truth. Encouragement can't fix this. The confidence built out of other people's words is the first thing to crack under pressure, on the bench, after a bad play, in the quiet car ride home. It belongs to whoever's saying it, so it leaves the moment they need it most.\nWhat holds is a different kind entirely. The confidence a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better. That's what our Multi-Sport Foundation Program gives them. Real sprint times and jump heights on a screen, climbing week after week, proof they earned that nobody can talk them out of.\nAnd a kid who's seen that proof changes. The bracing goes out of them. They stop waiting for the play to go wrong and start wanting it, and somewhere over a season they go from hoping they belong on that field to simply knowing they do.\nOne mom told us about exactly this. Her son was shy and quiet and wouldn't join any team. He got physically stronger here first, and then something bigger followed, he got confident, and now he plays. The strength came first. The belief grew out of it.\nThe first step in is the Athlete Analysis. Same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a pep talk. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1694,
+      "ad": "AD 2 — VERSION B (Emotional depth) — Medium"
+    },
+    "ad-2-version-b-emotional-depth-medium.altHook.1": {
+      "id": "ad-2-version-b-emotional-depth-medium.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Telling your kid they're great stopped working a while ago. Here's what actually rebuilds it.",
+      "chars": 93,
+      "ad": "AD 2 — VERSION B (Emotional depth) — Medium",
+      "archetype": "Oracle",
+      "code": null
+    },
+    "ad-2-version-b-emotional-depth-medium.altHook.2": {
+      "id": "ad-2-version-b-emotional-depth-medium.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The hardest part isn't watching them lose. It's watching them stop believing they can win.",
+      "chars": 90,
+      "ad": "AD 2 — VERSION B (Emotional depth) — Medium",
+      "archetype": "Mirror",
+      "code": null
+    },
+    "ad-2-version-b-emotional-depth-medium.altHook.3": {
+      "id": "ad-2-version-b-emotional-depth-medium.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence. The kind that breaks under pressure, and the kind that doesn't.",
+      "chars": 98,
+      "ad": "AD 2 — VERSION B (Emotional depth) — Medium",
+      "archetype": "Paradox",
+      "code": null
+    },
+    "ad-2-version-b-emotional-depth-medium.imageHeadline": {
+      "id": "ad-2-version-b-emotional-depth-medium.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 2 — VERSION B (Emotional depth) — Medium"
+    },
+    "ad-2-version-b-emotional-depth-medium.imageSubhead": {
+      "id": "ad-2-version-b-emotional-depth-medium.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 2 — VERSION B (Emotional depth) — Medium"
+    },
+    "ad-3-version-a-consequence-depth-long.headline": {
+      "id": "ad-3-version-a-consequence-depth-long.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why \"Great Job\" Isn't Working",
+      "chars": 29,
+      "ad": "AD 3 — VERSION A (Consequence depth) — Long"
+    },
+    "ad-3-version-a-consequence-depth-long.description": {
+      "id": "ad-3-version-a-consequence-depth-long.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 3 — VERSION A (Consequence depth) — Long"
+    },
+    "ad-3-version-a-consequence-depth-long.primaryText": {
+      "id": "ad-3-version-a-consequence-depth-long.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times. And the second a game gets hard, it's gone.\nHere's the brutal truth. There are two kinds of confidence, and most of youth sports is built on the wrong one. The first gets handed to a kid by adults, in the form of encouragement and \"good job\" and trophies for showing up. The second a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting faster. Only one of them holds up when the play is on the line.\nPraise is on loan. It belongs to whoever's saying it, so it goes quiet exactly when your kid needs it, on the bench, after a bad rep, in the moment the game stops being easy. That's why the encouragement keeps not landing. It was never really theirs.\nAnd here's the part worth saying plainly: you didn't do anything wrong by encouraging them. Every good parent does. It just isn't the tool that fixes this, because confidence problems don't get solved with words. They get solved with evidence.\nThat's what our Multi-Sport Foundation Program is built on. It runs on The Velocity Code™, and every session your athlete sees their real sprint time and jump height on a screen, climbing. The improvement is measured, displayed, and theirs. Nobody can talk them out of a number they watched go up.\nAnd a kid who owns that proof competes without hesitating. That turns into making the play instead of second-guessing it. More plays made becomes more reasons to trust themselves, and that trust becomes the thing coaches notice from across the field, until the kid who used to shrink is the one who plays like the moment belongs to them.\nWe've watched it happen with kids who didn't even want to play. One mom told us her son was shy and quiet and wouldn't join any team. He got physically stronger here first, and then the bigger change followed, he got confident, and now he plays on a team. The physical proof came first, and the belief grew out of it. That's the order it works in, every time.\nThe first step in is the Athlete Analysis. We run your athlete through the same Dashr timing gates and GymAware velocity trackers the NFL uses, and you leave with their real sprint time, real jump height, and a clear picture of where they stand. Not a pep talk. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.\nCoach Graham Wilkerson built this. He's a CSCS, the same credential D1 and NFL strength coaches carry, and he trained NFL athletes Zack Martin, Ted Karras, and Nick Martin before adapting these principles for the developmental window where they matter most.\nHere's the promise no other program in this market will make. +1 mph. +3 inches. 90 days. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.\nTo your athlete's success, Coach {{user.first_name}}",
+      "chars": 2881,
+      "ad": "AD 3 — VERSION A (Consequence depth) — Long"
+    },
+    "ad-3-version-a-consequence-depth-long.altHook.1": {
+      "id": "ad-3-version-a-consequence-depth-long.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence in a young athlete. Only one of them survives a bad game.",
+      "chars": 91,
+      "ad": "AD 3 — VERSION A (Consequence depth) — Long",
+      "archetype": "Oracle",
+      "code": null
+    },
+    "ad-3-version-a-consequence-depth-long.altHook.2": {
+      "id": "ad-3-version-a-consequence-depth-long.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The confidence you're building with encouragement is the kind that breaks first.",
+      "chars": 80,
+      "ad": "AD 3 — VERSION A (Consequence depth) — Long",
+      "archetype": "Warning",
+      "code": null
+    },
+    "ad-3-version-a-consequence-depth-long.altHook.3": {
+      "id": "ad-3-version-a-consequence-depth-long.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid doesn't need to be told they're good. They need to see it.",
+      "chars": 67,
+      "ad": "AD 3 — VERSION A (Consequence depth) — Long",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    "ad-3-version-a-consequence-depth-long.imageHeadline": {
+      "id": "ad-3-version-a-consequence-depth-long.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 3 — VERSION A (Consequence depth) — Long"
+    },
+    "ad-3-version-a-consequence-depth-long.imageSubhead": {
+      "id": "ad-3-version-a-consequence-depth-long.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 3 — VERSION A (Consequence depth) — Long"
+    },
+    "ad-3-version-b-emotional-depth-long.headline": {
+      "id": "ad-3-version-b-emotional-depth-long.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "When They Stop Believing",
+      "chars": 24,
+      "ad": "AD 3 — VERSION B (Emotional depth) — Long"
+    },
+    "ad-3-version-b-emotional-depth-long.description": {
+      "id": "ad-3-version-b-emotional-depth-long.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 3 — VERSION B (Emotional depth) — Long"
+    },
+    "ad-3-version-b-emotional-depth-long.primaryText": {
+      "id": "ad-3-version-b-emotional-depth-long.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud. You're in the car after a game, and your kid goes quiet, and then comes some version of \"I'm not as good as the rest of them.\" And you don't know what to say, because telling them they're great hasn't been landing for a while now.\nHere's the brutal truth. Encouragement can't fix this, and it isn't your fault that it can't. The confidence built out of other people's words is the first thing to crack under pressure. It belongs to whoever's saying it, so it goes quiet on the bench, after the bad play, in exactly the moment your kid is reaching for it. It was never really theirs.\nWhat holds is a different kind entirely. The confidence a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better. You can't hand it to them, and a coach can't shout it into them. They have to see it.\nThat's what our Multi-Sport Foundation Program gives them. It runs on The Velocity Code™, and every session your athlete watches their real sprint time and jump height climb on a screen in front of them. The progress is measured and it's theirs. Nobody can talk them out of a number they watched go up themselves.\nAnd a kid who's seen that proof changes in a way you feel before you can measure it. The bracing goes out of them. They stop waiting for the play to go wrong and start wanting the ball, and somewhere across a season they cross the line from hoping they belong on that field to simply knowing they do.\nOne mom told us about exactly this kind of change. Her son was shy and quiet and wouldn't join any team. He got physically stronger here first, and then the bigger thing followed, he got confident, and now he plays. The strength came first. The belief grew out of it. That's almost always the order, the body gives a kid something real to stand on, and the belief follows.\nAnd the coaching behind it isn't guesswork. Coach Graham Wilkerson is a CSCS, the same credential D1 and NFL strength coaches carry, and he trained NFL athletes Zack Martin, Ted Karras, and Nick Martin before adapting these principles for the developmental window where they take hold deepest.\nThe first step in is the Athlete Analysis. We run your athlete through the same Dashr timing gates and GymAware velocity trackers the NFL uses, and you leave with their real numbers and a clear picture of where they stand. Not a pep talk. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.\nHere's the promise no other program in this market will make. +1 mph. +3 inches. 90 days. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.\nTo your athlete's success, Coach {{user.first_name}}",
+      "chars": 2773,
+      "ad": "AD 3 — VERSION B (Emotional depth) — Long"
+    },
+    "ad-3-version-b-emotional-depth-long.altHook.1": {
+      "id": "ad-3-version-b-emotional-depth-long.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Telling your kid they're great stopped working a while ago. Here's what actually rebuilds it.",
+      "chars": 93,
+      "ad": "AD 3 — VERSION B (Emotional depth) — Long",
+      "archetype": "Oracle",
+      "code": null
+    },
+    "ad-3-version-b-emotional-depth-long.altHook.2": {
+      "id": "ad-3-version-b-emotional-depth-long.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The hardest part isn't watching them lose. It's watching them stop believing they can win.",
+      "chars": 90,
+      "ad": "AD 3 — VERSION B (Emotional depth) — Long",
+      "archetype": "Mirror",
+      "code": null
+    },
+    "ad-3-version-b-emotional-depth-long.altHook.3": {
+      "id": "ad-3-version-b-emotional-depth-long.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence. The kind that breaks under pressure, and the kind that doesn't.",
+      "chars": 98,
+      "ad": "AD 3 — VERSION B (Emotional depth) — Long",
+      "archetype": "Paradox",
+      "code": null
+    },
+    "ad-3-version-b-emotional-depth-long.imageHeadline": {
+      "id": "ad-3-version-b-emotional-depth-long.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 3 — VERSION B (Emotional depth) — Long"
+    },
+    "ad-3-version-b-emotional-depth-long.imageSubhead": {
+      "id": "ad-3-version-b-emotional-depth-long.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 3 — VERSION B (Emotional depth) — Long"
+    },
+    "ad-1-2.headline": {
+      "id": "ad-1-2.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why More Games Isn't Enough",
+      "chars": 27,
+      "ad": "AD 1"
+    },
+    "ad-1-2.description": {
+      "id": "ad-1-2.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 1"
+    },
+    "ad-1-2.primaryText": {
+      "id": "ad-1-2.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "More playing time feels like the answer. Another season, another team, more reps in real games. And a year later, the same kid, the same speed.\nHere's the brutal truth. A game doesn't develop an athlete. It reveals one. It shows you exactly what was built in training and nothing more, so playing more games just runs the same ceiling out there again and again under pressure.\nThat's the difference our Multi-Sport Foundation Program is built on. We develop the engine, the speed and power a game can only put on display, which means a first step that beats the defender to the ball, more touches every game, and the kind of play that makes coaches start asking who that kid is.\nThe first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real sprint time and jump numbers. Not a tryout. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1044,
+      "ad": "AD 1"
+    },
+    "ad-1-2.altHook.1": {
+      "id": "ad-1-2.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid can play a hundred games this year and finish exactly as fast as they started. Here's why.",
+      "chars": 99,
+      "ad": "AD 1",
+      "archetype": "Oracle",
+      "code": null
+    },
+    "ad-1-2.altHook.2": {
+      "id": "ad-1-2.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Games don't make athletes faster. They just show you how fast training already made them.",
+      "chars": 89,
+      "ad": "AD 1",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    "ad-1-2.altHook.3": {
+      "id": "ad-1-2.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "More game film won't fix a speed problem. It'll just record it in higher definition.",
+      "chars": 84,
+      "ad": "AD 1",
+      "archetype": "Warning",
+      "code": null
+    },
+    "ad-1-2.imageHeadline": {
+      "id": "ad-1-2.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why More Games Won't Make Them Faster",
+      "chars": 44,
+      "ad": "AD 1"
+    },
+    "ad-1-2.imageSubhead": {
+      "id": "ad-1-2.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Will)",
+      "chars": 24,
+      "ad": "AD 1"
+    },
+    "ad-2-2.headline": {
+      "id": "ad-2-2.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why More Games Isn't Enough",
+      "chars": 27,
+      "ad": "AD 2"
+    },
+    "ad-2-2.description": {
+      "id": "ad-2-2.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 2"
+    },
+    "ad-2-2.primaryText": {
+      "id": "ad-2-2.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "More playing time feels like the answer. Another season, another team, more reps in real games. And a year later, the same kid, the same speed.\nHere's the brutal truth. A game is a test, not a teacher. Everything your kid does out there, the first step, the closing burst, the jump for the ball, was built somewhere else, and the field just hands back a score on it. So another season of games measures the same athlete over and over while the number that actually matters, how fast and explosive they are, sits exactly where it started.\nThe speed and power behind those plays gets built on purpose, in training, or it doesn't get built at all. That's the part our Multi-Sport Foundation Program owns.\nAnd a bigger engine shows up everywhere the old one fell short. It's the first step that beats the defender to the ball, which turns into more touches every game, which becomes the play that swings the score, until the kid who used to blend in is the one coaches are asking about by name.\nOne dad told us his son had spent two years somewhere else before coming to us, and after a single week the kid said it was the best he'd ever had. He felt it immediately, because for once something was actually being built into him instead of just measured out of him.\nThe first step in is the Athlete Analysis. Same timing gates, same velocity trackers we use every session. You'll see your athlete's real numbers before you decide anything. Not a tryout. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1600,
+      "ad": "AD 2"
+    },
+    "ad-2-2.altHook.1": {
+      "id": "ad-2-2.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid can play a hundred games this year and finish exactly as fast as they started. Here's why.",
+      "chars": 99,
+      "ad": "AD 2",
+      "archetype": "Oracle",
+      "code": null
+    },
+    "ad-2-2.altHook.2": {
+      "id": "ad-2-2.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Games don't make athletes faster. They just show you how fast training already made them.",
+      "chars": 89,
+      "ad": "AD 2",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    "ad-2-2.altHook.3": {
+      "id": "ad-2-2.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "More game film won't fix a speed problem. It'll just record it in higher definition.",
+      "chars": 84,
+      "ad": "AD 2",
+      "archetype": "Warning",
+      "code": null
+    },
+    "ad-2-2.imageHeadline": {
+      "id": "ad-2-2.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why More Games Won't Make Them Faster",
+      "chars": 44,
+      "ad": "AD 2"
+    },
+    "ad-2-2.imageSubhead": {
+      "id": "ad-2-2.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Will)",
+      "chars": 24,
+      "ad": "AD 2"
+    },
+    "ad-3-2.headline": {
+      "id": "ad-3-2.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why More Games Isn't Enough",
+      "chars": 27,
+      "ad": "AD 3"
+    },
+    "ad-3-2.description": {
+      "id": "ad-3-2.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 3"
+    },
+    "ad-3-2.primaryText": {
+      "id": "ad-3-2.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "More playing time feels like the answer. Another season, another team, more reps in real games. And a year later, the same kid, the same speed.\nHere's the brutal truth. A game is a test, not a teacher. Everything your kid does on the field, the first step, the closing speed, the burst to the ball, got built somewhere else, and the game simply hands back the result. When a kid isn't fast enough, more games keep grading the same engine and reporting the same score. The ceiling never moves, because nothing on a game field was ever designed to move it.\nThat's why a whole season can pass with nothing to show for it. Your kid plays out the athlete they already were in September, and then does it again the following fall.\nAnd here's something worth saying plainly: none of that playing time was wasted, and you weren't wrong to want it. Games matter. They're where a kid competes, learns to read the field, and finds out what they're made of under pressure. They were just never the place an athlete gets built, and asking a game to make a kid faster is asking the scoreboard to do the work of the weight room.\nBuilding the engine is a separate job, and it's the one our Multi-Sport Foundation Program exists to do. It runs on The Velocity Code™, and every session we develop the real sprint speed and explosive power a game can only put on display, measured on purpose, rep by rep.\nThat kind of speed doesn't stay in the gym. It becomes the first step that beats the defender to the ball. That turns into more touches every single game. More touches become the plays that change the score, and those plays become the film a coach actually stops to watch, until one season in, the kid who used to blend into the roster is the one getting asked about by name.\nOne dad told us his son had been somewhere else for two years, and that a single week with us was enough for the kid to say it was the best he'd ever had. The reason was simple. He could feel that he was finally being built, not just put through his paces and sent home.\nThe first step in is the Athlete Analysis. We run your athlete through the same Dashr timing gates and GymAware velocity trackers the NFL uses, and you leave with their real sprint time, real jump height, and a clear picture of where they stand. Not a tryout. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.\nCoach Graham Wilkerson built this. He's a CSCS, the same credential D1 and NFL strength coaches carry, and he trained NFL athletes Zack Martin, Ted Karras, and Nick Martin before adapting these principles for the developmental window where they matter most.\nHere's the promise no other program in this market will make. +1 mph. +3 inches. 90 days. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.\nTo your athlete's success, Coach {{user.first_name}}",
+      "chars": 2906,
+      "ad": "AD 3"
+    },
+    "ad-3-2.altHook.1": {
+      "id": "ad-3-2.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid can play a hundred games this year and finish exactly as fast as they started. Here's why.",
+      "chars": 99,
+      "ad": "AD 3",
+      "archetype": "Oracle",
+      "code": null
+    },
+    "ad-3-2.altHook.2": {
+      "id": "ad-3-2.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Games don't make athletes faster. They just show you how fast training already made them.",
+      "chars": 89,
+      "ad": "AD 3",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    "ad-3-2.altHook.3": {
+      "id": "ad-3-2.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "More game film won't fix a speed problem. It'll just record it in higher definition.",
+      "chars": 84,
+      "ad": "AD 3",
+      "archetype": "Warning",
+      "code": null
+    },
+    "ad-3-2.imageHeadline": {
+      "id": "ad-3-2.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why More Games Won't Make Them Faster",
+      "chars": 44,
+      "ad": "AD 3"
+    },
+    "ad-3-2.imageSubhead": {
+      "id": "ad-3-2.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Will)",
+      "chars": 24,
+      "ad": "AD 3"
+    },
+    "dsi-1-the-grind-trap.ms.1": {
+      "id": "dsi-1-the-grind-trap.ms.1",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "The tired rep isn't effort. It's instruction.",
+      "chars": 45,
+      "dsi": "1 THE GRIND TRAP"
+    },
+    "dsi-1-the-grind-trap.ms.2": {
+      "id": "dsi-1-the-grind-trap.ms.2",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "The harder they grind, the deeper the slow groove.",
+      "chars": 50,
+      "dsi": "1 THE GRIND TRAP"
+    },
+    "dsi-1-the-grind-trap.ms.3": {
+      "id": "dsi-1-the-grind-trap.ms.3",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "'Push through it' programs exactly one thing: slow.",
+      "chars": 51,
+      "dsi": "1 THE GRIND TRAP"
+    },
+    "dsi-1-the-grind-trap.ms.4": {
+      "id": "dsi-1-the-grind-trap.ms.4",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "Working harder is writing slower code.",
+      "chars": 38,
+      "dsi": "1 THE GRIND TRAP"
+    },
+    "dsi-1-the-grind-trap.ms.5": {
+      "id": "dsi-1-the-grind-trap.ms.5",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "They're not falling behind. Their training is pushing them back.",
+      "chars": 64,
+      "dsi": "1 THE GRIND TRAP"
+    },
+    "dsi-2-the-measurement-advantage.ms.1": {
+      "id": "dsi-2-the-measurement-advantage.ms.1",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "No sensor. No proof. Just a coach's opinion.",
+      "chars": 44,
+      "dsi": "2 THE MEASUREMENT ADVANTAGE"
+    },
+    "dsi-2-the-measurement-advantage.ms.2": {
+      "id": "dsi-2-the-measurement-advantage.ms.2",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "We measure to the hundredth. Everyone else guesses.",
+      "chars": 51,
+      "dsi": "2 THE MEASUREMENT ADVANTAGE"
+    },
+    "dsi-2-the-measurement-advantage.ms.3": {
+      "id": "dsi-2-the-measurement-advantage.ms.3",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "Speed claimed isn't speed. Speed measured is.",
+      "chars": 45,
+      "dsi": "2 THE MEASUREMENT ADVANTAGE"
+    },
+    "dsi-2-the-measurement-advantage.ms.4": {
+      "id": "dsi-2-the-measurement-advantage.ms.4",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "Ask your coach for the number. We'll write ours down.",
+      "chars": 53,
+      "dsi": "2 THE MEASUREMENT ADVANTAGE"
+    },
+    "dsi-2-the-measurement-advantage.ms.5": {
+      "id": "dsi-2-the-measurement-advantage.ms.5",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "They watch your child train. We measure what actually happens.",
+      "chars": 62,
+      "dsi": "2 THE MEASUREMENT ADVANTAGE"
+    },
+    "dsi-3-the-developmental-window.ms.1": {
+      "id": "dsi-3-the-developmental-window.ms.1",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "The speed window is open right now. It closes at puberty.",
+      "chars": 57,
+      "dsi": "3 THE DEVELOPMENTAL WINDOW"
+    },
+    "dsi-3-the-developmental-window.ms.2": {
+      "id": "dsi-3-the-developmental-window.ms.2",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "Form it now, or spend years correcting it.",
+      "chars": 42,
+      "dsi": "3 THE DEVELOPMENTAL WINDOW"
+    },
+    "dsi-3-the-developmental-window.ms.3": {
+      "id": "dsi-3-the-developmental-window.ms.3",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "At age 9, the nervous system is writing blueprints. Not refinements.",
+      "chars": 68,
+      "dsi": "3 THE DEVELOPMENTAL WINDOW"
+    },
+    "dsi-3-the-developmental-window.ms.4": {
+      "id": "dsi-3-the-developmental-window.ms.4",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "They only build the foundation once.",
+      "chars": 36,
+      "dsi": "3 THE DEVELOPMENTAL WINDOW"
+    },
+    "dsi-3-the-developmental-window.ms.5": {
+      "id": "dsi-3-the-developmental-window.ms.5",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "After puberty, you rewrite. Before, you write. These are not the same job.",
+      "chars": 74,
+      "dsi": "3 THE DEVELOPMENTAL WINDOW"
+    },
+    "dsi-4-the-written-guarantee.ms.1": {
+      "id": "dsi-4-the-written-guarantee.ms.1",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "+1 mph. +3 inches. 90 days. In writing.",
+      "chars": 39,
+      "dsi": "4 THE WRITTEN GUARANTEE"
+    },
+    "dsi-4-the-written-guarantee.ms.2": {
+      "id": "dsi-4-the-written-guarantee.ms.2",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "Miss the number, train free until we don't.",
+      "chars": 43,
+      "dsi": "4 THE WRITTEN GUARANTEE"
+    },
+    "dsi-4-the-written-guarantee.ms.3": {
+      "id": "dsi-4-the-written-guarantee.ms.3",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "A number. In writing. Before you spend a dollar.",
+      "chars": 48,
+      "dsi": "4 THE WRITTEN GUARANTEE"
+    },
+    "dsi-4-the-written-guarantee.ms.4": {
+      "id": "dsi-4-the-written-guarantee.ms.4",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "We guarantee it because we measure it.",
+      "chars": 38,
+      "dsi": "4 THE WRITTEN GUARANTEE"
+    },
+    "dsi-4-the-written-guarantee.ms.5": {
+      "id": "dsi-4-the-written-guarantee.ms.5",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "Ask them for the guarantee number. Then ask us for ours.",
+      "chars": 56,
+      "dsi": "4 THE WRITTEN GUARANTEE"
+    },
+    "dsi-5-confidence-built-on-proof.ms.1": {
+      "id": "dsi-5-confidence-built-on-proof.ms.1",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "'Great job' disappears. A velocity PR is forever.",
+      "chars": 49,
+      "dsi": "5 CONFIDENCE BUILT ON PROOF"
+    },
+    "dsi-5-confidence-built-on-proof.ms.2": {
+      "id": "dsi-5-confidence-built-on-proof.ms.2",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "We don't tell them they're improving. We show them the number.",
+      "chars": 62,
+      "dsi": "5 CONFIDENCE BUILT ON PROOF"
+    },
+    "dsi-5-confidence-built-on-proof.ms.3": {
+      "id": "dsi-5-confidence-built-on-proof.ms.3",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "One number no bad game, no cut, no coach can take away.",
+      "chars": 55,
+      "dsi": "5 CONFIDENCE BUILT ON PROOF"
+    },
+    "dsi-5-confidence-built-on-proof.ms.4": {
+      "id": "dsi-5-confidence-built-on-proof.ms.4",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "Data-proof confidence survives what praise never can.",
+      "chars": 53,
+      "dsi": "5 CONFIDENCE BUILT ON PROOF"
+    },
+    "dsi-5-confidence-built-on-proof.ms.5": {
+      "id": "dsi-5-confidence-built-on-proof.ms.5",
+      "kind": "microscript",
+      "role": "reframe",
+      "text": "42 out of 63 parents said confidence first. More than speed.",
+      "chars": 60,
+      "dsi": "5 CONFIDENCE BUILT ON PROOF"
+    }
+  }
+}
