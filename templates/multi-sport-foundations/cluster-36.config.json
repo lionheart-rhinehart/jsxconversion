@@ -2,14 +2,26 @@
   "width": 1080,
   "height": 1920,
   "fixedDesign": [
-    { "id": "center_rule", "tag": "center_rule", "type": "rect", "x": 440, "y": 1200, "width": 200, "height": 8, "fill": "#c4141d", "z": 15 }
+    {
+      "id": "center_rule",
+      "tag": "center_rule",
+      "type": "rect",
+      "x": 440,
+      "y": 1200,
+      "width": 200,
+      "height": 8,
+      "fill": "#c4141d",
+      "z": 15
+    }
   ],
   "elements": [
     {
       "id": "eyebrow",
       "tag": "eyebrow",
       "label": "Context anchor chip (auto-filled, centered)",
-      "x": 0, "y": 360, "width": 1080,
+      "x": 0,
+      "y": 360,
+      "width": 1080,
       "textAlign": "center",
       "text": "CITY SPORTS PARENTS",
       "fontSize": 32,
@@ -23,32 +35,65 @@
       "textTransform": "uppercase",
       "z": 20,
       "role": "eyebrow",
-      "accepts": ["eyebrow", "proof"],
+      "accepts": [
+        "eyebrow",
+        "proof"
+      ],
       "maxChars": 34
+    },
+    {
+      "id": "kicker",
+      "tag": "kicker",
+      "label": "Kicker — hook lead-in (auto from splitHook; blank if 2-seg)",
+      "type": "text",
+      "x": 0,
+      "y": 600,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "",
+      "fontSize": 56,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.95,
+      "letterSpacing": "0.01em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "kicker",
+      "accepts": [
+        "kicker"
+      ],
+      "maxChars": 30
     },
     {
       "id": "reframe",
       "tag": "reframe",
       "label": "Centered epiphany",
-      "x": 60, "y": 720, "width": 960,
+      "x": 60,
+      "y": 720,
+      "width": 960,
       "textAlign": "center",
       "text": "THEY'RE NOT FALLING BEHIND. THEIR TRAINING IS PUSHING THEM BACK.",
       "fontSize": 104,
       "fontFamily": "Anton",
       "color": "#ffffff",
-      "lineHeight": 1.0,
+      "lineHeight": 1,
       "letterSpacing": "0.005em",
       "textTransform": "uppercase",
       "z": 21,
       "role": "reframe",
-      "accepts": ["reframe", "claim"],
+      "accepts": [
+        "reframe",
+        "claim"
+      ],
       "maxChars": 92
     },
     {
       "id": "brand_wordmark",
       "tag": "brand",
       "label": "Brand wordmark (centered)",
-      "x": 0, "y": 1680, "width": 1080,
+      "x": 0,
+      "y": 1680,
+      "width": 1080,
       "textAlign": "center",
       "text": "ATHLETES ACCELERATION",
       "fontSize": 34,
@@ -59,7 +104,9 @@
       "textTransform": "uppercase",
       "z": 22,
       "role": "brand",
-      "accepts": ["brand"],
+      "accepts": [
+        "brand"
+      ],
       "maxChars": 24
     }
   ]

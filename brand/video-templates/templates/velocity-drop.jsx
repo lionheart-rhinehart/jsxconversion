@@ -29,12 +29,13 @@ function VelocityDrop({ data = {} }) {
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
       {bgClip ? <SyncedVideo src={bgClip} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} /> : null}
       {bgClip ? <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.55) 0%, rgba(10,11,13,0.45) 45%, rgba(10,11,13,0.85) 100%)' }} /> : null}
-      <Eyebrow top={150} fontSize={38} style={{ opacity: ease((t - 0.05) / 0.3) }}>{eyebrow}</Eyebrow>
-      <div style={{ position: 'absolute', top: 360, left: 86, right: 86,
-        fontFamily: 'Anton, sans-serif', fontSize: 104, color: '#fff', lineHeight: 0.95,
-        textTransform: 'uppercase', opacity: capT, transform: `translateY(${(1 - capT) * 14}px)` }}>
-        {claim}
-      </div>
+      <TplText field="eyebrow" data={data} base={{ position: 'absolute', top: 150, left: 90 }} style={{ fontSize: 38, opacity: ease((t - 0.05) / 0.3) }}>{eyebrow}</TplText>
+      <TplText field="claim" data={data}
+        base={{ position: 'absolute', top: 360, left: 86, right: 86 }}
+        style={{ fontFamily: 'Anton, sans-serif', fontSize: 104, color: '#fff', lineHeight: 0.95,
+          textTransform: 'uppercase', opacity: capT, transform: `translateY(${(1 - capT) * 14}px)` }}
+        maxHeight={420} fitKey={claim}
+      >{claim}</TplText>
 
       {/* baseline */}
       <div style={{ position: 'absolute', left: chartX, top: baseline, width: 900, height: 3, background: '#3a3d42' }} />
@@ -54,24 +55,30 @@ function VelocityDrop({ data = {} }) {
       {/* 10% cutoff line + label */}
       <div style={{ position: 'absolute', left: chartX, top: baseline - cutoffH, width: 900 * cutoffT,
         height: 5, background: RED }} />
-      <div style={{ position: 'absolute', left: 600, top: baseline - cutoffH - 52, width: 390, textAlign: 'right',
-        fontFamily: '"JetBrains Mono", monospace', fontSize: 28, color: RED, letterSpacing: '0.04em',
-        textTransform: 'uppercase', opacity: cutoffT }}>10% DROP · SET ENDS HERE</div>
-      <div style={{ position: 'absolute', left: chartX, top: baseline + 20, width: 900,
-        fontFamily: '"JetBrains Mono", monospace', fontSize: 28, color: '#9aa0a6', letterSpacing: '0.06em',
-        textTransform: 'uppercase', opacity: capT }}>BAR VELOCITY · REP BY REP</div>
+      <TplText field="cutoffLabel" data={data}
+        base={{ position: 'absolute', left: 600, top: baseline - cutoffH - 52, width: 390, textAlign: 'right' }}
+        style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 28, color: RED, letterSpacing: '0.04em',
+          textTransform: 'uppercase', opacity: cutoffT }}
+      >10% DROP · SET ENDS HERE</TplText>
+      <TplText field="axisLabel" data={data}
+        base={{ position: 'absolute', left: chartX, top: baseline + 20, width: 900 }}
+        style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 28, color: '#9aa0a6', letterSpacing: '0.06em',
+          textTransform: 'uppercase', opacity: capT }}
+      >BAR VELOCITY · REP BY REP</TplText>
 
       {/* coach lower-third */}
       <div style={{ position: 'absolute', left: 0, right: 0, bottom: 150, padding: '0 90px',
         opacity: coachT, transform: `translateY(${(1 - coachT) * 20}px)` }}>
         <div style={{ width: 90, height: 6, background: RED, marginBottom: 18 }} />
-        <div style={{ fontFamily: 'Anton, sans-serif', fontSize: 52, color: '#fff', textTransform: 'uppercase', lineHeight: 1 }}>{coachName}</div>
-        <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 30, color: '#9aa0a6', letterSpacing: '0.06em', textTransform: 'uppercase', marginTop: 10 }}>{credentials}</div>
+        <TplText field="coachName" data={data} base={{}} style={{ fontFamily: 'Anton, sans-serif', fontSize: 52, color: '#fff', textTransform: 'uppercase', lineHeight: 1 }}>{coachName}</TplText>
+        <TplText field="credentials" data={data} base={{ marginTop: 10 }} style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 30, color: '#9aa0a6', letterSpacing: '0.06em', textTransform: 'uppercase' }}>{credentials}</TplText>
       </div>
 
-      <div style={{ position: 'absolute', bottom: 70, left: 90, right: 90,
-        fontFamily: '"JetBrains Mono", monospace', fontSize: 28, color: '#fff',
-        letterSpacing: '0.14em', textTransform: 'uppercase', opacity: 0.85 }}>{brand}</div>
+      <TplText field="brand" data={data}
+        base={{ position: 'absolute', bottom: 70, left: 90, right: 90 }}
+        style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 28, color: '#fff',
+          letterSpacing: '0.14em', textTransform: 'uppercase', opacity: 0.85 }}
+      >{brand}</TplText>
     </div>
   );
 }

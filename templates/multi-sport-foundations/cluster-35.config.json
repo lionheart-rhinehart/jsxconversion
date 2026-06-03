@@ -2,14 +2,25 @@
   "width": 1080,
   "height": 1920,
   "fixedDesign": [
-    { "id": "red_band", "tag": "red_band", "type": "rect", "x": 0, "y": 1140, "width": 1080, "height": 780, "fill": "#c4141d", "z": 5 }
+    {
+      "id": "red_band",
+      "tag": "red_band",
+      "type": "rect",
+      "x": 0,
+      "y": 1140,
+      "width": 1080,
+      "height": 780,
+      "fill": "#c4141d",
+      "z": 5
+    }
   ],
   "elements": [
     {
       "id": "eyebrow",
       "tag": "eyebrow",
       "label": "Context anchor chip (auto-filled)",
-      "x": 90, "y": 170,
+      "x": 90,
+      "y": 170,
       "textAlign": "left",
       "text": "CITY SPORTS PARENTS",
       "fontSize": 32,
@@ -23,14 +34,42 @@
       "textTransform": "uppercase",
       "z": 20,
       "role": "eyebrow",
-      "accepts": ["eyebrow", "proof"],
+      "accepts": [
+        "eyebrow",
+        "proof"
+      ],
       "maxChars": 34
+    },
+    {
+      "id": "kicker",
+      "tag": "kicker",
+      "label": "Kicker — hook lead-in (auto from splitHook; blank if 2-seg)",
+      "type": "text",
+      "x": 86,
+      "y": 430,
+      "width": 900,
+      "textAlign": "left",
+      "text": "",
+      "fontSize": 56,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.95,
+      "letterSpacing": "0.01em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "kicker",
+      "accepts": [
+        "kicker"
+      ],
+      "maxChars": 30
     },
     {
       "id": "line1",
       "tag": "line1",
       "label": "Hook (dark half)",
-      "x": 86, "y": 560, "width": 924,
+      "x": 86,
+      "y": 560,
+      "width": 924,
       "textAlign": "left",
       "text": "IT'S WORKING.",
       "fontSize": 150,
@@ -42,14 +81,20 @@
       "whiteSpace": "pre-line",
       "z": 21,
       "role": "hook",
-      "accepts": ["hook", "claim", "reframe"],
+      "accepts": [
+        "hook",
+        "claim",
+        "reframe"
+      ],
       "maxChars": 26
     },
     {
       "id": "line2",
       "tag": "line2",
       "label": "Claim (red band)",
-      "x": 90, "y": 1280, "width": 912,
+      "x": 90,
+      "y": 1280,
+      "width": 912,
       "textAlign": "left",
       "text": "THE PROBLEM IS WHAT IT'S TEACHING.",
       "fontSize": 92,
@@ -60,14 +105,20 @@
       "textTransform": "uppercase",
       "z": 22,
       "role": "claim",
-      "accepts": ["claim", "reframe", "proof"],
+      "accepts": [
+        "claim",
+        "reframe",
+        "proof"
+      ],
       "maxChars": 52
     },
     {
       "id": "brand_wordmark",
       "tag": "brand",
       "label": "Brand wordmark (red band)",
-      "x": 90, "y": 1812, "width": 900,
+      "x": 90,
+      "y": 1812,
+      "width": 900,
       "textAlign": "left",
       "text": "ATHLETES ACCELERATION",
       "fontSize": 32,
@@ -78,7 +129,9 @@
       "textTransform": "uppercase",
       "z": 23,
       "role": "brand",
-      "accepts": ["brand"],
+      "accepts": [
+        "brand"
+      ],
       "maxChars": 24
     }
   ]

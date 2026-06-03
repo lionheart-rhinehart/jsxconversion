@@ -1,0 +1,134 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
+      "z": 1
+    },
+    {
+      "id": "bg_photo",
+      "tag": "bg_photo",
+      "label": "Hero footage still",
+      "type": "image",
+      "src": "./assets/hook-sprint-carmel.jpg",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "objectFit": "cover",
+      "z": 0
+    },
+    {
+      "id": "scrim",
+      "tag": "scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.15) 0%, rgba(10,11,13,0) 38%, rgba(10,11,13,0.55) 70%, rgba(10,11,13,0.94) 100%)",
+      "z": 1
+    },
+    {
+      "id": "brand_rule",
+      "tag": "brand_rule",
+      "type": "rect",
+      "x": 90,
+      "y": 1786,
+      "width": 120,
+      "height": 5,
+      "fill": "#c4141d",
+      "z": 2
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor chip (auto-filled)",
+      "x": 90,
+      "y": 1190,
+      "textAlign": "left",
+      "text": "INDIANAPOLIS SPORT PARENTS",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#c4141d",
+      "chipBg": "#ffffff",
+      "chipPad": "12px 24px",
+      "chipRadius": 8,
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 34,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "hook",
+      "tag": "hook",
+      "label": "Lower-third hook",
+      "x": 86,
+      "y": 1290,
+      "width": 924,
+      "textAlign": "left",
+      "text": "There are two kinds of confidence.",
+      "fontSize": 96,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.96,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "textShadow": "0 3px 12px rgba(0,0,0,0.7)",
+      "z": 21,
+      "role": "hook",
+      "accepts": [
+        "hook",
+        "claim",
+        "reframe"
+      ],
+      "maxChars": 48
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark",
+      "x": 90,
+      "y": 1812,
+      "width": 900,
+      "textAlign": "left",
+      "text": "ATHLETES ACCELERATION",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 500,
+      "color": "#ffffff",
+      "letterSpacing": "0.14em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 8px rgba(0,0,0,0.8)",
+      "z": 22,
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 24
+    }
+  ],
+  "media": {
+    "path": "./assets/conf-A1.jpg",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1
+  }
+}

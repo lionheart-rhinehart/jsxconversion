@@ -24,6 +24,7 @@ import {
   readdirSync,
   mkdirSync,
   renameSync,
+  statSync,
   rmSync,
   createWriteStream,
 } from "node:fs";
@@ -186,6 +187,42 @@ function send(res, status, body, contentType = "application/json") {
 
 function sendJson(res, status, obj) {
   send(res, status, JSON.stringify(obj));
+}
+
+// Serve a file with HTTP range support. WHY: a <video> element only allows
+// seeking (and reports non-empty `seekable` ranges) when the source supports
+// byte-range requests (206 Partial Content + Accept-Ranges). Without it the
+// editor's clip-trim scrub can't seek the preview ("currentTime = X" resets to
+// 0 / seekable is [0,0]). Files here are small (IG clips), so readFileSync +
+// slice is fine.
+function sendFile(req, res, filePath, contentType) {
+  const size = statSync(filePath).size;
+  const headers = {
+    "Content-Type": contentType,
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Expose-Headers": "Content-Length, Content-Range, Accept-Ranges",
+    "Accept-Ranges": "bytes",
+    "Cache-Control": "no-store",
+  };
+  const range = req.headers && req.headers.range;
+  const m = range && /^bytes=(\d*)-(\d*)$/.exec(range);
+  if (m) {
+    let start = m[1] === "" ? null : parseInt(m[1], 10);
+    let end = m[2] === "" ? null : parseInt(m[2], 10);
+    if (start === null) { start = Math.max(0, size - (end || 0)); end = size - 1; } // suffix range
+    else if (end === null || end >= size) { end = size - 1; }
+    if (start > end || start >= size) {
+      res.writeHead(416, { ...headers, "Content-Range": `bytes */${size}` });
+      res.end();
+      return;
+    }
+    const chunk = readFileSync(filePath).subarray(start, end + 1);
+    res.writeHead(206, { ...headers, "Content-Range": `bytes ${start}-${end}/${size}`, "Content-Length": chunk.length });
+    res.end(chunk);
+    return;
+  }
+  res.writeHead(200, { ...headers, "Content-Length": size });
+  res.end(readFileSync(filePath));
 }
 
 function readBody(req) {
@@ -821,7 +858,7 @@ const server = createServer(async (req, res) => {
     const allowed = MEDIA_ROOTS.some((r) => resolved.startsWith(resolve(r)));
     if (allowed && existsSync(resolved)) {
       const mime = MIME[extname(resolved).toLowerCase()] || "application/octet-stream";
-      send(res, 200, readFileSync(resolved), mime);
+      sendFile(req, res, resolved, mime);
       return;
     }
     sendJson(res, 404, { error: "media not found" });
@@ -835,7 +872,7 @@ const server = createServer(async (req, res) => {
     const resolved = resolve(join(VIDEO_DIR, rel));
     if (resolved.startsWith(resolve(VIDEO_DIR)) && existsSync(resolved)) {
       const mime = MIME[extname(resolved).toLowerCase()] || "application/octet-stream";
-      send(res, 200, readFileSync(resolved), mime);
+      sendFile(req, res, resolved, mime);
       return;
     }
   }
@@ -854,7 +891,7 @@ const server = createServer(async (req, res) => {
     const filePath = join(PROJECT_ROOT, path.slice(1)); // strip leading /
     if (existsSync(filePath)) {
       const mime = MIME[extname(filePath).toLowerCase()] || "application/octet-stream";
-      send(res, 200, readFileSync(filePath), mime);
+      sendFile(req, res, filePath, mime);
       return;
     }
   }
@@ -867,7 +904,7 @@ const server = createServer(async (req, res) => {
     const resolved = resolve(filePath);
     if (resolved.startsWith(resolve(TEMPLATES_DIR)) && existsSync(resolved)) {
       const mime = MIME[extname(resolved).toLowerCase()] || "application/octet-stream";
-      send(res, 200, readFileSync(resolved), mime);
+      sendFile(req, res, resolved, mime);
       return;
     }
   }

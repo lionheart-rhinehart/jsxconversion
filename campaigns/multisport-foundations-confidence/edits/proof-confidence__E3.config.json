@@ -1,0 +1,218 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
+      "z": 1
+    },
+    {
+      "id": "divider_1",
+      "tag": "divider_1",
+      "type": "rect",
+      "x": 90,
+      "y": 690,
+      "width": 300,
+      "height": 8,
+      "fill": "#c4141d",
+      "z": 15
+    },
+    {
+      "id": "brand_rule",
+      "tag": "brand_rule",
+      "type": "rect",
+      "x": 90,
+      "y": 1628,
+      "width": 150,
+      "height": 6,
+      "fill": "#c4141d",
+      "z": 16
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor chip (auto-filled)",
+      "x": 90,
+      "y": 170,
+      "textAlign": "left",
+      "text": "INDIANAPOLIS SPORT PARENTS",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#c4141d",
+      "chipBg": "#ffffff",
+      "chipPad": "12px 24px",
+      "chipRadius": 8,
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 34,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "coach_name",
+      "tag": "coach_name",
+      "label": "Coach name (display)",
+      "x": 86,
+      "y": 270,
+      "width": 924,
+      "textAlign": "left",
+      "text": "COACH GRAHAM\nWILKERSON",
+      "fontSize": 132,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.9,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "whiteSpace": "pre-line",
+      "z": 21,
+      "role": "byline",
+      "accepts": [
+        "byline",
+        "claim"
+      ],
+      "maxChars": 26,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "coach_title",
+      "tag": "coach_title",
+      "label": "Coach title / cert",
+      "x": 90,
+      "y": 562,
+      "width": 924,
+      "textAlign": "left",
+      "text": "CSCS",
+      "fontSize": 33,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 400,
+      "color": "#9aa0a6",
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "z": 22,
+      "role": "byline",
+      "accepts": [
+        "byline",
+        "proof"
+      ],
+      "maxChars": 40,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "proof_hero",
+      "tag": "proof_hero",
+      "label": "Proof headline",
+      "x": 90,
+      "y": 742,
+      "width": 924,
+      "textAlign": "left",
+      "text": "TRAINED NFL\nATHLETES",
+      "fontSize": 100,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.95,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "whiteSpace": "pre-line",
+      "z": 23,
+      "role": "proof",
+      "accepts": [
+        "proof",
+        "claim"
+      ],
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "proof_names",
+      "tag": "proof_names",
+      "label": "NFL athlete names",
+      "x": 90,
+      "y": 980,
+      "width": 924,
+      "textAlign": "left",
+      "text": "ZACK MARTIN · TED KARRAS · NICK MARTIN",
+      "fontSize": 34,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 400,
+      "color": "#c4141d",
+      "letterSpacing": "0.03em",
+      "textTransform": "uppercase",
+      "z": 24,
+      "role": "proof",
+      "accepts": [
+        "proof",
+        "byline"
+      ],
+      "maxChars": 44,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "claim_line",
+      "tag": "claim_line",
+      "label": "Supporting claim",
+      "x": 90,
+      "y": 1110,
+      "width": 912,
+      "textAlign": "left",
+      "text": "The same credential D1 and NFL strength coaches carry.",
+      "fontSize": 64,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.98,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "z": 25,
+      "role": "claim",
+      "accepts": [
+        "claim",
+        "reframe"
+      ],
+      "maxChars": 72,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark",
+      "x": 90,
+      "y": 1664,
+      "width": 900,
+      "textAlign": "left",
+      "text": "ATHLETES ACCELERATION",
+      "fontSize": 34,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 500,
+      "color": "#ffffff",
+      "letterSpacing": "0.14em",
+      "textTransform": "uppercase",
+      "z": 26,
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    }
+  ],
+  "media": {
+    "path": "./assets/conf-E3.jpg",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1
+  }
+}

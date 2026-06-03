@@ -29,6 +29,10 @@
   .controls .filt.on { background: var(--aa-red-600, #c4141d); border-color: var(--aa-red-600, #c4141d); color: #fff; }
   .controls .sp { flex: 1; }
   .controls .meta { font-family: var(--font-mono, monospace); font-size: 11px; color: var(--aa-ink-400, #969ca7); letter-spacing: 0.1em; }
+  .controls .camp-switch { display: inline-flex; align-items: center; gap: 8px; margin-right: 6px; }
+  .controls .camp-switch span { font-family: var(--font-mono, monospace); font-size: 10px; letter-spacing: 0.14em; color: var(--aa-ink-400, #969ca7); text-transform: uppercase; }
+  .controls .camp-switch select { background: #15171a; border: 1px solid var(--aa-red-600, #c4141d); color: #fff; font-family: var(--font-mono, monospace); font-size: 12px; letter-spacing: 0.06em; padding: 6px 28px 6px 12px; cursor: pointer; max-width: 360px; }
+  .controls .camp-switch select:focus { outline: none; box-shadow: 0 0 0 1px var(--aa-red-600, #c4141d); }
 
   /* Beat section */
   .beat { padding-top: 36px; }
@@ -196,6 +200,47 @@
   .tp-swatch { width: 26px; height: 26px; border: 2px solid transparent; border-radius: 3px; cursor: pointer; }
   .tp-swatch.is-active { border-color: #fff; }
   .tp-storage-banner { font-family: var(--font-mono, monospace); font-size: 10px; color: #fbbf24; padding: 6px 0; }
+  /* tp-image / tp-media / tp-trim — completes the gallery EditPanel port (these were omitted, so the
+     MediaField <video> escaped full-screen and the trim timeline was uncovered/unstyled). */
+  .tp-image { position: relative; width: 100%; aspect-ratio: 16 / 10; background: rgba(255,255,255,0.04); border: 1px dashed rgba(255,255,255,0.2); overflow: hidden; cursor: pointer; }
+  .tp-image.is-over { border-color: var(--aa-red-600, #c4141d); background: rgba(196,20,29,0.08); }
+  .tp-image img, .tp-image video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .tp-image-overlay { position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 8px; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.6) 100%); pointer-events: none; }
+  .tp-image-label { font-family: var(--font-mono, monospace); font-size: 10px; color: #fff; letter-spacing: 0.1em; text-shadow: 0 1px 3px rgba(0,0,0,0.6); }
+  .tp-image-reset { position: absolute; top: 6px; right: 6px; width: 22px; height: 22px; background: rgba(10,11,13,0.85); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-size: 16px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; pointer-events: auto; }
+  .tp-image-reset:hover { background: var(--aa-red-600, #c4141d); border-color: var(--aa-red-600, #c4141d); }
+  .tp-media { display: flex; flex-direction: column; gap: 12px; }
+  .tp-trim { padding: 12px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); }
+  .tp-trim-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .tp-trim-head-left { display: flex; align-items: center; gap: 10px; }
+  .tp-trim-applied { display: flex; align-items: center; gap: 6px; padding: 3px 8px; background: rgba(21,163,74,0.12); border: 1px solid rgba(21,163,74,0.4); font-family: var(--font-mono, monospace); font-size: 9px; color: #4ade80; letter-spacing: 0.14em; font-weight: 700; }
+  .tp-trim-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 6px rgba(74,222,128,0.7); animation: tp-pulse 2s ease-in-out infinite; }
+  @keyframes tp-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+  .tp-trim-audio { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.08); }
+  .tp-trim-audio-label { font-family: var(--font-mono, monospace); font-size: 10px; color: var(--aa-ink-300, #b8bdc6); letter-spacing: 0.16em; margin-bottom: 8px; }
+  .tp-trim-audio-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .tp-trim-audio-btn { padding: 8px 10px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); color: var(--aa-ink-300, #b8bdc6); font-family: var(--font-mono, monospace); font-size: 11px; letter-spacing: 0.1em; cursor: pointer; font-weight: 600; }
+  .tp-trim-audio-btn:hover { background: rgba(255,255,255,0.07); color: #fff; }
+  .tp-trim-audio-btn.is-active { background: var(--aa-red-600, #c4141d); border-color: var(--aa-red-600, #c4141d); color: #fff; }
+  .tp-trim-audio-hint { margin-top: 8px; font-family: var(--font-mono, monospace); font-size: 9px; color: var(--aa-warning, #fbbf24); letter-spacing: 0.1em; text-align: center; }
+  .tp-trim-label { font-family: var(--font-mono, monospace); font-size: 11px; color: var(--aa-red-600, #c4141d); letter-spacing: 0.16em; font-weight: 700; }
+  .tp-trim-play { padding: 5px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); color: #fff; font-family: var(--font-mono, monospace); font-size: 10px; letter-spacing: 0.1em; cursor: pointer; }
+  .tp-trim-play:hover { background: var(--aa-red-600, #c4141d); border-color: var(--aa-red-600, #c4141d); }
+  .tp-trim-track { position: relative; width: 100%; height: 56px; background: #0a0b0d; border: 1px solid rgba(255,255,255,0.12); user-select: none; touch-action: none; margin-bottom: 10px; }
+  .tp-trim-tick { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(255,255,255,0.08); pointer-events: none; }
+  .tp-trim-tick:first-child, .tp-trim-tick:last-child { background: rgba(255,255,255,0.16); }
+  .tp-trim-tick-label { position: absolute; bottom: 2px; left: 3px; font-family: var(--font-mono, monospace); font-size: 9px; color: rgba(255,255,255,0.4); font-variant-numeric: tabular-nums; letter-spacing: 0.04em; }
+  .tp-trim-window { position: absolute; top: 4px; bottom: 4px; background: rgba(196,20,29,0.35); border: 2px solid var(--aa-red-600, #c4141d); cursor: grab; box-shadow: 0 2px 12px rgba(196,20,29,0.4); display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
+  .tp-trim-window:active { cursor: grabbing; }
+  .tp-trim-window-label { font-family: var(--font-mono, monospace); font-size: 11px; color: #fff; font-weight: 700; letter-spacing: 0.06em; text-shadow: 0 1px 2px rgba(0,0,0,0.6); font-variant-numeric: tabular-nums; pointer-events: none; }
+  .tp-trim-resize { position: absolute; top: -2px; bottom: -2px; right: -7px; width: 14px; background: var(--aa-red-600, #c4141d); cursor: ew-resize; border: 2px solid #fff; box-sizing: border-box; }
+  .tp-trim-resize::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 2px; height: 14px; background: #fff; box-shadow: 4px 0 0 #fff, -4px 0 0 #fff; }
+  .tp-trim-scrub { position: absolute; top: -4px; bottom: -4px; width: 2px; background: #fff; box-shadow: 0 0 8px rgba(255,255,255,0.6); pointer-events: none; transform: translateX(-50%); }
+  .tp-trim-info { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .tp-trim-info-cell { padding: 6px 8px; background: rgba(255,255,255,0.04); border-left: 2px solid var(--aa-red-600, #c4141d); display: flex; flex-direction: column; gap: 2px; }
+  .tp-trim-info-label { font-family: var(--font-mono, monospace); font-size: 9px; color: rgba(255,255,255,0.5); letter-spacing: 0.12em; }
+  .tp-trim-info-value { font-family: var(--font-mono, monospace); font-size: 13px; color: #fff; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .tp-trim-hint { margin-top: 10px; font-family: var(--font-mono, monospace); font-size: 9px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-align: center; }
 </style>
 </head>
 <body>
@@ -245,6 +290,16 @@ const campaignParam = qs.get("campaign") || "";
 
 let PLAN = null;
 let FILTER = "all";
+let CAMPAIGNS = [];
+
+// Campaign switcher: list all campaigns (angles live in separate campaigns) so the
+// header dropdown can flip between angle 1 / 2 / 3 without hand-editing the URL.
+async function loadCampaigns() {
+  try {
+    const r = await fetch(API + "/campaigns");
+    if (r.ok) { CAMPAIGNS = (await r.json()).campaigns || []; if (PLAN) renderControls(); }
+  } catch { /* non-fatal — switcher just shows the current campaign */ }
+}
 
 const fmtLabel = (f) => ({ video: "VIDEO", gif: "GIF", static: "STATIC" }[f] || f.toUpperCase());
 
@@ -255,6 +310,7 @@ async function load() {
     if (!r.ok) throw new Error("plan " + r.status + " — is editor-server running on :5173?");
     PLAN = await r.json();
     render();
+    loadCampaigns();
   } catch (e) {
     document.getElementById("content").innerHTML =
       '<div class="empty err">Could not load plan.<br>' + e.message +
@@ -292,11 +348,22 @@ function renderDash() {
 
 function renderControls() {
   const filters = ["all", "video", "gif", "static", "fresh", "template", "needs review"];
+  const camps = CAMPAIGNS.length ? CAMPAIGNS : [PLAN.campaign];
+  const opts = camps.map((c) =>
+    `<option value="${c}" ${c === PLAN.campaign ? "selected" : ""}>${c}</option>`).join("");
   document.getElementById("controls").innerHTML =
+    `<label class="camp-switch"><span>ANGLE / CAMPAIGN</span><select id="campSel">${opts}</select></label>` +
     filters.map((f) => `<button class="filt ${FILTER === f ? "on" : ""}" data-f="${f}">${f}</button>`).join("") +
-    `<span class="sp"></span><span class="meta">campaign: ${PLAN.campaign} · click a creative's EDIT to open the position editor</span>`;
+    `<span class="sp"></span><span class="meta">click a creative's EDIT to open the position editor</span>`;
   document.querySelectorAll(".filt").forEach((b) =>
     b.addEventListener("click", () => { FILTER = b.dataset.f; render(); }));
+  const sel = document.getElementById("campSel");
+  if (sel) sel.addEventListener("change", () => {
+    // preserve api/editor params, swap the campaign, reload
+    const params = new URLSearchParams(location.search);
+    params.set("campaign", sel.value);
+    location.search = params.toString();
+  });
 }
 
 function pass(a) {

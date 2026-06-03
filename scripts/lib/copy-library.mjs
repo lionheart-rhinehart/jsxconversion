@@ -54,11 +54,22 @@ const KIND_ROLE = {
   headline: "claim", // the short FB headline
   description: null,
   primaryText: null, // long body — a source pool, not an auto-placed slot
+  bodyPara: null, // one body PARAGRAPH lifted whole (hookRef auto-splits it across kicker/headline/subhead)
+  bodyLine: null, // one body SENTENCE lifted alone (copyRefs drops it in a single slot)
   altHook: "hook",
   imageHeadline: "hook", // the REAL on-creative headline
   imageSubhead: "reframe", // the REAL on-creative subhead
   microscript: "reframe",
 };
+
+// Split a paragraph into sentence-ish segments (keeps terminal punctuation with
+// the segment). Same boundary rule as splitHook in roles.mjs — words never change.
+function splitSentences(t) {
+  return String(t)
+    .split(/(?<=[.!?])\s+/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
 
 function mkUnit(id, kind, text, extra = {}) {
   return { id, kind, role: KIND_ROLE[kind] ?? null, text, chars: chars(text), ...extra };
@@ -135,6 +146,27 @@ export function parseAdCopy(md, { warn = () => {} } = {}) {
         units.push(mkUnit(`${adId}.primaryText`, "primaryText", body, { ad: block.label }));
         produced++;
       }
+
+      // Cut the body into MAGNETS the planner can place: each blank-line-separated
+      // PARAGRAPH whole (one unit), plus each SENTENCE inside it (a finer unit). The
+      // whole-body primaryText unit above stays as a source pool; these are the
+      // referenceable pieces (a paragraph → hookRef auto-split; a sentence → copyRef).
+      const paras = primary
+        .split(/\n\s*\n/)
+        .map((p) => p.split(/\r?\n/).map((l) => cleanLine(l)).filter(Boolean).join(" ").trim())
+        .filter(Boolean);
+      paras.forEach((para, i) => {
+        const pn = i + 1;
+        units.push(mkUnit(`${adId}.bodyPara.${pn}`, "bodyPara", para, { ad: block.label }));
+        produced++;
+        const sents = splitSentences(para);
+        if (sents.length > 1) {
+          sents.forEach((s, j) => {
+            units.push(mkUnit(`${adId}.bodyLine.${pn}.${j + 1}`, "bodyLine", s, { ad: block.label }));
+            produced++;
+          });
+        }
+      });
     }
 
     // Alternative hooks: numbered list, each "text" — Archetype: X (V1.1)
