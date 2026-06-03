@@ -233,12 +233,15 @@ refuse to render it anyway (exit 2), so catching it here saves a round trip. The
 to `campaigns/<name>/validation.json` and surfaced live on the review page.
 
 ### Step 5 — Review (stop here)
-Ensure the servers are up:
-- `node scripts/editor-server.mjs` (:5173 — plan API + render)
-- `node "brand/video-templates/serve.mjs"` (:5599 — serves the review page)
+Ensure the dev servers are up with **`npm run dev`** — it starts BOTH the plan/render
+server and the review page, auto-picks free ports (so a second chat/worktree never
+collides), writes the chosen ports to `.dev-ports.json`, and prints a ready-to-open
+review URL.
 
-Tell the user to open **http://localhost:5599/review.html?campaign=<name>**, review
-the cards, tweak/note, and **Approve** the ones to build. **Then STOP.** Do not render.
+Tell the user to open the **review URL `npm run dev` printed** — of the form
+`http://localhost:<review>/review.html?campaign=<name>&api=http://localhost:<editor>&editor=http://localhost:<editor>`
+(on the main checkout that's `:5599`/`:5173`). Review the cards, tweak/note, and
+**Approve** the ones to build. **Then STOP.** Do not render.
 
 ### Step 6 — Render (only after approvals)
 When the user says go (re-invoke `/creative-engine <name>` or "render approved"),

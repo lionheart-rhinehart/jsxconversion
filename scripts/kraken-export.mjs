@@ -39,7 +39,17 @@ const PROJECT_ROOT = resolve(".");
 const CAMPAIGNS_DIR = join(PROJECT_ROOT, "campaigns");
 const OUT_DIR = join(PROJECT_ROOT, "out");
 const TMP_DIR = join(PROJECT_ROOT, ".tmp");
-const SERVER = process.env.EDITOR_SERVER || `http://localhost:${process.env.EDITOR_PORT || 5173}`;
+// Talk to THIS checkout's editor-server. Env wins; else read the port dev.mjs wrote
+// for this workspace (.dev-ports.json); else the historical default.
+function devEditorPort() {
+  try {
+    const f = join(PROJECT_ROOT, ".dev-ports.json");
+    if (existsSync(f)) return JSON.parse(readFileSync(f, "utf8")).editor || null;
+  } catch { /* ignore — fall through to default */ }
+  return null;
+}
+const SERVER = process.env.EDITOR_SERVER
+  || `http://localhost:${process.env.EDITOR_PORT || devEditorPort() || 5173}`;
 
 // ── CLI ───────────────────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
