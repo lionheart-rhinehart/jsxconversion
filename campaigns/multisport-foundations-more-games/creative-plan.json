@@ -1,0 +1,388 @@
+{
+  "schemaVersion": 1,
+  "campaign": "multisport-foundations-more-games",
+  "brand": "athletes-acceleration",
+  "knobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": {
+      "video": 0.6,
+      "gif": 0.15,
+      "static": 0.25
+    },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 3
+  },
+  "_planNotes": {
+    "angle": "Angle 3 — 'more games isn't enough' (Topic 6, the parent who believes volume of play is development). Mechanism = games MEASURE the athlete training built, they don't BUILD one. 'A game is a test, not a teacher.' Proof = the Athlete Analysis baseline + the 'one dad' case study + credentials + the guarantee — no forced RCT.",
+    "copyRule": "BY REFERENCE, VERBATIM. Role-slot cards (A1–A4, B1–B2, C1–C2, D1–D2, E3 claim, E4) bind copy by id via copyRefs/hookRef. verbatimGuard CLEAN on ALL 17 now: E1/E2/F1 multi-field values were corrected to verbatim text (E1 quote = single magnet, E2 statsLabel = 'Built, then measured.', F1 title1+title2 concatenate to the verbatim promise line exactly). E3's claim_line binds the verbatim magnet 'Coach Graham Wilkerson built this.'; its coach name / CSCS / NFL-name slots are byline (attribution/identity, exempt) and carry verbatim names — cluster-31's proof_hero+proof_names roles were set to byline (a name list is attribution, not a message claim).",
+    "kicker": "EXERCISED. B1 renders the full eyebrow→kicker→headline→subhead stack from three consecutive verbatim sentences (AD1 para1: 'More playing time feels like the answer.' / 'Another season, another team, more reps in real games.' / 'And a year later, the same kid, the same speed.'). D1 renders eyebrow→kicker→headline ('Games matter.' lead-in → the blame-removal sentence). A3 stays a 2-segment hook (headline+subhead) — its alt-hook has no third part. Casting three distinct complete verbatim lines into the three slots is selection, not stitching.",
+    "layout": "eyebrow (INDIANAPOLIS SPORT PARENTS, white chip) → kicker → headline → subhead. cluster-43 is the stacked template (A3 hookRef 2-seg; B1 3-line kicker stack; D1 kicker+headline). Distinct skeleton within every beat.",
+    "media": "EVERY creative media-backed. Statics set asset.media (./assets/mg-<id>.jpg); motion sets asset.clip (brand/video-templates/assets/mg-<id>.mp4). 17 DISTINCT cache clips, favoring 'where it's built' strength/power footage. Minted via scripts/prep-media.mjs (prefix mg-).",
+    "eyebrow": "location = indianapolis → 'INDIANAPOLIS SPORT PARENTS' auto-anchor; never hand-set.",
+    "guaranteeFlag": "guarantee role brand-locked to canonical wording on F1/F2.",
+    "status": "All 'pending' — re-authored (kicker cards + verbatim fixes); awaiting approval on the review page."
+  },
+  "angles": [
+    {
+      "id": "more-games",
+      "name": "More Games Isn't Enough (volume of play as development) — ad copy series #3",
+      "location": "indianapolis",
+      "mechanism": "Games measure the athlete training built; they don't build one. A game is a test, not a teacher — it reveals what's already there, it doesn't add to it. Speed and power get built on purpose in training, or not at all.",
+      "emotionalJob": "Reframe games as a mirror, not a maker — without criticizing the parent's choices (validate the instinct, then flip it).",
+      "voice": "Head-coach-to-parent, declarative, metric-driven. No emoji / exclamation / em dash.",
+      "assets": [
+        {
+          "id": "A1",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-33",
+          "media": "./assets/mg-A1.jpg",
+          "copyRefs": {
+            "hook": "ad-2.bodyLine.2.2"
+          },
+          "copySource": "Verbatim magnet (AD2 body): \"A game is a test, not a teacher.\" — the angle's epiphany.",
+          "status": "rendered",
+          "notes": "Lone epiphany hook over sprint footage.",
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/A1.png",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/A1.png",
+          "renderedAt": "2026-06-03T13:28:23.227Z"
+        },
+        {
+          "id": "A2",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-35",
+          "media": "./assets/mg-A2.jpg",
+          "copyRefs": {
+            "hook": "ad-1.headline",
+            "claim": "ad-1.description"
+          },
+          "copySource": "Verbatim magnets: ad Headline \"Why More Games Isn't Enough\" (hook) + Description \"Built, then measured.\" (claim).",
+          "status": "rendered",
+          "notes": "Split card: headline + claim.",
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/A2.png",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/A2.png",
+          "renderedAt": "2026-06-03T13:28:26.998Z"
+        },
+        {
+          "id": "A3",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-43",
+          "media": "./assets/mg-A3.jpg",
+          "hookRef": "ad-1.altHook.2",
+          "copySource": "Verbatim magnet (AD1 alt hook, Mechanism): \"Games don't make athletes faster. They just show you how fast training already made them.\" — auto-split headline + subhead (2-segment, no kicker).",
+          "status": "rendered",
+          "notes": "Two-segment mechanism hook stacked.",
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/A3.png",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/A3.png",
+          "renderedAt": "2026-06-03T13:28:30.407Z"
+        },
+        {
+          "id": "A4",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-39",
+          "media": "./assets/mg-A4.jpg",
+          "copyRefs": {
+            "mechanism": [
+              "ad-1.imageHeadline",
+              "ad-1.imageSubhead"
+            ]
+          },
+          "copySource": "Verbatim magnets: image headline \"Here's Why More Games Won't Make Them Faster\" + sub-headline \"(And What Actually Will)\".",
+          "status": "rendered",
+          "notes": "Claim + support = the on-image headline pair.",
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/A4.png",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/A4.png",
+          "renderedAt": "2026-06-03T13:28:34.324Z"
+        },
+        {
+          "id": "B1",
+          "beat": "B — Name the moment",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-43",
+          "media": "./assets/mg-B1.jpg",
+          "copyRefs": {
+            "kicker": "ad-1.bodyLine.1.1",
+            "hook": "ad-1.bodyLine.1.2",
+            "reframe": "ad-1.bodyLine.1.3"
+          },
+          "copySource": "Verbatim magnets (AD1 para1, three consecutive sentences) → the FULL eyebrow→kicker→headline→subhead stack: \"More playing time feels like the answer.\" (kicker) / \"Another season, another team, more reps in real games.\" (headline) / \"And a year later, the same kid, the same speed.\" (subhead).",
+          "status": "rendered",
+          "notes": "KICKER CARD — full stacked hook from three verbatim sentences.",
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/B1.png",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/B1.png",
+          "renderedAt": "2026-06-03T13:28:38.044Z"
+        },
+        {
+          "id": "B2",
+          "beat": "B — Name the moment",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-40",
+          "media": "./assets/mg-B2.jpg",
+          "copyRefs": {
+            "reframe": [
+              "ad-1.bodyLine.2.2",
+              "ad-1.bodyLine.2.3"
+            ]
+          },
+          "copySource": "Verbatim magnets (AD1 body): \"A game doesn't develop an athlete.\" + \"It reveals one.\"",
+          "status": "rendered",
+          "notes": "Quote-style reframe + support.",
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/B2.png",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/B2.png",
+          "renderedAt": "2026-06-03T13:28:41.868Z"
+        },
+        {
+          "id": "C1",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-36",
+          "media": "./assets/mg-C1.jpg",
+          "copyRefs": {
+            "reframe": "ad-3.bodyLine.2.5"
+          },
+          "copySource": "Verbatim magnet (AD3 body): \"The ceiling never moves, because nothing on a game field was ever designed to move it.\"",
+          "status": "rendered",
+          "notes": "Why the ceiling holds (mechanism).",
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/C1.png",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/C1.png",
+          "renderedAt": "2026-06-03T13:28:45.437Z"
+        },
+        {
+          "id": "C2",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-42",
+          "media": "./assets/mg-C2.jpg",
+          "copyRefs": {
+            "reframe": "ad-3.bodyLine.6.1"
+          },
+          "copySource": "Verbatim magnet (AD3 body): \"That kind of speed doesn't stay in the gym.\"",
+          "status": "rendered",
+          "notes": "The build pays off on the field (distinct from C1).",
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/C2.png",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/C2.png",
+          "renderedAt": "2026-06-03T13:28:49.609Z"
+        },
+        {
+          "id": "D1",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-43",
+          "media": "./assets/mg-D1.jpg",
+          "copyRefs": {
+            "kicker": "ad-3.bodyLine.4.2",
+            "hook": "ad-3.bodyLine.4.1"
+          },
+          "copySource": "Verbatim magnets (AD3 body) → eyebrow→kicker→headline: \"Games matter.\" (kicker lead-in) / \"And here's something worth saying plainly: none of that playing time was wasted, and you weren't wrong to want it.\" (headline).",
+          "status": "rendered",
+          "notes": "KICKER CARD — 'Games matter.' lead-in over the blame-removal line.",
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/D1.png",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/D1.png",
+          "renderedAt": "2026-06-03T13:28:54.004Z"
+        },
+        {
+          "id": "D2",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-36",
+          "media": "./assets/mg-D2.jpg",
+          "copyRefs": {
+            "reframe": "ad-3.bodyLine.3.1"
+          },
+          "copySource": "Verbatim magnet (AD3 body): \"That's why a whole season can pass with nothing to show for it.\"",
+          "status": "rendered",
+          "notes": "The cost named plainly (distinct from C1).",
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/D2.png",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/D2.png",
+          "renderedAt": "2026-06-03T13:28:58.181Z"
+        },
+        {
+          "id": "E1",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "meet-coach",
+          "clip": "brand/video-templates/assets/mg-E1.mp4",
+          "templateData": {
+            "eyebrow": "BUILT, THEN MEASURED",
+            "coachFirst": "COACH GRAHAM",
+            "coachLast": "WILKERSON",
+            "coachTitle": "CSCS · FOUNDER",
+            "quote": "A game is a test, not a teacher.",
+            "credentials": "TRAINED ZACK MARTIN · TED KARRAS · NICK MARTIN",
+            "facts": "REAL|SPRINT + JUMP NUMBERS · EVERY|SESSION · BUILT|ON PURPOSE",
+            "ctaText": "BOOK THE ATHLETE ANALYSIS",
+            "ctaMicro": "FREE. NOT A TRYOUT. A DATA SET."
+          },
+          "copySource": "Multi-field template. quote = verbatim magnet 'A game is a test, not a teacher.'; eyebrow = ad Description; credentials = verbatim names; cta micro = 'Not a tryout. A data set.'",
+          "status": "rendered",
+          "notes": "Coach proof VSL over box-jump footage.",
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/E1.mp4",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/E1.mp4",
+          "renderedAt": "2026-06-03T13:29:31.338Z"
+        },
+        {
+          "id": "E2",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "quote-card",
+          "clip": "brand/video-templates/assets/mg-E2.mp4",
+          "templateData": {
+            "eyebrow": "BUILT, THEN MEASURED",
+            "quoteText": "He could feel that he was finally being built, not just put through his paces and sent home.",
+            "bylineName": "A PARENT",
+            "bylineMeta": "INDIANAPOLIS · ATHLETES ACCELERATION",
+            "statsLabel": "Built, then measured."
+          },
+          "copySource": "Multi-field template. quoteText = verbatim AD3 case study line; statsLabel = verbatim ad Description 'Built, then measured.' (was a paraphrase, now fixed).",
+          "status": "rendered",
+          "notes": "Parent case-study quote card.",
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/E2.mp4",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/E2.mp4",
+          "renderedAt": "2026-06-03T13:29:59.424Z"
+        },
+        {
+          "id": "E3",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-31",
+          "media": "./assets/mg-E3.jpg",
+          "templateData": {
+            "coach_name": "COACH GRAHAM\nWILKERSON",
+            "coach_title": "CSCS",
+            "proof_hero": "TRAINED NFL\nATHLETES",
+            "proof_names": "ZACK MARTIN · TED KARRAS · NICK MARTIN"
+          },
+          "copyRefs": {
+            "claim": "ad-3.bodyLine.9.1"
+          },
+          "copySource": "Credential card. claim_line binds the verbatim magnet 'Coach Graham Wilkerson built this.' (traces clean). coach name / CSCS / 'trained NFL athletes' / the NFL names are byline-role attribution (verbatim Cody words / proper nouns; guard-exempt as identity).",
+          "status": "rendered",
+          "notes": "Credential verdict (static; distinct from E1 video / E2 quote).",
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/E3.png",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/E3.png",
+          "renderedAt": "2026-06-03T13:30:02.998Z"
+        },
+        {
+          "id": "E4",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-e2e-e5-testimonial",
+          "media": "./assets/mg-E4.jpg",
+          "copyRefs": {
+            "testimonial": "ad-3.bodyLine.7.1"
+          },
+          "templateData": {
+            "byline": "A PARENT · INDIANAPOLIS"
+          },
+          "copySource": "Verbatim magnet (AD3 'one dad'): \"One dad told us his son had been somewhere else for two years, and that a single week with us was enough for the kid to say it was the best he'd ever had.\" Byline is an identity slot.",
+          "status": "rendered",
+          "notes": "Testimonial card.",
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/E4.png",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/E4.png",
+          "renderedAt": "2026-06-03T13:30:06.659Z"
+        },
+        {
+          "id": "F1",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "stat-reveal",
+          "clip": "brand/video-templates/assets/mg-F1.mp4",
+          "templateData": {
+            "eyebrow": "THE 90-DAY GUARANTEE",
+            "title1": "Here's the promise no other",
+            "title2": "program in this market will make.",
+            "stat1Value": 1,
+            "stat1Unit": " MPH",
+            "stat1Label": "SPEED",
+            "stat2Value": 3,
+            "stat2Unit": "\"",
+            "stat2Label": "VERTICAL",
+            "freeLine1": "90",
+            "freeLine2": "DAYS",
+            "ctaText": "BOOK YOUR FREE ATHLETE ANALYSIS"
+          },
+          "copySource": "Multi-field template. title1 + title2 concatenate EXACTLY to the verbatim magnet 'Here's the promise no other program in this market will make.' (only a line break added). Guarantee band brand-locked.",
+          "status": "rendered",
+          "notes": "Guarantee reveal video.",
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/F1.mp4",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/F1.mp4",
+          "renderedAt": "2026-06-03T13:30:25.133Z"
+        },
+        {
+          "id": "F2",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-32",
+          "media": "./assets/mg-F2.jpg",
+          "templateData": {
+            "offer_headline": "FREE ATHLETE\nANALYSIS",
+            "offer_detail": "Not a tryout. A data set.",
+            "cta_text": "BOOK THE ATHLETE ANALYSIS"
+          },
+          "copySource": "Multi-field offer template. 'Not a tryout. A data set.' verbatim. Guarantee band auto-locked.",
+          "status": "rendered",
+          "notes": "Offer card. Guarantee band verbatim-locked.",
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/F2.png",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/F2.png",
+          "renderedAt": "2026-06-03T13:30:28.950Z"
+        },
+        {
+          "id": "BR1",
+          "beat": null,
+          "temperature": "any",
+          "format": "video",
+          "source": "template",
+          "template": "logo-sting",
+          "clip": "brand/video-templates/assets/mg-BR1.mp4",
+          "templateData": {
+            "wordmark1": "ATHLETES",
+            "wordmark2": "ACCELERATION",
+            "tagline": "BUILT, THEN MEASURED.",
+            "url": "ATHLETESACCEL.COM"
+          },
+          "copySource": "Brand lockup + verbatim ad Description as tagline (\"Built, then measured.\").",
+          "status": "rendered",
+          "notes": "Brand bumper over sled-push footage.",
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/BR1.mp4",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/BR1.mp4",
+          "renderedAt": "2026-06-03T13:30:40.006Z"
+        }
+      ]
+    }
+  ]
+}
