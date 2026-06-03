@@ -643,14 +643,14 @@
           "copySource": "Brand lockup only (no campaign copy — it's a bumper).",
           "status": "rendered",
           "notes": "Brand bumper / logo sting.",
-          "kraken": {
-            "id": "79798a21-26d7-441a-832b-443a4c806c81",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/grind-trap-noblesville-grind-trap-BR1-1780501538011.mp4",
-            "folder": "ANGLE 1"
-          },
           "output": "out/campaigns/grind-trap-noblesville/grind-trap/BR1.mp4",
           "thumb": "out/campaigns/grind-trap-noblesville/grind-trap/BR1.mp4",
-          "renderedAt": "2026-06-03T15:43:02.044Z"
+          "renderedAt": "2026-06-03T18:04:33.649Z",
+          "kraken": {
+            "id": "5f0ea4c9-2a6e-470d-b1f4-56022ed996e6",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/grind-trap-noblesville-grind-trap-BR1-1780511667485.mp4",
+            "folder": "ANGLE 1"
+          }
         }
       ]
     }

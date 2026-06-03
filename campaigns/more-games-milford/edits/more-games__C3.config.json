@@ -1,0 +1,212 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
+      "z": 1
+    },
+    {
+      "id": "bg_photo",
+      "tag": "bg_photo",
+      "label": "Field/sunset photo",
+      "type": "image",
+      "src": "./assets/cluster-13-background.jpg",
+      "x": -1317,
+      "y": 0,
+      "width": 2880,
+      "height": 1920,
+      "objectFit": "cover",
+      "filter": "brightness(0.92) saturate(1.02)",
+      "z": 0
+    },
+    {
+      "id": "green_wedge",
+      "tag": "brand_wedge",
+      "label": "Angled green wedge (parallelogram)",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "#6da354",
+      "opacity": 0.9,
+      "clipPath": "polygon(-902px 1054px, 963px 632px, 1081px 1151px, -785px 1573px)",
+      "z": 10
+    },
+    {
+      "id": "athlete",
+      "tag": "talent_photo",
+      "label": "Sprinter cutout (on top of headline)",
+      "type": "image",
+      "src": "./assets/cluster-13-foreground.png",
+      "x": 7,
+      "y": 118,
+      "width": 826,
+      "height": 688,
+      "objectFit": "fill",
+      "transform": "matrix(2.4281, -0.6898, 0.6895, 2.4272, -669.16, 514.66)",
+      "transformOrigin": "0 0",
+      "z": 70
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "[TITLE] eyebrow",
+      "x": 0,
+      "y": 58,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "MILFORD SPORT PARENTS",
+      "fontSize": 38,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#ffffff",
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "textShadow": "0 0 34px rgba(0,0,0,0.55), 0 2px 10px rgba(0,0,0,0.5)",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow"
+      ],
+      "maxChars": 10
+    },
+    {
+      "id": "headline_1",
+      "tag": "title",
+      "label": "FOUNDATIONAL",
+      "x": 24,
+      "y": 650,
+      "text": "The speed and power behind those plays gets built on purpose, in training, or it doesn't get built at all.",
+      "fontSize": 124,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 1,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "z": 80,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 17,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "headline_2",
+      "tag": "title",
+      "label": "YOUTH",
+      "x": 39,
+      "y": 849,
+      "text": "",
+      "fontSize": 182,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 1,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "z": 60,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 8,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "headline_3",
+      "tag": "title",
+      "label": "PROGRAM",
+      "x": 39,
+      "y": 1109,
+      "text": "",
+      "fontSize": 166,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 1,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "z": 30,
+      "role": "claim",
+      "accepts": [
+        "hook",
+        "claim",
+        "brand",
+        "offer"
+      ],
+      "maxChars": 10,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "microscript_1",
+      "tag": "microscript",
+      "label": "Microscript line 1 (bold)",
+      "x": 0,
+      "y": 1606,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "",
+      "fontSize": 28,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#ffffff",
+      "letterSpacing": "0.02em",
+      "textTransform": "uppercase",
+      "z": 40,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 27,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "microscript_2",
+      "tag": "microscript_2",
+      "label": "Microscript line 2 (light)",
+      "x": 0,
+      "y": 1654,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "",
+      "fontSize": 24,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 400,
+      "color": "#dadada",
+      "letterSpacing": "0.02em",
+      "textTransform": "uppercase",
+      "z": 50,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "proof"
+      ],
+      "maxChars": 27,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    }
+  ],
+  "media": {
+    "path": "./assets/mg-C3.jpg",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1
+  }
+}

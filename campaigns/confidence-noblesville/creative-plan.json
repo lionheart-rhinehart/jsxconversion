@@ -454,14 +454,14 @@
           "copySource": "Brand lockup + verbatim ad Description as tagline (\"Confidence from proof.\").",
           "status": "rendered",
           "notes": "Brand bumper over footage.",
-          "kraken": {
-            "id": "d0f29657-1bac-4bad-bd26-1487d181fdeb",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/confidence-noblesville-proof-confidence-BR1-1780505176485.mp4",
-            "folder": "ANGLE 2 -"
-          },
           "output": "out/campaigns/confidence-noblesville/proof-confidence/BR1.mp4",
           "thumb": "out/campaigns/confidence-noblesville/proof-confidence/BR1.mp4",
-          "renderedAt": "2026-06-03T16:02:21.724Z"
+          "renderedAt": "2026-06-03T18:04:56.700Z",
+          "kraken": {
+            "id": "16a816d6-e4ae-4cd2-a883-4b96969b1eda",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/confidence-noblesville-proof-confidence-BR1-1780511679863.mp4",
+            "folder": "ANGLE 2 -"
+          }
         }
       ]
     }

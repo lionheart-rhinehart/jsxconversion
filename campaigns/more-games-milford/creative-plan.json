@@ -1,0 +1,592 @@
+{
+  "schemaVersion": 1,
+  "campaign": "more-games-milford",
+  "brand": "athletes-acceleration",
+  "knobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": {
+      "video": 0.6,
+      "gif": 0.15,
+      "static": 0.25
+    },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 3
+  },
+  "_planNotes": {
+    "angle": "Angle 3 — 'more games isn't enough' (Topic 6, the parent who believes volume of play is development). Mechanism = games MEASURE the athlete training built, they don't BUILD one. 'A game is a test, not a teacher.' Proof = the Athlete Analysis baseline + the 'one dad' case study + credentials + the guarantee — no forced RCT.",
+    "copyRule": "BY REFERENCE, VERBATIM. Role-slot cards (A1–A4, B1–B2, C1–C2, D1–D2, E3 claim, E4) bind copy by id via copyRefs/hookRef. verbatimGuard CLEAN on ALL 17 now: E1/E2/F1 multi-field values were corrected to verbatim text (E1 quote = single magnet, E2 statsLabel = 'Built, then measured.', F1 title1+title2 concatenate to the verbatim promise line exactly). E3's claim_line binds the verbatim magnet 'Coach Graham Wilkerson built this.'; its coach name / CSCS / NFL-name slots are byline (attribution/identity, exempt) and carry verbatim names — cluster-31's proof_hero+proof_names roles were set to byline (a name list is attribution, not a message claim).",
+    "kicker": "EXERCISED. B1 renders the full eyebrow→kicker→headline→subhead stack from three consecutive verbatim sentences (AD1 para1: 'More playing time feels like the answer.' / 'Another season, another team, more reps in real games.' / 'And a year later, the same kid, the same speed.'). D1 renders eyebrow→kicker→headline ('Games matter.' lead-in → the blame-removal sentence). A3 stays a 2-segment hook (headline+subhead) — its alt-hook has no third part. Casting three distinct complete verbatim lines into the three slots is selection, not stitching.",
+    "layout": "eyebrow (INDIANAPOLIS SPORT PARENTS, white chip) → kicker → headline → subhead. cluster-43 is the stacked template (A3 hookRef 2-seg; B1 3-line kicker stack; D1 kicker+headline). Distinct skeleton within every beat.",
+    "media": "EVERY creative media-backed. Statics set asset.media (./assets/mg-<id>.jpg); motion sets asset.clip (brand/video-templates/assets/mg-<id>.mp4). 17 DISTINCT cache clips, favoring 'where it's built' strength/power footage. Minted via scripts/prep-media.mjs (prefix mg-).",
+    "eyebrow": "location = indianapolis → 'INDIANAPOLIS SPORT PARENTS' auto-anchor; never hand-set.",
+    "guaranteeFlag": "guarantee role brand-locked to canonical wording on F1/F2.",
+    "status": "All 'pending' — re-authored (kicker cards + verbatim fixes); awaiting approval on the review page."
+  },
+  "angles": [
+    {
+      "id": "more-games",
+      "name": "More Games Isn't Enough (volume of play as development) — ad copy series #3",
+      "location": "milford",
+      "mechanism": "Games measure the athlete training built; they don't build one. A game is a test, not a teacher — it reveals what's already there, it doesn't add to it. Speed and power get built on purpose in training, or not at all.",
+      "emotionalJob": "Reframe games as a mirror, not a maker — without criticizing the parent's choices (validate the instinct, then flip it).",
+      "voice": "Head-coach-to-parent, declarative, metric-driven. No emoji / exclamation / em dash.",
+      "assets": [
+        {
+          "id": "A1",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-multisport-foundations-grind-trap-A1",
+          "clip": "brand/video-templates/assets/mg-A1.mp4",
+          "templateData": {
+            "line1": "A GAME IS A TEST,",
+            "line2": "NOT A TEACHER.",
+            "brand": "ATHLETES ACCELERATION"
+          },
+          "copySource": "Verbatim magnet (AD2 body): \"A game is a test, not a teacher.\" — the angle's epiphany, split across the two display lines. eyebrow auto-anchors.",
+          "status": "rendered",
+          "notes": "MOTION (rebalance): 3s GIF hook over agility footage (was static cluster-33). CANDIDATE CLIP mg-A1.mp4 (free agility-drill 5033ed6f) — swap on the review page if desired.",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/more-games-milford/more-games/A1.mp4",
+          "thumb": "out/campaigns/more-games-milford/more-games/A1.mp4",
+          "renderedAt": "2026-06-03T18:21:24.905Z",
+          "kraken": {
+            "id": "524a46b7-b8f3-412e-8244-e2984e1cdf74",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/more-games-milford-more-games-A1-1780511757580.mp4",
+            "folder": "ANGLE 3"
+          }
+        },
+        {
+          "id": "A2",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "two-truths-lie",
+          "clip": "brand/video-templates/assets/mg-A2.mp4",
+          "templateData": {
+            "duration": 8,
+            "eyebrow": "2 TRUTHS · 1 LIE",
+            "title": "2 TRUTHS, 1 LIE.",
+            "claim1": "A GAME DOESN'T DEVELOP AN ATHLETE. IT REVEALS ONE.",
+            "claim2": "A GAME IS A TEST, NOT A TEACHER.",
+            "claim3": "MORE GAMES MAKE A KID FASTER.",
+            "lieIndex": 3,
+            "lieExplain": "Games measure speed. They don't build it. Training does.",
+            "ctaText": "SPOT THE LIE"
+          },
+          "copySource": "Two-truths-one-lie engagement card. Truths are verbatim: claim1 = AD1 \"A game doesn't develop an athlete. It reveals one.\"; claim2 = AD2 \"A game is a test, not a teacher.\" claim3 is the angle's target misconception (the LIE: \"more games make a kid faster\"), revealed false by lieExplain (the mechanism: games measure speed, training builds it). eyebrow auto-anchors.",
+          "status": "rendered",
+          "notes": "MOTION (rebalance): two-truths-1-lie engagement card for the cold stop-scroll over footage (added optional bgClip support to the template). CANDIDATE CLIP mg-A2.mp4 (free sled-push e0fab9c6) — swap on the review page if desired.",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/more-games-milford/more-games/A2.mp4",
+          "thumb": "out/campaigns/more-games-milford/more-games/A2.mp4",
+          "renderedAt": "2026-06-03T18:23:28.835Z",
+          "kraken": {
+            "id": "dd3d8159-0b7b-4f09-bf82-4aab8f8901c0",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/more-games-milford-more-games-A2-1780511759806.mp4",
+            "folder": "ANGLE 3"
+          }
+        },
+        {
+          "id": "A3",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-43",
+          "media": "./assets/mg-A3.jpg",
+          "hookRef": "ad-1.altHook.2",
+          "copySource": "Verbatim magnet (AD1 alt hook, Mechanism): \"Games don't make athletes faster. They just show you how fast training already made them.\" — auto-split headline + subhead (2-segment, no kicker).",
+          "status": "rendered",
+          "notes": "Two-segment mechanism hook stacked.",
+          "output": "out/campaigns/more-games-milford/more-games/A3.png",
+          "thumb": "out/campaigns/more-games-milford/more-games/A3.png",
+          "renderedAt": "2026-06-03T18:23:34.264Z",
+          "kraken": {
+            "id": "96072da5-e5f1-4f78-b1bb-f422d0476c8b",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/more-games-milford-more-games-A3-1780511761583.png",
+            "folder": "ANGLE 3"
+          }
+        },
+        {
+          "id": "A4",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-39",
+          "media": "./assets/mg-A4.jpg",
+          "copyRefs": {
+            "mechanism": [
+              "ad-1.imageHeadline",
+              "ad-1.imageSubhead"
+            ]
+          },
+          "copySource": "Verbatim magnets: image headline \"Here's Why More Games Won't Make Them Faster\" + sub-headline \"(And What Actually Will)\".",
+          "status": "rendered",
+          "notes": "Claim + support = the on-image headline pair.",
+          "output": "out/campaigns/more-games-milford/more-games/A4.png",
+          "thumb": "out/campaigns/more-games-milford/more-games/A4.png",
+          "renderedAt": "2026-06-03T18:23:38.290Z",
+          "kraken": {
+            "id": "1ec66040-4333-4827-baba-6a25921767db",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/more-games-milford-more-games-A4-1780511762893.png",
+            "folder": "ANGLE 3"
+          }
+        },
+        {
+          "id": "B1",
+          "beat": "B — Name the moment",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-43",
+          "media": "./assets/mg-B1.jpg",
+          "copyRefs": {
+            "kicker": "ad-1.bodyLine.1.1",
+            "hook": "ad-1.bodyLine.1.2",
+            "reframe": "ad-1.bodyLine.1.3"
+          },
+          "copySource": "Verbatim magnets (AD1 para1, three consecutive sentences) → the FULL eyebrow→kicker→headline→subhead stack: \"More playing time feels like the answer.\" (kicker) / \"Another season, another team, more reps in real games.\" (headline) / \"And a year later, the same kid, the same speed.\" (subhead).",
+          "status": "rendered",
+          "notes": "KICKER CARD — full stacked hook from three verbatim sentences.",
+          "output": "out/campaigns/more-games-milford/more-games/B1.png",
+          "thumb": "out/campaigns/more-games-milford/more-games/B1.png",
+          "renderedAt": "2026-06-03T18:23:42.101Z",
+          "kraken": {
+            "id": "967ba080-de79-441d-8c37-53ca24213589",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/more-games-milford-more-games-B1-1780511764220.png",
+            "folder": "ANGLE 3"
+          }
+        },
+        {
+          "id": "B2",
+          "beat": "B — Name the moment",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-multisport-foundations-grind-trap-A1",
+          "clip": "brand/video-templates/assets/mg-B2.mp4",
+          "templateData": {
+            "line1": "A GAME DOESN'T\nDEVELOP AN ATHLETE.",
+            "line2": "IT REVEALS ONE.",
+            "brand": "ATHLETES ACCELERATION"
+          },
+          "copySource": "Verbatim magnets (AD1 body): \"A game doesn't develop an athlete.\" (line1) + \"It reveals one.\" (line2). eyebrow auto-anchors.",
+          "status": "rendered",
+          "notes": "MOTION (rebalance): 3s GIF reframe over deadlift footage (was static cluster-40). CANDIDATE CLIP mg-B2.mp4 (free deadlift c306cfa9).",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/more-games-milford/more-games/B2.mp4",
+          "thumb": "out/campaigns/more-games-milford/more-games/B2.mp4",
+          "renderedAt": "2026-06-03T18:24:40.674Z",
+          "kraken": {
+            "id": "0645b2ad-2a94-4558-afb6-78b1bf72078b",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/more-games-milford-more-games-B2-1780511766558.mp4",
+            "folder": "ANGLE 3"
+          }
+        },
+        {
+          "id": "C1",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "myth-vs-truth",
+          "clip": "brand/video-templates/assets/mg-C1.mp4",
+          "templateData": {
+            "mythLabel": "THE MYTH",
+            "myth": "MORE GAMES MAKE A KID FASTER.",
+            "truthLabel": "THE TRUTH",
+            "truth": "A GAME IS A TEST, NOT A TEACHER. SPEED GETS BUILT IN TRAINING.",
+            "sourceLabel": "WHERE IT'S BUILT",
+            "source": "TRAINING, NOT THE SCOREBOARD.",
+            "ctaText": "BOOK THE FREE ATHLETE ANALYSIS"
+          },
+          "copySource": "Myth-vs-truth reframe (angle-matched, replaces the off-angle velocity-bar chart). myth = the angle's target misconception; truth = verbatim AD2 \"A game is a test, not a teacher.\" + the mechanism (speed built in training, AD2 bodyLine.3.1). Footage bg = squat-jump (the build). eyebrow auto-anchors.",
+          "status": "rendered",
+          "notes": "MOTION (angle-fix): myth-vs-truth over squat-jump footage (was velocity-drop bar chart, off-angle). CANDIDATE CLIP mg-C1.mp4 (free squat-jump cc69c187).",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/more-games-milford/more-games/C1.mp4",
+          "thumb": "out/campaigns/more-games-milford/more-games/C1.mp4",
+          "renderedAt": "2026-06-03T18:26:44.488Z",
+          "kraken": {
+            "id": "0877a77b-fc75-4192-8515-781d618da273",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/more-games-milford-more-games-C1-1780511768710.mp4",
+            "folder": "ANGLE 3"
+          }
+        },
+        {
+          "id": "C2",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-multisport-foundations-grind-trap-A1",
+          "clip": "brand/video-templates/assets/mg-C2.mp4",
+          "templateData": {
+            "line1": "THAT KIND OF SPEED",
+            "line2": "DOESN'T STAY IN THE GYM.",
+            "brand": "ATHLETES ACCELERATION"
+          },
+          "copySource": "Verbatim magnet (AD3 body): \"That kind of speed doesn't stay in the gym.\" — split across the two display lines. eyebrow auto-anchors.",
+          "status": "rendered",
+          "notes": "MOTION (rebalance): 3s GIF reframe over sprint footage (was static cluster-42; distinct from C1 velocity-drop / C3 chart). CANDIDATE CLIP mg-C2.mp4 (free sprinting c818ba76).",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/more-games-milford/more-games/C2.mp4",
+          "thumb": "out/campaigns/more-games-milford/more-games/C2.mp4",
+          "renderedAt": "2026-06-03T18:27:32.086Z",
+          "kraken": {
+            "id": "f47686d9-22a1-4acb-b357-641332b083e5",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/more-games-milford-more-games-C2-1780511770765.mp4",
+            "folder": "ANGLE 3"
+          }
+        },
+        {
+          "id": "C3",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-13",
+          "media": "./assets/mg-C3.jpg",
+          "copyRefs": {
+            "claim": "ad-2.bodyLine.3.1"
+          },
+          "copySource": "Verbatim magnet (AD2 body): \"The speed and power behind those plays gets built on purpose, in training, or it doesn't get built at all.\" — the build-or-nothing mechanism (distinct from C1 myth-vs-truth / C2 speed-on-field).",
+          "status": "rendered",
+          "notes": "Mechanism: built on purpose or not at all (cluster-13 clean claim card over footage; replaced cluster-37 velocity-chart, off-angle). CANDIDATE STILL placed (mg-C3.jpg = free box-jumps d15bf6db) — swap on the review page if desired.",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/more-games-milford/more-games/C3.png",
+          "thumb": "out/campaigns/more-games-milford/more-games/C3.png",
+          "renderedAt": "2026-06-03T18:27:37.504Z",
+          "kraken": {
+            "id": "ed42aa19-8377-4d8a-9e93-ec6f67d245bf",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/more-games-milford-more-games-C3-1780511772014.png",
+            "folder": "ANGLE 3"
+          }
+        },
+        {
+          "id": "D1",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-e2e-d1",
+          "clip": "brand/video-templates/assets/mg-D1.mp4",
+          "templateData": {
+            "line1": "Games matter.",
+            "line2": "None of that playing time was wasted.",
+            "line3": "And you weren't wrong to want it.",
+            "microscript": "A game just can't build the engine. Training does."
+          },
+          "copySource": "Blame-lift, line by line (fresh-e2e-d1, angle-matched, replaces the off-angle velocity-bar chart). line1-3 = verbatim AD3 blame-removal (bodyLine.4.2 'Games matter.' + 4.1 'none of that playing time was wasted, and you weren't wrong to want it'). microscript = the mechanism reframe. Footage bg over sprint clip. eyebrow auto-anchors.",
+          "status": "rendered",
+          "notes": "MOTION (angle-fix): fresh-e2e-d1 blame-lift over sprint footage (was velocity-drop bar chart, off-angle). CANDIDATE CLIP mg-D1.mp4 (free sprinting 60e664e6).",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/more-games-milford/more-games/D1.mp4",
+          "thumb": "out/campaigns/more-games-milford/more-games/D1.mp4",
+          "renderedAt": "2026-06-03T18:29:44.086Z",
+          "kraken": {
+            "id": "9ddcc4a7-f534-4d84-87e3-cc4d9ce77cf0",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/more-games-milford-more-games-D1-1780511773747.mp4",
+            "folder": "ANGLE 3"
+          }
+        },
+        {
+          "id": "D2",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-36",
+          "media": "./assets/mg-D2.jpg",
+          "copyRefs": {
+            "reframe": "ad-3.bodyLine.3.1"
+          },
+          "copySource": "Verbatim magnet (AD3 body): \"That's why a whole season can pass with nothing to show for it.\"",
+          "status": "rendered",
+          "notes": "The cost named plainly (distinct from C1).",
+          "output": "out/campaigns/more-games-milford/more-games/D2.png",
+          "thumb": "out/campaigns/more-games-milford/more-games/D2.png",
+          "renderedAt": "2026-06-03T18:29:49.330Z",
+          "kraken": {
+            "id": "8cf3229c-a620-4fae-8679-24673c8bbc0b",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/more-games-milford-more-games-D2-1780511775085.png",
+            "folder": "ANGLE 3"
+          }
+        },
+        {
+          "id": "D3",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-34",
+          "media": "./assets/mg-D3.jpg",
+          "copyRefs": {
+            "reframe": "ad-3.bodyLine.4.4"
+          },
+          "copySource": "Verbatim magnet (AD3 body): \"They were just never the place an athlete gets built, and asking a game to make a kid faster is asking the scoreboard to do the work of the weight room.\" — blame-removal reframe (distinct from D1 'games matter' / D2 'whole season can pass').",
+          "status": "rendered",
+          "notes": "Remove-blame reframe: the scoreboard can't do the weight room's job (cluster-34 phrase-kill, distinct skeleton from D1/D2). CANDIDATE STILL placed (mg-D3.jpg = free broad-jump ec536643) — swap on the review page if desired.",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/more-games-milford/more-games/D3.png",
+          "thumb": "out/campaigns/more-games-milford/more-games/D3.png",
+          "renderedAt": "2026-06-03T18:29:53.186Z",
+          "kraken": {
+            "id": "b5fd74df-4f63-4fda-b3d4-a214d328a5aa",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/more-games-milford-more-games-D3-1780511776061.png",
+            "folder": "ANGLE 3"
+          }
+        },
+        {
+          "id": "E1",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "meet-coach",
+          "clip": "brand/video-templates/assets/mg-E1.mp4",
+          "templateData": {
+            "eyebrow": "BUILT, THEN MEASURED",
+            "coachFirst": "COACH GRAHAM",
+            "coachLast": "WILKERSON",
+            "coachTitle": "CSCS · FOUNDER",
+            "quote": "A game is a test, not a teacher.",
+            "credentials": "TRAINED ZACK MARTIN · TED KARRAS · NICK MARTIN",
+            "facts": "REAL|SPRINT + JUMP NUMBERS · EVERY|SESSION · BUILT|ON PURPOSE",
+            "ctaText": "BOOK THE ATHLETE ANALYSIS",
+            "ctaMicro": "FREE. NOT A TRYOUT. A DATA SET."
+          },
+          "copySource": "Multi-field template. quote = verbatim magnet 'A game is a test, not a teacher.'; eyebrow = ad Description; credentials = verbatim names; cta micro = 'Not a tryout. A data set.'",
+          "status": "rendered",
+          "notes": "Coach proof VSL over box-jump footage.",
+          "output": "out/campaigns/more-games-milford/more-games/E1.mp4",
+          "thumb": "out/campaigns/more-games-milford/more-games/E1.mp4",
+          "renderedAt": "2026-06-03T18:31:20.425Z",
+          "kraken": {
+            "id": "8ba7b005-d984-4e85-a05a-ded87726fe5a",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/more-games-milford-more-games-E1-1780511777505.mp4",
+            "folder": "ANGLE 3"
+          }
+        },
+        {
+          "id": "E2",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "quote-card",
+          "clip": "brand/video-templates/assets/mg-E2.mp4",
+          "templateData": {
+            "eyebrow": "BUILT, THEN MEASURED",
+            "quoteText": "He could feel that he was finally being built, not just put through his paces and sent home.",
+            "bylineName": "A PARENT",
+            "bylineMeta": "MILFORD · ATHLETES ACCELERATION",
+            "statsLabel": "Built, then measured."
+          },
+          "copySource": "Multi-field template. quoteText = verbatim AD3 case study line; statsLabel = verbatim ad Description 'Built, then measured.' (was a paraphrase, now fixed).",
+          "status": "rendered",
+          "notes": "Parent case-study quote card.",
+          "output": "out/campaigns/more-games-milford/more-games/E2.mp4",
+          "thumb": "out/campaigns/more-games-milford/more-games/E2.mp4",
+          "renderedAt": "2026-06-03T18:33:18.608Z",
+          "kraken": {
+            "id": "02791370-8f25-4db3-82f9-434c3e7258e8",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/more-games-milford-more-games-E2-1780511779597.mp4",
+            "folder": "ANGLE 3"
+          }
+        },
+        {
+          "id": "E3",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-31",
+          "media": "./assets/mg-E3.jpg",
+          "templateData": {
+            "coach_name": "COACH GRAHAM\nWILKERSON",
+            "coach_title": "CSCS",
+            "proof_hero": "TRAINED NFL\nATHLETES",
+            "proof_names": "ZACK MARTIN · TED KARRAS · NICK MARTIN"
+          },
+          "copyRefs": {
+            "claim": "ad-3.bodyLine.9.1"
+          },
+          "copySource": "Credential card. claim_line binds the verbatim magnet 'Coach Graham Wilkerson built this.' (traces clean). coach name / CSCS / 'trained NFL athletes' / the NFL names are byline-role attribution (verbatim Cody words / proper nouns; guard-exempt as identity).",
+          "status": "rendered",
+          "notes": "Credential verdict (static; distinct from E1 video / E2 quote).",
+          "output": "out/campaigns/more-games-milford/more-games/E3.png",
+          "thumb": "out/campaigns/more-games-milford/more-games/E3.png",
+          "renderedAt": "2026-06-03T18:33:24.628Z",
+          "kraken": {
+            "id": "0d04153c-6091-4c82-b516-f1fb8053481b",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/more-games-milford-more-games-E3-1780511781184.png",
+            "folder": "ANGLE 3"
+          }
+        },
+        {
+          "id": "E4",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-e2e-e5-testimonial",
+          "media": "./assets/mg-E4.jpg",
+          "copyRefs": {
+            "testimonial": "ad-3.bodyLine.7.1"
+          },
+          "templateData": {
+            "byline": "A PARENT · MILFORD"
+          },
+          "copySource": "Verbatim magnet (AD3 'one dad'): \"One dad told us his son had been somewhere else for two years, and that a single week with us was enough for the kid to say it was the best he'd ever had.\" Byline is an identity slot.",
+          "status": "rendered",
+          "notes": "Testimonial card.",
+          "output": "out/campaigns/more-games-milford/more-games/E4.png",
+          "thumb": "out/campaigns/more-games-milford/more-games/E4.png",
+          "renderedAt": "2026-06-03T18:33:28.622Z",
+          "kraken": {
+            "id": "1842e2f5-1fa3-4893-a5d8-666ac6c0ccce",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/more-games-milford-more-games-E4-1780511782487.png",
+            "folder": "ANGLE 3"
+          }
+        },
+        {
+          "id": "F1",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "stat-reveal",
+          "clip": "brand/video-templates/assets/mg-F1.mp4",
+          "templateData": {
+            "eyebrow": "THE 90-DAY GUARANTEE",
+            "title1": "Here's the promise no other",
+            "title2": "program in this market will make.",
+            "stat1Value": 1,
+            "stat1Unit": " MPH",
+            "stat1Label": "SPEED",
+            "stat2Value": 3,
+            "stat2Unit": "\"",
+            "stat2Label": "VERTICAL",
+            "freeLine1": "90",
+            "freeLine2": "DAYS",
+            "ctaText": "BOOK YOUR FREE ATHLETE ANALYSIS"
+          },
+          "copySource": "Multi-field template. title1 + title2 concatenate EXACTLY to the verbatim magnet 'Here's the promise no other program in this market will make.' (only a line break added). Guarantee band brand-locked.",
+          "status": "rendered",
+          "notes": "Guarantee reveal video.",
+          "output": "out/campaigns/more-games-milford/more-games/F1.mp4",
+          "thumb": "out/campaigns/more-games-milford/more-games/F1.mp4",
+          "renderedAt": "2026-06-03T18:33:46.900Z",
+          "kraken": {
+            "id": "cf68fb51-6563-40ed-806e-3c26dd0fe6fa",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/more-games-milford-more-games-F1-1780511783830.mp4",
+            "folder": "ANGLE 3"
+          }
+        },
+        {
+          "id": "F2",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-32",
+          "media": "./assets/mg-F2.jpg",
+          "templateData": {
+            "offer_headline": "FREE ATHLETE\nANALYSIS",
+            "offer_detail": "Not a tryout. A data set.",
+            "cta_text": "BOOK THE ATHLETE ANALYSIS"
+          },
+          "copySource": "Multi-field offer template. 'Not a tryout. A data set.' verbatim. Guarantee band auto-locked.",
+          "status": "rendered",
+          "notes": "Offer card. Guarantee band verbatim-locked.",
+          "output": "out/campaigns/more-games-milford/more-games/F2.png",
+          "thumb": "out/campaigns/more-games-milford/more-games/F2.png",
+          "renderedAt": "2026-06-03T18:33:50.909Z",
+          "kraken": {
+            "id": "820c6305-5a08-47a5-bf94-7be7e77cf50c",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/more-games-milford-more-games-F2-1780511785028.png",
+            "folder": "ANGLE 3"
+          }
+        },
+        {
+          "id": "F3",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "season-clock",
+          "clip": "brand/video-templates/assets/mg-F3.mp4",
+          "templateData": {
+            "line1": "ANOTHER SEASON.",
+            "line2": "SAME SPEED.",
+            "offer": "SEE THE NUMBER FIRST.",
+            "guarantee": "+1 mph. +3 inches. 90 days. Or we keep training them free.",
+            "cta": "BOOK THE FREE ATHLETE ANALYSIS",
+            "brand": "ATHLETES ACCELERATION"
+          },
+          "copySource": "Retarget offer, distinct motion from F1 stat-reveal. Scene-1 'ANOTHER SEASON. / SAME SPEED.' compresses the angle setup (AD2 para1: 'Another season, another team, more reps in real games. And a year later, the same kid, the same speed.'). offer = the Athlete Analysis baseline ('See the number first'; AD2 'You'll see your athlete's real numbers before you decide anything.'). guarantee = canonical brand-locked wording (AD2 bodyPara.7). eyebrow auto-anchors to INDIANAPOLIS SPORT PARENTS.",
+          "status": "rendered",
+          "notes": "Season-clock retarget offer over footage (distinct from F1/F2). CANDIDATE CLIP placed (mg-F3.mp4 = free sprinting clip 899da2d7) — footage renders correctly; swap/reframe on the review page if you want a different shot.",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/more-games-milford/more-games/F3.mp4",
+          "thumb": "out/campaigns/more-games-milford/more-games/F3.mp4",
+          "renderedAt": "2026-06-03T18:35:38.408Z",
+          "kraken": {
+            "id": "3fcd0d45-52a6-4ee3-b6e4-2d595c54cb19",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/more-games-milford-more-games-F3-1780511786813.mp4",
+            "folder": "ANGLE 3"
+          }
+        },
+        {
+          "id": "BR1",
+          "beat": null,
+          "temperature": "any",
+          "format": "video",
+          "source": "template",
+          "template": "logo-sting",
+          "clip": "brand/video-templates/assets/mg-BR1.mp4",
+          "templateData": {
+            "wordmark1": "ATHLETES",
+            "wordmark2": "ACCELERATION",
+            "tagline": "BUILT, THEN MEASURED.",
+            "url": "ATHLETESACCEL.COM"
+          },
+          "copySource": "Brand lockup + verbatim ad Description as tagline (\"Built, then measured.\").",
+          "status": "rendered",
+          "notes": "Brand bumper over sled-push footage.",
+          "output": "out/campaigns/more-games-milford/more-games/BR1.mp4",
+          "thumb": "out/campaigns/more-games-milford/more-games/BR1.mp4",
+          "renderedAt": "2026-06-03T18:35:49.655Z",
+          "kraken": {
+            "id": "c9ba62f9-b8cd-4ac9-a2f2-76829c065a33",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/more-games-milford-more-games-BR1-1780511788767.mp4",
+            "folder": "ANGLE 3"
+          }
+        }
+      ]
+    }
+  ]
+}

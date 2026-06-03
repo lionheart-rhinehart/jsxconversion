@@ -643,14 +643,14 @@
           "copySource": "Brand lockup only (no campaign copy — it's a bumper).",
           "status": "rendered",
           "notes": "Brand bumper / logo sting.",
-          "kraken": {
-            "id": "94ee5d16-7329-4778-b48d-678113c377c6",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/grind-trap-milford-grind-trap-BR1-1780501505909.mp4",
-            "folder": "ANGLE 1"
-          },
           "output": "out/campaigns/grind-trap-milford/grind-trap/BR1.mp4",
           "thumb": "out/campaigns/grind-trap-milford/grind-trap/BR1.mp4",
-          "renderedAt": "2026-06-03T15:43:02.044Z"
+          "renderedAt": "2026-06-03T18:04:22.346Z",
+          "kraken": {
+            "id": "e2fcf859-aaaf-464c-b944-68564448f924",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/f491d421-8dda-4a33-b112-86fe29b707c0/grind-trap-milford-grind-trap-BR1-1780511660744.mp4",
+            "folder": "ANGLE 1"
+          }
         }
       ]
     }
