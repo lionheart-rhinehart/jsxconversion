@@ -296,7 +296,7 @@
           },
           "output": "out/campaigns/confidence-milford/proof-confidence/E1.mp4",
           "thumb": "out/campaigns/confidence-milford/proof-confidence/E1.mp4",
-          "renderedAt": "2026-06-03T16:02:21.724Z"
+          "renderedAt": "2026-06-03T16:39:10.378Z"
         },
         {
           "id": "E2",
@@ -314,7 +314,7 @@
             "statsLabel": "THE STRENGTH CAME FIRST. THE BELIEF GREW OUT OF IT."
           },
           "copySource": "Multi-field template (templateData by design). Verbatim case study (AD2A 'one mom'): \"He got physically stronger here first, and the confidence followed it, and now he plays.\" + \"The strength came first. The belief grew out of it.\"",
-          "status": "rendered",
+          "status": "rendering",
           "notes": "Parent case-study quote card.",
           "kraken": {
             "id": "e7096448-e6dd-43b4-9392-c4c5f707a5be",

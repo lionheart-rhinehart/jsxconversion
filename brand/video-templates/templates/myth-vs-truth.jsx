@@ -14,6 +14,7 @@ function MythVsTruthReel({ data = {} }) {
   const sourceLabel = data.sourceLabel ?? 'SOURCE';
   const source = data.source ?? 'NSCA POSITION STATEMENT · 2024';
   const ctaText = data.ctaText ?? 'STOP BELIEVING THE BS →';
+  const bgClip = data.bgClip ?? null;
 
   const eyebrowT = Math.max(0, Math.min(1, (t - 0.2) / 0.4));
   const mythLabelT = Math.max(0, Math.min(1, (t - 0.6) / 0.4));
@@ -28,6 +29,8 @@ function MythVsTruthReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
+      {bgClip ? <SyncedVideo src={bgClip} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} /> : null}
+      {bgClip ? <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.82) 0%, rgba(10,11,13,0.72) 50%, rgba(10,11,13,0.9) 100%)' }} /> : null}
       <Eyebrow top={110} fontSize={24}>// {eyebrow}</Eyebrow>
 
       {/* MYTH block */}
