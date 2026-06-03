@@ -68,9 +68,20 @@ function main() {
   }
   for (const w of warnings) console.error(`[intake-copy] WARN: ${w}`);
 
-  // Fail loud on a structurally broken parse (warnings include "0 units" blocks).
-  if (warnings.some((w) => /0 units/.test(w))) {
-    console.error(`[intake-copy] one or more AD blocks produced no units — failing.`);
+  // Parse report (G3c): make what was parsed (and what dropped) VISIBLE so a
+  // formatting variance can't quietly swallow copy. Tracked alongside the library.
+  const reportPath = join(dir, "copy-library.report.json");
+  writeFileSync(reportPath, JSON.stringify({
+    campaign, generatedFrom: lib.generatedFrom, count: lib.count,
+    byKind, warnings,
+  }, null, 2) + "\n");
+
+  // Fail loud on a structurally broken parse: a block that produced NO units, OR
+  // a section header that was present but dropped (G3c) — both mean copy is missing.
+  const fatal = warnings.filter((w) => /0 units|dropped section/.test(w));
+  if (fatal.length) {
+    console.error(`[intake-copy] copy was dropped during parse — failing:`);
+    for (const w of fatal) console.error(`  - ${w}`);
     process.exit(1);
   }
 }
