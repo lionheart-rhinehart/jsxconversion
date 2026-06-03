@@ -40,16 +40,10 @@ already exists on disk for the campaign and resumes from there.
 4. **Approval gate is mandatory.** You produce the plan; the user approves on the
    review page; ONLY approved assets render. Never render unapproved assets unless
    the user explicitly passes `--all`.
-5. **You never write copy — you select and place it (verbatim).** The user wrote
-   every hook, headline, and line in `ad-copy.md` / `microscripts.md`; it is already
-   good. Your job is casting, not copywriting: pick which of HIS units goes on which
-   creative and compose the visual around it. The copy that lands on a creative comes
-   ONLY from `campaigns/<name>/copy-library.json` (the parsed verbatim units),
-   referenced by id — never authored, paraphrased, reworded, or truncated. The brief
-   is for strategy/thinking only; nothing paraphrased from it lands on a creative. If
-   a hook is too long, drop to a shorter alternative hook (also his), split it across
-   kicker/headline/subhead, or flag it — never reword. (`verbatimGuard` in
-   `scripts/lib/copy-resolve.mjs` flags any on-creative text that isn't his.)
+5. **You do not write the core ad copy.** The user provides it. You MATCH it to
+   angles and the brief, and compose visuals around it. You may derive slot-level
+   fragments (a short microscript variant) only from the brief, flagged for
+   approval — never invent claims.
 
 ## The flow
 
@@ -76,18 +70,10 @@ Pulled media appears in the editor `/media` picker (motion) and via `/media-into
 not auto-clear `needs-kraken-path` (a human placement does). If the brand is unknown, ask for
 its slug + data tier and add it to `config.json`.
 
-### Step 2 — Collect inputs + build the copy library
+### Step 2 — Collect inputs
 Ensure `campaigns/<name>/` contains: `brief.md` (reverse brief), `ad-copy.md`,
 `microscripts.md`, and any named templates for this campaign. Ask the user for any
 that are missing. Confirm the campaign slug.
-
-Then build the **verbatim copy library** BEFORE planning (order gate — the plan
-references it by id):
-`node scripts/intake-copy.mjs <name>` → `campaigns/<name>/copy-library.json`. It parses
-`ad-copy.md` + `microscripts.md` into verbatim units (each with an `id`, `role`, `chars`)
-and fails loud on malformed input. Re-run it whenever `ad-copy.md`/`microscripts.md`
-change — a stale library means the plan's refs miss. This file is the ONLY source of copy
-allowed on a creative.
 
 ### Step 3 — Deep read (no skim — sub-agent fan-out)
 If `campaigns/<name>/campaign-knowledge.json` does not yet exist (or is stale),
@@ -133,14 +119,8 @@ section produced output** before planning; re-run any that came back empty.
 - **One red.** The brand red is `#c4141d` (`--aa-red-600`, "matches logo"). Never introduce another red
   (the legacy clusters once carried `#ed1c24`/`#fe3430` — normalized out). New skeletons use `AA_RED`
   from `_helpers.jsx` (statics) or `const RED = '#c4141d'` (motion).
-- **Bind copy by REFERENCE, never by authoring.** Set `asset.copyRefs` (a `{role: id}` map,
-  e.g. `{proof:"ad-2.altHook.3"}`) and/or `asset.hookRef` (one copy-library id) pointing at
-  units in `copy-library.json`. The resolver lays a `hookRef` across **kicker → headline →
-  subhead** automatically (verbatim split). **Prefer the doc's on-creative copy** — each ad's
-  `imageHeadline` / `imageSubhead` are the exact words meant for the creative (use them for the
-  headline/subhead). Do NOT write `asset.headline`/`microscript` strings (legacy/back-compat
-  only). Never paraphrase from `campaign-knowledge.json` onto a creative — it is strategy only.
-  Validate tag→layer-type before binding an image tag.
+- Bind a headline + microscript pulled/derived from `campaign-knowledge.json` to the beat, format,
+  and image source. Validate tag→layer-type before binding an image tag.
 - **Stands alone — EVERY non-`null`-beat asset (the #2 past failure).** A creative must read on its
   own (who it's for + what it's about) WITHOUT the ad's body copy. (a) Set `angle.location` (or
   per-asset `location`); the cascade auto-injects an audience+locale **eyebrow** anchor (e.g.

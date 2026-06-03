@@ -133,14 +133,8 @@ section produced output** before planning; re-run any that came back empty.
 - **One red.** The brand red is `#c4141d` (`--aa-red-600`, "matches logo"). Never introduce another red
   (the legacy clusters once carried `#ed1c24`/`#fe3430` — normalized out). New skeletons use `AA_RED`
   from `_helpers.jsx` (statics) or `const RED = '#c4141d'` (motion).
-- **Bind copy by REFERENCE, never by authoring.** Set `asset.copyRefs` (a `{role: id}` map,
-  e.g. `{proof:"ad-2.altHook.3"}`) and/or `asset.hookRef` (one copy-library id) pointing at
-  units in `copy-library.json`. The resolver lays a `hookRef` across **kicker → headline →
-  subhead** automatically (verbatim split). **Prefer the doc's on-creative copy** — each ad's
-  `imageHeadline` / `imageSubhead` are the exact words meant for the creative (use them for the
-  headline/subhead). Do NOT write `asset.headline`/`microscript` strings (legacy/back-compat
-  only). Never paraphrase from `campaign-knowledge.json` onto a creative — it is strategy only.
-  Validate tag→layer-type before binding an image tag.
+- Bind a headline + microscript pulled/derived from `campaign-knowledge.json` to the beat, format,
+  and image source. Validate tag→layer-type before binding an image tag.
 - **Stands alone — EVERY non-`null`-beat asset (the #2 past failure).** A creative must read on its
   own (who it's for + what it's about) WITHOUT the ad's body copy. (a) Set `angle.location` (or
   per-asset `location`); the cascade auto-injects an audience+locale **eyebrow** anchor (e.g.

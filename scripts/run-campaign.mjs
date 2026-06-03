@@ -37,6 +37,8 @@ import {
 } from "./lib/fill-core.mjs";
 import { assemble } from "./lib/assemble.mjs";
 import { fieldRole, buildEyebrowAnchor } from "./lib/roles.mjs";
+import { loadCopyLibrary } from "./lib/copy-library.mjs";
+import { buildRefPools, verbatimGuard } from "./lib/copy-resolve.mjs";
 import { validateTemplateSource } from "./validate-templates.mjs";
 
 const PROJECT_ROOT = resolve(".");
@@ -68,6 +70,10 @@ if (!existsSync(planPath)) {
 }
 const plan = JSON.parse(readFileSync(planPath, "utf8"));
 const brand = plan.brand || null;
+
+// Cody's verbatim copy library (null when the campaign has no ad-copy.md → the
+// legacy authored-copy path renders, preserving back-compat).
+const COPY_LIBRARY = loadCopyLibrary(join(CAMPAIGNS_DIR, campaign));
 
 const campaignOut = join(OUT_DIR, "campaigns", campaign);
 mkdirSync(campaignOut, { recursive: true });
@@ -164,12 +170,25 @@ function buildMotionData(asset, dataKeys, tierTags = {}) {
     data = { ...asset.templateData };
   } else {
     // Role-aware JOIN: infer each field's role from its name, then match the
-    // asset's copy (headline routed by beat, microscript → reframe) to fields by
-    // role — replacing the old hardcoded regex guess.
+    // asset's copy to fields by role. Copy comes by REFERENCE (verbatim, from the
+    // copy-library) when the asset carries copyRefs/hookRef; else the legacy path.
+    // Motion has no maxChars, so the hook still splits but there's no length-based
+    // alt-hook fallback (known gap — static-only fit).
     const slots = dataKeys.map((k) => ({ id: k, role: fieldRole(k), accepts: [] }));
     if (slots.some((s) => s.role)) {
-      const { bySlotId } = assemble({ slots, copyByRole: buildCopyByRole(asset) });
+      const refPools = COPY_LIBRARY
+        ? buildRefPools(asset, { library: COPY_LIBRARY, tierTags, warn: (m) => console.error(`[copy] ${m}`) })
+        : null;
+      const copyByRole = refPools ? refPools.pools : buildCopyByRole(asset);
+      const { bySlotId } = assemble({ slots, copyByRole });
       data = { ...bySlotId };
+      if (COPY_LIBRARY) {
+        const placedBySlot = {};
+        for (const s of slots) if (bySlotId[s.id]) placedBySlot[s.id] = { role: s.role, text: bySlotId[s.id] };
+        for (const v of verbatimGuard({ placedBySlot, provenance: refPools ? refPools.provenance : new Set(), library: COPY_LIBRARY, asset })) {
+          console.error(`[copy] VERBATIM VIOLATION ${asset.id} field "${v.slotId}" (${v.role}): not from copy-library — "${String(v.text).slice(0, 60)}"`);
+        }
+      }
     } else {
       // Fallback for templates with no role-ish field names.
       if (asset.microscript && dataKeys.includes("eyebrow")) data.eyebrow = asset.microscript;

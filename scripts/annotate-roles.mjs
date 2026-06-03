@@ -30,6 +30,7 @@ const MAP = {
   banner_text:         { role: "claim",   accepts: ["claim", "proof"],                   maxChars: 60 },
   subtitle:            { role: "claim",   accepts: ["claim", "hook"],                    maxChars: 48 },
   attention:           { role: "hook",    accepts: ["hook"],                             maxChars: 24 },
+  kicker:              { role: "kicker",  accepts: ["kicker", "hook"],                   maxChars: 30 },
   microscript:         { role: "reframe", accepts: ["reframe", "eyebrow", "proof"],      maxChars: 40 },
   microscript_2:       { role: "reframe", accepts: ["reframe", "proof"],                 maxChars: 40 },
   subhead:             { role: "reframe", accepts: ["reframe", "eyebrow"],               maxChars: 48 },
