@@ -26,27 +26,39 @@ function DidYouKnowReel({ data = {} }) {
       <div style={{ position: 'absolute', top: -200, right: -150, width: 500, height: 500, background: `radial-gradient(circle, ${RED}33 0%, transparent 60%)`, filter: 'blur(40px)' }}/>
       <Eyebrow top={110} fontSize={24}>// {eyebrow}</Eyebrow>
 
-      <div style={{ position: 'absolute', top: 280, left: 60, right: 60, fontFamily: 'Anton, sans-serif', fontSize: 80, color: '#fff', lineHeight: 0.95, opacity: p1T }}>{factPrefix}</div>
-      <div style={{ position: 'absolute', top: 440, left: 60, right: 60, fontFamily: 'Anton, sans-serif', fontSize: 200, color: RED, lineHeight: 0.85, opacity: b1T, transform: `scale(${0.92 + 0.08*b1T})`, textShadow: `0 0 36px rgba(196,20,29,0.5)` }}>{factBig}</div>
-      <div style={{ position: 'absolute', top: 720, left: 60, right: 60, fontFamily: 'Anton, sans-serif', fontSize: 80, color: '#fff', lineHeight: 0.95, opacity: sT }}>{factSuffix}</div>
-      <div style={{
-        position: 'absolute', top: 880, left: 60, right: 60,
-        fontFamily: 'Anton, sans-serif', fontSize: 320, color: RED, lineHeight: 0.85,
-        opacity: pctT, transform: `scale(${0.85 + 0.15*pctT})`,
-        textShadow: `0 0 48px rgba(196,20,29,0.7)`,
-        letterSpacing: '-0.04em',
-      }}>{factPercent}</div>
+      <TplText field="factPrefix" data={data} fitKey={factPrefix}
+        base={{ position: 'absolute', top: 280, left: 60, right: 60 }}
+        style={{ fontFamily: 'Anton, sans-serif', fontSize: 80, color: '#fff', lineHeight: 0.95, opacity: p1T }}
+      >{factPrefix}</TplText>
+      <TplText field="factBig" data={data} fitKey={factBig}
+        base={{ position: 'absolute', top: 440, left: 60, right: 60 }}
+        style={{ fontFamily: 'Anton, sans-serif', fontSize: 200, color: RED, lineHeight: 0.85, opacity: b1T, transform: `scale(${0.92 + 0.08*b1T})`, textShadow: `0 0 36px rgba(196,20,29,0.5)` }}
+      >{factBig}</TplText>
+      <TplText field="factSuffix" data={data} fitKey={factSuffix}
+        base={{ position: 'absolute', top: 720, left: 60, right: 60 }}
+        style={{ fontFamily: 'Anton, sans-serif', fontSize: 80, color: '#fff', lineHeight: 0.95, opacity: sT }}
+      >{factSuffix}</TplText>
+      <TplText field="factPercent" data={data} fitKey={factPercent}
+        base={{ position: 'absolute', top: 880, left: 60, right: 60 }}
+        style={{ fontFamily: 'Anton, sans-serif', fontSize: 320, color: RED, lineHeight: 0.85, opacity: pctT, transform: `scale(${0.85 + 0.15*pctT})`, textShadow: `0 0 48px rgba(196,20,29,0.7)`, letterSpacing: '-0.04em' }}
+      >{factPercent}</TplText>
 
       <div style={{ position: 'absolute', bottom: 360, left: 60, right: 60, padding: '12px 16px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', opacity: srcT, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
         <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 14, color: '#15a34a', letterSpacing: '0.16em' }}>// {sourceLabel}</div>
-        <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 16, color: '#fff', letterSpacing: '0.08em' }}>{source}</div>
+        <TplText field="source" data={data} fitKey={source}
+          base={{}} style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 16, color: '#fff', letterSpacing: '0.08em' }}
+        >{source}</TplText>
       </div>
 
       <div style={{ position: 'absolute', bottom: 230, left: 60, right: 60, padding: '18px 22px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', borderLeft: `4px solid ${RED}`, opacity: iT }}>
-        <div style={{ fontFamily: 'Geist, sans-serif', fontSize: 26, color: '#fff', fontWeight: 500, lineHeight: 1.35 }}>{insight}</div>
+        <TplText field="insight" data={data} fitKey={insight}
+          base={{}} style={{ fontFamily: 'Geist, sans-serif', fontSize: 26, color: '#fff', fontWeight: 500, lineHeight: 1.35 }}
+        >{insight}</TplText>
       </div>
       <div style={{ position: 'absolute', bottom: 90, left: 60, right: 60, padding: '22px 28px', background: RED, display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: ctaT }}>
-        <div style={{ fontFamily: 'Anton, sans-serif', fontSize: 44, color: '#fff' }}>{ctaText}</div>
+        <TplText field="ctaText" data={data} fitKey={ctaText}
+          base={{}} style={{ fontFamily: 'Anton, sans-serif', fontSize: 44, color: '#fff' }}
+        >{ctaText}</TplText>
         <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 16, color: '#fff', letterSpacing: '0.1em' }}>ATHLETESACCEL.COM</div>
       </div>
     </div>
