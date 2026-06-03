@@ -11,6 +11,7 @@ function TwoTruthsLieReel({ data = {} }) {
   const lieIndex = (typeof data.lieIndex === 'number') ? data.lieIndex : 3;
   const lieExplain = data.lieExplain ?? "Bar speed matters more than load. After ~80% 1RM, gains plateau.";
   const ctaText = data.ctaText ?? 'GUESS BEFORE THE REVEAL ↓';
+  const bgClip = data.bgClip ?? null;
 
   const eT = Math.max(0, Math.min(1, (t-0.2)/0.4));
   const tiT = window.Easing ? window.Easing.easeOutCubic(Math.max(0, Math.min(1, (t-0.4)/0.5))) : 1;
@@ -55,6 +56,8 @@ function TwoTruthsLieReel({ data = {} }) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: '#0a0b0d', overflow: 'hidden' }}>
+      {bgClip ? <SyncedVideo src={bgClip} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} /> : null}
+      {bgClip ? <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,11,13,0.84) 0%, rgba(10,11,13,0.74) 50%, rgba(10,11,13,0.9) 100%)' }} /> : null}
       <Eyebrow top={110} fontSize={24}>// {eyebrow}</Eyebrow>
       <div style={{ position: 'absolute', top: 210, left: 60, right: 60, fontFamily: 'Anton, sans-serif', fontSize: 130, color: '#fff', lineHeight: 0.88, opacity: tiT }}>{title}</div>
       <div style={{ position: 'absolute', top: 530, left: 60, right: 60, display: 'flex', flexDirection: 'column', gap: 22 }}>

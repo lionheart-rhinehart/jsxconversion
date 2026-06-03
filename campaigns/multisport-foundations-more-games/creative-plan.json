@@ -61,6 +61,7 @@
           "format": "video",
           "source": "template",
           "template": "two-truths-lie",
+          "clip": "brand/video-templates/assets/mg-A2.mp4",
           "templateData": {
             "duration": 8,
             "eyebrow": "2 TRUTHS · 1 LIE",
@@ -74,13 +75,13 @@
           },
           "copySource": "Two-truths-one-lie engagement card. Truths are verbatim: claim1 = AD1 \"A game doesn't develop an athlete. It reveals one.\"; claim2 = AD2 \"A game is a test, not a teacher.\" claim3 is the angle's target misconception (the LIE: \"more games make a kid faster\"), revealed false by lieExplain (the mechanism: games measure speed, training builds it). eyebrow auto-anchors.",
           "status": "rendered",
-          "notes": "MOTION (rebalance): two-truths-1-lie engagement card for the cold stop-scroll (animated reveal; no footage by template design — exposes no media key). Template changed from velocity-drop per review-UI edit.",
+          "notes": "MOTION (rebalance): two-truths-1-lie engagement card for the cold stop-scroll over footage (added optional bgClip support to the template). CANDIDATE CLIP mg-A2.mp4 (free sled-push e0fab9c6) — swap on the review page if desired.",
           "flags": [
-            "anim-card"
+            "candidate-media"
           ],
           "output": "out/campaigns/multisport-foundations-more-games/more-games/A2.mp4",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/A2.mp4",
-          "renderedAt": "2026-06-03T16:11:19.470Z"
+          "renderedAt": "2026-06-03T17:26:35.273Z"
         },
         {
           "id": "A3",
@@ -225,13 +226,13 @@
           },
           "copySource": "Verbatim magnet (AD2 body): \"The speed and power behind those plays gets built on purpose, in training, or it doesn't get built at all.\" — the build-or-nothing mechanism (distinct from C1 myth-vs-truth / C2 speed-on-field).",
           "status": "rendered",
-          "notes": "Mechanism: built on purpose or not at all (cluster-13 clean claim card over footage; replaced cluster-37 velocity-chart, off-angle). MEDIA PENDING — hand-place ./assets/mg-C3.jpg via the Kraken bar; the static render injects it as a full-frame bg + scrim (current PNG is a text-only placeholder).",
+          "notes": "Mechanism: built on purpose or not at all (cluster-13 clean claim card over footage; replaced cluster-37 velocity-chart, off-angle). CANDIDATE STILL placed (mg-C3.jpg = free box-jumps d15bf6db) — swap on the review page if desired.",
           "flags": [
-            "needs-media"
+            "candidate-media"
           ],
           "output": "out/campaigns/multisport-foundations-more-games/more-games/C3.png",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/C3.png",
-          "renderedAt": "2026-06-03T16:26:25.330Z"
+          "renderedAt": "2026-06-03T17:29:53.656Z"
         },
         {
           "id": "D1",
@@ -287,14 +288,14 @@
             "reframe": "ad-3.bodyLine.4.4"
           },
           "copySource": "Verbatim magnet (AD3 body): \"They were just never the place an athlete gets built, and asking a game to make a kid faster is asking the scoreboard to do the work of the weight room.\" — blame-removal reframe (distinct from D1 'games matter' / D2 'whole season can pass').",
-          "status": "planned",
-          "notes": "Remove-blame reframe: the scoreboard can't do the weight room's job (cluster-34 phrase-kill, distinct skeleton from D1/D2). MEDIA PENDING — hand-place ./assets/mg-D3.jpg via the Kraken bar; the static render injects it as a full-frame bg + scrim (current PNG is a text-only placeholder).",
+          "status": "rendered",
+          "notes": "Remove-blame reframe: the scoreboard can't do the weight room's job (cluster-34 phrase-kill, distinct skeleton from D1/D2). CANDIDATE STILL placed (mg-D3.jpg = free broad-jump ec536643) — swap on the review page if desired.",
           "flags": [
-            "needs-media"
+            "candidate-media"
           ],
           "output": "out/campaigns/multisport-foundations-more-games/more-games/D3.png",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/D3.png",
-          "renderedAt": "2026-06-03T15:08:04.931Z"
+          "renderedAt": "2026-06-03T17:26:46.064Z"
         },
         {
           "id": "E1",

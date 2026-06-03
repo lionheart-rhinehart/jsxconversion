@@ -45,8 +45,8 @@
           "status": "rendered",
           "notes": "Lone hook over training footage.",
           "kraken": {
-            "id": "8e5e2c93-bfe2-44da-aff1-83604551134e",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-confidence-proof-confidence-A1-1780490794555.png",
+            "id": "133faba3-d624-4d89-959e-a31dfb37703c",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/confidence-noblesville-proof-confidence-A1-1780505152038.png",
             "folder": "ANGLE 2 -"
           },
           "output": "out/campaigns/confidence-noblesville/proof-confidence/A1.png",
@@ -69,8 +69,8 @@
           "status": "rendered",
           "notes": "Split card: headline + claim.",
           "kraken": {
-            "id": "7bf8c20b-3c3c-4c13-bc6d-3901387eb02c",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-confidence-proof-confidence-A2-1780490796353.png",
+            "id": "0a7b8f26-d768-4cbc-955b-068b0effb06d",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/confidence-noblesville-proof-confidence-A2-1780505154252.png",
             "folder": "ANGLE 2 -"
           },
           "output": "out/campaigns/confidence-noblesville/proof-confidence/A2.png",
@@ -92,8 +92,8 @@
           "status": "rendered",
           "notes": "Centered reframe.",
           "kraken": {
-            "id": "b07ec896-3649-474c-8cb7-6d06c0ae5847",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-confidence-proof-confidence-A3-1780490797339.png",
+            "id": "6802f0b4-a739-4f5f-92c8-0fd9e65564f9",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/confidence-noblesville-proof-confidence-A3-1780505157079.png",
             "folder": "ANGLE 2 -"
           },
           "output": "out/campaigns/confidence-noblesville/proof-confidence/A3.png",
@@ -116,8 +116,8 @@
           "status": "rendered",
           "notes": "Stacked layout: headline + subhead (kicker empty).",
           "kraken": {
-            "id": "6279b2b9-86f4-46b0-8609-97094c04a76a",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-confidence-proof-confidence-A4-1780490798536.png",
+            "id": "beab3f90-f010-4154-951b-0e7d5137a8c2",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/confidence-noblesville-proof-confidence-A4-1780505158067.png",
             "folder": "ANGLE 2 -"
           },
           "output": "out/campaigns/confidence-noblesville/proof-confidence/A4.png",
@@ -137,8 +137,8 @@
           "status": "rendered",
           "notes": "Two-segment hook stacked (headline + subhead).",
           "kraken": {
-            "id": "233bca06-91a7-44c2-813d-c3c93f437309",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-confidence-proof-confidence-B1-1780490799976.png",
+            "id": "b098f978-b49d-4671-b9a7-92a1b37dffde",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/confidence-noblesville-proof-confidence-B1-1780505159155.png",
             "folder": "ANGLE 2 -"
           },
           "output": "out/campaigns/confidence-noblesville/proof-confidence/B1.png",
@@ -163,8 +163,8 @@
           "status": "rendered",
           "notes": "Quote-style reframe + support, both verbatim sentences.",
           "kraken": {
-            "id": "ab72912b-e15e-4c6e-9eaa-a283249fe7ff",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-confidence-proof-confidence-B2-1780490801437.png",
+            "id": "4f1287f5-15e9-4b82-9845-80e0703b9db8",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/confidence-noblesville-proof-confidence-B2-1780505160197.png",
             "folder": "ANGLE 2 -"
           },
           "output": "out/campaigns/confidence-noblesville/proof-confidence/B2.png",
@@ -186,8 +186,8 @@
           "status": "rendered",
           "notes": "The two-kinds mechanism (distinct copy from A4).",
           "kraken": {
-            "id": "a3101c39-78d2-4db5-a6c2-60bdeaace024",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-confidence-proof-confidence-C1-1780490802928.png",
+            "id": "51b4eb94-2315-4121-ada9-dca5f3dea286",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/confidence-noblesville-proof-confidence-C1-1780505161287.png",
             "folder": "ANGLE 2 -"
           },
           "output": "out/campaigns/confidence-noblesville/proof-confidence/C1.png",
@@ -212,8 +212,8 @@
           "status": "rendered",
           "notes": "Mechanism reframe (distinct copy from B2).",
           "kraken": {
-            "id": "cfc43883-f81c-4443-bb09-9e4f9139e506",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-confidence-proof-confidence-C2-1780490804111.png",
+            "id": "08377818-fd87-4734-b169-5963f4e9dd5b",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/confidence-noblesville-proof-confidence-C2-1780505162329.png",
             "folder": "ANGLE 2 -"
           },
           "output": "out/campaigns/confidence-noblesville/proof-confidence/C2.png",
@@ -235,8 +235,8 @@
           "status": "rendered",
           "notes": "Blame removal (distinct copy from A3).",
           "kraken": {
-            "id": "08107c19-9098-40ed-912c-92e36bdff3f4",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-confidence-proof-confidence-D1-1780490805102.png",
+            "id": "472a28a4-a486-4662-b066-6189bc13326b",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/confidence-noblesville-proof-confidence-D1-1780505163437.png",
             "folder": "ANGLE 2 -"
           },
           "output": "out/campaigns/confidence-noblesville/proof-confidence/D1.png",
@@ -259,8 +259,8 @@
           "status": "rendered",
           "notes": "The pivot to proof, stacked (distinct copy from C1).",
           "kraken": {
-            "id": "d2e539d7-15aa-4130-955f-5a0edb16b83e",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-confidence-proof-confidence-D2-1780490806671.png",
+            "id": "d355cc93-104f-4ad3-afcb-bd98232fd935",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/confidence-noblesville-proof-confidence-D2-1780505164891.png",
             "folder": "ANGLE 2 -"
           },
           "output": "out/campaigns/confidence-noblesville/proof-confidence/D2.png",
@@ -290,13 +290,13 @@
           "status": "rendered",
           "notes": "Coach proof VSL. Binds a distinct coach/training clip.",
           "kraken": {
-            "id": "80d01c6a-5554-4ae5-8dd0-b22ac7a0e2ff",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-confidence-proof-confidence-E1-1780490807858.mp4",
+            "id": "cd3a5298-bcbd-4e6f-9759-45318da7b969",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/confidence-noblesville-proof-confidence-E1-1780505167170.mp4",
             "folder": "ANGLE 2 -"
           },
           "output": "out/campaigns/confidence-noblesville/proof-confidence/E1.mp4",
           "thumb": "out/campaigns/confidence-noblesville/proof-confidence/E1.mp4",
-          "renderedAt": "2026-06-03T16:02:21.724Z"
+          "renderedAt": "2026-06-03T16:42:53.478Z"
         },
         {
           "id": "E2",
@@ -317,8 +317,8 @@
           "status": "rendered",
           "notes": "Parent case-study quote card.",
           "kraken": {
-            "id": "e7096448-e6dd-43b4-9392-c4c5f707a5be",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-confidence-proof-confidence-E2-1780490809281.mp4",
+            "id": "29d7e29d-8e2d-4deb-aad3-95e3ffdb3159",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/confidence-noblesville-proof-confidence-E2-1780505169822.mp4",
             "folder": "ANGLE 2 -"
           },
           "output": "out/campaigns/confidence-noblesville/proof-confidence/E2.mp4",
@@ -344,8 +344,8 @@
           "status": "rendered",
           "notes": "Credential verdict (static, distinct from E1 video / E2 quote).",
           "kraken": {
-            "id": "185fb1d4-4d03-461f-8b7d-742f2dd44d53",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-confidence-proof-confidence-E3-1780490810288.png",
+            "id": "ed2792a9-ee08-4aa5-ab0f-1ec30cfe4c36",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/confidence-noblesville-proof-confidence-E3-1780505171360.png",
             "folder": "ANGLE 2 -"
           },
           "output": "out/campaigns/confidence-noblesville/proof-confidence/E3.png",
@@ -370,8 +370,8 @@
           "status": "rendered",
           "notes": "Testimonial card (AD2B variant; distinct wording from E2).",
           "kraken": {
-            "id": "5a5f6312-765e-4361-89ac-96ab65d7e246",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-confidence-proof-confidence-E4-1780490811580.png",
+            "id": "88e7a531-3d46-480e-84bf-17c170d236a2",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/confidence-noblesville-proof-confidence-E4-1780505172511.png",
             "folder": "ANGLE 2 -"
           },
           "output": "out/campaigns/confidence-noblesville/proof-confidence/E4.png",
@@ -404,13 +404,13 @@
           "status": "rendered",
           "notes": "Guarantee reveal video.",
           "kraken": {
-            "id": "7d992b84-7038-4145-ab3b-6c5bd6fd344a",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-confidence-proof-confidence-F1-1780490813422.mp4",
+            "id": "c66dce6b-b603-4147-b4cf-b0d39cae9823",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/confidence-noblesville-proof-confidence-F1-1780505174090.mp4",
             "folder": "ANGLE 2 -"
           },
           "output": "out/campaigns/confidence-noblesville/proof-confidence/F1.mp4",
           "thumb": "out/campaigns/confidence-noblesville/proof-confidence/F1.mp4",
-          "renderedAt": "2026-06-03T16:02:21.724Z"
+          "renderedAt": "2026-06-03T16:43:11.599Z"
         },
         {
           "id": "F2",
@@ -429,8 +429,8 @@
           "status": "rendered",
           "notes": "Offer card. Guarantee band verbatim-locked.",
           "kraken": {
-            "id": "656fe011-1c24-4e12-9093-d9b2b21a4d9f",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-confidence-proof-confidence-F2-1780490814309.png",
+            "id": "f9897a64-b9a9-412b-ae97-cb699e31a562",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/confidence-noblesville-proof-confidence-F2-1780505174927.png",
             "folder": "ANGLE 2 -"
           },
           "output": "out/campaigns/confidence-noblesville/proof-confidence/F2.png",
@@ -455,8 +455,8 @@
           "status": "rendered",
           "notes": "Brand bumper over footage.",
           "kraken": {
-            "id": "f7483f5c-7d21-4151-bbe0-138b640a3581",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/79872791-0804-4fd8-833c-6c8c61ec2956/multisport-foundations-confidence-proof-confidence-BR1-1780490815833.mp4",
+            "id": "d0f29657-1bac-4bad-bd26-1487d181fdeb",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/confidence-noblesville-proof-confidence-BR1-1780505176485.mp4",
             "folder": "ANGLE 2 -"
           },
           "output": "out/campaigns/confidence-noblesville/proof-confidence/BR1.mp4",

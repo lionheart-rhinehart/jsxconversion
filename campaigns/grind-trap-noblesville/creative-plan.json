@@ -54,14 +54,14 @@
           "status": "rendered",
           "notes": "3s motion hook from the ad's opening lines.",
           "clip": "brand/kraken-cache/athletes-acceleration-action-clip-sprinting-mixed-male-athletes-acceleration-indy--6402a4e5.mp4",
-          "kraken": {
-            "id": "058ee5bb-73ab-46a4-a783-ffe60a66b357",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/grind-trap-noblesville-grind-trap-A1-1780501507946.mp4",
-            "folder": "ANGLE 1"
-          },
           "output": "out/campaigns/grind-trap-noblesville/grind-trap/A1.mp4",
           "thumb": "out/campaigns/grind-trap-noblesville/grind-trap/A1.mp4",
-          "renderedAt": "2026-06-03T16:23:19.447Z"
+          "renderedAt": "2026-06-03T16:23:19.447Z",
+          "kraken": {
+            "id": "8d1b045f-f527-4d94-bca2-9ab8071a9dd5",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/grind-trap-noblesville-grind-trap-A1-1780505091503.mp4",
+            "folder": "ANGLE 1"
+          }
         },
         {
           "id": "A2",
@@ -222,14 +222,14 @@
           "status": "rendered",
           "notes": "Velocity-drop animation shows the set ending at the cutoff while your rule reads on screen.",
           "clip": "brand/video-templates/assets/msf-A1.mp4",
-          "kraken": {
-            "id": "85b19aa3-6294-4e87-b393-ebc3efece510",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/grind-trap-noblesville-grind-trap-C1-1780501515499.mp4",
-            "folder": "ANGLE 1"
-          },
           "output": "out/campaigns/grind-trap-noblesville/grind-trap/C1.mp4",
           "thumb": "out/campaigns/grind-trap-noblesville/grind-trap/C1.mp4",
-          "renderedAt": "2026-06-03T16:25:43.514Z"
+          "renderedAt": "2026-06-03T16:25:43.514Z",
+          "kraken": {
+            "id": "1f1cc1b0-9a2c-4a1a-ae78-12bb80d6c1b8",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/grind-trap-noblesville-grind-trap-C1-1780505094592.mp4",
+            "folder": "ANGLE 1"
+          }
         },
         {
           "id": "C2",
@@ -392,14 +392,14 @@
           "copySource": "All verbatim: ad Headline (eyebrow), AD3 quote \"a fast rep is the only thing worth rehearsing\", credentials, Wang 2026 numbers, Athlete Analysis offer.",
           "status": "rendered",
           "notes": "Coach proof VSL. Binds a real coach clip — hand-place in the editor.",
-          "kraken": {
-            "id": "dc700892-3bc0-4a52-8bcc-ac54dd62e9cf",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/grind-trap-noblesville-grind-trap-E1-1780501523113.mp4",
-            "folder": "ANGLE 1"
-          },
           "output": "out/campaigns/grind-trap-noblesville/grind-trap/E1.mp4",
           "thumb": "out/campaigns/grind-trap-noblesville/grind-trap/E1.mp4",
-          "renderedAt": "2026-06-03T16:26:59.214Z"
+          "renderedAt": "2026-06-03T16:26:59.214Z",
+          "kraken": {
+            "id": "4fe9bc53-5072-4d3b-a710-541dc4162b61",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/grind-trap-noblesville-grind-trap-E1-1780505097658.mp4",
+            "folder": "ANGLE 1"
+          }
         },
         {
           "id": "E2",
@@ -515,14 +515,14 @@
           "copySource": "Verbatim numbers (+1 mph, +3 inches, 90 days) + AD3 line \"the promise no other program in this market will make.\" Guarantee role renders the LOCKED brand wording — see guaranteeFlag.",
           "status": "rendered",
           "notes": "Guarantee reveal video. Guarantee band is verbatim-locked to the brand canonical.",
-          "kraken": {
-            "id": "ec13e9d9-7d5d-4c0e-ac67-b7bb040d2488",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/grind-trap-noblesville-grind-trap-F1-1780501529317.mp4",
-            "folder": "ANGLE 1"
-          },
           "output": "out/campaigns/grind-trap-noblesville/grind-trap/F1.mp4",
           "thumb": "out/campaigns/grind-trap-noblesville/grind-trap/F1.mp4",
-          "renderedAt": "2026-06-03T16:27:18.465Z"
+          "renderedAt": "2026-06-03T16:27:18.465Z",
+          "kraken": {
+            "id": "7fbdabbd-7e70-4ca0-867d-1644da1d6bd2",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/grind-trap-noblesville-grind-trap-F1-1780505100901.mp4",
+            "folder": "ANGLE 1"
+          }
         },
         {
           "id": "F2",
@@ -579,14 +579,14 @@
           "status": "rendered",
           "notes": "Season-clock retarget (≠ F1). Guarantee verbatim-locked.",
           "clip": "brand/video-templates/assets/msf-F3.mp4",
-          "kraken": {
-            "id": "88e62fea-d301-4cbe-8270-a44e348ce671",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/grind-trap-noblesville-grind-trap-F3-1780501533351.mp4",
-            "folder": "ANGLE 1"
-          },
           "output": "out/campaigns/grind-trap-noblesville/grind-trap/F3.mp4",
           "thumb": "out/campaigns/grind-trap-noblesville/grind-trap/F3.mp4",
-          "renderedAt": "2026-06-03T16:29:21.778Z"
+          "renderedAt": "2026-06-03T16:29:21.778Z",
+          "kraken": {
+            "id": "1cbfc928-aa5c-4c55-85e3-73be257babb6",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/grind-trap-noblesville-grind-trap-F3-1780505103080.mp4",
+            "folder": "ANGLE 1"
+          }
         },
         {
           "id": "FA1",
@@ -618,14 +618,14 @@
           "status": "rendered",
           "notes": "Full-arc VSL. Its baked captions were paraphrased last run; templateData here forces your verbatim lines.",
           "clip": "brand/video-templates/assets/msf-FA1.mp4",
-          "kraken": {
-            "id": "9ce1c0bb-3c1e-4136-bc33-0941a2fd6424",
-            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/grind-trap-noblesville-grind-trap-FA1-1780501535160.mp4",
-            "folder": "ANGLE 1"
-          },
           "output": "out/campaigns/grind-trap-noblesville/grind-trap/FA1.mp4",
           "thumb": "out/campaigns/grind-trap-noblesville/grind-trap/FA1.mp4",
-          "renderedAt": "2026-06-03T16:37:35.064Z"
+          "renderedAt": "2026-06-03T16:37:35.064Z",
+          "kraken": {
+            "id": "a9aad7a0-d333-4943-91b8-a7b691038fb3",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/d99a09e2-2810-4d39-ad24-d546b896b603/grind-trap-noblesville-grind-trap-FA1-1780505104775.mp4",
+            "folder": "ANGLE 1"
+          }
         },
         {
           "id": "BR1",
