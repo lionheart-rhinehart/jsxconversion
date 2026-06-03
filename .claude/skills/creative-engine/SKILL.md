@@ -214,6 +214,24 @@ The runner uses `templateData` verbatim when present (warning on keys the templa
 doesn't read), and otherwise the **role-aware join** (`buildCopyByRole` → `assemble` in
 `scripts/lib/`) routes headline/microscript onto the right role-slots.
 
+### Step 4b — Compliance gate (MANDATORY — do not skip)
+Before opening the review page, validate the plan and **loop-fix until it is clean**:
+
+```
+node scripts/validate-knowledge.mjs <name>   # deep-read completeness (must exit 0)
+node scripts/validate-plan.mjs <name>         # compliance gate (must exit 0 — no blocking)
+```
+
+`validate-plan.mjs` checks the bytes that actually render (static edits config / motion
+templateData) against `data/rules.<brand>.json`: it **blocks** on a creative with no media,
+copy not traced to the copy-library (verbatim, persuasive roles), a missing/wrong eyebrow city,
+off-voice copy (emoji / exclamation / banned words), a paraphrased guarantee, or a non-9:16
+static; it **warns** on beat-role fit and coverage/reuse. Fix every ✗ (rebind copy to a library
+unit, place media, correct the city/guarantee, etc.) and re-run until `blocking: 0`. **Do NOT open
+the review page or tell the user to review while any blocking violation remains** — the runner will
+refuse to render it anyway (exit 2), so catching it here saves a round trip. The report is written
+to `campaigns/<name>/validation.json` and surfaced live on the review page.
+
 ### Step 5 — Review (stop here)
 Ensure the servers are up:
 - `node scripts/editor-server.mjs` (:5173 — plan API + render)

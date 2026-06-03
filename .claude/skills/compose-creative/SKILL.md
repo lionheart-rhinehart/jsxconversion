@@ -34,6 +34,14 @@ bank's own file shape so it is **promotable**. This is invoked per-asset by
   the Stage host returns t=0 and everything renders invisible); give **every** text an explicit
   `color`; captions carry the whole message (mute viewing).
 
+## Must pass the compliance gate
+The fresh asset is validated like any other: after composing, `validate-plan.mjs` checks the
+rendered bytes and **blocks** on no media, non-verbatim persuasive copy, missing/wrong eyebrow city,
+emoji/exclamation/banned words, a paraphrased guarantee, or non-9:16. Compose to pass it the first
+time (real media placed, copy bound to the copy-library, guarantee verbatim). For drag-positioning,
+wrap each editable text node in `<TplText field=… data=…>` (see `did-you-know.jsx` for the pattern)
+so the result is editable in the review page's Position tab.
+
 ## Output shapes (match the bank exactly)
 
 ### Static (the common case)
