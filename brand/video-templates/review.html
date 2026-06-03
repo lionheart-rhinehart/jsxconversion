@@ -856,7 +856,7 @@ function FolderTree({ nodes, picked, setPicked, expanded, setExpanded, depth }) 
 // pull a folder's media into THIS campaign, or upload from the computer. Calls
 // onChanged() after a pull/upload so the MediaPickers refetch. Hidden when there
 // is no campaign (a per-campaign pull would be meaningless).
-function KrakenBar({ campaign, onChanged, onUploaded }) {
+function KrakenBar({ campaign, onChanged, onUploaded, onPlaced }) {
   const [workspaces, setWorkspaces] = useState(null);
   const [ws, setWs] = useState("");
   const [folders, setFolders] = useState(null);
@@ -865,6 +865,9 @@ function KrakenBar({ campaign, onChanged, onUploaded }) {
   const [busy, setBusy] = useState(null);
   const [msg, setMsg] = useState("");
   const fileRef = React.useRef(null);
+  const [files, setFiles] = useState(null);     // media items WITHIN the picked folder (per-file pull)
+  const [filesBusy, setFilesBusy] = useState(false);
+  const [fileFilter, setFileFilter] = useState("");
 
   // Workspaces + the campaign's saved default location, in parallel.
   useEffect(() => {
@@ -898,6 +901,22 @@ function KrakenBar({ campaign, onChanged, onUploaded }) {
     return () => { live = false; };
   }, [ws]);
 
+  // The media FILES inside the picked folder (per-file pull). Lazy — only the
+  // currently-picked folder, fetched once per pick.
+  useEffect(() => {
+    if (!ws || !picked) { setFiles(null); return; }
+    let live = true;
+    setFiles(null); setFilesBusy(true); setFileFilter("");
+    const wsName = (workspaces || []).find((w) => w.id === ws);
+    const q = "/kraken/files?workspace=" + encodeURIComponent((wsName && wsName.name) || ws) +
+      "&folder=" + encodeURIComponent(picked.id);
+    fetch(apiBase() + q)
+      .then((r) => r.json()).then((j) => { if (live) setFiles(j.files || []); })
+      .catch(() => { if (live) setFiles([]); })
+      .then(() => { if (live) setFilesBusy(false); });
+    return () => { live = false; };
+  }, [ws, picked]);
+
   // Flat → nested. Orphans (parent not in the set) surface at root so nothing hides.
   const tree = React.useMemo(() => {
     const list = folders || [];
@@ -912,24 +931,10 @@ function KrakenBar({ campaign, onChanged, onUploaded }) {
     return roots;
   }, [folders]);
 
-  async function pull() {
-    if (!campaign || !ws || !picked) return;
-    setBusy("Pulling " + picked.name + "…");
-    try {
-      // Send the readable workspace NAME (sidecar stays human-readable); the
-      // FOLDER goes by id so duplicate names can't pull the wrong one.
-      const wsName = (workspaces.find((w) => w.id === ws) || {}).name || ws;
-      const r = await fetch(apiBase() + "/kraken/pull", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ campaign, workspace: wsName, folder: picked.id }),
-      });
-      const j = await r.json();
-      if (!r.ok) throw new Error(j.error || (j.stderr || "").slice(-160) || "pull failed");
-      setMsg(`Pulled ${picked.name}: ${j.cached || 0} new, ${j.skipped || 0} cached (${j.imgs || 0} img, ${j.vids || 0} vid)`);
-      onChanged();
-    } catch (e) { setMsg("Pull failed: " + e.message); }
-    setBusy(null);
-  }
+  // NOTE: whole-folder "Pull" was removed from the UI — it bulk-downloaded every
+  // file (e.g. IG Stories = 207 videos) and hung. Browse the folder's thumbnails
+  // and click ONE to place it (pullFile → /kraken/pull-file downloads just that
+  // file). The /kraken/pull endpoint still exists for CLI/bulk use.
 
   async function upload(files) {
     if (!campaign || !files || !files.length) return;
@@ -959,6 +964,27 @@ function KrakenBar({ campaign, onChanged, onUploaded }) {
     if (uploaded.length && onUploaded) onUploaded(uploaded);
   }
 
+  // Per-file pull: pull ONE content item from the picked folder and place it
+  // directly (no whole-folder pull). The server returns the cached relative path
+  // + the durable Kraken ref; the parent places it by kind via onPlaced.
+  async function pullFile(file) {
+    if (!campaign || !ws || !picked) return;
+    setBusy("Placing " + (file.title || file.id) + "…");
+    try {
+      const wsName = ((workspaces || []).find((w) => w.id === ws) || {}).name || ws;
+      const r = await fetch(apiBase() + "/kraken/pull-file", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ campaign, workspace: wsName, folder: picked.id, file: file.id }),
+      });
+      const j = await r.json();
+      if (!r.ok || !j.file) throw new Error(j.error || (j.stderr || "").slice(-160) || "pull failed");
+      setMsg("Placed " + (j.file.title || j.file.name));
+      onChanged();
+      if (onPlaced) onPlaced(j.file);
+    } catch (e) { setMsg("Place failed: " + e.message); }
+    setBusy(null);
+  }
+
   if (!campaign) return null;
 
   return (
@@ -969,7 +995,6 @@ function KrakenBar({ campaign, onChanged, onUploaded }) {
           <option value="">{workspaces === null ? "Loading locations…" : (workspaces.length ? "— AA location —" : "No locations configured")}</option>
           {(workspaces || []).map((w) => <option key={w.id} value={w.id}>{w.name}</option>)}
         </select>
-        <button className="vm-tab" disabled={!picked || !!busy} onClick={pull} title={picked ? "Pull " + picked.name : "Pick a folder first"}>{busy ? "…" : "Pull"}</button>
         <button className="vm-tab" disabled={!!busy} onClick={() => fileRef.current && fileRef.current.click()}>Upload</button>
         <input ref={fileRef} type="file" multiple style={{ display: "none" }}
           accept="image/*,video/*,audio/*" onChange={(e) => upload([...e.target.files])} />
@@ -979,6 +1004,40 @@ function KrakenBar({ campaign, onChanged, onUploaded }) {
           {folders === null ? <div className="vm-hint">Loading folders…</div>
             : !tree.length ? <div className="vm-hint">No folders in this location.</div>
               : <FolderTree nodes={tree} picked={picked} setPicked={setPicked} expanded={expanded} setExpanded={setExpanded} depth={0} />}
+        </div>
+      )}
+      {picked && (
+        <div className="kbar-files">
+          {filesBusy ? <div className="vm-hint">Loading files in {picked.name}…</div>
+            : files === null ? null
+              : !files.length ? <div className="vm-hint">No image/video files in "{picked.name}".</div>
+                : (() => {
+                    const q = fileFilter.trim().toLowerCase();
+                    const shown = q ? files.filter((f) => (f.title || "").toLowerCase().includes(q)) : files;
+                    return (
+                      <React.Fragment>
+                        <input type="text" value={fileFilter} onChange={(e) => setFileFilter(e.target.value)}
+                          placeholder={"Click a file to place it · filter " + files.length + " in " + picked.name + "…"}
+                          style={{ width: "100%", margin: "6px 0", padding: "5px 8px", fontSize: 12,
+                            background: "#15171a", color: "#e6e8ea", border: "1px solid #2a2d31", borderRadius: 4 }} />
+                        <div className="vm-grid vm-grid-clip" style={{ maxHeight: 240, overflowY: "auto" }}>
+                          {shown.map((f) => (
+                            <button key={f.id} type="button" className="vm-tile" disabled={!!busy}
+                              title={f.title || f.id} onClick={() => pullFile(f)}>
+                              <span className="vm-srcbadge kraken">{f.type === "video" ? "vid" : "img"}</span>
+                              {f.type === "image" && f.url
+                                ? <img src={f.url} alt="" loading="lazy" />
+                                : <video src={f.url} muted preload="none" />}
+                              <span style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "2px 4px",
+                                fontSize: 9, lineHeight: 1.2, color: "#cfd2d6", background: "rgba(10,11,13,0.78)",
+                                whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{f.title || f.id}</span>
+                            </button>
+                          ))}
+                          {!shown.length && <div className="vm-hint">No file matches "{fileFilter}".</div>}
+                        </div>
+                      </React.Fragment>
+                    );
+                  })()}
         </div>
       )}
       {(busy || msg) && <div className="kbar-msg">{busy || msg}</div>}
@@ -1336,6 +1395,12 @@ function VideoEditModal({ angleId, assetId, onClose }) {
                       else if (imageKey) { it.kind === "clip" ? pickClip(it) : pickPhoto(it); }
                       // No imageKey → the template has no media slot; the media-tab
                       // hint already explains it; nothing to place.
+                    }}
+                    onPlaced={(file) => {
+                      // A per-file Kraken pull: place it by type via the same path.
+                      if (!file || !file.path || !imageKey) return;
+                      const it = { path: file.path, url: "/media-file/" + file.path, name: file.name };
+                      file.type === "video" ? pickClip(it) : pickPhoto(it);
                     }} />
                 </div>
                 <div className="vm-tabbody">

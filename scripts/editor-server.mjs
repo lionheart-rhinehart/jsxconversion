@@ -580,7 +580,11 @@ const server = createServer(async (req, res) => {
       const exts = EXT_FOR_KIND[kind] || PHOTO_EXT;
       const items = [];
       const seen = new Set();
-      const addFrom = (root, source) => {
+      // filename → durable Kraken ref, written by kraken-pull (.manifest.json).
+      const loadMan = (root) => {
+        try { return JSON.parse(readFileSync(join(root, ".manifest.json"), "utf8")); } catch (_) { return {}; }
+      };
+      const addFrom = (root, source, man = {}) => {
         let files = [];
         try { files = readdirSync(root); } catch (_) { return; }
         for (const f of files) {
@@ -593,7 +597,12 @@ const server = createServer(async (req, res) => {
           const src = source === "kraken-dir"
             ? (f.startsWith("upload-") ? "uploaded" : "kraken")
             : source;
-          items.push({ name: f, path: rel, url: "/media-file/" + rel, source: src });
+          const item = { name: f, path: rel, url: "/media-file/" + rel, source: src };
+          // Attach the durable Kraken ref (from the pull manifest) so a placement
+          // can store it — used for static re-fetch + portability.
+          const ref = man[f];
+          if (ref && ref.id) { item.krakenId = ref.id; item.krakenUrl = ref.url; }
+          items.push(item);
         }
       };
       // Shared brand-kit roots — everything EXCEPT the kraken cache root.
@@ -602,8 +611,8 @@ const server = createServer(async (req, res) => {
         addFrom(root, "brand");
       }
       // The campaign's pulled media + its uploads, then the legacy flat cache.
-      if (campaign) addFrom(campaignCacheDir(campaign), "kraken-dir");
-      addFrom(KRAKEN_CACHE_ROOT, "kraken-dir");
+      if (campaign) { const cd = campaignCacheDir(campaign); addFrom(cd, "kraken-dir", loadMan(cd)); }
+      addFrom(KRAKEN_CACHE_ROOT, "kraken-dir", loadMan(KRAKEN_CACHE_ROOT));
       sendJson(res, 200, {
         kind, campaign,
         krakenFolder: campaign ? krakenSidecarFolder(campaign) : null,
@@ -695,6 +704,57 @@ const server = createServer(async (req, res) => {
       const { code, stdout, stderr } = await runNode([
         "scripts/kraken-pull.mjs", campaign,
         "--workspace", workspace, "--folder", folder, "--per-campaign", "--json",
+      ]);
+      let summary = null;
+      const m = (stdout || "").match(/__PULL_JSON__ (.+)/);
+      if (m) { try { summary = JSON.parse(m[1]); } catch (_) {} }
+      sendJson(res, code === 0 ? 200 : 500, {
+        exitCode: code, ...(summary || {}), stderr: stderr.slice(-2000),
+      });
+    } catch (e) {
+      sendJson(res, 500, { error: String((e && e.message) || e) });
+    }
+    return;
+  }
+
+  // GET /kraken/files?workspace=<ws>&folder=<uuid> — the media items WITHIN a
+  // folder (for per-file pull / direct placement). Spawns kraken-list files.
+  if (path === "/kraken/files" && req.method === "GET") {
+    try {
+      const ws = url.searchParams.get("workspace");
+      const folder = url.searchParams.get("folder");
+      if (!ws || !folder) { sendJson(res, 400, { error: "missing ?workspace= and/or ?folder=" }); return; }
+      const { code, stdout, stderr } = await runNode([
+        "scripts/kraken-list.mjs", "files", "--workspace", ws, "--folder", folder,
+      ]);
+      let j = null;
+      try { j = JSON.parse((stdout || "").trim() || "{}"); } catch (_) {}
+      if (!j || j.error) { sendJson(res, code === 2 ? 404 : 502, j || { error: stderr.slice(-300) || "file list failed" }); return; }
+      sendJson(res, 200, j);
+    } catch (e) {
+      sendJson(res, 502, { error: String((e && e.message) || e) });
+    }
+    return;
+  }
+
+  // POST /kraken/pull-file { campaign, workspace, folder, file } — pull ONE
+  // content item (per-file pull). Spawns kraken-pull --file; returns the cached
+  // relative path + the durable Kraken ref ({file:{path,krakenId,krakenUrl,...}})
+  // so the UI can place it directly and statics can stamp a durable reference.
+  if (path === "/kraken/pull-file" && req.method === "POST") {
+    try {
+      let body;
+      try { body = JSON.parse((await readBody(req)) || "{}"); }
+      catch (e) { sendJson(res, 400, { error: "bad JSON: " + e.message }); return; }
+      const { campaign, workspace, folder, file } = body;
+      if (!campaign || !workspace || !folder || !file) {
+        sendJson(res, 400, { error: "need campaign, workspace, folder, file" });
+        return;
+      }
+      const { code, stdout, stderr } = await runNode([
+        "scripts/kraken-pull.mjs", campaign,
+        "--workspace", workspace, "--folder", folder, "--file", file,
+        "--per-campaign", "--json",
       ]);
       let summary = null;
       const m = (stdout || "").match(/__PULL_JSON__ (.+)/);
