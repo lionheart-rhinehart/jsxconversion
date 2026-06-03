@@ -270,6 +270,12 @@ export function buildCopyLibrary({ campaign, adCopyMd, microscriptsMd, warn = ()
 
 // Load a written copy-library.json. Returns null if absent (caller falls back to
 // the legacy headline path — campaigns with no ad-copy.md still render).
+//
+// NOTE (S1): this stays NON-throwing on a corrupt file (returns null) because the
+// RENDER + EDITOR paths depend on that — resolveStaticConfig calls it inside an
+// unwrapped editor-server handler, and a throw there would hang the editor. Code
+// that wants to FAIL on corruption (validate-plan, intake-copy) must use
+// loadCopyLibraryStrict() instead — somewhere it's safe to throw.
 export function loadCopyLibrary(campaignDir) {
   const path = join(campaignDir, COPY_LIBRARY_FILE);
   if (!existsSync(path)) return null;
@@ -278,4 +284,34 @@ export function loadCopyLibrary(campaignDir) {
   } catch {
     return null;
   }
+}
+
+// Strict loader (S1): absent → null (legacy path, fine); present-but-broken →
+// THROW. Use ONLY where a throw is safe (validate-plan / intake), so a corrupt
+// library is caught loudly instead of silently degrading to authored-copy and
+// defeating the verbatim gate. Validates the minimal shape.
+export function loadCopyLibraryStrict(campaignDir) {
+  const path = join(campaignDir, COPY_LIBRARY_FILE);
+  if (!existsSync(path)) return null;
+  let raw;
+  try {
+    raw = readFileSync(path, "utf8");
+  } catch (e) {
+    throw new Error(`copy-library.json unreadable at ${path}: ${e.message}`);
+  }
+  let lib;
+  try {
+    lib = JSON.parse(raw);
+  } catch (e) {
+    throw new Error(`copy-library.json is corrupt (invalid JSON) at ${path}: ${e.message}`);
+  }
+  if (!lib || typeof lib !== "object" || !Array.isArray(lib.units)) {
+    throw new Error(`copy-library.json has no units[] array at ${path} — re-run: node scripts/intake-copy.mjs <campaign>`);
+  }
+  if (!lib.byId || typeof lib.byId !== "object") {
+    // byId is derivable; rebuild it rather than fail (older libraries may omit it).
+    lib.byId = {};
+    for (const u of lib.units) if (u && u.id && !(u.id in lib.byId)) lib.byId[u.id] = u;
+  }
+  return lib;
 }

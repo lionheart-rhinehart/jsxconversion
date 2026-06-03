@@ -1,0 +1,4 @@
+{
+  "verbatim": "warn",
+  "_note": "Grandfathered existing campaign: verbatim check is a WARNING (not a block) while reworded copy is migrated to verbatim library bindings. New campaigns omit this file and get the hard block. Remove this file once copy is clean."
+}
