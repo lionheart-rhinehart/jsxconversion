@@ -1,7 +1,15 @@
 {
-  "generatedAt": "2026-06-02T16:03:13.877Z",
+  "generatedAt": "2026-06-03T12:11:53.095Z",
   "note": "Role-index for playbook-driven template selection. Regenerate with: node scripts/build-template-index.mjs",
   "templates": {
+    "athlete-birthday": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
+      "roles": [
+        "eyebrow"
+      ],
+      "slotCount": 1
+    },
     "cluster-1": {
       "format": "static",
       "dir": "templates/multi-sport-foundations",
@@ -359,6 +367,7 @@
       "dir": "templates/multi-sport-foundations",
       "roles": [
         "eyebrow",
+        "kicker",
         "hook",
         "reframe",
         "brand"
@@ -366,6 +375,7 @@
       "accepts": [
         "eyebrow",
         "proof",
+        "kicker",
         "hook",
         "claim",
         "reframe",
@@ -373,13 +383,14 @@
         "offer",
         "brand"
       ],
-      "slotCount": 4
+      "slotCount": 5
     },
     "cluster-35": {
       "format": "static",
       "dir": "templates/multi-sport-foundations",
       "roles": [
         "eyebrow",
+        "kicker",
         "hook",
         "claim",
         "brand"
@@ -387,29 +398,32 @@
       "accepts": [
         "eyebrow",
         "proof",
+        "kicker",
         "hook",
         "claim",
         "reframe",
         "brand"
       ],
-      "slotCount": 4
+      "slotCount": 5
     },
     "cluster-36": {
       "format": "static",
       "dir": "templates/multi-sport-foundations",
       "roles": [
         "eyebrow",
+        "kicker",
         "reframe",
         "brand"
       ],
       "accepts": [
         "eyebrow",
         "proof",
+        "kicker",
         "reframe",
         "claim",
         "brand"
       ],
-      "slotCount": 3
+      "slotCount": 4
     },
     "cluster-37": {
       "format": "static",
@@ -513,6 +527,7 @@
       "dir": "templates/multi-sport-foundations",
       "roles": [
         "eyebrow",
+        "kicker",
         "hook",
         "claim",
         "brand"
@@ -520,31 +535,56 @@
       "accepts": [
         "eyebrow",
         "proof",
+        "kicker",
         "hook",
         "claim",
         "reframe",
         "mechanism",
         "brand"
       ],
-      "slotCount": 4
+      "slotCount": 5
     },
     "cluster-42": {
       "format": "static",
       "dir": "templates/multi-sport-foundations",
       "roles": [
         "eyebrow",
+        "kicker",
         "reframe",
         "brand"
       ],
       "accepts": [
         "eyebrow",
         "proof",
+        "kicker",
         "reframe",
         "claim",
         "hook",
         "brand"
       ],
-      "slotCount": 3
+      "slotCount": 4
+    },
+    "cluster-43": {
+      "format": "static",
+      "dir": "templates/multi-sport-foundations",
+      "roles": [
+        "eyebrow",
+        "kicker",
+        "hook",
+        "reframe",
+        "brand"
+      ],
+      "accepts": [
+        "eyebrow",
+        "proof",
+        "kicker",
+        "hook",
+        "claim",
+        "reframe",
+        "mechanism",
+        "brand"
+      ],
+      "slotCount": 5
     },
     "cluster-8": {
       "format": "static",
@@ -599,11 +639,36 @@
       "format": "video",
       "dir": "brand/video-templates/templates",
       "roles": [
+        "eyebrow",
         "byline",
         "claim",
         "proof"
       ],
-      "slotCount": 3
+      "slotCount": 4
+    },
+    "coach-lt-reel": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
+      "roles": [
+        "eyebrow"
+      ],
+      "slotCount": 1
+    },
+    "committed": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
+      "roles": [
+        "eyebrow"
+      ],
+      "slotCount": 1
+    },
+    "five-star-review": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
+      "roles": [
+        "eyebrow"
+      ],
+      "slotCount": 1
     },
     "fresh-e2e-a2-hook": {
       "format": "static",
@@ -619,6 +684,14 @@
         "reframe"
       ],
       "slotCount": 2
+    },
+    "fresh-e2e-a3": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
+      "roles": [
+        "eyebrow"
+      ],
+      "slotCount": 1
     },
     "fresh-e2e-e5-testimonial": {
       "format": "static",
@@ -662,15 +735,59 @@
       ],
       "slotCount": 9
     },
+    "fresh-smoke-motion": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
+      "roles": [
+        "eyebrow",
+        "hook",
+        "reframe",
+        "cta"
+      ],
+      "slotCount": 4
+    },
+    "holiday-hours": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
+      "roles": [
+        "eyebrow"
+      ],
+      "slotCount": 1
+    },
+    "hype-intro": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
+      "roles": [
+        "eyebrow"
+      ],
+      "slotCount": 1
+    },
+    "hype-intro-reel": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
+      "roles": [
+        "eyebrow"
+      ],
+      "slotCount": 1
+    },
     "logo-sting": {
       "format": "video",
       "dir": "brand/video-templates/templates",
       "roles": [
+        "eyebrow",
         "brand",
         "claim",
         "byline"
       ],
-      "slotCount": 3
+      "slotCount": 4
+    },
+    "logo-sting-reel": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
+      "roles": [
+        "eyebrow"
+      ],
+      "slotCount": 1
     },
     "meet-coach": {
       "format": "video",
@@ -686,6 +803,14 @@
       ],
       "slotCount": 7
     },
+    "new-year": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
+      "roles": [
+        "eyebrow"
+      ],
+      "slotCount": 1
+    },
     "quote-card": {
       "format": "video",
       "dir": "brand/video-templates/templates",
@@ -696,6 +821,14 @@
         "stat"
       ],
       "slotCount": 4
+    },
+    "recovery-tip": {
+      "format": "video",
+      "dir": "brand/video-templates/templates",
+      "roles": [
+        "eyebrow"
+      ],
+      "slotCount": 1
     },
     "season-clock": {
       "format": "video",
