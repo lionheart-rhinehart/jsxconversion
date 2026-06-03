@@ -566,7 +566,6 @@
             <div id="krakenBar" class="kbar" hidden>
               <div class="kbar-row">
                 <select id="kbWorkspace"><option value="">— AA location —</option></select>
-                <button id="kbPull" type="button" disabled>Pull</button>
                 <button id="kbUpload" type="button">Upload</button>
                 <input id="kbFile" type="file" multiple hidden accept="image/*,video/*,audio/*">
               </div>
@@ -2508,12 +2507,12 @@
       if (!camp) { bar.hidden = true; return; } // standalone cluster edit → no campaign
       bar.hidden = false;
       const wsSel = $('kbWorkspace'), tree = $('kbTree'), msg = $('kbMsg');
-      const pullBtn = $('kbPull'), upBtn = $('kbUpload'), fileInput = $('kbFile');
+      const upBtn = $('kbUpload'), fileInput = $('kbFile');
       const filesEl = $('kbFiles');
       let workspaces = [], folders = [], picked = null, expanded = {}, busy = false;
 
       const setMsg = (m) => { msg.textContent = m || ''; };
-      const syncButtons = () => { pullBtn.disabled = busy || !picked || !wsSel.value; upBtn.disabled = busy; };
+      const syncButtons = () => { upBtn.disabled = busy; };
       const setBusy = (b) => { busy = b; syncButtons(); };
 
       const buildTree = () => {
@@ -2557,23 +2556,9 @@
         if (wsSel.value) loadFolders(wsSel.value); else { tree.hidden = true; tree.innerHTML = ''; }
       });
 
-      pullBtn.addEventListener('click', async () => {
-        if (!picked || !wsSel.value) return;
-        setBusy(true); setMsg('Pulling ' + picked.name + '…');
-        try {
-          // Readable workspace NAME for the sidecar; FOLDER by id (exact).
-          const wsName = (workspaces.find((w) => w.id === wsSel.value) || {}).name || wsSel.value;
-          const r = await fetch('/kraken/pull', {
-            method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ campaign: camp.campaign, workspace: wsName, folder: picked.id }),
-          });
-          const j = await r.json();
-          if (!r.ok) throw new Error(j.error || (j.stderr || '').slice(-160) || 'pull failed');
-          setMsg('Pulled ' + picked.name + ': ' + (j.cached || 0) + ' new, ' + (j.skipped || 0) + ' cached (' + (j.imgs || 0) + ' img, ' + (j.vids || 0) + ' vid)');
-          resetPhotoGrid();
-        } catch (e) { setMsg('Pull failed: ' + e.message); }
-        setBusy(false);
-      });
+      // Whole-folder "Pull" was removed (it bulk-downloaded every file and hung on
+      // large folders). Browse the folder's thumbnails and click ONE to place it
+      // (per-file pull via /kraken/pull-file). The /kraken/pull endpoint remains for CLI.
 
       upBtn.addEventListener('click', () => fileInput.click());
       fileInput.addEventListener('change', async () => {
@@ -2616,7 +2601,7 @@
           files = j.files || [];
         } catch (_) { files = []; }
         filesEl.innerHTML = '';
-        if (!files.length) { filesEl.innerHTML = '<div class="ed-empty">No image/video files here. (Use Pull for the whole folder.)</div>'; return; }
+        if (!files.length) { filesEl.innerHTML = '<div class="ed-empty">No image/video files in this folder.</div>'; return; }
         for (const f of files) {
           const t = document.createElement('button');
           t.type = 'button'; t.className = 'ed-photo-tile'; t.title = f.title || f.id;
