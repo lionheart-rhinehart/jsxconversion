@@ -1113,7 +1113,9 @@ function KrakenBar({ campaign, onChanged, onUploaded, onPlaced }) {
 // {fontSize} (resize); TplText re-applies it live (preview == render).
 function DragOverlay({ stageRef, data, setOverride, selected, setSelected }) {
   const [boxes, setBoxes] = useState([]);
+  const [noDraggable, setNoDraggable] = useState(false); // template has no [data-ov-key] nodes
   const boxesRef = React.useRef([]);
+  const emptyRef = React.useRef(0);
   const dragRef = React.useRef(null);
 
   // rAF loop: re-measure every [data-ov-key] node so handles track the animation.
@@ -1136,6 +1138,10 @@ function DragOverlay({ stageRef, data, setOverride, selected, setSelected }) {
         });
         boxesRef.current = next;
         setBoxes(next);
+        // Detect a non-retrofitted template (no draggable nodes). Grace period of
+        // ~40 frames avoids flashing the message while the Stage is still mounting.
+        if (next.length) { emptyRef.current = 0; setNoDraggable(false); }
+        else if (++emptyRef.current >= 40) setNoDraggable(true);
       }
       raf = requestAnimationFrame(tick);
     };
@@ -1198,6 +1204,15 @@ function DragOverlay({ stageRef, data, setOverride, selected, setSelected }) {
     <div className="vm-drag-overlay"
       onWheel={(e) => { if (selected.length) { e.preventDefault(); bump(selected, e.deltaY < 0 ? 4 : -4); } }}
       onMouseDown={(e) => { if (e.target.classList.contains("vm-drag-overlay")) setSelected([]); }}>
+      {noDraggable && (
+        <div style={{ position: "absolute", left: "50%", top: 24, transform: "translateX(-50%)",
+          maxWidth: 460, padding: "10px 14px", background: "rgba(10,11,13,0.92)",
+          border: "1px solid #f59e0b", color: "#fbbf24", fontFamily: "monospace",
+          fontSize: 12, lineHeight: 1.4, textAlign: "center", pointerEvents: "none", zIndex: 5 }}>
+          This template isn't position-editable yet — its text layers aren't wrapped for dragging.
+          Edit wording in the <b>COPY</b> tab; this template needs a TplText retrofit to drag text.
+        </div>
+      )}
       {boxes.map((b) => (
         <div key={b.key} className={"vm-handle" + (selected.includes(b.key) ? " sel" : "")}
           style={{ left: b.left, top: b.top, width: b.w, height: b.h }}

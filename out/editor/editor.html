@@ -761,7 +761,14 @@
     }
     function configUrl(id) {
       const camp = parseCampId(id);
-      return camp ? `/campaign-config/${camp.campaign}/${camp.angle}/${camp.asset}` : '/config/' + id;
+      if (camp) return `/campaign-config/${camp.campaign}/${camp.angle}/${camp.asset}`;
+      // Harden (S): a MALFORMED camp id (starts with "camp:" but didn't parse) must
+      // NOT silently fall back to /config/<id> — that would read/WRITE the shared
+      // template instead of the asset's edits file (data loss). Refuse loudly.
+      if (typeof id === 'string' && id.startsWith('camp:')) {
+        throw new Error('malformed campaign id "' + id + '" — expected camp:<campaign>:<angle>:<asset>');
+      }
+      return '/config/' + id;
     }
     async function fetchConfig(cluster) {
       const r = await fetch(configUrl(cluster));
@@ -2773,7 +2780,13 @@
       if (!state.cluster || !state.config) return;
       setStatus('Saving…');
       const r = await saveConfig(state.cluster, state.config);
-      setStatus(r.saved ? 'Saved ' + state.cluster + '.config.json' : 'Save error: ' + (r.error || 'unknown'));
+      // Be explicit about the refresh gap: a plain Save persists the layout but the
+      // rendered PNG/thumb stays stale until a re-render. Tell the user so "saved"
+      // doesn't read as "nothing happened" when the image looks unchanged.
+      const isCamp = !!parseCampId(state.cluster);
+      setStatus(r.saved
+        ? (isCamp ? 'Saved — click "Save + Render" to update the image' : 'Saved ' + state.cluster + '.config.json')
+        : 'Save error: ' + (r.error || 'unknown'));
       // After save while in Crop mode, switch back to Move so user sees the result
       if (state.mode === 'crop') setMode('move');
     }
