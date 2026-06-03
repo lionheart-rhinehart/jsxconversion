@@ -1,0 +1,203 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
+      "z": 1
+    },
+    {
+      "id": "guarantee_band",
+      "tag": "guarantee_band",
+      "type": "rect",
+      "x": 90,
+      "y": 815,
+      "width": 900,
+      "height": 250,
+      "fill": "#c4141d",
+      "borderRadius": 8,
+      "z": 14
+    },
+    {
+      "id": "cta_band",
+      "tag": "cta_band",
+      "type": "rect",
+      "x": 90,
+      "y": 1430,
+      "width": 900,
+      "height": 140,
+      "fill": "#c4141d",
+      "borderRadius": 8,
+      "z": 14
+    },
+    {
+      "id": "brand_rule",
+      "tag": "brand_rule",
+      "type": "rect",
+      "x": 90,
+      "y": 1628,
+      "width": 150,
+      "height": 6,
+      "fill": "#c4141d",
+      "z": 16
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor chip (auto-filled)",
+      "x": 90,
+      "y": 170,
+      "textAlign": "left",
+      "text": "MILFORD SPORT PARENTS",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#c4141d",
+      "chipBg": "#ffffff",
+      "chipPad": "12px 24px",
+      "chipRadius": 8,
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 34,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "offer_headline",
+      "tag": "offer_headline",
+      "label": "Offer headline (display)",
+      "x": 86,
+      "y": 280,
+      "width": 924,
+      "textAlign": "left",
+      "text": "FREE ATHLETE\nANALYSIS",
+      "fontSize": 144,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.9,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "whiteSpace": "pre-line",
+      "z": 21,
+      "role": "offer",
+      "accepts": [
+        "offer",
+        "claim"
+      ],
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "offer_detail",
+      "tag": "offer_detail",
+      "label": "Offer support line",
+      "x": 90,
+      "y": 610,
+      "width": 880,
+      "textAlign": "left",
+      "text": "Not a pep talk. A data set.",
+      "fontSize": 42,
+      "fontFamily": "Geist",
+      "fontWeight": 500,
+      "color": "#cfd2d6",
+      "lineHeight": 1.35,
+      "z": 22,
+      "role": "offer",
+      "accepts": [
+        "offer",
+        "reframe"
+      ],
+      "maxChars": 70,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "guarantee_text",
+      "tag": "guarantee",
+      "label": "Guarantee (verbatim, locked)",
+      "x": 132,
+      "y": 852,
+      "width": 816,
+      "textAlign": "left",
+      "text": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us.",
+      "fontSize": 47,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 600,
+      "color": "#ffffff",
+      "lineHeight": 1.25,
+      "letterSpacing": "0.01em",
+      "z": 25,
+      "role": "guarantee",
+      "accepts": [
+        "guarantee"
+      ],
+      "maxChars": 64,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "cta_text",
+      "tag": "cta",
+      "label": "CTA",
+      "x": 90,
+      "y": 1466,
+      "width": 900,
+      "textAlign": "center",
+      "text": "BOOK THE ATHLETE ANALYSIS",
+      "fontSize": 52,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 1,
+      "letterSpacing": "0.01em",
+      "textTransform": "uppercase",
+      "z": 25,
+      "role": "cta",
+      "accepts": [
+        "cta"
+      ],
+      "maxChars": 28,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark",
+      "x": 90,
+      "y": 1664,
+      "width": 900,
+      "textAlign": "left",
+      "text": "ATHLETES ACCELERATION",
+      "fontSize": 34,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 500,
+      "color": "#ffffff",
+      "letterSpacing": "0.14em",
+      "textTransform": "uppercase",
+      "z": 27,
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    }
+  ],
+  "media": {
+    "path": "./assets/conf-F2.jpg",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1
+  }
+}
