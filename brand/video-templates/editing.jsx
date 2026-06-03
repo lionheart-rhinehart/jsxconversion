@@ -148,8 +148,15 @@ function TrimmedMedia({ src, clipStart = 0, clipEnd = null, muted = true, style 
   // <img data-bgframe> the render driver fills per frame — a wall-clock <video>
   // hyperloops/freezes in the headless frame-by-frame capture. Live preview keeps
   // the normal <video> below.
+  //
+  // NB: run-campaign signals this case by REWRITING src to the frames-dir base
+  // (e.g. "./E1.bgframes/"), which has no video extension — so `isVideo` is false
+  // here. Gate on `src === bf.base` (not isVideo) so this fires; otherwise we'd fall
+  // through to <img src="<a directory>"> and render a broken/black background (the
+  // bug that hit every TrimmedMedia template: meet-coach, quote-card, …). A real
+  // static photo (its own jpg src) never equals bf.base, so it's unaffected.
   const bf = (typeof window !== 'undefined') ? window.__bgFrames : null;
-  const useFrames = isVideo && bf && bf.base && bf.count > 0;
+  const useFrames = !!bf && !!bf.base && bf.count > 0 && (isVideo || src === bf.base);
 
   React.useEffect(() => {
     if (useFrames || !isVideo || !videoRef.current) return;

@@ -35,7 +35,13 @@
           "source": "template",
           "template": "fresh-multisport-foundations-grind-trap-A1",
           "templateData": {
-            "duration": 3
+            "duration": 3,
+            "eyebrow": "// THE LAST REP LIE",
+            "line1": "THE TIRED REP\nISN'T EFFORT.",
+            "line2": "IT'S INSTRUCTION.",
+            "brand": "ATHLETES ACCELERATION",
+            "bgClip": "http://localhost:5173/media-file/brand/kraken-cache/multisport-foundations/athletes-acceleration-action-clip-squat-middle-school-female-athletes-acceleration-04d58a05.mp4",
+            "bgClip_audio": false
           },
           "knowledgeRefs": [
             "microscripts_dsi1_grind_trap.lines[0]"
@@ -44,7 +50,8 @@
           "notes": "3s motion hook: 'The tired rep isn't effort. It's instruction.' Eyebrow auto-anchors.",
           "output": "out/campaigns/multisport-foundations/grind-trap/A1.gif",
           "thumb": "out/campaigns/multisport-foundations/grind-trap/A1.gif",
-          "renderedAt": "2026-06-01T19:55:18.750Z"
+          "renderedAt": "2026-06-03T13:46:47.161Z",
+          "clip": "brand/kraken-cache/multisport-foundations/athletes-acceleration-action-clip-squat-middle-school-female-athletes-acceleration-04d58a05.mp4"
         },
         {
           "id": "A2",

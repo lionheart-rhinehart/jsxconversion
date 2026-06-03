@@ -1,0 +1,159 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
+      "z": 1
+    },
+    {
+      "id": "brand_rule",
+      "tag": "brand_rule",
+      "type": "rect",
+      "x": 90,
+      "y": 1786,
+      "width": 120,
+      "height": 5,
+      "fill": "#c4141d",
+      "z": 16
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor chip (auto-filled)",
+      "x": 90,
+      "y": 170,
+      "textAlign": "left",
+      "text": "CARMEL SPORT PARENTS",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#c4141d",
+      "chipBg": "#ffffff",
+      "chipPad": "12px 24px",
+      "chipRadius": 8,
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 34,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "kicker",
+      "tag": "kicker",
+      "label": "Kicker — hook lead-in (top segment of splitHook; blank if 2-seg)",
+      "x": 86,
+      "y": 430,
+      "width": 912,
+      "textAlign": "left",
+      "text": "",
+      "fontSize": 54,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.98,
+      "letterSpacing": "0.01em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 10px rgba(0,0,0,0.6)",
+      "z": 21,
+      "role": "kicker",
+      "accepts": [
+        "kicker"
+      ],
+      "maxChars": 44
+    },
+    {
+      "id": "headline",
+      "tag": "headline",
+      "label": "Headline — main thought of the hook",
+      "x": 86,
+      "y": 600,
+      "width": 912,
+      "textAlign": "left",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "fontSize": 92,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.92,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "textShadow": "0 3px 14px rgba(0,0,0,0.6)",
+      "z": 22,
+      "role": "hook",
+      "accepts": [
+        "hook",
+        "claim",
+        "reframe",
+        "mechanism"
+      ],
+      "maxChars": 130
+    },
+    {
+      "id": "subhead",
+      "tag": "subhead",
+      "label": "Subhead — the rest of the hook",
+      "x": 86,
+      "y": 1180,
+      "width": 912,
+      "textAlign": "left",
+      "text": "(And What Actually Rebuilds It)",
+      "fontSize": 64,
+      "fontFamily": "Anton",
+      "color": "#c4141d",
+      "lineHeight": 0.96,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 10px rgba(0,0,0,0.6)",
+      "z": 23,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "claim",
+        "proof"
+      ],
+      "maxChars": 56
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark",
+      "x": 90,
+      "y": 1812,
+      "width": 900,
+      "textAlign": "left",
+      "text": "ATHLETES ACCELERATION",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 500,
+      "color": "#ffffff",
+      "letterSpacing": "0.14em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 8px rgba(0,0,0,0.8)",
+      "z": 24,
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 24
+    }
+  ],
+  "media": {
+    "path": "./assets/conf-A4.jpg",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1
+  }
+}

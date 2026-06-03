@@ -1,0 +1,7 @@
+{
+  "_comment": "Location tier — Milford facility (Athletes Acceleration, OH). Supplies `city` for the locale eyebrow anchor ('MILFORD SPORT PARENTS'). State suffix is stripped by buildEyebrowAnchor.",
+  "location": "milford",
+  "tags": {
+    "city": "MILFORD, OH"
+  }
+}

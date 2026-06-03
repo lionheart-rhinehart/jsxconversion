@@ -1,0 +1,152 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
+      "z": 1
+    },
+    {
+      "id": "brand_rule",
+      "tag": "brand_rule",
+      "type": "rect",
+      "x": 90,
+      "y": 1628,
+      "width": 150,
+      "height": 6,
+      "fill": "#c4141d",
+      "z": 16
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor chip (auto-filled)",
+      "x": 90,
+      "y": 170,
+      "textAlign": "left",
+      "text": "NOBLESVILLE SPORT PARENTS",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#c4141d",
+      "chipBg": "#ffffff",
+      "chipPad": "12px 24px",
+      "chipRadius": 8,
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 34,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "quote_mark",
+      "tag": "quote_mark",
+      "label": "Decorative quote glyph",
+      "x": 84,
+      "y": 360,
+      "width": 400,
+      "textAlign": "left",
+      "text": "“",
+      "fontSize": 320,
+      "fontFamily": "Anton",
+      "color": "#c4141d",
+      "lineHeight": 0.7,
+      "z": 21,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "reframe",
+      "tag": "reframe",
+      "label": "Blame-removal reframe",
+      "x": 90,
+      "y": 640,
+      "width": 912,
+      "textAlign": "left",
+      "text": "They have to see it.",
+      "fontSize": 150,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.92,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "whiteSpace": "pre-line",
+      "z": 22,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "claim",
+        "hook"
+      ],
+      "maxChars": 40,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "support",
+      "tag": "support",
+      "label": "Support line",
+      "x": 92,
+      "y": 1230,
+      "width": 880,
+      "textAlign": "left",
+      "text": "You can't hand it to them, and a coach can't shout it into them.",
+      "fontSize": 46,
+      "fontFamily": "Geist",
+      "fontWeight": 500,
+      "color": "#c4141d",
+      "lineHeight": 1.12,
+      "z": 23,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "claim",
+        "mechanism",
+        "proof"
+      ],
+      "maxChars": 90,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark",
+      "x": 90,
+      "y": 1664,
+      "width": 900,
+      "textAlign": "left",
+      "text": "ATHLETES ACCELERATION",
+      "fontSize": 34,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 500,
+      "color": "#ffffff",
+      "letterSpacing": "0.14em",
+      "textTransform": "uppercase",
+      "z": 24,
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    }
+  ],
+  "media": {
+    "path": "./assets/conf-C2.jpg",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1
+  }
+}

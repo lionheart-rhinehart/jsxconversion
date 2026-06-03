@@ -1,0 +1,117 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "rule_top",
+      "tag": "rule_top",
+      "type": "rect",
+      "x": 240,
+      "y": 690,
+      "width": 600,
+      "height": 6,
+      "fill": "#c4141d",
+      "z": 15
+    },
+    {
+      "id": "rule_bottom",
+      "tag": "rule_bottom",
+      "type": "rect",
+      "x": 240,
+      "y": 1230,
+      "width": 600,
+      "height": 6,
+      "fill": "#c4141d",
+      "z": 15
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor chip (auto-filled, centered)",
+      "x": 0,
+      "y": 340,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "MILFORD SPORT PARENT",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#c4141d",
+      "chipBg": "#ffffff",
+      "chipPad": "12px 24px",
+      "chipRadius": 8,
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 34
+    },
+    {
+      "id": "reframe",
+      "tag": "reframe",
+      "label": "Framed reframe (centered, two-line)",
+      "x": 60,
+      "y": 760,
+      "width": 960,
+      "textAlign": "center",
+      "text": "The training looked productive. It was Phantom Progress.",
+      "fontSize": 96,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 1,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "whiteSpace": "pre-line",
+      "z": 21,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "claim",
+        "hook"
+      ],
+      "maxChars": 80
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark (centered)",
+      "x": 0,
+      "y": 1680,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "ATHLETES ACCELERATION",
+      "fontSize": 34,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 500,
+      "color": "#ffffff",
+      "letterSpacing": "0.14em",
+      "textTransform": "uppercase",
+      "z": 22,
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 24
+    }
+  ],
+  "media": {
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1,
+    "z": 0,
+    "path": "./assets/swap-dsc09089.jpg",
+    "crop": {
+      "x": 1324,
+      "y": 0,
+      "width": 1593,
+      "height": 2620,
+      "forPath": "./assets/swap-dsc09089.jpg"
+    }
+  }
+}

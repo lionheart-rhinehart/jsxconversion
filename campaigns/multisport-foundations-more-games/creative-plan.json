@@ -35,38 +35,51 @@
           "id": "A1",
           "beat": "A — Stop the scroll",
           "temperature": "cold",
-          "format": "static",
+          "format": "gif",
           "source": "template",
-          "template": "cluster-33",
-          "media": "./assets/mg-A1.jpg",
-          "copyRefs": {
-            "hook": "ad-2.bodyLine.2.2"
+          "template": "fresh-multisport-foundations-grind-trap-A1",
+          "clip": "brand/video-templates/assets/mg-A1.mp4",
+          "templateData": {
+            "line1": "A GAME IS A TEST,",
+            "line2": "NOT A TEACHER.",
+            "brand": "ATHLETES ACCELERATION"
           },
-          "copySource": "Verbatim magnet (AD2 body): \"A game is a test, not a teacher.\" — the angle's epiphany.",
+          "copySource": "Verbatim magnet (AD2 body): \"A game is a test, not a teacher.\" — the angle's epiphany, split across the two display lines. eyebrow auto-anchors.",
           "status": "rendered",
-          "notes": "Lone epiphany hook over sprint footage.",
-          "output": "out/campaigns/multisport-foundations-more-games/more-games/A1.png",
-          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/A1.png",
-          "renderedAt": "2026-06-03T13:28:23.227Z"
+          "notes": "MOTION (rebalance): 3s GIF hook over agility footage (was static cluster-33). CANDIDATE CLIP mg-A1.mp4 (free agility-drill 5033ed6f) — swap on the review page if desired.",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/A1.gif",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/A1.gif",
+          "renderedAt": "2026-06-03T15:35:42.292Z"
         },
         {
           "id": "A2",
           "beat": "A — Stop the scroll",
           "temperature": "cold",
-          "format": "static",
+          "format": "video",
           "source": "template",
-          "template": "cluster-35",
-          "media": "./assets/mg-A2.jpg",
-          "copyRefs": {
-            "hook": "ad-1.headline",
-            "claim": "ad-1.description"
+          "template": "two-truths-lie",
+          "templateData": {
+            "duration": 8,
+            "title": "2 TRUTHS, 1 LIE.",
+            "claim1": "A GAME DOESN'T DEVELOP AN ATHLETE. IT REVEALS ONE.",
+            "claim2": "A GAME IS A TEST, NOT A TEACHER.",
+            "claim3": "MORE GAMES MAKE A KID FASTER.",
+            "lieIndex": 3,
+            "lieExplain": "Games measure speed. They don't build it. Training does.",
+            "ctaText": "SPOT THE LIE"
           },
-          "copySource": "Verbatim magnets: ad Headline \"Why More Games Isn't Enough\" (hook) + Description \"Built, then measured.\" (claim).",
+          "copySource": "Two-truths-one-lie engagement card. Truths are verbatim: claim1 = AD1 \"A game doesn't develop an athlete. It reveals one.\"; claim2 = AD2 \"A game is a test, not a teacher.\" claim3 is the angle's target misconception (the LIE: \"more games make a kid faster\"), revealed false by lieExplain (the mechanism: games measure speed, training builds it). eyebrow auto-anchors.",
           "status": "rendered",
-          "notes": "Split card: headline + claim.",
-          "output": "out/campaigns/multisport-foundations-more-games/more-games/A2.png",
-          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/A2.png",
-          "renderedAt": "2026-06-03T13:28:26.998Z"
+          "notes": "MOTION (rebalance): two-truths-1-lie engagement card for the cold stop-scroll (animated reveal; no footage by template design — exposes no media key). Template changed from velocity-drop per review-UI edit.",
+          "flags": [
+            "anim-card"
+          ],
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/A2.mp4",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/A2.mp4",
+          "renderedAt": "2026-06-03T16:05:39.248Z"
         },
         {
           "id": "A3",
@@ -82,7 +95,7 @@
           "notes": "Two-segment mechanism hook stacked.",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/A3.png",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/A3.png",
-          "renderedAt": "2026-06-03T13:28:30.407Z"
+          "renderedAt": "2026-06-03T14:46:48.118Z"
         },
         {
           "id": "A4",
@@ -103,7 +116,7 @@
           "notes": "Claim + support = the on-image headline pair.",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/A4.png",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/A4.png",
-          "renderedAt": "2026-06-03T13:28:34.324Z"
+          "renderedAt": "2026-06-03T14:47:21.306Z"
         },
         {
           "id": "B1",
@@ -123,83 +136,120 @@
           "notes": "KICKER CARD — full stacked hook from three verbatim sentences.",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/B1.png",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/B1.png",
-          "renderedAt": "2026-06-03T13:28:38.044Z"
+          "renderedAt": "2026-06-03T14:47:39.259Z"
         },
         {
           "id": "B2",
           "beat": "B — Name the moment",
           "temperature": "cold",
-          "format": "static",
+          "format": "gif",
           "source": "template",
-          "template": "cluster-40",
-          "media": "./assets/mg-B2.jpg",
-          "copyRefs": {
-            "reframe": [
-              "ad-1.bodyLine.2.2",
-              "ad-1.bodyLine.2.3"
-            ]
+          "template": "fresh-multisport-foundations-grind-trap-A1",
+          "clip": "brand/video-templates/assets/mg-B2.mp4",
+          "templateData": {
+            "line1": "A GAME DOESN'T\nDEVELOP AN ATHLETE.",
+            "line2": "IT REVEALS ONE.",
+            "brand": "ATHLETES ACCELERATION"
           },
-          "copySource": "Verbatim magnets (AD1 body): \"A game doesn't develop an athlete.\" + \"It reveals one.\"",
+          "copySource": "Verbatim magnets (AD1 body): \"A game doesn't develop an athlete.\" (line1) + \"It reveals one.\" (line2). eyebrow auto-anchors.",
           "status": "rendered",
-          "notes": "Quote-style reframe + support.",
-          "output": "out/campaigns/multisport-foundations-more-games/more-games/B2.png",
-          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/B2.png",
-          "renderedAt": "2026-06-03T13:28:41.868Z"
+          "notes": "MOTION (rebalance): 3s GIF reframe over deadlift footage (was static cluster-40). CANDIDATE CLIP mg-B2.mp4 (free deadlift c306cfa9).",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/B2.gif",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/B2.gif",
+          "renderedAt": "2026-06-03T15:55:11.204Z"
         },
         {
           "id": "C1",
           "beat": "C — Reveal mechanism",
           "temperature": "warm",
-          "format": "static",
+          "format": "video",
           "source": "template",
-          "template": "cluster-36",
-          "media": "./assets/mg-C1.jpg",
-          "copyRefs": {
-            "reframe": "ad-3.bodyLine.2.5"
+          "template": "velocity-drop",
+          "clip": "brand/video-templates/assets/mg-C1.mp4",
+          "templateData": {
+            "claim": "The ceiling never moves, because nothing on a game field was ever designed to move it.",
+            "coachName": "COACH GRAHAM WILKERSON",
+            "credentials": "CSCS · NFL-TRAINED"
           },
-          "copySource": "Verbatim magnet (AD3 body): \"The ceiling never moves, because nothing on a game field was ever designed to move it.\"",
+          "copySource": "claim = verbatim magnet (AD3 body) \"The ceiling never moves, because nothing on a game field was ever designed to move it.\" over squat-jump footage; coachName/credentials byline identity.",
           "status": "rendered",
-          "notes": "Why the ceiling holds (mechanism).",
-          "output": "out/campaigns/multisport-foundations-more-games/more-games/C1.png",
-          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/C1.png",
-          "renderedAt": "2026-06-03T13:28:45.437Z"
+          "notes": "MOTION (rebalance): velocity-drop mechanism over squat-jump footage (was static cluster-36). CANDIDATE CLIP mg-C1.mp4 (free squat-jump cc69c187).",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/C1.mp4",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/C1.mp4",
+          "renderedAt": "2026-06-03T15:41:36.098Z"
         },
         {
           "id": "C2",
           "beat": "C — Reveal mechanism",
           "temperature": "warm",
+          "format": "gif",
+          "source": "template",
+          "template": "fresh-multisport-foundations-grind-trap-A1",
+          "clip": "brand/video-templates/assets/mg-C2.mp4",
+          "templateData": {
+            "line1": "THAT KIND OF SPEED",
+            "line2": "DOESN'T STAY IN THE GYM.",
+            "brand": "ATHLETES ACCELERATION"
+          },
+          "copySource": "Verbatim magnet (AD3 body): \"That kind of speed doesn't stay in the gym.\" — split across the two display lines. eyebrow auto-anchors.",
+          "status": "rendered",
+          "notes": "MOTION (rebalance): 3s GIF reframe over sprint footage (was static cluster-42; distinct from C1 velocity-drop / C3 chart). CANDIDATE CLIP mg-C2.mp4 (free sprinting c818ba76).",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/C2.gif",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/C2.gif",
+          "renderedAt": "2026-06-03T15:42:26.790Z"
+        },
+        {
+          "id": "C3",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
           "format": "static",
           "source": "template",
-          "template": "cluster-42",
-          "media": "./assets/mg-C2.jpg",
+          "template": "cluster-37",
+          "media": "./assets/mg-C3.jpg",
           "copyRefs": {
-            "reframe": "ad-3.bodyLine.6.1"
+            "claim": "ad-2.bodyLine.3.1"
           },
-          "copySource": "Verbatim magnet (AD3 body): \"That kind of speed doesn't stay in the gym.\"",
-          "status": "rendered",
-          "notes": "The build pays off on the field (distinct from C1).",
-          "output": "out/campaigns/multisport-foundations-more-games/more-games/C2.png",
-          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/C2.png",
-          "renderedAt": "2026-06-03T13:28:49.609Z"
+          "copySource": "Verbatim magnet (AD2 body): \"The speed and power behind those plays gets built on purpose, in training, or it doesn't get built at all.\" — the build-or-nothing mechanism (distinct from C1 ceiling / C2 speed-on-field).",
+          "status": "planned",
+          "notes": "Mechanism: built on purpose or not at all (cluster-37 velocity-chart, distinct skeleton from C1/C2). MEDIA PENDING — hand-place ./assets/mg-C3.jpg via the Kraken bar; the static render injects it as a full-frame bg + scrim behind the chart (current PNG is a text-only placeholder).",
+          "flags": [
+            "needs-media"
+          ],
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/C3.png",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/C3.png",
+          "renderedAt": "2026-06-03T15:08:01.234Z"
         },
         {
           "id": "D1",
           "beat": "D — Remove blame",
           "temperature": "warm",
-          "format": "static",
+          "format": "video",
           "source": "template",
-          "template": "cluster-43",
-          "media": "./assets/mg-D1.jpg",
-          "copyRefs": {
-            "kicker": "ad-3.bodyLine.4.2",
-            "hook": "ad-3.bodyLine.4.1"
+          "template": "velocity-drop",
+          "clip": "brand/video-templates/assets/mg-D1.mp4",
+          "templateData": {
+            "claim": "None of that playing time was wasted, and you weren't wrong to want it.",
+            "coachName": "COACH GRAHAM WILKERSON",
+            "credentials": "CSCS · NFL-TRAINED"
           },
-          "copySource": "Verbatim magnets (AD3 body) → eyebrow→kicker→headline: \"Games matter.\" (kicker lead-in) / \"And here's something worth saying plainly: none of that playing time was wasted, and you weren't wrong to want it.\" (headline).",
+          "copySource": "claim = verbatim blame-removal magnet (AD3 bodyLine.4.1, preamble 'And here's something worth saying plainly:' trimmed) over sprint footage; coachName/credentials byline identity.",
           "status": "rendered",
-          "notes": "KICKER CARD — 'Games matter.' lead-in over the blame-removal line.",
-          "output": "out/campaigns/multisport-foundations-more-games/more-games/D1.png",
-          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/D1.png",
-          "renderedAt": "2026-06-03T13:28:54.004Z"
+          "notes": "MOTION (rebalance): velocity-drop blame-removal over sprint footage (was static cluster-43 kicker card). CANDIDATE CLIP mg-D1.mp4 (free sprinting 60e664e6).",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/D1.mp4",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/D1.mp4",
+          "renderedAt": "2026-06-03T15:44:43.317Z"
         },
         {
           "id": "D2",
@@ -217,7 +267,28 @@
           "notes": "The cost named plainly (distinct from C1).",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/D2.png",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/D2.png",
-          "renderedAt": "2026-06-03T13:28:58.181Z"
+          "renderedAt": "2026-06-03T14:48:48.447Z"
+        },
+        {
+          "id": "D3",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-34",
+          "media": "./assets/mg-D3.jpg",
+          "copyRefs": {
+            "reframe": "ad-3.bodyLine.4.4"
+          },
+          "copySource": "Verbatim magnet (AD3 body): \"They were just never the place an athlete gets built, and asking a game to make a kid faster is asking the scoreboard to do the work of the weight room.\" — blame-removal reframe (distinct from D1 'games matter' / D2 'whole season can pass').",
+          "status": "planned",
+          "notes": "Remove-blame reframe: the scoreboard can't do the weight room's job (cluster-34 phrase-kill, distinct skeleton from D1/D2). MEDIA PENDING — hand-place ./assets/mg-D3.jpg via the Kraken bar; the static render injects it as a full-frame bg + scrim (current PNG is a text-only placeholder).",
+          "flags": [
+            "needs-media"
+          ],
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/D3.png",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/D3.png",
+          "renderedAt": "2026-06-03T15:08:04.931Z"
         },
         {
           "id": "E1",
@@ -243,7 +314,7 @@
           "notes": "Coach proof VSL over box-jump footage.",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/E1.mp4",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/E1.mp4",
-          "renderedAt": "2026-06-03T13:29:31.338Z"
+          "renderedAt": "2026-06-03T15:59:42.223Z"
         },
         {
           "id": "E2",
@@ -265,7 +336,7 @@
           "notes": "Parent case-study quote card.",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/E2.mp4",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/E2.mp4",
-          "renderedAt": "2026-06-03T13:29:59.424Z"
+          "renderedAt": "2026-06-03T15:00:30.401Z"
         },
         {
           "id": "E3",
@@ -289,7 +360,7 @@
           "notes": "Credential verdict (static; distinct from E1 video / E2 quote).",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/E3.png",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/E3.png",
-          "renderedAt": "2026-06-03T13:30:02.998Z"
+          "renderedAt": "2026-06-03T14:52:13.212Z"
         },
         {
           "id": "E4",
@@ -310,7 +381,7 @@
           "notes": "Testimonial card.",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/E4.png",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/E4.png",
-          "renderedAt": "2026-06-03T13:30:06.659Z"
+          "renderedAt": "2026-06-03T14:52:28.248Z"
         },
         {
           "id": "F1",
@@ -339,7 +410,7 @@
           "notes": "Guarantee reveal video.",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/F1.mp4",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/F1.mp4",
-          "renderedAt": "2026-06-03T13:30:25.133Z"
+          "renderedAt": "2026-06-03T14:52:49.573Z"
         },
         {
           "id": "F2",
@@ -359,7 +430,33 @@
           "notes": "Offer card. Guarantee band verbatim-locked.",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/F2.png",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/F2.png",
-          "renderedAt": "2026-06-03T13:30:28.950Z"
+          "renderedAt": "2026-06-03T14:53:10.936Z"
+        },
+        {
+          "id": "F3",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "season-clock",
+          "clip": "brand/video-templates/assets/mg-F3.mp4",
+          "templateData": {
+            "line1": "ANOTHER SEASON.",
+            "line2": "SAME SPEED.",
+            "offer": "SEE THE NUMBER FIRST.",
+            "guarantee": "+1 mph. +3 inches. 90 days. Or we keep training them free.",
+            "cta": "BOOK THE FREE ATHLETE ANALYSIS",
+            "brand": "ATHLETES ACCELERATION"
+          },
+          "copySource": "Retarget offer, distinct motion from F1 stat-reveal. Scene-1 'ANOTHER SEASON. / SAME SPEED.' compresses the angle setup (AD2 para1: 'Another season, another team, more reps in real games. And a year later, the same kid, the same speed.'). offer = the Athlete Analysis baseline ('See the number first'; AD2 'You'll see your athlete's real numbers before you decide anything.'). guarantee = canonical brand-locked wording (AD2 bodyPara.7). eyebrow auto-anchors to INDIANAPOLIS SPORT PARENTS.",
+          "status": "rendered",
+          "notes": "Season-clock retarget offer over footage (distinct from F1/F2). CANDIDATE CLIP placed (mg-F3.mp4 = free sprinting clip 899da2d7) — footage renders correctly; swap/reframe on the review page if you want a different shot.",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/multisport-foundations-more-games/more-games/F3.mp4",
+          "thumb": "out/campaigns/multisport-foundations-more-games/more-games/F3.mp4",
+          "renderedAt": "2026-06-03T15:18:00.154Z"
         },
         {
           "id": "BR1",
@@ -380,7 +477,7 @@
           "notes": "Brand bumper over sled-push footage.",
           "output": "out/campaigns/multisport-foundations-more-games/more-games/BR1.mp4",
           "thumb": "out/campaigns/multisport-foundations-more-games/more-games/BR1.mp4",
-          "renderedAt": "2026-06-03T13:30:40.006Z"
+          "renderedAt": "2026-06-03T14:53:23.874Z"
         }
       ]
     }
