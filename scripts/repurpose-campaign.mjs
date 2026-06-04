@@ -259,8 +259,12 @@ async function main() {
     console.log(`[repurpose] cloned: ${cloneReport.counts.editConfigs} edit configs (${cloneReport.counts.configChanges} changes), ${cloneReport.counts.templateDataSwaps} templateData swaps, media set ${cloneReport.counts.mediaSet}`);
     for (const w of cloneReport.freshWarnings) console.warn(`[repurpose] warn (fresh asset): ${w}`);
 
-    // Phase 3 — render every asset FULLY (no copy-across path)
-    const rr = sh("node", ["scripts/run-campaign.mjs", target.dest, "--all"]);
+    // Phase 3 — render every asset FULLY (no copy-across path). --force forwards
+    // run-campaign's --force-unsafe so a faithful 1:1 of a grandfathered/force-
+    // shipped source renders despite its inherited (non-introduced) hard blocks.
+    const runArgs = ["scripts/run-campaign.mjs", target.dest, "--all"];
+    if (args.force) runArgs.push("--force-unsafe");
+    const rr = sh("node", runArgs);
     if (!rr.ok) {
       console.error(`[repurpose] ABORT ${target.dest}: render failed (exit ${rr.code})`);
       report.push({ dest: target.dest, status: "aborted (render)" });

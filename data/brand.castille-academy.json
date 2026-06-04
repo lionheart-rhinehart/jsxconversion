@@ -1,0 +1,21 @@
+{
+  "_comment": "Brand kit for Castille Academy — a standalone premium youth athletic-development brand. Keys under `tags` map a layer's field name (its `tag`) to the value that replaces the layer's content at fill time. Source design system lives at kitPath (a Claude Design handoff bundle); see brand/castille-academy/project/README.md for the full brand rules. Campaign/location overlays (data/campaign.*.json, data/location.*.json) override these per launch.",
+  "brand": "Castille Academy",
+  "_note": "Tokens drawn verbatim from the Castille design system (brand/castille-academy/project/colors_and_type.css): provided palette is black/white/red #a81918, type is Libre Caslon Display (display) / Hanken Grotesk (body) / Saira Condensed (the condensed stat/numeral face → the metrics `font_mono` slot). The bank's AA authoring colors are remapped to these at render/clone time (scripts/lib/palette.mjs). CAVEATS: (1) url is a PLACEHOLDER — no real Castille domain provided yet. (2) logo is the design's TYPOGRAPHIC PLACEHOLDER (rendered from the brand-logo.html lockup), not a commissioned crest. (3) brand_name is all-caps for label/eyebrow contexts; on Caslon DISPLAY contexts the design wants Title Case 'Castille Academy' (no all-caps Caslon). (4) fonts are NOT in the bank preflight set — validateKit warns and static font tokenization is deferred (motion honors the family strings; statics keep the bank face) until the .woff2 binaries are registered in fonts/ + brand/castille-academy/fonts/. (5) guarantee set to the AA program line per user direction (the Castille design itself carries no guarantee — its signature device is the Castille Index).",
+  "kitPath": "brand/castille-academy",
+  "logo_src": "brand/castille-academy/assets/castille-logo.png",
+  "tags": {
+    "logo": "./assets/castille-logo.png",
+    "brand_name": "CASTILLE ACADEMY",
+    "guarantee": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us.",
+    "url": "castilleacademy.com",
+    "brand_red": "#a81918",
+    "brand_red_deep": "#891513",
+    "ink_950": "#000000",
+    "ink_900": "#0d0d0d",
+    "white": "#ffffff",
+    "font_display": "'Libre Caslon Display', 'Hoefler Text', Georgia, serif",
+    "font_body": "'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif",
+    "font_mono": "'Saira Condensed', 'Oswald', 'Arial Narrow', sans-serif"
+  }
+}

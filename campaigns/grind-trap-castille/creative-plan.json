@@ -1,0 +1,676 @@
+{
+  "schemaVersion": 1,
+  "campaign": "grind-trap-castille",
+  "brand": "castille-academy",
+  "knobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": {
+      "video": 0.6,
+      "gif": 0.15,
+      "static": 0.25
+    },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 3
+  },
+  "_planNotes": {
+    "copyRule": "VERBATIM ONLY. Every templateData value below is a line Cody actually wrote (ad Headline/Description, image headline/sub-headline, the alternative hooks, or sentences from the AD1/AD2/AD3 body copy) — or a cited fact (Wang 2026 numbers, credentials, offer name). The DSI-1 microscripts were removed at Cody's request and replaced with body/hook lines. Nothing is paraphrased or stitched. Where a written line is two sentences, it is split only at its own sentence boundary (no word changes).",
+    "selection": "Templates were chosen by FIT to the copy: a line goes on the creative whose slot holds it without trimming. The old plan's phrase-kill (cluster-34, 28-char slot) and stitched lines (e.g. 'WORKS HARD. STILL THE SAME SPEED.') were dropped because no verbatim line fits a 28-char kill slot and those strings were rewrites.",
+    "kickerHeadlineSubhead": "Each card = auto locale kicker (eyebrow, '{CITY} SPORTS PARENTS' from the data tier) + a headline-class line + a subhead-class line, mapped from your Headline/Description and image headline/sub-headline structure.",
+    "guaranteeFlag": "IMPORTANT: your ad-copy guarantee reads '+1 mph. +3 inches. 90 days. Or we keep training them free.' The brand kit LOCKS the guarantee role to its canonical wording: '+1 mph speed. +3\" vertical. 90 days. Or your training is on us.' Per brand law the locked canonical renders on creatives (F1/F2/F3/FA1). Flagging so you can confirm or reconcile the two wordings.",
+    "media": "Media follows the proven multisport-foundations-media pattern: STATICS set top-level asset.media (./assets/msf-<id>.jpg, a distinct Hamilton County middle-school frame-grab) → the runner natively injects a full-frame bg + legibility scrim + text shadows (run-campaign.mjs:242). MOTION sets top-level asset.clip (brand/video-templates/assets/msf-<id>.mp4) → the runner auto-detects the bg key + frame-extracts. E1 keeps its coach clip. No hand-built sidecars. F1 (stat-reveal) and BR1 (logo-sting) are intentionally BARE — same as the reference campaign (guarantee reveal + logo bumper render on solid brand backgrounds). Sources: local Hamilton County IG Stories (Carmel/AA-carmel/Noblesville), MS-preferred for the 8-12 band, drill-matched, no reuse. All starting points — swap/reposition in the editor.",
+    "status": "All assets 'pending' — awaiting your approval on the review page. Nothing renders until you approve."
+  },
+  "angles": [
+    {
+      "id": "grind-trap",
+      "name": "My kid tries hard (The Grind Trap / The Last Rep Lie) — ad copy series #1",
+      "location": "pelham",
+      "mechanism": "UMP Mechanism 1 — The Velocity Drop: fatigued reps encode slowness. Fix = the set ends the instant speed drops.",
+      "emotionalJob": "End the parent's guilt. It's not your kid, not you — it's the unmeasured rep.",
+      "voice": "Head-coach-to-parent, declarative, metric-driven. No emoji / exclamation / em dash.",
+      "assets": [
+        {
+          "id": "A1",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-multisport-foundations-grind-trap-A1",
+          "templateData": {
+            "duration": 3,
+            "eyebrow": "",
+            "line1": "THE LAST REP LIE\n\nDOES YOUR KID WORK HARD &\nNEVER QUITS.",
+            "line2": "AND HASN'T GOTTEN FASTER IN SIX MONTHS.",
+            "brand": "CASTILLE ACADEMY",
+            "bgClip": "http://localhost:5273/media-file/brand/kraken-cache/athletes-acceleration-action-clip-sprinting-mixed-male-athletes-acceleration-indy--6402a4e5.mp4",
+            "bgClip_clipStart": 1.602939751037344,
+            "bgClip_clipEnd": 4.602939751037352,
+            "bgClip_audio": true
+          },
+          "knowledgeRefs": [
+            "ad_copy_series_1.ads[0]"
+          ],
+          "copySource": "AD1 lead (verbatim excerpt): \"Works hard. Never quits. And hasn't gotten faster in six months.\"",
+          "status": "rendered",
+          "notes": "3s motion hook from the ad's opening lines.",
+          "clip": "brand/kraken-cache/cas-action-clip-strength-and-agility-training-high-school-mixed--99e3141f.mp4",
+          "output": "out/campaigns/grind-trap-castille/grind-trap/A1.mp4",
+          "thumb": "out/campaigns/grind-trap-castille/grind-trap/A1.mp4",
+          "renderedAt": "2026-06-04T00:07:59.015Z",
+          "kraken": {
+            "id": "cd11c729-b73c-459e-9b33-7a2dc9ac903f",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/grind-trap-castille-grind-trap-A1-1780532872881.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "A2",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-35",
+          "templateData": {
+            "line1": "Why Hard Work Isn't Enough",
+            "line2": "See the number first."
+          },
+          "knowledgeRefs": [
+            "ad_copy_series_1"
+          ],
+          "copySource": "Ad Headline (verbatim) + Description (verbatim): \"Why Hard Work Isn't Enough\" / \"See the number first.\"",
+          "status": "rendered",
+          "notes": "Split red/black: your headline as line1, your description as the subhead.",
+          "media": "./assets/msf-A2.jpg",
+          "photo": "./assets/cas-action-image-posing-high-school-female-castille-academy-slid-d9d2365d.jpg",
+          "output": "out/campaigns/grind-trap-castille/grind-trap/A2.png",
+          "thumb": "out/campaigns/grind-trap-castille/grind-trap/A2.png",
+          "renderedAt": "2026-06-04T00:11:34.695Z",
+          "editedAt": "2026-06-04T00:11:30.673Z",
+          "kraken": {
+            "id": "28343303-f7c2-4b11-9b6b-4c0c01ffb01f",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/grind-trap-castille-grind-trap-A2-1780532874963.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "A3",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-42",
+          "templateData": {
+            "reframe": "The training looked productive. It was Phantom Progress."
+          },
+          "knowledgeRefs": [
+            "ad_copy_series_1.ads[2]",
+            "named_ip"
+          ],
+          "copySource": "AD3 (verbatim): \"The training looked productive. It was Phantom Progress.\" (uses your Phantom Progress IP).",
+          "status": "rendered",
+          "notes": "Centered reframe card.",
+          "media": "./assets/msf-A3.jpg",
+          "photo": "./assets/cas-action-image-posing-high-school-female-castille-academy-slid-e35e9a43.jpg",
+          "output": "out/campaigns/grind-trap-castille/grind-trap/A3.png",
+          "thumb": "out/campaigns/grind-trap-castille/grind-trap/A3.png",
+          "renderedAt": "2026-06-04T00:16:49.222Z",
+          "editedAt": "2026-06-04T00:16:42.426Z",
+          "kraken": {
+            "id": "3116c0dd-09c6-4528-8384-ee5aeba09fe5",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/grind-trap-castille-grind-trap-A3-1780532876496.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "A4",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-33",
+          "templateData": {
+            "hook": "Here's the reason, and it's not them."
+          },
+          "knowledgeRefs": [
+            "ad_copy_series_1.ads[0]"
+          ],
+          "copySource": "AD1 (verbatim): \"Here's the reason, and it's not them.\"",
+          "status": "rendered",
+          "notes": "Lone hook anchored over a sprint still (hand-place the clip in the editor).",
+          "media": "./assets/msf-A4.jpg",
+          "photo": "./assets/cas-action-image-celebrating-high-school-male-castille-academy-s-15a12342.jpg",
+          "output": "out/campaigns/grind-trap-castille/grind-trap/A4.png",
+          "thumb": "out/campaigns/grind-trap-castille/grind-trap/A4.png",
+          "renderedAt": "2026-06-04T00:08:12.057Z",
+          "kraken": {
+            "id": "62d9700c-e65c-4436-b5c3-3c4b1a6156f1",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/grind-trap-castille-grind-trap-A4-1780532877829.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "B1",
+          "beat": "B — Name the moment",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-36",
+          "templateData": {
+            "reframe": "Here's Why Most Young Athletes Stop Getting Faster\n(And What You Can Do About It)"
+          },
+          "knowledgeRefs": [
+            "ad_copy_series_1"
+          ],
+          "copySource": "Image headline (verbatim) + image sub-headline (verbatim), stacked.",
+          "status": "rendered",
+          "notes": "Your on-image headline + sub-headline, both verbatim on one centered card.",
+          "media": "./assets/msf-B1.jpg",
+          "photo": "./assets/cas-action-image-soccer-high-school-female-castille-academy-slid-b92dac9c.jpg",
+          "output": "out/campaigns/grind-trap-castille/grind-trap/B1.png",
+          "thumb": "out/campaigns/grind-trap-castille/grind-trap/B1.png",
+          "renderedAt": "2026-06-04T00:08:17.299Z",
+          "kraken": {
+            "id": "1dc4e1f4-fdf4-4fb2-9c01-b3dd4c841bc8",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/grind-trap-castille-grind-trap-B1-1780532879328.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "B2",
+          "beat": "B — Name the moment",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-39",
+          "templateData": {
+            "claim": "Your kid's training is working perfectly.",
+            "support": "The problem is what it's teaching."
+          },
+          "knowledgeRefs": [
+            "ad_copy_series_1.alt_hooks"
+          ],
+          "copySource": "AD1 alternative hook 2 (verbatim Paradox): \"Your kid's training is working perfectly. The problem is what it's teaching.\"",
+          "status": "rendered",
+          "notes": "Headline + support = the two sentences of your Paradox hook.",
+          "media": "./assets/msf-B2.jpg",
+          "photo": "./assets/cas-action-image-posing-high-school-female-castille-academy-slid-94c8b00b.jpg",
+          "output": "out/campaigns/grind-trap-castille/grind-trap/B2.png",
+          "thumb": "out/campaigns/grind-trap-castille/grind-trap/B2.png",
+          "renderedAt": "2026-06-04T00:08:21.793Z",
+          "kraken": {
+            "id": "8f132f11-043a-481a-bed1-4c082aaf9977",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/grind-trap-castille-grind-trap-B2-1780532880359.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "C1",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "velocity-drop",
+          "templateData": {
+            "duration": 9,
+            "eyebrow": "// THE 10% RULE",
+            "claim": "THE SET ENDS THE SECOND SPEED DROPS.",
+            "coachName": "COACH GRAHAM WILKERSON",
+            "credentials": "CSCS · NFL-TRAINED",
+            "brand": "CASTILLE ACADEMY",
+            "mechanism": "The set ends the second speed drops.",
+            "byline": "COACH GRAHAM WILKERSON · CSCS",
+            "bgClip": "http://localhost:5273/media-file/brand/video-templates/assets/msf-A1.mp4"
+          },
+          "knowledgeRefs": [
+            "problem_mechanism.solution_fix",
+            "credentials"
+          ],
+          "copySource": "Mechanism line (verbatim AD1): \"The set ends the second speed drops.\"; credential fact.",
+          "status": "rendered",
+          "notes": "Velocity-drop animation shows the set ending at the cutoff while your rule reads on screen.",
+          "clip": "brand/kraken-cache/cas-action-clip-strength-and-conditioning-middle-school-mixed-ca-9fefd2ca.mp4",
+          "output": "out/campaigns/grind-trap-castille/grind-trap/C1.mp4",
+          "thumb": "out/campaigns/grind-trap-castille/grind-trap/C1.mp4",
+          "renderedAt": "2026-06-04T00:10:47.824Z",
+          "kraken": {
+            "id": "ba97cb54-f912-4543-9a03-947c23046c5d",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/grind-trap-castille-grind-trap-C1-1780532882320.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "C2",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-37",
+          "templateData": {
+            "claim": "Every rep your athlete does stays fast."
+          },
+          "knowledgeRefs": [
+            "problem_mechanism.solution_fix"
+          ],
+          "copySource": "Verbatim (AD2): \"every rep your athlete does stays fast.\"",
+          "status": "rendered",
+          "notes": "Mechanism velocity-chart; your fix line as the claim.",
+          "media": "./assets/msf-C2.jpg",
+          "photo": "./assets/cas-action-image-lifting-high-school-male-castille-academy-8c864ece.png",
+          "output": "out/campaigns/grind-trap-castille/grind-trap/C2.png",
+          "thumb": "out/campaigns/grind-trap-castille/grind-trap/C2.png",
+          "renderedAt": "2026-06-04T00:10:53.739Z",
+          "kraken": {
+            "id": "6ef3d4d2-a0d7-4ac3-ad83-957982b902c3",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/grind-trap-castille-grind-trap-C2-1780532884062.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "C3",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-40",
+          "templateData": {
+            "reframe": "The instant speed drops, the set ends.",
+            "support": "It doesn't just memorize the movement. It memorizes the speed."
+          },
+          "knowledgeRefs": [
+            "problem_mechanism",
+            "ad_copy_series_1.ads[2]"
+          ],
+          "copySource": "Verbatim (AD3): \"The instant speed drops, the set ends.\" + \"it doesn't just memorize the movement, it memorizes the speed\" (split at sentence boundary).",
+          "status": "rendered",
+          "notes": "Quote-style reframe + the muscle-memory mechanic as support.",
+          "media": "./assets/msf-C3.jpg",
+          "photo": "./assets/cas-action-image-agility-drill-middle-school-male-castille-acade-604abe06.png",
+          "output": "out/campaigns/grind-trap-castille/grind-trap/C3.png",
+          "thumb": "out/campaigns/grind-trap-castille/grind-trap/C3.png",
+          "renderedAt": "2026-06-04T00:10:58.144Z",
+          "kraken": {
+            "id": "fd37dfaf-9057-49b0-a02c-44fd5fe6ddfa",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/grind-trap-castille-grind-trap-C3-1780532885701.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "D1",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-36",
+          "templateData": {
+            "reframe": "The reps that feel like the hardest work are the ones quietly making your kid slower."
+          },
+          "knowledgeRefs": [
+            "ad_copy_series_1.ads[0]"
+          ],
+          "copySource": "AD1 (verbatim): \"The reps that feel like the hardest work are the ones quietly making your kid slower.\"",
+          "status": "rendered",
+          "notes": "Centered emotional close of the angle (≠ B1 copy).",
+          "media": "./assets/msf-D1.jpg",
+          "photo": "./assets/cas-action-image-lunge-with-overhead-hold-high-school-female-cas-8c2a7c2f.png",
+          "output": "out/campaigns/grind-trap-castille/grind-trap/D1.png",
+          "thumb": "out/campaigns/grind-trap-castille/grind-trap/D1.png",
+          "renderedAt": "2026-06-04T00:11:02.531Z",
+          "kraken": {
+            "id": "207cb2b9-7093-4f8a-b7c2-a905e2521843",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/grind-trap-castille-grind-trap-D1-1780532886711.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "D2",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-42",
+          "templateData": {
+            "reframe": "This was never your kid's fault, and it was never yours."
+          },
+          "knowledgeRefs": [
+            "ad_copy_series_1.ads[2]",
+            "problem_mechanism.reframe_of_blame"
+          ],
+          "copySource": "Verbatim (AD3): \"this was never your kid's fault, and it was never yours.\"",
+          "status": "rendered",
+          "notes": "Centered reframe (≠ A3 copy).",
+          "media": "./assets/msf-D2.jpg",
+          "photo": "./assets/cas-action-image-rotational-training-high-school-male-castille-a-2aab1e2c.png",
+          "output": "out/campaigns/grind-trap-castille/grind-trap/D2.png",
+          "thumb": "out/campaigns/grind-trap-castille/grind-trap/D2.png",
+          "renderedAt": "2026-06-04T00:11:06.990Z",
+          "kraken": {
+            "id": "16a20027-556e-40fc-91b7-d57fcf0ceb4e",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/grind-trap-castille-grind-trap-D2-1780532887920.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "D3",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-41",
+          "templateData": {
+            "claim_line1": "The effort was real.",
+            "claim_line2": "It was just rehearsing the wrong thing."
+          },
+          "knowledgeRefs": [
+            "ad_copy_series_1.ads[2]"
+          ],
+          "copySource": "Verbatim (AD3): \"The effort was real. It was just rehearsing the wrong thing.\"",
+          "status": "rendered",
+          "notes": "Two-tier hook+claim from your blame-removal beat.",
+          "media": "./assets/msf-D3.jpg",
+          "photo": "./assets/cas-group-shot-posing-middle-school-male-castille-academy-1eb84be1.jpg",
+          "output": "out/campaigns/grind-trap-castille/grind-trap/D3.png",
+          "thumb": "out/campaigns/grind-trap-castille/grind-trap/D3.png",
+          "renderedAt": "2026-06-04T00:11:11.061Z",
+          "kraken": {
+            "id": "3777bae5-36de-4361-a925-8a5470eb9b4e",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/grind-trap-castille-grind-trap-D3-1780532889190.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "E1",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "meet-coach",
+          "clip": "brand/kraken-cache/cas-action-clip-landmine-rotations-sled-push-side-plank-rotation-bda56fa9.mp4",
+          "templateData": {
+            "eyebrow": "WHY HARD WORK ISN'T ENOUGH",
+            "coachFirst": "COACH GRAHAM",
+            "coachLast": "WILKERSON",
+            "coachTitle": "CSCS",
+            "quote": "A FAST REP IS THE ONLY THING WORTH REHEARSING.",
+            "credentials": "TRAINED ZACK MARTIN · TED KARRAS · NICK MARTIN",
+            "facts": "224%|GREATER VERTICAL (WANG 2026) · 28%|LESS FATIGUE · 8-12|THE WINDOW",
+            "ctaText": "BOOK THE ATHLETE ANALYSIS",
+            "ctaMicro": "FREE. REAL NUMBERS, NOT A PITCH."
+          },
+          "knowledgeRefs": [
+            "credentials",
+            "proof_studies[0]",
+            "the_offer"
+          ],
+          "copySource": "All verbatim: ad Headline (eyebrow), AD3 quote \"a fast rep is the only thing worth rehearsing\", credentials, Wang 2026 numbers, Athlete Analysis offer.",
+          "status": "rendered",
+          "notes": "Coach proof VSL. Binds a real coach clip — hand-place in the editor.",
+          "output": "out/campaigns/grind-trap-castille/grind-trap/E1.mp4",
+          "thumb": "out/campaigns/grind-trap-castille/grind-trap/E1.mp4",
+          "renderedAt": "2026-06-04T00:12:10.335Z",
+          "kraken": {
+            "id": "d5e930bb-9441-446a-8405-501f0b7b129b",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/grind-trap-castille-grind-trap-E1-1780532890722.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "E2",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-30",
+          "templateData": {
+            "stat1_value": "224%",
+            "stat1_label": "GREATER VERTICAL JUMP",
+            "stat2_value": "28%",
+            "stat2_label": "LESS TOTAL FATIGUE",
+            "proof_citation": "WANG 2026 · FRONTIERS IN PHYSIOLOGY",
+            "claim_line": "Less work. More speed."
+          },
+          "knowledgeRefs": [
+            "proof_studies[0]"
+          ],
+          "copySource": "Verbatim cited proof (AD2/AD3): 224% greater vertical jump, 28% less fatigue, Wang 2026 Frontiers in Physiology; claim \"Less work. More speed.\"",
+          "status": "rendered",
+          "notes": "Giant-stat proof card.",
+          "media": "./assets/msf-E2.jpg",
+          "photo": "./assets/cas-behind-the-scenes-celebrating-high-school-male-castille-acad-4524b603.jpg",
+          "output": "out/campaigns/grind-trap-castille/grind-trap/E2.png",
+          "thumb": "out/campaigns/grind-trap-castille/grind-trap/E2.png",
+          "renderedAt": "2026-06-04T00:12:14.992Z",
+          "kraken": {
+            "id": "75f2db8e-90b0-4469-92a7-33a3649daf66",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/grind-trap-castille-grind-trap-E2-1780532892667.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "E3",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-31",
+          "templateData": {
+            "coach_name": "COACH GRAHAM\nWILKERSON",
+            "coach_title": "CSCS",
+            "proof_hero": "TRAINED NFL\nATHLETES",
+            "proof_names": "ZACK MARTIN · TED KARRAS · NICK MARTIN",
+            "claim_line": "The same credential D1 and NFL strength coaches carry."
+          },
+          "knowledgeRefs": [
+            "credentials"
+          ],
+          "copySource": "Verbatim credential facts (AD3): Coach Graham Wilkerson, CSCS, trained Zack Martin / Ted Karras / Nick Martin; \"the same credential D1 and NFL strength coaches carry.\"",
+          "status": "rendered",
+          "notes": "Credential verdict (static, ≠ E1 video / E2 stat).",
+          "media": "./assets/msf-E3.jpg",
+          "photo": "./assets/cas-behind-the-scenes-signing-high-school-female-castille-academ-dea27052.jpg",
+          "output": "out/campaigns/grind-trap-castille/grind-trap/E3.png",
+          "thumb": "out/campaigns/grind-trap-castille/grind-trap/E3.png",
+          "renderedAt": "2026-06-04T00:12:20.049Z",
+          "kraken": {
+            "id": "ed82cacf-89dd-4bce-9c9b-1431507d07e7",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/grind-trap-castille-grind-trap-E3-1780532894923.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "F1",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "stat-reveal",
+          "templateData": {
+            "duration": 6,
+            "eyebrow": "THE 90-DAY GUARANTEE",
+            "title1": "THE PROMISE NO OTHER",
+            "title2": "PROGRAM WILL MAKE.",
+            "ctaText": "BOOK YOUR FREE ATHLETE ANALYSIS",
+            "stat1Value": 1,
+            "stat1Unit": " MPH",
+            "stat1Label": "SPEED",
+            "stat2Value": 3,
+            "stat2Unit": "\"",
+            "stat2Label": "VERTICAL",
+            "freeLine1": "90",
+            "freeLine2": "DAYS",
+            "_overrides": {
+              "stat1": {
+                "dx": -32,
+                "dy": 580
+              },
+              "stat2": {
+                "dx": -32,
+                "dy": 580
+              },
+              "orfree": {
+                "dx": -32,
+                "dy": 580
+              },
+              "title": {
+                "dx": -23,
+                "dy": 174,
+                "fontSize": 146
+              },
+              "eyebrow": {
+                "fontSize": 52,
+                "dx": -29,
+                "dy": 26
+              }
+            }
+          },
+          "knowledgeRefs": [
+            "guarantee",
+            "the_offer"
+          ],
+          "copySource": "Verbatim numbers (+1 mph, +3 inches, 90 days) + AD3 line \"the promise no other program in this market will make.\" Guarantee role renders the LOCKED brand wording — see guaranteeFlag.",
+          "status": "rendered",
+          "notes": "Guarantee reveal video. Guarantee band is verbatim-locked to the brand canonical.",
+          "clip": "brand/kraken-cache/cas-action-clip-mixed-athletic-training-middle-school-female-cas-2d9c4d8f.mp4",
+          "output": "out/campaigns/grind-trap-castille/grind-trap/F1.mp4",
+          "thumb": "out/campaigns/grind-trap-castille/grind-trap/F1.mp4",
+          "renderedAt": "2026-06-04T00:12:39.067Z",
+          "kraken": {
+            "id": "261ef236-7611-4478-9330-5220a435af06",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/grind-trap-castille-grind-trap-F1-1780532897888.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "F2",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-32",
+          "templateData": {
+            "offer_headline": "FREE ATHLETE\nANALYSIS",
+            "offer_detail": "Not a sales pitch. A data set.",
+            "cta": "BOOK THE ATHLETE ANALYSIS"
+          },
+          "knowledgeRefs": [
+            "the_offer",
+            "guarantee"
+          ],
+          "copySource": "Verbatim (AD1): Athlete Analysis offer; \"Not a sales pitch. A data set.\"; \"book the Athlete Analysis.\" Guarantee band auto-locked.",
+          "status": "rendered",
+          "notes": "Offer card. Guarantee band verbatim-locked to brand canonical.",
+          "media": "./assets/msf-F2.jpg",
+          "photo": "./assets/cas-group-shot-posing-high-school-female-castille-academy-slide1-cea86328.jpg",
+          "output": "out/campaigns/grind-trap-castille/grind-trap/F2.png",
+          "thumb": "out/campaigns/grind-trap-castille/grind-trap/F2.png",
+          "renderedAt": "2026-06-04T00:12:43.310Z",
+          "kraken": {
+            "id": "cdc05233-dabb-49a8-a5d8-2615b64bf455",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/grind-trap-castille-grind-trap-F2-1780532899207.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "F3",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "season-clock",
+          "templateData": {
+            "duration": 7,
+            "eyebrow": "// ANOTHER SEASON, SAME SPEED?",
+            "line1": "DONT GO ANOTHER SEASON.",
+            "line2": "AND STILL BE THE SAME SPEED.",
+            "offer": "COME SEE PROOF",
+            "guarantee": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us.",
+            "cta": "BOOK THE ATHLETE ANALYSIS",
+            "brand": "CASTILLE ACADEMY",
+            "hook": "See the number first."
+          },
+          "knowledgeRefs": [
+            "the_offer",
+            "guarantee"
+          ],
+          "copySource": "Verbatim ad Description as the retarget hook: \"See the number first.\"; Athlete Analysis CTA. Guarantee auto-locked.",
+          "status": "rendered",
+          "notes": "Season-clock retarget (≠ F1). Guarantee verbatim-locked.",
+          "clip": "brand/kraken-cache/cas-action-clip-sports-performance-training-high-school-mixed-ca-b5690291.mp4",
+          "output": "out/campaigns/grind-trap-castille/grind-trap/F3.mp4",
+          "thumb": "out/campaigns/grind-trap-castille/grind-trap/F3.mp4",
+          "renderedAt": "2026-06-04T00:13:23.584Z",
+          "kraken": {
+            "id": "7820413d-8926-4d1d-bf8f-c27504967d7b",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/grind-trap-castille-grind-trap-F3-1780532900938.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "FA1",
+          "beat": "A→F full arc",
+          "temperature": "warm-hot",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-multisport-foundations-grind-trap-FA1",
+          "templateData": {
+            "duration": 30,
+            "hook": "SIX MONTHS. EVERY PRACTICE. EVERY DRILL. NEVER QUIT. STILL THE SAME SPEED.",
+            "mech1": "EVERY SLOW, GRINDING REP AT THE END OF A DRILL IS TEACHING THE BODY THAT SLOW IS NORMAL.",
+            "mech2": "THE SET ENDS THE SECOND SPEED DROPS.",
+            "reframe": "THIS WAS NEVER YOUR KID'S FAULT, AND IT WAS NEVER YOURS.",
+            "statValue": "224%",
+            "statLabel": "GREATER VERTICAL JUMP",
+            "proofCite": "WANG 2026 · FRONTIERS IN PHYSIOLOGY",
+            "guarantee": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us.",
+            "cta": "BOOK THE FREE ATHLETE ANALYSIS"
+          },
+          "knowledgeRefs": [
+            "ad_copy_series_1",
+            "problem_mechanism",
+            "proof_studies[0]",
+            "guarantee",
+            "the_offer"
+          ],
+          "copySource": "30s arc, all verbatim: hook = AD2 alt hook 2; mech1 = AD1 body (\"every slow, grinding rep at the end of a drill is teaching the body that slow is normal\"); mech2 = AD1 fix line; reframe = AD3 blame line; Wang 2026 proof. Overrides the template's baked PARAPHRASES with your exact words. Guarantee = LOCKED brand canonical.",
+          "status": "rendered",
+          "notes": "Full-arc VSL. Its baked captions were paraphrased last run; templateData here forces your verbatim lines.",
+          "clip": "brand/kraken-cache/cas-action-clip-agility-drill-lifting-jumping-high-school-mixed--95f367b2.mp4",
+          "output": "out/campaigns/grind-trap-castille/grind-trap/FA1.mp4",
+          "thumb": "out/campaigns/grind-trap-castille/grind-trap/FA1.mp4",
+          "renderedAt": "2026-06-04T00:19:46.729Z",
+          "kraken": {
+            "id": "464cf804-c719-4fc1-9d7a-ee28eedd9736",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/grind-trap-castille-grind-trap-FA1-1780532902594.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "BR1",
+          "beat": null,
+          "temperature": "any",
+          "format": "video",
+          "source": "template",
+          "template": "logo-sting",
+          "templateData": {
+            "wordmark1": "ATHLETES",
+            "wordmark2": "ACCELERATION",
+            "url": "ATHLETESACCEL.COM"
+          },
+          "knowledgeRefs": [],
+          "copySource": "Brand lockup only (no campaign copy — it's a bumper).",
+          "status": "rendered",
+          "notes": "Brand bumper / logo sting.",
+          "clip": "brand/kraken-cache/cas-action-clip-training-middle-school-mixed-castille-academy-167af2e8.mp4",
+          "output": "out/campaigns/grind-trap-castille/grind-trap/BR1.mp4",
+          "thumb": "out/campaigns/grind-trap-castille/grind-trap/BR1.mp4",
+          "renderedAt": "2026-06-04T00:19:58.538Z",
+          "kraken": {
+            "id": "b1b26446-cbf3-4261-8c6c-70135564152a",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/grind-trap-castille-grind-trap-BR1-1780532905565.mp4",
+            "folder": "angle 1"
+          }
+        }
+      ]
+    }
+  ],
+  "location": "pelham"
+}

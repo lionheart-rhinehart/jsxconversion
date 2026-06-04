@@ -1,0 +1,33 @@
+<!-- @dsCard group="Brand" -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css">
+<style>
+  .ig{display:grid;grid-template-columns:repeat(8,1fr);gap:14px}
+  .ic{display:flex;flex-direction:column;align-items:center;gap:7px}
+  .ic i{width:24px;height:24px;color:var(--ca-ink-800);stroke-width:1.75}
+  .ic span{font-family:var(--font-cond);font-weight:600;font-size:9px;letter-spacing:0.06em;text-transform:uppercase;color:var(--fg-3)}
+  .ic.brass i{color:var(--ca-red-600)}
+</style></head>
+<body><div class="card">
+  <div class="spread" style="margin-bottom:16px"><span class="cap">Iconography · Lucide · 1.75 stroke</span><span class="cap" style="color:var(--ca-red-600)">inherit color</span></div>
+  <div class="ig">
+    <div class="ic"><i data-lucide="zap"></i><span>Velocity</span></div>
+    <div class="ic"><i data-lucide="dumbbell"></i><span>Force</span></div>
+    <div class="ic"><i data-lucide="target"></i><span>Craft</span></div>
+    <div class="ic brass"><i data-lucide="shield-check"></i><span>Certified</span></div>
+    <div class="ic"><i data-lucide="trending-up"></i><span>Index</span></div>
+    <div class="ic"><i data-lucide="stopwatch"></i><span>Timed</span></div>
+    <div class="ic"><i data-lucide="map-pin"></i><span>Campus</span></div>
+    <div class="ic"><i data-lucide="calendar"></i><span>Book</span></div>
+    <div class="ic"><i data-lucide="users"></i><span>Group</span></div>
+    <div class="ic"><i data-lucide="activity"></i><span>Assess</span></div>
+    <div class="ic"><i data-lucide="medal"></i><span>Result</span></div>
+    <div class="ic"><i data-lucide="graduation-cap"></i><span>Varsity</span></div>
+    <div class="ic"><i data-lucide="chevron-right"></i><span>Next</span></div>
+    <div class="ic"><i data-lucide="play"></i><span>Clip</span></div>
+    <div class="ic"><i data-lucide="star"></i><span>Rating</span></div>
+    <div class="ic"><i data-lucide="arrow-right"></i><span>CTA</span></div>
+  </div>
+  <p style="font-family:var(--font-body);font-size:13px;color:var(--fg-3);margin:16px 0 0">Lucide, stroke 1.75, sized to cap-height, color inherited. Brass only when an icon does semantic work. <b style="color:var(--fg-2)">No emoji, ever.</b></p>
+</div>
+<script src="https://unpkg.com/lucide@latest"></script><script>lucide.createIcons();</script>
+</body></html>

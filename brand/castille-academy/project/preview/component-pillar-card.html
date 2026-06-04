@@ -1,0 +1,20 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css">
+<style>
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .pillar{position:relative;background:var(--ca-ink-900);border:1px solid var(--ca-ink-700);border-radius:var(--r-lg);padding:18px 16px;overflow:hidden;color:var(--ca-paper-100)}
+  .pillar .no{position:absolute;top:8px;right:12px;font-family:var(--font-display);font-size:40px;color:transparent;-webkit-text-stroke:1px var(--ca-ink-600);line-height:1}
+  .pillar i{width:22px;height:22px;color:var(--ca-red-400);margin-bottom:26px;display:block}
+  .pillar h6{font-family:var(--font-cond);font-weight:700;font-size:18px;letter-spacing:0.06em;text-transform:uppercase;margin:0 0 5px;color:var(--ca-paper-100)}
+  .pillar p{font-family:var(--font-body);font-size:12.5px;line-height:1.5;color:var(--ca-ink-200);margin:0}
+</style></head>
+<body><div class="card card--bone">
+  <span class="cap" style="display:block;margin-bottom:14px">Pillar cards · the three disciplines</span>
+  <div class="pillars">
+    <div class="pillar"><span class="no">01</span><i data-lucide="zap"></i><h6>Velocity</h6><p>Acceleration, top speed and change of direction. Timed, never guessed.</p></div>
+    <div class="pillar"><span class="no">02</span><i data-lucide="dumbbell"></i><h6>Force</h6><p>Strength and power built through progressive, age-appropriate loading.</p></div>
+    <div class="pillar"><span class="no">03</span><i data-lucide="target"></i><h6>Craft</h6><p>Coordination, mobility and resilience — the durability of a complete athlete.</p></div>
+  </div>
+</div>
+<script src="https://unpkg.com/lucide@latest"></script><script>lucide.createIcons();</script>
+</body></html>

@@ -1,0 +1,617 @@
+{
+  "schemaVersion": 1,
+  "campaign": "more-games-castille",
+  "brand": "castille-academy",
+  "knobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": {
+      "video": 0.6,
+      "gif": 0.15,
+      "static": 0.25
+    },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 3
+  },
+  "_planNotes": {
+    "angle": "Angle 3 — 'more games isn't enough' (Topic 6, the parent who believes volume of play is development). Mechanism = games MEASURE the athlete training built, they don't BUILD one. 'A game is a test, not a teacher.' Proof = the Athlete Analysis baseline + the 'one dad' case study + credentials + the guarantee — no forced RCT.",
+    "copyRule": "BY REFERENCE, VERBATIM. Role-slot cards (A1–A4, B1–B2, C1–C2, D1–D2, E3 claim, E4) bind copy by id via copyRefs/hookRef. verbatimGuard CLEAN on ALL 17 now: E1/E2/F1 multi-field values were corrected to verbatim text (E1 quote = single magnet, E2 statsLabel = 'Built, then measured.', F1 title1+title2 concatenate to the verbatim promise line exactly). E3's claim_line binds the verbatim magnet 'Coach Graham Wilkerson built this.'; its coach name / CSCS / NFL-name slots are byline (attribution/identity, exempt) and carry verbatim names — cluster-31's proof_hero+proof_names roles were set to byline (a name list is attribution, not a message claim).",
+    "kicker": "EXERCISED. B1 renders the full eyebrow→kicker→headline→subhead stack from three consecutive verbatim sentences (AD1 para1: 'More playing time feels like the answer.' / 'Another season, another team, more reps in real games.' / 'And a year later, the same kid, the same speed.'). D1 renders eyebrow→kicker→headline ('Games matter.' lead-in → the blame-removal sentence). A3 stays a 2-segment hook (headline+subhead) — its alt-hook has no third part. Casting three distinct complete verbatim lines into the three slots is selection, not stitching.",
+    "layout": "eyebrow (INDIANAPOLIS SPORT PARENTS, white chip) → kicker → headline → subhead. cluster-43 is the stacked template (A3 hookRef 2-seg; B1 3-line kicker stack; D1 kicker+headline). Distinct skeleton within every beat.",
+    "media": "EVERY creative media-backed. Statics set asset.media (./assets/mg-<id>.jpg); motion sets asset.clip (brand/video-templates/assets/mg-<id>.mp4). 17 DISTINCT cache clips, favoring 'where it's built' strength/power footage. Minted via scripts/prep-media.mjs (prefix mg-).",
+    "eyebrow": "location = indianapolis → 'INDIANAPOLIS SPORT PARENTS' auto-anchor; never hand-set.",
+    "guaranteeFlag": "guarantee role brand-locked to canonical wording on F1/F2.",
+    "status": "All 'pending' — re-authored (kicker cards + verbatim fixes); awaiting approval on the review page."
+  },
+  "angles": [
+    {
+      "id": "more-games",
+      "name": "More Games Isn't Enough (volume of play as development) — ad copy series #3",
+      "location": "pelham",
+      "mechanism": "Games measure the athlete training built; they don't build one. A game is a test, not a teacher — it reveals what's already there, it doesn't add to it. Speed and power get built on purpose in training, or not at all.",
+      "emotionalJob": "Reframe games as a mirror, not a maker — without criticizing the parent's choices (validate the instinct, then flip it).",
+      "voice": "Head-coach-to-parent, declarative, metric-driven. No emoji / exclamation / em dash.",
+      "assets": [
+        {
+          "id": "A1",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-multisport-foundations-grind-trap-A1",
+          "clip": "brand/kraken-cache/cas-action-clip-agility-drill-middle-school-mixed-castille-acade-aed98e89.mp4",
+          "templateData": {
+            "line1": "A GAME IS A TEST,",
+            "line2": "NOT A TEACHER.",
+            "brand": "CASTILLE ACADEMY"
+          },
+          "copySource": "Verbatim magnet (AD2 body): \"A game is a test, not a teacher.\" — the angle's epiphany, split across the two display lines. eyebrow auto-anchors.",
+          "status": "rendered",
+          "notes": "MOTION (rebalance): 3s GIF hook over agility footage (was static cluster-33). CANDIDATE CLIP mg-A1.mp4 (free agility-drill 5033ed6f) — swap on the review page if desired.",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/more-games-castille/more-games/A1.mp4",
+          "thumb": "out/campaigns/more-games-castille/more-games/A1.mp4",
+          "renderedAt": "2026-06-04T00:33:17.986Z",
+          "kraken": {
+            "id": "357c3160-b263-4fac-8a8f-f0e0c57f2e93",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/more-games-castille-more-games-A1-1780534035442.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "A2",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "two-truths-lie",
+          "clip": "brand/kraken-cache/cas-action-clip-baseball-batting-middle-school-male-castille-aca-a5369f7b.mp4",
+          "templateData": {
+            "duration": 8,
+            "eyebrow": "2 TRUTHS · 1 LIE",
+            "title": "2 TRUTHS, 1 LIE.",
+            "claim1": "A GAME DOESN'T DEVELOP AN ATHLETE. IT REVEALS ONE.",
+            "claim2": "A GAME IS A TEST, NOT A TEACHER.",
+            "claim3": "MORE GAMES MAKE A KID FASTER.",
+            "lieIndex": 3,
+            "lieExplain": "Games measure speed. They don't build it. Training does.",
+            "ctaText": "SPOT THE LIE"
+          },
+          "copySource": "Two-truths-one-lie engagement card. Truths are verbatim: claim1 = AD1 \"A game doesn't develop an athlete. It reveals one.\"; claim2 = AD2 \"A game is a test, not a teacher.\" claim3 is the angle's target misconception (the LIE: \"more games make a kid faster\"), revealed false by lieExplain (the mechanism: games measure speed, training builds it). eyebrow auto-anchors.",
+          "status": "rendered",
+          "notes": "MOTION (rebalance): two-truths-1-lie engagement card for the cold stop-scroll over footage (added optional bgClip support to the template). CANDIDATE CLIP mg-A2.mp4 (free sled-push e0fab9c6) — swap on the review page if desired.",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/more-games-castille/more-games/A2.mp4",
+          "thumb": "out/campaigns/more-games-castille/more-games/A2.mp4",
+          "renderedAt": "2026-06-04T00:34:47.972Z",
+          "kraken": {
+            "id": "8219b2d0-0c0e-4d27-a5b6-6d631aa8b8bb",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/more-games-castille-more-games-A2-1780534038456.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "A3",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-43",
+          "media": "./assets/mg-A3.jpg",
+          "hookRef": "ad-1.altHook.2",
+          "copySource": "Verbatim magnet (AD1 alt hook, Mechanism): \"Games don't make athletes faster. They just show you how fast training already made them.\" — auto-split headline + subhead (2-segment, no kicker).",
+          "status": "rendered",
+          "notes": "Two-segment mechanism hook stacked.",
+          "photo": "./assets/cas-behind-the-scenes-signing-high-school-male-castille-academy--918170d5.jpg",
+          "output": "out/campaigns/more-games-castille/more-games/A3.png",
+          "thumb": "out/campaigns/more-games-castille/more-games/A3.png",
+          "renderedAt": "2026-06-04T00:34:53.061Z",
+          "kraken": {
+            "id": "e7e94b31-2d26-46da-aa56-05dd02a35b6d",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/more-games-castille-more-games-A3-1780534039742.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "A4",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-39",
+          "media": "./assets/mg-A4.jpg",
+          "copyRefs": {
+            "mechanism": [
+              "ad-1.imageHeadline",
+              "ad-1.imageSubhead"
+            ]
+          },
+          "copySource": "Verbatim magnets: image headline \"Here's Why More Games Won't Make Them Faster\" + sub-headline \"(And What Actually Will)\".",
+          "status": "rendered",
+          "notes": "Claim + support = the on-image headline pair.",
+          "photo": "./assets/cas-behind-the-scenes-posing-middle-school-male-castille-academy-0a0f6351.jpg",
+          "output": "out/campaigns/more-games-castille/more-games/A4.png",
+          "thumb": "out/campaigns/more-games-castille/more-games/A4.png",
+          "renderedAt": "2026-06-04T00:34:57.944Z",
+          "kraken": {
+            "id": "ccbf9a07-f0d4-4584-9ff0-d25cbbc82ad8",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/more-games-castille-more-games-A4-1780534040807.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "B1",
+          "beat": "B — Name the moment",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-43",
+          "media": "./assets/mg-B1.jpg",
+          "copyRefs": {
+            "kicker": "ad-1.bodyLine.1.1",
+            "hook": "ad-1.bodyLine.1.2",
+            "reframe": "ad-1.bodyLine.1.3"
+          },
+          "copySource": "Verbatim magnets (AD1 para1, three consecutive sentences) → the FULL eyebrow→kicker→headline→subhead stack: \"More playing time feels like the answer.\" (kicker) / \"Another season, another team, more reps in real games.\" (headline) / \"And a year later, the same kid, the same speed.\" (subhead).",
+          "status": "rendered",
+          "notes": "KICKER CARD — full stacked hook from three verbatim sentences.",
+          "photo": "./assets/cas-behind-the-scenes-signing-high-school-male-castille-academy--924ba45d.jpg",
+          "output": "out/campaigns/more-games-castille/more-games/B1.png",
+          "thumb": "out/campaigns/more-games-castille/more-games/B1.png",
+          "renderedAt": "2026-06-04T00:35:02.088Z",
+          "kraken": {
+            "id": "8ceed763-a6ad-4115-b2bd-5a02bdbe27c8",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/more-games-castille-more-games-B1-1780534042020.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "B2",
+          "beat": "B — Name the moment",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-multisport-foundations-grind-trap-A1",
+          "clip": "brand/kraken-cache/cas-action-clip-vertical-jump-high-school-male-castille-academy--7e29dfcb.mp4",
+          "templateData": {
+            "line1": "A GAME DOESN'T\nDEVELOP AN ATHLETE.",
+            "line2": "IT REVEALS ONE.",
+            "brand": "CASTILLE ACADEMY"
+          },
+          "copySource": "Verbatim magnets (AD1 body): \"A game doesn't develop an athlete.\" (line1) + \"It reveals one.\" (line2). eyebrow auto-anchors.",
+          "status": "rendered",
+          "notes": "MOTION (rebalance): 3s GIF reframe over deadlift footage (was static cluster-40). CANDIDATE CLIP mg-B2.mp4 (free deadlift c306cfa9).",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/more-games-castille/more-games/B2.mp4",
+          "thumb": "out/campaigns/more-games-castille/more-games/B2.mp4",
+          "renderedAt": "2026-06-04T00:35:57.057Z",
+          "kraken": {
+            "id": "6bae7e91-eb30-4a12-880a-858132a4f9b7",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/more-games-castille-more-games-B2-1780534043814.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "C1",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "myth-vs-truth",
+          "clip": "brand/kraken-cache/cas-action-clip-strength-conditioning-mixed-mixed-castille-acade-ab82a388.mp4",
+          "templateData": {
+            "mythLabel": "THE MYTH",
+            "myth": "MORE GAMES MAKE A KID FASTER.",
+            "truthLabel": "THE TRUTH",
+            "truth": "A GAME IS A TEST, NOT A TEACHER. SPEED GETS BUILT IN TRAINING.",
+            "sourceLabel": "WHERE IT'S BUILT",
+            "source": "TRAINING, NOT THE SCOREBOARD.",
+            "ctaText": "BOOK THE FREE ATHLETE ANALYSIS"
+          },
+          "copySource": "Myth-vs-truth reframe (angle-matched, replaces the off-angle velocity-bar chart). myth = the angle's target misconception; truth = verbatim AD2 \"A game is a test, not a teacher.\" + the mechanism (speed built in training, AD2 bodyLine.3.1). Footage bg = squat-jump (the build). eyebrow auto-anchors.",
+          "status": "rendered",
+          "notes": "MOTION (angle-fix): myth-vs-truth over squat-jump footage (was velocity-drop bar chart, off-angle). CANDIDATE CLIP mg-C1.mp4 (free squat-jump cc69c187).",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/more-games-castille/more-games/C1.mp4",
+          "thumb": "out/campaigns/more-games-castille/more-games/C1.mp4",
+          "renderedAt": "2026-06-04T00:37:25.182Z",
+          "kraken": {
+            "id": "34f6f46a-6a4b-47dd-9424-b22c0f4ae362",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/more-games-castille-more-games-C1-1780534045728.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "C2",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-multisport-foundations-grind-trap-A1",
+          "clip": "brand/kraken-cache/cas-action-clip-sprinting-high-school-female-castille-academy-64e34550.mp4",
+          "templateData": {
+            "duration": 3,
+            "eyebrow": "// THE LAST REP LIE",
+            "line1": "THAT KIND OF SPEED",
+            "line2": "DOESN'T STAY IN THE GYM.",
+            "brand": "CASTILLE ACADEMY",
+            "bgClip": "http://localhost:5273/media-file/brand/kraken-cache/cas-action-clip-sprinting-high-school-female-castille-academy-64e34550.mp4",
+            "bgClip_clipStart": 3,
+            "bgClip_clipEnd": 6,
+            "bgClip_audio": false
+          },
+          "copySource": "Verbatim magnet (AD3 body): \"That kind of speed doesn't stay in the gym.\" — split across the two display lines. eyebrow auto-anchors.",
+          "status": "rendered",
+          "notes": "MOTION (rebalance): 3s GIF reframe over sprint footage (was static cluster-42; distinct from C1 velocity-drop / C3 chart). CANDIDATE CLIP mg-C2.mp4 (free sprinting c818ba76).",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/more-games-castille/more-games/C2.mp4",
+          "thumb": "out/campaigns/more-games-castille/more-games/C2.mp4",
+          "renderedAt": "2026-06-04T00:38:24.620Z",
+          "kraken": {
+            "id": "a9eeac43-86b5-40b5-a520-90904ddb9c3c",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/more-games-castille-more-games-C2-1780534048203.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "C3",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-13",
+          "media": "./assets/mg-C3.jpg",
+          "copyRefs": {
+            "claim": "ad-2.bodyLine.3.1"
+          },
+          "copySource": "Verbatim magnet (AD2 body): \"The speed and power behind those plays gets built on purpose, in training, or it doesn't get built at all.\" — the build-or-nothing mechanism (distinct from C1 myth-vs-truth / C2 speed-on-field).",
+          "status": "rendered",
+          "notes": "Mechanism: built on purpose or not at all (cluster-13 clean claim card over footage; replaced cluster-37 velocity-chart, off-angle). CANDIDATE STILL placed (mg-C3.jpg = free box-jumps d15bf6db) — swap on the review page if desired.",
+          "flags": [
+            "candidate-media"
+          ],
+          "photo": "./assets/cas-behind-the-scenes-writing-unknown-female-castille-academy-sl-1cf13ef6.jpg",
+          "output": "out/campaigns/more-games-castille/more-games/C3.png",
+          "thumb": "out/campaigns/more-games-castille/more-games/C3.png",
+          "renderedAt": "2026-06-04T00:38:28.905Z",
+          "kraken": {
+            "id": "7315df78-6ec3-4630-9316-f5fb0a6ce3c5",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/more-games-castille-more-games-C3-1780534049527.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "D1",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-e2e-d1",
+          "clip": "brand/kraken-cache/cas-action-clip-band-work-high-school-female-castille-academy-3645b2d0.mp4",
+          "templateData": {
+            "duration": 8,
+            "eyebrow": "YOUR KID ISN’T THE PROBLEM",
+            "line1": "Games matter.",
+            "line2": "None of that playing time was wasted.",
+            "line3": "And you weren't wrong to want it.",
+            "microscript": "A game just can't build the engine. Training does.",
+            "media": "assets/photo-coach-action.jpg",
+            "_overrides": {
+              "microscript": {
+                "dx": -6,
+                "dy": -335
+              }
+            }
+          },
+          "copySource": "Blame-lift, line by line (fresh-e2e-d1, angle-matched, replaces the off-angle velocity-bar chart). line1-3 = verbatim AD3 blame-removal (bodyLine.4.2 'Games matter.' + 4.1 'none of that playing time was wasted, and you weren't wrong to want it'). microscript = the mechanism reframe. Footage bg over sprint clip. eyebrow auto-anchors.",
+          "status": "rendered",
+          "notes": "MOTION (angle-fix): fresh-e2e-d1 blame-lift over sprint footage (was velocity-drop bar chart, off-angle). CANDIDATE CLIP mg-D1.mp4 (free sprinting 60e664e6).",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/more-games-castille/more-games/D1.mp4",
+          "thumb": "out/campaigns/more-games-castille/more-games/D1.mp4",
+          "renderedAt": "2026-06-04T00:41:06.975Z",
+          "kraken": {
+            "id": "c008c38f-abc4-44f5-becd-b2f9232baf1d",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/more-games-castille-more-games-D1-1780534051486.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "D2",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-36",
+          "media": "./assets/mg-D2.jpg",
+          "copyRefs": {
+            "reframe": "ad-3.bodyLine.3.1"
+          },
+          "copySource": "Verbatim magnet (AD3 body): \"That's why a whole season can pass with nothing to show for it.\"",
+          "status": "rendered",
+          "notes": "The cost named plainly (distinct from C1).",
+          "photo": "./assets/cas-behind-the-scenes-posing-high-school-male-castille-academy-s-37cfa8d1.jpg",
+          "output": "out/campaigns/more-games-castille/more-games/D2.png",
+          "thumb": "out/campaigns/more-games-castille/more-games/D2.png",
+          "renderedAt": "2026-06-04T00:41:11.993Z",
+          "kraken": {
+            "id": "a51bc478-f4a9-4659-ab35-e00479b9aa81",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/more-games-castille-more-games-D2-1780534052716.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "D3",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-34",
+          "media": "./assets/mg-D3.jpg",
+          "copyRefs": {
+            "reframe": "ad-3.bodyLine.4.4"
+          },
+          "copySource": "Verbatim magnet (AD3 body): \"They were just never the place an athlete gets built, and asking a game to make a kid faster is asking the scoreboard to do the work of the weight room.\" — blame-removal reframe (distinct from D1 'games matter' / D2 'whole season can pass').",
+          "status": "rendered",
+          "notes": "Remove-blame reframe: the scoreboard can't do the weight room's job (cluster-34 phrase-kill, distinct skeleton from D1/D2). CANDIDATE STILL placed (mg-D3.jpg = free broad-jump ec536643) — swap on the review page if desired.",
+          "flags": [
+            "candidate-media"
+          ],
+          "photo": "./assets/cas-group-shot-posing-middle-school-male-castille-academy-slide1-2a078ac1.jpg",
+          "output": "out/campaigns/more-games-castille/more-games/D3.png",
+          "thumb": "out/campaigns/more-games-castille/more-games/D3.png",
+          "renderedAt": "2026-06-04T00:41:16.899Z",
+          "kraken": {
+            "id": "88cc97e5-7611-4d01-9cfa-1b0b24426029",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/more-games-castille-more-games-D3-1780534053885.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "E1",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "meet-coach",
+          "clip": "brand/kraken-cache/cas-action-clip-agility-drill-sled-push-batting-training-middle--f85b0e1f.mp4",
+          "templateData": {
+            "eyebrow": "BUILT, THEN MEASURED",
+            "coachFirst": "COACH GRAHAM",
+            "coachLast": "WILKERSON",
+            "coachTitle": "CSCS · FOUNDER",
+            "quote": "A game is a test, not a teacher.",
+            "credentials": "TRAINED ZACK MARTIN · TED KARRAS · NICK MARTIN",
+            "facts": "REAL|SPRINT + JUMP NUMBERS · EVERY|SESSION · BUILT|ON PURPOSE",
+            "ctaText": "BOOK THE ATHLETE ANALYSIS",
+            "ctaMicro": "FREE. NOT A TRYOUT. A DATA SET."
+          },
+          "copySource": "Multi-field template. quote = verbatim magnet 'A game is a test, not a teacher.'; eyebrow = ad Description; credentials = verbatim names; cta micro = 'Not a tryout. A data set.'",
+          "status": "rendered",
+          "notes": "Coach proof VSL over box-jump footage.",
+          "output": "out/campaigns/more-games-castille/more-games/E1.mp4",
+          "thumb": "out/campaigns/more-games-castille/more-games/E1.mp4",
+          "renderedAt": "2026-06-04T00:42:28.787Z",
+          "kraken": {
+            "id": "ecf75256-0987-4c74-99a4-dbf566321f96",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/more-games-castille-more-games-E1-1780534055313.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "E2",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "quote-card",
+          "clip": "brand/kraken-cache/cas-action-clip-sprinting-high-school-female-castille-academy-64e34550.mp4",
+          "templateData": {
+            "eyebrow": "BUILT, THEN MEASURED",
+            "quoteText": "He could feel that he was finally being built, not just put through his paces and sent home.",
+            "bylineName": "A PARENT",
+            "bylineMeta": "PELHAM · CASTILLE ACADEMY",
+            "statsLabel": "Built, then measured."
+          },
+          "copySource": "Multi-field template. quoteText = verbatim AD3 case study line; statsLabel = verbatim ad Description 'Built, then measured.' (was a paraphrase, now fixed).",
+          "status": "rendered",
+          "notes": "Parent case-study quote card.",
+          "output": "out/campaigns/more-games-castille/more-games/E2.mp4",
+          "thumb": "out/campaigns/more-games-castille/more-games/E2.mp4",
+          "renderedAt": "2026-06-04T00:44:27.801Z",
+          "kraken": {
+            "id": "c5f4516d-ad50-4ec6-a12e-84167c4c0d28",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/more-games-castille-more-games-E2-1780534056965.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "E3",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-31",
+          "media": "./assets/mg-E3.jpg",
+          "templateData": {
+            "coach_name": "COACH GRAHAM\nWILKERSON",
+            "coach_title": "CSCS",
+            "proof_hero": "TRAINED NFL\nATHLETES",
+            "proof_names": "ZACK MARTIN · TED KARRAS · NICK MARTIN"
+          },
+          "copyRefs": {
+            "claim": "ad-3.bodyLine.9.1"
+          },
+          "copySource": "Credential card. claim_line binds the verbatim magnet 'Coach Graham Wilkerson built this.' (traces clean). coach name / CSCS / 'trained NFL athletes' / the NFL names are byline-role attribution (verbatim Cody words / proper nouns; guard-exempt as identity).",
+          "status": "rendered",
+          "notes": "Credential verdict (static; distinct from E1 video / E2 quote).",
+          "photo": "./assets/cas-behind-the-scenes-posing-high-school-female-castille-academy-d2bc746c.jpg",
+          "output": "out/campaigns/more-games-castille/more-games/E3.png",
+          "thumb": "out/campaigns/more-games-castille/more-games/E3.png",
+          "renderedAt": "2026-06-04T00:44:32.949Z",
+          "kraken": {
+            "id": "c7b0e927-253a-4ca8-b249-c16662fd1ac3",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/more-games-castille-more-games-E3-1780534058036.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "E4",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-e2e-e5-testimonial",
+          "media": "./assets/mg-E4.jpg",
+          "copyRefs": {
+            "testimonial": "ad-3.bodyLine.7.1"
+          },
+          "templateData": {
+            "byline": "A PARENT · PELHAM"
+          },
+          "copySource": "Verbatim magnet (AD3 'one dad'): \"One dad told us his son had been somewhere else for two years, and that a single week with us was enough for the kid to say it was the best he'd ever had.\" Byline is an identity slot.",
+          "status": "rendered",
+          "notes": "Testimonial card.",
+          "photo": "./assets/cas-group-shot-posing-middle-school-male-castille-academy-slide1-8b47e1c1.jpg",
+          "output": "out/campaigns/more-games-castille/more-games/E4.png",
+          "thumb": "out/campaigns/more-games-castille/more-games/E4.png",
+          "renderedAt": "2026-06-04T00:44:37.453Z",
+          "kraken": {
+            "id": "9bead7f3-8aee-4bc0-b21d-76f0015950f7",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/more-games-castille-more-games-E4-1780534058958.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "F1",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "stat-reveal",
+          "clip": "brand/kraken-cache/cas-action-clip-band-work-high-school-male-castille-academy-cf2f6440.mp4",
+          "templateData": {
+            "eyebrow": "THE 90-DAY GUARANTEE",
+            "title1": "Here's the promise no other",
+            "title2": "program in this market will make.",
+            "stat1Value": 1,
+            "stat1Unit": " MPH",
+            "stat1Label": "SPEED",
+            "stat2Value": 3,
+            "stat2Unit": "\"",
+            "stat2Label": "VERTICAL",
+            "freeLine1": "90",
+            "freeLine2": "DAYS",
+            "ctaText": "BOOK YOUR FREE ATHLETE ANALYSIS"
+          },
+          "copySource": "Multi-field template. title1 + title2 concatenate EXACTLY to the verbatim magnet 'Here's the promise no other program in this market will make.' (only a line break added). Guarantee band brand-locked.",
+          "status": "rendered",
+          "notes": "Guarantee reveal video.",
+          "output": "out/campaigns/more-games-castille/more-games/F1.mp4",
+          "thumb": "out/campaigns/more-games-castille/more-games/F1.mp4",
+          "renderedAt": "2026-06-04T00:44:55.999Z",
+          "kraken": {
+            "id": "99031a25-1fea-4994-b6a1-048c60ee057d",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/more-games-castille-more-games-F1-1780534060628.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "F2",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-32",
+          "media": "./assets/mg-F2.jpg",
+          "templateData": {
+            "offer_headline": "FREE ATHLETE\nANALYSIS",
+            "offer_detail": "Not a tryout. A data set.",
+            "cta_text": "BOOK THE ATHLETE ANALYSIS"
+          },
+          "copySource": "Multi-field offer template. 'Not a tryout. A data set.' verbatim. Guarantee band auto-locked.",
+          "status": "rendered",
+          "notes": "Offer card. Guarantee band verbatim-locked.",
+          "photo": "./assets/cas-group-shot-posing-high-school-mixed-castille-academy-slide12-6c2d5bfc.jpg",
+          "output": "out/campaigns/more-games-castille/more-games/F2.png",
+          "thumb": "out/campaigns/more-games-castille/more-games/F2.png",
+          "renderedAt": "2026-06-04T00:45:00.329Z",
+          "kraken": {
+            "id": "ac3c35aa-e353-4e53-8465-214257e139ed",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/more-games-castille-more-games-F2-1780534061457.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "F3",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "season-clock",
+          "clip": "brand/kraken-cache/cas-action-clip-landmine-squat-high-school-mixed-castille-academ-b6afd38a.mp4",
+          "templateData": {
+            "line1": "ANOTHER SEASON.",
+            "line2": "SAME SPEED.",
+            "offer": "SEE THE NUMBER FIRST.",
+            "guarantee": "+1 mph. +3 inches. 90 days. Or we keep training them free.",
+            "cta": "BOOK THE FREE ATHLETE ANALYSIS",
+            "brand": "CASTILLE ACADEMY"
+          },
+          "copySource": "Retarget offer, distinct motion from F1 stat-reveal. Scene-1 'ANOTHER SEASON. / SAME SPEED.' compresses the angle setup (AD2 para1: 'Another season, another team, more reps in real games. And a year later, the same kid, the same speed.'). offer = the Athlete Analysis baseline ('See the number first'; AD2 'You'll see your athlete's real numbers before you decide anything.'). guarantee = canonical brand-locked wording (AD2 bodyPara.7). eyebrow auto-anchors to INDIANAPOLIS SPORT PARENTS.",
+          "status": "rendered",
+          "notes": "Season-clock retarget offer over footage (distinct from F1/F2). CANDIDATE CLIP placed (mg-F3.mp4 = free sprinting clip 899da2d7) — footage renders correctly; swap/reframe on the review page if you want a different shot.",
+          "flags": [
+            "candidate-media"
+          ],
+          "output": "out/campaigns/more-games-castille/more-games/F3.mp4",
+          "thumb": "out/campaigns/more-games-castille/more-games/F3.mp4",
+          "renderedAt": "2026-06-04T00:47:01.748Z",
+          "kraken": {
+            "id": "8767583e-26e9-46a1-828e-4a98c007d0e1",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/more-games-castille-more-games-F3-1780534063468.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "BR1",
+          "beat": null,
+          "temperature": "any",
+          "format": "video",
+          "source": "template",
+          "template": "logo-sting",
+          "clip": "brand/kraken-cache/cas-action-clip-sprinting-high-school-female-castille-academy-4c6b217d.mp4",
+          "templateData": {
+            "wordmark1": "ATHLETES",
+            "wordmark2": "ACCELERATION",
+            "tagline": "BUILT, THEN MEASURED.",
+            "url": "ATHLETESACCEL.COM"
+          },
+          "copySource": "Brand lockup + verbatim ad Description as tagline (\"Built, then measured.\").",
+          "status": "rendered",
+          "notes": "Brand bumper over sled-push footage.",
+          "output": "out/campaigns/more-games-castille/more-games/BR1.mp4",
+          "thumb": "out/campaigns/more-games-castille/more-games/BR1.mp4",
+          "renderedAt": "2026-06-04T00:47:13.578Z",
+          "kraken": {
+            "id": "7e5cbe0d-3eed-4e7e-b91f-0f0260eca58a",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/more-games-castille-more-games-BR1-1780534065188.mp4",
+            "folder": "angle 3"
+          }
+        }
+      ]
+    }
+  ],
+  "location": "pelham"
+}

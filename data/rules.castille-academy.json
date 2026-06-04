@@ -1,0 +1,48 @@
+{
+  "_comment": "Creative-engine enforcement rules for Castille Academy. Mirrors the Athletes Acceleration ruleset (same youth-sports-performance creative contract) so a repurposed AA campaign validates under Castille identically to its source. Consumed by scripts/validate-plan.mjs via loadRules(); without this file the brand falls back to DEFAULT_RULES, which is stricter (no mediaExempt) and false-flags motion stat-reveal/logo-sting cards. eyebrowPattern stays '{CITY} SPORT PARENTS' so the Pelham eyebrow ('PELHAM SPORT PARENTS') parses.",
+  "brand": "castille-academy",
+  "aspect": {
+    "width": 1080,
+    "height": 1920
+  },
+  "mediaExempt": [
+    "logo-sting",
+    "stat-reveal"
+  ],
+  "verbatim": "substring",
+  "verbatimRoles": [
+    "hook",
+    "claim",
+    "mechanism",
+    "reframe",
+    "kicker",
+    "testimonial"
+  ],
+  "cityModel": "clone",
+  "locationRotation": {
+    "enabled": false
+  },
+  "voice": {
+    "noEmoji": true,
+    "noExclamation": true
+  },
+  "bannedWords": [
+    "scholarship",
+    "dream",
+    "guaranteed",
+    "limited time",
+    "act now",
+    "spots left",
+    "don't miss"
+  ],
+  "eyebrowPattern": "{CITY} SPORT PARENTS",
+  "_beatRolesNote": "anyOf = the beat's VALID role set; an asset must carry >=1.",
+  "beatRoles": {
+    "A": { "anyOf": ["hook"] },
+    "B": { "anyOf": ["hook", "claim", "reframe"] },
+    "C": { "anyOf": ["mechanism", "reframe", "stat"] },
+    "D": { "anyOf": ["reframe", "testimonial", "claim"] },
+    "E": { "anyOf": ["proof", "stat", "testimonial"] },
+    "F": { "anyOf": ["offer", "cta"] }
+  }
+}

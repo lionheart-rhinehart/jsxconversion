@@ -192,6 +192,24 @@ export function cloneTarget({
       if (!f.endsWith(".config.json")) continue;
       const cfg = JSON.parse(readFileSync(join(srcEdits, f), "utf8"));
       cfgChanges += transformEditConfig(cfg, swaps, paletteMap, identity);
+      // media replace/per-asset for STATICS: a static's background renders from
+      // THIS edits config's `media` layer, not the plan asset — so the plan-level
+      // a.clip/a.photo set above (which only reaches motion) misses it. Apply the
+      // map entry to cfg.media here. A VIDEO entry is valid too — the static
+      // renderer still-frames it (a different action clip per card = real variety).
+      // assetId is the filename tail (<angle>__<assetId>.config.json).
+      if (mediaPolicy === "replace" || mediaPolicy === "per-asset") {
+        const assetId = f.replace(/\.config\.json$/, "").split("__").pop();
+        const mp = mediaMap[assetId];
+        if (mp && cfg.media) {
+          cfg.media.path = mp;
+          if (/\.(mp4|mov|webm|m4v|mkv)$/i.test(mp) && cfg.media.videoStartTime == null) {
+            cfg.media.videoStartTime = 1; // still-frame a video bg ~1s in (avoid a blurred first frame)
+          }
+          cfgChanges++;
+          mediaSet++;
+        }
+      }
       writeFileSync(join(destDir, "edits", f), JSON.stringify(cfg, null, 2));
       cfgFiles++;
     }

@@ -1,0 +1,31 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css">
+<style>
+  .badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-cond);font-weight:600;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:5px 11px;border-radius:var(--r-pill)}
+  .badge i{width:13px;height:13px}
+  .b-brass{background:var(--ca-red-100);color:var(--ca-red-700)}
+  .b-navy{background:var(--ca-ink-900);color:var(--ca-paper-100)}
+  .b-line{background:transparent;border:1px solid var(--ca-ink-300);color:var(--ca-ink-700)}
+  .b-up{background:rgba(47,125,84,0.14);color:var(--ca-success)}
+  .b-claret{background:rgba(108,17,15,0.1);color:var(--ca-claret-600)}
+  .tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-cond);font-weight:600;font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--fg-2);padding:6px 12px;border:1px solid var(--ca-ink-200);border-radius:var(--r-md)}
+  .tag.on{background:var(--ca-ink-900);color:var(--ca-paper-100);border-color:var(--ca-ink-900)}
+</style></head>
+<body><div class="card">
+  <span class="cap" style="display:block;margin-bottom:14px">Badges &amp; filter chips</span>
+  <div class="wrap" style="gap:9px;margin-bottom:16px">
+    <span class="badge b-brass"><i data-lucide="shield-check"></i>Certified</span>
+    <span class="badge b-navy">Varsity 16–18</span>
+    <span class="badge b-line">Block 3 of 4</span>
+    <span class="badge b-up"><i data-lucide="trending-up"></i>Index +12</span>
+    <span class="badge b-claret">3 spots left</span>
+  </div>
+  <div class="wrap" style="gap:8px">
+    <span class="tag on">All sports</span>
+    <span class="tag">Speed</span>
+    <span class="tag">Strength</span>
+    <span class="tag">Mobility</span>
+  </div>
+</div>
+<script src="https://unpkg.com/lucide@latest"></script><script>lucide.createIcons();</script>
+</body></html>
