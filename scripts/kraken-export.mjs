@@ -34,7 +34,7 @@ import {
   mimeForExt, bucketForMime, uploadToStorage, ingestContent, setFolder,
   findExistingByMeta, softDeleteContent,
 } from "./lib/kraken.mjs";
-import { exportExitCode, summarizeExport, isPublishable } from "./lib/export-accounting.mjs";
+import { exportExitCode, summarizeExport, isPublishable, staleRenderReason } from "./lib/export-accounting.mjs";
 import { scanBrandIntegrity, gatherCampaignTexts } from "./lib/brand-integrity.mjs";
 
 const PROJECT_ROOT = resolve(".");
@@ -194,6 +194,14 @@ async function main() {
       const outAbs = join(PROJECT_ROOT, asset.output);
       if (!existsSync(outAbs)) {
         console.error(`[export] ${tag} ✗ output missing: ${asset.output}`); failed++; continue;
+      }
+
+      // Staleness guard (F): the output file must be at least as new as the last
+      // hand-edit, or we'd publish the pre-edit creative. Fail-loud, never ship.
+      const stale = staleRenderReason(asset);
+      if (stale) {
+        console.error(`[export] ${tag} ✗ STALE: ${stale} — re-render before export`);
+        failed++; continue;
       }
 
       const ext = extname(outAbs).toLowerCase();

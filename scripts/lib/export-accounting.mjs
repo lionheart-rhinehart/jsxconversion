@@ -32,6 +32,23 @@ export function exportExitCode({ pushed = 0, failed = 0, replace = false } = {})
   return 0;
 }
 
+// Staleness guard (Plan 3 · F): a render is STALE if the asset was hand-edited
+// after its last render (editedAt > renderedAt) or edited but never rendered. The
+// on-disk output then predates the edit, so a blind re-export would ship the
+// pre-edit creative (the Saco B2 silent miss). Returns a human reason, or null if
+// the output is current. Never-edited assets (no editedAt) are always current.
+export function staleRenderReason(asset) {
+  if (!asset || !asset.editedAt) return null;
+  const edited = Date.parse(asset.editedAt);
+  if (!Number.isFinite(edited)) return null; // unparseable stamp → don't block
+  if (!asset.renderedAt) return "edited but never rendered";
+  const rendered = Date.parse(asset.renderedAt);
+  if (Number.isFinite(rendered) && edited > rendered) {
+    return `edited ${asset.editedAt} after last render ${asset.renderedAt}`;
+  }
+  return null;
+}
+
 // One honest status line. `scoped` is true when --only narrowed the run (then we
 // say "spot-checked", not "checked all N"); `total` is the plan's full asset count.
 export function summarizeExport({ pushed = 0, deduped = 0, skipped = 0, failed = 0, total = 0, replace = false, dryRun = false, scoped = false } = {}) {

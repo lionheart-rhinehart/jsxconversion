@@ -13,7 +13,7 @@
 
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { assemble } from "./assemble.mjs";
 import { BEAT_HEADLINE_ROLE, beatLetter, buildEyebrowAnchor } from "./roles.mjs";
 import { loadCopyLibrary } from "./copy-library.mjs";
@@ -339,25 +339,52 @@ export function emitVariant({ clusterId, config, templateDir, suffix = ".fill" }
 
 const DEFAULT_RENDERER = ".claude/skills/jsx-to-mp4/scripts/render.mjs";
 
+// Render children currently in flight, so a SIGINT/SIGTERM on the PARENT (the
+// run-campaign CLI, or the editor SIGTERMing run-campaign on a posix abort) can
+// tree-kill them instead of orphaning their Chrome grandchild (J: reap on ALL
+// exit paths, not only a child's normal exit). The renderer's own try/finally
+// already covers a render that finishes or throws; this covers the parent dying.
+const activeRenders = new Set();
+let signalHooked = false;
+function reapActiveRenders() {
+  for (const proc of activeRenders) {
+    try {
+      if (process.platform === "win32") spawnSync("taskkill", ["/PID", String(proc.pid), "/T", "/F"], { stdio: "ignore" });
+      else proc.kill("SIGTERM");
+    } catch (_) { /* already gone */ }
+  }
+  activeRenders.clear();
+}
+function hookRenderSignals() {
+  if (signalHooked) return;
+  signalHooked = true;
+  for (const [sig, code] of [["SIGINT", 130], ["SIGTERM", 143]]) {
+    process.on(sig, () => { reapActiveRenders(); process.exit(code); });
+  }
+}
+
 // Render a jsx file through the renderer. Resolves { code, ok } instead of
 // calling process.exit, so it can be awaited inside a loop.
 export function renderJsx({ jsxPath, projectRoot, renderer = DEFAULT_RENDERER, inherit = true }) {
   return new Promise((resolve) => {
+    hookRenderSignals();
     const proc = spawn("node", [renderer, jsxPath], {
       cwd: projectRoot,
       stdio: inherit ? "inherit" : ["ignore", "pipe", "pipe"],
     });
+    activeRenders.add(proc);
+    const settle = (val) => { activeRenders.delete(proc); resolve(val); };
     let stdout = "", stderr = "";
     if (!inherit) {
       proc.stdout.on("data", (d) => (stdout += d));
       proc.stderr.on("data", (d) => (stderr += d));
     }
-    proc.on("exit", (code) => resolve({ code, ok: code === 0, stdout, stderr }));
-    proc.on("error", (err) => resolve({ code: 1, ok: false, stdout, stderr: String(err) }));
-    // NOTE: the child reaps itself on normal exit, and the grandchild Chrome is
-    // now cleaned up by the renderer's own try/finally (render.mjs/static-react.mjs/
-    // claude-design.mjs). If the PARENT (run-campaign) is hard-killed mid-render,
-    // this child is NOT group-killed on Windows — rely on the orphan-cleanup step
-    // (Part B) rather than process-group plumbing here.
+    proc.on("exit", (code) => settle({ code, ok: code === 0, stdout, stderr }));
+    proc.on("error", (err) => settle({ code: 1, ok: false, stdout, stderr: String(err) }));
+    // The child reaps itself on normal exit, and its Chrome grandchild is cleaned
+    // up by the renderer's own try/finally (render.mjs/static-react.mjs/
+    // claude-design.mjs). If the PARENT is signal-killed mid-render, the
+    // SIGINT/SIGTERM hook above tree-kills the in-flight child; the dev-start
+    // orphan-sweep is the final backstop for a HARD kill (SIGKILL) that skips it.
   });
 }

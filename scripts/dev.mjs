@@ -24,37 +24,29 @@
 //  Run it from the checkout you want to serve (main OR a worktree root).
 // ============================================================================
 import { spawn } from "node:child_process";
-import { createServer } from "node:net";
 import { writeFileSync } from "node:fs";
 import { resolve, join } from "node:path";
+import { sweepOrphans } from "./lib/orphan-sweep.mjs";
+import { findFreePort } from "./lib/free-port.mjs";
 
 const CWD = resolve(".");
+
+// Cheap orphan-sweep BEFORE we launch (Plan 3 · J): reap any headless-Chrome
+// left over from a crashed/killed render whose parent node is gone, so a fresh
+// dev session doesn't inherit the machine-choking leak. Safe — it only kills
+// shells with a dead parent, never an active render.
+{
+  const sweep = sweepOrphans();
+  if (sweep.killed) console.log(`[dev] orphan-sweep: reaped ${sweep.killed} stray render-Chrome (scanned ${sweep.scanned})`);
+}
 const isWorktree = CWD.replace(/\\/g, "/").includes("/.claude/worktrees/");
 // Worktrees start 10 above main; the free-port probe below settles the exact value,
 // so several worktrees just cascade upward instead of colliding.
 const EDITOR_BASE = isWorktree ? 5183 : 5173;
 const REVIEW_BASE = isWorktree ? 5609 : 5599;
 
-// First free port at or above `start` (bounded so a bug can't scan forever).
-// IMPORTANT: probe with `listen(p)` and NO host — the real servers
-// (editor-server.mjs:945, serve.mjs) bind dual-stack `::` the same way. Probing
-// 127.0.0.1 instead would report a port "free" that another `::`-bound server
-// already holds, then the real bind would EADDRINUSE.
-function findFreePort(start) {
-  return new Promise((res, rej) => {
-    const tryPort = (p) => {
-      const srv = createServer();
-      srv.once("error", (e) => {
-        srv.close();
-        if (e.code === "EADDRINUSE" && p < start + 100) tryPort(p + 1);
-        else rej(e);
-      });
-      srv.once("listening", () => srv.close(() => res(p)));
-      srv.listen(p);
-    };
-    tryPort(start);
-  });
-}
+// findFreePort lives in ./lib/free-port.mjs (unit-tested there). It probes
+// `listen(p)` with NO host so it matches the real servers' dual-stack `::` bind.
 
 // Explicit env wins (exact port, no probe); otherwise grab the first free one.
 const editorPort = process.env.EDITOR_PORT

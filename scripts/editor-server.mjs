@@ -34,8 +34,13 @@ import { resolveStaticConfig } from "./lib/fill-core.mjs";
 import { fieldRole, BEAT_HEADLINE_ROLE, beatLetter } from "./lib/roles.mjs";
 import { loadCopyLibrary } from "./lib/copy-library.mjs";
 import { validatePlan } from "./validate-plan.mjs";
+import { scopeMediaRoots } from "./lib/media-scope.mjs";
 
 const PORT = Number(process.env.EDITOR_PORT) || 5173;
+// Hard ceiling for a single-asset render (J): a hung render (the 7-sec clip that
+// pinned chrome 4+ min) is tree-killed at this bound so it can't leak. Generous
+// so a legitimate motion render finishes; override via RENDER_TIMEOUT_MS.
+const RENDER_TIMEOUT_MS = Number(process.env.RENDER_TIMEOUT_MS) || 10 * 60 * 1000;
 const PROJECT_ROOT = resolve(".");
 const TEMPLATES_DIR = join(PROJECT_ROOT, "templates/multi-sport-foundations");
 const OUT_DIR = join(PROJECT_ROOT, "out");
@@ -61,6 +66,45 @@ const PHOTO_EXT = new Set([".jpg", ".jpeg", ".png", ".webp"]);
 const CLIP_EXT = new Set([".mp4", ".mov", ".webm"]);
 const AUDIO_EXT = new Set([".mp3", ".wav", ".m4a", ".aac", ".ogg"]);
 const EXT_FOR_KIND = { photo: PHOTO_EXT, clip: CLIP_EXT, audio: AUDIO_EXT };
+const MUSIC_ROOT = join(PROJECT_ROOT, "music-library");
+
+// Every registered franchisee kit's media dirs. These are SERVABLE (the
+// /media-file guard allows them) but NOT part of the AA shared listing set — the
+// per-campaign scoping below (K) lists a kit's media ONLY for that kit's campaigns.
+function kitDirForBrand(slug) {
+  try {
+    const j = JSON.parse(readFileSync(join(DATA_DIR, `brand.${slug}.json`), "utf8"));
+    return j && j.kitPath ? join(PROJECT_ROOT, j.kitPath) : null;
+  } catch (_) { return null; }
+}
+function registeredBrandSlugs() {
+  try {
+    return readdirSync(DATA_DIR)
+      .map((f) => (f.match(/^brand\.([\w-]+)\.json$/) || [])[1])
+      .filter(Boolean);
+  } catch (_) { return []; }
+}
+const KIT_MEDIA_ROOTS = [];
+for (const slug of registeredBrandSlugs()) {
+  const kit = kitDirForBrand(slug);
+  if (!kit) continue;
+  for (const sub of ["assets", "uploads"]) {
+    const r = join(kit, sub);
+    if (![...MEDIA_ROOTS, ...KIT_MEDIA_ROOTS].some((x) => resolve(x) === resolve(r))) KIT_MEDIA_ROOTS.push(r);
+  }
+}
+// True if a resolved path sits under any servable media root (shared + kit).
+function underAnyMediaRoot(resolved) {
+  return [...MEDIA_ROOTS, ...KIT_MEDIA_ROOTS].some((r) => resolved.startsWith(resolve(r)));
+}
+// The campaign's attached brand slug (plan.brand) — drives media scoping.
+function campaignBrandSlug(campaign) {
+  try {
+    const p = join(CAMPAIGNS_DIR, campaign, "creative-plan.json");
+    if (existsSync(p)) return JSON.parse(readFileSync(p, "utf8")).brand || null;
+  } catch (_) {}
+  return null;
+}
 
 // Kraken cache: raw media pulled from The Kraken Content Library lands here,
 // isolated per campaign (brand/kraken-cache/<campaign>/). The legacy flat dir is
@@ -306,9 +350,23 @@ const server = createServer(async (req, res) => {
       { cwd: PROJECT_ROOT },
     );
     let stdout = "", stderr = "";
+    let done = false;
+    // Same abort guard as /render-asset (J): if the client gives up before the
+    // render finishes, TREE-KILL it so the puppeteer (chrome) grandchild can't
+    // orphan and leak. The `done` guard means a normal exit never gets killed.
+    req.on("close", () => {
+      if (done) return;
+      done = true;
+      try {
+        if (process.platform === "win32") spawn("taskkill", ["/PID", String(proc.pid), "/T", "/F"]);
+        else proc.kill("SIGTERM");
+      } catch (_) {}
+    });
     proc.stdout.on("data", (d) => (stdout += d));
     proc.stderr.on("data", (d) => (stderr += d));
     proc.on("exit", (code) => {
+      if (done) return;
+      done = true;
       // Sync to compare folder so the compare viewer also sees the update
       if (code === 0) {
         const src = join(OUT_DIR, `${id}.png`);
@@ -518,9 +576,22 @@ const server = createServer(async (req, res) => {
       const body = await readBody(req);
       let parsed;
       try { parsed = JSON.parse(body); } catch (e) { sendJson(res, 400, { error: e.message }); return; }
-      writeAtomic(editsPath, JSON.stringify(parsed, null, 2));
-      stampPlanAsset(campaign, angleId, assetId, { editedAt: new Date().toISOString() });
-      sendJson(res, 200, { saved: true, campaign, angle: angleId, asset: assetId });
+      const editedAt = new Date().toISOString();
+      // F (persistence): never report "saved" until the bytes are confirmed on
+      // disk AND the editedAt stamp is in the plan. A silently-dropped save (Saco
+      // B2) would otherwise let a blind re-export ship the pre-edit creative.
+      try {
+        writeAtomic(editsPath, JSON.stringify(parsed, null, 2));
+        JSON.parse(readFileSync(editsPath, "utf8")); // read-back: did it land + parse?
+      } catch (e) {
+        sendJson(res, 500, { saved: false, error: "edits did not persist: " + ((e && e.message) || e) });
+        return;
+      }
+      if (!stampPlanAsset(campaign, angleId, assetId, { editedAt })) {
+        sendJson(res, 500, { saved: false, error: "editedAt stamp did not persist (asset not found in plan)" });
+        return;
+      }
+      sendJson(res, 200, { saved: true, editedAt, campaign, angle: angleId, asset: assetId });
       return;
     }
   }
@@ -539,24 +610,38 @@ const server = createServer(async (req, res) => {
     );
     let stderr = "";
     let done = false;
-    // If the client abandons the request (modal/tab closed, navigated away, or a
-    // long render times out in the browser) before it finishes, TREE-KILL the
-    // spawned render. On Windows, killing this child node would otherwise ORPHAN
-    // its puppeteer (chrome) grandchild — the leak that saturated the machine. /T
-    // reaps the whole tree. The `done` guard ensures a normal completion never
-    // triggers a kill (proc 'exit' fires first and sets done).
-    req.on("close", () => {
-      if (done) return;
-      done = true;
+    // Tree-kill the spawned render. On Windows, killing this child node would
+    // otherwise ORPHAN its puppeteer (chrome) grandchild — the leak that
+    // saturated the machine. /T reaps the whole tree.
+    const killTree = () => {
       try {
         if (process.platform === "win32") spawn("taskkill", ["/PID", String(proc.pid), "/T", "/F"]);
         else proc.kill("SIGTERM");
       } catch (_) {}
+    };
+    // Hard ceiling: a render that never returns is killed so it can't pin chrome
+    // forever (J · "tree-kill on disconnect/timeout").
+    const watchdog = setTimeout(() => {
+      if (done) return;
+      done = true;
+      killTree();
+      if (!res.headersSent) sendJson(res, 504, { exitCode: -1, error: `render timed out after ${Math.round(RENDER_TIMEOUT_MS / 1000)}s — killed`, stderr: stderr.slice(-2000) });
+    }, RENDER_TIMEOUT_MS);
+    // If the client abandons the request (modal/tab closed, navigated away, or a
+    // long render times out in the browser) before it finishes, tree-kill the
+    // render. The `done` guard ensures a normal completion never triggers a kill
+    // (proc 'exit' fires first and sets done).
+    req.on("close", () => {
+      if (done) return;
+      done = true;
+      clearTimeout(watchdog);
+      killTree();
     });
     proc.stderr.on("data", (d) => (stderr += d));
     proc.on("exit", (code) => {
       if (done) return;
       done = true;
+      clearTimeout(watchdog);
       let output = null;
       try {
         const plan = JSON.parse(readFileSync(join(CAMPAIGNS_DIR, campaign, "creative-plan.json"), "utf8"));
@@ -643,11 +728,17 @@ const server = createServer(async (req, res) => {
           items.push(item);
         }
       };
-      // Shared brand-kit roots — everything EXCEPT the kraken cache root.
-      for (const root of MEDIA_ROOTS) {
-        if (resolve(root) === resolve(KRAKEN_CACHE_ROOT)) continue; // handled below
-        addFrom(root, "brand");
-      }
+      // Brand-scoped listing roots (K): AA / legacy plan → the full shared set;
+      // a franchisee campaign → neutral audio + its OWN kit media only, so the
+      // picker never surfaces AA photos under a non-AA brand. The kraken cache
+      // root is excluded here and added per-campaign below.
+      const brandSlug = campaign ? campaignBrandSlug(campaign) : null;
+      const sharedRoots = MEDIA_ROOTS.filter((r) => resolve(r) !== resolve(KRAKEN_CACHE_ROOT));
+      const listRoots = scopeMediaRoots({
+        brandSlug, sharedRoots, musicRoot: MUSIC_ROOT,
+        kitDir: brandSlug ? kitDirForBrand(brandSlug) : null,
+      });
+      for (const root of listRoots) addFrom(root, "brand");
       // The campaign's pulled media + its uploads, then the legacy flat cache.
       if (campaign) { const cd = campaignCacheDir(campaign); addFrom(cd, "kraken-dir", loadMan(cd)); }
       addFrom(KRAKEN_CACHE_ROOT, "kraken-dir", loadMan(KRAKEN_CACHE_ROOT));
@@ -666,17 +757,25 @@ const server = createServer(async (req, res) => {
   // editor-server never imports lib/kraken.mjs; it SPAWNS the standalone CLIs.
 
   // GET /kraken/workspaces — { workspaces: [{name,id}] }. Degrades to an empty
-  // list (never 500s the picker) if creds/config are missing.
+  // list (never 500s the picker) if creds/config are missing. K (self-heal): a
+  // long-lived server intermittently returned 0 workspaces under load; retry once
+  // on a transient empty/failure so a single hiccup doesn't read as "none".
   if (path === "/kraken/workspaces" && req.method === "GET") {
     try {
-      const { code, stdout, stderr } = await runNode(["scripts/kraken-list.mjs", "workspaces"]);
-      let j = {};
-      try { j = JSON.parse((stdout || "").trim() || "{}"); } catch (_) {}
-      if (code !== 0 || j.error) {
-        sendJson(res, 200, { workspaces: [], error: j.error || stderr.slice(-300) });
+      const attempt = async () => {
+        const { code, stdout, stderr } = await runNode(["scripts/kraken-list.mjs", "workspaces"]);
+        let j = {};
+        try { j = JSON.parse((stdout || "").trim() || "{}"); } catch (_) {}
+        const ok = code === 0 && !j.error && Array.isArray(j.workspaces) && j.workspaces.length > 0;
+        return { ok, code, j, stderr };
+      };
+      let r = await attempt();
+      if (!r.ok) r = await attempt(); // one self-heal retry on empty/failed
+      if (r.code !== 0 || r.j.error) {
+        sendJson(res, 200, { workspaces: [], error: r.j.error || r.stderr.slice(-300) });
         return;
       }
-      sendJson(res, 200, { workspaces: j.workspaces || [] });
+      sendJson(res, 200, { workspaces: r.j.workspaces || [] });
     } catch (e) {
       sendJson(res, 200, { workspaces: [], error: String((e && e.message) || e) });
     }
@@ -863,8 +962,8 @@ const server = createServer(async (req, res) => {
       const { src } = JSON.parse((await readBody(req)) || "{}");
       if (!src) { sendJson(res, 400, { error: "missing src" }); return; }
       const from = resolve(join(PROJECT_ROOT, src));
-      // Guard: source must live under a known brand-media root.
-      if (!MEDIA_ROOTS.some((r) => from.startsWith(resolve(r))) || !existsSync(from)) {
+      // Guard: source must live under a known brand-media root (shared OR a kit).
+      if (!underAnyMediaRoot(from) || !existsSync(from)) {
         sendJson(res, 404, { error: "source media not found in a brand media root" });
         return;
       }
@@ -893,7 +992,7 @@ const server = createServer(async (req, res) => {
   if (path.startsWith("/media-file/") && req.method === "GET") {
     const rel = decodeURIComponent(path.slice("/media-file/".length));
     const resolved = resolve(join(PROJECT_ROOT, rel));
-    const allowed = MEDIA_ROOTS.some((r) => resolved.startsWith(resolve(r)));
+    const allowed = underAnyMediaRoot(resolved);
     if (allowed && existsSync(resolved)) {
       const mime = MIME[extname(resolved).toLowerCase()] || "application/octet-stream";
       sendFile(req, res, resolved, mime);
