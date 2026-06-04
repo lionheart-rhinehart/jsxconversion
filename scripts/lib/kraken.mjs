@@ -336,6 +336,15 @@ export async function setFolder(contentId, folderId) {
   return rows[0] || null;
 }
 
+// Soft-delete a content row (set deleted_at). The library treats deleted_at-not-null
+// as gone (findExistingByMeta + listFolderMedia both filter deleted_at=is.null), so
+// this is the "REPLACE" primitive: soft-delete the stale row, then re-ingest fresh.
+// Returns the updated row (or null).
+export async function softDeleteContent(contentId, stamp) {
+  const rows = await restPatch(`content_outputs?id=eq.${contentId}`, { deleted_at: stamp || new Date().toISOString() });
+  return rows[0] || null;
+}
+
 // Idempotency: find an existing library row for this exact creative. Keyed on the
 // (campaign, angleId, assetId) TRIPLE scoped to the workspace — assetIds like "A1"
 // repeat across campaigns, so a bare-assetId match would wrongly skip a different

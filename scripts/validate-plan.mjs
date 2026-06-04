@@ -40,9 +40,18 @@ const ROLE_INDEX_PATH = join(PROJECT_ROOT, "templates/_role-index.json");
 
 // ── rules config ─────────────────────────────────────────────────────────────
 // Universal defaults — enforced even with no data/rules.<brand>.json present.
+// The CANONICAL target format mix (mirrors .claude/skills/creative-engine/config.json
+// defaultKnobs.motionRatio). The target is NOT read from the plan's own
+// knobs.motionRatio — a planner can (and did: SMAA) water that knob down to match a
+// static-heavy output and defeat the check. The canonical target is the bar.
+export const CANONICAL_MOTION_RATIO = { video: 0.6, gif: 0.15, static: 0.25 };
+
 export const DEFAULT_RULES = {
   aspect: { width: 1080, height: 1920 },
   mediaExempt: [],
+  // Format-mix gate (R3): block | warn | off. Block by default; a grandfathered
+  // campaign relaxes it via campaigns/<c>/validation.config.json {"formatMix":"warn"}.
+  formatMix: "block",
   verbatim: "warn",                 // off | warn | substring(block). Brand file opts into hard.
   // Scope the verbatim check to PERSUASIVE copy — the lines that must be Cody's
   // verbatim words. Factual proof/stat/credentials/citations come from research,
@@ -51,6 +60,14 @@ export const DEFAULT_RULES = {
   cityModel: "clone",
   locationRotation: { enabled: false },
   voice: { noEmoji: true, noExclamation: true },
+  // Typographic rating glyphs used by the bank's StarRating element — these are UI,
+  // NOT emoji, so they're stripped before the no-emoji check. A brand can override
+  // the set in rules.<brand>.json. (locked invariant: rating-stars are rules-driven.)
+  ratingGlyphs: ["★", "☆", "✦", "✧"],
+  // Verbatim guarantee for this brand. null → fall back to GUARANTEE_TEXT (the AA
+  // line in roles.mjs); a franchisee sets its OWN line here so the drift check
+  // compares against the right guarantee (locked invariant: guarantee is rules-driven).
+  guaranteeText: null,
   bannedWords: [],
   eyebrowPattern: DEFAULT_EYEBROW_PATTERN,
   beatRoles: {
@@ -159,6 +176,41 @@ function isContentField(f, format) {
   if (!isStr(f.key)) return false;
   if (NON_CONTENT_KEY.test(f.key) || MEDIA_KEY.test(f.key)) return false;
   return true;
+}
+
+// ── R3: format-mix gate ────────────────────────────────────────────────────────
+// The failure to catch is MOTION COLLAPSE: a plan that ships mostly static when the
+// target is video-heavy (SMAA: 22% video vs 60% target; the planner even watered its
+// own knob down to hide it). So the hard signal is the VIDEO share falling below the
+// canonical target — NOT a gif↔static trade (a healthy 55%-video, no-gif plan must
+// still pass). Slack = max(1 asset, 15 percentage points) so small batches and a few
+// points of drift don't trip; a gross miss does. Pure + exported for unit tests.
+// Returns { ok, total, target, actual, videoShare, deviations, skipped? }.
+export function checkFormatMix(plan, { target = CANONICAL_MOTION_RATIO, minAssets = 4 } = {}) {
+  const assets = (plan.angles || []).flatMap((a) => a.assets || []);
+  const total = assets.length;
+  const actual = { video: 0, gif: 0, static: 0 };
+  for (const a of assets) {
+    const f = a.format === "video" || a.format === "gif" ? a.format : "static";
+    actual[f]++;
+  }
+  // Too few assets → rounding dominates; skip (not enough signal to fail on).
+  if (total < minAssets) return { ok: true, total, target, actual, videoShare: null, deviations: [], skipped: true };
+  const slackShare = Math.max(1 / total, 0.15);
+  const targetVideo = typeof target.video === "number" ? target.video : 0;
+  const videoShare = actual.video / total;
+  const deviations = [];
+  // Only UNDER-target video is a failure (more motion than target is never a problem).
+  if (videoShare < targetVideo - slackShare) {
+    deviations.push({
+      bucket: "video",
+      actual: actual.video,
+      expected: Math.round(targetVideo * total),
+      target: targetVideo,
+      actualShare: +videoShare.toFixed(2),
+    });
+  }
+  return { ok: deviations.length === 0, total, target, actual, videoShare: +videoShare.toFixed(2), deviations, slackShare };
 }
 
 // ── the validator ────────────────────────────────────────────────────────────
@@ -287,9 +339,14 @@ export function validatePlan(plan, opts = {}) {
         const t = f.text;
         if (!isStr(t)) continue;
 
-        // voice (applies to ALL text — emoji/!/banned never belong anywhere)
-        if (rules.voice && rules.voice.noEmoji && EMOJI_RE.test(t)) {
-          add("voiceEmoji", "block", `emoji in "${f.key}": ${t.slice(0, 40)}`, { fixHint: "brand prohibits emoji" });
+        // voice (applies to ALL text — emoji/!/banned never belong anywhere). Strip
+        // configured rating glyphs (★ etc.) first: they're typographic UI, not emoji.
+        if (rules.voice && rules.voice.noEmoji) {
+          const allowed = rules.ratingGlyphs || [];
+          const tForEmoji = allowed.length ? [...t].filter((ch) => !allowed.includes(ch)).join("") : t;
+          if (EMOJI_RE.test(tForEmoji)) {
+            add("voiceEmoji", "block", `emoji in "${f.key}": ${t.slice(0, 40)}`, { fixHint: "brand prohibits emoji" });
+          }
         }
         if (rules.voice && rules.voice.noExclamation && t.includes("!")) {
           add("voiceExclamation", "block", `exclamation point in "${f.key}": ${t.slice(0, 40)}`, { fixHint: "brand voice is declarative — no exclamation points" });
@@ -341,9 +398,10 @@ export function validatePlan(plan, opts = {}) {
       if (gFields.length) {
         const joined = gFields.map((f) => f.text).join(" ");
         const looksLikeGuarantee = /\bmph\b/i.test(joined) && /vertical/i.test(joined);
-        if (looksLikeGuarantee && norm(joined) !== norm(GUARANTEE_TEXT)) {
+        const guaranteeText = rules.guaranteeText || GUARANTEE_TEXT;
+        if (looksLikeGuarantee && norm(joined) !== norm(guaranteeText)) {
           add("guaranteeDrift", "block", `guarantee is paraphrased (fields: ${gFields.map((f) => f.key).join("+")})`,
-            { fixHint: `must read exactly: ${GUARANTEE_TEXT}` });
+            { fixHint: `must read exactly: ${guaranteeText}` });
         }
       }
 
@@ -387,6 +445,21 @@ export function validatePlan(plan, opts = {}) {
         const v = { rule: "copyReuse", severity: "warn", message: `[${angleId}] same copy on ${uniq.join(", ")}: "${text.slice(0, 40)}"` };
         campaignViolations.push(v); bump(v);
       }
+    }
+  }
+
+  // ── R3: format-mix (campaign-level). Block by default; relaxable per-campaign. ──
+  const formatMixMode = rules.formatMix || "block";
+  if (formatMixMode !== "off") {
+    const mix = checkFormatMix(plan);
+    if (!mix.ok) {
+      const detail = mix.deviations
+        .map((d) => `${d.bucket} ${d.actual}/${mix.total} (${Math.round(d.actualShare * 100)}%, target ${Math.round(d.target * 100)}% ≈ ${d.expected})`)
+        .join(", ");
+      const v = { rule: "formatMix", severity: formatMixMode === "warn" ? "warn" : "block",
+        message: `format mix off target: ${detail}`,
+        fixHint: "rebalance formats toward the canonical 60% video / 15% gif / 25% static (media-pull is mandatory, so 'no footage' is not a reason to skip motion); or grandfather via campaigns/<c>/validation.config.json {\"formatMix\":\"warn\"}" };
+      campaignViolations.push(v); bump(v);
     }
   }
 

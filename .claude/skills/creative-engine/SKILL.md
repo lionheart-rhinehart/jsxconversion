@@ -37,9 +37,11 @@ already exists on disk for the campaign and resumes from there.
    `scripts/lib/roles.mjs` (currently `+1 mph speed. +3" vertical. 90 days. Or your
    training is on us.`). The `guarantee` role is auto-fill-locked, so the renderer
    never overwrites it; don't hand-paste a different wording.
-4. **Approval gate is mandatory.** You produce the plan; the user approves on the
-   review page; ONLY approved assets render. Never render unapproved assets unless
-   the user explicitly passes `--all`.
+4. **Approval gates PUBLISH, not render.** Render a PROOF of every planned asset FIRST
+   (`run-campaign.mjs --all`), so the review page shows real pixels — never an empty page.
+   The user approves the proofs; ONLY approved proofs are pushed to the live Kraken library
+   (`kraken-export.mjs --approved-only`). Rendering is cheap, local, and reversible; publishing
+   outward is the hard-to-reverse step the gate guards.
 5. **You never write copy — you select and place it (verbatim).** The user wrote
    every hook, headline, and line in `ad-copy.md` / `microscripts.md`; it is already
    good. Your job is casting, not copywriting: pick which of HIS units goes on which
@@ -159,12 +161,22 @@ section produced output** before planning; re-run any that came back empty.
   template repeats within an angle (not just guidance). Prefer the clean AA-native bank
   `cluster-30..42`; the legacy `cluster-1..22` are Canva imports with baked photos / competitor
   watermarks — do not reuse them for an on-brand batch.
+  - **Rotate the WHOLE bank, not the same 3–4 clusters (past failure: stuck on 33/34/35/39).** Track
+    template usage across the ENTIRE campaign (every angle), not just within one beat, and deliberately
+    reach for role-fit clusters you haven't used yet before repeating a familiar one. A campaign that
+    only ever touches a handful of skeletons reads as one ad restyled, not a varied set — spread across
+    the full role-ready bank (`templates/_role-index.json`).
 - **No media reused in a batch (the footage version of variety).** Every media-backed asset gets a
   DISTINCT source clip/still — never the same `media`/`clip`/`photo` path on two assets, and avoid the
   same *movement* (a video and a static of the same drill reads as a repeat). `run-campaign.mjs`
   validates this per angle and HARD-FAILS on any duplicate path (always, regardless of repetitionCap).
   Pull distinct scenes from the Kraken cache; prefer the campaign's school level (middle-school for the
   8–12 foundations work) and clips with no competitor equipment branding.
+  - **Assign media by SCENE diversity, not pool order (past failure: every static the same shot).**
+    Don't walk the cached media list top-to-bottom handing out the next file — deliberately vary the
+    drill / movement / framing across the set so no two creatives read as the same moment. (The runner
+    auto-extracts a video still with ffmpeg's `thumbnail` filter — a representative bright frame, not a
+    fixed ~1s seek — so a video bg won't land on a black/transition frame.)
 - **One red — and it comes from the active kit.** A creative carries exactly one brand red; never
   introduce a second (the legacy clusters once carried `#ed1c24`/`#fe3430` — normalized out). The red
   is NOT hardcoded: the bank's authoring red `#c4141d` (`--aa-red-600`) is the AA kit's value AND the
@@ -215,7 +227,7 @@ doesn't read), and otherwise the **role-aware join** (`buildCopyByRole` → `ass
 `scripts/lib/`) routes headline/microscript onto the right role-slots.
 
 ### Step 4b — Compliance gate (MANDATORY — do not skip)
-Before opening the review page, validate the plan and **loop-fix until it is clean**:
+Before rendering proofs, validate the plan and **loop-fix until it is clean**:
 
 ```
 node scripts/validate-knowledge.mjs <name>   # deep-read completeness (must exit 0)
@@ -232,7 +244,17 @@ the review page or tell the user to review while any blocking violation remains*
 refuse to render it anyway (exit 2), so catching it here saves a round trip. The report is written
 to `campaigns/<name>/validation.json` and surfaced live on the review page.
 
-### Step 5 — Review (stop here)
+### Step 5 — Render proofs (so review has real pixels)
+Review happens on RENDERED proofs, never on a promise — an empty review page was a real
+failure. Once the gate is clean, render a proof of **every planned asset**:
+`node scripts/run-campaign.mjs <name> --all`  (add `--angle <id>` to scope to one angle).
+It re-runs the compliance gate (refuses on any block unless `--force-unsafe`), renders each
+asset, runs render-QA (black/frozen/wrong-duration → failed), writes
+`out/campaigns/<name>/<angle>/<id>.<ext>`, patches each card's status/thumb (the page updates
+live), and emits `manifest.json`. Background-friendly — while a proof batch renders, return to
+Step 4 for the next angle. Good fresh proofs ⇒ offer to promote into the bank.
+
+### Step 6 — Review (stop here)
 Ensure the dev servers are up with **`npm run dev`** — it starts BOTH the plan/render
 server and the review page, auto-picks free ports (so a second chat/worktree never
 collides), writes the chosen ports to `.dev-ports.json`, and prints a ready-to-open
@@ -240,27 +262,21 @@ review URL.
 
 Tell the user to open the **review URL `npm run dev` printed** — of the form
 `http://localhost:<review>/review.html?campaign=<name>&api=http://localhost:<editor>&editor=http://localhost:<editor>`
-(on the main checkout that's `:5599`/`:5173`). Review the cards, tweak/note, and
-**Approve** the ones to build. **Then STOP.** Do not render.
+(on the main checkout that's `:5599`/`:5173`). They review the rendered proofs, tweak/note/edit
+(an edit re-renders that card), and **Approve** the ones to publish. **Then STOP.** Approval
+gates the outward PUBLISH — nothing is pushed to the live library until the user says go.
 
-### Step 6 — Render (only after approvals)
-When the user says go (re-invoke `/creative-engine <name>` or "render approved"),
-run the background runner:
-`node scripts/run-campaign.mjs <name>`  (add `--angle <id>` to scope, `--all` to
-ignore the gate). It renders approved assets, writes
-`out/campaigns/<name>/<angle>/<id>.<ext>`, patches each card's status/thumb (the
-page updates live), and emits `manifest.json`. While it runs in the background,
-return to Step 4 for the next angle.
-
-### Step 7 — Export to The Kraken (after render)
-Push the rendered creatives into a **destination folder** in the Content Library
-(same workspace as the source). Run `node scripts/kraken-export.mjs <name>` — with no
-`--folder` it prints the live folder list and exits; show it, ask which folder is the
-DESTINATION, then re-run with `--folder "<name>"`. **Run `--dry-run` first** (it reports the
-push set + resolved workspace UUID, writing nothing). The exporter dedups on the
-(campaign, angle, asset) triple (safe to re-run), attaches a video thumbnail, assigns the
-folder, and writes `asset.kraken = {id,url,folder}` back into the plan. The workspace/folder
-picks persist in `campaigns/<name>/kraken.json`.
+### Step 7 — Publish approved proofs to The Kraken (after review)
+Push ONLY the approved proofs into a **destination folder** in the Content Library
+(same workspace as the source). Run `node scripts/kraken-export.mjs <name> --approved-only` —
+with no `--folder` it prints the live folder list and exits; show it, ask which folder is the
+DESTINATION, then re-run with `--folder "<name>" --approved-only`. **Run `--dry-run` first** (it
+reports the push set + resolved workspace UUID, writing nothing). `--approved-only` publishes only
+cards the user approved (the publish gate); omit it only to push every rendered proof deliberately.
+The exporter dedups on the (campaign, angle, asset) triple (safe to re-run; pass `--replace` to
+overwrite a stale row), attaches a video thumbnail, assigns the folder, runs the **brand-integrity
+gate** (blocks AA leaks on a non-AA brand), and writes `asset.kraken = {id,url,folder}` back into
+the plan. The workspace/folder picks persist in `campaigns/<name>/kraken.json`.
 
 ## Dispatch (which renderer per asset)
 - `template` + `static` → `fill-core` cascade fill → static render (PNG).

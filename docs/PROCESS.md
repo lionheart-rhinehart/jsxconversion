@@ -25,18 +25,19 @@ and it renders the approved ones in the background while you move to the next an
   3b.KNOW GATE  → validate-knowledge.mjs: every deep-read section produced output (else fix before planning)
   4. PLAN       → creative-plan.json (angles × assets: format, source, copy, microscript, image, flags)
   4b.PLAN GATE  → validate-plan.mjs: HARD compliance gate (media, eyebrow/city, verbatim, voice,
-                  guarantee, ratio; warns: beat-role, coverage). The skill loop-fixes to clean
-                  BEFORE opening REVIEW; report → campaigns/<name>/validation.json
-  5. REVIEW     → review.html (served): per-card compliance badges; Approve DISABLED on blocked
-                  cards; campaign banner; approve / note / tweak / edit          ── STOPS HERE
-  6. RENDER     → run-campaign.mjs: re-runs the gate (exit 2 on any block unless --force-unsafe),
-                  approved only, render-then-move, THEN render-QA (lib/render-qa.mjs: black/frozen/
-                  wrong-duration → failed, not rendered)
+                  guarantee, FORMAT MIX; warns: beat-role, coverage). The skill loop-fixes to clean
+                  BEFORE rendering proofs; report → campaigns/<name>/validation.json
+  5. RENDER     → run-campaign.mjs --all: render a PROOF of every planned asset (re-runs the gate,
+     PROOFS       exit 2 on any block unless --force-unsafe; render-then-move, THEN render-QA
+                  (lib/render-qa.mjs: black/frozen/wrong-duration → failed, not rendered))
                   → out/campaigns/<name>/<angle>/<id>.<ext> + manifest.json (+ durationSec/fileSize)
-                  → good fresh assets ⇒ promote into the bank
-  7. EXPORT     → kraken-export.mjs: push rendered creatives into the chosen
-                  DESTINATION folder in the Kraken Content Library (idempotent)
-  └─ while rendering, loop back to step 4 for the next angle
+  6. REVIEW     → review.html (served): per-card compliance badges + the RENDERED PROOF; Approve
+                  DISABLED on blocked cards; campaign banner; approve / note / tweak / edit ── STOPS HERE
+                  (approval gates outward PUBLISH, NOT render — you review real pixels, not a promise)
+                  → good fresh proofs ⇒ promote into the bank
+  7. PUBLISH    → kraken-export.mjs --approved-only: push ONLY the approved proofs into the chosen
+                  DESTINATION folder in the Kraken Content Library (idempotent; --replace overwrites)
+  └─ while a proof batch renders, loop back to step 4 for the next angle
 ```
 
 The Kraken (per-AA-location workspace + source/destination folders) is chosen **per
@@ -215,7 +216,10 @@ coach-lower-thirds / logo-sting / meet-coach for worked examples):
   reports any on-creative text that isn't the user's. The brief is strategy-only.
 - **Hand placement sacred**: fill/generate set data only.
 - **Voice**: no emoji, no exclamation points; guarantee verbatim.
-- **Approval gate**: only approved assets render.
+- **Approval gates PUBLISH (not render)**: render a PROOF of every planned asset FIRST
+  (`run-campaign.mjs --all`), review the real pixels, then push ONLY the approved proofs to
+  the live library (`kraken-export.mjs --approved-only`). Rendering is cheap + reversible
+  (local files); publishing to the Kraken is the outward, hard-to-reverse step the gate guards.
 - **Render-then-move + unique basenames**: the renderer writes `out/<basename>.<ext>`;
   the runner uses a unique per-cell basename and moves the result into the campaign
   folder, so concurrent/background renders never collide in `out/` or `.tmp/`.

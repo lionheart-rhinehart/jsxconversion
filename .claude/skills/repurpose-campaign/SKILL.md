@@ -32,11 +32,27 @@ Kits are registered via **`/creative-engine` intake** — repurpose only *consum
 export replace-safe. Colors follow the kit automatically (the bank's authoring colors are
 remapped to the kit's at render/clone time); for the AA kit that remap is a no-op.
 
+## Absorb a target-led opening (don't loop on source)
+
+Users almost always lead with the TARGET, not the source: *"repurpose this for Pelham"*,
+*"make a Jarosh version"*. **Absorb that answer — do not re-ask for the source as if they
+said nothing.** From a target-led opening:
+- If the target is a **registered brand kit** (`data/brand.<slug>.json` exists) or a **known
+  AA location** (`data/location.<slug>.json`), record it as the answer to step 2/3 and move
+  straight to picking the source.
+- If the target is **NOT registered**, STOP and route to **`/creative-engine` intake** to
+  register the kit/location first (colors, logo, name, url, fonts), then resume here.
+
+Source selection is a **single flat pick** from the rendered campaigns — never bifurcate it
+into an angle-then-location sub-flow (that two-step loop was the intake failure). One list,
+one (multi-)selection.
+
 ## Question order (ASK in this sequence; collect, then run)
 
 1. **Source campaign(s)** — list the rendered campaigns under `campaigns/` (those with a
-   `creative-plan.json` whose assets are `rendered`) and present them as a **multi-select**
-   list. The user checks one or several (angles are often run as separate campaigns).
+   `creative-plan.json` whose assets are `rendered`) and present them as ONE **multi-select**
+   flat list. The user checks one or several (angles are often run as separate campaigns).
+   (If they already named the target above, you still ask THIS — the source — here, once.)
 2. **Target brand** — the kit to repurpose TO (asked ONCE, applies to all selected).
    Confirm `data/brand.<slug>.json` + `brand/<slug>/` exist. **If the kit is not registered,
    STOP and route the user to `/creative-engine` intake to register it** (capture colors,
@@ -63,9 +79,12 @@ remapped to the kit's at render/clone time); for the AA kit that remap is a no-o
    - **Source folder** — media source (Kraken workspace + folder), for the chosen media policy.
    - **Destination folder** — the target Kraken workspace + folder to export into (each maps to
      its own, e.g. ANGLE 1/2/3).
-5. **Write the job spec, dry-run, then run.** Build `<spec>.json` (schema below), run the
-   orchestrator with `--dry-run` and show the user the set (clone plan, would-render count,
-   inherited guarantee text, Kraken rows that would be REPLACED). On confirm, run it for real.
+5. **Write the job spec, dry-run, render proofs, REVIEW, then publish.** Build `<spec>.json`
+   (schema below), run `--dry-run` and show the user the set (clone plan, would-render count,
+   inherited guarantee text, Kraken rows that would be REPLACED). On confirm, **render proofs
+   only** (`--render-only`) — clone + render + verify, NO export. Point the user at the review
+   page for the dest campaign(s) to check the real pixels and approve. **Only after they say go**
+   do you publish (`--export-only`). Approval gates the outward push, never the render.
 
 ## Building the job spec
 
@@ -81,7 +100,7 @@ Write a JSON job spec and pass it with `--job`:
       "dest": "more-games-velocity-sports",
       "location": "fishers",
       "textSwaps": [{ "from": "CARMEL", "to": "FISHERS" }],
-      "media": { "policy": "reuse", "map": {} },
+      "media": { "policy": "replace", "map": { "A1": "brand/kraken-cache/velocity-sports/drill-1.mp4" } },
       "workspace": "velocity-sports",
       "destFolder": "ANGLE 1"
     }
@@ -93,28 +112,41 @@ Write a JSON job spec and pass it with `--job`:
   the kit and aborts if incomplete). The brand-name wordmark swap is added automatically from
   the source vs target tiers — you only add `textSwaps` for things the orchestrator can't
   infer (e.g. a city token like `INDIANAPOLIS`/`CARMEL` → the new city).
-- `media.policy`: `reuse` (default) keeps source clips/photos; `replace`/`per-asset` binds
-  `media.map[assetId]` paths you pulled from the franchisee workspace.
+- `media.policy` is **required — there is no silent default**. `reuse` keeps source clips/photos
+  (rejected on a brand change unless you also set `"allowSourceMedia": true`, since reuse would
+  ship the source brand's footage); `replace`/`per-asset` binds `media.map[assetId]` paths you
+  pulled from the franchisee workspace (a map is required — the run stops-and-asks if it's empty).
 - `textSwaps[].from` may be a plain string (matched literally, global) — the orchestrator
   handles the color remap and brand-name swap itself.
 
 ## Run
 
 ```
-node scripts/repurpose-campaign.mjs --job <spec>.json --dry-run     # show the set, no writes
-node scripts/repurpose-campaign.mjs --job <spec>.json               # real run
+node scripts/repurpose-campaign.mjs --job <spec>.json --dry-run        # show the set, no writes
+node scripts/repurpose-campaign.mjs --job <spec>.json --render-only    # clone+render+verify; STOP for review
+#   … user reviews + approves the dest campaign on the review page …
+node scripts/repurpose-campaign.mjs --job <spec>.json --export-only    # publish approved proofs (replace-safe)
 ```
 
-The orchestrator loops each target through 6 hard gates — **pre-flight** (active-dim data must
+The orchestrator loops each target through hard gates — **pre-flight** (active-dim data must
 resolve, else abort that target with zero writes), **clone+swap**, **render every asset via
 `run-campaign --all`** (no copy-across path → no eyebrow leak), **verify** (rendered count ==
-source count, files on disk), **export replace-safe** (soft-delete the old Kraken row, then
-re-ingest), **report**. It is all-or-nothing per target (one target's failure doesn't stop the
-others), idempotent (re-run replaces), and ends with a per-target report.
+source count, files on disk), then — **after a review stop** — **export replace-safe**
+(soft-delete the old Kraken row, then re-ingest), **report**. `--render-only` stops after verify
+(the review stop); `--export-only` resumes at publish. A bare run (neither flag) still does the
+whole chain for back-compat, but the **two-phase render→review→publish flow is the default you
+drive**. All-or-nothing per target, idempotent (re-run replaces), ends with a per-target report.
 
 ## Non-negotiables (the script enforces; don't fight them)
 
 - A target never renders without its active-dimension data (kit / location tier / workspace).
 - Every asset is rendered fully per target — there is NO copy-across-targets path.
+- **Review before publish**: render proofs, let the user approve, THEN export. Approval gates
+  the outward push, not the render (`--render-only` → review → `--export-only`).
 - Re-export REPLACES (soft-delete then re-ingest); it never leaves a stale creative.
+- **Media is a required decision** — the orchestrator refuses a silent `reuse` on a brand change
+  (it would ship the SOURCE brand's footage). Pull the target's own media, or set
+  `allowSourceMedia:true` to knowingly reuse.
+- The export runs a **brand-integrity gate** — AA red / wordmark / assets on a non-AA brand block
+  the publish (AA people/proof are flagged to confirm-or-swap).
 - Colors follow the active kit everywhere; the AA kit is unchanged by construction.

@@ -33,6 +33,7 @@ import {
 } from "node:fs";
 import { resolve, join, dirname } from "node:path";
 import { spawn, spawnSync } from "node:child_process";
+import { createRequire } from "node:module";
 import {
   emitVariant, renderJsx, resolveStaticConfig, buildCopyByRole,
   loadTier, mergeTiers,
@@ -47,6 +48,8 @@ import { validatePlan, writeValidationReport } from "./validate-plan.mjs";
 import { verifyRender } from "./lib/render-qa.mjs";
 import { loadBrandFile } from "./lib/brand-kit.mjs";
 import { stageKitFonts } from "./lib/fonts-stage.mjs";
+import { checkRenderEnv, formatRenderEnvError, REQUIRED_FONT_FAMILIES } from "./lib/preflight.mjs";
+import { capBgExtraction } from "./lib/clip-cap.mjs";
 
 const PROJECT_ROOT = resolve(".");
 const CAMPAIGNS_DIR = join(PROJECT_ROOT, "campaigns");
@@ -130,22 +133,37 @@ function ffmpegAvailable() {
   return spawnSync("ffmpeg", ["-version"], { stdio: "ignore" }).status === 0;
 }
 
-// Render-env preflight (fail-fast, ONCE before any asset): the static and motion
-// renderers load React's UMD builds from node_modules. A git worktree gets its
-// OWN node_modules (gitignored, NOT auto-installed), so a fresh worktree renders
-// nothing — and without this gate the FIRST and EVERY asset fails with an opaque
-// "exit 1". Catch it here with the one-line fix, before wasting a whole batch.
+// Resolve the puppeteer browser executable WITHOUT launching it (cheap, and never
+// throws): a missing browser is a render-killer the React-UMD check alone misses.
+// Returns the path string, or undefined when we can't probe (so the pure check
+// skips the assertion rather than false-failing).
+function probeBrowserPath() {
+  try {
+    const pmod = createRequire(import.meta.url)("puppeteer");
+    if (typeof pmod.executablePath === "function") return pmod.executablePath();
+  } catch { /* fall through */ }
+  return undefined;
+}
+
+// Render-env preflight (fail-fast, ONCE before any asset): React UMD + puppeteer
+// browser + ffmpeg + brand fonts. A git worktree gets its OWN node_modules
+// (gitignored, NOT auto-installed) and the cloud session installs ffmpeg/chromium
+// in a hook — so any can be silently absent, and without this gate the FIRST and
+// EVERY asset fails with an opaque "exit 1" after the whole batch churns. Catch it
+// here with ONE actionable line, before wasting 20 minutes. Exits 3 on a hard miss.
 function preflightRenderEnv() {
-  const need = [
-    "node_modules/react/umd/react.production.min.js",
-    "node_modules/react-dom/umd/react-dom.production.min.js",
-  ];
-  const missing = need.filter((rel) => !existsSync(join(PROJECT_ROOT, rel)));
-  if (missing.length) {
-    console.error(`[campaign] FATAL: render dependencies are not installed in this checkout:`);
-    for (const m of missing) console.error(`             missing: ${m}`);
-    console.error(`[campaign] Fix: run \`npm install\` here first. Git worktrees have their own`);
-    console.error(`           node_modules (gitignored, not auto-created) — install once per worktree.`);
+  const result = checkRenderEnv({
+    projectRoot: PROJECT_ROOT,
+    ffmpegOk: ffmpegAvailable(),
+    browserPath: probeBrowserPath(),
+    fontFamilies: REQUIRED_FONT_FAMILIES,
+  });
+  for (const w of result.warnings) console.error(`[campaign] preflight warning: ${w}`);
+  if (!result.ok) {
+    const { head, fix, bullets } = formatRenderEnvError(result);
+    console.error(`[campaign] FATAL: ${head}`);
+    console.error(bullets);
+    console.error(`[campaign] ${fix}`);
     process.exit(3);
   }
 }
@@ -154,9 +172,19 @@ function preflightRenderEnv() {
 function mp4ToGif(mp4Path, gifPath, fps = 15, width = 480) {
   return new Promise((res) => {
     const vf = `fps=${fps},scale=${width}:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse`;
-    const p = spawn("ffmpeg", ["-y", "-i", mp4Path, "-vf", vf, gifPath], { stdio: "ignore" });
-    p.on("exit", (code) => res(code === 0));
-    p.on("error", () => res(false));
+    const p = spawn("ffmpeg", ["-y", "-i", mp4Path, "-vf", vf, gifPath], { stdio: ["ignore", "ignore", "pipe"] });
+    let err = "";
+    if (p.stderr) p.stderr.on("data", (d) => { err += d.toString(); });
+    p.on("exit", (code) => {
+      if (code !== 0) {
+        // Surface ffmpeg's stderr — gif failures were reported as a bare
+        // "gif conversion failed" with the real cause swallowed.
+        const tail = err.trim().split(/\r?\n/).filter(Boolean).slice(-4);
+        for (const line of tail) console.error(`           │ ${line}`);
+      }
+      res(code === 0);
+    });
+    p.on("error", (e) => { console.error(`           │ ffmpeg spawn error: ${e.message}`); res(false); });
   });
 }
 
@@ -332,15 +360,25 @@ async function renderTemplateStatic(asset, angleId) {
       }
       if (mediaRel) {
         if (bakedBg) {
-          // An <img> src CANNOT be a video → still-frame it to a PNG.
+          // An <img> src CANNOT be a video → still-frame it to a PNG. When the user
+          // pinned a start (asset.mediaStart) honor it; otherwise let ffmpeg's
+          // `thumbnail` filter pick a REPRESENTATIVE (non-black) frame rather than a
+          // fixed t≈1s seek, which was landing on black/transition frames (D).
           if (VID_RE.test(mediaRel)) {
             const abs = join(TEMPLATE_DIR, mediaRel.replace(/^\.\//, ""));
             const pngRel = mediaRel.replace(/\.[^.]+$/, "") + "-frame.png";
             const pngAbs = join(TEMPLATE_DIR, pngRel.replace(/^\.\//, ""));
             mkdirSync(dirname(pngAbs), { recursive: true });
-            const ex = spawnSync("ffmpeg", ["-y", "-loglevel", "error", "-ss", String(asset.mediaStart || 1),
-              "-i", abs, "-frames:v", "1", pngAbs], { stdio: "ignore" });
+            const ffStill = asset.mediaStart != null
+              ? ["-y", "-loglevel", "error", "-ss", String(asset.mediaStart), "-i", abs, "-frames:v", "1", pngAbs]
+              : ["-y", "-loglevel", "error", "-i", abs, "-vf", "thumbnail=n=100", "-frames:v", "1", pngAbs];
+            const ex = spawnSync("ffmpeg", ffStill, { encoding: "utf8" });
             if (ex.status === 0 && existsSync(pngAbs)) mediaRel = pngRel;
+            else {
+              const t = String(ex.stderr || ex.error?.message || "").trim().split(/\r?\n/).filter(Boolean).slice(-3);
+              console.error(`[render]   note: ${asset.id} static bg still-frame failed; using raw path.`);
+              for (const line of t) console.error(`           │ ${line}`);
+            }
           }
           if ("src" in bakedBg) bakedBg.src = mediaRel; else bakedBg.path = mediaRel;
         } else {
@@ -460,6 +498,15 @@ async function renderTemplateMotion(asset, angleId, wantGif) {
   // a copy next to the wrapper so the headless page can load it as a sibling,
   // and bind it to the template's media key. (Motion media in render is verified
   // in the deferred live-render pass; the wiring is here.)
+  // Resolve the exported clip length D up-front — the bg-frame extraction caps to
+  // it (frames past D are never displayed). L = the template's intrinsic loop length.
+  const dField = durationField(src);
+  const L = dField ? dField.default : 0;
+  let D = Math.max(1, Number(asset.templateData?.duration) || L || 8);
+  if (dField) {
+    if (typeof dField.min === "number") D = Math.max(dField.min, D);
+    if (typeof dField.max === "number") D = Math.min(dField.max, D);
+  }
   let stagedMedia = null;
   let bgFramesDir = null;        // set when a VIDEO bg is pre-extracted to frames
   let bgFramesInfo = null;       // { base, count, fps, key } → window.__bgFrames in the wrapper
@@ -483,12 +530,19 @@ async function renderTemplateMotion(asset, angleId, wantGif) {
         const cs = Math.max(0, Number(data[`${mediaKey}_clipStart`]) || 0);
         const ceRaw = data[`${mediaKey}_clipEnd`];
         const ce = (typeof ceRaw === "number" && ceRaw > cs) ? ceRaw : null;
+        // CAP the extraction window so a long source clip can't OOM the render: a
+        // 26s clip @ 30fps = 780 PNGs decoded into memory, but frames past the
+        // export duration D are never displayed. Cap to D, then to a hard frame
+        // ceiling. Log the cap — never silently OOM, never silently drop the bg.
+        const requestedSpanSec = ce != null ? (ce - cs) : null;
+        const cap = capBgExtraction({ requestedSpanSec, exportDurationSec: D, fps: 30 });
+        if (cap.capped) console.error(`[render]   ${asset.id} bg clip ${cap.note}`);
         const ffArgs = ["-y"];
         if (cs > 0) ffArgs.push("-ss", String(cs));
         ffArgs.push("-i", abs);
-        if (ce != null) ffArgs.push("-t", String(ce - cs));
+        ffArgs.push("-t", String(cap.spanSec));
         ffArgs.push("-vf", "fps=30", join(bgFramesDir, "%05d.png"));
-        const ex = spawnSync("ffmpeg", ffArgs, { stdio: "ignore" });
+        const ex = spawnSync("ffmpeg", ffArgs, { encoding: "utf8" });
         const frames = ex.status === 0 ? readdirSync(bgFramesDir).filter((f) => f.endsWith(".png")).length : 0;
         if (frames > 0) {
           bgFramesInfo = { base: `./${base}.bgframes/`, count: frames, fps: 30, key: mediaKey };
@@ -496,6 +550,10 @@ async function renderTemplateMotion(asset, angleId, wantGif) {
           console.error(`[render]   ${asset.id} bg clip → ${frames} frames @ 30fps (deterministic <img> sequence).`);
         } else {
           console.error(`[render]   note: ${asset.id} bg-frame extraction failed; rendering without background.`);
+          // Surface ffmpeg's own stderr — the actionable cause (bad codec, missing
+          // file, unreadable clip) was being swallowed behind a generic note.
+          const errTail = String(ex.stderr || ex.error?.message || "").trim().split(/\r?\n/).filter(Boolean).slice(-4);
+          for (const line of errTail) console.error(`           │ ${line}`);
           rmSync(bgFramesDir, { recursive: true, force: true }); bgFramesDir = null;
         }
       } else if (mediaKey) {
@@ -531,17 +589,8 @@ async function renderTemplateMotion(asset, angleId, wantGif) {
   // accepts /^[0-9.]+$/ in `duration={...}`; a quoted/NaN value would silently
   // fall back to DEFAULTS (8s). Fall back to 8 when unset.
   // L = the template's intrinsic animation/loop length (SPEC duration `default`);
-  // D = the exported clip length, clamped to the template's per-template bounds so
-  // a stale plan value can't exceed what the template is meant to do. When D > L the
-  // wrapper loops the L-second animation to fill D (LoopRemap); when no duration
-  // field exists, L falls back to D (no looping, prior behavior).
-  const dField = durationField(src);
-  const L = dField ? dField.default : 0;
-  let D = Math.max(1, Number(asset.templateData?.duration) || L || 8);
-  if (dField) {
-    if (typeof dField.min === "number") D = Math.max(dField.min, D);
-    if (typeof dField.max === "number") D = Math.min(dField.max, D);
-  }
+  // D/L resolved above (the bg-frame extraction needed D). When D > L the wrapper
+  // loops the L-second animation to fill D (LoopRemap); no duration field → L=0.
   const wrapperName = `CampWrap_${slug(asset.id).replace(/-/g, "_")}`;
   const wrapper = `// Auto-generated motion wrapper for campaign "${campaign}" asset ${asset.id}.
 // Renders bank template ${tmpl} (window.${compName}) inside a Stage with __CONFIG__ data.

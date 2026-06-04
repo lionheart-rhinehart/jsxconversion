@@ -32,8 +32,10 @@ import { spawnSync } from "node:child_process";
 import {
   resolveWorkspaceId, loadWorkspaces, listFolders, resolveFolder,
   mimeForExt, bucketForMime, uploadToStorage, ingestContent, setFolder,
-  findExistingByMeta,
+  findExistingByMeta, softDeleteContent,
 } from "./lib/kraken.mjs";
+import { exportExitCode, summarizeExport, isPublishable } from "./lib/export-accounting.mjs";
+import { scanBrandIntegrity, gatherCampaignTexts } from "./lib/brand-integrity.mjs";
 
 const PROJECT_ROOT = resolve(".");
 const CAMPAIGNS_DIR = join(PROJECT_ROOT, "campaigns");
@@ -57,11 +59,20 @@ const campaign = args.find((a) => !a.startsWith("--"));
 const flag = (n) => args.includes(`--${n}`);
 const opt = (n) => { const i = args.indexOf(`--${n}`); return i >= 0 ? args[i + 1] : null; };
 if (!campaign) {
-  console.error('Usage: node scripts/kraken-export.mjs <campaign> --workspace <loc> [--folder "<name>"] [--dry-run] [--only ids]');
+  console.error('Usage: node scripts/kraken-export.mjs <campaign> --workspace <loc> [--folder "<name>"] [--replace] [--dry-run] [--only ids] [--allow-aa]');
   process.exit(1);
 }
 const dryRun = flag("dry-run");
 const onlyIds = opt("only") ? new Set(opt("only").split(",").map((s) => s.trim())) : null;
+// --replace makes re-export REPLACE: soft-delete the existing library row, then
+// re-ingest the fresh file (instead of dedup-skipping). Makes SKILL.md's "re-export
+// REPLACES, never leaves a stale creative" promise actually true for a direct re-run.
+const replace = flag("replace");
+// --allow-aa is the deliberately-awkward escape hatch for the brand-integrity gate.
+const allowAA = flag("allow-aa");
+// --approved-only is the PUBLISH gate (R2): under render-proofs-first, only push the
+// assets the user approved on the review page. Default pushes any rendered output.
+const approvedOnly = flag("approved-only");
 
 const planPath = join(CAMPAIGNS_DIR, campaign, "creative-plan.json");
 const sidecarPath = join(CAMPAIGNS_DIR, campaign, "kraken.json");
@@ -105,8 +116,13 @@ async function patchAsset(angleId, assetId, fields) {
 function posterFrame(videoPath, assetTag) {
   mkdirSync(TMP_DIR, { recursive: true });
   const poster = join(TMP_DIR, `poster-${slug(assetTag)}.png`);
-  const r = spawnSync("ffmpeg", ["-y", "-ss", "0.5", "-i", videoPath, "-frames:v", "1", "-q:v", "3", poster], { stdio: "ignore" });
-  return r.status === 0 && existsSync(poster) ? poster : null;
+  // `thumbnail` picks a representative (non-black) frame rather than a fixed 0.5s
+  // seek that can land on a black/transition frame.
+  const r = spawnSync("ffmpeg", ["-y", "-loglevel", "error", "-i", videoPath, "-vf", "thumbnail=n=100", "-frames:v", "1", "-q:v", "3", poster], { encoding: "utf8" });
+  if (r.status === 0 && existsSync(poster)) return poster;
+  const tail = String(r.stderr || r.error?.message || "").trim().split(/\r?\n/).filter(Boolean).slice(-3);
+  for (const line of tail) console.error(`           │ ${line}`);
+  return null;
 }
 
 async function main() {
@@ -146,6 +162,25 @@ async function main() {
 
   if (!dryRun) saveSidecar({ workspace: wsName, workspaceId: wsId, destFolder: folder.name, destFolderId: folder.id });
 
+  // ── Brand-integrity gate: never publish AA content under a franchisee brand.
+  // Scans the bytes that produced the renders (plan + edits configs). On a non-AA
+  // brand, AA red / "ATHLETES ACCELERATION" / a known AA asset is BLOCKING; AA
+  // people/proof are flagged for the user to confirm-or-swap. --allow-aa overrides.
+  {
+    const texts = gatherCampaignTexts(join(CAMPAIGNS_DIR, campaign));
+    const scan = scanBrandIntegrity({ brand: plan.brand || null, texts });
+    if (!scan.isAA && scan.findings.length) {
+      const warnLabels = [...new Set(scan.findings.filter((f) => f.severity === "warn").map((f) => f.detail))];
+      for (const w of warnLabels) console.error(`[export] AA people/proof to confirm-or-swap: ${w}`);
+      for (const b of scan.blocking) console.error(`[export] AA LEAK on brand "${scan.brand}" — ${b.kind} (${b.detail}) in ${b.source}`);
+      if (scan.blocking.length && !allowAA) {
+        console.error(`[export] BLOCKED — ${scan.blocking.length} Athletes Acceleration leak(s) on a non-AA brand. Fix the source (re-run the palette/identity swap) or re-export with --allow-aa to override.`);
+        process.exit(2);
+      }
+      if (scan.blocking.length) console.error(`[export] --allow-aa set: proceeding despite ${scan.blocking.length} AA leak(s).`);
+    }
+  }
+
   const manifestPath = join(OUT_DIR, "campaigns", campaign, "manifest.json");
   const manifest = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, "utf8")) : { campaign, cells: [] };
 
@@ -155,7 +190,7 @@ async function main() {
     for (const asset of angle.assets || []) {
       if (onlyIds && !onlyIds.has(asset.id)) continue;
       const tag = `${angle.id}/${asset.id}`;
-      if (asset.status !== "rendered" || !asset.output) { skipped++; continue; }
+      if (!isPublishable(asset, { approvedOnly })) { skipped++; continue; }
       const outAbs = join(PROJECT_ROOT, asset.output);
       if (!existsSync(outAbs)) {
         console.error(`[export] ${tag} ✗ output missing: ${asset.output}`); failed++; continue;
@@ -166,17 +201,27 @@ async function main() {
       const bucket = bucketForMime(mime);
       const type = mime.startsWith("video/") ? "video" : "image";
 
-      // 1. Dedup on the (campaign,angle,asset) triple.
+      // 1. Dedup on the (campaign,angle,asset) triple. With --replace, soft-delete
+      //    the existing row instead of skipping, so the fresh file re-ingests below
+      //    (the "re-export REPLACES" promise). Without --replace, skip (idempotent).
       let existing = null;
       try { existing = await findExistingByMeta(wsId, campaign, angle.id, asset.id); }
       catch (e) { console.error(`[export] ${tag} dedup check failed: ${e.message}`); }
-      if (existing) {
+      if (existing && !replace) {
         console.error(`[export] ${tag} • already in library (${existing.id}) — skipping ingest`);
         if (!dryRun) {
           try { await setFolder(existing.id, folder.id); } catch { /* best effort */ }
           await patchAsset(angle.id, asset.id, { kraken: { id: existing.id, url: existing.content, folder: folder.name } });
         }
         deduped++; continue;
+      }
+      if (existing && replace && !dryRun) {
+        try {
+          await softDeleteContent(existing.id);
+          console.error(`[export] ${tag} • replace: soft-deleted stale row ${existing.id}`);
+        } catch (e) {
+          console.error(`[export] ${tag} ✗ replace soft-delete failed: ${e.message}`); failed++; continue;
+        }
       }
 
       if (dryRun) {
@@ -250,8 +295,9 @@ async function main() {
     mkdirSync(join(OUT_DIR, "campaigns", campaign), { recursive: true });
     writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
   }
-  console.error(`[export] done — pushed:${pushed} deduped:${deduped} skipped:${skipped} failed:${failed}${dryRun ? "  (DRY RUN — nothing written)" : ""}`);
-  process.exit(failed > 0 ? 1 : 0);
+  const total = (plan.angles || []).reduce((n, a) => n + (a.assets || []).length, 0);
+  console.error(`[export] done — ${summarizeExport({ pushed, deduped, skipped, failed, total, replace, dryRun, scoped: !!onlyIds })}`);
+  process.exit(dryRun ? 0 : exportExitCode({ pushed, failed, replace }));
 }
 
 main().catch((e) => { console.error("[export] fatal:", e.message); process.exit(1); });
