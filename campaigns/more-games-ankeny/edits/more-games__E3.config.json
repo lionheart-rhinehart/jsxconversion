@@ -85,7 +85,7 @@
       "y": 720,
       "width": 960,
       "textAlign": "center",
-      "text": "Here's Why Most Young Athletes Stop Getting Faster\n(And What You Can Do About It)",
+      "text": "A FAST REP BECOMES THE STEP THAT BEATS THE DEFENDER. THATS MORE TOUCHES, EVERY GAME.",
       "fontSize": 104,
       "fontFamily": "Anton",
       "color": "#ffffff",
@@ -126,19 +126,18 @@
     }
   ],
   "media": {
-    "path": "./assets/swap-upload-jarosh-images-638942872-1504070021726261-8224200172582480270-n.png",
+    "path": "./assets/jarosh/638942872-1504070021726261-8224200172582480270-n-60f3ee53.jpg",
     "tag": "bg_media",
     "z": 0,
     "videoStartTime": 1,
     "offsetX": 0,
     "offsetY": 0,
-    "scale": 1,
     "crop": {
-      "x": 344,
-      "y": 11,
+      "x": 282,
+      "y": 0,
       "width": 539,
-      "height": 947,
-      "forPath": "./assets/swap-upload-jarosh-images-638942872-1504070021726261-8224200172582480270-n.png"
+      "height": 958,
+      "forPath": "./assets/jarosh/638942872-1504070021726261-8224200172582480270-n-60f3ee53.jpg"
     }
   }
 }

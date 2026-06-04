@@ -538,8 +538,25 @@ const server = createServer(async (req, res) => {
       { cwd: PROJECT_ROOT },
     );
     let stderr = "";
+    let done = false;
+    // If the client abandons the request (modal/tab closed, navigated away, or a
+    // long render times out in the browser) before it finishes, TREE-KILL the
+    // spawned render. On Windows, killing this child node would otherwise ORPHAN
+    // its puppeteer (chrome) grandchild — the leak that saturated the machine. /T
+    // reaps the whole tree. The `done` guard ensures a normal completion never
+    // triggers a kill (proc 'exit' fires first and sets done).
+    req.on("close", () => {
+      if (done) return;
+      done = true;
+      try {
+        if (process.platform === "win32") spawn("taskkill", ["/PID", String(proc.pid), "/T", "/F"]);
+        else proc.kill("SIGTERM");
+      } catch (_) {}
+    });
     proc.stderr.on("data", (d) => (stderr += d));
     proc.on("exit", (code) => {
+      if (done) return;
+      done = true;
       let output = null;
       try {
         const plan = JSON.parse(readFileSync(join(CAMPAIGNS_DIR, campaign, "creative-plan.json"), "utf8"));

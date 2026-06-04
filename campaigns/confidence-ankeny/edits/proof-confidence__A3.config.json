@@ -18,7 +18,7 @@
       "tag": "rule_top",
       "type": "rect",
       "x": 240,
-      "y": 690,
+      "y": 845,
       "width": 600,
       "height": 6,
       "fill": "#fa3f36",
@@ -41,12 +41,12 @@
       "id": "eyebrow",
       "tag": "eyebrow",
       "label": "Context anchor chip (auto-filled, centered)",
-      "x": 0,
+      "x": 11,
       "y": 340,
       "width": 1080,
       "textAlign": "center",
       "text": "Ankeny SPORT PARENTS",
-      "fontSize": 32,
+      "fontSize": 50,
       "fontFamily": "JetBrains Mono",
       "fontWeight": 700,
       "color": "#fa3f36",
@@ -69,8 +69,8 @@
       "tag": "kicker",
       "label": "Kicker — hook lead-in (auto from splitHook; blank if 2-seg)",
       "type": "text",
-      "x": 0,
-      "y": 640,
+      "x": 6,
+      "y": 644,
       "width": 1080,
       "textAlign": "center",
       "text": "",
@@ -93,7 +93,7 @@
       "tag": "reframe",
       "label": "Framed reframe (centered, two-line)",
       "x": 60,
-      "y": 760,
+      "y": 874,
       "width": 960,
       "textAlign": "center",
       "text": "Your kid doesn't need to be told they're good. They need to see it.",
@@ -139,9 +139,11 @@
     }
   ],
   "media": {
-    "path": "./assets/jarosh/talking-head-speaking-high-school-female-jarosh-658366fc.mp4",
+    "path": "./assets/jarosh/a3-female-42s.png",
     "tag": "bg_media",
     "z": 0,
-    "videoStartTime": 1
+    "videoStartTime": 1,
+    "offsetX": 0,
+    "offsetY": 0
   }
 }

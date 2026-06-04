@@ -139,11 +139,12 @@
     }
   ],
   "media": {
-    "path": "./assets/jarosh/action-clip-dumbbell-shoulder-press-middle-school-male-jaros-42129fc4.mp4",
+    "path": "./assets/swap-upload-jarosh-female-athlete-deadlifting.jpg",
     "tag": "bg_media",
     "z": 0,
     "videoStartTime": 1,
     "offsetX": 0,
-    "offsetY": 0
+    "offsetY": 0,
+    "scale": 1
   }
 }

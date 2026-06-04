@@ -39,14 +39,15 @@ function MythVsTruthReel({ data = {} }) {
       }}>
         <div style={{
           fontFamily: '"JetBrains Mono", monospace',
-          fontSize: 22, color: RED, letterSpacing: '0.18em',
-          marginBottom: 14,
+          fontSize: 34, fontWeight: 700, color: RED, letterSpacing: '0.14em',
+          marginBottom: 18,
           opacity: mythLabelT,
+          background: '#fff', display: 'inline-block', padding: '8px 18px',
         }}>{mythLabel}</div>
         <div style={{
           position: 'relative',
           fontFamily: 'Anton, sans-serif',
-          fontSize: 84, color: '#969ca7', lineHeight: 0.95,
+          fontSize: 100, color: '#969ca7', lineHeight: 0.95,
           opacity: mythT,
           transform: `translateY(${(1 - mythT) * 16}px)`,
         }}>
@@ -72,13 +73,14 @@ function MythVsTruthReel({ data = {} }) {
       }}>
         <div style={{
           fontFamily: '"JetBrains Mono", monospace',
-          fontSize: 22, color: GREEN, letterSpacing: '0.18em',
-          marginBottom: 14,
+          fontSize: 34, fontWeight: 700, color: GREEN, letterSpacing: '0.14em',
+          marginBottom: 18,
           opacity: truthLabelT,
+          background: '#fff', display: 'inline-block', padding: '8px 18px',
         }}>{truthLabel}</div>
         <div style={{
           fontFamily: 'Anton, sans-serif',
-          fontSize: 84, color: '#fff', lineHeight: 0.95,
+          fontSize: 100, color: '#fff', lineHeight: 0.95,
           opacity: truthT,
           transform: `translateY(${(1 - truthT) * 18}px)`,
         }}>{truth}</div>
@@ -122,7 +124,7 @@ function MythVsTruthReel({ data = {} }) {
         transform: `translateY(${(1 - ctaT) * 16}px)`,
       }}>
         <div style={{ fontFamily: 'Anton, sans-serif', fontSize: 40, color: '#fff' }}>{ctaText}</div>
-        <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 16, color: '#fff', letterSpacing: '0.1em' }}>ATHLETESACCEL.COM</div>
+        <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 16, color: '#fff', letterSpacing: '0.1em' }}>{((window.__BRAND__ && window.__BRAND__.url) || 'athletesaccel.com').toUpperCase()}</div>
       </div>
     </div>
   );

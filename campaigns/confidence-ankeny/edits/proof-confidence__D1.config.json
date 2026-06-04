@@ -62,7 +62,7 @@
       "y": 600,
       "width": 1080,
       "textAlign": "center",
-      "text": "",
+      "text": "seems crazy, i know but...",
       "fontSize": 56,
       "fontFamily": "Anton",
       "color": "#ffffff",
@@ -81,12 +81,12 @@
       "id": "reframe",
       "tag": "reframe",
       "label": "Centered epiphany",
-      "x": 60,
-      "y": 720,
+      "x": 58,
+      "y": 761,
       "width": 960,
       "textAlign": "center",
-      "text": "And here's the part worth saying plainly: you didn't do anything wrong by encouraging them.",
-      "fontSize": 104,
+      "text": "Working harder is actually making you slower",
+      "fontSize": 124,
       "fontFamily": "Anton",
       "color": "#ffffff",
       "lineHeight": 1,
@@ -129,6 +129,15 @@
     "path": "./assets/jarosh/638942872-1504070021726261-8224200172582480270-n-60f3ee53.jpg",
     "tag": "bg_media",
     "z": 0,
-    "videoStartTime": 1
+    "videoStartTime": 1,
+    "offsetX": 0,
+    "offsetY": 0,
+    "crop": {
+      "x": 307,
+      "y": 0,
+      "width": 539,
+      "height": 958,
+      "forPath": "./assets/jarosh/638942872-1504070021726261-8224200172582480270-n-60f3ee53.jpg"
+    }
   }
 }

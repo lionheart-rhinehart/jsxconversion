@@ -56,7 +56,12 @@
           "clip": "brand/kraken-cache/action-clip-sled-push-squat-jumping-strength-training-high-s-4b6c5551.mp4",
           "output": "out/campaigns/grind-trap-ankeny/grind-trap/A1.mp4",
           "thumb": "out/campaigns/grind-trap-ankeny/grind-trap/A1.mp4",
-          "renderedAt": "2026-06-04T02:29:46.210Z"
+          "renderedAt": "2026-06-04T02:29:46.210Z",
+          "kraken": {
+            "id": "2299aee6-399f-44c8-a119-5364bdbed827",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/grind-trap-ankeny-grind-trap-A1-1780581543638.mp4",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "A2",
@@ -78,7 +83,13 @@
           "media": "./assets/jarosh/action-clip-acceleration-training-upper-body-strength-traini-101007f9.mp4",
           "output": "out/campaigns/grind-trap-ankeny/grind-trap/A2.png",
           "thumb": "out/campaigns/grind-trap-ankeny/grind-trap/A2.png",
-          "renderedAt": "2026-06-04T02:29:55.883Z"
+          "renderedAt": "2026-06-04T03:41:14.889Z",
+          "editedAt": "2026-06-04T03:41:04.990Z",
+          "kraken": {
+            "id": "c29b0010-4c89-4811-8f8e-575aa44d873d",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/grind-trap-ankeny-grind-trap-A2-1780581546143.png",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "A3",
@@ -100,8 +111,13 @@
           "media": "./assets/jarosh/action-clip-dumbbell-shoulder-press-middle-school-male-jaros-42129fc4.mp4",
           "output": "out/campaigns/grind-trap-ankeny/grind-trap/A3.png",
           "thumb": "out/campaigns/grind-trap-ankeny/grind-trap/A3.png",
-          "renderedAt": "2026-06-04T02:30:05.232Z",
-          "editedAt": "2026-06-04T02:42:34.147Z"
+          "renderedAt": "2026-06-04T03:41:54.635Z",
+          "editedAt": "2026-06-04T03:39:30.438Z",
+          "kraken": {
+            "id": "af0c6c05-0365-455d-8779-73aa79cac530",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/grind-trap-ankeny-grind-trap-A3-1780581547128.png",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "A4",
@@ -122,7 +138,12 @@
           "media": "./assets/jarosh/action-clip-med-ball-throw-high-school-female-jarosh-slide3o-02af193f.mp4",
           "output": "out/campaigns/grind-trap-ankeny/grind-trap/A4.png",
           "thumb": "out/campaigns/grind-trap-ankeny/grind-trap/A4.png",
-          "renderedAt": "2026-06-04T02:30:14.079Z"
+          "renderedAt": "2026-06-04T03:37:15.398Z",
+          "kraken": {
+            "id": "a3c573ac-7982-44ae-8e63-ae0b730a2275",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/grind-trap-ankeny-grind-trap-A4-1780581548363.png",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "B1",
@@ -143,8 +164,13 @@
           "media": "./assets/jarosh/action-clip-band-work-high-school-female-jarosh-slide2of4-423c2eed.mp4",
           "output": "out/campaigns/grind-trap-ankeny/grind-trap/B1.png",
           "thumb": "out/campaigns/grind-trap-ankeny/grind-trap/B1.png",
-          "renderedAt": "2026-06-04T02:30:22.476Z",
-          "editedAt": "2026-06-04T02:54:32.942Z"
+          "renderedAt": "2026-06-04T03:45:02.331Z",
+          "editedAt": "2026-06-04T03:44:44.302Z",
+          "kraken": {
+            "id": "07fb77c3-2686-41fd-9038-33a9a4b03f9b",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/grind-trap-ankeny-grind-trap-B1-1780581549319.png",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "B2",
@@ -166,7 +192,12 @@
           "media": "./assets/jarosh/action-clip-bench-press-high-school-male-jarosh-slide1of4-cca5e335.mp4",
           "output": "out/campaigns/grind-trap-ankeny/grind-trap/B2.png",
           "thumb": "out/campaigns/grind-trap-ankeny/grind-trap/B2.png",
-          "renderedAt": "2026-06-04T02:30:31.047Z"
+          "renderedAt": "2026-06-04T02:30:31.047Z",
+          "kraken": {
+            "id": "be8ffe89-cf03-4021-882c-774e5262ac3d",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/grind-trap-ankeny-grind-trap-B2-1780581550701.png",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "C1",
@@ -184,7 +215,9 @@
             "brand": "JAROSH PERFORMANCE",
             "mechanism": "The set ends the second speed drops.",
             "byline": "COACH NICK JAROSH · FOUNDER",
-            "bgClip": "http://localhost:5273/media-file/brand/video-templates/assets/msf-A1.mp4"
+            "bgClip": "http://localhost:5173/media-file/brand/kraken-cache/action-clip-strength-training-jumping-mixed-mixed-jarosh-59037544.mp4",
+            "bgClip_clipStart": 3.906158207468877,
+            "bgClip_clipEnd": 12.906158207468874
           },
           "knowledgeRefs": [
             "problem_mechanism.solution_fix",
@@ -196,7 +229,12 @@
           "clip": "brand/kraken-cache/action-clip-strength-training-jumping-mixed-mixed-jarosh-59037544.mp4",
           "output": "out/campaigns/grind-trap-ankeny/grind-trap/C1.mp4",
           "thumb": "out/campaigns/grind-trap-ankeny/grind-trap/C1.mp4",
-          "renderedAt": "2026-06-04T02:33:48.166Z"
+          "renderedAt": "2026-06-04T12:47:24.853Z",
+          "kraken": {
+            "id": "76f60b49-1d5e-45aa-9d7f-44d0104719af",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/grind-trap-ankeny-grind-trap-C1-1780581552679.mp4",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "C2",
@@ -217,7 +255,12 @@
           "media": "./assets/jarosh/action-clip-athletic-training-middle-school-male-jarosh-a5aabbaa.mp4",
           "output": "out/campaigns/grind-trap-ankeny/grind-trap/C2.png",
           "thumb": "out/campaigns/grind-trap-ankeny/grind-trap/C2.png",
-          "renderedAt": "2026-06-04T02:34:05.147Z"
+          "renderedAt": "2026-06-04T02:34:05.147Z",
+          "kraken": {
+            "id": "6bd5f2a1-5d76-4e59-bddf-7749074cadfb",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/grind-trap-ankeny-grind-trap-C2-1780581554211.png",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "C3",
@@ -240,7 +283,12 @@
           "media": "./assets/jarosh/action-clip-nordic-hamstring-curl-high-school-male-jarosh-sl-5f9856ca.mp4",
           "output": "out/campaigns/grind-trap-ankeny/grind-trap/C3.png",
           "thumb": "out/campaigns/grind-trap-ankeny/grind-trap/C3.png",
-          "renderedAt": "2026-06-04T02:34:13.647Z"
+          "renderedAt": "2026-06-04T02:34:13.647Z",
+          "kraken": {
+            "id": "47f156e3-0c1f-48be-9727-e69f8a391a97",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/grind-trap-ankeny-grind-trap-C3-1780581555228.png",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "D1",
@@ -261,7 +309,12 @@
           "media": "./assets/jarosh/action-clip-dumbbell-lunges-middle-school-female-jarosh-slid-52453b4f.mp4",
           "output": "out/campaigns/grind-trap-ankeny/grind-trap/D1.png",
           "thumb": "out/campaigns/grind-trap-ankeny/grind-trap/D1.png",
-          "renderedAt": "2026-06-04T02:34:22.514Z"
+          "renderedAt": "2026-06-04T02:34:22.514Z",
+          "kraken": {
+            "id": "c1e7b5ce-b8cd-47ea-a71f-22734bb352c2",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/grind-trap-ankeny-grind-trap-D1-1780581556279.png",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "D2",
@@ -283,7 +336,12 @@
           "media": "./assets/jarosh/action-clip-deadlift-high-school-female-jarosh-slide1of4-865674ee.mp4",
           "output": "out/campaigns/grind-trap-ankeny/grind-trap/D2.png",
           "thumb": "out/campaigns/grind-trap-ankeny/grind-trap/D2.png",
-          "renderedAt": "2026-06-04T02:34:31.054Z"
+          "renderedAt": "2026-06-04T02:34:31.054Z",
+          "kraken": {
+            "id": "779bc0cc-e9b0-4a44-841f-941febe33b25",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/grind-trap-ankeny-grind-trap-D2-1780581557364.png",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "D3",
@@ -305,7 +363,12 @@
           "media": "./assets/jarosh/action-clip-multi-sport-training-mixed-mixed-jarosh-6cb996b4.mp4",
           "output": "out/campaigns/grind-trap-ankeny/grind-trap/D3.png",
           "thumb": "out/campaigns/grind-trap-ankeny/grind-trap/D3.png",
-          "renderedAt": "2026-06-04T02:34:40.114Z"
+          "renderedAt": "2026-06-04T02:34:40.114Z",
+          "kraken": {
+            "id": "40018eef-5ab1-4a52-8afe-5d2d2991dc75",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/grind-trap-ankeny-grind-trap-D3-1780581558244.png",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "E1",
@@ -336,7 +399,12 @@
           "notes": "Coach proof VSL. Binds a real coach clip — hand-place in the editor.",
           "output": "out/campaigns/grind-trap-ankeny/grind-trap/E1.mp4",
           "thumb": "out/campaigns/grind-trap-ankeny/grind-trap/E1.mp4",
-          "renderedAt": "2026-06-04T02:36:05.538Z"
+          "renderedAt": "2026-06-04T02:36:05.538Z",
+          "kraken": {
+            "id": "4feba668-c033-4a21-a7fa-3024e3407b21",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/grind-trap-ankeny-grind-trap-E1-1780581559810.mp4",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "E2",
@@ -362,7 +430,12 @@
           "media": "./assets/jarosh/aqmm8k-j9ulaw4xvc0vr27is9mqxapunsbnjqd7kp6nivqvlyojixkqxr-ot-91a5a129.mp4",
           "output": "out/campaigns/grind-trap-ankeny/grind-trap/E2.png",
           "thumb": "out/campaigns/grind-trap-ankeny/grind-trap/E2.png",
-          "renderedAt": "2026-06-04T02:36:20.888Z"
+          "renderedAt": "2026-06-04T02:36:20.888Z",
+          "kraken": {
+            "id": "475190ed-f491-4f91-a243-a556f91805bb",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/grind-trap-ankeny-grind-trap-E2-1780581561510.png",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "E3",
@@ -387,7 +460,12 @@
           "media": "./assets/jarosh/aqnrqoiqddtqmy7-r6mirkeprxllgu9gjucp7uoobk-n7o-q81-r8x2bd3cy-3a4a8875.mp4",
           "output": "out/campaigns/grind-trap-ankeny/grind-trap/E3.png",
           "thumb": "out/campaigns/grind-trap-ankeny/grind-trap/E3.png",
-          "renderedAt": "2026-06-04T02:52:06.707Z"
+          "renderedAt": "2026-06-04T02:52:06.707Z",
+          "kraken": {
+            "id": "e8a14291-835f-4a2e-b837-bb40addeb8aa",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/grind-trap-ankeny-grind-trap-E3-1780581562652.png",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "F1",
@@ -445,7 +523,12 @@
           "clip": "brand/kraken-cache/aqnq8k-ml5qwanaiv6w0arcni8eug-sgjlcv0or6f7drokwglkcc554d-cik-3a19cc3d.mp4",
           "output": "out/campaigns/grind-trap-ankeny/grind-trap/F1.mp4",
           "thumb": "out/campaigns/grind-trap-ankeny/grind-trap/F1.mp4",
-          "renderedAt": "2026-06-04T02:36:51.324Z"
+          "renderedAt": "2026-06-04T02:36:51.324Z",
+          "kraken": {
+            "id": "76d18151-e746-4b51-88d0-a42eea0e3e95",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/grind-trap-ankeny-grind-trap-F1-1780581564052.mp4",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "F2",
@@ -469,7 +552,12 @@
           "media": "./assets/jarosh/aqo7i2shk9uye5svmqzrivnv9kn8jp00uwqlmup-rj3afgdicjalto-mksgd-7f37b9ea.mp4",
           "output": "out/campaigns/grind-trap-ankeny/grind-trap/F2.png",
           "thumb": "out/campaigns/grind-trap-ankeny/grind-trap/F2.png",
-          "renderedAt": "2026-06-04T02:37:00.569Z"
+          "renderedAt": "2026-06-04T02:37:00.569Z",
+          "kraken": {
+            "id": "3a006158-0801-4b72-a7b0-79312acf1d08",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/grind-trap-ankeny-grind-trap-F2-1780581565118.png",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "F3",
@@ -487,7 +575,10 @@
             "guarantee": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us.",
             "cta": "BOOK THE ATHLETE ANALYSIS",
             "brand": "JAROSH PERFORMANCE",
-            "hook": "See the number first."
+            "hook": "See the number first.",
+            "bgClip": "http://localhost:5173/media-file/brand/kraken-cache/aqo7i2shk9uye5svmqzrivnv9kn8jp00uwqlmup-rj3afgdicjalto-mksgd-7f37b9ea.mp4",
+            "bgClip_clipStart": 9.890794556016598,
+            "bgClip_clipEnd": 16.8907945560166
           },
           "knowledgeRefs": [
             "the_offer",
@@ -496,10 +587,15 @@
           "copySource": "Verbatim ad Description as the retarget hook: \"See the number first.\"; Athlete Analysis CTA. Guarantee auto-locked.",
           "status": "rendered",
           "notes": "Season-clock retarget (≠ F1). Guarantee verbatim-locked.",
-          "clip": "brand/kraken-cache/aqo6ajlndlhgi3nnlmq0-8u840gu1dg2-ugjr1uzkfn40hl4xxwhd0s0ks09-6120b216.mp4",
+          "clip": "brand/kraken-cache/aqo7i2shk9uye5svmqzrivnv9kn8jp00uwqlmup-rj3afgdicjalto-mksgd-7f37b9ea.mp4",
           "output": "out/campaigns/grind-trap-ankeny/grind-trap/F3.mp4",
           "thumb": "out/campaigns/grind-trap-ankeny/grind-trap/F3.mp4",
-          "renderedAt": "2026-06-04T02:39:21.487Z"
+          "renderedAt": "2026-06-04T12:38:18.200Z",
+          "kraken": {
+            "id": "e0c1e2ce-dede-4834-a907-55d0b687f1ef",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/grind-trap-ankeny-grind-trap-F3-1780581566754.mp4",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "FA1",
@@ -510,15 +606,17 @@
           "template": "fresh-multisport-foundations-grind-trap-FA1",
           "templateData": {
             "duration": 30,
+            "eyebrow": "// AGES 8-12 · HAMILTON COUNTY, IN",
             "hook": "SIX MONTHS. EVERY PRACTICE. EVERY DRILL. NEVER QUIT. STILL THE SAME SPEED.",
             "mech1": "EVERY SLOW, GRINDING REP AT THE END OF A DRILL IS TEACHING THE BODY THAT SLOW IS NORMAL.",
             "mech2": "THE SET ENDS THE SECOND SPEED DROPS.",
-            "reframe": "THIS WAS NEVER YOUR KID'S FAULT, AND IT WAS NEVER YOURS.",
+            "reframe": "'Great job' disappears. A velocity PR is forever.",
             "statValue": "224%",
             "statLabel": "GREATER VERTICAL JUMP",
             "proofCite": "WANG 2026 · FRONTIERS IN PHYSIOLOGY",
             "guarantee": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us.",
-            "cta": "BOOK THE FREE ATHLETE ANALYSIS"
+            "cta": "BOOK THE FREE ATHLETE ANALYSIS",
+            "brand": "ATHLETES ACCELERATION"
           },
           "knowledgeRefs": [
             "ad_copy_series_1",
@@ -533,7 +631,12 @@
           "clip": "brand/kraken-cache/aqo4mrbcesezkpjgphwqyfpvui9qqtsyt36kujaykkvkqfdumrofw121yco3-33d10770.mp4",
           "output": "out/campaigns/grind-trap-ankeny/grind-trap/FA1.mp4",
           "thumb": "out/campaigns/grind-trap-ankeny/grind-trap/FA1.mp4",
-          "renderedAt": "2026-06-04T02:48:08.348Z"
+          "renderedAt": "2026-06-04T04:18:36.793Z",
+          "kraken": {
+            "id": "57fb3059-03e9-4cb2-bf6e-c9daa8d30326",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/grind-trap-ankeny-grind-trap-FA1-1780581569300.mp4",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "BR1",
@@ -554,7 +657,12 @@
           "clip": "brand/kraken-cache/action-clip-multiple-exercises-high-school-female-jarosh-16490074.mp4",
           "output": "out/campaigns/grind-trap-ankeny/grind-trap/BR1.mp4",
           "thumb": "out/campaigns/grind-trap-ankeny/grind-trap/BR1.mp4",
-          "renderedAt": "2026-06-04T02:48:20.346Z"
+          "renderedAt": "2026-06-04T02:48:20.346Z",
+          "kraken": {
+            "id": "d85cf3b5-d2d0-4c65-b4d8-b9b9de78bd47",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/grind-trap-ankeny-grind-trap-BR1-1780581572199.mp4",
+            "folder": "angle 1"
+          }
         }
       ]
     }

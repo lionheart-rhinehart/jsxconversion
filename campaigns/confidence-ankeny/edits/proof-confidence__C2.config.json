@@ -34,7 +34,7 @@
       "y": 170,
       "textAlign": "left",
       "text": "Ankeny SPORT PARENTS",
-      "fontSize": 32,
+      "fontSize": 40,
       "fontFamily": "JetBrains Mono",
       "fontWeight": 700,
       "color": "#fa3f36",
@@ -56,8 +56,8 @@
       "id": "quote_mark",
       "tag": "quote_mark",
       "label": "Decorative quote glyph",
-      "x": 84,
-      "y": 360,
+      "x": 94,
+      "y": 480,
       "width": 400,
       "textAlign": "left",
       "text": "“",
@@ -73,10 +73,10 @@
       "tag": "reframe",
       "label": "Blame-removal reframe",
       "x": 90,
-      "y": 640,
+      "y": 756,
       "width": 912,
       "textAlign": "left",
-      "text": "They have to see it.",
+      "text": "They have to see it for themselves",
       "fontSize": 150,
       "fontFamily": "Anton",
       "color": "#ffffff",
@@ -147,6 +147,9 @@
     "path": "./assets/jarosh/group-shot-posing-high-school-female-jarosh-performance-mp4-df29d9c5.mp4",
     "tag": "bg_media",
     "z": 0,
-    "videoStartTime": 1
+    "videoStartTime": 1,
+    "offsetX": 0,
+    "offsetY": -125,
+    "scale": 1.25
   }
 }

@@ -287,6 +287,7 @@ async function renderTemplateStatic(asset, angleId) {
   const suffix = `.camp-${slug(campaign)}-${slug(angleId)}-${slug(asset.id)}`;
   const editsPath = editsConfigPath(angleId, asset.id);
   let config;
+  let isFresh = false;
   if (existsSync(editsPath)) {
     config = JSON.parse(readFileSync(editsPath, "utf8"));
   } else {
@@ -294,39 +295,76 @@ async function renderTemplateStatic(asset, angleId) {
     const location = asset.location || (ang && ang.location) || plan.location || null;
     config = resolveStaticConfig({ clusterId, asset, brand, location, campaign, templateDir: TEMPLATE_DIR, dataDir: DATA_DIR });
     if (!config) return { ok: false, error: `could not resolve config for "${clusterId}"` };
-    // Optional background media (opt-in via asset.media): a full-frame image/clip
-    // behind everything + a legibility scrim below the text. Lets the same design
-    // run with footage behind it. A video still-frames in the static renderer.
-    if (asset.media) {
-      // If the template SHIPS a baked background image (e.g. cluster-33 bg_photo,
-      // whose default is an AA stock photo), REPLACE its source — a separate z:0
-      // media layer would render BEHIND the baked image and never appear (that's
-      // how AA's hook-sprint photo leaked onto non-AA creatives). The template
-      // already carries its own scrim + text shadows in that case, so don't double
-      // them. Otherwise (no baked bg) add a full-frame media layer + scrim.
+    isFresh = true;
+  }
+  {
+    // Background media: opt-in via asset.media (repurpose/clone) OR asset.photo /
+    // asset.clip (the editor's media picker). Applied on BOTH the fresh-fill AND the
+    // existing-edits path so an editor pick lands on a STATIC (whose edits config the
+    // renderer would otherwise use verbatim). On the edits path we re-apply ONLY when
+    // there's an explicit pick (photo/clip), so a text-only edit never disturbs an
+    // existing background. photo/clip win over the repurposed a.media. Paths may be
+    // TEMPLATE_DIR-relative ("./assets/..") OR PROJECT_ROOT-relative (editor picks);
+    // resolve both, then STAGE under the served assets/ dir.
+    const sbg = isFresh ? (asset.photo || asset.clip || asset.media) : (asset.photo || asset.clip);
+    if (sbg) {
+      const VID_RE = /\.(mp4|mov|webm|m4v|mkv)$/i;
+      const baseName = (p) => String(p).split(/[\\/]/).pop();
+      const assetsDir = join(TEMPLATE_DIR, "assets");
+      // If the template SHIPS a baked background image (e.g. cluster-33 bg_photo),
+      // REPLACE its source — a separate z:0 media layer would render BEHIND it and
+      // never appear. Otherwise add a full-frame media layer + scrim.
       const bakedBg = [...(config.fixedDesign || []), ...(config.elements || [])]
         .find((e) => e && e.type === "image"
           && (e.z === 0 || /bg|background|photo|hero/i.test(String(e.id || "") + String(e.tag || ""))));
-      if (bakedBg) {
-        if ("src" in bakedBg) bakedBg.src = asset.media; else bakedBg.path = asset.media;
-      } else {
-        config.media = { path: asset.media, tag: "bg_media", z: 0, videoStartTime: asset.mediaStart || 1 };
-        config.fixedDesign = config.fixedDesign || [];
-        config.fixedDesign.unshift({ id: "_bg_scrim", tag: "_bg_scrim", type: "rect", x: 0, y: 0,
-          width: config.width || 1080, height: config.height || 1920,
-          fill: "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)", z: 1 });
-        // Legibility over footage: give each text layer a drop-shadow (helps red
-        // accents + white alike). Skip layers that already define one (e.g. the
-        // photo-hook template). Only when media is present → solid batch untouched.
-        for (const el of config.elements || []) {
-          if (typeof el.text === "string" && el.textShadow == null) {
-            el.textShadow = "0 2px 12px rgba(0,0,0,0.92)";
+      // Already a template-served "./assets/.." file? use as-is; else resolve + stage.
+      let mediaRel = (/^\.\/assets\//.test(String(sbg))
+        && existsSync(join(TEMPLATE_DIR, String(sbg).replace(/^\.\//, "")))) ? String(sbg) : null;
+      if (!mediaRel) {
+        let absSrc = join(TEMPLATE_DIR, String(sbg).replace(/^\.\//, ""));
+        if (!existsSync(absSrc)) { const p2 = join(PROJECT_ROOT, sbg); if (existsSync(p2)) absSrc = p2; }
+        if (existsSync(absSrc)) {
+          mkdirSync(assetsDir, { recursive: true });
+          const staged = "bg-" + baseName(absSrc).replace(/[^a-z0-9.]+/gi, "-").toLowerCase();
+          copyFileSync(absSrc, join(assetsDir, staged));
+          mediaRel = "./assets/" + staged;
+        }
+      }
+      if (mediaRel) {
+        if (bakedBg) {
+          // An <img> src CANNOT be a video → still-frame it to a PNG.
+          if (VID_RE.test(mediaRel)) {
+            const abs = join(TEMPLATE_DIR, mediaRel.replace(/^\.\//, ""));
+            const pngRel = mediaRel.replace(/\.[^.]+$/, "") + "-frame.png";
+            const pngAbs = join(TEMPLATE_DIR, pngRel.replace(/^\.\//, ""));
+            mkdirSync(dirname(pngAbs), { recursive: true });
+            const ex = spawnSync("ffmpeg", ["-y", "-loglevel", "error", "-ss", String(asset.mediaStart || 1),
+              "-i", abs, "-frames:v", "1", pngAbs], { stdio: "ignore" });
+            if (ex.status === 0 && existsSync(pngAbs)) mediaRel = pngRel;
+          }
+          if ("src" in bakedBg) bakedBg.src = mediaRel; else bakedBg.path = mediaRel;
+        } else {
+          config.media = { path: mediaRel, tag: "bg_media", z: 0, videoStartTime: asset.mediaStart || 1 };
+          config.fixedDesign = config.fixedDesign || [];
+          if (!config.fixedDesign.some((e) => e && e.id === "_bg_scrim")) {
+            config.fixedDesign.unshift({ id: "_bg_scrim", tag: "_bg_scrim", type: "rect", x: 0, y: 0,
+              width: config.width || 1080, height: config.height || 1920,
+              fill: "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)", z: 1 });
+          }
+          // Legibility over footage: give each text layer a drop-shadow. Skip layers
+          // that already define one. Only when media is present → solid batch untouched.
+          for (const el of config.elements || []) {
+            if (typeof el.text === "string" && el.textShadow == null) {
+              el.textShadow = "0 2px 12px rgba(0,0,0,0.92)";
+            }
           }
         }
       }
     }
-    mkdirSync(dirname(editsPath), { recursive: true });
-    writeFileSync(editsPath, JSON.stringify(config, null, 2));
+    if (isFresh) {
+      mkdirSync(dirname(editsPath), { recursive: true });
+      writeFileSync(editsPath, JSON.stringify(config, null, 2));
+    }
   }
   // Durable static media: if the config points at a media file that's missing
   // locally (e.g. a gitignored swap-* in a fresh worktree) but carries a Kraken
@@ -413,6 +451,7 @@ async function renderTemplateMotion(asset, angleId, wantGif) {
   // per-brand PNG staged in the motion served dir (assets/<slug>-logo.png) when
   // present — AA has none, so it keeps its built-in fallback (0-diff).
   if (motionTiers.brand_name) brandPalette.brand_name = motionTiers.brand_name;
+  if (motionTiers.url) brandPalette.url = motionTiers.url;
   const motionLogoRel = `assets/${brand}-logo.png`;
   if (existsSync(join(PROJECT_ROOT, "brand/video-templates", motionLogoRel))) brandPalette.logo_motion = motionLogoRel;
 
@@ -694,7 +733,7 @@ async function main() {
 
   const useServer = await serverUp();
   console.error(`[campaign] plan: ${planPath}`);
-  console.error(`[campaign] plan patching via ${useServer ? "editor-server (:5173)" : "direct file write"}`);
+  console.error(`[campaign] plan patching via ${useServer ? `editor-server (${SERVER})` : "direct file write"}`);
   if (!ffmpegAvailable()) console.error("[campaign] WARNING: ffmpeg not on PATH — video/gif will fail.");
 
   const manifest = { campaign, generatedFrom: planPath, cells: [], summary: {} };

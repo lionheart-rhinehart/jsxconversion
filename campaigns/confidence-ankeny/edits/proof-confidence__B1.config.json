@@ -34,7 +34,7 @@
       "y": 170,
       "textAlign": "left",
       "text": "Ankeny SPORT PARENTS",
-      "fontSize": 32,
+      "fontSize": 38,
       "fontFamily": "JetBrains Mono",
       "fontWeight": 700,
       "color": "#fa3f36",
@@ -80,7 +80,7 @@
       "tag": "headline",
       "label": "Headline — main thought of the hook",
       "x": 86,
-      "y": 600,
+      "y": 868,
       "width": 912,
       "textAlign": "left",
       "text": "The hardest part isn't watching them lose.",
@@ -110,7 +110,7 @@
       "width": 912,
       "textAlign": "left",
       "text": "It's watching them stop believing they can win.",
-      "fontSize": 64,
+      "fontSize": 74,
       "fontFamily": "Anton",
       "color": "#fa3f36",
       "lineHeight": 0.96,
@@ -154,6 +154,8 @@
     "path": "./assets/jarosh/action-image-posing-high-school-female-jarosh-performance-mp-5782a83d.mp4",
     "tag": "bg_media",
     "z": 0,
-    "videoStartTime": 1
+    "videoStartTime": 1,
+    "offsetX": 0,
+    "offsetY": 0
   }
 }

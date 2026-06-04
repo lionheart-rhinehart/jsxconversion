@@ -83,7 +83,7 @@
       "y": 600,
       "width": 912,
       "textAlign": "left",
-      "text": "It just isn't the tool that fixes this, because confidence problems don't get solved with words.",
+      "text": "More game film won't fix a speed problem. It'll just record it in higher definition.",
       "fontSize": 92,
       "fontFamily": "Anton",
       "color": "#ffffff",
@@ -109,8 +109,8 @@
       "y": 1180,
       "width": 912,
       "textAlign": "left",
-      "text": "They get solved with evidence.",
-      "fontSize": 64,
+      "text": "No sensor. No proof. Just a coach's opinion.",
+      "fontSize": 88,
       "fontFamily": "Anton",
       "color": "#fa3f36",
       "lineHeight": 0.96,
@@ -154,6 +154,8 @@
     "path": "./assets/jarosh/action-clip-lateral-shuffle-high-school-female-jarosh-slide2-2f08659e.mp4",
     "tag": "bg_media",
     "z": 0,
-    "videoStartTime": 1
+    "videoStartTime": 1,
+    "offsetX": 0,
+    "offsetY": 0
   }
 }

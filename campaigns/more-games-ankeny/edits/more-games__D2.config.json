@@ -85,7 +85,7 @@
       "y": 720,
       "width": 960,
       "textAlign": "center",
-      "text": "Here's Why Most Young Athletes Stop Getting Faster\n(And What You Can Do About It)",
+      "text": "That's why a whole season can pass with nothing to show for it.",
       "fontSize": 104,
       "fontFamily": "Anton",
       "color": "#ffffff",
@@ -126,19 +126,9 @@
     }
   ],
   "media": {
-    "path": "./assets/swap-upload-jarosh-images-638942872-1504070021726261-8224200172582480270-n.png",
+    "path": "./assets/jarosh/aqnq8k-ml5qwanaiv6w0arcni8eug-sgjlcv0or6f7drokwglkcc554d-cik-3a19cc3d.mp4",
     "tag": "bg_media",
     "z": 0,
-    "videoStartTime": 1,
-    "offsetX": 0,
-    "offsetY": 0,
-    "scale": 1,
-    "crop": {
-      "x": 344,
-      "y": 11,
-      "width": 539,
-      "height": 947,
-      "forPath": "./assets/swap-upload-jarosh-images-638942872-1504070021726261-8224200172582480270-n.png"
-    }
+    "videoStartTime": 1
   }
 }

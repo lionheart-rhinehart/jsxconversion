@@ -80,8 +80,8 @@
       "id": "line1",
       "tag": "line1",
       "label": "Hook (dark half)",
-      "x": 86,
-      "y": 560,
+      "x": 78,
+      "y": 662,
       "width": 924,
       "textAlign": "left",
       "text": "When They Stop Believing",
@@ -152,9 +152,11 @@
     }
   ],
   "media": {
-    "path": "./assets/jarosh/talking-head-speaking-high-school-male-jarosh-b2e0443d.mp4",
+    "path": "./assets/jarosh/a2-male-52s.png",
     "tag": "bg_media",
     "z": 0,
-    "videoStartTime": 1
+    "videoStartTime": 1,
+    "offsetX": 0,
+    "offsetY": 0
   }
 }

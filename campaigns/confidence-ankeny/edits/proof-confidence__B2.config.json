@@ -72,8 +72,8 @@
       "id": "reframe",
       "tag": "reframe",
       "label": "Blame-removal reframe",
-      "x": 90,
-      "y": 640,
+      "x": 94,
+      "y": 502,
       "width": 912,
       "textAlign": "left",
       "text": "Praise is on loan.",
@@ -99,11 +99,11 @@
       "tag": "support",
       "label": "Support line",
       "x": 92,
-      "y": 1230,
+      "y": 1106,
       "width": 880,
       "textAlign": "left",
-      "text": "It was never really theirs.",
-      "fontSize": 46,
+      "text": "'Great job' disappears. A PR is forever.",
+      "fontSize": 80,
       "fontFamily": "Geist",
       "fontWeight": 500,
       "color": "#fa3f36",
@@ -147,6 +147,8 @@
     "path": "./assets/jarosh/group-shot-posing-high-school-female-jarosh-performance-mp4-d20251bb.mp4",
     "tag": "bg_media",
     "z": 0,
-    "videoStartTime": 1
+    "videoStartTime": 1,
+    "offsetX": 0,
+    "offsetY": 0
   }
 }

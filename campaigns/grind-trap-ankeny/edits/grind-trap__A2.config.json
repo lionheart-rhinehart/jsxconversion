@@ -110,7 +110,7 @@
       "y": 1280,
       "width": 912,
       "textAlign": "left",
-      "text": "See the number first.",
+      "text": "Less work. More speed.",
       "fontSize": 92,
       "fontFamily": "Anton",
       "color": "#ffffff",
@@ -155,6 +155,8 @@
     "path": "./assets/jarosh/action-clip-acceleration-training-upper-body-strength-traini-101007f9.mp4",
     "tag": "bg_media",
     "z": 0,
-    "videoStartTime": 1
+    "videoStartTime": 1,
+    "offsetX": 0,
+    "offsetY": 0
   }
 }

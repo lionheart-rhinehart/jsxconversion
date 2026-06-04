@@ -46,7 +46,12 @@
           "notes": "Lone hook over training footage.",
           "output": "out/campaigns/confidence-ankeny/proof-confidence/A1.png",
           "thumb": "out/campaigns/confidence-ankeny/proof-confidence/A1.png",
-          "renderedAt": "2026-06-04T02:51:48.761Z"
+          "renderedAt": "2026-06-04T14:17:28.988Z",
+          "kraken": {
+            "id": "24fda56e-580d-4790-b7ed-8945b2079c89",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/confidence-ankeny-proof-confidence-A1-1780590601272.png",
+            "folder": "angle 2"
+          }
         },
         {
           "id": "A2",
@@ -55,7 +60,7 @@
           "format": "static",
           "source": "template",
           "template": "cluster-35",
-          "media": "./assets/jarosh/talking-head-speaking-high-school-male-jarosh-b2e0443d.mp4",
+          "media": "./assets/jarosh/a2-male-52s.png",
           "copyRefs": {
             "hook": "ad-1-version-b-emotional-depth-short.headline",
             "claim": "ad-1-version-a-consequence-depth-short.description"
@@ -65,7 +70,13 @@
           "notes": "Split card: headline + claim.",
           "output": "out/campaigns/confidence-ankeny/proof-confidence/A2.png",
           "thumb": "out/campaigns/confidence-ankeny/proof-confidence/A2.png",
-          "renderedAt": "2026-06-04T02:51:59.396Z"
+          "renderedAt": "2026-06-04T15:48:39.934Z",
+          "kraken": {
+            "id": "9fdbcc00-118b-41d7-9aa0-9e82904a65c3",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/confidence-ankeny-proof-confidence-A2-1780590603140.png",
+            "folder": "angle 2"
+          },
+          "editedAt": "2026-06-04T15:48:18.786Z"
         },
         {
           "id": "A3",
@@ -74,7 +85,7 @@
           "format": "static",
           "source": "template",
           "template": "cluster-42",
-          "media": "./assets/jarosh/talking-head-speaking-high-school-female-jarosh-658366fc.mp4",
+          "media": "./assets/jarosh/a3-female-42s.png",
           "copyRefs": {
             "reframe": "ad-1-version-a-consequence-depth-short.altHook.3"
           },
@@ -83,7 +94,13 @@
           "notes": "Centered reframe.",
           "output": "out/campaigns/confidence-ankeny/proof-confidence/A3.png",
           "thumb": "out/campaigns/confidence-ankeny/proof-confidence/A3.png",
-          "renderedAt": "2026-06-04T02:52:11.620Z"
+          "renderedAt": "2026-06-04T15:37:44.058Z",
+          "kraken": {
+            "id": "37e5fcdc-b9fc-4e7c-9354-a43b5422bad4",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/confidence-ankeny-proof-confidence-A3-1780590604358.png",
+            "folder": "angle 2"
+          },
+          "editedAt": "2026-06-04T15:37:29.922Z"
         },
         {
           "id": "A4",
@@ -102,7 +119,13 @@
           "notes": "Stacked layout: headline + subhead (kicker empty).",
           "output": "out/campaigns/confidence-ankeny/proof-confidence/A4.png",
           "thumb": "out/campaigns/confidence-ankeny/proof-confidence/A4.png",
-          "renderedAt": "2026-06-04T02:52:19.821Z"
+          "renderedAt": "2026-06-04T15:38:05.546Z",
+          "kraken": {
+            "id": "f8981ca9-3795-4d4e-82ea-0239fd3e2425",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/confidence-ankeny-proof-confidence-A4-1780590605585.png",
+            "folder": "angle 2"
+          },
+          "editedAt": "2026-06-04T15:37:56.337Z"
         },
         {
           "id": "B1",
@@ -118,7 +141,13 @@
           "notes": "Two-segment hook stacked (headline + subhead).",
           "output": "out/campaigns/confidence-ankeny/proof-confidence/B1.png",
           "thumb": "out/campaigns/confidence-ankeny/proof-confidence/B1.png",
-          "renderedAt": "2026-06-04T02:52:27.901Z"
+          "renderedAt": "2026-06-04T15:38:44.557Z",
+          "kraken": {
+            "id": "8f77506b-b606-47f2-86a8-f346fd9952f8",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/confidence-ankeny-proof-confidence-B1-1780590607021.png",
+            "folder": "angle 2"
+          },
+          "editedAt": "2026-06-04T15:38:29.346Z"
         },
         {
           "id": "B2",
@@ -139,7 +168,13 @@
           "notes": "Quote-style reframe + support, both verbatim sentences.",
           "output": "out/campaigns/confidence-ankeny/proof-confidence/B2.png",
           "thumb": "out/campaigns/confidence-ankeny/proof-confidence/B2.png",
-          "renderedAt": "2026-06-04T02:52:36.565Z"
+          "renderedAt": "2026-06-04T15:40:19.419Z",
+          "kraken": {
+            "id": "1b8ad3c4-51c7-4b66-b2a0-b140a8f45057",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/confidence-ankeny-proof-confidence-B2-1780590608421.png",
+            "folder": "angle 2"
+          },
+          "editedAt": "2026-06-04T15:40:02.698Z"
         },
         {
           "id": "C1",
@@ -148,7 +183,7 @@
           "format": "static",
           "source": "template",
           "template": "cluster-36",
-          "media": "./assets/jarosh/group-shot-posing-mixed-mixed-jarosh-performance-jpg-a8734a95.jpg",
+          "media": "./assets/jarosh/c1-asher-athlete.png",
           "copyRefs": {
             "reframe": "ad-2-version-a-consequence-depth-medium.bodyLine.2.4"
           },
@@ -157,7 +192,13 @@
           "notes": "The two-kinds mechanism (distinct copy from A4).",
           "output": "out/campaigns/confidence-ankeny/proof-confidence/C1.png",
           "thumb": "out/campaigns/confidence-ankeny/proof-confidence/C1.png",
-          "renderedAt": "2026-06-04T02:52:44.886Z"
+          "renderedAt": "2026-06-04T16:28:28.133Z",
+          "kraken": {
+            "id": "b1614aa4-146d-478f-8bef-dbcc34a2a1f2",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/confidence-ankeny-proof-confidence-C1-1780590609827.png",
+            "folder": "angle 2"
+          },
+          "editedAt": "2026-06-04T16:28:17.753Z"
         },
         {
           "id": "C2",
@@ -178,7 +219,13 @@
           "notes": "Mechanism reframe (distinct copy from B2).",
           "output": "out/campaigns/confidence-ankeny/proof-confidence/C2.png",
           "thumb": "out/campaigns/confidence-ankeny/proof-confidence/C2.png",
-          "renderedAt": "2026-06-04T02:52:53.204Z"
+          "renderedAt": "2026-06-04T16:27:36.447Z",
+          "kraken": {
+            "id": "891a46f1-ec82-4460-8404-4675c0d56721",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/confidence-ankeny-proof-confidence-C2-1780590611449.png",
+            "folder": "angle 2"
+          },
+          "editedAt": "2026-06-04T15:45:52.890Z"
         },
         {
           "id": "D1",
@@ -196,7 +243,13 @@
           "notes": "Blame removal (distinct copy from A3).",
           "output": "out/campaigns/confidence-ankeny/proof-confidence/D1.png",
           "thumb": "out/campaigns/confidence-ankeny/proof-confidence/D1.png",
-          "renderedAt": "2026-06-04T02:53:02.026Z"
+          "renderedAt": "2026-06-04T15:51:52.824Z",
+          "kraken": {
+            "id": "c5e4070b-567a-4639-8d7f-25135f4716c3",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/confidence-ankeny-proof-confidence-D1-1780590612773.png",
+            "folder": "angle 2"
+          },
+          "editedAt": "2026-06-04T15:51:40.673Z"
         },
         {
           "id": "D2",
@@ -215,7 +268,13 @@
           "notes": "The pivot to proof, stacked (distinct copy from C1).",
           "output": "out/campaigns/confidence-ankeny/proof-confidence/D2.png",
           "thumb": "out/campaigns/confidence-ankeny/proof-confidence/D2.png",
-          "renderedAt": "2026-06-04T02:53:10.238Z"
+          "renderedAt": "2026-06-04T15:47:40.325Z",
+          "kraken": {
+            "id": "8004087e-512f-4341-8b78-81abe8e3b7be",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/confidence-ankeny-proof-confidence-D2-1780590614247.png",
+            "folder": "angle 2"
+          },
+          "editedAt": "2026-06-04T15:47:21.337Z"
         },
         {
           "id": "E1",
@@ -223,25 +282,29 @@
           "temperature": "warm",
           "format": "video",
           "source": "template",
-          "template": "meet-coach",
-          "clip": "brand/kraken-cache/jarosh-performance-post-20260528t172302-18094659880961980-mp-9e9f155c.mp4",
+          "template": "myth-vs-truth",
+          "clip": "brand/kraken-cache/action-clip-lateral-shuffle-high-school-female-jarosh-slide2-2f08659e.mp4",
           "templateData": {
             "eyebrow": "CONFIDENCE FROM PROOF",
-            "coachFirst": "COACH NICK",
-            "coachLast": "JAROSH",
-            "coachTitle": "FOUNDER",
-            "quote": "CONFIDENCE PROBLEMS DON'T GET SOLVED WITH WORDS. THEY GET SOLVED WITH EVIDENCE.",
-            "credentials": "CINCINNATI REDS · COLLEGE ATHLETICS",
-            "facts": "REAL|SPRINT + JUMP NUMBERS · EVERY|SESSION · PROOF|THEY OWN",
-            "ctaText": "BOOK THE ATHLETE ANALYSIS",
-            "ctaMicro": "FREE. NOT A PEP TALK. A DATA SET."
+            "mythLabel": "THE MYTH",
+            "myth": "CONFIDENCE COMES FROM BEING TOLD YOU’RE DOING GREAT.",
+            "truthLabel": "THE TRUTH",
+            "truth": "IT COMES FROM A KID SEEING THEIR OWN DATA CLIMB.",
+            "sourceLabel": "WHAT HOLDS UP",
+            "source": "ONLY ONE HOLDS UP WHEN THE GAME’S ON THE LINE.",
+            "ctaText": "BOOK THE ATHLETE ANALYSIS"
           },
           "copySource": "Multi-field template (templateData by design). Verbatim values: AD Description (eyebrow), AD3 line \"confidence problems don't get solved with words. They get solved with evidence\" (quote), credentials verbatim, \"Not a pep talk. A data set.\" (cta micro).",
           "status": "rendered",
           "notes": "Coach proof VSL. Binds a distinct coach/training clip.",
           "output": "out/campaigns/confidence-ankeny/proof-confidence/E1.mp4",
           "thumb": "out/campaigns/confidence-ankeny/proof-confidence/E1.mp4",
-          "renderedAt": "2026-06-04T02:56:42.403Z"
+          "renderedAt": "2026-06-04T15:12:06.583Z",
+          "kraken": {
+            "id": "ef8638ad-6791-4399-9a28-ddd9f587a6b9",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/confidence-ankeny-proof-confidence-E1-1780590616074.mp4",
+            "folder": "angle 2"
+          }
         },
         {
           "id": "E2",
@@ -259,8 +322,16 @@
             "statsLabel": "THE STRENGTH CAME FIRST. THE BELIEF GREW OUT OF IT."
           },
           "copySource": "Multi-field template (templateData by design). Verbatim case study (AD2A 'one mom'): \"He got physically stronger here first, and the confidence followed it, and now he plays.\" + \"The strength came first. The belief grew out of it.\"",
-          "status": "rendering",
-          "notes": "Parent case-study quote card."
+          "status": "rendered",
+          "notes": "Parent case-study quote card.",
+          "output": "out/campaigns/confidence-ankeny/proof-confidence/E2.mp4",
+          "thumb": "out/campaigns/confidence-ankeny/proof-confidence/E2.mp4",
+          "renderedAt": "2026-06-04T13:56:15.067Z",
+          "kraken": {
+            "id": "40330054-cfb3-42dc-8d17-140099f3084d",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/confidence-ankeny-proof-confidence-E2-1780590618525.mp4",
+            "folder": "angle 2"
+          }
         },
         {
           "id": "E3",
@@ -268,18 +339,22 @@
           "temperature": "warm",
           "format": "static",
           "source": "template",
-          "template": "cluster-31",
-          "media": "./assets/jarosh/jarosh-performance-post-20260421t185440-18103586420303972-mp-953e4d09.mp4",
+          "template": "cluster-36",
+          "media": "./assets/jarosh/e3-confidence-girl-5s.png",
           "templateData": {
-            "coach_name": "COACH NICK\nJAROSH",
-            "coach_title": "FOUNDER",
-            "proof_hero": "PRO & COLLEGE\nATHLETES",
-            "proof_names": "CINCINNATI REDS · COLLEGE ATHLETICS",
-            "claim_line": "Built on pro and college strength-and-conditioning experience."
+            "reframe": "TWO KINDS OF CONFIDENCE. ONLY ONE SURVIVES A BAD GAME."
           },
           "copySource": "Multi-field credential template (templateData by design). Verbatim facts (AD3): Coach Graham Wilkerson, CSCS, trained Zack Martin / Ted Karras / Nick Martin; \"the same credential D1 and NFL strength coaches carry.\"",
-          "status": "approved",
-          "notes": "Credential verdict (static, distinct from E1 video / E2 quote)."
+          "status": "rendered",
+          "notes": "Credential verdict (static, distinct from E1 video / E2 quote).",
+          "output": "out/campaigns/confidence-ankeny/proof-confidence/E3.png",
+          "thumb": "out/campaigns/confidence-ankeny/proof-confidence/E3.png",
+          "renderedAt": "2026-06-04T15:05:18.021Z",
+          "kraken": {
+            "id": "ef89e958-a692-4a55-825e-1a751bfd4fcb",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/confidence-ankeny-proof-confidence-E3-1780590620373.png",
+            "folder": "angle 2"
+          }
         },
         {
           "id": "E4",
@@ -301,7 +376,12 @@
           "notes": "Testimonial card (AD2B variant; distinct wording from E2).",
           "output": "out/campaigns/confidence-ankeny/proof-confidence/E4.png",
           "thumb": "out/campaigns/confidence-ankeny/proof-confidence/E4.png",
-          "renderedAt": "2026-06-04T03:01:39.114Z"
+          "renderedAt": "2026-06-04T14:17:38.512Z",
+          "kraken": {
+            "id": "e6c09994-5d35-45ca-90b7-d17f86ad9b25",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/confidence-ankeny-proof-confidence-E4-1780590622384.png",
+            "folder": "angle 2"
+          }
         },
         {
           "id": "F1",
@@ -326,8 +406,16 @@
             "ctaText": "BOOK YOUR FREE ATHLETE ANALYSIS"
           },
           "copySource": "Multi-field template (templateData by design). Verbatim numbers (+1 mph, +3\", 90 days) + AD3 line \"the promise no other program in this market will make.\" Guarantee band is brand-locked.",
-          "status": "approved",
-          "notes": "Guarantee reveal video."
+          "status": "rendered",
+          "notes": "Guarantee reveal video.",
+          "output": "out/campaigns/confidence-ankeny/proof-confidence/F1.mp4",
+          "thumb": "out/campaigns/confidence-ankeny/proof-confidence/F1.mp4",
+          "renderedAt": "2026-06-04T13:56:50.674Z",
+          "kraken": {
+            "id": "af3642a8-5d68-4e84-bd2d-7f1911cb7d4c",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/confidence-ankeny-proof-confidence-F1-1780590624554.mp4",
+            "folder": "angle 2"
+          }
         },
         {
           "id": "F2",
@@ -336,15 +424,23 @@
           "format": "static",
           "source": "template",
           "template": "cluster-32",
-          "media": "./assets/jarosh/jarosh-performance-post-20260505t175329-18115540564831348-mp-cf248ffe.mp4",
+          "media": "./assets/jarosh/f2-deadlift-2s.png",
           "templateData": {
             "offer_headline": "FREE ATHLETE\nANALYSIS",
             "offer_detail": "Not a pep talk. A data set.",
             "cta_text": "BOOK THE ATHLETE ANALYSIS"
           },
           "copySource": "Multi-field offer template (templateData by design). Verbatim: Athlete Analysis offer; \"Not a pep talk. A data set.\" Guarantee band auto-locked.",
-          "status": "approved",
-          "notes": "Offer card. Guarantee band verbatim-locked."
+          "status": "rendered",
+          "notes": "Offer card. Guarantee band verbatim-locked.",
+          "output": "out/campaigns/confidence-ankeny/proof-confidence/F2.png",
+          "thumb": "out/campaigns/confidence-ankeny/proof-confidence/F2.png",
+          "renderedAt": "2026-06-04T15:23:21.448Z",
+          "kraken": {
+            "id": "a9e7f220-c08a-4add-b9b2-ad584909159e",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/confidence-ankeny-proof-confidence-F2-1780590625732.png",
+            "folder": "angle 2"
+          }
         },
         {
           "id": "BR1",
@@ -361,8 +457,16 @@
             "url": "JAROSHPERFORMANCE.FITNESS"
           },
           "copySource": "Brand lockup + verbatim ad Description as tagline (\"Confidence from proof.\").",
-          "status": "approved",
-          "notes": "Brand bumper over footage."
+          "status": "rendered",
+          "notes": "Brand bumper over footage.",
+          "output": "out/campaigns/confidence-ankeny/proof-confidence/BR1.mp4",
+          "thumb": "out/campaigns/confidence-ankeny/proof-confidence/BR1.mp4",
+          "renderedAt": "2026-06-04T13:57:10.400Z",
+          "kraken": {
+            "id": "7c0f91b6-b8aa-4f1c-8a21-84ba634f3638",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/620313c9-f0ea-43f1-a0f0-102f888e4985/confidence-ankeny-proof-confidence-BR1-1780590627197.mp4",
+            "folder": "angle 2"
+          }
         }
       ]
     }
