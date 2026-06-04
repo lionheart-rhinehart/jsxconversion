@@ -20,7 +20,7 @@ export in prose — only build the job spec and invoke the script.
 > Why a script owns it: the predecessor session shipped the wrong city's eyebrow into
 > three location folders because "render once, copy the video" was prose an agent could
 > skim. The correctness nuances now live in code that fails loud (see
-> `docs/lessons-learned/2026-06-03__creative-engine__motion-eyebrow-location-override.md`).
+> `lessons-learned/2026-06-03__creative-engine__motion-eyebrow-location-override.md`).
 > Trust the gates; don't work around them.
 
 ## The model

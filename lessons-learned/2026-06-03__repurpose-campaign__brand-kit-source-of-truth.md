@@ -75,4 +75,4 @@ AA renders identical, (4) confirm the temp/test artifacts and any live Kraken ro
 - `scripts/lib/fill-core.mjs` (`resolveStaticConfig` remap), `scripts/run-campaign.mjs` (motion
   `window.__BRAND__` + font staging), `scripts/validate-templates.mjs` (guardrail)
 - `.claude/skills/repurpose-campaign/SKILL.md`; `data/brand.athletes-acceleration.json` (token contract)
-- Prior: `docs/lessons-learned/2026-06-03__creative-engine__motion-eyebrow-location-override.md`
+- Prior: `lessons-learned/2026-06-03__creative-engine__motion-eyebrow-location-override.md`

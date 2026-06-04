@@ -1,52 +1,104 @@
 # aa-creative-engine
 
-Creative engine for **Athletes Acceleration** (youth sports performance, ages 8–18, locations across IN + OH). Turns JSX templates into branded ad creatives — vertical videos for Reels/Stories/Shorts and static images for feed posts — ready for Meta/Facebook campaigns.
+Creative engine for **Athletes Acceleration** (youth sports performance, ages 8–18, locations across
+IN + OH). Turns JSX templates into branded ad creatives — vertical videos for Reels/Stories/Shorts and
+static images for feed posts — ready for Meta/Facebook campaigns.
 
-> **Whole-campaign workflow:** the `/creative-engine` skill takes a brand + a full campaign (reverse brief + ad copy + microscripts) and produces a reviewable, then rendered, set of angle-coherent creatives. **`docs/PROCESS.md` is the canonical end-to-end map** — read it before working on campaign intake, planning, the review page, or the render runner.
+This file is the **handbook**: the standing rules + a map, loaded into every chat. It *points to* the
+detailed manuals (`docs/PROCESS.md`, `docs/MAP.md`) rather than repeating them. For the full
+where-everything-lives map and naming detail, see **`docs/MAP.md`**.
 
-## Two outputs, one source
+---
 
-The same JSX template can produce:
+## How we work together (rules, not suggestions)
 
-- **MP4 video** (default — animated React, Remotion, or Claude Design output)
-- **Static PNG/JPG** (single frame, lifted from the first paint or a specified `t=` mark)
+These four are binding for every chat on this repo. They exist because each one has bitten us before.
 
-Both run through the same renderer; the output mode is per-file.
+1. **Explain at a marketer's level.** Cody is a marketer, not a developer. Introduce any technical
+   idea (git, branches, hooks, renders) in plain language with a concrete analogy *from the first
+   sentence* — proactively, and define each term on first use. Don't wait to be asked.
 
-## How to use
+2. **Git workflow — work in `main`, finish by deploying.** (Analogy: one shared desk, and you always
+   file your work in the cabinet before you leave.)
+   - Keep the Claude Desktop **worktree toggle OFF** → every chat works in the **one `main` checkout**.
+   - Session start auto-syncs (`git pull --ff-only`) via the SessionStart hook — no action needed.
+   - **Finish every session with `/full-deploy-light`** (on `main` it commits + pushes, no PR).
+   - **Never end a session on `/save-progress`** — it commits locally *without pushing*, stranding the
+     work. `/save-progress` is a mid-work checkpoint only.
 
-Hand Claude a `.jsx` (or `.tsx`) file. Claude runs the `jsx-to-mp4` skill in
-`.claude/skills/jsx-to-mp4/`, which detects the component type and dispatches
-to the right renderer:
+3. **Parallel chats — split only when you must, and only through git.** Default is the single shared
+   `main` checkout (rule 2). Run a **separate worktree per chat** *only* when two chats genuinely work
+   at once on **different files** — then follow **`docs/parallel-chats.md`** and start the second one
+   with `./scripts/new-workspace.ps1 <name>`. **Never copy files between checkouts** — combine through
+   commit + merge, never by copying folders (that silently overwrites uncommitted work).
 
-- **Remotion compositions** (`<Composition>`, `useCurrentFrame`) → `npx remotion render`
-- **Claude Design** (`<Stage>` / `<Sprite>` / `useTime`) → puppeteer + shipped runtime
-- **Animated React** (Framer Motion, CSS animations, canvas, etc.) → Puppeteer + ffmpeg
-- **Static React** → single screenshot (looped if MP4 output requested)
+4. **Creative-engine non-negotiables.** `docs/PROCESS.md` is the canonical end-to-end map — read it
+   before touching campaign intake, planning, the review page, or the render runner. And:
+   - **Every creative carries real media** (a real image/video/clip, pulled from Kraken) — no bare
+     type cards.
+   - **The guarantee is verbatim, never paraphrased:** *+1 mph speed, +3" vertical, 90 days, or
+     training is free.*
+   - **Voice:** head-coach-to-parent, declarative, metric-driven — no emoji, no exclamation points.
+   - Brand source of truth is `brand/` — read `brand/README.md` + `brand/aa-design-system/project/README.md`
+     before authoring any new creative; role/template rules live in `docs/creative-playbook.md`.
 
-Output lands in `./out/<name>.mp4` (or `.png`/`.jpg` for static).
+---
 
-## Brand
+## The map (where things live)
 
-`brand/` is the single source of truth for Athletes Acceleration identity — colors, type, fonts, voice, photography, and reusable React components. **Read `brand/README.md` and `brand/aa-design-system/project/README.md` before authoring any new creative.** The kit defines:
+Compact version — full detail, plus what's legacy vs. active, in **`docs/MAP.md`**.
 
-- Brand red `#c4141d`, ink scale, chrome accent
-- Type: Anton (display), Geist (body), JetBrains Mono (mono/metrics)
-- Voice: head-coach-to-parent, declarative, metric-driven, no emoji/exclamation points
-- The guarantee: **+1 mph speed, +3" vertical, 90 days, or training is free** (verbatim, never paraphrased)
-- Three pillars: ACCELERATE (speed), DOMINATE (strength), UNLEASH (power)
+```
+brand/         Athletes Acceleration design system + per-franchisee brand kits, fonts, photos, components
+campaigns/     One folder per campaign: brief + ad-copy + microscripts + creative-plan + edits/
+data/          Shared JSON tier: brand.* / location.* / campaign.* / rules.*  (the cascade)
+templates/     Static JSX bank (multi-sport-foundations/cluster-*.jsx) + per-template assets
+scripts/       Pipeline CLIs (run-campaign, kraken-*, fill-template…) + scripts/lib/ shared modules
+docs/          PROCESS.md (canonical), MAP.md (this map), creative-playbook, copy-role-schema, parallel-chats
+lessons-learned/  Dated gotchas (YYYY-MM-DD__slug.md) — new ones land here on every deploy
+fonts/         Font binaries for the renderer's preflight
+out/           Rendered creatives — gitignored (machine-local)
+.claude/skills/   The 6 skills (jsx-to-mp4, creative-engine, compose-creative, repurpose-campaign, restart-dev, skill-creator) — LOCKED zone
+```
 
-## Per-file render parameters
+---
 
-The renderer reads parameters from the JSX itself, in this order:
+## Naming scheme
 
-1. `<Stage>` props (Claude Design)
-2. Remotion `<Composition>` props
-3. Top-level exported constants: `DURATION_SECONDS`, `FPS`, `WIDTH`, `HEIGHT`
-4. Sibling config: `<name>.config.json`
-5. Defaults: 1080×1920 (vertical), 30fps, 10s
+| Thing | Convention | Example |
+|---|---|---|
+| Campaign folder | `<angle>-<location>` or `<campaign-slug>` | `confidence-ankeny`, `multisport-foundations` |
+| Data file | `<type>.<name>.json` (brand/location/campaign/rules) | `data/location.ankeny.json` |
+| Static template | `cluster-<N>.jsx` + `cluster-<N>.config.json` | `cluster-12.jsx` |
+| Per-asset edit | `proof-<angle>__<beat>.config.json` in `campaigns/<c>/edits/` | `proof-confidence__A1.config.json` |
+| Lesson | `YYYY-MM-DD__<slug>.md` in root `lessons-learned/` | `2026-06-04__re-verify-live-state.md` |
+| Output | `out/campaigns/<campaign>/<angle>/<id>.<ext>` (gitignored) | — |
 
-Every component must `export default` the React element to render.
+---
+
+## What this builds — two outputs, one source
+
+The same JSX template can produce an **MP4 video** (default) or a **static PNG/JPG** (single frame).
+Both run through the same renderer; output mode is per-file. Hand Claude a `.jsx`/`.tsx` and the
+`jsx-to-mp4` skill detects the type and dispatches:
+
+- **Remotion** (`<Composition>`, `useCurrentFrame`) → `npx remotion render`
+- **Claude Design** (`<Stage>`/`<Sprite>`/`useTime`) → puppeteer + shipped runtime
+- **Animated React** (Framer Motion, CSS, canvas) → Puppeteer + ffmpeg
+- **Static React** → single screenshot (looped if MP4 requested)
+
+Output lands in `./out/<name>.mp4` (or `.png`/`.jpg`). Deep detail: `.claude/skills/jsx-to-mp4/SKILL.md`.
+
+### Per-file render parameters (read in this order)
+1. `<Stage>` props (Claude Design) → 2. Remotion `<Composition>` props → 3. top-level exports
+(`DURATION_SECONDS`, `FPS`, `WIDTH`, `HEIGHT`) → 4. sibling `<name>.config.json` → 5. defaults
+(1080×1920 vertical, 30fps, 10s). Every component must `export default` the element to render.
+
+### Brand quick reference
+Red `#c4141d`, ink scale, chrome accent · Anton (display), Geist (body), JetBrains Mono (metrics) ·
+three pillars: ACCELERATE (speed), DOMINATE (strength), UNLEASH (power). Full kit in `brand/`.
+
+---
 
 ## Setup
 
@@ -54,22 +106,18 @@ Every component must `export default` the React element to render.
 npm install
 ```
 
-`ffmpeg` must be on PATH. In the cloud session it's installed by
-`.claude/hooks/session-start.sh`; locally, install via your package manager.
+`ffmpeg` must be on PATH (cloud: installed by `.claude/hooks/session-start.sh`; locally via your
+package manager). `npm install` also wires the pre-commit template validator (`scripts/githooks/`).
 
-## Layout
+---
 
-- `.claude/skills/jsx-to-mp4/` — the renderer skill (SKILL.md + scripts/)
-- `brand/` — Athletes Acceleration design system, fonts, photos, components
-- `fonts/` — font binaries (Anton, Geist, JetBrains Mono, etc.) for the renderer's font preflight
-- `templates/` — reusable JSX scaffolds for common ad formats
-- `examples/` — sample inputs
-- `out/` — rendered creatives (gitignored)
+## Where to look things up
 
-## Campaign workflow (manual, for now)
-
-Today this is a Claude-Code-driven workflow: hand Claude a campaign brief in chat, it authors JSX templates per angle, the renderer produces MP4s + statics, you ship them. After a handful of campaigns produce repeatable patterns, the next step is wrapping this in a Claude Agent SDK service for autonomous brief-in / creatives-out.
-
-## Parallel chats (avoid clobbering)
-
-If more than one chat/session works on this repo at once, follow **`docs/parallel-chats.md`**. The rule: **one chat = one worktree/branch; chats combine only through git (commit + merge), never by copying files between folders.** Start an isolated workspace with `./scripts/new-workspace.ps1 <name>`. **Never `cp` files from one checkout into another** (e.g. a worktree into the main checkout) — that silently overwrites uncommitted work. To test in another checkout, merge via git first.
+- **`docs/PROCESS.md`** — canonical end-to-end pipeline (intake → plan → review → render → export).
+- **`docs/MAP.md`** — full navigation map: every folder, what's legacy vs. active, the data cascade.
+- **`docs/creative-playbook.md`** — which roles each beat needs + how to pick templates.
+- **`docs/copy-role-schema.md`** — the copy field taxonomy.
+- **`docs/parallel-chats.md`** — running two chats without clobbering.
+- **`lessons-learned/`** — dated gotchas from past sessions.
+- **`brand/README.md`** + **`brand/aa-design-system/project/README.md`** — the brand bible.
+- **`HANDOFF.md`** — current open problems (changes session to session; not a standing rule).
