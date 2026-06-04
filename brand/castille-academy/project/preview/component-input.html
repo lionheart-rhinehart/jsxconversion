@@ -1,0 +1,24 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css">
+<style>
+  .field{display:flex;flex-direction:column;gap:7px}
+  .field label{font-family:var(--font-cond);font-weight:600;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--fg-2)}
+  .inp{font-family:var(--font-body);font-size:15px;color:var(--ca-ink-900);background:var(--ca-white);border:1px solid var(--ca-ink-200);border-radius:var(--r-md);padding:12px 14px;outline:none;transition:border-color var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out)}
+  .inp::placeholder{color:var(--ca-ink-300)}
+  .inp.focus{border-color:var(--ca-red-500);box-shadow:0 0 0 3px rgba(168,25,24,0.16)}
+  .seg{display:flex;border:1px solid var(--ca-ink-200);border-radius:var(--r-md);overflow:hidden;width:max-content}
+  .seg button{font-family:var(--font-cond);font-weight:600;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;padding:10px 16px;border:0;background:#fff;color:var(--fg-2);cursor:pointer;border-right:1px solid var(--ca-ink-200)}
+  .seg button:last-child{border-right:0}
+  .seg button.on{background:var(--ca-ink-900);color:var(--ca-paper-100)}
+</style></head>
+<body><div class="card">
+  <span class="cap" style="display:block;margin-bottom:14px">Form inputs · select state</span>
+  <div class="row" style="gap:14px;align-items:flex-start">
+    <div class="field" style="flex:1"><label>Athlete name</label><input class="inp" value="Mara Ellison"></div>
+    <div class="field" style="flex:1"><label>Email</label><input class="inp focus" placeholder="you@email.com"></div>
+  </div>
+  <div class="field" style="margin-top:14px"><label>Primary sport</label>
+    <div class="seg"><button class="on">Soccer</button><button>Basketball</button><button>Track</button><button>Football</button></div>
+  </div>
+  <p style="font-family:var(--font-body);font-size:13px;color:var(--fg-3);margin:14px 0 0">Focus ring is a soft brass glow, never blue. Labels in condensed caps. Segmented control fills navy when active.</p>
+</div></body></html>

@@ -65,6 +65,21 @@ Write-Host "Creating worktree '$relPath' on branch '$branch' (from origin/main).
 git worktree add $relPath -b $branch origin/main
 if (-not $?) { Write-Host "ERROR: git worktree add failed." -ForegroundColor Red; exit 1 }
 
+# A worktree gets its OWN node_modules (gitignored, not shared with the main
+# checkout). Without an install here, the renderer fails on every asset with an
+# opaque error. Bootstrap it now so the new chat can render immediately.
+Write-Host "Installing dependencies (npm install) in the new worktree..." -ForegroundColor Cyan
+Push-Location $absPath
+try {
+  npm install
+  if (-not $?) {
+    Write-Host "WARNING: npm install failed in the new worktree. Run it manually before rendering:" -ForegroundColor Yellow
+    Write-Host "         cd `"$relPath`"; npm install" -ForegroundColor Yellow
+  }
+} finally {
+  Pop-Location
+}
+
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Green
 Write-Host " New isolated workspace ready." -ForegroundColor Green

@@ -1,0 +1,128 @@
+{
+  "_comment": "Repurpose job: AA Carmel masters → Castille Academy brand at the Pelham location. Dimensions changing: location (PELHAM SPORT PARENTS eyebrow), colors (AA red → Castille #a81918), identity (logo/name/url → Castille), fonts (Caslon/Hanken/Saira; statics deferred). Copy KEPT verbatim (guarantee rides along; Castille kit guarantee == AA line). Media REUSED from source (AA clips still carry AA watermarks — replace per-franchisee later). The brand-name wordmark swap (ATHLETES ACCELERATION → CASTILLE ACADEMY) is auto-added by the orchestrator. EXPORT: Kraken workspace cdfcde40-cedd-4579-ad95-2ae28957d520, into the 'Multi sport - campaign' angle folders, mapped grind-trap→angle 1, confidence→angle 2, more-games→angle 3 (destFolder is the folder UUID to avoid name ambiguity).",
+  "brand": "castille-academy",
+  "dimensions": [
+    "location",
+    "colors",
+    "identity",
+    "fonts",
+    "media"
+  ],
+  "targets": [
+    {
+      "source": "grind-trap-carmel",
+      "dest": "grind-trap-castille",
+      "location": "pelham",
+      "textSwaps": [
+        {
+          "from": "CARMEL",
+          "to": "PELHAM"
+        },
+        {
+          "from": "Or we will train you for free until you do.",
+          "to": "Or your training is on us."
+        }
+      ],
+      "media": {
+        "policy": "replace",
+        "map": {
+          "A1": "brand/kraken-cache/cas-action-clip-strength-and-agility-training-high-school-mixed--99e3141f.mp4",
+          "A2": "./assets/cas-action-image-posing-high-school-female-castille-academy-slid-d9d2365d.jpg",
+          "A3": "./assets/cas-action-image-posing-high-school-female-castille-academy-slid-e35e9a43.jpg",
+          "A4": "./assets/cas-action-image-celebrating-high-school-male-castille-academy-s-15a12342.jpg",
+          "B1": "./assets/cas-action-image-soccer-high-school-female-castille-academy-slid-b92dac9c.jpg",
+          "B2": "./assets/cas-action-image-posing-high-school-female-castille-academy-slid-94c8b00b.jpg",
+          "C1": "brand/kraken-cache/cas-action-clip-strength-and-conditioning-middle-school-mixed-ca-9fefd2ca.mp4",
+          "C2": "./assets/cas-action-image-lifting-high-school-male-castille-academy-8c864ece.png",
+          "C3": "./assets/cas-action-image-agility-drill-middle-school-male-castille-acade-604abe06.png",
+          "D1": "./assets/cas-action-image-lunge-with-overhead-hold-high-school-female-cas-8c2a7c2f.png",
+          "D2": "./assets/cas-action-image-rotational-training-high-school-male-castille-a-2aab1e2c.png",
+          "D3": "./assets/cas-group-shot-posing-middle-school-male-castille-academy-1eb84be1.jpg",
+          "E1": "brand/kraken-cache/cas-action-clip-landmine-rotations-sled-push-side-plank-rotation-bda56fa9.mp4",
+          "E2": "./assets/cas-behind-the-scenes-celebrating-high-school-male-castille-acad-4524b603.jpg",
+          "E3": "./assets/cas-behind-the-scenes-signing-high-school-female-castille-academ-dea27052.jpg",
+          "F1": "brand/kraken-cache/cas-action-clip-mixed-athletic-training-middle-school-female-cas-2d9c4d8f.mp4",
+          "F2": "./assets/cas-group-shot-posing-high-school-female-castille-academy-slide1-cea86328.jpg",
+          "F3": "brand/kraken-cache/cas-action-clip-sports-performance-training-high-school-mixed-ca-b5690291.mp4",
+          "FA1": "brand/kraken-cache/cas-action-clip-agility-drill-lifting-jumping-high-school-mixed--95f367b2.mp4",
+          "BR1": "brand/kraken-cache/cas-action-clip-training-middle-school-mixed-castille-academy-167af2e8.mp4"
+        }
+      },
+      "workspace": "cdfcde40-cedd-4579-ad95-2ae28957d520",
+      "destFolder": "aeb4b9fb-3830-4a3c-b0be-c8018532b210"
+    },
+    {
+      "source": "confidence-carmel",
+      "dest": "confidence-castille",
+      "location": "pelham",
+      "textSwaps": [
+        {
+          "from": "CARMEL",
+          "to": "PELHAM"
+        }
+      ],
+      "media": {
+        "policy": "replace",
+        "map": {
+          "A1": "./assets/cas-action-clip-hurdle-jumps-high-school-female-castille-academy-13ec882d-still.jpg",
+          "A2": "./assets/cas-action-clip-hurdle-jump-high-school-female-castille-academy-43193faf-still.jpg",
+          "A3": "./assets/cas-action-clip-lateral-push-off-drill-high-school-male-castille-e38c848b-still.jpg",
+          "A4": "./assets/cas-action-clip-band-work-high-school-male-castille-academy-fba12be2-still.jpg",
+          "B1": "./assets/cas-action-clip-suspension-training-high-school-male-castille-ac-de6c35f8-still.jpg",
+          "B2": "./assets/cas-action-clip-landmine-split-squat-high-school-male-castille-a-7aa2c7ae-still.jpg",
+          "C1": "./assets/cas-action-clip-box-jumps-high-school-male-castille-academy-e5885803-still.jpg",
+          "C2": "./assets/cas-action-clip-lunges-middle-school-male-castille-academy-eb923c03-still.jpg",
+          "D1": "./assets/cas-group-shot-celebrating-high-school-female-castille-academy-s-6874690e.jpg",
+          "D2": "./assets/cas-group-shot-posing-middle-school-male-castille-academy-slide8-32899773.jpg",
+          "E1": "brand/kraken-cache/cas-action-clip-vertical-jump-high-school-female-castille-academ-483d4e68.mp4",
+          "E2": "brand/kraken-cache/cas-action-clip-agility-drill-high-school-male-castille-academy--eee51630.mp4",
+          "E3": "./assets/cas-group-shot-posing-high-school-male-castille-academy-slide4of-6bed665b.jpg",
+          "E4": "./assets/cas-action-clip-push-press-high-school-female-castille-academy-9576303b-still.jpg",
+          "F1": "brand/kraken-cache/cas-action-clip-strength-and-conditioning-high-school-mixed-cast-638de834.mp4",
+          "F2": "./assets/cas-action-clip-rotational-cable-chop-high-school-female-castill-2bc3afa2-still.jpg",
+          "BR1": "brand/kraken-cache/cas-action-clip-strength-agility-training-high-school-mixed-cast-74b40f95.mp4"
+        }
+      },
+      "workspace": "cdfcde40-cedd-4579-ad95-2ae28957d520",
+      "destFolder": "33b1c475-9d23-45da-b6c9-abe660c242ca"
+    },
+    {
+      "source": "more-games-carmel",
+      "dest": "more-games-castille",
+      "location": "pelham",
+      "textSwaps": [
+        {
+          "from": "CARMEL",
+          "to": "PELHAM"
+        }
+      ],
+      "media": {
+        "policy": "replace",
+        "map": {
+          "A1": "brand/kraken-cache/cas-action-clip-agility-drill-middle-school-mixed-castille-acade-aed98e89.mp4",
+          "A2": "brand/kraken-cache/cas-action-clip-baseball-batting-middle-school-male-castille-aca-a5369f7b.mp4",
+          "A3": "./assets/cas-behind-the-scenes-signing-high-school-male-castille-academy--918170d5.jpg",
+          "A4": "./assets/cas-behind-the-scenes-posing-middle-school-male-castille-academy-0a0f6351.jpg",
+          "B1": "./assets/cas-behind-the-scenes-signing-high-school-male-castille-academy--924ba45d.jpg",
+          "B2": "brand/kraken-cache/cas-action-clip-vertical-jump-high-school-male-castille-academy--7e29dfcb.mp4",
+          "C1": "brand/kraken-cache/cas-action-clip-strength-conditioning-mixed-mixed-castille-acade-ab82a388.mp4",
+          "C2": "brand/kraken-cache/cas-action-clip-deadlift-high-school-female-castille-academy-6013443b.mp4",
+          "C3": "./assets/cas-behind-the-scenes-writing-unknown-female-castille-academy-sl-1cf13ef6.jpg",
+          "D1": "brand/kraken-cache/cas-action-clip-band-work-high-school-female-castille-academy-3645b2d0.mp4",
+          "D2": "./assets/cas-behind-the-scenes-posing-high-school-male-castille-academy-s-37cfa8d1.jpg",
+          "D3": "./assets/cas-group-shot-posing-middle-school-male-castille-academy-slide1-2a078ac1.jpg",
+          "E1": "brand/kraken-cache/cas-action-clip-agility-drill-sled-push-batting-training-middle--f85b0e1f.mp4",
+          "E2": "brand/kraken-cache/cas-action-clip-sprinting-high-school-female-castille-academy-64e34550.mp4",
+          "E3": "./assets/cas-behind-the-scenes-posing-high-school-female-castille-academy-d2bc746c.jpg",
+          "E4": "./assets/cas-group-shot-posing-middle-school-male-castille-academy-slide1-8b47e1c1.jpg",
+          "F1": "brand/kraken-cache/cas-action-clip-band-work-high-school-male-castille-academy-cf2f6440.mp4",
+          "F2": "./assets/cas-group-shot-posing-high-school-mixed-castille-academy-slide12-6c2d5bfc.jpg",
+          "F3": "brand/kraken-cache/cas-action-clip-landmine-squat-high-school-mixed-castille-academ-b6afd38a.mp4",
+          "BR1": "brand/kraken-cache/cas-action-clip-sprinting-high-school-female-castille-academy-4c6b217d.mp4"
+        }
+      },
+      "workspace": "cdfcde40-cedd-4579-ad95-2ae28957d520",
+      "destFolder": "df79de13-fef0-49ea-86e8-b8263d64e796"
+    }
+  ]
+}

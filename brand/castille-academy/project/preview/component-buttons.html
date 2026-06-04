@@ -1,0 +1,26 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css">
+<style>
+  .btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-cond);font-weight:600;font-size:15px;letter-spacing:0.09em;text-transform:uppercase;border-radius:var(--r-md);border:1px solid transparent;padding:13px 22px;cursor:pointer;transition:all var(--dur-base) var(--ease-out);text-decoration:none;line-height:1}
+  .btn i{width:17px;height:17px}
+  .btn-primary{background:var(--ca-red-500);color:var(--ca-ink-950)}
+  .btn-primary:hover{background:var(--ca-red-600);transform:translateY(-1px);box-shadow:var(--shadow-red)}
+  .btn-navy{background:var(--ca-ink-900);color:var(--ca-paper-100)}
+  .btn-navy:hover{background:var(--ca-ink-800);transform:translateY(-1px);box-shadow:var(--shadow-3)}
+  .btn-ghost{background:transparent;color:var(--ca-ink-800);border-color:var(--ca-ink-300)}
+  .btn-ghost:hover{border-color:var(--ca-ink-900);background:var(--ca-ink-50)}
+  .btn-text{background:transparent;color:var(--ca-red-600);padding:13px 4px}
+  .btn-text:hover{color:var(--ca-red-700);gap:13px}
+</style></head>
+<body><div class="card">
+  <span class="cap" style="display:block;margin-bottom:16px">Buttons · condensed caps, squared 4px</span>
+  <div class="wrap" style="gap:12px;align-items:center">
+    <a class="btn btn-primary">Book Assessment <i data-lucide="arrow-right"></i></a>
+    <a class="btn btn-navy">View Programs</a>
+    <a class="btn btn-ghost">Find a Campus <i data-lucide="map-pin"></i></a>
+    <a class="btn btn-text">Member Login <i data-lucide="arrow-right"></i></a>
+  </div>
+  <p style="font-family:var(--font-body);font-size:13px;color:var(--fg-3);margin:16px 0 0">Primary = brass on navy ink. Hover lifts 1px with a brass glow (primary) or shadow (navy). Press settles to <code style="font-family:var(--font-mono);font-size:12px">translateY(0) scale(.99)</code>.</p>
+</div>
+<script src="https://unpkg.com/lucide@latest"></script><script>lucide.createIcons();</script>
+</body></html>

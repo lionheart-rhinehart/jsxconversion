@@ -130,6 +130,26 @@ function ffmpegAvailable() {
   return spawnSync("ffmpeg", ["-version"], { stdio: "ignore" }).status === 0;
 }
 
+// Render-env preflight (fail-fast, ONCE before any asset): the static and motion
+// renderers load React's UMD builds from node_modules. A git worktree gets its
+// OWN node_modules (gitignored, NOT auto-installed), so a fresh worktree renders
+// nothing — and without this gate the FIRST and EVERY asset fails with an opaque
+// "exit 1". Catch it here with the one-line fix, before wasting a whole batch.
+function preflightRenderEnv() {
+  const need = [
+    "node_modules/react/umd/react.production.min.js",
+    "node_modules/react-dom/umd/react-dom.production.min.js",
+  ];
+  const missing = need.filter((rel) => !existsSync(join(PROJECT_ROOT, rel)));
+  if (missing.length) {
+    console.error(`[campaign] FATAL: render dependencies are not installed in this checkout:`);
+    for (const m of missing) console.error(`             missing: ${m}`);
+    console.error(`[campaign] Fix: run \`npm install\` here first. Git worktrees have their own`);
+    console.error(`           node_modules (gitignored, not auto-created) — install once per worktree.`);
+    process.exit(3);
+  }
+}
+
 // mp4 → gif via two-pass palette (high quality, small size).
 function mp4ToGif(mp4Path, gifPath, fps = 15, width = 480) {
   return new Promise((res) => {
@@ -659,6 +679,9 @@ async function main() {
   const manifest = { campaign, generatedFrom: planPath, cells: [], summary: {} };
   let ok = 0, failed = 0, pending = 0, skipped = 0;
 
+  // Fail loud + early if this checkout can't render anything (missing deps).
+  preflightRenderEnv();
+
   // FONTS follow the active brand kit: stage the kit's custom font files under the
   // bank family names so the preflight resolves to them (no source/renderer edits).
   // No-op for AA / any brand that keeps the bank fonts. Removed in finally.
@@ -720,6 +743,13 @@ async function main() {
         await patchAsset(useServer, angle.id, asset.id, { status: "failed", notes: (asset.notes || "") });
         row.status = "failed"; row.error = res.error; failed++;
         console.error(`[render] ${tag} ✗ ${res.error}`);
+        // Surface the captured subprocess stderr — the real, actionable cause
+        // (missing dep, bad config, font/asset error) was being swallowed behind
+        // a generic "exit N", so every failure looked identical and opaque.
+        if (res.log && String(res.log).trim()) {
+          const tail = String(res.log).trim().split(/\r?\n/).slice(-8);
+          for (const line of tail) console.error(`           │ ${line}`);
+        }
       }
       manifest.cells.push(row);
     }

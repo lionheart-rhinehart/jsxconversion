@@ -1,0 +1,50 @@
+/* Shared base for Castille Academy design-system preview cards.
+   Each card is ~700px wide and short. Keep decoration minimal — the asset
+   name is rendered OUTSIDE the card by the Design System tab. */
+@import url('../colors_and_type.css');
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  font-family: var(--font-body);
+  color: var(--fg-1);
+  background: var(--bg-1);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.card {
+  padding: 22px 24px;
+  background: var(--bg-1);
+}
+.card--bone { background: var(--ca-paper-100); }
+.card--navy { background: var(--ca-ink-900); color: var(--ca-paper-100); }
+.card--navy p { color: var(--ca-ink-200); }
+
+.row { display: flex; gap: 12px; align-items: center; }
+.col { display: flex; flex-direction: column; }
+.wrap { display: flex; flex-wrap: wrap; }
+.spread { display: flex; justify-content: space-between; align-items: baseline; }
+
+.cap {
+  font-family: var(--font-cond);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+/* swatch grid */
+.swatches { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; }
+.sw { height: 76px; display: flex; align-items: flex-end; padding: 8px; }
+.sw small {
+  font-family: var(--font-cond); font-weight: 600; font-size: 10px;
+  letter-spacing: 0.04em; line-height: 1.25;
+}
+.sw .hex { display: block; opacity: 0.72; font-weight: 500; }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--font-cond); font-weight: 600; font-size: 12px;
+  letter-spacing: 0.04em; color: var(--fg-2);
+}
+.dot { width: 14px; height: 14px; border-radius: 3px; box-shadow: var(--shadow-1); }

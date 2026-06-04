@@ -1,0 +1,483 @@
+{
+  "schemaVersion": 1,
+  "campaign": "confidence-castille",
+  "brand": "castille-academy",
+  "knobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": {
+      "video": 0.6,
+      "gif": 0.15,
+      "static": 0.25
+    },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 3
+  },
+  "_planNotes": {
+    "angle": "Angle 2 — 'proof = confidence' (Pain state #2, the kid whose confidence is shrinking). Mechanism = UMS Principle 4: two kinds of confidence — praise is fragile (on loan), data-built confidence is durable. PROOF for this angle is the 'shy kid' case study + the visible-numbers mechanism + credentials + the guarantee — it deliberately does NOT use the Wang 224% stat (that proves velocity/jump, not confidence).",
+    "copyRule": "BY REFERENCE, VERBATIM. The role-slot cards (A1–A4, B1–B2, C1–C2, D1–D2, E4) bind copy by id into copy-library.json via copyRefs/hookRef — no inline text, every word traces to a magnet Cody wrote; verbatimGuard is CLEAN on all of these. The 'cut more magnets' upgrade (scripts/lib/copy-library.mjs) splits each ad body into bodyPara/bodyLine units, so proof/blame/offer lines are now referenceable too. Multi-field templates (E1 meet-coach, E2 quote-card, E3 cluster-31 credentials, F1 stat-reveal, F2 cluster-32, BR1 logo-sting) keep templateData by design (per SKILL.md). KNOWN EXCEPTION: E3's credential card carries 3 proof/claim labels (the NFL names + 'the same credential D1 and NFL strength coaches carry') that are verbatim FACTS from AD3 reformatted as uppercase card labels, so the report-only guard flags them — not a rewrite (proper nouns + a capitalized clause), just not a whole-sentence magnet. 16 of 17 cards trace 100% clean.",
+    "layout": "Hook cards use the role-upgrade stack: eyebrow (INDIANAPOLIS SPORT PARENTS, white chip, top) → kicker (lead-in, above headline) → headline → subhead. cluster-43 is the stacked-hook template (A4/B1/D2). A hookRef auto-splits a 2–3 segment line across kicker/headline/subhead via splitHook; a copyRefs binds a single magnet to one slot.",
+    "media": "EVERY creative is media-backed (hard rule 6). Statics set asset.media (./assets/conf-<id>.jpg); the runner injects it as a full-frame bg + legibility scrim + text shadows. Motion sets asset.clip. Distinct source per asset, no reuse.",
+    "eyebrow": "location = indianapolis → eyebrow auto-anchors 'INDIANAPOLIS SPORT PARENTS' (white chip) on every card; never hand-set.",
+    "guaranteeFlag": "guarantee role is brand-locked to the canonical wording on F1/F2; renders the canonical string.",
+    "status": "All 'pending' — re-authored by reference; awaiting approval on the review page. Clear campaigns/multisport-foundations-confidence/edits/ before re-render (stale sidecars override the plan)."
+  },
+  "angles": [
+    {
+      "id": "proof-confidence",
+      "name": "Proof = Confidence (the kid whose confidence is shrinking) — ad copy series #2",
+      "location": "pelham",
+      "mechanism": "UMS Principle 4 — two kinds of confidence: praise is on loan (fragile); data a kid builds for themselves is durable. Proof = the kid sees their own numbers climb.",
+      "emotionalJob": "Name what the parent is actually buying (confidence). End the helplessness of praise that stopped working.",
+      "voice": "Head-coach-to-parent, declarative, metric-driven. No emoji / exclamation / em dash.",
+      "assets": [
+        {
+          "id": "A1",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-33",
+          "media": "./assets/conf-A1.jpg",
+          "copyRefs": {
+            "hook": "ad-1-version-a-consequence-depth-short.bodyLine.2.2"
+          },
+          "copySource": "Verbatim magnet (AD1A body): \"There are two kinds of confidence.\"",
+          "status": "rendered",
+          "notes": "Lone hook over training footage.",
+          "photo": "./assets/cas-action-clip-hurdle-jumps-high-school-female-castille-academy-13ec882d-still.jpg",
+          "output": "out/campaigns/confidence-castille/proof-confidence/A1.png",
+          "thumb": "out/campaigns/confidence-castille/proof-confidence/A1.png",
+          "renderedAt": "2026-06-04T01:15:14.821Z",
+          "kraken": {
+            "id": "6021b03a-033a-4b3e-ace7-c475cf453b04",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/confidence-castille-proof-confidence-A1-1780535988262.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "A2",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-35",
+          "media": "./assets/conf-A2.jpg",
+          "copyRefs": {
+            "hook": "ad-1-version-b-emotional-depth-short.headline",
+            "claim": "ad-1-version-a-consequence-depth-short.description"
+          },
+          "copySource": "Verbatim magnets: ad Headline \"When They Stop Believing\" (hook) + Description \"Confidence from proof.\" (claim).",
+          "status": "rendered",
+          "notes": "Split card: headline + claim.",
+          "photo": "./assets/cas-action-clip-hurdle-jump-high-school-female-castille-academy-43193faf-still.jpg",
+          "output": "out/campaigns/confidence-castille/proof-confidence/A2.png",
+          "thumb": "out/campaigns/confidence-castille/proof-confidence/A2.png",
+          "renderedAt": "2026-06-04T01:15:19.233Z",
+          "kraken": {
+            "id": "e32b5f76-f9e4-4f87-9ea2-87052a24387f",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/confidence-castille-proof-confidence-A2-1780535990447.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "A3",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-42",
+          "media": "./assets/conf-A3.jpg",
+          "copyRefs": {
+            "reframe": "ad-1-version-a-consequence-depth-short.altHook.3"
+          },
+          "copySource": "Verbatim magnet (AD1A alt hook, Mechanism): \"Your kid doesn't need to be told they're good. They need to see it.\"",
+          "status": "rendered",
+          "notes": "Centered reframe.",
+          "photo": "./assets/cas-action-clip-lateral-push-off-drill-high-school-male-castille-e38c848b-still.jpg",
+          "output": "out/campaigns/confidence-castille/proof-confidence/A3.png",
+          "thumb": "out/campaigns/confidence-castille/proof-confidence/A3.png",
+          "renderedAt": "2026-06-04T01:15:23.891Z",
+          "kraken": {
+            "id": "22c82318-baaf-45ee-a123-764ad9a5951f",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/confidence-castille-proof-confidence-A3-1780535991669.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "A4",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-43",
+          "media": "./assets/conf-A4.jpg",
+          "copyRefs": {
+            "hook": "ad-1-version-a-consequence-depth-short.imageHeadline",
+            "reframe": "ad-1-version-a-consequence-depth-short.imageSubhead"
+          },
+          "copySource": "Verbatim magnets: image headline \"Here's Why Most Young Athletes Lose Confidence\" (headline) + image sub-headline \"(And What Actually Rebuilds It)\" (subhead).",
+          "status": "rendered",
+          "notes": "Stacked layout: headline + subhead (kicker empty).",
+          "photo": "./assets/cas-action-clip-band-work-high-school-male-castille-academy-fba12be2-still.jpg",
+          "output": "out/campaigns/confidence-castille/proof-confidence/A4.png",
+          "thumb": "out/campaigns/confidence-castille/proof-confidence/A4.png",
+          "renderedAt": "2026-06-04T01:15:28.753Z",
+          "kraken": {
+            "id": "3880bdea-602a-403d-a4d3-50c6193ae357",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/confidence-castille-proof-confidence-A4-1780535993191.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "B1",
+          "beat": "B — Name the moment",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-43",
+          "media": "./assets/conf-B1.jpg",
+          "hookRef": "ad-1-version-b-emotional-depth-short.altHook.2",
+          "copySource": "Verbatim magnet (AD1B alt hook, Mirror): \"The hardest part isn't watching them lose. It's watching them stop believing they can win.\" — auto-split headline + subhead.",
+          "status": "rendered",
+          "notes": "Two-segment hook stacked (headline + subhead).",
+          "photo": "./assets/cas-action-clip-suspension-training-high-school-male-castille-ac-de6c35f8-still.jpg",
+          "output": "out/campaigns/confidence-castille/proof-confidence/B1.png",
+          "thumb": "out/campaigns/confidence-castille/proof-confidence/B1.png",
+          "renderedAt": "2026-06-04T01:15:33.582Z",
+          "kraken": {
+            "id": "68d41d4c-d010-4a1d-b366-bbff4c84505c",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/confidence-castille-proof-confidence-B1-1780535994202.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "B2",
+          "beat": "B — Name the moment",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-40",
+          "media": "./assets/conf-B2.jpg",
+          "copyRefs": {
+            "reframe": [
+              "ad-3-version-a-consequence-depth-long.bodyLine.3.1",
+              "ad-3-version-a-consequence-depth-long.bodyLine.3.4"
+            ]
+          },
+          "copySource": "Verbatim magnets (AD3A body): \"Praise is on loan.\" (reframe) + \"It was never really theirs.\" (support).",
+          "status": "rendered",
+          "notes": "Quote-style reframe + support, both verbatim sentences.",
+          "photo": "./assets/cas-action-clip-landmine-split-squat-high-school-male-castille-a-7aa2c7ae-still.jpg",
+          "output": "out/campaigns/confidence-castille/proof-confidence/B2.png",
+          "thumb": "out/campaigns/confidence-castille/proof-confidence/B2.png",
+          "renderedAt": "2026-06-04T01:15:39.274Z",
+          "kraken": {
+            "id": "0456638b-3d31-4677-9607-c1f587a04012",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/confidence-castille-proof-confidence-B2-1780535995347.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "C1",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-36",
+          "media": "./assets/conf-C1.jpg",
+          "copyRefs": {
+            "reframe": "ad-2-version-a-consequence-depth-medium.bodyLine.2.4"
+          },
+          "copySource": "Verbatim magnet (AD2A body): \"Only one of them holds up when the play is on the line, and it isn't the one made of words.\"",
+          "status": "rendered",
+          "notes": "The two-kinds mechanism (distinct copy from A4).",
+          "photo": "./assets/cas-action-clip-box-jumps-high-school-male-castille-academy-e5885803-still.jpg",
+          "output": "out/campaigns/confidence-castille/proof-confidence/C1.png",
+          "thumb": "out/campaigns/confidence-castille/proof-confidence/C1.png",
+          "renderedAt": "2026-06-04T01:15:43.712Z",
+          "kraken": {
+            "id": "fcdffb16-79aa-4567-a412-ac8ca401591c",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/confidence-castille-proof-confidence-C1-1780535996454.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "C2",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-40",
+          "media": "./assets/conf-C2.jpg",
+          "copyRefs": {
+            "reframe": [
+              "ad-3-version-b-emotional-depth-long.bodyLine.3.4",
+              "ad-3-version-b-emotional-depth-long.bodyLine.3.3"
+            ]
+          },
+          "copySource": "Verbatim magnets (AD3B body): \"They have to see it.\" (reframe) + \"You can't hand it to them, and a coach can't shout it into them.\" (support).",
+          "status": "rendered",
+          "notes": "Mechanism reframe (distinct copy from B2).",
+          "photo": "./assets/cas-action-clip-lunges-middle-school-male-castille-academy-eb923c03-still.jpg",
+          "output": "out/campaigns/confidence-castille/proof-confidence/C2.png",
+          "thumb": "out/campaigns/confidence-castille/proof-confidence/C2.png",
+          "renderedAt": "2026-06-04T01:15:49.362Z",
+          "kraken": {
+            "id": "905db761-a4a4-4a1e-9b0a-e9127a4d4157",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/confidence-castille-proof-confidence-C2-1780535997909.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "D1",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-36",
+          "media": "./assets/conf-D1.jpg",
+          "copyRefs": {
+            "reframe": "ad-3-version-a-consequence-depth-long.bodyLine.4.1"
+          },
+          "copySource": "Verbatim magnet (AD3A body): \"And here's the part worth saying plainly: you didn't do anything wrong by encouraging them.\"",
+          "status": "rendered",
+          "notes": "Blame removal (distinct copy from A3).",
+          "photo": "./assets/cas-group-shot-celebrating-high-school-female-castille-academy-s-6874690e.jpg",
+          "output": "out/campaigns/confidence-castille/proof-confidence/D1.png",
+          "thumb": "out/campaigns/confidence-castille/proof-confidence/D1.png",
+          "renderedAt": "2026-06-04T01:15:53.787Z",
+          "kraken": {
+            "id": "e8ae584a-25a8-4b8d-9e77-6e914e6c6943",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/confidence-castille-proof-confidence-D1-1780535999591.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "D2",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-43",
+          "media": "./assets/conf-D2.jpg",
+          "copyRefs": {
+            "hook": "ad-3-version-a-consequence-depth-long.bodyLine.4.3",
+            "reframe": "ad-3-version-a-consequence-depth-long.bodyLine.4.4"
+          },
+          "copySource": "Verbatim magnets (AD3A body): \"It just isn't the tool that fixes this, because confidence problems don't get solved with words.\" (headline) + \"They get solved with evidence.\" (subhead).",
+          "status": "rendered",
+          "notes": "The pivot to proof, stacked (distinct copy from C1).",
+          "photo": "./assets/cas-group-shot-posing-middle-school-male-castille-academy-slide8-32899773.jpg",
+          "output": "out/campaigns/confidence-castille/proof-confidence/D2.png",
+          "thumb": "out/campaigns/confidence-castille/proof-confidence/D2.png",
+          "renderedAt": "2026-06-04T01:15:57.925Z",
+          "kraken": {
+            "id": "690ae7a5-fe10-47e8-a66c-5a4b5059eeb2",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/confidence-castille-proof-confidence-D2-1780536000845.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "E1",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "meet-coach",
+          "clip": "brand/kraken-cache/cas-action-clip-vertical-jump-high-school-female-castille-academ-483d4e68.mp4",
+          "templateData": {
+            "eyebrow": "CONFIDENCE FROM PROOF",
+            "coachFirst": "COACH GRAHAM",
+            "coachLast": "WILKERSON",
+            "coachTitle": "CSCS · FOUNDER",
+            "quote": "CONFIDENCE PROBLEMS DON'T GET SOLVED WITH WORDS. THEY GET SOLVED WITH EVIDENCE.",
+            "credentials": "TRAINED ZACK MARTIN · TED KARRAS · NICK MARTIN",
+            "facts": "REAL|SPRINT + JUMP NUMBERS · EVERY|SESSION · PROOF|THEY OWN",
+            "ctaText": "BOOK THE ATHLETE ANALYSIS",
+            "ctaMicro": "FREE. NOT A PEP TALK. A DATA SET."
+          },
+          "copySource": "Multi-field template (templateData by design). Verbatim values: AD Description (eyebrow), AD3 line \"confidence problems don't get solved with words. They get solved with evidence\" (quote), credentials verbatim, \"Not a pep talk. A data set.\" (cta micro).",
+          "status": "rendered",
+          "notes": "Coach proof VSL. Binds a distinct coach/training clip.",
+          "output": "out/campaigns/confidence-castille/proof-confidence/E1.mp4",
+          "thumb": "out/campaigns/confidence-castille/proof-confidence/E1.mp4",
+          "renderedAt": "2026-06-04T01:17:14.004Z",
+          "kraken": {
+            "id": "a4941acc-67ca-4263-b3f5-5a24e70713ec",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/confidence-castille-proof-confidence-E1-1780536002622.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "E2",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "quote-card",
+          "clip": "brand/kraken-cache/cas-action-clip-agility-drill-high-school-male-castille-academy--eee51630.mp4",
+          "templateData": {
+            "eyebrow": "CONFIDENCE FROM PROOF",
+            "quoteText": "He got physically stronger here first, and the confidence followed it, and now he plays.",
+            "bylineName": "A PARENT",
+            "bylineMeta": "PELHAM · CASTILLE ACADEMY",
+            "statsLabel": "THE STRENGTH CAME FIRST. THE BELIEF GREW OUT OF IT."
+          },
+          "copySource": "Multi-field template (templateData by design). Verbatim case study (AD2A 'one mom'): \"He got physically stronger here first, and the confidence followed it, and now he plays.\" + \"The strength came first. The belief grew out of it.\"",
+          "status": "rendered",
+          "notes": "Parent case-study quote card.",
+          "output": "out/campaigns/confidence-castille/proof-confidence/E2.mp4",
+          "thumb": "out/campaigns/confidence-castille/proof-confidence/E2.mp4",
+          "renderedAt": "2026-06-04T01:18:59.592Z",
+          "kraken": {
+            "id": "2c7f7474-de29-48aa-bb7b-b21f4457a36e",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/confidence-castille-proof-confidence-E2-1780536005913.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "E3",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-31",
+          "media": "./assets/conf-E3.jpg",
+          "templateData": {
+            "coach_name": "COACH GRAHAM\nWILKERSON",
+            "coach_title": "CSCS",
+            "proof_hero": "TRAINED NFL\nATHLETES",
+            "proof_names": "ZACK MARTIN · TED KARRAS · NICK MARTIN",
+            "claim_line": "The same credential D1 and NFL strength coaches carry."
+          },
+          "copySource": "Multi-field credential template (templateData by design). Verbatim facts (AD3): Coach Graham Wilkerson, CSCS, trained Zack Martin / Ted Karras / Nick Martin; \"the same credential D1 and NFL strength coaches carry.\"",
+          "status": "rendered",
+          "notes": "Credential verdict (static, distinct from E1 video / E2 quote).",
+          "photo": "./assets/cas-group-shot-posing-high-school-male-castille-academy-slide4of-6bed665b.jpg",
+          "output": "out/campaigns/confidence-castille/proof-confidence/E3.png",
+          "thumb": "out/campaigns/confidence-castille/proof-confidence/E3.png",
+          "renderedAt": "2026-06-04T01:19:05.914Z",
+          "kraken": {
+            "id": "a576b600-a58c-4039-9cc4-872b83e9945d",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/confidence-castille-proof-confidence-E3-1780536007973.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "E4",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-e2e-e5-testimonial",
+          "media": "./assets/conf-E4.jpg",
+          "copyRefs": {
+            "testimonial": "ad-2-version-b-emotional-depth-medium.bodyLine.5.3"
+          },
+          "templateData": {
+            "byline": "A PARENT · PELHAM"
+          },
+          "copySource": "Verbatim magnet (AD2B 'one mom'): \"He got physically stronger here first, and then something bigger followed, he got confident, and now he plays.\" (testimonial). Byline is an identity slot (templateData).",
+          "status": "rendered",
+          "notes": "Testimonial card (AD2B variant; distinct wording from E2).",
+          "photo": "./assets/cas-action-clip-push-press-high-school-female-castille-academy-9576303b-still.jpg",
+          "output": "out/campaigns/confidence-castille/proof-confidence/E4.png",
+          "thumb": "out/campaigns/confidence-castille/proof-confidence/E4.png",
+          "renderedAt": "2026-06-04T01:19:11.126Z",
+          "kraken": {
+            "id": "eaf01210-ddd7-479c-8f43-93bacce32feb",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/confidence-castille-proof-confidence-E4-1780536008932.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "F1",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "stat-reveal",
+          "clip": "brand/kraken-cache/cas-action-clip-strength-and-conditioning-high-school-mixed-cast-638de834.mp4",
+          "templateData": {
+            "eyebrow": "THE 90-DAY GUARANTEE",
+            "title1": "THE PROMISE NO OTHER",
+            "title2": "PROGRAM WILL MAKE.",
+            "stat1Value": 1,
+            "stat1Unit": " MPH",
+            "stat1Label": "SPEED",
+            "stat2Value": 3,
+            "stat2Unit": "\"",
+            "stat2Label": "VERTICAL",
+            "freeLine1": "90",
+            "freeLine2": "DAYS",
+            "ctaText": "BOOK YOUR FREE ATHLETE ANALYSIS"
+          },
+          "copySource": "Multi-field template (templateData by design). Verbatim numbers (+1 mph, +3\", 90 days) + AD3 line \"the promise no other program in this market will make.\" Guarantee band is brand-locked.",
+          "status": "rendered",
+          "notes": "Guarantee reveal video.",
+          "output": "out/campaigns/confidence-castille/proof-confidence/F1.mp4",
+          "thumb": "out/campaigns/confidence-castille/proof-confidence/F1.mp4",
+          "renderedAt": "2026-06-04T01:19:30.723Z",
+          "kraken": {
+            "id": "74c36ce9-ddf2-4828-bf97-779f891d04fa",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/confidence-castille-proof-confidence-F1-1780536010737.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "F2",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-32",
+          "media": "./assets/conf-F2.jpg",
+          "templateData": {
+            "offer_headline": "FREE ATHLETE\nANALYSIS",
+            "offer_detail": "Not a pep talk. A data set.",
+            "cta_text": "BOOK THE ATHLETE ANALYSIS"
+          },
+          "copySource": "Multi-field offer template (templateData by design). Verbatim: Athlete Analysis offer; \"Not a pep talk. A data set.\" Guarantee band auto-locked.",
+          "status": "rendered",
+          "notes": "Offer card. Guarantee band verbatim-locked.",
+          "photo": "./assets/cas-action-clip-rotational-cable-chop-high-school-female-castill-2bc3afa2-still.jpg",
+          "output": "out/campaigns/confidence-castille/proof-confidence/F2.png",
+          "thumb": "out/campaigns/confidence-castille/proof-confidence/F2.png",
+          "renderedAt": "2026-06-04T01:19:35.247Z",
+          "kraken": {
+            "id": "2eb4de9b-e4b2-4b19-90ee-adef85984cbf",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/confidence-castille-proof-confidence-F2-1780536011713.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "BR1",
+          "beat": null,
+          "temperature": "any",
+          "format": "video",
+          "source": "template",
+          "template": "logo-sting",
+          "clip": "brand/kraken-cache/cas-action-clip-strength-agility-training-high-school-mixed-cast-74b40f95.mp4",
+          "templateData": {
+            "wordmark1": "ATHLETES",
+            "wordmark2": "ACCELERATION",
+            "tagline": "CONFIDENCE FROM PROOF.",
+            "url": "ATHLETESACCEL.COM"
+          },
+          "copySource": "Brand lockup + verbatim ad Description as tagline (\"Confidence from proof.\").",
+          "status": "rendered",
+          "notes": "Brand bumper over footage.",
+          "output": "out/campaigns/confidence-castille/proof-confidence/BR1.mp4",
+          "thumb": "out/campaigns/confidence-castille/proof-confidence/BR1.mp4",
+          "renderedAt": "2026-06-04T01:19:47.066Z",
+          "kraken": {
+            "id": "907b7970-fddb-48df-ac7e-67feae4f2f38",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/cdfcde40-cedd-4579-ad95-2ae28957d520/confidence-castille-proof-confidence-BR1-1780536013148.mp4",
+            "folder": "angle 2"
+          }
+        }
+      ]
+    }
+  ],
+  "location": "pelham"
+}

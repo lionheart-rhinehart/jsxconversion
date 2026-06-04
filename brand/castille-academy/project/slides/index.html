@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Castille Academy · Deck Template</title>
+<link rel="stylesheet" href="_slide.css">
+<style>
+  html, body { margin:0; background:#000; }
+  deck-stage:not(:defined){ visibility:hidden; }
+  /* slides are slotted directly; the .slide div is the 1280x720 canvas */
+  deck-stage section > .slide { box-shadow:none; }
+
+<style>
+  .ring{position:relative;width:280px;height:280px;border-radius:50%;background:conic-gradient(var(--ca-red-500) 0 74%, var(--ca-ink-800) 74% 100%);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .ring::after{content:"";position:absolute;inset:26px;border-radius:50%;background:var(--ca-ink-950)}
+  .ring .v{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;line-height:1}
+  .bar{height:10px;border-radius:999px;background:var(--ca-ink-800)}
+  .bar i{display:block;height:100%;border-radius:999px;background:var(--ca-red-500)}
+</style>
+</style>
+</head>
+<body>
+<deck-stage width="1280" height="720">
+  <section data-label="Title">
+<div class="slide dark" data-screen-label="Slide · Title">
+  <!-- right photo panel -->
+  <div style="position:absolute;top:0;right:0;width:46%;height:100%;overflow:hidden">
+    <img class="imgbw" src="../assets/hero-sprint-male.jpg" alt="" style="filter:grayscale(1) contrast(1.08) brightness(0.62)">
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg, var(--ca-ink-950) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.4) 100%)"></div>
+  </div>
+  <!-- content -->
+  <div style="position:absolute;inset:0;padding:72px 80px;display:flex;flex-direction:column;justify-content:space-between;z-index:2">
+    <div class="wm"><span class="crest">C</span><div style="display:flex;flex-direction:column;gap:2px"><b>Castille</b><span class="sub">Academy</span></div></div>
+    <div style="max-width:720px">
+      <div class="eyebrow" style="margin-bottom:24px">Parent Information Night · 2026</div>
+      <div class="title" style="font-size:96px">The Making<br>of an <span class="a">Athlete.</span></div>
+      <p class="serif" style="font-size:23px;color:var(--ca-ink-300);margin:26px 0 0;max-width:520px">A curriculum for speed, strength and craft — and one number that proves the work.</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <span style="width:54px;height:1px;background:var(--ca-red-500)"></span>
+      <span class="creed" style="color:var(--ca-paper-100)">Disciplina · <span style="color:var(--ca-red-500)">Vis</span> · Victoria</span>
+    </div>
+  </div>
+</div>
+  </section>
+  <section data-label="Statement">
+<div class="slide" data-screen-label="Slide · Statement">
+  <div style="position:absolute;inset:0;padding:90px 110px;display:flex;flex-direction:column;justify-content:center">
+    <div class="eyebrow" style="margin-bottom:30px">The Truth About Development</div>
+    <div class="title" style="font-size:82px;max-width:1000px;color:var(--ca-ink-900)">Talent is a <span class="a">starting line</span>,<br>not a plan.</div>
+    <p class="serif" style="font-size:24px;line-height:1.5;color:var(--ca-ink-600);margin:34px 0 0;max-width:720px">Most young athletes never get measured, so they never get developed. We baseline every athlete, then build the block that moves the number.</p>
+  </div>
+  <div style="position:absolute;left:110px;bottom:64px;width:64px;height:4px;background:var(--ca-red-600)"></div>
+</div>
+  </section>
+  <section data-label="Pillars">
+<div class="slide dark" data-screen-label="Slide · Pillars">
+  <div style="position:absolute;inset:0;padding:64px 80px;display:flex;flex-direction:column">
+    <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:8px">
+      <div class="eyebrow">The Castille Method</div>
+      <span style="flex:1;height:1px;background:var(--ca-ink-700)"></span>
+    </div>
+    <h2 class="title" style="font-size:56px;color:var(--ca-paper-100);margin:0 0 40px">One Standard, Measured Three Ways.</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;flex:1">
+      <div class="pillar" style="position:relative;background:var(--ca-ink-900);border:1px solid var(--ca-ink-800);border-radius:10px;padding:34px 30px;display:flex;flex-direction:column">
+        <span class="title" style="position:absolute;top:20px;right:28px;font-size:64px;color:transparent;-webkit-text-stroke:1.25px var(--ca-ink-700)">01</span>
+        <i data-lucide="zap" style="width:34px;height:34px;color:var(--ca-red-500);stroke-width:1.75;margin-bottom:auto"></i>
+        <h3 class="label" style="font-size:30px;color:var(--ca-paper-100);margin:30px 0 10px;font-weight:700">Velocity</h3>
+        <p style="font-size:17px;line-height:1.5;color:var(--ca-ink-300);margin:0">Acceleration, top speed and change of direction. Every metre timed.</p>
+      </div>
+      <div class="pillar" style="position:relative;background:var(--ca-ink-900);border:1px solid var(--ca-ink-800);border-radius:10px;padding:34px 30px;display:flex;flex-direction:column">
+        <span class="title" style="position:absolute;top:20px;right:28px;font-size:64px;color:transparent;-webkit-text-stroke:1.25px var(--ca-ink-700)">02</span>
+        <i data-lucide="dumbbell" style="width:34px;height:34px;color:var(--ca-red-500);stroke-width:1.75;margin-bottom:auto"></i>
+        <h3 class="label" style="font-size:30px;color:var(--ca-paper-100);margin:30px 0 10px;font-weight:700">Force</h3>
+        <p style="font-size:17px;line-height:1.5;color:var(--ca-ink-300);margin:0">Strength and power through progressive, age-appropriate loading.</p>
+      </div>
+      <div class="pillar" style="position:relative;background:var(--ca-ink-900);border:1px solid var(--ca-ink-800);border-radius:10px;padding:34px 30px;display:flex;flex-direction:column">
+        <span class="title" style="position:absolute;top:20px;right:28px;font-size:64px;color:transparent;-webkit-text-stroke:1.25px var(--ca-ink-700)">03</span>
+        <i data-lucide="target" style="width:34px;height:34px;color:var(--ca-red-500);stroke-width:1.75;margin-bottom:auto"></i>
+        <h3 class="label" style="font-size:30px;color:var(--ca-paper-100);margin:30px 0 10px;font-weight:700">Craft</h3>
+        <p style="font-size:17px;line-height:1.5;color:var(--ca-ink-300);margin:0">Coordination, mobility and resilience — the durability of a complete athlete.</p>
+      </div>
+    </div>
+  </div>
+</div>
+  </section>
+  <section data-label="The Castille Index">
+<div class="slide dark" data-screen-label="Slide · Castille Index">
+  <div style="position:absolute;inset:0;padding:72px 80px;display:grid;grid-template-columns:1fr 0.85fr;gap:64px;align-items:center">
+    <div>
+      <div class="eyebrow" style="margin-bottom:24px">The Castille Index</div>
+      <h2 class="title" style="font-size:62px;color:var(--ca-paper-100);margin:0 0 24px">A Number That<br>Holds Us <span class="a">Accountable.</span></h2>
+      <p class="serif" style="font-size:21px;line-height:1.55;color:var(--ca-ink-300);margin:0;max-width:520px">Every athlete is scored 0–100 at intake across speed, power and craft — and re-measured every block. Progress you can see, not take on faith.</p>
+    </div>
+    <div style="background:var(--ca-ink-900);border:1px solid var(--ca-ink-800);border-radius:14px;padding:40px;display:flex;flex-direction:column;align-items:center;gap:30px">
+      <div class="ring"><div class="v"><b class="data" style="font-size:110px;color:#fff">74</b><span class="label" style="font-size:16px;letter-spacing:0.2em;color:var(--ca-red-400);font-weight:600">Index</span></div></div>
+      <div style="width:100%;display:flex;flex-direction:column;gap:16px">
+        <div><div style="display:flex;justify-content:space-between;margin-bottom:7px"><span class="label" style="font-size:16px;color:var(--ca-ink-200)">Velocity</span><span class="data" style="font-size:18px;color:var(--ca-red-400)">71</span></div><div class="bar"><i style="width:71%"></i></div></div>
+        <div><div style="display:flex;justify-content:space-between;margin-bottom:7px"><span class="label" style="font-size:16px;color:var(--ca-ink-200)">Force</span><span class="data" style="font-size:18px;color:var(--ca-red-400)">78</span></div><div class="bar"><i style="width:78%"></i></div></div>
+        <div><div style="display:flex;justify-content:space-between;margin-bottom:7px"><span class="label" style="font-size:16px;color:var(--ca-ink-200)">Craft</span><span class="data" style="font-size:18px;color:var(--ca-red-400)">73</span></div><div class="bar"><i style="width:73%"></i></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+  </section>
+  <section data-label="Photo">
+<div class="slide dark" data-screen-label="Slide · Photo">
+  <img class="imgbw" src="../assets/photo-lifting.jpg" alt="" style="position:absolute;inset:0;filter:grayscale(1) contrast(1.08) brightness(0.66)">
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.88) 100%)"></div>
+  <div style="position:absolute;inset:0;padding:72px 80px;display:flex;flex-direction:column;justify-content:flex-end;z-index:2">
+    <div class="eyebrow" style="margin-bottom:20px">Inside the Academy</div>
+    <h2 class="title" style="font-size:78px;color:var(--ca-paper-100);max-width:840px">Where Athletes<br>Are <span class="a">Measured.</span></h2>
+    <p class="serif" style="font-size:22px;color:var(--ca-ink-200);margin:22px 0 0;max-width:560px">Coach-led small groups, filmed technique, and assessment built into every block.</p>
+  </div>
+</div>
+  </section>
+  <section data-label="Stats">
+<div class="slide" data-screen-label="Slide · Stats">
+  <div style="position:absolute;inset:0;padding:80px 80px;display:flex;flex-direction:column;justify-content:center">
+    <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:48px">
+      <div class="eyebrow">Real Results</div>
+      <span style="flex:1;height:1px;background:var(--ca-paper-300)"></span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr)">
+      <div style="padding-right:48px">
+        <div class="data" style="font-size:120px;color:var(--ca-ink-900);line-height:0.86">+12<span style="font-size:48px;color:var(--ca-red-600)"> pts</span></div>
+        <div class="label" style="font-size:18px;color:var(--ca-ink-500);margin-top:14px">Avg. Index gain / season</div>
+      </div>
+      <div style="padding:0 48px;border-left:1px solid var(--ca-paper-300)">
+        <div class="data" style="font-size:120px;color:var(--ca-ink-900);line-height:0.86">1,400<span style="font-size:48px;color:var(--ca-red-600)">+</span></div>
+        <div class="label" style="font-size:18px;color:var(--ca-ink-500);margin-top:14px">Athletes developed</div>
+      </div>
+      <div style="padding:0 48px;border-left:1px solid var(--ca-paper-300)">
+        <div class="data" style="font-size:120px;color:var(--ca-ink-900);line-height:0.86">4</div>
+        <div class="label" style="font-size:18px;color:var(--ca-ink-500);margin-top:14px">Indiana campuses</div>
+      </div>
+    </div>
+    <p class="serif" style="font-size:22px;color:var(--ca-ink-600);margin:54px 0 0;max-width:760px">Measured at intake, re-scored every block. The number moves because the work is real.</p>
+  </div>
+</div>
+  </section>
+  <section data-label="Closing">
+<div class="slide dark" data-screen-label="Slide · Closing">
+  <div style="position:absolute;top:0;left:0;width:38%;height:100%;overflow:hidden">
+    <img class="imgbw" src="../assets/photo-sprint-mixed.jpg" alt="" style="filter:grayscale(1) contrast(1.08) brightness(0.5)">
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg, rgba(0,0,0,0.3) 0%, var(--ca-ink-950) 100%)"></div>
+  </div>
+  <div style="position:absolute;inset:0;padding:72px 80px 72px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;text-align:right;z-index:2">
+    <div class="wm" style="align-self:flex-end"><div style="display:flex;flex-direction:column;gap:2px;align-items:flex-end"><b>Castille</b><span class="sub">Academy</span></div><span class="crest">C</span></div>
+    <div style="max-width:720px">
+      <div class="eyebrow" style="margin-bottom:22px">Start With a Measurement</div>
+      <h2 class="title" style="font-size:84px;color:var(--ca-paper-100)">Book Your<br><span class="a">Assessment.</span></h2>
+      <p class="serif" style="font-size:22px;color:var(--ca-ink-300);margin:24px 0 0">60 minutes. Ends with your athlete's first Castille Index<br>and a recommended block.</p>
+      <div style="display:flex;gap:28px;justify-content:flex-end;margin-top:30px">
+        <span class="label" style="font-size:17px;color:var(--ca-ink-200)">castilleacademy.com</span>
+        <span class="label" style="font-size:17px;color:var(--ca-red-400)">Carmel · Indianapolis · Noblesville · Westfield</span>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;align-self:flex-end">
+      <span class="creed" style="color:var(--ca-paper-100)">Disciplina · <span style="color:var(--ca-red-500)">Vis</span> · Victoria</span>
+      <span style="width:54px;height:1px;background:var(--ca-red-500)"></span>
+    </div>
+  </div>
+</div>
+  </section>
+</deck-stage>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="deck-stage.js"></script>
+<script>window.addEventListener('load',()=>{ if(window.lucide) lucide.createIcons(); });</script>
+</body>
+</html>

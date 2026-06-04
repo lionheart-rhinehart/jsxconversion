@@ -1,0 +1,30 @@
+/* Castille Academy · slide frame (16:9, 1280×720). Shared by all slide files. */
+@import url('../colors_and_type.css');
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--ca-ink-100); display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+.slide {
+  position: relative; width: 1280px; height: 720px; overflow: hidden;
+  background: var(--ca-white); color: var(--ca-ink-900);
+  font-family: var(--font-body); flex-shrink: 0;
+}
+.slide.dark { background: var(--ca-ink-950); color: var(--ca-paper-100); }
+.eyebrow { font-family: var(--font-cond); font-weight: 600; font-size: 19px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ca-red-600); }
+.dark .eyebrow { color: var(--ca-red-500); }
+.title { font-family: var(--font-display); letter-spacing: -0.015em; line-height: 0.98; }
+.title .a { color: var(--ca-red-600); }
+.dark .title .a { color: var(--ca-red-500); }
+.label { font-family: var(--font-cond); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.data { font-family: var(--font-cond); font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.serif { font-family: var(--font-serif); }
+.creed { font-family: var(--font-display); font-size: 22px; letter-spacing: 0.02em; }
+/* wordmark */
+.wm { display: flex; align-items: center; gap: 14px; }
+.wm .crest { width: 46px; height: 52px; border: 1.6px solid var(--ca-red-500); border-radius: 6px 6px 22px 22px/6px 6px 26px 26px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 27px; line-height: 1; color: var(--ca-red-500); }
+.wm b { font-family: var(--font-display); font-size: 27px; line-height: 0.9; }
+.wm .sub { font-family: var(--font-cond); font-weight: 600; font-size: 11px; letter-spacing: 0.44em; color: var(--ca-red-500); text-transform: uppercase; }
+.dark .wm b { color: var(--ca-paper-100); }
+.slide:not(.dark) .wm b { color: var(--ca-ink-900); }
+.slide:not(.dark) .wm .crest { border-color: var(--ca-red-600); color: var(--ca-red-600); }
+.slide:not(.dark) .wm .sub { color: var(--ca-red-600); }
+.imgbw { filter: grayscale(1) contrast(1.06) brightness(0.9); width: 100%; height: 100%; object-fit: cover; display: block; }

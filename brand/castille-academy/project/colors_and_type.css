@@ -1,0 +1,208 @@
+/* =========================================================================
+   CASTILLE ACADEMY · COLORS & TYPE
+   An elite athletic development academy. Bold, exacting, premium.
+   Brand palette (provided): Black #000000 · White #ffffff · Red #a81918.
+   High-contrast. Black & white photography. Red used as the single accent.
+   -------------------------------------------------------------------------
+   FONTS (Google Fonts — see @import)
+   Display:  Libre Caslon Display   · High-contrast serif. Headlines, wordmark.
+   Subhead:  Libre Caslon Text      · Serif for intros / pull quotes.
+   Athletic: Saira Condensed        · Condensed sans. Eyebrows, labels, stats.
+   Body/UI:  Hanken Grotesk         · Humanist grotesque. Body + product UI.
+   Icons:    Lucide (CDN <script> in HTML)
+   NOTE: fonts load from Google Fonts. For offline/production self-host the
+   .woff2 files and swap these URLs. Flagged in README.
+   ========================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Saira+Condensed:wght@400;500;600;700;800&family=Hanken+Grotesk:ital,wght@0,300..800;1,400..600&display=swap');
+
+:root {
+  /* =========================================================
+     CORE BRAND · provided palette
+     ========================================================= */
+  --ca-black: #000000;
+  --ca-white: #ffffff;
+
+  /* =========================================================
+     RED · the single brand accent. Base #a81918 (provided).
+     Used surgically: accents, the accent word, CTAs, active states,
+     the Index ring, eyebrows. Never a full-bleed body background.
+     ========================================================= */
+  --ca-red-50:  #fdf1f0;
+  --ca-red-100: #fadbd8;
+  --ca-red-200: #f1b2ad;
+  --ca-red-300: #e5827b;
+  --ca-red-400: #d2514a;
+  --ca-red-500: #c01f1c;
+  --ca-red-600: #a81918;   /* base — provided brand red */
+  --ca-red-700: #891513;
+  --ca-red-800: #6c110f;
+  --ca-red-900: #4d0c0b;
+  --ca-red:        var(--ca-red-600);
+  --ca-red-deep:   var(--ca-red-800);
+  --ca-red-bright: var(--ca-red-500);
+
+  /* Deep oxblood — rarest secondary (crest detail / pressed red). */
+  --ca-claret-400: #891513;
+  --ca-claret-500: #6c110f;
+  --ca-claret-600: #4d0c0b;
+  --ca-claret:     var(--ca-claret-600);
+
+  /* =========================================================
+     INK · neutral graphite scale, anchored on true black.
+     The workhorse for type and dark surfaces.
+     ========================================================= */
+  --ca-ink-950: #000000;   /* true black — hero grounds, footer        */
+  --ca-ink-900: #0d0d0d;   /* primary dark surface / body ink           */
+  --ca-ink-850: #161616;   /* elevated dark surface                     */
+  --ca-ink-800: #1f1f1f;   /* dark cards                                */
+  --ca-ink-700: #2e2e2e;   /* hovered dark / dark borders               */
+  --ca-ink-600: #474747;   /* muted line on dark                        */
+  --ca-ink-500: #6a6a6a;   /* tertiary text                            */
+  --ca-ink-450: #7c7c7c;   /* tertiary text (lighter)                  */
+  --ca-ink-400: #949494;   /* muted text / icons                        */
+  --ca-ink-300: #bcbcbc;   /* dividers / muted icons                    */
+  --ca-ink-200: #dadada;   /* subtle borders on light                   */
+  --ca-ink-100: #e9e9e9;   /* light surface line                        */
+  --ca-ink-50:  #f4f4f4;   /* faint wash                               */
+  --ca-ink:     var(--ca-ink-900);
+
+  /* =========================================================
+     PAPER · light neutrals. Clean white-to-grey canvas.
+     ========================================================= */
+  --ca-paper-50:  #ffffff;   /* pure white canvas                       */
+  --ca-paper-100: #f6f6f6;   /* off-white section bg                    */
+  --ca-paper-200: #ececec;   /* light card / inset                      */
+  --ca-paper-300: #dcdcdc;   /* light border                            */
+  --ca-paper-400: #bdbdbd;   /* muted light line                        */
+
+  /* =========================================================
+     SEMANTIC / STATUS — muted, used functionally only
+     ========================================================= */
+  --ca-success: #2f7d54;     /* PRs, gains, Index up                    */
+  --ca-warning: #c08a1e;     /* schedule conflicts                      */
+  --ca-danger:  var(--ca-red-600);
+  --ca-info:    #3a5a86;
+  --ca-pitch:   #2c5e43;     /* turf — sport context only               */
+
+  /* =========================================================
+     SEMANTIC TOKENS · LIGHT MODE (default)
+     ========================================================= */
+  --fg-1:      var(--ca-ink-900);    /* primary text                    */
+  --fg-2:      var(--ca-ink-700);    /* secondary text                  */
+  --fg-3:      var(--ca-ink-500);    /* tertiary / meta                 */
+  --fg-muted:  var(--ca-ink-400);
+  --fg-on-dark:  var(--ca-paper-100);
+  --fg-on-red:   var(--ca-white);
+
+  --bg-1:      var(--ca-white);      /* base page background            */
+  --bg-2:      var(--ca-paper-100);  /* section bg                      */
+  --bg-3:      var(--ca-paper-50);   /* card bg                         */
+  --bg-inverse:var(--ca-ink-950);
+
+  --border-1:  var(--ca-ink-200);
+  --border-2:  var(--ca-ink-300);
+  --border-soft: var(--ca-paper-300);
+  --border-strong: var(--ca-ink-900);
+
+  --link:      var(--ca-red-600);
+  --link-hover:var(--ca-red-700);
+
+  /* =========================================================
+     TYPE FAMILIES
+     ========================================================= */
+  --font-display: "Libre Caslon Display", "Big Caslon", "Hoefler Text", Georgia, serif;
+  --font-serif:   "Libre Caslon Text", Georgia, "Times New Roman", serif;
+  --font-cond:    "Saira Condensed", "Oswald", "Arial Narrow", system-ui, sans-serif;
+  --font-body:    "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:    ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+
+  /* =========================================================
+     TYPE SCALE
+     ========================================================= */
+  --fs-xs:   12px;  --fs-sm:   14px;  --fs-base: 16px;  --fs-md:   18px;
+  --fs-lg:   20px;  --fs-xl:   24px;  --fs-2xl:  32px;  --fs-3xl:  42px;
+  --fs-4xl:  58px;  --fs-5xl:  80px;  --fs-hero: clamp(48px, 8vw, 120px);
+
+  /* =========================================================
+     SPACING · 8pt base, tight low-end
+     ========================================================= */
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:24px;
+  --s-6:32px; --s-7:48px; --s-8:64px; --s-9:96px; --s-10:128px;
+
+  /* =========================================================
+     RADII · squared-to-gentle. Bold, not bubbly-app.
+     ========================================================= */
+  --r-none:0; --r-sm:2px; --r-md:4px; --r-lg:8px; --r-xl:12px; --r-pill:999px;
+
+  /* =========================================================
+     ELEVATION · crisp neutral shadows
+     ========================================================= */
+  --shadow-1: 0 1px 2px rgba(0,0,0,0.07);
+  --shadow-2: 0 2px 10px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-3: 0 14px 36px -10px rgba(0,0,0,0.22), 0 2px 6px rgba(0,0,0,0.07);
+  --shadow-4: 0 30px 70px -18px rgba(0,0,0,0.40);
+  --shadow-red: 0 10px 28px -10px rgba(168,25,24,0.45);
+  --inner-1:  inset 0 1px 0 rgba(255,255,255,0.10);
+  --hairline-red: inset 0 0 0 1px rgba(168,25,24,0.35);
+
+  /* =========================================================
+     MOTION · refined, unhurried. Fades + gentle rises. No bounce.
+     ========================================================= */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in:  cubic-bezier(0.55, 0.06, 0.68, 0.19);
+  --ease-inout: cubic-bezier(0.65, 0.05, 0.36, 1);
+  --dur-fast: 160ms; --dur-base: 280ms; --dur-slow: 520ms;
+}
+
+/* =========================================================
+   SEMANTIC TYPE RULES
+   ========================================================= */
+.ca-display, h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.02;
+  color: inherit;
+  text-wrap: balance;
+}
+.ca-hero, h1 { font-size: var(--fs-hero); line-height: 0.98; letter-spacing: -0.015em; }
+h2 { font-size: var(--fs-4xl); line-height: 1.0; }
+h3 { font-size: var(--fs-2xl); line-height: 1.08; letter-spacing: -0.005em; }
+h4 { font-family: var(--font-body); font-weight: 700; font-size: var(--fs-xl); letter-spacing: -0.01em; line-height: 1.2; color: inherit; }
+h5 { font-family: var(--font-body); font-weight: 600; font-size: var(--fs-md); line-height: 1.3; color: inherit; }
+p, body { font-family: var(--font-body); font-size: var(--fs-base); line-height: 1.6; color: var(--fg-2); }
+
+.ca-lede { font-family: var(--font-serif); font-size: var(--fs-lg); line-height: 1.55; color: var(--fg-2); }
+small, .ca-small { font-size: var(--fs-sm); color: var(--fg-3); }
+
+/* Eyebrow / kicker — condensed, letterspaced, red. */
+.ca-eyebrow { font-family: var(--font-cond); font-size: var(--fs-sm); font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ca-red-600); }
+.ca-eyebrow--muted { color: var(--ca-ink-500); }
+.ca-eyebrow--light { color: var(--ca-red-300); }
+
+/* Condensed label — nav, buttons-in-caps, pillar names, table heads */
+.ca-label { font-family: var(--font-cond); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* Data / stats — condensed tabular numerals. Index, +mph, times. */
+.ca-data { font-family: var(--font-cond); font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: 0.01em; line-height: 1; }
+
+/* Pull quote / motto — serif italic */
+.ca-quote { font-family: var(--font-serif); font-style: italic; font-size: var(--fs-xl); line-height: 1.4; color: var(--fg-1); }
+
+code, kbd, pre, .ca-mono { font-family: var(--font-mono); }
+
+/* Accent + outline display words */
+.ca-display .accent, h1 .accent, h2 .accent { color: var(--ca-red-600); }
+.ca-display .outline, h1 .outline, h2 .outline { color: transparent; -webkit-text-stroke: 1.25px currentColor; }
+
+/* =========================================================
+   PHOTO TREATMENT · black & white + protection gradient.
+   Wrap an <img> in .ca-photo to unify imagery (B&W lets red pop)
+   and mask legacy watermarks.
+   ========================================================= */
+.ca-photo { position: relative; overflow: hidden; background: var(--ca-ink-950); }
+.ca-photo > img { display: block; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.06) brightness(0.96); }
+.ca-photo::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.0) 35%, rgba(0,0,0,0.45) 100%); }
+.ca-photo::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 44%; pointer-events: none; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.82) 100%); }
+.ca-photo--flat::after { display: none; }

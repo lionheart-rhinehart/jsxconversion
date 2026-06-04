@@ -1,0 +1,28 @@
+<!-- @dsCard group="Brand" -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="_slide.css">
+<style>
+  .ring{position:relative;width:280px;height:280px;border-radius:50%;background:conic-gradient(var(--ca-red-500) 0 74%, var(--ca-ink-800) 74% 100%);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .ring::after{content:"";position:absolute;inset:26px;border-radius:50%;background:var(--ca-ink-950)}
+  .ring .v{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;line-height:1}
+  .bar{height:10px;border-radius:999px;background:var(--ca-ink-800)}
+  .bar i{display:block;height:100%;border-radius:999px;background:var(--ca-red-500)}
+</style></head>
+<body>
+<div class="slide dark" data-screen-label="Slide · Castille Index">
+  <div style="position:absolute;inset:0;padding:72px 80px;display:grid;grid-template-columns:1fr 0.85fr;gap:64px;align-items:center">
+    <div>
+      <div class="eyebrow" style="margin-bottom:24px">The Castille Index</div>
+      <h2 class="title" style="font-size:62px;color:var(--ca-paper-100);margin:0 0 24px">A Number That<br>Holds Us <span class="a">Accountable.</span></h2>
+      <p class="serif" style="font-size:21px;line-height:1.55;color:var(--ca-ink-300);margin:0;max-width:520px">Every athlete is scored 0–100 at intake across speed, power and craft — and re-measured every block. Progress you can see, not take on faith.</p>
+    </div>
+    <div style="background:var(--ca-ink-900);border:1px solid var(--ca-ink-800);border-radius:14px;padding:40px;display:flex;flex-direction:column;align-items:center;gap:30px">
+      <div class="ring"><div class="v"><b class="data" style="font-size:110px;color:#fff">74</b><span class="label" style="font-size:16px;letter-spacing:0.2em;color:var(--ca-red-400);font-weight:600">Index</span></div></div>
+      <div style="width:100%;display:flex;flex-direction:column;gap:16px">
+        <div><div style="display:flex;justify-content:space-between;margin-bottom:7px"><span class="label" style="font-size:16px;color:var(--ca-ink-200)">Velocity</span><span class="data" style="font-size:18px;color:var(--ca-red-400)">71</span></div><div class="bar"><i style="width:71%"></i></div></div>
+        <div><div style="display:flex;justify-content:space-between;margin-bottom:7px"><span class="label" style="font-size:16px;color:var(--ca-ink-200)">Force</span><span class="data" style="font-size:18px;color:var(--ca-red-400)">78</span></div><div class="bar"><i style="width:78%"></i></div></div>
+        <div><div style="display:flex;justify-content:space-between;margin-bottom:7px"><span class="label" style="font-size:16px;color:var(--ca-ink-200)">Craft</span><span class="data" style="font-size:18px;color:var(--ca-red-400)">73</span></div><div class="bar"><i style="width:73%"></i></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>

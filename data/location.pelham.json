@@ -1,0 +1,7 @@
+{
+  "_comment": "Location tier — Pelham (Castille Academy franchisee target). Supplies `city` for the locale eyebrow anchor. buildEyebrowAnchor strips a trailing 2-letter state suffix and applies the pattern '{CITY} SPORT PARENTS' → 'PELHAM SPORT PARENTS'. Append a state (e.g. 'PELHAM, NH') if any non-eyebrow slot needs the full City, ST form.",
+  "location": "pelham",
+  "tags": {
+    "city": "PELHAM"
+  }
+}

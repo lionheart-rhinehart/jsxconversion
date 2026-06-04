@@ -1,0 +1,110 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(0, 0, 0,0.66) 0%, rgba(0, 0, 0,0.54) 45%, rgba(0, 0, 0,0.90) 100%)",
+      "z": 1
+    },
+    {
+      "id": "center_rule",
+      "tag": "center_rule",
+      "type": "rect",
+      "x": 440,
+      "y": 1200,
+      "width": 200,
+      "height": 8,
+      "fill": "#a81918",
+      "z": 15
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor chip (auto-filled, centered)",
+      "x": 0,
+      "y": 360,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "PELHAM SPORT PARENTS",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#a81918",
+      "chipBg": "#ffffff",
+      "chipPad": "12px 24px",
+      "chipRadius": 8,
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 34,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "reframe",
+      "tag": "reframe",
+      "label": "Centered epiphany",
+      "x": 60,
+      "y": 720,
+      "width": 960,
+      "textAlign": "center",
+      "text": "Here's Why Most Young Athletes Stop Getting Faster\n(And What You Can Do About It)",
+      "fontSize": 104,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 1,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "z": 21,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "claim"
+      ],
+      "maxChars": 92,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark (centered)",
+      "x": 0,
+      "y": 1680,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "CASTILLE ACADEMY",
+      "fontSize": 34,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 500,
+      "color": "#ffffff",
+      "letterSpacing": "0.14em",
+      "textTransform": "uppercase",
+      "z": 22,
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    }
+  ],
+  "media": {
+    "path": "./assets/cas-action-image-soccer-high-school-female-castille-academy-slid-b92dac9c.jpg",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1
+  }
+}
