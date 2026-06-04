@@ -1,0 +1,21 @@
+<!-- @dsCard group="Colors" -->
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><link rel="stylesheet" href="_base.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200&display=block"><style>
+  .grid{display:flex;gap:14px;flex-wrap:wrap}
+  .item{display:flex;flex-direction:column;gap:6px}
+  .chip{width:104px;height:60px;border-radius:var(--r-md);box-shadow:var(--shadow-1);border:1px solid rgba(10,12,15,0.06)}
+  .nm{font-family:var(--font-mono);font-size:11px;font-weight:600;color:var(--fg-1)}
+  .hex{font-family:var(--font-mono);font-size:10.5px;color:var(--fg-3)}
+</style></head>
+<body>
+  <div class="col" style="gap:14px">
+    <p class="card-label">Steel + Signal accents · do semantic work only</p>
+    <div class="grid">
+      <div class="item"><div class="chip" style="background:var(--jp-steel)"></div><span class="nm">steel</span><span class="hex">#9AA5B4 · hairlines, ticks</span></div>
+      <div class="item"><div class="chip" style="background:var(--jp-gain)"></div><span class="nm">gain</span><span class="hex">#19C37D · PRs, +deltas</span></div>
+      <div class="item"><div class="chip" style="background:var(--jp-warning)"></div><span class="nm">warning</span><span class="hex">#F2B134 · attention</span></div>
+      <div class="item"><div class="chip" style="background:var(--jp-danger)"></div><span class="nm">danger</span><span class="hex">#E5484D · regression</span></div>
+      <div class="item"><div class="chip" style="background:var(--jp-data)"></div><span class="nm">data</span><span class="hex">#2F9BFF · 2nd series</span></div>
+    </div>
+    <p style="font-size:13px;color:var(--fg-3);margin:2px 0 0;max-width:66ch">Gain-green appears <b>only</b> on measured improvement. Steel carries the technical/instrument work the red shouldn't. Blue is for a rare secondary telemetry series.</p>
+  </div>
+</body></html>

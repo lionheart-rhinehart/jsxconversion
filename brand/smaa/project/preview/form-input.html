@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:24px;font-family:var(--font-sans);background:var(--paper-soft);color:var(--fg1)}
+.lbl{font-size:11px;color:var(--fg3);font-family:ui-monospace,monospace}
+
+.field{display:flex;flex-direction:column;gap:6px}
+label{font-size:13px;font-weight:700;color:var(--fg1)}
+input{font-family:var(--font-sans);font-size:15px;padding:13px 15px;border:1.5px solid var(--paper-line);border-radius:10px;background:#fff;color:var(--fg1)}
+input::placeholder{color:var(--fg3)}
+.focus{border-color:var(--smaa-blue);box-shadow:0 0 0 3px rgba(1,126,230,.18)}
+
+</style></head><body>
+<div style="display:flex;gap:16px">
+  <div class="field" style="flex:1"><label>Parent Name</label><input placeholder="Jane Doe"></div>
+  <div class="field" style="flex:1"><label>Email</label><input class="focus" value="jane@email.com"></div>
+</div>
+<div class="lbl" style="margin-top:12px">Inputs · 1.5px border · 10px radius · blue focus ring</div></body></html>

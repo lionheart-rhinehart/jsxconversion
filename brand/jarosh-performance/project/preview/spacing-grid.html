@@ -1,0 +1,28 @@
+<!-- @dsCard group="Spacing" -->
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><link rel="stylesheet" href="_base.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200&display=block"><style>
+  .demo{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .panel{height:140px;border-radius:var(--r-lg);position:relative;overflow:hidden;border:1px solid var(--jp-ink-700);background:var(--jp-ink-950)}
+  .ruler{height:140px;border-radius:var(--r-lg);background:var(--jp-ink-50);border:1px solid var(--border-1);position:relative;overflow:hidden}
+  .ticks{position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:flex-end;padding:0 14px}
+  .tk{flex:1;border-left:1.5px solid var(--jp-steel);height:8px}
+  .tk.major{height:16px}
+  .axis{position:absolute;left:14px;bottom:34px;right:14px;border-bottom:1.5px solid var(--jp-steel)}
+  .cap{position:absolute;top:12px;left:14px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;color:var(--jp-steel);text-transform:uppercase}
+</style></head>
+<body>
+  <div class="col" style="gap:10px">
+    <p class="card-label">Calibration grid &amp; ruler · the signature lab texture</p>
+    <div class="demo">
+      <div class="panel calib-grid"><span class="cap" style="color:var(--jp-ink-400)">grid · 28px · dark panel</span></div>
+      <div class="ruler">
+        <span class="cap">ruler baseline</span>
+        <div class="axis"></div>
+        <div class="ticks">
+          <div class="tk major"></div><div class="tk"></div><div class="tk"></div><div class="tk"></div>
+          <div class="tk major"></div><div class="tk"></div><div class="tk"></div><div class="tk"></div>
+          <div class="tk major"></div><div class="tk"></div><div class="tk"></div><div class="tk"></div><div class="tk major"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body></html>

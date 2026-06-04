@@ -80,12 +80,16 @@ function mkUnit(id, kind, text, extra = {}) {
 // Split into AD blocks. An AD block begins with a line whose first bold span is
 // "AD …" (e.g. **AD 1** or **AD 1 — VERSION A (…) — Short**) and runs until the
 // next such line (or EOF). The `---` rules inside a block are section dividers.
+// The label must be COLON-FREE: metadata fields are written **Field:** (e.g.
+// **Ad type:**), and "Ad type:" would otherwise match AD\b case-insensitively and
+// be mistaken for a block header — truncating the real block and misfiling its
+// copy. Block headers never carry a colon, so excluding ":" disambiguates cleanly.
 function splitAdBlocks(md) {
   const lines = md.split(/\r?\n/);
   const blocks = [];
   let cur = null;
   for (const line of lines) {
-    const head = line.match(/^\*\*(AD\b[^*]*?)\*\*/i);
+    const head = line.match(/^\*\*(AD\b[^*:]*?)\*\*/i);
     if (head) {
       if (cur) blocks.push(cur);
       cur = { label: cleanLine(head[1]), lines: [line] };
@@ -181,15 +185,20 @@ export function parseAdCopy(md, { warn = () => {} } = {}) {
         let archetype = null;
         let code = null;
         // Suffix forms seen in the wild: "— Archetype: Warning (V1.5)",
-        // "— Archetype: Warning" (no code), "(V2.2)" alone. Strip whatever is
-        // there; capture archetype + optional code.
+        // "— Archetype: Warning" (no code), "(Archetype: PARADOX)" paren-form,
+        // "(V2.2)" alone. Strip whatever is there; capture archetype + optional code.
         const suffix = rest.match(/\s*[—–-]\s*Archetype:\s*(.+)$/i);
+        const parenArche = rest.match(/\s*\(\s*Archetype:\s*([^)]+)\)\s*$/i);
         if (suffix) {
           let meta = suffix[1].trim();
           const codeM = meta.match(/\(([^)]+)\)\s*$/);
           if (codeM) { code = codeM[1].trim(); meta = meta.slice(0, codeM.index).trim(); }
           archetype = meta || null;
           rest = rest.slice(0, suffix.index).trim();
+        } else if (parenArche) {
+          // Paren-form: "<hook> (Archetype: PARADOX)" / "(Archetype: ORACLE — distinct framing)"
+          archetype = parenArche[1].trim() || null;
+          rest = rest.slice(0, parenArche.index).trim();
         } else {
           const codeOnly = rest.match(/\s*\(([Vv][\d.]+)\)\s*$/);
           if (codeOnly) { code = codeOnly[1].trim(); rest = rest.slice(0, codeOnly.index).trim(); }

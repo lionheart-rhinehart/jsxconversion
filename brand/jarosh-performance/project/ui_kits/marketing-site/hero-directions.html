@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jarosh Performance · Hero Directions</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200&display=block" />
+  <link rel="stylesheet" href="kit.css" />
+  <style>
+    /* mini nav used inside each hero artboard */
+    .hd-nav { display:flex; align-items:center; gap:12px; padding:16px 28px; position:relative; z-index:3; }
+    .hd-nav .nav-spacer { flex:1; }
+    .hd-cta { display:inline-flex; align-items:center; gap:7px; background:var(--jp-red-500); color:#fff; font-weight:600; font-size:13px; padding:9px 15px; border-radius:var(--r-md); }
+    .hd-cta .material-symbols-rounded { font-size:16px; }
+    .hd-link { font-size:13px; font-weight:500; padding:6px 10px; }
+    /* photo hero badges */
+    .photo-hero { position:relative; height:100%; color:#fff; overflow:hidden; }
+    .photo-hero .shade { position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,12,15,0.55) 0%, rgba(10,12,15,0.2) 35%, rgba(10,12,15,0.9) 100%); z-index:1; }
+    .photo-hero .content { position:absolute; left:0; right:0; bottom:0; z-index:2; padding:40px 44px; }
+    .photo-badges { display:flex; gap:10px; margin-top:18px; }
+    .pbadge { background:rgba(16,19,24,0.72); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.14); border-radius:var(--r-md); padding:10px 14px; }
+    .pbadge .v { font-family:var(--font-mono); font-weight:700; font-variant-numeric:tabular-nums; font-size:22px; }
+    .pbadge .v .u { font-size:12px; color:var(--jp-steel); }
+    .pbadge .k { font-family:var(--font-mono); font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.6); }
+    /* split hero */
+    .split-hero { display:grid; grid-template-columns:1.05fr 0.95fr; height:100%; background:var(--bg-1); }
+    .split-left { padding:48px 44px; display:flex; flex-direction:column; justify-content:center; }
+    .split-right { background:var(--jp-ink-950); position:relative; display:flex; align-items:center; justify-content:center; padding:36px; overflow:hidden; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="components.jsx"></script>
+  <script type="text/babel" src="design-canvas.jsx"></script>
+
+  <script type="text/babel">
+    const MiniNav = ({ light }) => (
+      <div className="hd-nav">
+        <LogoLockup light={light} />
+        <div className="nav-spacer" />
+        <span className="hd-link" style={{ color: light ? '#fff' : 'var(--fg-1)' }}>Programs</span>
+        <span className="hd-link" style={{ color: light ? '#fff' : 'var(--fg-1)' }}>Results</span>
+        <span className="hd-cta">Book An Assessment <Icon name="arrow_forward" /></span>
+      </div>
+    );
+
+    // ---------- A · DATA HERO ----------
+    const HeroData = () => (
+      <div style={{ position:'relative', height:'100%', background:'var(--jp-ink-950)', color:'#fff', overflow:'hidden' }}>
+        <div className="hero-grid" />
+        <div className="hero-glow" />
+        <MiniNav light />
+        <div style={{ position:'relative', zIndex:2, display:'grid', gridTemplateColumns:'1.2fr 0.9fr', gap:36, alignItems:'center', padding:'8px 44px 0' }}>
+          <div>
+            <Tag>The Baseline</Tag>
+            <h1 style={{ fontFamily:'var(--font-display)', textTransform:'uppercase', fontSize:64, lineHeight:0.84, letterSpacing:'-0.01em', margin:'14px 0 0' }}>
+              Faster Isn't<br/>A Guess.<br/>It's A <span style={{color:'var(--jp-red-bright)'}}>Measurement.</span>
+            </h1>
+            <p style={{ color:'rgba(255,255,255,0.75)', fontSize:15, maxWidth:'42ch', margin:'20px 0 22px', lineHeight:1.5 }}>We baseline every athlete on day one — then build the gaps and retest. Not just a speed program.</p>
+            <span className="hd-cta" style={{ padding:'12px 20px', fontSize:15 }}>Book An Assessment <Icon name="arrow_forward" /></span>
+          </div>
+          <div className="instrument">
+            <div className="instrument-head"><span className="live"><span className="pulse" />Now Measuring</span><span className="who">#0427 · HS</span></div>
+            <div className="instrument-body">
+              <div className="imt"><div className="k">10-yd split</div><div className="v">1.58<span className="u">s</span></div><div className="d"><Icon name="trending_up" fill />−0.18s</div></div>
+              <div className="imt"><div className="k">Vertical</div><div className="v">36.5<span className="u">″</span></div><div className="d"><Icon name="trending_up" fill />+3.5″</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+
+    // ---------- B · PHOTO HERO ----------
+    const HeroPhoto = () => (
+      <div className="photo-slot" style={{ height:'100%' }}>
+        <span className="reg tl" /><span className="reg tr" /><span className="reg bl" /><span className="reg br" />
+        <span className="slot-label"><Icon name="add_photo_alternate" />Full-bleed athlete photo</span>
+        <div className="photo-hero">
+          <div style={{ position:'relative', zIndex:3 }}><MiniNav light /></div>
+          <div className="shade" />
+          <div className="content">
+            <Tag>Speed.Lab</Tag>
+            <h1 style={{ fontFamily:'var(--font-display)', textTransform:'uppercase', fontSize:72, lineHeight:0.84, letterSpacing:'-0.01em', margin:'8px 0 0', maxWidth:'14ch' }}>
+              Built To Be <span style={{color:'var(--jp-red-bright)'}}>First</span> To The Ball.
+            </h1>
+            <div className="photo-badges">
+              <div className="pbadge"><div className="v">−0.18<span className="u">s</span></div><div className="k">10-yd / 90d</div></div>
+              <div className="pbadge"><div className="v">+3.5<span className="u">″</span></div><div className="k">vertical / 90d</div></div>
+              <div className="pbadge"><div className="v">100<span className="u">%</span></div><div className="k">retested monthly</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+
+    // ---------- C · SPLIT EDITORIAL HERO ----------
+    const HeroSplit = () => (
+      <div className="split-hero">
+        <div className="split-left">
+          <div style={{ position:'absolute', top:0, left:0, right:0 }}><MiniNav /></div>
+          <Tag>Not Just A Speed Program</Tag>
+          <h1 style={{ fontFamily:'var(--font-display)', textTransform:'uppercase', fontSize:60, lineHeight:0.86, letterSpacing:'-0.01em', margin:'12px 0 0', color:'var(--fg-1)' }}>
+            Measured.<br/>Built.<br/><span style={{color:'var(--jp-red-600)'}}>Proven.</span>
+          </h1>
+          <p style={{ color:'var(--fg-2)', fontSize:16, maxWidth:'40ch', margin:'20px 0 24px', lineHeight:1.55 }}>
+            Speed, agility, strength, power — tied together by the one thing most programs skip: the data. Ankeny, IA.
+          </p>
+          <div style={{ display:'flex', gap:12 }}>
+            <span className="hd-cta" style={{ padding:'13px 20px', fontSize:15 }}>Book An Assessment <Icon name="arrow_forward" /></span>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:7, border:'1.5px solid var(--border-strong)', color:'var(--fg-1)', fontWeight:600, fontSize:15, padding:'13px 20px', borderRadius:'var(--r-md)' }}>See The Data</span>
+          </div>
+        </div>
+        <div className="split-right calib-grid">
+          <div className="instrument" style={{ width:'100%', maxWidth:380 }}>
+            <div className="instrument-head"><span className="live"><span className="pulse" />Athlete Report</span><span className="who">90-DAY</span></div>
+            <div className="instrument-body">
+              <div className="imt"><div className="k">10-yd split</div><div className="v">1.58<span className="u">s</span></div><div className="d"><Icon name="trending_up" fill />−0.18s</div></div>
+              <div className="imt"><div className="k">Top speed</div><div className="v">18.4<span className="u">mph</span></div><div className="d"><Icon name="trending_up" fill />+6%</div></div>
+              <div className="imt"><div className="k">Vertical</div><div className="v">36.5<span className="u">″</span></div><div className="d"><Icon name="trending_up" fill />+3.5″</div></div>
+              <div className="imt"><div className="k">Force</div><div className="v">+22<span className="u">%</span></div><div className="d"><Icon name="trending_up" fill />vs base</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+
+    function App() {
+      return (
+        <DesignCanvas>
+          <DCSection id="heroes" title="Homepage Hero — Directions" subtitle="Three treatments of the same premium / data-forward system. Pick one to run as the site hero.">
+            <DCArtboard id="a" label="A · Data hero (instrument panel)" width={1180} height={560}><HeroData /></DCArtboard>
+            <DCArtboard id="b" label="B · Photo hero (full-bleed + badges)" width={1180} height={560}><HeroPhoto /></DCArtboard>
+            <DCArtboard id="c" label="C · Split editorial (light + report card)" width={1180} height={560}><HeroSplit /></DCArtboard>
+          </DCSection>
+        </DesignCanvas>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

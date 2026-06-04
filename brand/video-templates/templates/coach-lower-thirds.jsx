@@ -10,7 +10,15 @@ function CoachLowerThirds({ data = {} }) {
   const media = data.media ?? 'assets/photo-group-coaching.jpg';
 
   const t = useTime();
-  const RED = (window.__BRAND__ && window.__BRAND__.brand_red || '#c4141d');
+  const BRAND = (typeof window !== 'undefined' && window.__BRAND__) || {};
+  const RED = BRAND.brand_red || '#c4141d';
+  // Corner brand stamp: a non-AA kit supplies brand_name + a staged logo_motion;
+  // AA carries neither, so it keeps its built-in logo + wordmark (0-diff). When a
+  // brand ships its own logo (a wordmark in SMAA's case) we show the logo alone to
+  // avoid a redundant/overflowing text wordmark.
+  const cornerLogo = BRAND.logo_motion || 'assets/logo.png';
+  const cornerName = BRAND.brand_name || 'ATHLETES\nACCELERATION';
+  const cornerShowText = !BRAND.logo_motion;
 
   // Slide in 0.3-1.0, hold to 4.5, slide out 4.5-5.5
   let panelX = 0;
@@ -137,18 +145,20 @@ function CoachLowerThirds({ data = {} }) {
         </div>
       </div>
 
-      {/* Small AA logo top-left */}
+      {/* Brand stamp top-left (brand-aware: kit logo + name, AA fallback) */}
       <div style={{
         position: 'absolute',
         top: 40, left: 40,
         display: 'flex', alignItems: 'center', gap: 12,
         opacity: barT,
       }}>
-        <img src="assets/logo.png" style={{ width: 44, height: 44, objectFit: 'contain' }}/>
-        <div style={{
-          fontFamily: 'Anton, sans-serif',
-          fontSize: 24, color: '#fff', lineHeight: 0.9,
-        }}>ATHLETES<br/>ACCELERATION</div>
+        <img src={cornerLogo} style={{ height: 44, maxWidth: 220, objectFit: 'contain' }}/>
+        {cornerShowText ? (
+          <div style={{
+            fontFamily: 'Anton, sans-serif',
+            fontSize: 24, color: '#fff', lineHeight: 0.9, whiteSpace: 'pre-line',
+          }}>{cornerName}</div>
+        ) : null}
       </div>
     </div>
   );

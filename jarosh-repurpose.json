@@ -1,0 +1,255 @@
+{
+  "brand": "jarosh-performance",
+  "dimensions": [
+    "colors",
+    "identity",
+    "fonts",
+    "location",
+    "media"
+  ],
+  "targets": [
+    {
+      "source": "grind-trap-carmel",
+      "dest": "grind-trap-ankeny",
+      "location": "ankeny",
+      "textSwaps": [
+        {
+          "from": "CARMEL",
+          "to": "ANKENY"
+        },
+        {
+          "from": "+1 mph speed. +3\" vertical. 90 days. Or we will train you for free until you do.",
+          "to": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us."
+        },
+        {
+          "from": "+1 mph. +3 inches. 90 days. Or we keep training them free.",
+          "to": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us."
+        },
+        {
+          "from": "CSCS · NFL-TRAINED",
+          "to": "CINCINNATI REDS · COLLEGE S&C"
+        },
+        {
+          "from": "CSCS · FOUNDER",
+          "to": "FOUNDER"
+        },
+        {
+          "from": "TRAINED NFL\nATHLETES",
+          "to": "PRO & COLLEGE\nATHLETES"
+        },
+        {
+          "from": "CSCS",
+          "to": "FOUNDER"
+        },
+        {
+          "from": "GRAHAM",
+          "to": "NICK"
+        },
+        {
+          "from": "WILKERSON",
+          "to": "JAROSH"
+        },
+        {
+          "from": "TRAINED ZACK MARTIN · TED KARRAS · NICK MARTIN",
+          "to": "CINCINNATI REDS · COLLEGE ATHLETICS"
+        },
+        {
+          "from": "ZACK MARTIN · TED KARRAS · NICK MARTIN",
+          "to": "CINCINNATI REDS · COLLEGE ATHLETICS"
+        },
+        {
+          "from": "The same credential D1 and NFL strength coaches carry.",
+          "to": "Built on pro and college strength-and-conditioning experience."
+        }
+      ],
+      "media": {
+        "policy": "replace",
+        "map": {
+          "A1": "brand/kraken-cache/action-clip-sled-push-squat-jumping-strength-training-high-s-4b6c5551.mp4",
+          "A2": "./assets/jarosh/action-clip-acceleration-training-upper-body-strength-traini-101007f9.mp4",
+          "A3": "./assets/jarosh/action-clip-dumbbell-shoulder-press-middle-school-male-jaros-42129fc4.mp4",
+          "A4": "./assets/jarosh/action-clip-med-ball-throw-high-school-female-jarosh-slide3o-02af193f.mp4",
+          "B1": "./assets/jarosh/action-clip-band-work-high-school-female-jarosh-slide2of4-423c2eed.mp4",
+          "B2": "./assets/jarosh/action-clip-bench-press-high-school-male-jarosh-slide1of4-cca5e335.mp4",
+          "C1": "brand/kraken-cache/action-clip-strength-training-jumping-mixed-mixed-jarosh-59037544.mp4",
+          "C2": "./assets/jarosh/action-clip-athletic-training-middle-school-male-jarosh-a5aabbaa.mp4",
+          "C3": "./assets/jarosh/action-clip-nordic-hamstring-curl-high-school-male-jarosh-sl-5f9856ca.mp4",
+          "D1": "./assets/jarosh/action-clip-dumbbell-lunges-middle-school-female-jarosh-slid-52453b4f.mp4",
+          "D2": "./assets/jarosh/action-clip-deadlift-high-school-female-jarosh-slide1of4-865674ee.mp4",
+          "D3": "./assets/jarosh/action-clip-multi-sport-training-mixed-mixed-jarosh-6cb996b4.mp4",
+          "E1": "brand/kraken-cache/aqpffb-qkatacnzgo0t-syvjoq2athdqk-4kcpprpt5xdmrnmmab1j6g8hyy-475b73ec.mp4",
+          "E2": "./assets/jarosh/aqmm8k-j9ulaw4xvc0vr27is9mqxapunsbnjqd7kp6nivqvlyojixkqxr-ot-91a5a129.mp4",
+          "E3": "./assets/jarosh/aqnrqoiqddtqmy7-r6mirkeprxllgu9gjucp7uoobk-n7o-q81-r8x2bd3cy-3a4a8875.mp4",
+          "F1": "brand/kraken-cache/aqnq8k-ml5qwanaiv6w0arcni8eug-sgjlcv0or6f7drokwglkcc554d-cik-3a19cc3d.mp4",
+          "F2": "./assets/jarosh/aqo7i2shk9uye5svmqzrivnv9kn8jp00uwqlmup-rj3afgdicjalto-mksgd-7f37b9ea.mp4",
+          "F3": "brand/kraken-cache/aqo6ajlndlhgi3nnlmq0-8u840gu1dg2-ugjr1uzkfn40hl4xxwhd0s0ks09-6120b216.mp4",
+          "FA1": "brand/kraken-cache/aqo4mrbcesezkpjgphwqyfpvui9qqtsyt36kujaykkvkqfdumrofw121yco3-33d10770.mp4",
+          "BR1": "brand/kraken-cache/action-clip-multiple-exercises-high-school-female-jarosh-16490074.mp4"
+        }
+      },
+      "workspace": "jarosh",
+      "destFolder": "angle 1"
+    },
+    {
+      "source": "confidence-carmel",
+      "dest": "confidence-ankeny",
+      "location": "ankeny",
+      "textSwaps": [
+        {
+          "from": "CARMEL",
+          "to": "ANKENY"
+        },
+        {
+          "from": "+1 mph speed. +3\" vertical. 90 days. Or we will train you for free until you do.",
+          "to": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us."
+        },
+        {
+          "from": "+1 mph. +3 inches. 90 days. Or we keep training them free.",
+          "to": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us."
+        },
+        {
+          "from": "CSCS · NFL-TRAINED",
+          "to": "CINCINNATI REDS · COLLEGE S&C"
+        },
+        {
+          "from": "CSCS · FOUNDER",
+          "to": "FOUNDER"
+        },
+        {
+          "from": "TRAINED NFL\nATHLETES",
+          "to": "PRO & COLLEGE\nATHLETES"
+        },
+        {
+          "from": "CSCS",
+          "to": "FOUNDER"
+        },
+        {
+          "from": "GRAHAM",
+          "to": "NICK"
+        },
+        {
+          "from": "WILKERSON",
+          "to": "JAROSH"
+        },
+        {
+          "from": "TRAINED ZACK MARTIN · TED KARRAS · NICK MARTIN",
+          "to": "CINCINNATI REDS · COLLEGE ATHLETICS"
+        },
+        {
+          "from": "ZACK MARTIN · TED KARRAS · NICK MARTIN",
+          "to": "CINCINNATI REDS · COLLEGE ATHLETICS"
+        },
+        {
+          "from": "The same credential D1 and NFL strength coaches carry.",
+          "to": "Built on pro and college strength-and-conditioning experience."
+        }
+      ],
+      "media": {
+        "policy": "replace",
+        "map": {
+          "A1": "./assets/jarosh/action-clip-ringing-pr-bell-mixed-mixed-jarosh-b8a50405.mp4",
+          "A2": "./assets/jarosh/talking-head-speaking-high-school-male-jarosh-b2e0443d.mp4",
+          "A3": "./assets/jarosh/talking-head-speaking-high-school-female-jarosh-658366fc.mp4",
+          "A4": "./assets/jarosh/group-shot-posing-high-school-female-jarosh-performance-mp4-dcd301ab.mp4",
+          "B1": "./assets/jarosh/action-image-posing-high-school-female-jarosh-performance-mp-5782a83d.mp4",
+          "B2": "./assets/jarosh/group-shot-posing-high-school-female-jarosh-performance-mp4-d20251bb.mp4",
+          "C1": "./assets/jarosh/group-shot-posing-mixed-mixed-jarosh-performance-jpg-a8734a95.jpg",
+          "C2": "./assets/jarosh/group-shot-posing-high-school-female-jarosh-performance-mp4-df29d9c5.mp4",
+          "D1": "./assets/jarosh/638942872-1504070021726261-8224200172582480270-n-60f3ee53.jpg",
+          "D2": "./assets/jarosh/action-clip-lateral-shuffle-high-school-female-jarosh-slide2-2f08659e.mp4",
+          "E1": "brand/kraken-cache/jarosh-performance-post-20260528t172302-18094659880961980-mp-9e9f155c.mp4",
+          "E2": "brand/kraken-cache/action-clip-hurdling-high-school-male-jarosh-performance-mp4-95470554.mp4",
+          "E3": "./assets/jarosh/jarosh-performance-post-20260421t185440-18103586420303972-mp-953e4d09.mp4",
+          "E4": "./assets/jarosh/jarosh-performance-post-20260423t185056-17928417144087920-mp-db494f93.mp4",
+          "F1": "brand/kraken-cache/jarosh-performance-post-20260429t215026-18376169473163196-mp-b495d907.mp4",
+          "F2": "./assets/jarosh/jarosh-performance-post-20260505t175329-18115540564831348-mp-cf248ffe.mp4",
+          "BR1": "brand/kraken-cache/jarosh-performance-post-20260511t182439-18064616354392961-sl-c6dad950.mp4"
+        }
+      },
+      "workspace": "jarosh",
+      "destFolder": "angle 2"
+    },
+    {
+      "source": "more-games-carmel",
+      "dest": "more-games-ankeny",
+      "location": "ankeny",
+      "textSwaps": [
+        {
+          "from": "CARMEL",
+          "to": "ANKENY"
+        },
+        {
+          "from": "+1 mph speed. +3\" vertical. 90 days. Or we will train you for free until you do.",
+          "to": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us."
+        },
+        {
+          "from": "+1 mph. +3 inches. 90 days. Or we keep training them free.",
+          "to": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us."
+        },
+        {
+          "from": "CSCS · NFL-TRAINED",
+          "to": "CINCINNATI REDS · COLLEGE S&C"
+        },
+        {
+          "from": "CSCS · FOUNDER",
+          "to": "FOUNDER"
+        },
+        {
+          "from": "TRAINED NFL\nATHLETES",
+          "to": "PRO & COLLEGE\nATHLETES"
+        },
+        {
+          "from": "CSCS",
+          "to": "FOUNDER"
+        },
+        {
+          "from": "GRAHAM",
+          "to": "NICK"
+        },
+        {
+          "from": "WILKERSON",
+          "to": "JAROSH"
+        },
+        {
+          "from": "TRAINED ZACK MARTIN · TED KARRAS · NICK MARTIN",
+          "to": "CINCINNATI REDS · COLLEGE ATHLETICS"
+        },
+        {
+          "from": "ZACK MARTIN · TED KARRAS · NICK MARTIN",
+          "to": "CINCINNATI REDS · COLLEGE ATHLETICS"
+        },
+        {
+          "from": "The same credential D1 and NFL strength coaches carry.",
+          "to": "Built on pro and college strength-and-conditioning experience."
+        }
+      ],
+      "media": {
+        "policy": "replace",
+        "map": {
+          "A1": "brand/kraken-cache/action-image-basketball-high-school-male-jarosh-performance--73cb5b33.mp4",
+          "A2": "brand/kraken-cache/jarosh-performance-post-20260511t182439-18064616354392961-sl-cc869c31.mp4",
+          "A3": "./assets/jarosh/jarosh-performance-post-20260511t182439-18064616354392961-sl-64ea2203.mp4",
+          "A4": "./assets/jarosh/jarosh-performance-post-20260511t182439-18064616354392961-sl-3e70e867.mp4",
+          "B1": "./assets/jarosh/jarosh-performance-post-20260518t191711-18103266109999547-mp-865ed48b.mp4",
+          "B2": "brand/kraken-cache/action-clip-lateral-shuffle-high-school-female-jarosh-slide2-2f08659e.mp4",
+          "C1": "brand/kraken-cache/action-clip-hurdling-high-school-male-jarosh-performance-mp4-95470554.mp4",
+          "C2": "brand/kraken-cache/aqpffb-qkatacnzgo0t-syvjoq2athdqk-4kcpprpt5xdmrnmmab1j6g8hyy-475b73ec.mp4",
+          "C3": "./assets/jarosh/aqmm8k-j9ulaw4xvc0vr27is9mqxapunsbnjqd7kp6nivqvlyojixkqxr-ot-91a5a129.mp4",
+          "D1": "brand/kraken-cache/aqnrqoiqddtqmy7-r6mirkeprxllgu9gjucp7uoobk-n7o-q81-r8x2bd3cy-3a4a8875.mp4",
+          "D2": "./assets/jarosh/aqnq8k-ml5qwanaiv6w0arcni8eug-sgjlcv0or6f7drokwglkcc554d-cik-3a19cc3d.mp4",
+          "D3": "./assets/jarosh/aqo7i2shk9uye5svmqzrivnv9kn8jp00uwqlmup-rj3afgdicjalto-mksgd-7f37b9ea.mp4",
+          "E1": "brand/kraken-cache/aqo6ajlndlhgi3nnlmq0-8u840gu1dg2-ugjr1uzkfn40hl4xxwhd0s0ks09-6120b216.mp4",
+          "E2": "brand/kraken-cache/aqo4mrbcesezkpjgphwqyfpvui9qqtsyt36kujaykkvkqfdumrofw121yco3-33d10770.mp4",
+          "E3": "./assets/jarosh/638942872-1504070021726261-8224200172582480270-n-60f3ee53.jpg",
+          "E4": "./assets/jarosh/action-clip-sled-push-squat-jumping-strength-training-high-s-4b6c5551.mp4",
+          "F1": "brand/kraken-cache/action-clip-acceleration-training-upper-body-strength-traini-101007f9.mp4",
+          "F2": "./assets/jarosh/action-clip-dumbbell-shoulder-press-middle-school-male-jaros-42129fc4.mp4",
+          "F3": "brand/kraken-cache/action-clip-med-ball-throw-high-school-female-jarosh-slide3o-02af193f.mp4",
+          "BR1": "brand/kraken-cache/action-clip-band-work-high-school-female-jarosh-slide2of4-423c2eed.mp4"
+        }
+      },
+      "workspace": "jarosh",
+      "destFolder": "angle 3"
+    }
+  ]
+}

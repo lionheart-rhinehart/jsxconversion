@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jarosh Performance · Deck Template</title>
+  <link rel="stylesheet" href="../colors_and_type.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200&display=block" />
+  <style>
+    html,body{margin:0;background:#0a0c0f;}
+    deck-stage:not(:defined){visibility:hidden}
+    .material-symbols-rounded{font-family:'Material Symbols Rounded';font-weight:normal;font-feature-settings:'liga';font-variation-settings:"FILL" 1,"wght" 500,"GRAD" 0,"opsz" 48;vertical-align:middle;}
+
+    section{ font-family:var(--font-body); overflow:hidden; }
+    .s{ width:100%; height:100%; padding:96px 120px; display:flex; flex-direction:column; position:relative; }
+    .dark{ background:var(--jp-ink-950); color:#fff; }
+    .light{ background:var(--bg-1); color:var(--fg-1); }
+    .gray{ background:var(--bg-2); color:var(--fg-1); }
+    .grid::after{ content:""; position:absolute; inset:0; background-image:linear-gradient(var(--grid-dark) 1px,transparent 1px),linear-gradient(90deg,var(--grid-dark) 1px,transparent 1px); background-size:72px 72px; pointer-events:none; }
+    .glow{ position:absolute; width:1000px; height:1000px; right:-260px; top:-280px; background:radial-gradient(closest-side,rgba(250,63,54,0.2),transparent); pointer-events:none; }
+    .z{ position:relative; z-index:2; }
+
+    /* top + bottom chrome */
+    .top{ display:flex; align-items:center; gap:20px; }
+    .lock{ display:flex; align-items:center; gap:16px; }
+    .lock img{ height:56px; }
+    .wm{ font-family:var(--font-display); text-transform:uppercase; line-height:0.76; }
+    .wm .n1{ font-size:30px; display:block; } .wm .n2{ font-size:13px; letter-spacing:0.36em; color:var(--jp-steel); }
+    .light .wm .n1, .gray .wm .n1{ color:var(--fg-1); }
+    .tag{ font-family:var(--font-mono); font-size:24px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--jp-red-bright); }
+    .tag::before{content:"[ ";opacity:0.5} .tag::after{content:" ]";opacity:0.5}
+    .light .tag,.gray .tag{ color:var(--jp-red-700); }
+    .foot{ display:flex; align-items:center; justify-content:space-between; font-family:var(--font-mono); font-size:20px; letter-spacing:0.06em; color:var(--jp-ink-400); }
+    .light .foot,.gray .foot{ color:var(--fg-3); }
+    .mid{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+    .spacer{ flex:1; }
+
+    .display{ font-family:var(--font-display); text-transform:uppercase; letter-spacing:-0.01em; line-height:1.0; margin:0; }
+    .display .accent{ color:var(--jp-red-bright); }
+    .light .display .accent,.gray .display .accent{ color:var(--jp-red-600); }
+    .lead{ font-size:30px; line-height:1.5; color:rgba(255,255,255,0.74); max-width:30ch; }
+    .light .lead,.gray .lead{ color:var(--fg-2); }
+    .mono-tab{ font-family:var(--font-mono); font-variant-numeric:tabular-nums; font-weight:700; }
+
+    /* pillars */
+    .pillars{ display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:60px; }
+    .pcard{ position:relative; background:var(--jp-ink-900); border:1px solid var(--jp-ink-700); border-radius:12px; padding:36px 30px; overflow:hidden; }
+    .pnum{ position:absolute; top:22px; right:28px; font-family:var(--font-display); font-size:64px; color:transparent; -webkit-text-stroke:2px var(--jp-red-600); }
+    .picon{ width:64px; height:64px; border-radius:8px; background:var(--jp-red-500); color:#fff; display:flex; align-items:center; justify-content:center; margin-bottom:28px; }
+    .picon .material-symbols-rounded{ font-size:38px; }
+    .ptitle{ font-family:var(--font-display); text-transform:uppercase; font-size:46px; line-height:0.92; color:#fff; margin:0; }
+    .pmetric{ font-family:var(--font-mono); font-size:18px; color:var(--jp-red-bright); margin:14px 0 0; }
+
+    /* method */
+    .method{ display:grid; grid-template-columns:repeat(3,1fr); gap:40px; margin-top:64px; }
+    .mstep{ padding-top:32px; border-top:3px solid var(--jp-red-500); }
+    .mnum{ font-family:var(--font-display); font-size:120px; line-height:0.9; }
+    .light .mnum,.gray .mnum{ color:var(--fg-1); }
+    .mtitle{ font-weight:700; font-size:34px; margin:8px 0 14px; display:flex; align-items:center; gap:14px; }
+    .mtitle .material-symbols-rounded{ color:var(--jp-red-600); font-size:34px; }
+    .mtext{ font-size:24px; line-height:1.5; color:var(--fg-2); margin:0; }
+
+    /* big stat */
+    .bigstat{ font-family:var(--font-mono); font-variant-numeric:tabular-nums; font-weight:700; letter-spacing:-0.03em; font-size:340px; line-height:0.8; }
+    .bigstat .u{ color:var(--jp-steel); font-size:110px; }
+
+    /* metric row */
+    .mrow{ display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:56px; }
+    .mt{ background:var(--jp-ink-900); border:1px solid var(--jp-ink-700); border-radius:12px; padding:30px; position:relative; }
+    .mt::before{ content:""; position:absolute; top:0; left:0; width:54px; border-top:3px solid var(--jp-red-500); border-radius:12px 0 0 0; }
+    .mt .k{ font-family:var(--font-mono); font-size:18px; letter-spacing:0.06em; text-transform:uppercase; color:var(--jp-ink-400); }
+    .mt .v{ font-family:var(--font-mono); font-variant-numeric:tabular-nums; font-weight:700; font-size:76px; line-height:1; margin:14px 0 8px; color:#fff; letter-spacing:-0.02em; }
+    .mt .v .u{ font-size:30px; color:var(--jp-steel); }
+    .mt .d{ font-family:var(--font-mono); font-size:20px; font-weight:700; color:var(--jp-gain); display:flex; align-items:center; gap:6px; }
+    .mt .d .material-symbols-rounded{ font-size:24px; }
+
+    /* quote */
+    .stars{ display:flex; gap:8px; color:var(--jp-red-500); margin-bottom:36px; }
+    .stars .material-symbols-rounded{ font-size:52px; }
+    .quote{ font-family:var(--font-display); text-transform:uppercase; font-size:92px; line-height:0.94; margin:0; max-width:22ch; }
+    .light .quote{ color:var(--fg-1); }
+    .byline{ font-family:var(--font-mono); font-size:26px; color:var(--fg-3); margin-top:44px; display:flex; gap:20px; align-items:center; }
+    .byline b{ color:var(--fg-1); }
+    .byline .g{ color:var(--jp-gain-dim); }
+
+    /* cta */
+    .ctabtn{ display:inline-flex; align-items:center; gap:18px; background:var(--jp-red-500); color:#fff; font-weight:700; font-size:34px; padding:28px 44px; border-radius:8px; }
+    .ctabtn .material-symbols-rounded{ font-size:38px; }
+
+    /* entrance */
+    @media (prefers-reduced-motion:no-preference){
+      [data-deck-active] .anim{ animation:rise .6s var(--ease-out,cubic-bezier(.2,.7,.2,1)) both; }
+      [data-deck-active] .anim2{ animation:rise .6s .12s var(--ease-out,cubic-bezier(.2,.7,.2,1)) both; }
+      [data-deck-active] .anim3{ animation:rise .6s .22s var(--ease-out,cubic-bezier(.2,.7,.2,1)) both; }
+      @keyframes rise{ from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
+    }
+  </style>
+</head>
+<body>
+  <deck-stage width="1920" height="1080">
+
+    <!-- 1 · TITLE -->
+    <section data-label="Title">
+      <div class="s dark grid">
+        <div class="glow"></div>
+        <div class="top z">
+          <div class="lock"><img src="../assets/logo-mark.svg" alt="" /><span class="wm"><span class="n1">Jarosh</span><span class="n2">Performance</span></span></div>
+          <div class="spacer"></div>
+          <span class="tag">Speed · Agility · Strength · Power</span>
+        </div>
+        <div class="mid z">
+          <span class="tag anim" style="margin-bottom:32px">The Baseline</span>
+          <h1 class="display anim2" style="font-size:128px">Faster Isn't<br/>A Guess.<br/>It's A <span class="accent">Measurement.</span></h1>
+          <p class="lead anim3" style="margin-top:44px">We baseline every athlete on day one — then build the gaps and retest. Not just a speed program.</p>
+        </div>
+        <div class="foot z"><span>Ankeny, IA</span><span>jaroshperformance.fitness</span></div>
+      </div>
+    </section>
+
+    <!-- 2 · STATEMENT -->
+    <section data-label="Not Just Speed">
+      <div class="s gray">
+        <div class="top">
+          <span class="tag">The Truth</span><div class="spacer"></div>
+          <span class="foot" style="display:flex">02</span>
+        </div>
+        <div class="mid">
+          <h2 class="display anim" style="font-size:104px;max-width:20ch">Most Programs<br/>Run Drills. <span class="accent">We Run<br/>The Numbers.</span></h2>
+          <p class="lead anim2" style="margin-top:40px;max-width:50ch;font-size:32px">Talent without measurement is a plateau waiting to happen. Speed, agility, strength, and power don't develop in isolation — and they don't improve if no one's keeping score.</p>
+        </div>
+        <div class="foot"><span>// notjustaspeedprogram</span><span>Jarosh Performance</span></div>
+      </div>
+    </section>
+
+    <!-- 3 · FOUR PILLARS -->
+    <section data-label="Four Pillars">
+      <div class="s dark grid">
+        <div class="top z"><span class="tag">The System</span><div class="spacer"></div><span class="foot" style="display:flex">03</span></div>
+        <div class="z" style="margin-top:8px">
+          <h2 class="display anim" style="font-size:96px">Four Systems. <span class="accent">One Athlete.</span></h2>
+          <div class="pillars">
+            <div class="pcard anim"><div class="pnum">01</div><div class="picon"><span class="material-symbols-rounded">sprint</span></div><h3 class="ptitle">Speed</h3><p class="pmetric">10/20/40 · velocity</p></div>
+            <div class="pcard anim2"><div class="pnum">02</div><div class="picon"><span class="material-symbols-rounded">shuffle</span></div><h3 class="ptitle">Agility</h3><p class="pmetric">change of direction</p></div>
+            <div class="pcard anim2"><div class="pnum">03</div><div class="picon"><span class="material-symbols-rounded">fitness_center</span></div><h3 class="ptitle">Strength</h3><p class="pmetric">force · max output</p></div>
+            <div class="pcard anim3"><div class="pnum">04</div><div class="picon"><span class="material-symbols-rounded">bolt</span></div><h3 class="ptitle">Power</h3><p class="pmetric">RFD · vertical · jump</p></div>
+          </div>
+        </div>
+        <div class="spacer"></div>
+        <div class="foot z"><span>Speed · Agility · Strength · Power</span><span>04 systems</span></div>
+      </div>
+    </section>
+
+    <!-- 4 · THE METHOD -->
+    <section data-label="The Method">
+      <div class="s light">
+        <div class="top"><span class="tag">The Method</span><div class="spacer"></div><span class="foot" style="display:flex">04</span></div>
+        <div class="mid">
+          <h2 class="display anim" style="font-size:104px">Test. Build. <span class="accent">Retest.</span></h2>
+          <div class="method">
+            <div class="mstep anim"><div class="mnum">01</div><div class="mtitle"><span class="material-symbols-rounded">straighten</span>Test</div><p class="mtext">A full day-one workup — 10/20/40 splits, vertical, broad jump, force, and a movement screen. That number is the starting line.</p></div>
+            <div class="mstep anim2"><div class="mnum">02</div><div class="mtitle"><span class="material-symbols-rounded">build</span>Build</div><p class="mtext">We program around the gaps the data exposes. No template — every session targets what actually moves the needle.</p></div>
+            <div class="mstep anim3"><div class="mnum">03</div><div class="mtitle"><span class="material-symbols-rounded">timeline</span>Retest</div><p class="mtext">Monthly retesting proves the progress — or tells us what to change. The loop is the method. The data keeps us honest.</p></div>
+          </div>
+        </div>
+        <div class="foot"><span>// the measurement loop</span><span>Jarosh Performance</span></div>
+      </div>
+    </section>
+
+    <!-- 5 · BIG STAT -->
+    <section data-label="Big Stat">
+      <div class="s dark grid">
+        <div class="glow"></div>
+        <div class="top z"><span class="tag">The Guarantee</span><div class="spacer"></div><span class="foot" style="display:flex">05</span></div>
+        <div class="mid z">
+          <div class="bigstat anim">&minus;0.18<span class="u">s</span></div>
+          <h2 class="display anim2 accent" style="font-size:90px;margin-top:24px">Average 10-Yard Gain<br/><span style="color:#fff">In 90 Days.</span></h2>
+          <p class="lead anim3" style="margin-top:32px;max-width:52ch">Every athlete starts with a baseline. Every session is tracked. Every month we retest — and if the data doesn't move, we adjust until it does.</p>
+        </div>
+        <div class="foot z"><span>+3.5″ vertical · +22% force</span><span>measured, not promised</span></div>
+      </div>
+    </section>
+
+    <!-- 6 · RESULTS + QUOTE -->
+    <section data-label="Results">
+      <div class="s dark grid">
+        <div class="top z"><span class="tag">Measured Progress</span><div class="spacer"></div><span class="foot" style="display:flex">06</span></div>
+        <div class="z" style="margin-top:8px">
+          <h2 class="display anim" style="font-size:84px">Progress You Can <span class="accent">Actually See.</span></h2>
+          <div class="mrow">
+            <div class="mt anim"><div class="k">10-yd gain</div><div class="v">&minus;0.18<span class="u">s</span></div><div class="d"><span class="material-symbols-rounded">trending_up</span>per 90 days</div></div>
+            <div class="mt anim2"><div class="k">Vertical</div><div class="v">+3.5<span class="u">″</span></div><div class="d"><span class="material-symbols-rounded">trending_up</span>per 90 days</div></div>
+            <div class="mt anim2"><div class="k">Force output</div><div class="v">+22<span class="u">%</span></div><div class="d"><span class="material-symbols-rounded">trending_up</span>vs baseline</div></div>
+            <div class="mt anim3"><div class="k">Retested</div><div class="v">100<span class="u">%</span></div><div class="d"><span class="material-symbols-rounded">trending_up</span>every month</div></div>
+          </div>
+          <p class="lead anim3" style="margin-top:48px;max-width:60ch;color:rgba(255,255,255,0.82);font-size:32px">"His workouts and programs are based on real numbers and results. If you want to get faster, this is the place to be." <span style="font-family:var(--font-mono);font-size:22px;color:var(--jp-ink-400)">— Andy J., Parent</span></p>
+        </div>
+        <div class="spacer"></div>
+        <div class="foot z"><span>Real Jarosh families</span><span>100% recommend</span></div>
+      </div>
+    </section>
+
+    <!-- 7 · CLOSER -->
+    <section data-label="Closer">
+      <div class="s dark grid">
+        <div class="glow"></div>
+        <div class="top z"><div class="lock"><img src="../assets/logo-mark.svg" alt="" /><span class="wm"><span class="n1">Jarosh</span><span class="n2">Performance</span></span></div><div class="spacer"></div><span class="tag">Start Here</span></div>
+        <div class="mid z">
+          <h2 class="display anim" style="font-size:130px">Book The<br/><span class="accent">Baseline.</span></h2>
+          <p class="lead anim2" style="margin-top:36px;max-width:46ch">Day one is all data. Bring training shoes — we'll find the starting line and build from there.</p>
+          <div class="anim3" style="margin-top:48px"><span class="ctabtn">Book An Assessment <span class="material-symbols-rounded">arrow_forward</span></span></div>
+        </div>
+        <div class="foot z"><span>405 SE Magazine Rd · Ankeny, IA</span><span>(515) 371-5881 · #notjustaspeedprogram</span></div>
+      </div>
+    </section>
+
+  </deck-stage>
+  <script src="deck-stage.js"></script>
+</body>
+</html>

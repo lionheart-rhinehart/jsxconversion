@@ -1,0 +1,30 @@
+<!-- @dsCard group="Colors" -->
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><link rel="stylesheet" href="_base.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200&display=block"><style>
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .panel{border-radius:var(--r-lg);padding:18px;border:1px solid var(--border-1)}
+  .light{background:var(--bg-1)}
+  .dark{background:var(--jp-ink-950);border-color:var(--jp-ink-700)}
+  .line{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:11.5px;margin:7px 0}
+  .dot{width:16px;height:16px;border-radius:3px;border:1px solid rgba(128,128,128,0.3)}
+</style></head>
+<body>
+  <div class="col" style="gap:10px">
+    <p class="card-label">Semantic tokens · light canvas &amp; inverse</p>
+    <div class="two">
+      <div class="panel light">
+        <div class="line"><span class="dot" style="background:var(--fg-1)"></span><span style="color:var(--fg-1)">--fg-1 primary text</span></div>
+        <div class="line"><span class="dot" style="background:var(--fg-2)"></span><span style="color:var(--fg-2)">--fg-2 secondary</span></div>
+        <div class="line"><span class="dot" style="background:var(--fg-3)"></span><span style="color:var(--fg-3)">--fg-3 tertiary / meta</span></div>
+        <div class="line"><span class="dot" style="background:var(--bg-2)"></span><span style="color:var(--fg-2)">--bg-2 section</span></div>
+        <div class="line"><span class="dot" style="background:var(--border-1)"></span><span style="color:var(--fg-2)">--border-1 hairline</span></div>
+      </div>
+      <div class="panel dark">
+        <div class="line"><span class="dot" style="background:#fff"></span><span style="color:#fff">#fff primary on dark</span></div>
+        <div class="line"><span class="dot" style="background:var(--jp-ink-400)"></span><span style="color:var(--jp-ink-400)">--jp-ink-400 muted</span></div>
+        <div class="line"><span class="dot" style="background:var(--jp-red-bright)"></span><span style="color:var(--jp-red-bright)">--jp-red-bright accent</span></div>
+        <div class="line"><span class="dot" style="background:var(--jp-ink-700)"></span><span style="color:var(--jp-ink-400)">--jp-ink-700 border</span></div>
+        <div class="line"><span class="dot" style="background:var(--jp-steel)"></span><span style="color:var(--jp-steel)">--jp-steel axis label</span></div>
+      </div>
+    </div>
+  </div>
+</body></html>

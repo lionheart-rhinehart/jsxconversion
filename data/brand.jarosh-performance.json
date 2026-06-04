@@ -1,0 +1,21 @@
+{
+  "_comment": "Brand kit for Jarosh Performance (franchisee). Keys under `tags` map a layer's field name (its `tag`) to the value that replaces the layer's content at fill time. Color/font tokens here OVERRIDE the AA authoring baseline at render/clone time (scripts/lib/palette.mjs remaps the bank's #c4141d-family literals to these). Registered from the Claude Design handoff bundle 'jarosh-performance-design-system' — see brand/jarosh-performance/project/README.md for the full brand rules (voice, visual foundations, iconography).",
+  "brand": "Jarosh Performance",
+  "_note": "Jarosh shares the AA token ARCHITECTURE and font stack (Anton/Geist/JetBrains Mono — all bank families, no custom binaries needed) but its OWN identity: signal red #fa3f36 on cool-carbon neutrals (a 'performance-lab' look, distinct from AA's gritty-stadium black/white/red). Colors below are mapped from colors_and_type.css: brand_red=--jp-red-500, brand_red_deep=--jp-red-700, ink_950=--jp-ink-950, ink_900=--jp-ink-900. LOGO: real 'Nick Jarosh Fitness / NJF' mark supplied by the user (njf circle + NICK JAROSH in red + FITNESS arched in black + 3 red stars). Background white was edge-flood-filled to transparent (logo.png), preserving the njf circle interior — sources kept as logo-njf-source.{jpg,svg}. The user confirmed: USE THIS NJF LOGO but KEEP brand_name 'JAROSH PERFORMANCE' (logo art and wordmark intentionally differ — only logo on hand). CAVEAT: the logo's black elements (FITNESS, njf circle) are low-contrast on the brand's DARK panels — it's a light-background logo. Restrict logo to light/photo placements, or supply a white/dark-mode variant. GUARANTEE: intentionally ABSENT — the bundle's guarantee was a reconstruction, not Jarosh's real claim; left empty until the user supplies the verbatim text. NOTE: user chose 'keep AA's guarantee verbatim' for the pending repurpose — re-confirm at run-time before it renders into ads.",
+  "kitPath": "brand/jarosh-performance",
+  "logo_src": "brand/jarosh-performance/project/assets/logo.png",
+  "tags": {
+    "logo": "./project/assets/logo.png",
+    "brand_name": "JAROSH PERFORMANCE",
+    "url": "jaroshperformance.fitness",
+    "guarantee": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us.",
+    "brand_red": "#fa3f36",
+    "brand_red_deep": "#c01a13",
+    "ink_950": "#0a0c0f",
+    "ink_900": "#101318",
+    "white": "#ffffff",
+    "font_display": "'Anton', 'Oswald', 'Arial Narrow', sans-serif",
+    "font_body": "'Geist', 'Inter', system-ui, sans-serif",
+    "font_mono": "'JetBrains Mono', ui-monospace, Menlo, monospace"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "_comment": "Location tier — SMAA Saco studio (Southern Maine Athlete Academy, 73 Industrial Park Road, Saco, ME 04072; grand opening June 8). Supplies `city` for the locale eyebrow anchor ('SACO SPORT PARENTS'); the ', ME' state suffix is stripped by cityLabel/buildEyebrowAnchor. Merged campaign > location > brand.",
+  "location": "saco",
+  "tags": {
+    "city": "SACO, ME"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "_comment": "Location tier for Ankeny, IA — Jarosh Performance's home city. Overlays the brand tier per launch: the motion eyebrow is force-set from tags.city (roles.mjs buildEyebrowAnchor → 'ANKENY SPORT PARENTS'), and CARMEL→ANKENY copy swaps ride alongside in the repurpose job spec. Created for the Jarosh repurpose of the Carmel Multi-sport campaign set.",
+  "tags": {
+    "city": "Ankeny, IA"
+  }
+}

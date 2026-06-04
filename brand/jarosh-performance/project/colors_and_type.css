@@ -1,0 +1,281 @@
+/* =========================================================================
+   JAROSH PERFORMANCE. COLORS & TYPE
+   Youth/HS/collegiate sports performance — Ankeny, IA.
+   Premium, technical, data-forward. A performance lab, not a gritty gym.
+   "Speed · Agility · Strength · Power"   #notjustaspeedprogram
+   ========================================================================= */
+
+/* ---------- FONTS ----------
+   Display:  Anton              · Condensed athletic display, all-caps
+   Body:     Geist (variable)   · Modern technical sans, weights 100–900
+   Mono:     JetBrains Mono     · Metrics, telemetry readouts, axis labels
+   Icons:    Material Symbols Rounded (loaded separately in HTML)
+   Served locally from ./fonts/. Geist + JetBrains Mono are variable fonts —
+   one file covers every weight via font-weight.
+*/
+@font-face {
+  font-family: 'Anton';
+  src: url('fonts/Anton-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('fonts/Geist-Variable.ttf') format('truetype-variations'),
+       url('fonts/Geist-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('fonts/JetBrainsMono-Variable.ttf') format('truetype-variations'),
+       url('fonts/JetBrainsMono-Variable.ttf') format('truetype');
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* =========================
+     CORE BRAND COLOR. SIGNAL RED  (#fa3f36)
+     The signal color. Used surgically — data highlights, CTAs, active
+     states, the calibration tick on the wordmark. Never on body copy.
+     ========================= */
+  --jp-red-50:  #fff1f0;
+  --jp-red-100: #ffdedb;
+  --jp-red-200: #ffc1bc;
+  --jp-red-300: #ff948c;
+  --jp-red-400: #fb5f55;
+  --jp-red-500: #fa3f36;  /* base — the Jarosh signal red */
+  --jp-red-600: #e9281f;
+  --jp-red-700: #c01a13;
+  --jp-red-800: #97150f;
+  --jp-red-900: #79140f;
+
+  --jp-red:        var(--jp-red-500);
+  --jp-red-deep:   var(--jp-red-700);
+  --jp-red-bright: #ff5e54;   /* slightly lifted for dark surfaces */
+
+  /* =========================
+     NEUTRALS. Cool carbon / steel
+     A technical, instrument-panel grayscale. Cooler than a warm gym black.
+     ========================= */
+  --jp-ink-950: #0a0c0f;   /* deepest background (lab black)         */
+  --jp-ink-900: #101318;   /* primary dark surface                   */
+  --jp-ink-800: #181c23;   /* elevated dark surface                  */
+  --jp-ink-700: #232932;   /* dark borders / hovered dark surface    */
+  --jp-ink-600: #353d49;   /* hairline grid on dark                  */
+  --jp-ink-500: #5b6573;   /* muted text on dark / secondary         */
+  --jp-ink-400: #8b94a3;   /* tertiary text                          */
+  --jp-ink-300: #b6bdc8;   /* dividers on light                      */
+  --jp-ink-200: #d9dde4;   /* subtle borders                         */
+  --jp-ink-100: #eceef2;   /* light surface                          */
+  --jp-ink-50:  #f5f6f8;   /* page background                        */
+  --jp-white:   #ffffff;
+
+  /* =========================
+     STEEL. Instrument metal accent
+     Hairlines, axis labels, calibration marks, badge edges. Cool, neutral.
+     ========================= */
+  --jp-steel-light: #e4e7ec;
+  --jp-steel:       #9aa5b4;
+  --jp-steel-dark:  #5f6878;
+
+  /* =========================
+     SEMANTIC / SIGNAL ACCENTS
+     ========================= */
+  --jp-gain:    #19c37d;     /* PRs, gains, "+0.18s", up-arrows        */
+  --jp-gain-dim:#0f9a62;
+  --jp-warning: #f2b134;     /* schedule / attention                   */
+  --jp-danger:  #d11a10;     /* regressions, errors (deeper than brand) */
+  --jp-data:    #2f9bff;     /* secondary telemetry series only (rare) */
+
+  /* =========================
+     SEMANTIC TOKENS. LIGHT MODE (default)
+     ========================= */
+  --fg-1:      var(--jp-ink-950);    /* primary text                  */
+  --fg-2:      var(--jp-ink-700);    /* secondary text                */
+  --fg-3:      var(--jp-ink-500);    /* tertiary / meta               */
+  --fg-muted:  var(--jp-ink-400);
+  --fg-on-red: #ffffff;           /* white reads on signal red */
+
+  --bg-1:      var(--jp-white);      /* base page background          */
+  --bg-2:      var(--jp-ink-50);     /* section bg                    */
+  --bg-3:      var(--jp-ink-100);    /* card bg                       */
+  --bg-inverse:var(--jp-ink-950);
+
+  --border-1:  var(--jp-ink-200);
+  --border-2:  var(--jp-ink-300);
+  --border-strong: var(--jp-ink-950);
+
+  --link:      var(--jp-red-700);
+  --link-hover:var(--jp-red-800);
+
+  /* Grid / telemetry hairlines (the performance-lab motif) */
+  --grid-light: rgba(10, 12, 15, 0.06);   /* fine grid on light       */
+  --grid-dark:  rgba(255, 255, 255, 0.06); /* fine grid on dark        */
+
+  /* =========================
+     TYPE FAMILY VARIABLES
+     ========================= */
+  --font-display: "Anton", "Oswald", "Arial Narrow", system-ui, sans-serif;
+  --font-body:    "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* =========================
+     TYPE SCALE. Body
+     ========================= */
+  --fs-xs:   12px;
+  --fs-sm:   14px;
+  --fs-base: 16px;
+  --fs-md:   18px;
+  --fs-lg:   20px;
+  --fs-xl:   24px;
+  --fs-2xl:  32px;
+  --fs-3xl:  44px;
+  --fs-4xl:  64px;
+  --fs-5xl:  96px;
+  --fs-hero: clamp(58px, 10vw, 164px);
+
+  /* =========================
+     SPACING (8pt base, tighter low-end)
+     ========================= */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  24px;
+  --s-6:  32px;
+  --s-7:  48px;
+  --s-8:  64px;
+  --s-9:  96px;
+  --s-10: 128px;
+
+  /* =========================
+     RADII
+     Squared and precise. The lab favors tight corners. Never pillowy.
+     ========================= */
+  --r-none: 0;
+  --r-sm:   2px;
+  --r-md:   4px;
+  --r-lg:   8px;
+  --r-xl:   12px;
+  --r-pill: 999px;
+
+  /* =========================
+     ELEVATION / SHADOWS
+     Restrained. Instrument panels sit flat; cards lift only slightly.
+     ========================= */
+  --shadow-1: 0 1px 2px rgba(10, 12, 15, 0.06);
+  --shadow-2: 0 2px 8px rgba(10, 12, 15, 0.08), 0 1px 2px rgba(10, 12, 15, 0.04);
+  --shadow-3: 0 12px 32px -8px rgba(10, 12, 15, 0.16), 0 2px 6px rgba(10, 12, 15, 0.05);
+  --shadow-4: 0 28px 64px -16px rgba(10, 12, 15, 0.26);
+  --shadow-red: 0 8px 24px -8px rgba(255, 106, 0, 0.45);
+  --inner-1:  inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  /* =========================
+     MOTION
+     Quick, calibrated easing. No bounce, no overshoot. Instruments don't wobble.
+     ========================= */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in:  cubic-bezier(0.6, 0.0, 0.8, 0.3);
+  --ease-snap:cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 360ms;
+}
+
+/* =========================
+   SEMANTIC TYPE RULES
+   ========================= */
+.jp-display,
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 400;        /* Anton has one weight; spacing carries weight */
+  letter-spacing: -0.005em;
+  line-height: 0.9;
+  text-transform: uppercase;
+  color: inherit;          /* inherits section context (dark stays white) */
+}
+
+.jp-hero,
+h1 {
+  font-size: var(--fs-hero);
+  line-height: 0.84;
+  letter-spacing: -0.01em;
+}
+
+h2 { font-size: var(--fs-4xl); line-height: 0.9; }
+h3 { font-size: var(--fs-2xl); line-height: 1.0; letter-spacing: 0; }
+
+h4 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--fs-xl);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: inherit;
+}
+
+h5 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--fs-md);
+  line-height: 1.3;
+  color: inherit;
+}
+
+p, body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: 1.55;
+  color: var(--fg-2);
+}
+
+small, .jp-small { font-size: var(--fs-sm); color: var(--fg-3); }
+
+/* Eyebrow / kicker. Mono, uppercase, tracked. The brand's "data label". */
+.jp-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--jp-red-700);
+  font-weight: 600;
+}
+.jp-eyebrow--muted { color: var(--fg-3); }
+
+/* Bracket-tag eyebrow. The lab readout style: [ SPEED.LAB ] */
+.jp-tag {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--jp-red-700);
+  font-weight: 600;
+}
+.jp-tag::before { content: "[ "; opacity: 0.5; }
+.jp-tag::after  { content: " ]"; opacity: 0.5; }
+
+/* Mono data. For metrics: +0.18s, 36.5", 1.42s split, 10/20/40. Always tabular. */
+.jp-data {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+code, kbd, pre, .jp-mono { font-family: var(--font-mono); }
+
+/* Two-tone display word. Color one or two words red for emphasis. */
+.jp-display .accent,
+h1 .accent, h2 .accent { color: var(--jp-red-600); }
+
+/* Outline display word. Stadium-signage / measurement-numeral treatment. */
+.jp-display .outline,
+h1 .outline, h2 .outline {
+  color: transparent;
+  -webkit-text-stroke: 2px currentColor;
+}

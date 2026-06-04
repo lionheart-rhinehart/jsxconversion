@@ -1,0 +1,23 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><link rel="stylesheet" href="_base.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200&display=block"><style>
+  .lab{display:block;font-family:var(--font-mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--fg-3);font-weight:600;margin-bottom:6px}
+  .inp{width:100%;height:48px;padding:0 14px;border:1.5px solid var(--border-2);border-radius:var(--r-md);font-size:15px;font-family:var(--font-body);color:var(--fg-1);background:#fff}
+  .inp.focus{border-color:var(--jp-red-500);box-shadow:0 0 0 3px rgba(250,63,54,0.15);outline:none}
+  .seg{display:flex;border:1.5px solid var(--border-2);border-radius:var(--r-md);overflow:hidden;width:fit-content}
+  .seg button{border:0;background:#fff;font-family:var(--font-body);font-size:14px;font-weight:600;padding:10px 16px;cursor:pointer;color:var(--fg-2)}
+  .seg button.on{background:var(--jp-ink-950);color:#fff}
+</style></head>
+<body>
+  <div class="col" style="gap:16px">
+    <p class="card-label">Inputs · 4px radius · red focus ring</p>
+    <div class="row" style="gap:16px;align-items:flex-start">
+      <div style="flex:1"><span class="lab">Athlete's name</span><input class="inp" value="Hailey Carter"></div>
+      <div style="width:120px"><span class="lab">Age</span><input class="inp focus" value="15"></div>
+    </div>
+    <div class="row" style="gap:16px;align-items:flex-end">
+      <div><span class="lab">Primary sport</span>
+        <div class="seg"><button class="on">Softball</button><button>Basketball</button><button>Soccer</button></div>
+      </div>
+    </div>
+  </div>
+</body></html>

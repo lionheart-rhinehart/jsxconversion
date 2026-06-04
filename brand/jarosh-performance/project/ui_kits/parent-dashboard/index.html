@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jarosh Performance · Parent Dashboard</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200&display=block" />
+  <link rel="stylesheet" href="dash.css" />
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel">
+    const { useState } = React;
+    const Icon = ({ name, fill, style, className="" }) => <span className={`material-symbols-rounded ${fill?'fill':''} ${className}`} style={style}>{name}</span>;
+
+    const DATES = ["Sep 12","Oct 10","Nov 7","Dec 5","Jan 9","Feb 6"];
+
+    const ATHLETES = {
+      hailey: {
+        initials: "HC", name: "Hailey Carter", sport: "Basketball", age: 15, program: "Competitive Edge",
+        gain: "Top 8% speed gain",
+        metrics: {
+          tenYd:    { label:"10-yd split", icon:"sprint",        u:"s",   lowerBetter:true,  series:[1.76,1.72,1.69,1.65,1.61,1.58] },
+          vertical: { label:"Vertical",    icon:"bolt",          u:"\u2033", lowerBetter:false, series:[33.0,33.5,34.2,35.1,35.8,36.5] },
+          topSpeed: { label:"Top speed",   icon:"speed",         u:"mph", lowerBetter:false, series:[16.9,17.2,17.5,17.8,18.1,18.4] },
+          force:    { label:"Force output",icon:"fitness_center",u:"%",   lowerBetter:false, series:[100,104,109,114,118,122], baselineIndex:true },
+        },
+        pillars: [ ["Speed","sprint",84], ["Agility","shuffle",76], ["Strength","fitness_center",68], ["Power","bolt",81] ],
+        attendance: { pct:94, sessions:42, streak:7 },
+        next: { date:"Feb 20", time:"4:30 PM", kind:"90-day retest" },
+        note: { text:"Hailey's first-step has come a long way \u2014 we cut 0.18s off the 10-yard in two cycles. Next block we shift to top-end mechanics and landing strength for the vertical. Keep up the sleep log; it's showing in the force numbers.", by:"Coach Nick", role:"Founder" },
+        history: [
+          { d:"Feb 6",  ten:"1.58", twenty:"2.71", forty:"4.92", vert:"36.5", latest:true },
+          { d:"Jan 9",  ten:"1.61", twenty:"2.76", forty:"5.01", vert:"35.8" },
+          { d:"Dec 5",  ten:"1.65", twenty:"2.82", forty:"5.10", vert:"35.1" },
+          { d:"Nov 7",  ten:"1.69", twenty:"2.88", forty:"5.18", vert:"34.2" },
+          { d:"Oct 10", ten:"1.72", twenty:"2.93", forty:"5.25", vert:"33.5" },
+          { d:"Sep 12", ten:"1.76", twenty:"3.00", forty:"5.34", vert:"33.0", base:true },
+        ],
+      },
+      mason: {
+        initials: "MR", name: "Mason Reilly", sport: "Football", age: 13, program: "Foundations",
+        gain: "Top 12% speed gain",
+        metrics: {
+          tenYd:    { label:"10-yd split", icon:"sprint",        u:"s",   lowerBetter:true,  series:[1.88,1.85,1.82,1.79,1.76,1.73] },
+          vertical: { label:"Vertical",    icon:"bolt",          u:"\u2033", lowerBetter:false, series:[24.0,24.6,25.1,25.9,26.4,27.2] },
+          topSpeed: { label:"Top speed",   icon:"speed",         u:"mph", lowerBetter:false, series:[15.1,15.4,15.6,15.9,16.2,16.5] },
+          force:    { label:"Force output",icon:"fitness_center",u:"%",   lowerBetter:false, series:[100,103,107,111,115,118] },
+        },
+        pillars: [ ["Speed","sprint",72], ["Agility","shuffle",80], ["Strength","fitness_center",58], ["Power","bolt",69] ],
+        attendance: { pct:88, sessions:31, streak:4 },
+        next: { date:"Feb 18", time:"5:15 PM", kind:"90-day retest" },
+        note: { text:"Mason is all motor. We've focused on movement quality and deceleration first \u2014 the agility score reflects it. Strength is the next lever; we'll introduce loaded patterns carefully this block.", by:"Coach Nick", role:"Founder" },
+        history: [
+          { d:"Feb 6",  ten:"1.73", twenty:"2.94", forty:"5.28", vert:"27.2", latest:true },
+          { d:"Jan 9",  ten:"1.76", twenty:"2.99", forty:"5.36", vert:"26.4" },
+          { d:"Dec 5",  ten:"1.79", twenty:"3.05", forty:"5.44", vert:"25.9" },
+          { d:"Nov 7",  ten:"1.82", twenty:"3.10", forty:"5.51", vert:"25.1" },
+          { d:"Oct 10", ten:"1.85", twenty:"3.16", forty:"5.59", vert:"24.6" },
+          { d:"Sep 12", ten:"1.88", twenty:"3.22", forty:"5.67", vert:"24.0", base:true },
+        ],
+      },
+    };
+
+    function fmtDelta(m) {
+      const a = m.series[0], b = m.series[m.series.length-1];
+      const diff = b - a;
+      let good;
+      if (m.lowerBetter) good = diff < 0; else good = diff > 0;
+      let txt;
+      if (m.u === "%") txt = (diff>=0?"+":"") + Math.round(diff) + "%";
+      else txt = (diff>=0?"+":"\u2212") + Math.abs(diff).toFixed(m.u==="s"?2:1) + (m.u==="s"?"s":m.u);
+      return { txt, good };
+    }
+    function curVal(m) {
+      const v = m.series[m.series.length-1];
+      if (m.u === "%") return "+" + Math.round(v-100);
+      return m.u==="s" ? v.toFixed(2) : v.toFixed(1);
+    }
+
+    function LineChart({ m, color="#fa3f36" }) {
+      const W=600, H=210, padL=8, padR=8, padT=18, padB=10;
+      const vals = m.series;
+      let min=Math.min(...vals), max=Math.max(...vals);
+      const span = (max-min)||1; min -= span*0.18; max += span*0.18;
+      const x = i => padL + (i/(vals.length-1))*(W-padL-padR);
+      const y = v => padT + (1-(v-min)/(max-min))*(H-padT-padB);
+      const pts = vals.map((v,i)=>`${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
+      const area = `${padL},${H-padB} ${pts} ${W-padR},${H-padB}`;
+      return (
+        <svg width="100%" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" style={{display:'block'}}>
+          {[0,1,2,3].map(g => <line key={g} x1={padL} x2={W-padR} y1={padT+g*(H-padT-padB)/3} y2={padT+g*(H-padT-padB)/3} stroke="#232932" strokeWidth="1" opacity="0.5" />)}
+          <polygon points={area} fill={color} opacity="0.08" />
+          <polyline points={pts} fill="none" stroke={color} strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
+          {vals.map((v,i)=>{
+            const last = i===vals.length-1, first = i===0;
+            return <circle key={i} cx={x(i)} cy={y(v)} r={last?5:first?4:3} fill={last?color:"#101318"} stroke={last?"#fff":color} strokeWidth={last?2:1.5} />;
+          })}
+        </svg>
+      );
+    }
+
+    function App() {
+      const [who, setWho] = useState("hailey");
+      const [metricKey, setMetricKey] = useState("tenYd");
+      const [open, setOpen] = useState(false);
+      const a = ATHLETES[who];
+      const order = ["tenYd","vertical","topSpeed","force"];
+      const m = a.metrics[metricKey];
+      const ringDash = Math.round(a.attendance.pct/100*100);
+
+      return (
+        <>
+          {/* TOP BAR */}
+          <div className="topbar">
+            <div className="topbar-inner">
+              <div className="tb-lock"><img src="../../assets/logo-mark.svg" alt="" /><span className="tb-wm"><span className="n1">Jarosh</span><span className="n2">Performance</span></span></div>
+              <div className="tb-divider" />
+              <span className="tb-section">Athlete Report</span>
+              <div className="tb-spacer" />
+              <div style={{position:'relative'}}>
+                <div className="tb-switch" onClick={()=>setOpen(o=>!o)}>
+                  <div className="tb-avatar">{a.initials}</div>
+                  <span className="nm">{a.name}</span>
+                  <Icon name="expand_more" />
+                </div>
+                {open && (
+                  <div style={{position:'absolute',right:0,top:'46px',background:'#fff',border:'1px solid var(--border-1)',borderRadius:8,boxShadow:'var(--shadow-3)',padding:6,minWidth:200,zIndex:40}}>
+                    {Object.entries(ATHLETES).map(([k,v])=>(
+                      <div key={k} onClick={()=>{setWho(k);setOpen(false);setMetricKey('tenYd');}} style={{display:'flex',alignItems:'center',gap:10,padding:'9px 10px',borderRadius:6,cursor:'pointer',background:k===who?'var(--jp-red-50)':'#fff'}}>
+                        <div className="tb-avatar" style={{width:28,height:28,fontSize:13}}>{v.initials}</div>
+                        <div><div style={{fontSize:13,fontWeight:600}}>{v.name}</div><div style={{fontSize:11,color:'var(--fg-3)',fontFamily:'var(--font-mono)'}}>{v.sport} · {v.age}</div></div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="tb-icon"><Icon name="notifications" /></div>
+            </div>
+          </div>
+
+          <div className="app">
+            {/* ATHLETE HEADER */}
+            <div className="ath-header">
+              <div className="ath-photo">
+                <span className="reg tl" /><span className="reg br" />
+                <span className="ph-ico"><Icon name="person" /></span>
+              </div>
+              <div>
+                <h1 className="ath-name">{a.name}</h1>
+                <div className="ath-meta"><span><b>{a.sport}</b></span><span>Age <b>{a.age}</b></span><span>Program <b>{a.program}</b></span><span>Athlete <b>#0427</b></span></div>
+              </div>
+              <div className="ath-badge">
+                <span className="day-badge"><Icon name="straighten" fill />90-DAY PROGRESS</span>
+                <span className="gain-pill"><Icon name="trending_up" fill />{a.gain}</span>
+              </div>
+            </div>
+
+            <div className="dash-grid">
+              {/* MAIN COLUMN */}
+              <div className="col-main">
+                {/* METRIC TILES */}
+                <div className="mtiles">
+                  {order.map(k=>{
+                    const mm = a.metrics[k]; const d = fmtDelta(mm);
+                    return (
+                      <div key={k} className={`mtile ${k===metricKey?'active':''}`} onClick={()=>setMetricKey(k)}>
+                        <div className="k"><Icon name={mm.icon} fill />{mm.label}</div>
+                        <div className="v">{curVal(mm)}<span className="u">{mm.u}</span></div>
+                        <div className={`d ${d.good?'up':''}`} style={!d.good?{color:'var(--jp-danger)'}:null}><Icon name={d.good?"trending_up":"trending_down"} fill />{d.txt}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* TREND CHART */}
+                <div className="panel panel-dark">
+                  <div className="panel-head">
+                    <h3 className="panel-title" style={{color:'#fff'}}>{m.label} — 6 tests</h3>
+                    <div className="chart-legend">
+                      <span className="legdot"><i style={{background:'#fa3f36'}}></i>Measured</span>
+                      <span className="legdot"><i style={{background:'#5b6573'}}></i>Baseline</span>
+                    </div>
+                  </div>
+                  <div className="panel-body" style={{paddingBottom:14}}>
+                    <div className="chart-wrap"><LineChart m={m} /></div>
+                    <div className="chart-xlabels">{DATES.map(d=><span key={d}>{d}</span>)}</div>
+                  </div>
+                </div>
+
+                {/* HISTORY TABLE */}
+                <div className="panel">
+                  <div className="panel-head"><h3 className="panel-title">Test History</h3><span className="panel-tag">10/20/40 · vertical</span></div>
+                  <div className="panel-body" style={{padding:'6px 8px'}}>
+                    <table className="htable">
+                      <thead><tr><th>Date</th><th>10yd</th><th>20yd</th><th>40yd</th><th>Vert</th></tr></thead>
+                      <tbody>
+                        {a.history.map(r=>(
+                          <tr key={r.d} className={r.latest?'latest':''}>
+                            <td>{r.d} {r.latest && <span className="up" style={{fontSize:10}}>LATEST</span>}{r.base && <span className="base" style={{fontSize:10}}>BASELINE</span>}</td>
+                            <td>{r.ten}</td><td>{r.twenty}</td><td>{r.forty}</td><td>{r.vert}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              {/* SIDE COLUMN */}
+              <div className="col-side">
+                {/* NEXT SESSION */}
+                <div className="panel">
+                  <div className="panel-head"><h3 className="panel-title">Next Assessment</h3><Icon name="event" style={{marginLeft:'auto',color:'var(--jp-red-600)'}} /></div>
+                  <div className="panel-body next-card">
+                    <div className="next-date">{a.next.date}</div>
+                    <div className="next-meta">{a.next.time} · {a.next.kind}</div>
+                    <button className="next-cta"><Icon name="check" />Confirm Attendance</button>
+                  </div>
+                </div>
+
+                {/* PILLARS */}
+                <div className="panel">
+                  <div className="panel-head"><h3 className="panel-title">Pillar Percentile</h3><span className="panel-tag">vs age group</span></div>
+                  <div className="panel-body">
+                    {a.pillars.map(([nm,ic,val])=>(
+                      <div className="pbar" key={nm}>
+                        <div className="pbar-head"><span className="pbar-name"><Icon name={ic} fill />{nm}</span><span className="pbar-val">{val}<span style={{color:'var(--fg-3)'}}>th</span></span></div>
+                        <div className="pbar-track"><div className="pbar-fill" style={{width:val+'%'}} /></div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* ATTENDANCE */}
+                <div className="panel">
+                  <div className="panel-head"><h3 className="panel-title">Attendance</h3><span className="panel-tag">this cycle</span></div>
+                  <div className="panel-body">
+                    <div className="ring-wrap">
+                      <div className="ring-center">
+                        <svg width="96" height="96" viewBox="0 0 96 96">
+                          <circle cx="48" cy="48" r="40" fill="none" stroke="#eceef2" strokeWidth="10" />
+                          <circle cx="48" cy="48" r="40" fill="none" stroke="#fa3f36" strokeWidth="10" strokeLinecap="round"
+                            strokeDasharray={`${ringDash*2.513} ${251.3}`} transform="rotate(-90 48 48)" />
+                        </svg>
+                        <div className="label"><span className="v">{a.attendance.pct}%</span><span className="k">Present</span></div>
+                      </div>
+                      <div className="ring-stats">
+                        <div className="rs"><div className="rv">{a.attendance.sessions}</div><div className="rk">Sessions logged</div></div>
+                        <div className="rs"><div className="rv">{a.attendance.streak}<span style={{fontSize:12,color:'var(--fg-3)'}}> wks</span></div><div className="rk">Current streak</div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* COACH NOTE */}
+                <div className="panel">
+                  <div className="panel-head"><h3 className="panel-title">Coach Note</h3><Icon name="edit_note" style={{marginLeft:'auto',color:'var(--fg-3)'}} /></div>
+                  <div className="panel-body">
+                    <p className="note">"{a.note.text}"</p>
+                    <div className="note-by"><div className="av">NJ</div><div><div className="nm">{a.note.by}</div><div className="rl">{a.note.role}</div></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

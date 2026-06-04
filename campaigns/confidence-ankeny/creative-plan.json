@@ -1,0 +1,371 @@
+{
+  "schemaVersion": 1,
+  "campaign": "confidence-ankeny",
+  "brand": "jarosh-performance",
+  "knobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": {
+      "video": 0.6,
+      "gif": 0.15,
+      "static": 0.25
+    },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 3
+  },
+  "_planNotes": {
+    "angle": "Angle 2 — 'proof = confidence' (Pain state #2, the kid whose confidence is shrinking). Mechanism = UMS Principle 4: two kinds of confidence — praise is fragile (on loan), data-built confidence is durable. PROOF for this angle is the 'shy kid' case study + the visible-numbers mechanism + credentials + the guarantee — it deliberately does NOT use the Wang 224% stat (that proves velocity/jump, not confidence).",
+    "copyRule": "BY REFERENCE, VERBATIM. The role-slot cards (A1–A4, B1–B2, C1–C2, D1–D2, E4) bind copy by id into copy-library.json via copyRefs/hookRef — no inline text, every word traces to a magnet Cody wrote; verbatimGuard is CLEAN on all of these. The 'cut more magnets' upgrade (scripts/lib/copy-library.mjs) splits each ad body into bodyPara/bodyLine units, so proof/blame/offer lines are now referenceable too. Multi-field templates (E1 meet-coach, E2 quote-card, E3 cluster-31 credentials, F1 stat-reveal, F2 cluster-32, BR1 logo-sting) keep templateData by design (per SKILL.md). KNOWN EXCEPTION: E3's credential card carries 3 proof/claim labels (the NFL names + 'the same credential D1 and NFL strength coaches carry') that are verbatim FACTS from AD3 reformatted as uppercase card labels, so the report-only guard flags them — not a rewrite (proper nouns + a capitalized clause), just not a whole-sentence magnet. 16 of 17 cards trace 100% clean.",
+    "layout": "Hook cards use the role-upgrade stack: eyebrow (INDIANAPOLIS SPORT PARENTS, white chip, top) → kicker (lead-in, above headline) → headline → subhead. cluster-43 is the stacked-hook template (A4/B1/D2). A hookRef auto-splits a 2–3 segment line across kicker/headline/subhead via splitHook; a copyRefs binds a single magnet to one slot.",
+    "media": "EVERY creative is media-backed (hard rule 6). Statics set asset.media (./assets/conf-<id>.jpg); the runner injects it as a full-frame bg + legibility scrim + text shadows. Motion sets asset.clip. Distinct source per asset, no reuse.",
+    "eyebrow": "location = indianapolis → eyebrow auto-anchors 'INDIANAPOLIS SPORT PARENTS' (white chip) on every card; never hand-set.",
+    "guaranteeFlag": "guarantee role is brand-locked to the canonical wording on F1/F2; renders the canonical string.",
+    "status": "All 'pending' — re-authored by reference; awaiting approval on the review page. Clear campaigns/multisport-foundations-confidence/edits/ before re-render (stale sidecars override the plan)."
+  },
+  "angles": [
+    {
+      "id": "proof-confidence",
+      "name": "Proof = Confidence (the kid whose confidence is shrinking) — ad copy series #2",
+      "location": "ankeny",
+      "mechanism": "UMS Principle 4 — two kinds of confidence: praise is on loan (fragile); data a kid builds for themselves is durable. Proof = the kid sees their own numbers climb.",
+      "emotionalJob": "Name what the parent is actually buying (confidence). End the helplessness of praise that stopped working.",
+      "voice": "Head-coach-to-parent, declarative, metric-driven. No emoji / exclamation / em dash.",
+      "assets": [
+        {
+          "id": "A1",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-33",
+          "media": "./assets/jarosh/action-clip-ringing-pr-bell-mixed-mixed-jarosh-b8a50405.mp4",
+          "copyRefs": {
+            "hook": "ad-1-version-a-consequence-depth-short.bodyLine.2.2"
+          },
+          "copySource": "Verbatim magnet (AD1A body): \"There are two kinds of confidence.\"",
+          "status": "rendered",
+          "notes": "Lone hook over training footage.",
+          "output": "out/campaigns/confidence-ankeny/proof-confidence/A1.png",
+          "thumb": "out/campaigns/confidence-ankeny/proof-confidence/A1.png",
+          "renderedAt": "2026-06-04T02:51:48.761Z"
+        },
+        {
+          "id": "A2",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-35",
+          "media": "./assets/jarosh/talking-head-speaking-high-school-male-jarosh-b2e0443d.mp4",
+          "copyRefs": {
+            "hook": "ad-1-version-b-emotional-depth-short.headline",
+            "claim": "ad-1-version-a-consequence-depth-short.description"
+          },
+          "copySource": "Verbatim magnets: ad Headline \"When They Stop Believing\" (hook) + Description \"Confidence from proof.\" (claim).",
+          "status": "rendered",
+          "notes": "Split card: headline + claim.",
+          "output": "out/campaigns/confidence-ankeny/proof-confidence/A2.png",
+          "thumb": "out/campaigns/confidence-ankeny/proof-confidence/A2.png",
+          "renderedAt": "2026-06-04T02:51:59.396Z"
+        },
+        {
+          "id": "A3",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-42",
+          "media": "./assets/jarosh/talking-head-speaking-high-school-female-jarosh-658366fc.mp4",
+          "copyRefs": {
+            "reframe": "ad-1-version-a-consequence-depth-short.altHook.3"
+          },
+          "copySource": "Verbatim magnet (AD1A alt hook, Mechanism): \"Your kid doesn't need to be told they're good. They need to see it.\"",
+          "status": "rendered",
+          "notes": "Centered reframe.",
+          "output": "out/campaigns/confidence-ankeny/proof-confidence/A3.png",
+          "thumb": "out/campaigns/confidence-ankeny/proof-confidence/A3.png",
+          "renderedAt": "2026-06-04T02:52:11.620Z"
+        },
+        {
+          "id": "A4",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-43",
+          "media": "./assets/jarosh/group-shot-posing-high-school-female-jarosh-performance-mp4-dcd301ab.mp4",
+          "copyRefs": {
+            "hook": "ad-1-version-a-consequence-depth-short.imageHeadline",
+            "reframe": "ad-1-version-a-consequence-depth-short.imageSubhead"
+          },
+          "copySource": "Verbatim magnets: image headline \"Here's Why Most Young Athletes Lose Confidence\" (headline) + image sub-headline \"(And What Actually Rebuilds It)\" (subhead).",
+          "status": "rendered",
+          "notes": "Stacked layout: headline + subhead (kicker empty).",
+          "output": "out/campaigns/confidence-ankeny/proof-confidence/A4.png",
+          "thumb": "out/campaigns/confidence-ankeny/proof-confidence/A4.png",
+          "renderedAt": "2026-06-04T02:52:19.821Z"
+        },
+        {
+          "id": "B1",
+          "beat": "B — Name the moment",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-43",
+          "media": "./assets/jarosh/action-image-posing-high-school-female-jarosh-performance-mp-5782a83d.mp4",
+          "hookRef": "ad-1-version-b-emotional-depth-short.altHook.2",
+          "copySource": "Verbatim magnet (AD1B alt hook, Mirror): \"The hardest part isn't watching them lose. It's watching them stop believing they can win.\" — auto-split headline + subhead.",
+          "status": "rendered",
+          "notes": "Two-segment hook stacked (headline + subhead).",
+          "output": "out/campaigns/confidence-ankeny/proof-confidence/B1.png",
+          "thumb": "out/campaigns/confidence-ankeny/proof-confidence/B1.png",
+          "renderedAt": "2026-06-04T02:52:27.901Z"
+        },
+        {
+          "id": "B2",
+          "beat": "B — Name the moment",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-40",
+          "media": "./assets/jarosh/group-shot-posing-high-school-female-jarosh-performance-mp4-d20251bb.mp4",
+          "copyRefs": {
+            "reframe": [
+              "ad-3-version-a-consequence-depth-long.bodyLine.3.1",
+              "ad-3-version-a-consequence-depth-long.bodyLine.3.4"
+            ]
+          },
+          "copySource": "Verbatim magnets (AD3A body): \"Praise is on loan.\" (reframe) + \"It was never really theirs.\" (support).",
+          "status": "rendered",
+          "notes": "Quote-style reframe + support, both verbatim sentences.",
+          "output": "out/campaigns/confidence-ankeny/proof-confidence/B2.png",
+          "thumb": "out/campaigns/confidence-ankeny/proof-confidence/B2.png",
+          "renderedAt": "2026-06-04T02:52:36.565Z"
+        },
+        {
+          "id": "C1",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-36",
+          "media": "./assets/jarosh/group-shot-posing-mixed-mixed-jarosh-performance-jpg-a8734a95.jpg",
+          "copyRefs": {
+            "reframe": "ad-2-version-a-consequence-depth-medium.bodyLine.2.4"
+          },
+          "copySource": "Verbatim magnet (AD2A body): \"Only one of them holds up when the play is on the line, and it isn't the one made of words.\"",
+          "status": "rendered",
+          "notes": "The two-kinds mechanism (distinct copy from A4).",
+          "output": "out/campaigns/confidence-ankeny/proof-confidence/C1.png",
+          "thumb": "out/campaigns/confidence-ankeny/proof-confidence/C1.png",
+          "renderedAt": "2026-06-04T02:52:44.886Z"
+        },
+        {
+          "id": "C2",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-40",
+          "media": "./assets/jarosh/group-shot-posing-high-school-female-jarosh-performance-mp4-df29d9c5.mp4",
+          "copyRefs": {
+            "reframe": [
+              "ad-3-version-b-emotional-depth-long.bodyLine.3.4",
+              "ad-3-version-b-emotional-depth-long.bodyLine.3.3"
+            ]
+          },
+          "copySource": "Verbatim magnets (AD3B body): \"They have to see it.\" (reframe) + \"You can't hand it to them, and a coach can't shout it into them.\" (support).",
+          "status": "rendered",
+          "notes": "Mechanism reframe (distinct copy from B2).",
+          "output": "out/campaigns/confidence-ankeny/proof-confidence/C2.png",
+          "thumb": "out/campaigns/confidence-ankeny/proof-confidence/C2.png",
+          "renderedAt": "2026-06-04T02:52:53.204Z"
+        },
+        {
+          "id": "D1",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-36",
+          "media": "./assets/jarosh/638942872-1504070021726261-8224200172582480270-n-60f3ee53.jpg",
+          "copyRefs": {
+            "reframe": "ad-3-version-a-consequence-depth-long.bodyLine.4.1"
+          },
+          "copySource": "Verbatim magnet (AD3A body): \"And here's the part worth saying plainly: you didn't do anything wrong by encouraging them.\"",
+          "status": "rendered",
+          "notes": "Blame removal (distinct copy from A3).",
+          "output": "out/campaigns/confidence-ankeny/proof-confidence/D1.png",
+          "thumb": "out/campaigns/confidence-ankeny/proof-confidence/D1.png",
+          "renderedAt": "2026-06-04T02:53:02.026Z"
+        },
+        {
+          "id": "D2",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-43",
+          "media": "./assets/jarosh/action-clip-lateral-shuffle-high-school-female-jarosh-slide2-2f08659e.mp4",
+          "copyRefs": {
+            "hook": "ad-3-version-a-consequence-depth-long.bodyLine.4.3",
+            "reframe": "ad-3-version-a-consequence-depth-long.bodyLine.4.4"
+          },
+          "copySource": "Verbatim magnets (AD3A body): \"It just isn't the tool that fixes this, because confidence problems don't get solved with words.\" (headline) + \"They get solved with evidence.\" (subhead).",
+          "status": "rendered",
+          "notes": "The pivot to proof, stacked (distinct copy from C1).",
+          "output": "out/campaigns/confidence-ankeny/proof-confidence/D2.png",
+          "thumb": "out/campaigns/confidence-ankeny/proof-confidence/D2.png",
+          "renderedAt": "2026-06-04T02:53:10.238Z"
+        },
+        {
+          "id": "E1",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "meet-coach",
+          "clip": "brand/kraken-cache/jarosh-performance-post-20260528t172302-18094659880961980-mp-9e9f155c.mp4",
+          "templateData": {
+            "eyebrow": "CONFIDENCE FROM PROOF",
+            "coachFirst": "COACH NICK",
+            "coachLast": "JAROSH",
+            "coachTitle": "FOUNDER",
+            "quote": "CONFIDENCE PROBLEMS DON'T GET SOLVED WITH WORDS. THEY GET SOLVED WITH EVIDENCE.",
+            "credentials": "CINCINNATI REDS · COLLEGE ATHLETICS",
+            "facts": "REAL|SPRINT + JUMP NUMBERS · EVERY|SESSION · PROOF|THEY OWN",
+            "ctaText": "BOOK THE ATHLETE ANALYSIS",
+            "ctaMicro": "FREE. NOT A PEP TALK. A DATA SET."
+          },
+          "copySource": "Multi-field template (templateData by design). Verbatim values: AD Description (eyebrow), AD3 line \"confidence problems don't get solved with words. They get solved with evidence\" (quote), credentials verbatim, \"Not a pep talk. A data set.\" (cta micro).",
+          "status": "rendered",
+          "notes": "Coach proof VSL. Binds a distinct coach/training clip.",
+          "output": "out/campaigns/confidence-ankeny/proof-confidence/E1.mp4",
+          "thumb": "out/campaigns/confidence-ankeny/proof-confidence/E1.mp4",
+          "renderedAt": "2026-06-04T02:56:42.403Z"
+        },
+        {
+          "id": "E2",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "quote-card",
+          "clip": "brand/kraken-cache/action-clip-hurdling-high-school-male-jarosh-performance-mp4-95470554.mp4",
+          "templateData": {
+            "eyebrow": "CONFIDENCE FROM PROOF",
+            "quoteText": "He got physically stronger here first, and the confidence followed it, and now he plays.",
+            "bylineName": "A PARENT",
+            "bylineMeta": "ANKENY · JAROSH PERFORMANCE",
+            "statsLabel": "THE STRENGTH CAME FIRST. THE BELIEF GREW OUT OF IT."
+          },
+          "copySource": "Multi-field template (templateData by design). Verbatim case study (AD2A 'one mom'): \"He got physically stronger here first, and the confidence followed it, and now he plays.\" + \"The strength came first. The belief grew out of it.\"",
+          "status": "rendering",
+          "notes": "Parent case-study quote card."
+        },
+        {
+          "id": "E3",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-31",
+          "media": "./assets/jarosh/jarosh-performance-post-20260421t185440-18103586420303972-mp-953e4d09.mp4",
+          "templateData": {
+            "coach_name": "COACH NICK\nJAROSH",
+            "coach_title": "FOUNDER",
+            "proof_hero": "PRO & COLLEGE\nATHLETES",
+            "proof_names": "CINCINNATI REDS · COLLEGE ATHLETICS",
+            "claim_line": "Built on pro and college strength-and-conditioning experience."
+          },
+          "copySource": "Multi-field credential template (templateData by design). Verbatim facts (AD3): Coach Graham Wilkerson, CSCS, trained Zack Martin / Ted Karras / Nick Martin; \"the same credential D1 and NFL strength coaches carry.\"",
+          "status": "approved",
+          "notes": "Credential verdict (static, distinct from E1 video / E2 quote)."
+        },
+        {
+          "id": "E4",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-e2e-e5-testimonial",
+          "media": "./assets/jarosh/jarosh-performance-post-20260423t185056-17928417144087920-mp-db494f93.mp4",
+          "copyRefs": {
+            "testimonial": "ad-2-version-b-emotional-depth-medium.bodyLine.5.3"
+          },
+          "templateData": {
+            "byline": "A PARENT · ANKENY",
+            "stars": "5.0"
+          },
+          "copySource": "Verbatim magnet (AD2B 'one mom'): \"He got physically stronger here first, and then something bigger followed, he got confident, and now he plays.\" (testimonial). Byline is an identity slot (templateData).",
+          "status": "rendered",
+          "notes": "Testimonial card (AD2B variant; distinct wording from E2).",
+          "output": "out/campaigns/confidence-ankeny/proof-confidence/E4.png",
+          "thumb": "out/campaigns/confidence-ankeny/proof-confidence/E4.png",
+          "renderedAt": "2026-06-04T03:01:39.114Z"
+        },
+        {
+          "id": "F1",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "stat-reveal",
+          "clip": "brand/kraken-cache/jarosh-performance-post-20260429t215026-18376169473163196-mp-b495d907.mp4",
+          "templateData": {
+            "eyebrow": "THE 90-DAY GUARANTEE",
+            "title1": "THE PROMISE NO OTHER",
+            "title2": "PROGRAM WILL MAKE.",
+            "stat1Value": 1,
+            "stat1Unit": " MPH",
+            "stat1Label": "SPEED",
+            "stat2Value": 3,
+            "stat2Unit": "\"",
+            "stat2Label": "VERTICAL",
+            "freeLine1": "90",
+            "freeLine2": "DAYS",
+            "ctaText": "BOOK YOUR FREE ATHLETE ANALYSIS"
+          },
+          "copySource": "Multi-field template (templateData by design). Verbatim numbers (+1 mph, +3\", 90 days) + AD3 line \"the promise no other program in this market will make.\" Guarantee band is brand-locked.",
+          "status": "approved",
+          "notes": "Guarantee reveal video."
+        },
+        {
+          "id": "F2",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-32",
+          "media": "./assets/jarosh/jarosh-performance-post-20260505t175329-18115540564831348-mp-cf248ffe.mp4",
+          "templateData": {
+            "offer_headline": "FREE ATHLETE\nANALYSIS",
+            "offer_detail": "Not a pep talk. A data set.",
+            "cta_text": "BOOK THE ATHLETE ANALYSIS"
+          },
+          "copySource": "Multi-field offer template (templateData by design). Verbatim: Athlete Analysis offer; \"Not a pep talk. A data set.\" Guarantee band auto-locked.",
+          "status": "approved",
+          "notes": "Offer card. Guarantee band verbatim-locked."
+        },
+        {
+          "id": "BR1",
+          "beat": null,
+          "temperature": "any",
+          "format": "video",
+          "source": "template",
+          "template": "logo-sting",
+          "clip": "brand/kraken-cache/jarosh-performance-post-20260511t182439-18064616354392961-sl-c6dad950.mp4",
+          "templateData": {
+            "wordmark1": "JAROSH",
+            "wordmark2": "PERFORMANCE",
+            "tagline": "CONFIDENCE FROM PROOF.",
+            "url": "JAROSHPERFORMANCE.FITNESS"
+          },
+          "copySource": "Brand lockup + verbatim ad Description as tagline (\"Confidence from proof.\").",
+          "status": "approved",
+          "notes": "Brand bumper over footage."
+        }
+      ]
+    }
+  ],
+  "location": "ankeny"
+}

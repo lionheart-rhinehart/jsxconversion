@@ -17,6 +17,18 @@
       "aliases": ["athletes acceleration", "aa", "genesis", "genesis sports performance"],
       "dataTier": "athletes-acceleration",
       "brandKit": "brand/aa-design-system/project/README.md"
+    },
+    "jarosh-performance": {
+      "slug": "jarosh-performance",
+      "aliases": ["jarosh performance", "jarosh", "nick jarosh fitness", "njf"],
+      "dataTier": "jarosh-performance",
+      "brandKit": "brand/jarosh-performance/project/README.md"
+    },
+    "smaa": {
+      "slug": "smaa",
+      "aliases": ["southern maine athlete academy", "southern maine soccer academy", "smaa", "southern maine"],
+      "dataTier": "smaa",
+      "brandKit": "brand/smaa/project/README.md"
     }
   }
 }

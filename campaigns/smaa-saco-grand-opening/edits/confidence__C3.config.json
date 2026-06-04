@@ -1,0 +1,177 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
+      "z": 1
+    },
+    {
+      "id": "divider_1",
+      "tag": "divider_1",
+      "type": "rect",
+      "x": 90,
+      "y": 250,
+      "width": 707,
+      "height": 8,
+      "fill": "#017ee6",
+      "z": 15,
+      "opacity": 1
+    },
+    {
+      "id": "brand_rule",
+      "tag": "brand_rule",
+      "type": "rect",
+      "x": 90,
+      "y": 1628,
+      "width": 150,
+      "height": 6,
+      "fill": "#017ee6",
+      "z": 16
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor chip (auto-filled)",
+      "x": 76,
+      "y": 103,
+      "textAlign": "left",
+      "text": "SACO SPORT PARENTS",
+      "fontSize": 58,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#017ee6",
+      "chipBg": "#ffffff",
+      "chipPad": "12px 24px",
+      "chipRadius": 8,
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 34,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "kicker",
+      "tag": "kicker",
+      "label": "Kicker — hook lead-in (auto from splitHook; blank if 2-seg)",
+      "type": "text",
+      "x": 100,
+      "y": 413,
+      "width": 924,
+      "textAlign": "left",
+      "text": "it has to be earned",
+      "fontSize": 56,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.95,
+      "letterSpacing": "0.01em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "kicker",
+      "accepts": [
+        "kicker"
+      ],
+      "maxChars": 30,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "phrase",
+      "tag": "phrase",
+      "label": "Giant phrase (hook/reframe/claim)",
+      "x": 74,
+      "y": 566,
+      "width": 924,
+      "textAlign": "left",
+      "text": "Confidence Can't Be Coached.",
+      "fontSize": 208,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.88,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "whiteSpace": "pre-line",
+      "z": 21,
+      "role": "hook",
+      "accepts": [
+        "hook",
+        "claim",
+        "reframe",
+        "mechanism",
+        "offer"
+      ],
+      "maxChars": 28,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "support",
+      "tag": "support",
+      "label": "Support line",
+      "x": 90,
+      "y": 1180,
+      "width": 912,
+      "textAlign": "left",
+      "text": "(Now open in Saco — founding spots)",
+      "fontSize": 66,
+      "fontFamily": "Anton",
+      "color": "#017ee6",
+      "lineHeight": 0.98,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "z": 22,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "claim",
+        "proof",
+        "mechanism"
+      ],
+      "maxChars": 64,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark",
+      "x": 90,
+      "y": 1664,
+      "width": 900,
+      "textAlign": "left",
+      "text": "SOUTHERN MAINE ATHLETE ACADEMY",
+      "fontSize": 34,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 500,
+      "color": "#ffffff",
+      "letterSpacing": "0.14em",
+      "textTransform": "uppercase",
+      "z": 23,
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    }
+  ],
+  "media": {
+    "path": "./assets/smaa-founder.jpg",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1,
+    "offsetX": 0,
+    "offsetY": 0
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
+      "z": 1
+    },
+    {
+      "id": "rule_top",
+      "tag": "rule_top",
+      "type": "rect",
+      "x": 240,
+      "y": 690,
+      "width": 600,
+      "height": 6,
+      "fill": "#fa3f36",
+      "z": 15
+    },
+    {
+      "id": "rule_bottom",
+      "tag": "rule_bottom",
+      "type": "rect",
+      "x": 240,
+      "y": 1230,
+      "width": 600,
+      "height": 6,
+      "fill": "#fa3f36",
+      "z": 15
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor chip (auto-filled, centered)",
+      "x": 0,
+      "y": 340,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "Ankeny SPORT PARENTS",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#fa3f36",
+      "chipBg": "#ffffff",
+      "chipPad": "12px 24px",
+      "chipRadius": 8,
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 34,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "kicker",
+      "tag": "kicker",
+      "label": "Kicker — hook lead-in (auto from splitHook; blank if 2-seg)",
+      "type": "text",
+      "x": 0,
+      "y": 640,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "",
+      "fontSize": 56,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.95,
+      "letterSpacing": "0.01em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "kicker",
+      "accepts": [
+        "kicker"
+      ],
+      "maxChars": 30,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "reframe",
+      "tag": "reframe",
+      "label": "Framed reframe (centered, two-line)",
+      "x": 60,
+      "y": 760,
+      "width": 960,
+      "textAlign": "center",
+      "text": "This was never your kid's fault, and it was never yours.",
+      "fontSize": 96,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 1,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "whiteSpace": "pre-line",
+      "z": 21,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "claim",
+        "hook"
+      ],
+      "maxChars": 80,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark (centered)",
+      "x": 0,
+      "y": 1680,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "JAROSH PERFORMANCE",
+      "fontSize": 34,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 500,
+      "color": "#ffffff",
+      "letterSpacing": "0.14em",
+      "textTransform": "uppercase",
+      "z": 22,
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 24,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    }
+  ],
+  "media": {
+    "path": "./assets/jarosh/action-clip-deadlift-high-school-female-jarosh-slide1of4-865674ee.mp4",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1
+  }
+}

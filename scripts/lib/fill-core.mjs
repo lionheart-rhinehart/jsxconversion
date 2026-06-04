@@ -201,6 +201,12 @@ export function resolveStaticConfig({ clusterId, asset, brand, location, campaig
   const locationTier = loadTier("location", location, dataDir);
   const campaignTier = loadTier("campaign", campaign, dataDir);
   const tierTags = mergeTiers(brandTier.tags, locationTier.tags, campaignTier.tags);
+  // Brand-name alias: the cluster bank tags its wordmark element `brand`, but the
+  // brand tier supplies the name as `brand_name`. Mirror it so the ACTIVE kit's
+  // name syncs (AA: same text → 0-diff; any other brand: overrides the baked AA
+  // wordmark). Without this every non-AA brand leaks "ATHLETES ACCELERATION" on
+  // cluster-30..43 (the `brand` tag never resolves against a `brand_name`-only tier).
+  if (tierTags.brand_name != null && tierTags.brand == null) tierTags.brand = tierTags.brand_name;
   // Brand-color remap: rewrite the bank's authoring colors to the ACTIVE kit's
   // (hex + rgba tints). Identity/no-op for the AA kit (0-diff); full recolor for
   // any other brand. Applied to the final filled config just before return.

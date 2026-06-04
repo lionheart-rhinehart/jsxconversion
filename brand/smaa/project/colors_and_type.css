@@ -1,0 +1,127 @@
+/* ============================================================
+   Southern Maine Athlete Academy (SMAA) — Foundations
+   Colors + Typography tokens
+   ------------------------------------------------------------
+   Brand: youth soccer + athletic development, Portland & Saco ME.
+   Voice: bold, motivating, parent-facing. Energetic but credible.
+   ============================================================ */
+
+/* --- Webfonts (substituted from Google Fonts — see README) ---
+   Oswald  -> condensed athletic display (stands in for the slab
+              wordmark feel on the logo)
+   Montserrat -> friendly geometric sans for headings + body
+   (If you have the brand's real fonts, drop them in /fonts and
+    swap the @import + --font-* vars below.)                      */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* ---------- BRAND CORE ---------- */
+  --smaa-blue:        #017ee6;  /* primary — CTAs, links, key accents */
+  --smaa-blue-600:    #0268bd;  /* hover / pressed primary */
+  --smaa-blue-050:    #e6f3fd;  /* tint wash */
+  --smaa-green:       #59be0b;  /* energy accent — highlights, success, "go" */
+  --smaa-green-600:   #4aa008;  /* hover green */
+  --smaa-green-050:   #eef9e3;  /* tint wash */
+
+  /* ---------- INK / SURFACES ---------- */
+  --ink-900:          #0b1219;  /* near-black navy — dark sections, logo bg */
+  --ink-800:          #121b24;  /* raised dark surface */
+  --ink-700:          #1d2933;  /* dark card / border-on-dark */
+  --paper:            #ffffff;  /* primary light surface */
+  --paper-soft:       #f4f7fa;  /* light section background */
+  --paper-line:       #e3e9ef;  /* hairline divider on light */
+
+  /* ---------- TEXT ---------- */
+  --fg1:              #0b1219;  /* primary text on light */
+  --fg2:              #45525e;  /* secondary text on light */
+  --fg3:              #6f7d89;  /* muted / captions */
+  --fg-on-dark1:      #ffffff;  /* primary text on dark */
+  --fg-on-dark2:      #aebbc7;  /* secondary text on dark */
+
+  /* ---------- SEMANTIC ---------- */
+  --success:          var(--smaa-green);
+  --link:             var(--smaa-blue);
+  --focus-ring:       #2c97ee;
+  --star:             #ffb400;  /* review stars */
+
+  /* ---------- TYPE FAMILIES ---------- */
+  --font-display: 'Oswald', 'Arial Narrow', system-ui, sans-serif;
+  --font-sans:    'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* ---------- TYPE SCALE (desktop) ---------- */
+  --fs-hero:   clamp(40px, 6vw, 76px);
+  --fs-h1:     clamp(34px, 4.5vw, 52px);
+  --fs-h2:     clamp(28px, 3.4vw, 40px);
+  --fs-h3:     22px;
+  --fs-lead:   20px;
+  --fs-body:   17px;
+  --fs-sm:     15px;
+  --fs-xs:     13px;
+  --fs-eyebrow:14px;
+
+  /* ---------- RADII ---------- */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --r-pill: 999px;
+
+  /* ---------- SHADOWS ---------- */
+  --shadow-sm: 0 1px 2px rgba(11,18,25,.08);
+  --shadow-md: 0 8px 24px rgba(11,18,25,.10);
+  --shadow-lg: 0 18px 48px rgba(11,18,25,.16);
+  --shadow-cta: 0 8px 20px rgba(1,126,230,.35);
+
+  /* ---------- SPACING (4px base) ---------- */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px; --sp-9: 96px;
+}
+
+/* ============================================================
+   SEMANTIC ELEMENT STYLES
+   ============================================================ */
+.smaa-display, .smaa-hero {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .005em;
+  line-height: .98;
+  color: var(--fg1);
+}
+.smaa-hero { font-size: var(--fs-hero); }
+
+.smaa-h1, .smaa-h2, .smaa-h3 {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -.01em;
+  color: var(--fg1);
+}
+.smaa-h1 { font-size: var(--fs-h1); }
+.smaa-h2 { font-size: var(--fs-h2); }
+.smaa-h3 { font-size: var(--fs-h3); font-weight: 700; line-height: 1.2; }
+
+.smaa-eyebrow {
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-size: var(--fs-eyebrow);
+  color: var(--smaa-blue);
+}
+
+.smaa-lead {
+  font-family: var(--font-sans);
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+  font-weight: 500;
+  color: var(--fg2);
+}
+.smaa-body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: 1.65;
+  color: var(--fg2);
+}
+.smaa-sm  { font-family: var(--font-sans); font-size: var(--fs-sm); line-height: 1.5; color: var(--fg3); }
+
+a { color: var(--link); }

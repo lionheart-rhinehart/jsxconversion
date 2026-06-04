@@ -1,0 +1,7 @@
+{
+  "_comment": "Location tier — SMAA Portland studio (Southern Maine Athlete Academy, 160 Presumpscot St, Portland, ME 04103). Supplies `city` for the locale eyebrow anchor ('PORTLAND SPORT PARENTS'); the ', ME' state suffix is stripped by cityLabel/buildEyebrowAnchor. Merged campaign > location > brand.",
+  "location": "portland",
+  "tags": {
+    "city": "PORTLAND, ME"
+  }
+}

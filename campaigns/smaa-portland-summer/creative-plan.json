@@ -1,0 +1,336 @@
+{
+  "schemaVersion": 1,
+  "campaign": "smaa-portland-summer",
+  "brand": "smaa",
+  "location": "portland",
+  "knobs": {
+    "assetsPerAngle": 3,
+    "motionRatio": {
+      "video": 0.22,
+      "gif": 0,
+      "static": 0.78
+    },
+    "freshnessFloor": 0,
+    "repetitionCap": 3
+  },
+  "_planNotes": {
+    "scope": "SMAA Portland summer campaign. 3 angles (Coach Trust / Summer Gap / Confidence) x 3 ads (short/medium/long) = 9 creatives, one per ad. Brand = smaa (data/brand.smaa.json). Location = portland (eyebrow auto-anchors 'PORTLAND SPORT PARENTS').",
+    "today": "Ad-copy-only pass. Media = SMAA brand-kit photos as PLACEHOLDERS (hero/founder/step1-3), distinct per asset within an angle. Real SMAA training media to be pulled from Kraken later and swapped in the editor. No reverse brief / microscripts exist for this campaign (the copy notes 'no RB').",
+    "copyRule": "BY REFERENCE, VERBATIM. On-creative copy = each ad's Headline-on-image (role hook) + Sub-headline-on-image (role reframe), bound by copyRefs to copy-library.json ids (ad-a1.imageHeadline etc.). Offer cards bind offer to the ad's verbatim '$100 off' bodyPara. Nothing authored or paraphrased.",
+    "format": "Mix: 2 motion (A2 meet-coach + C2 coach-lower-thirds, Coach Jeremy, founder/training photo) + 7 static (clean AA-native cluster bank, remapped to SMAA blue #017ee6). Motion templateData fully set so no AA stock defaults leak.",
+    "beats": "short=A (hook) · medium=C/D (mechanism / coach proof) · long=D (reframe). Letters A/C/D. NO F (offer) beat today: the clean static bank has no offer-only card without a guarantee slot (cluster-32 would leak AA's guarantee). The '$100 off' / founding-member offer lives in the ad BODY copy; an on-creative offer card is the flagged next step (confirm SMAA guarantee -> unlock cluster-32, or promote an offer template). Per-angle: 3 distinct skeletons + 3 distinct media.",
+    "brandSync": "fill-core aliases tier brand_name -> the cluster `brand` tag, so the wordmark reads SOUTHERN MAINE ATHLETE ACADEMY; palette.mjs remaps the bank red to SMAA blue. Verified.",
+    "guarantee": "SMAA guarantee wording not yet confirmed verbatim, so NO guarantee-slot templates used (cluster-32/season-clock/stat-reveal avoided). Add once Cody confirms the exact line.",
+    "status": "All 'pending' — awaiting approval on the review page. No render until approved."
+  },
+  "angles": [
+    {
+      "id": "coach-trust",
+      "name": "Coach Trust — minutes come from coach trust, not effort (ad copy Angle A)",
+      "location": "portland",
+      "mechanism": "Coaches play the kids they trust with the ball when the game is tight; trust is built in the half-second after the ball arrives (first touch + quick decision under pressure), and that is coachable.",
+      "emotionalJob": "Remove blame from the kid's effort and the parent's parenting; relocate the bench problem to a trainable skill.",
+      "voice": "Head-coach-to-parent, declarative. No emoji, no exclamation, no em dash.",
+      "assets": [
+        {
+          "id": "A1",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-33",
+          "media": "./assets/smaa-hero.jpg",
+          "copyRefs": {
+            "hook": "ad-a1.imageHeadline"
+          },
+          "copySource": "Verbatim on-image headline (ad-a1.imageHeadline): \"Why Hard Workers Ride the Bench\". eyebrow auto-anchors PORTLAND.",
+          "notes": "Cold hook card over hero training photo (placeholder).",
+          "status": "rendered",
+          "output": "out/campaigns/smaa-portland-summer/coach-trust/A1.png",
+          "thumb": "out/campaigns/smaa-portland-summer/coach-trust/A1.png",
+          "renderedAt": "2026-06-04T02:18:35.402Z",
+          "kraken": {
+            "id": "0eaa1c29-cb79-490d-aaae-6475c64e420e",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/9146b933-dc88-4e31-b8ba-1157135905ed/smaa-portland-summer-coach-trust-A1-1780540085082.png",
+            "folder": "Portland Summer - campaign"
+          },
+          "editedAt": "2026-06-04T02:18:26.911Z"
+        },
+        {
+          "id": "A2",
+          "beat": "D — Proof / trust",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "meet-coach",
+          "templateData": {
+            "duration": 8,
+            "coachFirst": "JEREMY",
+            "coachLast": "LONGCHAMP",
+            "coachTitle": "FOUNDER · SMAA",
+            "quote": "Coaches play the kids they trust with the ball when the game gets tight.",
+            "credentials": "MS · CSCS · 10 YRS COACHING · FORMER COLLEGE PLAYER",
+            "facts": "10 YRS|COACHING · 2|STUDIOS · 7+|AGES TRAINED",
+            "ctaText": "BOOK A FREE EVALUATION",
+            "ctaMicro": "FREE 1:1 EVALUATION",
+            "media": "assets/smaa-founder.jpg"
+          },
+          "copySource": "Meet-Coach proof card. quote is verbatim (ad-a1 body): \"Coaches play the kids they trust with the ball when the game gets tight.\" credentials/facts are factual (Coach Jeremy's stated record: MS, CSCS, 10 yrs, former college player; Portland+Saco studios; ages 7+). eyebrow force-set to PORTLAND at render.",
+          "notes": "Motion. Coach Jeremy over founder portrait (placeholder). All fields set so no AA stock defaults leak.",
+          "status": "rendered",
+          "output": "out/campaigns/smaa-portland-summer/coach-trust/A2.mp4",
+          "thumb": "out/campaigns/smaa-portland-summer/coach-trust/A2.mp4",
+          "renderedAt": "2026-06-04T01:29:20.330Z",
+          "kraken": {
+            "id": "c243ef4f-4ae3-4179-9a18-53f6f287ca28",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/9146b933-dc88-4e31-b8ba-1157135905ed/smaa-portland-summer-coach-trust-A2-1780538863144.mp4",
+            "folder": "Portland Summer - campaign"
+          }
+        },
+        {
+          "id": "A3",
+          "beat": "D — Reframe",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-34",
+          "media": "./assets/smaa-step1.jpg",
+          "copyRefs": {
+            "hook": "ad-a3.imageHeadline",
+            "reframe": "ad-a3.imageSubhead"
+          },
+          "copySource": "Reframe card. hook = ad-a3.imageHeadline \"Why Effort Doesn't Earn Minutes\"; reframe = ad-a3.imageSubhead \"(And what to build before fall rosters set)\". (Offer lives in the ad body copy; no clean offer-slot static without a guarantee slot — offer card deferred pending confirmed SMAA guarantee or a promoted offer template.)",
+          "notes": "Warm reframe over training photo (placeholder).",
+          "status": "rendered",
+          "output": "out/campaigns/smaa-portland-summer/coach-trust/A3.png",
+          "thumb": "out/campaigns/smaa-portland-summer/coach-trust/A3.png",
+          "renderedAt": "2026-06-04T02:19:42.680Z",
+          "kraken": {
+            "id": "e8d19cac-cdf8-4e36-b72a-6bc016086c46",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/9146b933-dc88-4e31-b8ba-1157135905ed/smaa-portland-summer-coach-trust-A3-1780540087117.png",
+            "folder": "Portland Summer - campaign"
+          },
+          "editedAt": "2026-06-04T02:19:28.099Z"
+        },
+        {
+          "id": "G1",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "gif",
+          "source": "template",
+          "template": "fresh-e2e-c1",
+          "photo": "brand/video-templates/assets/smaa-step2.jpg",
+          "templateData": {
+            "headline": "Effort gets a kid to practice. Decisions get them into the game.",
+            "microscript": ""
+          },
+          "copySource": "Animated hook GIF. headline = ad-a1.altHook.1 (verbatim alt hook). eyebrow auto-anchors PORTLAND; microscript suppressed; media = SMAA placeholder (smaa-step2.jpg).",
+          "notes": "GIF (mp4 -> palette). Footage-free animated hook over a SMAA photo. Bumps the motion mix.",
+          "status": "rendered",
+          "output": "out/campaigns/smaa-portland-summer/coach-trust/G1.gif",
+          "thumb": "out/campaigns/smaa-portland-summer/coach-trust/G1.gif",
+          "renderedAt": "2026-06-04T03:03:20.526Z",
+          "kraken": {
+            "id": "221f5e57-0b36-43dc-bcf4-cee0e424d12e",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/9146b933-dc88-4e31-b8ba-1157135905ed/smaa-portland-summer-coach-trust-G1-1780542534672.gif",
+            "folder": "Portland Summer - campaign"
+          }
+        }
+      ]
+    },
+    {
+      "id": "summer-gap",
+      "name": "Summer Gap — a busy soccer summer is not a developmental one (ad copy Angle B)",
+      "location": "portland",
+      "mechanism": "Game volume builds game IQ, not the physical/technical separators; those need eyes on every touch and a real plan. Summer (no games to win) is when players actually separate.",
+      "emotionalJob": "Reframe a 'busy summer' as a 'wasted summer' without blaming the parent's effort.",
+      "voice": "Head-coach-to-parent, declarative. No emoji, no exclamation, no em dash.",
+      "assets": [
+        {
+          "id": "B1",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-35",
+          "media": "./assets/smaa-step2.jpg",
+          "copyRefs": {
+            "hook": "ad-b1.imageHeadline",
+            "reframe": "ad-b1.imageSubhead"
+          },
+          "copySource": "hook = ad-b1.imageHeadline \"Why Summer Makes or Breaks Players\"; reframe = ad-b1.imageSubhead \"(And how to use the next 8 weeks)\". eyebrow auto-anchors PORTLAND.",
+          "notes": "Cold hook+subhead card over training photo (placeholder).",
+          "status": "rendered",
+          "output": "out/campaigns/smaa-portland-summer/summer-gap/B1.png",
+          "thumb": "out/campaigns/smaa-portland-summer/summer-gap/B1.png",
+          "renderedAt": "2026-06-04T02:20:28.616Z",
+          "kraken": {
+            "id": "23551a9d-6e0e-4f40-9f1f-504c1b4d815c",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/9146b933-dc88-4e31-b8ba-1157135905ed/smaa-portland-summer-summer-gap-B1-1780540088066.png",
+            "folder": "Portland Summer - campaign"
+          },
+          "editedAt": "2026-06-04T02:20:06.379Z"
+        },
+        {
+          "id": "B2",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-39",
+          "media": "./assets/smaa-step3.jpg",
+          "copyRefs": {
+            "hook": "ad-b2.imageHeadline",
+            "reframe": "ad-b2.imageSubhead"
+          },
+          "copySource": "Mechanism card. hook = ad-b2.imageHeadline \"The Summer Most Players Waste\"; reframe = ad-b2.imageSubhead \"(And how to make these 8 weeks count)\".",
+          "notes": "Mechanism reframe over training photo (placeholder).",
+          "status": "rendered",
+          "output": "out/campaigns/smaa-portland-summer/summer-gap/B2.png",
+          "thumb": "out/campaigns/smaa-portland-summer/summer-gap/B2.png",
+          "renderedAt": "2026-06-04T01:58:52.601Z",
+          "editedAt": "2026-06-04T01:58:44.521Z",
+          "kraken": {
+            "id": "e9c79c72-b93e-4fd0-bd74-d2f2071fc250",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/9146b933-dc88-4e31-b8ba-1157135905ed/smaa-portland-summer-summer-gap-B2-1780540089144.png",
+            "folder": "Portland Summer - campaign"
+          }
+        },
+        {
+          "id": "B3",
+          "beat": "D — Reframe",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-34",
+          "media": "./assets/smaa-hero.jpg",
+          "copyRefs": {
+            "hook": "ad-b3.imageHeadline",
+            "claim": "ad-b3.altHook.2"
+          },
+          "copySource": "Reframe card. hook = ad-b3.imageHeadline \"Why a Busy Summer Isn't Enough\"; claim = ad-b3.altHook.2 (verbatim) \"By the time fall tryouts arrive, the gap was already built in July.\" (Uses the alt-hook as the support line so B3 doesn't repeat B2's '(And how to make these 8 weeks count)' subhead.)",
+          "notes": "Warm reframe over hero photo (placeholder).",
+          "status": "rendered",
+          "output": "out/campaigns/smaa-portland-summer/summer-gap/B3.png",
+          "thumb": "out/campaigns/smaa-portland-summer/summer-gap/B3.png",
+          "renderedAt": "2026-06-04T02:21:29.305Z",
+          "kraken": {
+            "id": "7cc9b77b-0626-4a0c-a549-a8be8bdb648f",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/9146b933-dc88-4e31-b8ba-1157135905ed/smaa-portland-summer-summer-gap-B3-1780540090843.png",
+            "folder": "Portland Summer - campaign"
+          },
+          "editedAt": "2026-06-04T02:21:15.089Z"
+        }
+      ]
+    },
+    {
+      "id": "confidence",
+      "name": "Confidence — confidence is downstream of competence (ad copy Angle C)",
+      "location": "portland",
+      "mechanism": "Confidence is not a pep talk; it is a byproduct of a reliable first touch. Build the skill and belief follows; a kid who can handle the ball stops hiding from it.",
+      "emotionalJob": "Reframe confidence from an unfixable personality trait to a fixable skill outcome; warm, situation-focused, never about the child's character.",
+      "voice": "Head-coach-to-parent, declarative. No emoji, no exclamation, no em dash.",
+      "assets": [
+        {
+          "id": "C1",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-33",
+          "media": "./assets/smaa-step1.jpg",
+          "copyRefs": {
+            "hook": "ad-c1.imageHeadline"
+          },
+          "copySource": "Verbatim on-image headline (ad-c1.imageHeadline): \"Why Pep Talks Don't Build Confidence\". eyebrow auto-anchors PORTLAND.",
+          "notes": "Cold hook card over training photo (placeholder).",
+          "status": "rendered",
+          "output": "out/campaigns/smaa-portland-summer/confidence/C1.png",
+          "thumb": "out/campaigns/smaa-portland-summer/confidence/C1.png",
+          "renderedAt": "2026-06-04T02:23:16.305Z",
+          "kraken": {
+            "id": "c66ac365-bc7b-452c-bda6-47f253ccc25f",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/9146b933-dc88-4e31-b8ba-1157135905ed/smaa-portland-summer-confidence-C1-1780540091959.png",
+            "folder": "Portland Summer - campaign"
+          },
+          "editedAt": "2026-06-04T02:22:59.127Z"
+        },
+        {
+          "id": "C2",
+          "beat": "D — Proof / trust",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "coach-lower-thirds",
+          "templateData": {
+            "duration": 6,
+            "coachName": "COACH JEREMY LONGCHAMP",
+            "coachTitle": "FOUNDER · SMAA",
+            "credentials": "MS · CSCS · 10 YRS COACHING · FORMER COLLEGE PLAYER",
+            "media": "assets/smaa-step2.jpg"
+          },
+          "copySource": "Coach lower-thirds proof card over training b-roll (placeholder). coachName/credentials are factual (Coach Jeremy's stated record). eyebrow force-set to PORTLAND at render.",
+          "notes": "Motion. Coach credential card. All fields set so no AA stock defaults leak.",
+          "status": "rendered",
+          "output": "out/campaigns/smaa-portland-summer/confidence/C2.mp4",
+          "thumb": "out/campaigns/smaa-portland-summer/confidence/C2.mp4",
+          "renderedAt": "2026-06-04T01:38:18.025Z",
+          "kraken": {
+            "id": "419b54bb-1d5d-41c5-ae1f-fb9983d5194b",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/9146b933-dc88-4e31-b8ba-1157135905ed/smaa-portland-summer-confidence-C2-1780538871416.mp4",
+            "folder": "Portland Summer - campaign"
+          }
+        },
+        {
+          "id": "C3",
+          "beat": "D — Reframe",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-34",
+          "media": "./assets/smaa-founder.jpg",
+          "copyRefs": {
+            "hook": "ad-c3.imageHeadline",
+            "reframe": "ad-c3.imageSubhead"
+          },
+          "copySource": "Reframe card. hook = ad-c3.imageHeadline \"Why Confidence Can't Be Coached In\"; reframe = ad-c3.imageSubhead \"(And how to rebuild it before fall)\".",
+          "notes": "Warm reframe over founder photo (placeholder).",
+          "status": "rendered",
+          "output": "out/campaigns/smaa-portland-summer/confidence/C3.png",
+          "thumb": "out/campaigns/smaa-portland-summer/confidence/C3.png",
+          "renderedAt": "2026-06-04T02:25:54.406Z",
+          "kraken": {
+            "id": "0704bce1-02b4-4734-99bc-c43930e49729",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/9146b933-dc88-4e31-b8ba-1157135905ed/smaa-portland-summer-confidence-C3-1780540093553.png",
+            "folder": "Portland Summer - campaign"
+          },
+          "editedAt": "2026-06-04T02:25:37.928Z"
+        },
+        {
+          "id": "G1",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "gif",
+          "source": "template",
+          "template": "fresh-e2e-b1",
+          "photo": "brand/video-templates/assets/smaa-step3.jpg",
+          "templateData": {
+            "headline": "Confidence on the field isn't a mindset. It's a skill that got built first.",
+            "microscript": ""
+          },
+          "copySource": "Animated hook GIF. headline = ad-c1.altHook.1 (verbatim alt hook). eyebrow auto-anchors PORTLAND; microscript suppressed; media = SMAA placeholder (smaa-step3.jpg).",
+          "notes": "GIF (mp4 -> palette). Footage-free animated hook over a SMAA photo. Bumps the motion mix.",
+          "status": "rendered",
+          "output": "out/campaigns/smaa-portland-summer/confidence/G1.gif",
+          "thumb": "out/campaigns/smaa-portland-summer/confidence/G1.gif",
+          "renderedAt": "2026-06-04T03:04:59.953Z",
+          "kraken": {
+            "id": "7efbee49-85ce-4a1e-8849-f2b4fd646724",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/9146b933-dc88-4e31-b8ba-1157135905ed/smaa-portland-summer-confidence-G1-1780542536471.gif",
+            "folder": "Portland Summer - campaign"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,434 @@
+{
+  "schemaVersion": 1,
+  "campaign": "more-games-ankeny",
+  "brand": "jarosh-performance",
+  "knobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": {
+      "video": 0.6,
+      "gif": 0.15,
+      "static": 0.25
+    },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 3
+  },
+  "_planNotes": {
+    "angle": "Angle 3 — 'more games isn't enough' (Topic 6, the parent who believes volume of play is development). Mechanism = games MEASURE the athlete training built, they don't BUILD one. 'A game is a test, not a teacher.' Proof = the Athlete Analysis baseline + the 'one dad' case study + credentials + the guarantee — no forced RCT.",
+    "copyRule": "BY REFERENCE, VERBATIM. Role-slot cards (A1–A4, B1–B2, C1–C2, D1–D2, E3 claim, E4) bind copy by id via copyRefs/hookRef. verbatimGuard CLEAN on ALL 17 now: E1/E2/F1 multi-field values were corrected to verbatim text (E1 quote = single magnet, E2 statsLabel = 'Built, then measured.', F1 title1+title2 concatenate to the verbatim promise line exactly). E3's claim_line binds the verbatim magnet 'Coach Graham Wilkerson built this.'; its coach name / CSCS / NFL-name slots are byline (attribution/identity, exempt) and carry verbatim names — cluster-31's proof_hero+proof_names roles were set to byline (a name list is attribution, not a message claim).",
+    "kicker": "EXERCISED. B1 renders the full eyebrow→kicker→headline→subhead stack from three consecutive verbatim sentences (AD1 para1: 'More playing time feels like the answer.' / 'Another season, another team, more reps in real games.' / 'And a year later, the same kid, the same speed.'). D1 renders eyebrow→kicker→headline ('Games matter.' lead-in → the blame-removal sentence). A3 stays a 2-segment hook (headline+subhead) — its alt-hook has no third part. Casting three distinct complete verbatim lines into the three slots is selection, not stitching.",
+    "layout": "eyebrow (INDIANAPOLIS SPORT PARENTS, white chip) → kicker → headline → subhead. cluster-43 is the stacked template (A3 hookRef 2-seg; B1 3-line kicker stack; D1 kicker+headline). Distinct skeleton within every beat.",
+    "media": "EVERY creative media-backed. Statics set asset.media (./assets/mg-<id>.jpg); motion sets asset.clip (brand/video-templates/assets/mg-<id>.mp4). 17 DISTINCT cache clips, favoring 'where it's built' strength/power footage. Minted via scripts/prep-media.mjs (prefix mg-).",
+    "eyebrow": "location = indianapolis → 'INDIANAPOLIS SPORT PARENTS' auto-anchor; never hand-set.",
+    "guaranteeFlag": "guarantee role brand-locked to canonical wording on F1/F2.",
+    "status": "All 'pending' — re-authored (kicker cards + verbatim fixes); awaiting approval on the review page."
+  },
+  "angles": [
+    {
+      "id": "more-games",
+      "name": "More Games Isn't Enough (volume of play as development) — ad copy series #3",
+      "location": "ankeny",
+      "mechanism": "Games measure the athlete training built; they don't build one. A game is a test, not a teacher — it reveals what's already there, it doesn't add to it. Speed and power get built on purpose in training, or not at all.",
+      "emotionalJob": "Reframe games as a mirror, not a maker — without criticizing the parent's choices (validate the instinct, then flip it).",
+      "voice": "Head-coach-to-parent, declarative, metric-driven. No emoji / exclamation / em dash.",
+      "assets": [
+        {
+          "id": "A1",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-multisport-foundations-grind-trap-A1",
+          "clip": "brand/kraken-cache/action-image-basketball-high-school-male-jarosh-performance--73cb5b33.mp4",
+          "templateData": {
+            "line1": "A GAME IS A TEST,",
+            "line2": "NOT A TEACHER.",
+            "brand": "JAROSH PERFORMANCE"
+          },
+          "copySource": "Verbatim magnet (AD2 body): \"A game is a test, not a teacher.\" — the angle's epiphany, split across the two display lines. eyebrow auto-anchors.",
+          "status": "approved",
+          "notes": "MOTION (rebalance): 3s GIF hook over agility footage (was static cluster-33). CANDIDATE CLIP mg-A1.mp4 (free agility-drill 5033ed6f) — swap on the review page if desired.",
+          "flags": [
+            "candidate-media"
+          ]
+        },
+        {
+          "id": "A2",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "two-truths-lie",
+          "clip": "brand/kraken-cache/jarosh-performance-post-20260511t182439-18064616354392961-sl-cc869c31.mp4",
+          "templateData": {
+            "duration": 8,
+            "eyebrow": "2 TRUTHS · 1 LIE",
+            "title": "2 TRUTHS, 1 LIE.",
+            "claim1": "A GAME DOESN'T DEVELOP AN ATHLETE. IT REVEALS ONE.",
+            "claim2": "A GAME IS A TEST, NOT A TEACHER.",
+            "claim3": "MORE GAMES MAKE A KID FASTER.",
+            "lieIndex": 3,
+            "lieExplain": "Games measure speed. They don't build it. Training does.",
+            "ctaText": "SPOT THE LIE"
+          },
+          "copySource": "Two-truths-one-lie engagement card. Truths are verbatim: claim1 = AD1 \"A game doesn't develop an athlete. It reveals one.\"; claim2 = AD2 \"A game is a test, not a teacher.\" claim3 is the angle's target misconception (the LIE: \"more games make a kid faster\"), revealed false by lieExplain (the mechanism: games measure speed, training builds it). eyebrow auto-anchors.",
+          "status": "approved",
+          "notes": "MOTION (rebalance): two-truths-1-lie engagement card for the cold stop-scroll over footage (added optional bgClip support to the template). CANDIDATE CLIP mg-A2.mp4 (free sled-push e0fab9c6) — swap on the review page if desired.",
+          "flags": [
+            "candidate-media"
+          ]
+        },
+        {
+          "id": "A3",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-43",
+          "media": "./assets/jarosh/jarosh-performance-post-20260511t182439-18064616354392961-sl-64ea2203.mp4",
+          "hookRef": "ad-1.altHook.2",
+          "copySource": "Verbatim magnet (AD1 alt hook, Mechanism): \"Games don't make athletes faster. They just show you how fast training already made them.\" — auto-split headline + subhead (2-segment, no kicker).",
+          "status": "approved",
+          "notes": "Two-segment mechanism hook stacked."
+        },
+        {
+          "id": "A4",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-39",
+          "media": "./assets/jarosh/jarosh-performance-post-20260511t182439-18064616354392961-sl-3e70e867.mp4",
+          "copyRefs": {
+            "mechanism": [
+              "ad-1.imageHeadline",
+              "ad-1.imageSubhead"
+            ]
+          },
+          "copySource": "Verbatim magnets: image headline \"Here's Why More Games Won't Make Them Faster\" + sub-headline \"(And What Actually Will)\".",
+          "status": "approved",
+          "notes": "Claim + support = the on-image headline pair."
+        },
+        {
+          "id": "B1",
+          "beat": "B — Name the moment",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-43",
+          "media": "./assets/jarosh/jarosh-performance-post-20260518t191711-18103266109999547-mp-865ed48b.mp4",
+          "copyRefs": {
+            "kicker": "ad-1.bodyLine.1.1",
+            "hook": "ad-1.bodyLine.1.2",
+            "reframe": "ad-1.bodyLine.1.3"
+          },
+          "copySource": "Verbatim magnets (AD1 para1, three consecutive sentences) → the FULL eyebrow→kicker→headline→subhead stack: \"More playing time feels like the answer.\" (kicker) / \"Another season, another team, more reps in real games.\" (headline) / \"And a year later, the same kid, the same speed.\" (subhead).",
+          "status": "approved",
+          "notes": "KICKER CARD — full stacked hook from three verbatim sentences."
+        },
+        {
+          "id": "B2",
+          "beat": "B — Name the moment",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-multisport-foundations-grind-trap-A1",
+          "clip": "brand/kraken-cache/action-clip-lateral-shuffle-high-school-female-jarosh-slide2-2f08659e.mp4",
+          "templateData": {
+            "line1": "A GAME DOESN'T\nDEVELOP AN ATHLETE.",
+            "line2": "IT REVEALS ONE.",
+            "brand": "JAROSH PERFORMANCE"
+          },
+          "copySource": "Verbatim magnets (AD1 body): \"A game doesn't develop an athlete.\" (line1) + \"It reveals one.\" (line2). eyebrow auto-anchors.",
+          "status": "approved",
+          "notes": "MOTION (rebalance): 3s GIF reframe over deadlift footage (was static cluster-40). CANDIDATE CLIP mg-B2.mp4 (free deadlift c306cfa9).",
+          "flags": [
+            "candidate-media"
+          ]
+        },
+        {
+          "id": "C1",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "myth-vs-truth",
+          "clip": "brand/kraken-cache/action-clip-hurdling-high-school-male-jarosh-performance-mp4-95470554.mp4",
+          "templateData": {
+            "mythLabel": "THE MYTH",
+            "myth": "MORE GAMES MAKE A KID FASTER.",
+            "truthLabel": "THE TRUTH",
+            "truth": "A GAME IS A TEST, NOT A TEACHER. SPEED GETS BUILT IN TRAINING.",
+            "sourceLabel": "WHERE IT'S BUILT",
+            "source": "TRAINING, NOT THE SCOREBOARD.",
+            "ctaText": "BOOK THE FREE ATHLETE ANALYSIS"
+          },
+          "copySource": "Myth-vs-truth reframe (angle-matched, replaces the off-angle velocity-bar chart). myth = the angle's target misconception; truth = verbatim AD2 \"A game is a test, not a teacher.\" + the mechanism (speed built in training, AD2 bodyLine.3.1). Footage bg = squat-jump (the build). eyebrow auto-anchors.",
+          "status": "approved",
+          "notes": "MOTION (angle-fix): myth-vs-truth over squat-jump footage (was velocity-drop bar chart, off-angle). CANDIDATE CLIP mg-C1.mp4 (free squat-jump cc69c187).",
+          "flags": [
+            "candidate-media"
+          ]
+        },
+        {
+          "id": "C2",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-multisport-foundations-grind-trap-A1",
+          "clip": "brand/kraken-cache/aqpffb-qkatacnzgo0t-syvjoq2athdqk-4kcpprpt5xdmrnmmab1j6g8hyy-475b73ec.mp4",
+          "templateData": {
+            "line1": "THAT KIND OF SPEED",
+            "line2": "DOESN'T STAY IN THE GYM.",
+            "brand": "JAROSH PERFORMANCE"
+          },
+          "copySource": "Verbatim magnet (AD3 body): \"That kind of speed doesn't stay in the gym.\" — split across the two display lines. eyebrow auto-anchors.",
+          "status": "approved",
+          "notes": "MOTION (rebalance): 3s GIF reframe over sprint footage (was static cluster-42; distinct from C1 velocity-drop / C3 chart). CANDIDATE CLIP mg-C2.mp4 (free sprinting c818ba76).",
+          "flags": [
+            "candidate-media"
+          ]
+        },
+        {
+          "id": "C3",
+          "beat": "C — Reveal mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-13",
+          "media": "./assets/jarosh/aqmm8k-j9ulaw4xvc0vr27is9mqxapunsbnjqd7kp6nivqvlyojixkqxr-ot-91a5a129.mp4",
+          "copyRefs": {
+            "claim": "ad-2.bodyLine.3.1"
+          },
+          "copySource": "Verbatim magnet (AD2 body): \"The speed and power behind those plays gets built on purpose, in training, or it doesn't get built at all.\" — the build-or-nothing mechanism (distinct from C1 myth-vs-truth / C2 speed-on-field).",
+          "status": "approved",
+          "notes": "Mechanism: built on purpose or not at all (cluster-13 clean claim card over footage; replaced cluster-37 velocity-chart, off-angle). CANDIDATE STILL placed (mg-C3.jpg = free box-jumps d15bf6db) — swap on the review page if desired.",
+          "flags": [
+            "candidate-media"
+          ]
+        },
+        {
+          "id": "D1",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-e2e-d1",
+          "clip": "brand/kraken-cache/aqnrqoiqddtqmy7-r6mirkeprxllgu9gjucp7uoobk-n7o-q81-r8x2bd3cy-3a4a8875.mp4",
+          "templateData": {
+            "line1": "Games matter.",
+            "line2": "None of that playing time was wasted.",
+            "line3": "And you weren't wrong to want it.",
+            "microscript": "A game just can't build the engine. Training does."
+          },
+          "copySource": "Blame-lift, line by line (fresh-e2e-d1, angle-matched, replaces the off-angle velocity-bar chart). line1-3 = verbatim AD3 blame-removal (bodyLine.4.2 'Games matter.' + 4.1 'none of that playing time was wasted, and you weren't wrong to want it'). microscript = the mechanism reframe. Footage bg over sprint clip. eyebrow auto-anchors.",
+          "status": "approved",
+          "notes": "MOTION (angle-fix): fresh-e2e-d1 blame-lift over sprint footage (was velocity-drop bar chart, off-angle). CANDIDATE CLIP mg-D1.mp4 (free sprinting 60e664e6).",
+          "flags": [
+            "candidate-media"
+          ]
+        },
+        {
+          "id": "D2",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-36",
+          "media": "./assets/jarosh/aqnq8k-ml5qwanaiv6w0arcni8eug-sgjlcv0or6f7drokwglkcc554d-cik-3a19cc3d.mp4",
+          "copyRefs": {
+            "reframe": "ad-3.bodyLine.3.1"
+          },
+          "copySource": "Verbatim magnet (AD3 body): \"That's why a whole season can pass with nothing to show for it.\"",
+          "status": "approved",
+          "notes": "The cost named plainly (distinct from C1)."
+        },
+        {
+          "id": "D3",
+          "beat": "D — Remove blame",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-34",
+          "media": "./assets/jarosh/aqo7i2shk9uye5svmqzrivnv9kn8jp00uwqlmup-rj3afgdicjalto-mksgd-7f37b9ea.mp4",
+          "copyRefs": {
+            "reframe": "ad-3.bodyLine.4.4"
+          },
+          "copySource": "Verbatim magnet (AD3 body): \"They were just never the place an athlete gets built, and asking a game to make a kid faster is asking the scoreboard to do the work of the weight room.\" — blame-removal reframe (distinct from D1 'games matter' / D2 'whole season can pass').",
+          "status": "approved",
+          "notes": "Remove-blame reframe: the scoreboard can't do the weight room's job (cluster-34 phrase-kill, distinct skeleton from D1/D2). CANDIDATE STILL placed (mg-D3.jpg = free broad-jump ec536643) — swap on the review page if desired.",
+          "flags": [
+            "candidate-media"
+          ]
+        },
+        {
+          "id": "E1",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "meet-coach",
+          "clip": "brand/kraken-cache/aqo6ajlndlhgi3nnlmq0-8u840gu1dg2-ugjr1uzkfn40hl4xxwhd0s0ks09-6120b216.mp4",
+          "templateData": {
+            "eyebrow": "BUILT, THEN MEASURED",
+            "coachFirst": "COACH NICK",
+            "coachLast": "JAROSH",
+            "coachTitle": "FOUNDER",
+            "quote": "A game is a test, not a teacher.",
+            "credentials": "CINCINNATI REDS · COLLEGE ATHLETICS",
+            "facts": "REAL|SPRINT + JUMP NUMBERS · EVERY|SESSION · BUILT|ON PURPOSE",
+            "ctaText": "BOOK THE ATHLETE ANALYSIS",
+            "ctaMicro": "FREE. NOT A TRYOUT. A DATA SET."
+          },
+          "copySource": "Multi-field template. quote = verbatim magnet 'A game is a test, not a teacher.'; eyebrow = ad Description; credentials = verbatim names; cta micro = 'Not a tryout. A data set.'",
+          "status": "approved",
+          "notes": "Coach proof VSL over box-jump footage."
+        },
+        {
+          "id": "E2",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "quote-card",
+          "clip": "brand/kraken-cache/aqo4mrbcesezkpjgphwqyfpvui9qqtsyt36kujaykkvkqfdumrofw121yco3-33d10770.mp4",
+          "templateData": {
+            "eyebrow": "BUILT, THEN MEASURED",
+            "quoteText": "He could feel that he was finally being built, not just put through his paces and sent home.",
+            "bylineName": "A PARENT",
+            "bylineMeta": "ANKENY · JAROSH PERFORMANCE",
+            "statsLabel": "Built, then measured."
+          },
+          "copySource": "Multi-field template. quoteText = verbatim AD3 case study line; statsLabel = verbatim ad Description 'Built, then measured.' (was a paraphrase, now fixed).",
+          "status": "approved",
+          "notes": "Parent case-study quote card."
+        },
+        {
+          "id": "E3",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-31",
+          "media": "./assets/jarosh/638942872-1504070021726261-8224200172582480270-n-60f3ee53.jpg",
+          "templateData": {
+            "coach_name": "COACH NICK\nJAROSH",
+            "coach_title": "FOUNDER",
+            "proof_hero": "PRO & COLLEGE\nATHLETES",
+            "proof_names": "CINCINNATI REDS · COLLEGE ATHLETICS"
+          },
+          "copyRefs": {
+            "claim": "ad-3.bodyLine.9.1"
+          },
+          "copySource": "Credential card. claim_line binds the verbatim magnet 'Coach Graham Wilkerson built this.' (traces clean). coach name / CSCS / 'trained NFL athletes' / the NFL names are byline-role attribution (verbatim Cody words / proper nouns; guard-exempt as identity).",
+          "status": "approved",
+          "notes": "Credential verdict (static; distinct from E1 video / E2 quote)."
+        },
+        {
+          "id": "E4",
+          "beat": "E — Prove it",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-e2e-e5-testimonial",
+          "media": "./assets/jarosh/action-clip-sled-push-squat-jumping-strength-training-high-s-4b6c5551.mp4",
+          "copyRefs": {
+            "testimonial": "ad-3.bodyLine.7.1"
+          },
+          "templateData": {
+            "byline": "A PARENT · ANKENY",
+            "stars": "5.0"
+          },
+          "copySource": "Verbatim magnet (AD3 'one dad'): \"One dad told us his son had been somewhere else for two years, and that a single week with us was enough for the kid to say it was the best he'd ever had.\" Byline is an identity slot.",
+          "status": "approved",
+          "notes": "Testimonial card."
+        },
+        {
+          "id": "F1",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "stat-reveal",
+          "clip": "brand/kraken-cache/action-clip-acceleration-training-upper-body-strength-traini-101007f9.mp4",
+          "templateData": {
+            "eyebrow": "THE 90-DAY GUARANTEE",
+            "title1": "Here's the promise no other",
+            "title2": "program in this market will make.",
+            "stat1Value": 1,
+            "stat1Unit": " MPH",
+            "stat1Label": "SPEED",
+            "stat2Value": 3,
+            "stat2Unit": "\"",
+            "stat2Label": "VERTICAL",
+            "freeLine1": "90",
+            "freeLine2": "DAYS",
+            "ctaText": "BOOK YOUR FREE ATHLETE ANALYSIS"
+          },
+          "copySource": "Multi-field template. title1 + title2 concatenate EXACTLY to the verbatim magnet 'Here's the promise no other program in this market will make.' (only a line break added). Guarantee band brand-locked.",
+          "status": "approved",
+          "notes": "Guarantee reveal video."
+        },
+        {
+          "id": "F2",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "static",
+          "source": "template",
+          "template": "cluster-32",
+          "media": "./assets/jarosh/action-clip-dumbbell-shoulder-press-middle-school-male-jaros-42129fc4.mp4",
+          "templateData": {
+            "offer_headline": "FREE ATHLETE\nANALYSIS",
+            "offer_detail": "Not a tryout. A data set.",
+            "cta_text": "BOOK THE ATHLETE ANALYSIS"
+          },
+          "copySource": "Multi-field offer template. 'Not a tryout. A data set.' verbatim. Guarantee band auto-locked.",
+          "status": "approved",
+          "notes": "Offer card. Guarantee band verbatim-locked."
+        },
+        {
+          "id": "F3",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "season-clock",
+          "clip": "brand/kraken-cache/action-clip-med-ball-throw-high-school-female-jarosh-slide3o-02af193f.mp4",
+          "templateData": {
+            "line1": "ANOTHER SEASON.",
+            "line2": "SAME SPEED.",
+            "offer": "SEE THE NUMBER FIRST.",
+            "guarantee": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us.",
+            "cta": "BOOK THE FREE ATHLETE ANALYSIS",
+            "brand": "JAROSH PERFORMANCE"
+          },
+          "copySource": "Retarget offer, distinct motion from F1 stat-reveal. Scene-1 'ANOTHER SEASON. / SAME SPEED.' compresses the angle setup (AD2 para1: 'Another season, another team, more reps in real games. And a year later, the same kid, the same speed.'). offer = the Athlete Analysis baseline ('See the number first'; AD2 'You'll see your athlete's real numbers before you decide anything.'). guarantee = canonical brand-locked wording (AD2 bodyPara.7). eyebrow auto-anchors to INDIANAPOLIS SPORT PARENTS.",
+          "status": "approved",
+          "notes": "Season-clock retarget offer over footage (distinct from F1/F2). CANDIDATE CLIP placed (mg-F3.mp4 = free sprinting clip 899da2d7) — footage renders correctly; swap/reframe on the review page if you want a different shot.",
+          "flags": [
+            "candidate-media"
+          ]
+        },
+        {
+          "id": "BR1",
+          "beat": null,
+          "temperature": "any",
+          "format": "video",
+          "source": "template",
+          "template": "logo-sting",
+          "clip": "brand/kraken-cache/action-clip-band-work-high-school-female-jarosh-slide2of4-423c2eed.mp4",
+          "templateData": {
+            "wordmark1": "JAROSH",
+            "wordmark2": "PERFORMANCE",
+            "tagline": "BUILT, THEN MEASURED.",
+            "url": "JAROSHPERFORMANCE.FITNESS"
+          },
+          "copySource": "Brand lockup + verbatim ad Description as tagline (\"Built, then measured.\").",
+          "status": "approved",
+          "notes": "Brand bumper over sled-push footage."
+        }
+      ]
+    }
+  ],
+  "location": "ankeny"
+}

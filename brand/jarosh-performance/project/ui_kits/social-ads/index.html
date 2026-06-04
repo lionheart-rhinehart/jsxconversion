@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jarosh Performance · Social Ad Templates</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200&display=block" />
+  <link rel="stylesheet" href="social.css" />
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="design-canvas.jsx"></script>
+  <script type="text/babel">
+    const Icon = ({ name, fill, style }) => <span className={`material-symbols-rounded ${fill?'fill':''}`} style={style}>{name}</span>;
+    const Lock = ({ light }) => (
+      <div className="ad-lock">
+        <img src="../../assets/logo-mark.svg" alt="" />
+        <span className="ad-wm"><span className="n1" style={light?{color:'#fff'}:null}>Jarosh</span><span className="n2">Performance</span></span>
+      </div>
+    );
+
+    // 1 · SQUARE · STAT DROP
+    const StatDrop = () => (
+      <div className="ad ad-dark ad-grid">
+        <div className="ad-glow" />
+        <div className="ad-inner">
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+            <Lock light /><span className="ad-tag"><span className="ad-pulse" />Measured Progress</span>
+          </div>
+          <div className="grow" style={{display:'flex',flexDirection:'column',justifyContent:'center'}}>
+            <div className="ad-metric" style={{fontSize:300}}>&minus;0.18<span className="u" style={{fontSize:96}}>s</span></div>
+            <div className="ad-headline" style={{fontSize:64,marginTop:24}}>Average 10-Yard Gain<br/><span className="accent">In 90 Days.</span></div>
+          </div>
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-end'}}>
+            <span className="ad-label">That's first to the ball.</span>
+            <span className="ad-handle">@jaroshperformance</span>
+          </div>
+        </div>
+      </div>
+    );
+
+    // 2 · SQUARE · ATHLETE SPOTLIGHT (photo)
+    const Spotlight = () => (
+      <div className="ad ad-dark">
+        <div className="ad-photo"><div className="lab"><Icon name="add_photo_alternate" />Athlete photo</div></div>
+        <span className="ad-reg tl" /><span className="ad-reg tr" /><span className="ad-reg bl" /><span className="ad-reg br" />
+        <div className="ad-shade" />
+        <div className="ad-inner" style={{justifyContent:'space-between'}}>
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+            <Lock light /><span className="ad-tag">Athlete Spotlight</span>
+          </div>
+          <div>
+            <span className="ad-gain"><Icon name="trending_up" fill />+4″ VERTICAL · 90 DAYS</span>
+            <div className="ad-headline" style={{fontSize:92,marginTop:28}}>Hailey<br/>Touched <span className="accent">10 Ft.</span></div>
+            <div className="ad-label" style={{marginTop:20}}>HS · Basketball · #notjustaspeedprogram</div>
+          </div>
+        </div>
+      </div>
+    );
+
+    // 3 · SQUARE · QUOTE (light)
+    const Quote = () => (
+      <div className="ad ad-light ad-grid lite">
+        <div className="ad-inner">
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+            <Lock /><span className="ad-tag">Real Results</span>
+          </div>
+          <div className="grow" style={{display:'flex',flexDirection:'column',justifyContent:'center'}}>
+            <div style={{display:'flex',gap:6,color:'var(--jp-red-500)',marginBottom:30}}>
+              {Array.from({length:5}).map((_,i)=><Icon key={i} name="star" fill style={{fontSize:46}} />)}
+            </div>
+            <div style={{fontFamily:'var(--font-display)',textTransform:'uppercase',fontSize:78,lineHeight:0.92,color:'var(--fg-1)'}}>
+              "Based On Real Numbers <span style={{color:'var(--jp-red-600)'}}>And Results.</span>"
+            </div>
+            <div style={{fontFamily:'var(--font-mono)',fontSize:26,color:'var(--fg-3)',marginTop:34,display:'flex',gap:16,alignItems:'center'}}>
+              <b style={{color:'var(--fg-1)'}}>Andy J.</b> · Parent <span style={{color:'var(--jp-gain-dim)'}}>−0.2s · 40yd</span>
+            </div>
+          </div>
+          <span className="ad-handle" style={{color:'var(--fg-3)'}}>@jaroshperformance · Ankeny, IA</span>
+        </div>
+      </div>
+    );
+
+    // 4 · PORTRAIT · SUPERCHARGED CLINIC
+    const Supercharged = () => (
+      <div className="ad ad-dark ad-grid">
+        <div className="ad-glow" />
+        <div className="ad-inner">
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+            <Lock light /><span className="ad-handle">JAN 5</span>
+          </div>
+          <div className="grow" style={{display:'flex',flexDirection:'column',justifyContent:'center'}}>
+            <span className="ad-tag" style={{marginBottom:30}}><span className="ad-pulse" />Supercharged</span>
+            <div className="ad-headline" style={{fontSize:140}}>The<br/>Acceleration<br/><span className="accent">Experience.</span></div>
+            <div style={{fontSize:34,color:'rgba(255,255,255,0.78)',lineHeight:1.5,marginTop:36,maxWidth:'20ch'}}>
+              One step behind is a coaching problem. Rebuild the first three steps — measured, capped, elite.
+            </div>
+            <div style={{display:'flex',gap:46,marginTop:44}}>
+              <div><div className="ad-metric" style={{fontSize:84}}>2<span className="u" style={{fontSize:34}}>×/wk</span></div><div className="ad-label" style={{fontSize:22,marginTop:8}}>In-season safe</div></div>
+              <div><div className="ad-metric" style={{fontSize:84}}>100<span className="u" style={{fontSize:34}}>%</span></div><div className="ad-label" style={{fontSize:22,marginTop:8}}>Every rep timed</div></div>
+            </div>
+          </div>
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+            <span className="ad-cta">Register Now <Icon name="arrow_forward" /></span>
+            <span className="ad-handle">jaroshperformance.fitness</span>
+          </div>
+        </div>
+      </div>
+    );
+
+    // 5 · PORTRAIT · FOUR PILLARS
+    const Pillars = () => {
+      const rows = [['01','sprint','Speed','10/20/40 · velocity'],['02','shuffle','Agility','change of direction'],['03','fitness_center','Strength','force · max output'],['04','bolt','Power','RFD · vertical · jump']];
+      return (
+        <div className="ad ad-light ad-grid lite">
+          <div className="ad-inner">
+            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+              <Lock /><span className="ad-tag">The System</span>
+            </div>
+            <div className="ad-headline" style={{fontSize:104,color:'var(--fg-1)',marginTop:50}}>Four<br/>Systems.<br/><span className="accent">One Athlete.</span></div>
+            <div style={{marginTop:54,display:'flex',flexDirection:'column'}}>
+              {rows.map(([n,ic,t,m])=>(
+                <div key={n} style={{display:'flex',alignItems:'center',gap:28,padding:'30px 0',borderTop:'2px solid var(--border-1)'}}>
+                  <div style={{width:78,height:78,borderRadius:'var(--r-md)',background:'var(--jp-red-500)',color:'#fff',display:'flex',alignItems:'center',justifyContent:'center'}}><Icon name={ic} fill style={{fontSize:44}} /></div>
+                  <div style={{flex:1}}>
+                    <div style={{fontFamily:'var(--font-display)',textTransform:'uppercase',fontSize:52,lineHeight:0.9,color:'var(--fg-1)'}}>{t}</div>
+                    <div style={{fontFamily:'var(--font-mono)',fontSize:24,color:'var(--jp-red-700)',marginTop:6}}>{m}</div>
+                  </div>
+                  <div style={{fontFamily:'var(--font-display)',fontSize:64,color:'transparent',WebkitTextStroke:'2px var(--jp-red-500)'}}>{n}</div>
+                </div>
+              ))}
+            </div>
+            <div className="grow" />
+            <span className="ad-handle" style={{color:'var(--fg-3)'}}>@jaroshperformance</span>
+          </div>
+        </div>
+      );
+    };
+
+    // 6 · STORY · PR ALERT
+    const PRAlert = () => (
+      <div className="ad ad-dark">
+        <div className="ad-photo"><div className="lab"><Icon name="add_photo_alternate" />Athlete photo</div></div>
+        <span className="ad-reg tl" /><span className="ad-reg tr" /><span className="ad-reg bl" /><span className="ad-reg br" />
+        <div className="ad-shade" />
+        <div className="ad-inner" style={{justifyContent:'space-between'}}>
+          <div style={{display:'flex',justifyContent:'center',marginTop:20}}>
+            <span className="ad-tag" style={{fontSize:30}}><span className="ad-pulse" />New Gym Record</span>
+          </div>
+          <div style={{textAlign:'center'}}>
+            <div className="ad-metric" style={{fontSize:340}}>10<span className="u" style={{fontSize:110}}>ft</span></div>
+            <div className="ad-headline" style={{fontSize:108,marginTop:10}}>First Female<br/>To <span className="accent">Touch Rim.</span></div>
+            <div className="ad-label" style={{fontSize:28,marginTop:28}}>Congrats, Hailey · #notjustaspeedprogram</div>
+          </div>
+          <div style={{display:'flex',flexDirection:'column',alignItems:'center',gap:30}}>
+            <span className="ad-gain"><Icon name="trending_up" fill />+4″ VERTICAL · 90 DAYS</span>
+            <Lock light />
+          </div>
+        </div>
+      </div>
+    );
+
+    function App() {
+      return (
+        <DesignCanvas>
+          <DCSection id="square" title="Square · 1080×1080" subtitle="Feed posts">
+            <DCArtboard id="stat" label="Stat drop" width={1080} height={1080}><StatDrop /></DCArtboard>
+            <DCArtboard id="spot" label="Athlete spotlight (photo)" width={1080} height={1080}><Spotlight /></DCArtboard>
+            <DCArtboard id="quote" label="Testimonial (light)" width={1080} height={1080}><Quote /></DCArtboard>
+          </DCSection>
+          <DCSection id="portrait" title="Portrait · 1080×1350" subtitle="Feed (taller)">
+            <DCArtboard id="sc" label="SUPERCHARGED clinic" width={1080} height={1350}><Supercharged /></DCArtboard>
+            <DCArtboard id="pil" label="Four pillars" width={1080} height={1350}><Pillars /></DCArtboard>
+          </DCSection>
+          <DCSection id="story" title="Story · 1080×1920" subtitle="Stories / Reels cover">
+            <DCArtboard id="pr" label="PR alert" width={1080} height={1920}><PRAlert /></DCArtboard>
+          </DCSection>
+        </DesignCanvas>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

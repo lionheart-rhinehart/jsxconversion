@@ -298,17 +298,30 @@ async function renderTemplateStatic(asset, angleId) {
     // behind everything + a legibility scrim below the text. Lets the same design
     // run with footage behind it. A video still-frames in the static renderer.
     if (asset.media) {
-      config.media = { path: asset.media, tag: "bg_media", z: 0, videoStartTime: asset.mediaStart || 1 };
-      config.fixedDesign = config.fixedDesign || [];
-      config.fixedDesign.unshift({ id: "_bg_scrim", tag: "_bg_scrim", type: "rect", x: 0, y: 0,
-        width: config.width || 1080, height: config.height || 1920,
-        fill: "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)", z: 1 });
-      // Legibility over footage: give each text layer a drop-shadow (helps red
-      // accents + white alike). Skip layers that already define one (e.g. the
-      // photo-hook template). Only when media is present → solid batch untouched.
-      for (const el of config.elements || []) {
-        if (typeof el.text === "string" && el.textShadow == null) {
-          el.textShadow = "0 2px 12px rgba(0,0,0,0.92)";
+      // If the template SHIPS a baked background image (e.g. cluster-33 bg_photo,
+      // whose default is an AA stock photo), REPLACE its source — a separate z:0
+      // media layer would render BEHIND the baked image and never appear (that's
+      // how AA's hook-sprint photo leaked onto non-AA creatives). The template
+      // already carries its own scrim + text shadows in that case, so don't double
+      // them. Otherwise (no baked bg) add a full-frame media layer + scrim.
+      const bakedBg = [...(config.fixedDesign || []), ...(config.elements || [])]
+        .find((e) => e && e.type === "image"
+          && (e.z === 0 || /bg|background|photo|hero/i.test(String(e.id || "") + String(e.tag || ""))));
+      if (bakedBg) {
+        if ("src" in bakedBg) bakedBg.src = asset.media; else bakedBg.path = asset.media;
+      } else {
+        config.media = { path: asset.media, tag: "bg_media", z: 0, videoStartTime: asset.mediaStart || 1 };
+        config.fixedDesign = config.fixedDesign || [];
+        config.fixedDesign.unshift({ id: "_bg_scrim", tag: "_bg_scrim", type: "rect", x: 0, y: 0,
+          width: config.width || 1080, height: config.height || 1920,
+          fill: "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)", z: 1 });
+        // Legibility over footage: give each text layer a drop-shadow (helps red
+        // accents + white alike). Skip layers that already define one (e.g. the
+        // photo-hook template). Only when media is present → solid batch untouched.
+        for (const el of config.elements || []) {
+          if (typeof el.text === "string" && el.textShadow == null) {
+            el.textShadow = "0 2px 12px rgba(0,0,0,0.92)";
+          }
         }
       }
     }
@@ -394,6 +407,14 @@ async function renderTemplateMotion(asset, angleId, wantGif) {
   // (0-diff). Any token the kit omits falls back to the authoring palette.
   const brandPalette = {};
   for (const k of COLOR_TOKEN_KEYS) brandPalette[k] = motionTiers[k] || BANK_AUTHORING_PALETTE[k];
+  // Brand IDENTITY for motion chrome (corner wordmark/logo on templates like
+  // coach-lower-thirds). Without these, hardcoded "ATHLETES ACCELERATION" + the AA
+  // logo leak onto non-AA brands. brand_name is the tier name; logo_motion is a
+  // per-brand PNG staged in the motion served dir (assets/<slug>-logo.png) when
+  // present — AA has none, so it keeps its built-in fallback (0-diff).
+  if (motionTiers.brand_name) brandPalette.brand_name = motionTiers.brand_name;
+  const motionLogoRel = `assets/${brand}-logo.png`;
+  if (existsSync(join(PROJECT_ROOT, "brand/video-templates", motionLogoRel))) brandPalette.logo_motion = motionLogoRel;
 
   // Hand-picked media from the video edit surface (Part 4). asset.clip/photo are
   // REAL served paths under a tracked dir (B10), relative to PROJECT_ROOT. Stage

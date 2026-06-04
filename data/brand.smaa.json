@@ -1,0 +1,20 @@
+{
+  "_comment": "Brand kit for Southern Maine Athlete Academy (SMAA) — franchisee/new-brand intake. Keys under `tags` map a layer's field name (its `tag`) to the value that replaces the layer's content at fill time. Color/font tokens here OVERRIDE the AA authoring baseline at render/clone time (scripts/lib/palette.mjs remaps the bank's #c4141d-family literals to these). Registered from the Claude Design handoff bundle 'smaa-design-system' — see brand/smaa/project/README.md for the full brand rules (voice, visual foundations, iconography) and brand/smaa/project/colors_and_type.css for the source tokens.",
+  "brand": "Southern Maine Athlete Academy",
+  "_note": "SMAA is youth soccer + athletic development (ages 7+), Portland & Saco, ME. It shares the AA token ARCHITECTURE but its OWN identity: electric blue #017ee6 on white/navy (a clean, energetic youth-soccer look, distinct from AA's gritty-stadium black/white/red). The AA architecture is SINGLE-ACCENT (brand_red), so SMAA's primary blue takes the brand_red slot and brand_red_deep is its hover shade. Color mapping from colors_and_type.css: brand_red=--smaa-blue #017ee6, brand_red_deep=--smaa-blue-600 #0268bd, ink_950=--ink-900 #0b1219 (darkest navy / logo bg), ink_900=--ink-800 #121b24 (raised dark surface). THREE GAPS flagged honestly, NOT invented: (1) SMAA's lime-green accent #59be0b has NO slot in the single-accent AA token contract — it will not appear unless a template carries a dedicated second-accent role; (2) font_body Montserrat is NOT a bank font family, so STATIC font tokenization is deferred and statics fall back to the bank face until Montserrat binaries are registered in fonts/ + brand/smaa/fonts/ (motion honors the fontFamily string); (3) guarantee is intentionally ABSENT — SMAA's site does carry a one-month progress-or-train-free guarantee, but the exact verbatim wording must be confirmed by the user before it is bound (the verbatim rule forbids putting a design-tool reconstruction in the brand's mouth). Logo is white wordmark on transparent — always place on dark or imagery.",
+  "kitPath": "brand/smaa",
+  "logo_src": "brand/smaa/project/assets/logo.webp",
+  "tags": {
+    "logo": "./project/assets/logo.webp",
+    "brand_name": "SOUTHERN MAINE ATHLETE ACADEMY",
+    "url": "southernmaineathleteacademy.com",
+    "brand_red": "#017ee6",
+    "brand_red_deep": "#0268bd",
+    "ink_950": "#0b1219",
+    "ink_900": "#121b24",
+    "white": "#ffffff",
+    "font_display": "'Oswald', 'Arial Narrow', system-ui, sans-serif",
+    "font_body": "'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif",
+    "font_mono": "'JetBrains Mono', ui-monospace, Menlo, monospace"
+  }
+}

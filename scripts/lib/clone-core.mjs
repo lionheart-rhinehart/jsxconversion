@@ -166,8 +166,18 @@ export function cloneTarget({
       // resolves). replace/per-asset binds a new path when the map provides one.
       if ((mediaPolicy === "replace" || mediaPolicy === "per-asset") && mediaMap[a.id]) {
         const mp = mediaMap[a.id];
-        if (/\.(mp4|mov|webm|m4v|mkv)$/i.test(mp)) { a.clip = mp; delete a.photo; }
-        else { a.photo = mp; delete a.clip; }
+        // Route by asset TYPE, not file ext: the STATIC renderer reads asset.media
+        // (run-campaign.mjs → config.media.path) and ignores a.photo, so a static's
+        // replacement MUST land on a.media (a video bg still-frames there). Motion
+        // assets keep the a.clip(video)/a.photo(image) hand-pick path unchanged.
+        const isStatic = a.format === "static" || (a.media != null && a.clip == null);
+        if (isStatic) {
+          a.media = mp; delete a.photo; delete a.clip;
+        } else if (/\.(mp4|mov|webm|m4v|mkv)$/i.test(mp)) {
+          a.clip = mp; delete a.photo;
+        } else {
+          a.photo = mp; delete a.clip;
+        }
         mediaSet++;
       }
       // fresh-asset JSX color remap (R8): if a fresh asset's bespoke JSX carries

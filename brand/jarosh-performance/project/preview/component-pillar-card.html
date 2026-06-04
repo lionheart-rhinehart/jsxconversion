@@ -1,0 +1,27 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><link rel="stylesheet" href="_base.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200&display=block"><style>
+  .pillars{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .card{position:relative;background:var(--jp-ink-900);border:1px solid var(--jp-ink-700);border-radius:var(--r-lg);padding:22px 20px;overflow:hidden;box-shadow:var(--inner-1)}
+  .num{position:absolute;top:14px;right:18px;font-family:var(--font-display);font-size:52px;line-height:1;color:transparent;-webkit-text-stroke:1.5px var(--jp-red-600)}
+  .ic{width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;background:var(--jp-red-500);border-radius:var(--r-md);color:#fff;margin-bottom:16px}
+  .ic .material-symbols-rounded{font-size:24px}
+  .ti{font-family:var(--font-display);text-transform:uppercase;font-size:30px;line-height:0.95;color:#fff;margin:0}
+  .tx{font-size:13px;color:rgba(255,255,255,0.6);margin:10px 0 0;line-height:1.55}
+</style></head>
+<body>
+  <div class="col" style="gap:12px">
+    <p class="card-label">Pillar panel · dark · outlined numeral · calibration grid</p>
+    <div class="pillars">
+      <div class="card calib-grid"><span class="num">01</span>
+        <div class="ic"><span class="material-symbols-rounded mat-fill">sprint</span></div>
+        <h3 class="ti">Speed</h3>
+        <p class="tx">First-step quickness and max velocity. We rebuild the sprint, measured at 10/20/40.</p>
+      </div>
+      <div class="card calib-grid"><span class="num">04</span>
+        <div class="ic"><span class="material-symbols-rounded mat-fill">bolt</span></div>
+        <h3 class="ti">Power</h3>
+        <p class="tx">Rate of force development — the bridge between the weight room and game day.</p>
+      </div>
+    </div>
+  </div>
+</body></html>

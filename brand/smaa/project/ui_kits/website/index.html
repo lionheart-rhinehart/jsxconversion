@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Southern Maine Athlete Academy</title>
+<link rel="stylesheet" href="../../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; }
+  body { font-family: var(--font-sans); color: var(--fg1); -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a.smaa-navlink:hover { color: #fff !important; }
+  .smaa-benefit:hover { transform: translateY(-3px); box-shadow: var(--shadow-md) !important; }
+  .smaa-rise { animation: smaaRise .55s cubic-bezier(.22,.61,.36,1) both; }
+  @keyframes smaaRise { from { transform: translateY(16px); } to { transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .smaa-rise { animation: none !important; } }
+  @keyframes smaaPop { from { transform: translateY(14px) scale(.97); } to { transform: none; } }
+  /* responsive */
+  @media (max-width: 860px) {
+    .smaa-desktop-nav { display: none !important; }
+    .smaa-burger { display: flex !important; }
+    .smaa-founder-grid { grid-template-columns: 1fr !important; gap: 30px !important; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+
+<script type="text/babel" src="ui.jsx"></script>
+<script type="text/babel" src="Header.jsx"></script>
+<script type="text/babel" src="Sections1.jsx"></script>
+<script type="text/babel" src="Sections2.jsx"></script>
+<script type="text/babel" src="Modal.jsx"></script>
+<script type="text/babel">
+  function App() {
+    const [modal, setModal] = React.useState(false);
+    const open = () => setModal(true);
+
+    // refresh lucide icons whenever DOM updates
+    React.useEffect(() => {
+      const id = setInterval(() => window.lucide && window.lucide.createIcons(), 400);
+      return () => clearInterval(id);
+    }, []);
+
+    return (
+      <React.Fragment>
+        <Header onGetStarted={open} />
+        <Hero onGetStarted={open} />
+        <Benefits />
+        <Steps onGetStarted={open} />
+        <Difference />
+        <Founder />
+        <Guarantee />
+        <Reviews />
+        <FreeTools onGetStarted={open} />
+        <Footer onGetStarted={open} />
+        <GetStartedModal open={modal} onClose={() => setModal(false)} />
+      </React.Fragment>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
