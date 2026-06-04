@@ -6,6 +6,7 @@
   "description": "Athletes Acceleration creative engine — generates branded ad videos and statics from JSX templates.",
   "scripts": {
     "dev": "node scripts/dev.mjs",
+    "restart": "node scripts/restart-dev.mjs",
     "dev:editor": "node --watch scripts/editor-server.mjs",
     "dev:review": "node --watch brand/video-templates/serve.mjs",
     "render": "node .claude/skills/jsx-to-mp4/scripts/render.mjs",
