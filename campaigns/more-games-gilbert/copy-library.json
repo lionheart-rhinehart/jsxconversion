@@ -1,0 +1,1888 @@
+{
+  "schemaVersion": 1,
+  "campaign": "more-games-manteno",
+  "generatedFrom": [
+    "ad-copy.md"
+  ],
+  "count": 115,
+  "units": [
+    {
+      "id": "ad-1.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why More Games Isn't Enough",
+      "chars": 27,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "More playing time feels like the answer. Another season, another team, more reps in real games. And a year later, the same kid, the same speed.\nHere's the brutal truth. A game doesn't develop an athlete. It reveals one. It shows you exactly what was built in training and nothing more, so playing more games just runs the same ceiling out there again and again under pressure.\nThat's the difference our Multi-Sport Foundation Program is built on. We develop the engine, the speed and power a game can only put on display, which means a first step that beats the defender to the ball, more touches every game, and the kind of play that makes coaches start asking who that kid is.\nThe first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real sprint time and jump numbers. Not a tryout. A data set.\nThen the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1094,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "More playing time feels like the answer. Another season, another team, more reps in real games. And a year later, the same kid, the same speed.",
+      "chars": 143,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "More playing time feels like the answer.",
+      "chars": 40,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Another season, another team, more reps in real games.",
+      "chars": 54,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.1.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And a year later, the same kid, the same speed.",
+      "chars": 47,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the brutal truth. A game doesn't develop an athlete. It reveals one. It shows you exactly what was built in training and nothing more, so playing more games just runs the same ceiling out there again and again under pressure.",
+      "chars": 232,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the brutal truth.",
+      "chars": 24,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A game doesn't develop an athlete.",
+      "chars": 34,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It reveals one.",
+      "chars": 15,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It shows you exactly what was built in training and nothing more, so playing more games just runs the same ceiling out there again and again under pressure.",
+      "chars": 156,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's the difference our Multi-Sport Foundation Program is built on. We develop the engine, the speed and power a game can only put on display, which means a first step that beats the defender to the ball, more touches every game, and the kind of play that makes coaches start asking who that kid is.",
+      "chars": 301,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's the difference our Multi-Sport Foundation Program is built on.",
+      "chars": 69,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "We develop the engine, the speed and power a game can only put on display, which means a first step that beats the defender to the ball, more touches every game, and the kind of play that makes coaches start asking who that kid is.",
+      "chars": 231,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real sprint time and jump numbers. Not a tryout. A data set.",
+      "chars": 225,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real sprint time and jump numbers.",
+      "chars": 156,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.4.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a tryout.",
+      "chars": 13,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.4.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set.",
+      "chars": 11,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.",
+      "chars": 128,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical.",
+      "chars": 46,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph in speed.",
+      "chars": 16,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.5.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "30 sessions.",
+      "chars": 12,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.5.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free until they get there.",
+      "chars": 51,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid can play a hundred games this year and finish exactly as fast as they started. Here's why.",
+      "chars": 99,
+      "ad": "AD 1",
+      "archetype": "Oracle",
+      "code": null
+    },
+    {
+      "id": "ad-1.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Games don't make athletes faster. They just show you how fast training already made them.",
+      "chars": 89,
+      "ad": "AD 1",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    {
+      "id": "ad-1.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "More game film won't fix a speed problem. It'll just record it in higher definition.",
+      "chars": 84,
+      "ad": "AD 1",
+      "archetype": "Warning",
+      "code": null
+    },
+    {
+      "id": "ad-1.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why More Games Won't Make Them Faster",
+      "chars": 44,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Will)",
+      "chars": 24,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-2.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why More Games Isn't Enough",
+      "chars": 27,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "More playing time feels like the answer. Another season, another team, more reps in real games. And a year later, the same kid, the same speed.\nHere's the brutal truth. A game is a test, not a teacher. Everything your kid does out there, the first step, the closing burst, the jump for the ball, was built somewhere else, and the field just hands back a score on it. So another season of games measures the same athlete over and over while the number that actually matters, how fast and explosive they are, sits exactly where it started.\nThe speed and power behind those plays gets built on purpose, in training, or it doesn't get built at all. That's the part our Multi-Sport Foundation Program owns.\nAnd a bigger engine shows up everywhere the old one fell short. It's the first step that beats the defender to the ball, which turns into more touches every game, which becomes the play that swings the score, until the kid who used to blend in is the one coaches are asking about by name.\nThe first step in is the Athlete Analysis. Same timing gates, same velocity trackers we use every session. You'll see your athlete's real numbers before you decide anything. Not a tryout. A data set.\nThen the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1380,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "More playing time feels like the answer. Another season, another team, more reps in real games. And a year later, the same kid, the same speed.",
+      "chars": 143,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "More playing time feels like the answer.",
+      "chars": 40,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Another season, another team, more reps in real games.",
+      "chars": 54,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyLine.1.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And a year later, the same kid, the same speed.",
+      "chars": 47,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the brutal truth. A game is a test, not a teacher. Everything your kid does out there, the first step, the closing burst, the jump for the ball, was built somewhere else, and the field just hands back a score on it. So another season of games measures the same athlete over and over while the number that actually matters, how fast and explosive they are, sits exactly where it started.",
+      "chars": 393,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the brutal truth.",
+      "chars": 24,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A game is a test, not a teacher.",
+      "chars": 32,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Everything your kid does out there, the first step, the closing burst, the jump for the ball, was built somewhere else, and the field just hands back a score on it.",
+      "chars": 164,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "So another season of games measures the same athlete over and over while the number that actually matters, how fast and explosive they are, sits exactly where it started.",
+      "chars": 170,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The speed and power behind those plays gets built on purpose, in training, or it doesn't get built at all. That's the part our Multi-Sport Foundation Program owns.",
+      "chars": 163,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The speed and power behind those plays gets built on purpose, in training, or it doesn't get built at all.",
+      "chars": 106,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's the part our Multi-Sport Foundation Program owns.",
+      "chars": 56,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And a bigger engine shows up everywhere the old one fell short. It's the first step that beats the defender to the ball, which turns into more touches every game, which becomes the play that swings the score, until the kid who used to blend in is the one coaches are asking about by name.",
+      "chars": 288,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And a bigger engine shows up everywhere the old one fell short.",
+      "chars": 63,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It's the first step that beats the defender to the ball, which turns into more touches every game, which becomes the play that swings the score, until the kid who used to blend in is the one coaches are asking about by name.",
+      "chars": 224,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. Same timing gates, same velocity trackers we use every session. You'll see your athlete's real numbers before you decide anything. Not a tryout. A data set.",
+      "chars": 199,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Same timing gates, same velocity trackers we use every session.",
+      "chars": 63,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyLine.5.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "You'll see your athlete's real numbers before you decide anything.",
+      "chars": 66,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyLine.5.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a tryout.",
+      "chars": 13,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyLine.5.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set.",
+      "chars": 11,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.",
+      "chars": 128,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyLine.6.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical.",
+      "chars": 46,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyLine.6.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph in speed.",
+      "chars": 16,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyLine.6.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "30 sessions.",
+      "chars": 12,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyLine.6.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free until they get there.",
+      "chars": 51,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.bodyPara.7",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid can play a hundred games this year and finish exactly as fast as they started. Here's why.",
+      "chars": 99,
+      "ad": "AD 2",
+      "archetype": "Oracle",
+      "code": null
+    },
+    {
+      "id": "ad-2.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Games don't make athletes faster. They just show you how fast training already made them.",
+      "chars": 89,
+      "ad": "AD 2",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    {
+      "id": "ad-2.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "More game film won't fix a speed problem. It'll just record it in higher definition.",
+      "chars": 84,
+      "ad": "AD 2",
+      "archetype": "Warning",
+      "code": null
+    },
+    {
+      "id": "ad-2.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why More Games Won't Make Them Faster",
+      "chars": 44,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-2.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Will)",
+      "chars": 24,
+      "ad": "AD 2"
+    },
+    {
+      "id": "ad-3.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why More Games Isn't Enough",
+      "chars": 27,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "More playing time feels like the answer. Another season, another team, more reps in real games. And a year later, the same kid, the same speed.\nHere's the brutal truth. A game is a test, not a teacher. Everything your kid does on the field, the first step, the closing speed, the burst to the ball, got built somewhere else, and the game simply hands back the result. When a kid isn't fast enough, more games keep grading the same engine and reporting the same score. The ceiling never moves, because nothing on a game field was ever designed to move it.\nThat's why a whole season can pass with nothing to show for it. Your kid plays out the athlete they already were in September, and then does it again the following fall.\nAnd here's something worth saying plainly: none of that playing time was wasted, and you weren't wrong to want it. Games matter. They're where a kid competes, learns to read the field, and finds out what they're made of under pressure. They were just never the place an athlete gets built, and asking a game to make a kid faster is asking the scoreboard to do the work of the weight room.\nBuilding the engine is a separate job, and it's the one our Multi-Sport Foundation Program exists to do. Every session we develop the real sprint speed and explosive power a game can only put on display, measured on purpose, rep by rep.\nThat kind of speed doesn't stay in the gym. It becomes the first step that beats the defender to the ball. That turns into more touches every single game. More touches become the plays that change the score, and those plays become the film a coach actually stops to watch, until one season in, the kid who used to blend into the roster is the one getting asked about by name.\nThe first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you leave with their real sprint time, real jump height, and a clear picture of where they stand. Not a tryout. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.\nCoach Ronnie Battiato built this, and refined it for the developmental window where it matters most.\nHere's the promise no other program in this market will make. +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.\nTo your athlete's success, Coach Ronnie",
+      "chars": 2452,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "More playing time feels like the answer. Another season, another team, more reps in real games. And a year later, the same kid, the same speed.",
+      "chars": 143,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "More playing time feels like the answer.",
+      "chars": 40,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Another season, another team, more reps in real games.",
+      "chars": 54,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.1.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And a year later, the same kid, the same speed.",
+      "chars": 47,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the brutal truth. A game is a test, not a teacher. Everything your kid does on the field, the first step, the closing speed, the burst to the ball, got built somewhere else, and the game simply hands back the result. When a kid isn't fast enough, more games keep grading the same engine and reporting the same score. The ceiling never moves, because nothing on a game field was ever designed to move it.",
+      "chars": 410,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the brutal truth.",
+      "chars": 24,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A game is a test, not a teacher.",
+      "chars": 32,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Everything your kid does on the field, the first step, the closing speed, the burst to the ball, got built somewhere else, and the game simply hands back the result.",
+      "chars": 165,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "When a kid isn't fast enough, more games keep grading the same engine and reporting the same score.",
+      "chars": 99,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.2.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The ceiling never moves, because nothing on a game field was ever designed to move it.",
+      "chars": 86,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's why a whole season can pass with nothing to show for it. Your kid plays out the athlete they already were in September, and then does it again the following fall.",
+      "chars": 169,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's why a whole season can pass with nothing to show for it.",
+      "chars": 63,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Your kid plays out the athlete they already were in September, and then does it again the following fall.",
+      "chars": 105,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And here's something worth saying plainly: none of that playing time was wasted, and you weren't wrong to want it. Games matter. They're where a kid competes, learns to read the field, and finds out what they're made of under pressure. They were just never the place an athlete gets built, and asking a game to make a kid faster is asking the scoreboard to do the work of the weight room.",
+      "chars": 388,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And here's something worth saying plainly: none of that playing time was wasted, and you weren't wrong to want it.",
+      "chars": 114,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Games matter.",
+      "chars": 13,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.4.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "They're where a kid competes, learns to read the field, and finds out what they're made of under pressure.",
+      "chars": 106,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.4.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "They were just never the place an athlete gets built, and asking a game to make a kid faster is asking the scoreboard to do the work of the weight room.",
+      "chars": 152,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Building the engine is a separate job, and it's the one our Multi-Sport Foundation Program exists to do. Every session we develop the real sprint speed and explosive power a game can only put on display, measured on purpose, rep by rep.",
+      "chars": 236,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Building the engine is a separate job, and it's the one our Multi-Sport Foundation Program exists to do.",
+      "chars": 104,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Every session we develop the real sprint speed and explosive power a game can only put on display, measured on purpose, rep by rep.",
+      "chars": 131,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That kind of speed doesn't stay in the gym. It becomes the first step that beats the defender to the ball. That turns into more touches every single game. More touches become the plays that change the score, and those plays become the film a coach actually stops to watch, until one season in, the kid who used to blend into the roster is the one getting asked about by name.",
+      "chars": 375,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.6.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That kind of speed doesn't stay in the gym.",
+      "chars": 43,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.6.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It becomes the first step that beats the defender to the ball.",
+      "chars": 62,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.6.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That turns into more touches every single game.",
+      "chars": 47,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.6.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "More touches become the plays that change the score, and those plays become the film a coach actually stops to watch, until one season in, the kid who used to blend into the roster is the one getting asked about by name.",
+      "chars": 220,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyPara.7",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you leave with their real sprint time, real jump height, and a clear picture of where they stand. Not a tryout. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.",
+      "chars": 352,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.7.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.7.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "We run your athlete through the same timing gates and velocity trackers we use every session, and you leave with their real sprint time, real jump height, and a clear picture of where they stand.",
+      "chars": 195,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.7.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a tryout.",
+      "chars": 13,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.7.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set you get to keep.",
+      "chars": 27,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.7.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "From there, the path into the Multi-Sport Foundation Program is simple.",
+      "chars": 71,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyPara.8",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Coach Ronnie Battiato built this, and refined it for the developmental window where it matters most.",
+      "chars": 100,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyPara.9",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the promise no other program in this market will make. +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.",
+      "chars": 170,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.9.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the promise no other program in this market will make.",
+      "chars": 61,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.9.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+3 inches on the vertical.",
+      "chars": 26,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.9.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph in speed.",
+      "chars": 16,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.9.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "30 sessions.",
+      "chars": 12,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyLine.9.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free until they get there.",
+      "chars": 51,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyPara.10",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.bodyPara.11",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "To your athlete's success, Coach Ronnie",
+      "chars": 39,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid can play a hundred games this year and finish exactly as fast as they started. Here's why.",
+      "chars": 99,
+      "ad": "AD 3",
+      "archetype": "Oracle",
+      "code": null
+    },
+    {
+      "id": "ad-3.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Games don't make athletes faster. They just show you how fast training already made them.",
+      "chars": 89,
+      "ad": "AD 3",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    {
+      "id": "ad-3.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "More game film won't fix a speed problem. It'll just record it in higher definition.",
+      "chars": 84,
+      "ad": "AD 3",
+      "archetype": "Warning",
+      "code": null
+    },
+    {
+      "id": "ad-3.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why More Games Won't Make Them Faster",
+      "chars": 44,
+      "ad": "AD 3"
+    },
+    {
+      "id": "ad-3.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Will)",
+      "chars": 24,
+      "ad": "AD 3"
+    }
+  ],
+  "byId": {
+    "ad-1.headline": {
+      "id": "ad-1.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why More Games Isn't Enough",
+      "chars": 27,
+      "ad": "AD 1"
+    },
+    "ad-1.description": {
+      "id": "ad-1.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 1"
+    },
+    "ad-1.primaryText": {
+      "id": "ad-1.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "More playing time feels like the answer. Another season, another team, more reps in real games. And a year later, the same kid, the same speed.\nHere's the brutal truth. A game doesn't develop an athlete. It reveals one. It shows you exactly what was built in training and nothing more, so playing more games just runs the same ceiling out there again and again under pressure.\nThat's the difference our Multi-Sport Foundation Program is built on. We develop the engine, the speed and power a game can only put on display, which means a first step that beats the defender to the ball, more touches every game, and the kind of play that makes coaches start asking who that kid is.\nThe first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real sprint time and jump numbers. Not a tryout. A data set.\nThen the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1094,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyPara.1": {
+      "id": "ad-1.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "More playing time feels like the answer. Another season, another team, more reps in real games. And a year later, the same kid, the same speed.",
+      "chars": 143,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.1.1": {
+      "id": "ad-1.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "More playing time feels like the answer.",
+      "chars": 40,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.1.2": {
+      "id": "ad-1.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Another season, another team, more reps in real games.",
+      "chars": 54,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.1.3": {
+      "id": "ad-1.bodyLine.1.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And a year later, the same kid, the same speed.",
+      "chars": 47,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyPara.2": {
+      "id": "ad-1.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the brutal truth. A game doesn't develop an athlete. It reveals one. It shows you exactly what was built in training and nothing more, so playing more games just runs the same ceiling out there again and again under pressure.",
+      "chars": 232,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.2.1": {
+      "id": "ad-1.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the brutal truth.",
+      "chars": 24,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.2.2": {
+      "id": "ad-1.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A game doesn't develop an athlete.",
+      "chars": 34,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.2.3": {
+      "id": "ad-1.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It reveals one.",
+      "chars": 15,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.2.4": {
+      "id": "ad-1.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It shows you exactly what was built in training and nothing more, so playing more games just runs the same ceiling out there again and again under pressure.",
+      "chars": 156,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyPara.3": {
+      "id": "ad-1.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's the difference our Multi-Sport Foundation Program is built on. We develop the engine, the speed and power a game can only put on display, which means a first step that beats the defender to the ball, more touches every game, and the kind of play that makes coaches start asking who that kid is.",
+      "chars": 301,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.3.1": {
+      "id": "ad-1.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's the difference our Multi-Sport Foundation Program is built on.",
+      "chars": 69,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.3.2": {
+      "id": "ad-1.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "We develop the engine, the speed and power a game can only put on display, which means a first step that beats the defender to the ball, more touches every game, and the kind of play that makes coaches start asking who that kid is.",
+      "chars": 231,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyPara.4": {
+      "id": "ad-1.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real sprint time and jump numbers. Not a tryout. A data set.",
+      "chars": 225,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.4.1": {
+      "id": "ad-1.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.4.2": {
+      "id": "ad-1.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real sprint time and jump numbers.",
+      "chars": 156,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.4.3": {
+      "id": "ad-1.bodyLine.4.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a tryout.",
+      "chars": 13,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.4.4": {
+      "id": "ad-1.bodyLine.4.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set.",
+      "chars": 11,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyPara.5": {
+      "id": "ad-1.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.",
+      "chars": 128,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.5.1": {
+      "id": "ad-1.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical.",
+      "chars": 46,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.5.2": {
+      "id": "ad-1.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph in speed.",
+      "chars": 16,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.5.3": {
+      "id": "ad-1.bodyLine.5.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "30 sessions.",
+      "chars": 12,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.5.4": {
+      "id": "ad-1.bodyLine.5.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free until they get there.",
+      "chars": 51,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyPara.6": {
+      "id": "ad-1.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 1"
+    },
+    "ad-1.altHook.1": {
+      "id": "ad-1.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid can play a hundred games this year and finish exactly as fast as they started. Here's why.",
+      "chars": 99,
+      "ad": "AD 1",
+      "archetype": "Oracle",
+      "code": null
+    },
+    "ad-1.altHook.2": {
+      "id": "ad-1.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Games don't make athletes faster. They just show you how fast training already made them.",
+      "chars": 89,
+      "ad": "AD 1",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    "ad-1.altHook.3": {
+      "id": "ad-1.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "More game film won't fix a speed problem. It'll just record it in higher definition.",
+      "chars": 84,
+      "ad": "AD 1",
+      "archetype": "Warning",
+      "code": null
+    },
+    "ad-1.imageHeadline": {
+      "id": "ad-1.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why More Games Won't Make Them Faster",
+      "chars": 44,
+      "ad": "AD 1"
+    },
+    "ad-1.imageSubhead": {
+      "id": "ad-1.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Will)",
+      "chars": 24,
+      "ad": "AD 1"
+    },
+    "ad-2.headline": {
+      "id": "ad-2.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why More Games Isn't Enough",
+      "chars": 27,
+      "ad": "AD 2"
+    },
+    "ad-2.description": {
+      "id": "ad-2.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 2"
+    },
+    "ad-2.primaryText": {
+      "id": "ad-2.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "More playing time feels like the answer. Another season, another team, more reps in real games. And a year later, the same kid, the same speed.\nHere's the brutal truth. A game is a test, not a teacher. Everything your kid does out there, the first step, the closing burst, the jump for the ball, was built somewhere else, and the field just hands back a score on it. So another season of games measures the same athlete over and over while the number that actually matters, how fast and explosive they are, sits exactly where it started.\nThe speed and power behind those plays gets built on purpose, in training, or it doesn't get built at all. That's the part our Multi-Sport Foundation Program owns.\nAnd a bigger engine shows up everywhere the old one fell short. It's the first step that beats the defender to the ball, which turns into more touches every game, which becomes the play that swings the score, until the kid who used to blend in is the one coaches are asking about by name.\nThe first step in is the Athlete Analysis. Same timing gates, same velocity trackers we use every session. You'll see your athlete's real numbers before you decide anything. Not a tryout. A data set.\nThen the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1380,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyPara.1": {
+      "id": "ad-2.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "More playing time feels like the answer. Another season, another team, more reps in real games. And a year later, the same kid, the same speed.",
+      "chars": 143,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyLine.1.1": {
+      "id": "ad-2.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "More playing time feels like the answer.",
+      "chars": 40,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyLine.1.2": {
+      "id": "ad-2.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Another season, another team, more reps in real games.",
+      "chars": 54,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyLine.1.3": {
+      "id": "ad-2.bodyLine.1.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And a year later, the same kid, the same speed.",
+      "chars": 47,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyPara.2": {
+      "id": "ad-2.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the brutal truth. A game is a test, not a teacher. Everything your kid does out there, the first step, the closing burst, the jump for the ball, was built somewhere else, and the field just hands back a score on it. So another season of games measures the same athlete over and over while the number that actually matters, how fast and explosive they are, sits exactly where it started.",
+      "chars": 393,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyLine.2.1": {
+      "id": "ad-2.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the brutal truth.",
+      "chars": 24,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyLine.2.2": {
+      "id": "ad-2.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A game is a test, not a teacher.",
+      "chars": 32,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyLine.2.3": {
+      "id": "ad-2.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Everything your kid does out there, the first step, the closing burst, the jump for the ball, was built somewhere else, and the field just hands back a score on it.",
+      "chars": 164,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyLine.2.4": {
+      "id": "ad-2.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "So another season of games measures the same athlete over and over while the number that actually matters, how fast and explosive they are, sits exactly where it started.",
+      "chars": 170,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyPara.3": {
+      "id": "ad-2.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The speed and power behind those plays gets built on purpose, in training, or it doesn't get built at all. That's the part our Multi-Sport Foundation Program owns.",
+      "chars": 163,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyLine.3.1": {
+      "id": "ad-2.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The speed and power behind those plays gets built on purpose, in training, or it doesn't get built at all.",
+      "chars": 106,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyLine.3.2": {
+      "id": "ad-2.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's the part our Multi-Sport Foundation Program owns.",
+      "chars": 56,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyPara.4": {
+      "id": "ad-2.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And a bigger engine shows up everywhere the old one fell short. It's the first step that beats the defender to the ball, which turns into more touches every game, which becomes the play that swings the score, until the kid who used to blend in is the one coaches are asking about by name.",
+      "chars": 288,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyLine.4.1": {
+      "id": "ad-2.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And a bigger engine shows up everywhere the old one fell short.",
+      "chars": 63,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyLine.4.2": {
+      "id": "ad-2.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It's the first step that beats the defender to the ball, which turns into more touches every game, which becomes the play that swings the score, until the kid who used to blend in is the one coaches are asking about by name.",
+      "chars": 224,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyPara.5": {
+      "id": "ad-2.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. Same timing gates, same velocity trackers we use every session. You'll see your athlete's real numbers before you decide anything. Not a tryout. A data set.",
+      "chars": 199,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyLine.5.1": {
+      "id": "ad-2.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyLine.5.2": {
+      "id": "ad-2.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Same timing gates, same velocity trackers we use every session.",
+      "chars": 63,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyLine.5.3": {
+      "id": "ad-2.bodyLine.5.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "You'll see your athlete's real numbers before you decide anything.",
+      "chars": 66,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyLine.5.4": {
+      "id": "ad-2.bodyLine.5.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a tryout.",
+      "chars": 13,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyLine.5.5": {
+      "id": "ad-2.bodyLine.5.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set.",
+      "chars": 11,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyPara.6": {
+      "id": "ad-2.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.",
+      "chars": 128,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyLine.6.1": {
+      "id": "ad-2.bodyLine.6.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical.",
+      "chars": 46,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyLine.6.2": {
+      "id": "ad-2.bodyLine.6.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph in speed.",
+      "chars": 16,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyLine.6.3": {
+      "id": "ad-2.bodyLine.6.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "30 sessions.",
+      "chars": 12,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyLine.6.4": {
+      "id": "ad-2.bodyLine.6.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free until they get there.",
+      "chars": 51,
+      "ad": "AD 2"
+    },
+    "ad-2.bodyPara.7": {
+      "id": "ad-2.bodyPara.7",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 2"
+    },
+    "ad-2.altHook.1": {
+      "id": "ad-2.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid can play a hundred games this year and finish exactly as fast as they started. Here's why.",
+      "chars": 99,
+      "ad": "AD 2",
+      "archetype": "Oracle",
+      "code": null
+    },
+    "ad-2.altHook.2": {
+      "id": "ad-2.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Games don't make athletes faster. They just show you how fast training already made them.",
+      "chars": 89,
+      "ad": "AD 2",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    "ad-2.altHook.3": {
+      "id": "ad-2.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "More game film won't fix a speed problem. It'll just record it in higher definition.",
+      "chars": 84,
+      "ad": "AD 2",
+      "archetype": "Warning",
+      "code": null
+    },
+    "ad-2.imageHeadline": {
+      "id": "ad-2.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why More Games Won't Make Them Faster",
+      "chars": 44,
+      "ad": "AD 2"
+    },
+    "ad-2.imageSubhead": {
+      "id": "ad-2.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Will)",
+      "chars": 24,
+      "ad": "AD 2"
+    },
+    "ad-3.headline": {
+      "id": "ad-3.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why More Games Isn't Enough",
+      "chars": 27,
+      "ad": "AD 3"
+    },
+    "ad-3.description": {
+      "id": "ad-3.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 3"
+    },
+    "ad-3.primaryText": {
+      "id": "ad-3.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "More playing time feels like the answer. Another season, another team, more reps in real games. And a year later, the same kid, the same speed.\nHere's the brutal truth. A game is a test, not a teacher. Everything your kid does on the field, the first step, the closing speed, the burst to the ball, got built somewhere else, and the game simply hands back the result. When a kid isn't fast enough, more games keep grading the same engine and reporting the same score. The ceiling never moves, because nothing on a game field was ever designed to move it.\nThat's why a whole season can pass with nothing to show for it. Your kid plays out the athlete they already were in September, and then does it again the following fall.\nAnd here's something worth saying plainly: none of that playing time was wasted, and you weren't wrong to want it. Games matter. They're where a kid competes, learns to read the field, and finds out what they're made of under pressure. They were just never the place an athlete gets built, and asking a game to make a kid faster is asking the scoreboard to do the work of the weight room.\nBuilding the engine is a separate job, and it's the one our Multi-Sport Foundation Program exists to do. Every session we develop the real sprint speed and explosive power a game can only put on display, measured on purpose, rep by rep.\nThat kind of speed doesn't stay in the gym. It becomes the first step that beats the defender to the ball. That turns into more touches every single game. More touches become the plays that change the score, and those plays become the film a coach actually stops to watch, until one season in, the kid who used to blend into the roster is the one getting asked about by name.\nThe first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you leave with their real sprint time, real jump height, and a clear picture of where they stand. Not a tryout. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.\nCoach Ronnie Battiato built this, and refined it for the developmental window where it matters most.\nHere's the promise no other program in this market will make. +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.\nTo your athlete's success, Coach Ronnie",
+      "chars": 2452,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyPara.1": {
+      "id": "ad-3.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "More playing time feels like the answer. Another season, another team, more reps in real games. And a year later, the same kid, the same speed.",
+      "chars": 143,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.1.1": {
+      "id": "ad-3.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "More playing time feels like the answer.",
+      "chars": 40,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.1.2": {
+      "id": "ad-3.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Another season, another team, more reps in real games.",
+      "chars": 54,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.1.3": {
+      "id": "ad-3.bodyLine.1.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And a year later, the same kid, the same speed.",
+      "chars": 47,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyPara.2": {
+      "id": "ad-3.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the brutal truth. A game is a test, not a teacher. Everything your kid does on the field, the first step, the closing speed, the burst to the ball, got built somewhere else, and the game simply hands back the result. When a kid isn't fast enough, more games keep grading the same engine and reporting the same score. The ceiling never moves, because nothing on a game field was ever designed to move it.",
+      "chars": 410,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.2.1": {
+      "id": "ad-3.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the brutal truth.",
+      "chars": 24,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.2.2": {
+      "id": "ad-3.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A game is a test, not a teacher.",
+      "chars": 32,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.2.3": {
+      "id": "ad-3.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Everything your kid does on the field, the first step, the closing speed, the burst to the ball, got built somewhere else, and the game simply hands back the result.",
+      "chars": 165,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.2.4": {
+      "id": "ad-3.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "When a kid isn't fast enough, more games keep grading the same engine and reporting the same score.",
+      "chars": 99,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.2.5": {
+      "id": "ad-3.bodyLine.2.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The ceiling never moves, because nothing on a game field was ever designed to move it.",
+      "chars": 86,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyPara.3": {
+      "id": "ad-3.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's why a whole season can pass with nothing to show for it. Your kid plays out the athlete they already were in September, and then does it again the following fall.",
+      "chars": 169,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.3.1": {
+      "id": "ad-3.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's why a whole season can pass with nothing to show for it.",
+      "chars": 63,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.3.2": {
+      "id": "ad-3.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Your kid plays out the athlete they already were in September, and then does it again the following fall.",
+      "chars": 105,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyPara.4": {
+      "id": "ad-3.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And here's something worth saying plainly: none of that playing time was wasted, and you weren't wrong to want it. Games matter. They're where a kid competes, learns to read the field, and finds out what they're made of under pressure. They were just never the place an athlete gets built, and asking a game to make a kid faster is asking the scoreboard to do the work of the weight room.",
+      "chars": 388,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.4.1": {
+      "id": "ad-3.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And here's something worth saying plainly: none of that playing time was wasted, and you weren't wrong to want it.",
+      "chars": 114,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.4.2": {
+      "id": "ad-3.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Games matter.",
+      "chars": 13,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.4.3": {
+      "id": "ad-3.bodyLine.4.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "They're where a kid competes, learns to read the field, and finds out what they're made of under pressure.",
+      "chars": 106,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.4.4": {
+      "id": "ad-3.bodyLine.4.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "They were just never the place an athlete gets built, and asking a game to make a kid faster is asking the scoreboard to do the work of the weight room.",
+      "chars": 152,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyPara.5": {
+      "id": "ad-3.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Building the engine is a separate job, and it's the one our Multi-Sport Foundation Program exists to do. Every session we develop the real sprint speed and explosive power a game can only put on display, measured on purpose, rep by rep.",
+      "chars": 236,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.5.1": {
+      "id": "ad-3.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Building the engine is a separate job, and it's the one our Multi-Sport Foundation Program exists to do.",
+      "chars": 104,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.5.2": {
+      "id": "ad-3.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Every session we develop the real sprint speed and explosive power a game can only put on display, measured on purpose, rep by rep.",
+      "chars": 131,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyPara.6": {
+      "id": "ad-3.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That kind of speed doesn't stay in the gym. It becomes the first step that beats the defender to the ball. That turns into more touches every single game. More touches become the plays that change the score, and those plays become the film a coach actually stops to watch, until one season in, the kid who used to blend into the roster is the one getting asked about by name.",
+      "chars": 375,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.6.1": {
+      "id": "ad-3.bodyLine.6.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That kind of speed doesn't stay in the gym.",
+      "chars": 43,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.6.2": {
+      "id": "ad-3.bodyLine.6.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It becomes the first step that beats the defender to the ball.",
+      "chars": 62,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.6.3": {
+      "id": "ad-3.bodyLine.6.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That turns into more touches every single game.",
+      "chars": 47,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.6.4": {
+      "id": "ad-3.bodyLine.6.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "More touches become the plays that change the score, and those plays become the film a coach actually stops to watch, until one season in, the kid who used to blend into the roster is the one getting asked about by name.",
+      "chars": 220,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyPara.7": {
+      "id": "ad-3.bodyPara.7",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you leave with their real sprint time, real jump height, and a clear picture of where they stand. Not a tryout. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.",
+      "chars": 352,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.7.1": {
+      "id": "ad-3.bodyLine.7.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.7.2": {
+      "id": "ad-3.bodyLine.7.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "We run your athlete through the same timing gates and velocity trackers we use every session, and you leave with their real sprint time, real jump height, and a clear picture of where they stand.",
+      "chars": 195,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.7.3": {
+      "id": "ad-3.bodyLine.7.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a tryout.",
+      "chars": 13,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.7.4": {
+      "id": "ad-3.bodyLine.7.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set you get to keep.",
+      "chars": 27,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.7.5": {
+      "id": "ad-3.bodyLine.7.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "From there, the path into the Multi-Sport Foundation Program is simple.",
+      "chars": 71,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyPara.8": {
+      "id": "ad-3.bodyPara.8",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Coach Ronnie Battiato built this, and refined it for the developmental window where it matters most.",
+      "chars": 100,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyPara.9": {
+      "id": "ad-3.bodyPara.9",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the promise no other program in this market will make. +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.",
+      "chars": 170,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.9.1": {
+      "id": "ad-3.bodyLine.9.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the promise no other program in this market will make.",
+      "chars": 61,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.9.2": {
+      "id": "ad-3.bodyLine.9.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+3 inches on the vertical.",
+      "chars": 26,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.9.3": {
+      "id": "ad-3.bodyLine.9.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph in speed.",
+      "chars": 16,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.9.4": {
+      "id": "ad-3.bodyLine.9.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "30 sessions.",
+      "chars": 12,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyLine.9.5": {
+      "id": "ad-3.bodyLine.9.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free until they get there.",
+      "chars": 51,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyPara.10": {
+      "id": "ad-3.bodyPara.10",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 3"
+    },
+    "ad-3.bodyPara.11": {
+      "id": "ad-3.bodyPara.11",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "To your athlete's success, Coach Ronnie",
+      "chars": 39,
+      "ad": "AD 3"
+    },
+    "ad-3.altHook.1": {
+      "id": "ad-3.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid can play a hundred games this year and finish exactly as fast as they started. Here's why.",
+      "chars": 99,
+      "ad": "AD 3",
+      "archetype": "Oracle",
+      "code": null
+    },
+    "ad-3.altHook.2": {
+      "id": "ad-3.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Games don't make athletes faster. They just show you how fast training already made them.",
+      "chars": 89,
+      "ad": "AD 3",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    "ad-3.altHook.3": {
+      "id": "ad-3.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "More game film won't fix a speed problem. It'll just record it in higher definition.",
+      "chars": 84,
+      "ad": "AD 3",
+      "archetype": "Warning",
+      "code": null
+    },
+    "ad-3.imageHeadline": {
+      "id": "ad-3.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why More Games Won't Make Them Faster",
+      "chars": 44,
+      "ad": "AD 3"
+    },
+    "ad-3.imageSubhead": {
+      "id": "ad-3.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Will)",
+      "chars": 24,
+      "ad": "AD 3"
+    }
+  }
+}

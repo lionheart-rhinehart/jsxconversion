@@ -558,10 +558,11 @@ function wire() {
         const act = btn.dataset.act;
         if (act === "edit") {
           const a = findAsset(angle, asset);
-          // Static cluster templates → embed the position editor on the asset's
-          // OWN campaign config (camp:<campaign>:<angle>:<asset>), not the source
-          // template. Video/gif/fresh editing is wired by Part 4.
-          if (a && a.format === "static" && a.template && a.template.startsWith("cluster-")) {
+          // ANY static template → embed the position editor on the asset's OWN
+          // campaign config (camp:<campaign>:<angle>:<asset>), not the source
+          // template. (Was cluster-* only, which excluded fresh-isp-* statics.)
+          // Video/gif/fresh editing is wired by Part 4.
+          if (a && a.format === "static" && a.template) {
             openStaticEditor(angle, asset);
           } else if (window.openVideoEditor) {
             // Video / gif / fresh → the React edit modal (Part 4).

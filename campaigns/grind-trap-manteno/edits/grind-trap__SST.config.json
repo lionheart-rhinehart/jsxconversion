@@ -61,10 +61,10 @@
       "label": "BP chrome badge (dark, reads on white)",
       "type": "image",
       "src": "./assets/batti-badge.png",
-      "x": 64,
-      "y": 1788,
-      "width": 76,
-      "height": 76,
+      "x": 465,
+      "y": 1740,
+      "width": 150,
+      "height": 150,
       "objectFit": "contain",
       "z": 40
     },
@@ -86,15 +86,18 @@
       "id": "eyebrow",
       "tag": "eyebrow",
       "label": "Mono red eyebrow on white band",
-      "x": 70,
-      "y": 1432,
+      "x": 64,
+      "y": 96,
       "text": "MANTENO SPORT PARENTS",
-      "fontSize": 30,
+      "fontSize": 32,
       "fontFamily": "JetBrains Mono",
-      "fontWeight": 600,
+      "fontWeight": 700,
       "color": "#cb0202",
-      "letterSpacing": "0.22em",
+      "letterSpacing": "0.04em",
       "textTransform": "uppercase",
+      "chipBg": "#ffffff",
+      "chipPad": "10px 22px",
+      "chipRadius": 8,
       "z": 20,
       "role": "eyebrow",
       "accepts": [
@@ -126,27 +129,6 @@
         "hook"
       ],
       "maxChars": 40,
-      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
-    },
-    {
-      "id": "wordmark",
-      "tag": "brand",
-      "label": "Batti wordmark (black on white band)",
-      "x": 160,
-      "y": 1810,
-      "text": "BATTI-PERFORMANCE",
-      "fontSize": 30,
-      "fontFamily": "Saira Condensed",
-      "fontWeight": 900,
-      "color": "#0a0a0a",
-      "letterSpacing": "0.02em",
-      "textTransform": "uppercase",
-      "z": 41,
-      "role": "brand",
-      "accepts": [
-        "brand"
-      ],
-      "maxChars": 22,
       "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     }
   ]

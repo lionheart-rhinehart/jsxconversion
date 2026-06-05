@@ -50,7 +50,10 @@ const drillOf = (f) => {
   return m ? m[1] : "_other";
 };
 
-const cacheClips = readdirSync(cacheDir).filter((f) => f.endsWith(".mp4"));
+// Exclude "-unknown-" level clips: in Batti's Kraken folder these are the
+// mislabeled cross-brand (ISP) uploads (the tell is level "unknown" + a malformed
+// "-mp4-" double-extension before the hash). Filenames are otherwise untrustworthy.
+const cacheClips = readdirSync(cacheDir).filter((f) => f.endsWith(".mp4") && !/-unknown-/.test(f));
 if (!cacheClips.length) { console.error(`[prep] no .mp4 in ${cacheDir}`); process.exit(1); }
 const byDrill = {};
 for (const f of cacheClips) (byDrill[drillOf(f)] = byDrill[drillOf(f)] || []).push(f);

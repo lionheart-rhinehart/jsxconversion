@@ -1,0 +1,170 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
+      "z": 1
+    },
+    {
+      "id": "scrim_top",
+      "tag": "scrim_top",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 340,
+      "fill": "linear-gradient(180deg, rgba(28,28,29,0.6) 0%, rgba(28,28,29,0) 100%)",
+      "z": 4
+    },
+    {
+      "id": "ink_panel",
+      "tag": "ink_panel",
+      "type": "rect",
+      "x": 0,
+      "y": 1040,
+      "width": 1080,
+      "height": 880,
+      "fill": "#1c1c1d",
+      "z": 6
+    },
+    {
+      "id": "panel_feather",
+      "tag": "panel_feather",
+      "type": "rect",
+      "x": 0,
+      "y": 900,
+      "width": 1080,
+      "height": 160,
+      "fill": "linear-gradient(180deg, rgba(28,28,29,0) 0%, rgba(28,28,29,1) 100%)",
+      "z": 5
+    },
+    {
+      "id": "accent_bar",
+      "tag": "accent_bar",
+      "type": "rect",
+      "x": 96,
+      "y": 1132,
+      "width": 116,
+      "height": 12,
+      "fill": "#2573b7",
+      "z": 18
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor chip (auto-filled)",
+      "x": 96,
+      "y": 150,
+      "textAlign": "left",
+      "text": "FORT WORTH SPORT PARENTS",
+      "fontSize": 33,
+      "fontFamily": "Barlow",
+      "fontWeight": 700,
+      "color": "#2573b7",
+      "chipBg": "#ffffff",
+      "chipPad": "13px 28px",
+      "chipRadius": 999,
+      "letterSpacing": "0.16em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 34,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "claim",
+      "tag": "claim",
+      "label": "Mechanism claim",
+      "x": 96,
+      "y": 1186,
+      "width": 912,
+      "textAlign": "left",
+      "text": "The monthly loop is why the results don't run out.",
+      "fontSize": 84,
+      "fontFamily": "Barlow Condensed",
+      "fontWeight": 800,
+      "color": "#ffffff",
+      "lineHeight": 0.92,
+      "letterSpacing": "0.004em",
+      "textTransform": "uppercase",
+      "z": 21,
+      "role": "mechanism",
+      "accepts": [
+        "mechanism",
+        "claim",
+        "reframe",
+        "hook"
+      ],
+      "maxChars": 80,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "support",
+      "tag": "support",
+      "label": "Support line",
+      "x": 98,
+      "y": 1560,
+      "width": 884,
+      "textAlign": "left",
+      "text": "Including your athlete.",
+      "fontSize": 40,
+      "fontFamily": "Barlow",
+      "fontWeight": 600,
+      "color": "#7db0e3",
+      "lineHeight": 1.14,
+      "z": 22,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "claim",
+        "mechanism",
+        "proof"
+      ],
+      "maxChars": 96,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark",
+      "x": 98,
+      "y": 1660,
+      "width": 900,
+      "textAlign": "left",
+      "text": "IDEAL SPORTS PERFORMANCE",
+      "fontSize": 30,
+      "fontFamily": "Barlow",
+      "fontWeight": 600,
+      "color": "#ffffff",
+      "letterSpacing": "0.2em",
+      "textTransform": "uppercase",
+      "z": 23,
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 26,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    }
+  ],
+  "media": {
+    "path": "./assets/bg-brand-action-clip-stability-ball-mountain-climbers-high-school-mal-07f10925.mp4",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1
+  }
+}

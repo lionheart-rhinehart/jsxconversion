@@ -1,0 +1,465 @@
+{
+  "schemaVersion": 1,
+  "campaign": "more-games-manteno",
+  "brand": "batti-performance",
+  "knobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": {
+      "video": 0.6,
+      "gif": 0.15,
+      "static": 0.25
+    },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 1
+  },
+  "_planNotes": {
+    "scope": "More-games, Manteno. 20 assets / 20 UNIQUE templates (each used ONCE — repetitionCap:1), selected from the Batti template library. 14 video + 6 static. White-pill eyebrow; guarantee LOCKED; verbatim copy."
+  },
+  "angles": [
+    {
+      "id": "more-games",
+      "name": "More Games Isn't Enough — ad copy series #3",
+      "location": "manteno",
+      "mechanism": "Games measure the athlete training built; they don't build one. A game is a test, not a teacher.",
+      "emotionalJob": "Validate the instinct (more play feels right), then flip it: games reveal, training builds.",
+      "voice": "Head-coach-to-parent, declarative. No emoji / exclamation / em dash.",
+      "assets": [
+        {
+          "id": "M01",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "batti-hook-motion",
+          "clip": "brand/video-templates/assets/bt-mg-M01.mp4",
+          "templateData": {
+            "hook": "Games don't make athletes faster. They just show you how fast training already made them."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-manteno/more-games/M01.mp4",
+          "thumb": "out/campaigns/more-games-manteno/more-games/M01.mp4",
+          "renderedAt": "2026-06-05T15:00:14.357Z",
+          "kraken": {
+            "id": "d44ef195-79a2-4d57-b98c-fbd410ec840c",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/more-games-manteno-more-games-M01-1780672846670.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M02",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v01-hook-frame",
+          "clip": "brand/video-templates/assets/bt-mg-M02.mp4",
+          "templateData": {
+            "hook": "Your kid can play a hundred games this year and finish exactly as fast as they started."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-manteno/more-games/M02.mp4",
+          "thumb": "out/campaigns/more-games-manteno/more-games/M02.mp4",
+          "renderedAt": "2026-06-05T15:01:20.480Z",
+          "kraken": {
+            "id": "74e6c1c6-7588-400f-8819-b257cf579bca",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/more-games-manteno-more-games-M02-1780672856243.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M03",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v07-caption",
+          "clip": "brand/video-templates/assets/bt-mg-M03.mp4",
+          "templateData": {
+            "line": "More game film won't fix a speed problem. It'll just record it in higher definition."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-manteno/more-games/M03.mp4",
+          "thumb": "out/campaigns/more-games-manteno/more-games/M03.mp4",
+          "renderedAt": "2026-06-05T15:02:31.426Z",
+          "kraken": {
+            "id": "3b63090a-7812-4b89-8fb4-06452c695bd4",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/more-games-manteno-more-games-M03-1780672863230.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M04",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v12-wipe",
+          "clip": "brand/video-templates/assets/bt-mg-M04.mp4",
+          "templateData": {
+            "claim": "A game is a test, not a teacher."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-manteno/more-games/M04.mp4",
+          "thumb": "out/campaigns/more-games-manteno/more-games/M04.mp4",
+          "renderedAt": "2026-06-05T15:03:25.724Z",
+          "kraken": {
+            "id": "0e64ead8-e24f-406e-9991-d3c318b692bf",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/more-games-manteno-more-games-M04-1780672868042.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M05",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v03-highlight",
+          "clip": "brand/video-templates/assets/bt-mg-M05.mp4",
+          "templateData": {
+            "claim": "A game doesn't develop an athlete.",
+            "sub": "It reveals one."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-manteno/more-games/M05.mp4",
+          "thumb": "out/campaigns/more-games-manteno/more-games/M05.mp4",
+          "renderedAt": "2026-06-05T15:04:24.872Z",
+          "kraken": {
+            "id": "55ba2c9a-cf56-4dad-a5b1-c19cd14f65fe",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/more-games-manteno-more-games-M05-1780672872234.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M06",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "batti-mechanism-motion",
+          "clip": "brand/video-templates/assets/bt-mg-M06.mp4",
+          "templateData": {
+            "statement": "It becomes the first step that beats the defender to the ball."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-manteno/more-games/M06.mp4",
+          "thumb": "out/campaigns/more-games-manteno/more-games/M06.mp4",
+          "renderedAt": "2026-06-05T15:05:21.931Z",
+          "kraken": {
+            "id": "9b561c56-8638-449f-846a-ddc2b0ea93e3",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/more-games-manteno-more-games-M06-1780672876633.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M07",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v04-climb",
+          "clip": "brand/video-templates/assets/bt-mg-M07.mp4",
+          "templateData": {
+            "statement": "And a bigger engine shows up everywhere the old one fell short."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-manteno/more-games/M07.mp4",
+          "thumb": "out/campaigns/more-games-manteno/more-games/M07.mp4",
+          "renderedAt": "2026-06-05T15:06:31.812Z",
+          "kraken": {
+            "id": "2411aa70-fd8f-4b5e-9889-1f456246e309",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/more-games-manteno-more-games-M07-1780672881916.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M08",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v02-twokinds",
+          "clip": "brand/video-templates/assets/bt-mg-M08.mp4",
+          "templateData": {
+            "line1": "A GAME IS A TEST,",
+            "line2": "NOT A TEACHER."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-manteno/more-games/M08.mp4",
+          "thumb": "out/campaigns/more-games-manteno/more-games/M08.mp4",
+          "renderedAt": "2026-06-05T15:07:33.924Z",
+          "kraken": {
+            "id": "0f368f20-e26f-4657-a0a9-c92b201042e6",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/more-games-manteno-more-games-M08-1780672886368.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M09",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v08-strike",
+          "clip": "brand/video-templates/assets/bt-mg-M09.mp4",
+          "templateData": {
+            "claim": "A whole season can pass with nothing to show for it.",
+            "sub": "It becomes the first step that beats the defender to the ball."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-manteno/more-games/M09.mp4",
+          "thumb": "out/campaigns/more-games-manteno/more-games/M09.mp4",
+          "renderedAt": "2026-06-05T15:08:38.295Z",
+          "kraken": {
+            "id": "b1732de7-b28d-40ce-be98-28063945986d",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/more-games-manteno-more-games-M09-1780672889117.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M10",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v10-block",
+          "clip": "brand/video-templates/assets/bt-mg-M10.mp4",
+          "templateData": {
+            "headline": "Why More Games Isn't Enough",
+            "sub": "(And What Actually Will)"
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-manteno/more-games/M10.mp4",
+          "thumb": "out/campaigns/more-games-manteno/more-games/M10.mp4",
+          "renderedAt": "2026-06-05T15:09:50.002Z",
+          "kraken": {
+            "id": "be3af3eb-9ba2-46f4-8e5a-0f24edf547f3",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/more-games-manteno-more-games-M10-1780672892508.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M11",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v11-outline",
+          "clip": "brand/video-templates/assets/bt-mg-M11.mp4",
+          "templateData": {
+            "headline": "Here's Why More Games Won't Make Them Faster"
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-manteno/more-games/M11.mp4",
+          "thumb": "out/campaigns/more-games-manteno/more-games/M11.mp4",
+          "renderedAt": "2026-06-05T15:10:55.862Z",
+          "kraken": {
+            "id": "10d8a9eb-b156-41ce-a959-ae766f0367ae",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/more-games-manteno-more-games-M11-1780672900552.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M12",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v06-quotemark",
+          "clip": "brand/video-templates/assets/bt-mg-M12.mp4",
+          "templateData": {
+            "quote": "It reveals one."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-manteno/more-games/M12.mp4",
+          "thumb": "out/campaigns/more-games-manteno/more-games/M12.mp4",
+          "renderedAt": "2026-06-05T15:11:23.074Z",
+          "kraken": {
+            "id": "c7f7e8f0-7421-4bc5-85ba-24fc0b16d3ce",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/more-games-manteno-more-games-M12-1780672907060.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M13",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "batti-quote-motion",
+          "clip": "brand/video-templates/assets/bt-mg-M13.mp4",
+          "templateData": {
+            "quote": "More game film won't fix a speed problem."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-manteno/more-games/M13.mp4",
+          "thumb": "out/campaigns/more-games-manteno/more-games/M13.mp4",
+          "renderedAt": "2026-06-05T15:12:36.721Z",
+          "kraken": {
+            "id": "06ca1751-140b-4919-9b13-dff51924518e",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/more-games-manteno-more-games-M13-1780672912142.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M14",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v09-offer",
+          "clip": "brand/video-templates/assets/bt-mg-M14.mp4",
+          "templateData": {
+            "offer": "The first step in is the Athlete Analysis.",
+            "cta": "Book the Athlete Analysis"
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-manteno/more-games/M14.mp4",
+          "thumb": "out/campaigns/more-games-manteno/more-games/M14.mp4",
+          "renderedAt": "2026-06-05T15:13:59.311Z",
+          "kraken": {
+            "id": "850b7f9f-8282-4032-8a69-438e6d438c7a",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/more-games-manteno-more-games-M14-1780672918618.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "G01",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-grind-trap-N1",
+          "media": "./assets/bt-mg-G01.jpg",
+          "status": "rendered",
+          "copyRefs": {
+            "hook": [
+              "ad-1.imageHeadline"
+            ]
+          },
+          "output": "out/campaigns/more-games-manteno/more-games/G01.png",
+          "thumb": "out/campaigns/more-games-manteno/more-games/G01.png",
+          "renderedAt": "2026-06-05T15:14:21.341Z",
+          "kraken": {
+            "id": "58f502a3-51b1-421b-840a-dc2749711e33",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/more-games-manteno-more-games-G01-1780672921622.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "G02",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-grind-trap-D1",
+          "media": "./assets/bt-mg-G02.jpg",
+          "status": "rendered",
+          "copyRefs": {
+            "claim": [
+              "ad-1.headline"
+            ]
+          },
+          "output": "out/campaigns/more-games-manteno/more-games/G02.png",
+          "thumb": "out/campaigns/more-games-manteno/more-games/G02.png",
+          "renderedAt": "2026-06-05T15:14:33.659Z",
+          "kraken": {
+            "id": "c13a3d24-6bd0-48fb-a6f8-bbf9ac35285c",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/more-games-manteno-more-games-G02-1780672924302.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "G03",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-mechanism",
+          "media": "./assets/bt-mg-G03.jpg",
+          "status": "rendered",
+          "copyRefs": {
+            "mechanism": [
+              "ad-2.bodyLine.2.2"
+            ]
+          },
+          "output": "out/campaigns/more-games-manteno/more-games/G03.png",
+          "thumb": "out/campaigns/more-games-manteno/more-games/G03.png",
+          "renderedAt": "2026-06-05T15:14:45.998Z",
+          "kraken": {
+            "id": "16eb6b6b-6fea-45d2-8940-350ff82a664a",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/more-games-manteno-more-games-G03-1780672926568.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "G04",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-quote",
+          "media": "./assets/bt-mg-G04.jpg",
+          "status": "rendered",
+          "copyRefs": {
+            "reframe": [
+              "ad-1.bodyLine.2.2"
+            ]
+          },
+          "output": "out/campaigns/more-games-manteno/more-games/G04.png",
+          "thumb": "out/campaigns/more-games-manteno/more-games/G04.png",
+          "renderedAt": "2026-06-05T15:14:58.383Z",
+          "kraken": {
+            "id": "51406eca-f12e-4d47-b7cb-4b7b2e32c09f",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/more-games-manteno-more-games-G04-1780672929319.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "G05",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-offer",
+          "media": "./assets/bt-mg-G05.jpg",
+          "status": "rendered",
+          "copyRefs": {
+            "offer": [
+              "ad-1.bodyLine.4.1"
+            ]
+          },
+          "output": "out/campaigns/more-games-manteno/more-games/G05.png",
+          "thumb": "out/campaigns/more-games-manteno/more-games/G05.png",
+          "renderedAt": "2026-06-05T15:15:10.173Z",
+          "kraken": {
+            "id": "8166127a-ef1a-4313-aaae-5d2e0f069c52",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/more-games-manteno-more-games-G05-1780672931389.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "G06",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "conf-s01-whiteband",
+          "media": "./assets/bt-mg-G06.jpg",
+          "status": "rendered",
+          "templateData": {
+            "hook": "Games don't make athletes faster."
+          },
+          "output": "out/campaigns/more-games-manteno/more-games/G06.png",
+          "thumb": "out/campaigns/more-games-manteno/more-games/G06.png",
+          "renderedAt": "2026-06-05T15:15:22.621Z",
+          "kraken": {
+            "id": "cad73388-285d-4e2e-9737-b310d9ced658",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/more-games-manteno-more-games-G06-1780672933732.png",
+            "folder": "angle 3"
+          }
+        }
+      ]
+    }
+  ]
+}

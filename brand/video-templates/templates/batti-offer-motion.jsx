@@ -40,8 +40,7 @@ function BattiOfferMotion({ data = {} }) {
       <TplText field="cta" data={data} base={{ position: 'absolute', top: 1672, left: 64, right: 64, textAlign: 'center' }}
         style={{ fontFamily: 'Saira Condensed, sans-serif', fontWeight: 800, fontSize: 40, color: '#ffffff', letterSpacing: '0.04em', textTransform: 'uppercase', textAlign: 'center', opacity: clamp(ctaT * 2), transform: `translateY(${(1 - ctaT) * 20}px)` }}>{cta}</TplText>
 
-      <TplText field="brand" data={data} base={{ position: 'absolute', bottom: 88, left: 64, right: 64 }}
-        style={{ fontFamily: 'Saira Condensed, sans-serif', fontWeight: 900, fontSize: 28, color: '#ffffff', letterSpacing: '0.02em', textTransform: 'uppercase', opacity: brandT }}>{brand}</TplText>
+      <img src={(window.__BRAND__ && window.__BRAND__.logo_motion) || "assets/batti-performance-logo.png"} alt="Batti-Performance" style={{ position: "absolute", bottom: 14, left: 465, width: 150, height: 150, opacity: brandT }} />
     </div>
   );
 }

@@ -1,0 +1,159 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/bt-cf-S06.jpg",
+    "type": "image",
+    "tag": "bg_photo",
+    "z": 0
+  },
+  "fixedDesign": [
+    {
+      "id": "black_band",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1180,
+      "fill": "#000000",
+      "z": 5
+    },
+    {
+      "id": "band_rule",
+      "type": "rect",
+      "x": 0,
+      "y": 1180,
+      "width": 1080,
+      "height": 8,
+      "fill": "#c4141d",
+      "z": 6
+    },
+    {
+      "id": "guar_border",
+      "type": "rect",
+      "x": 64,
+      "y": 560,
+      "width": 8,
+      "height": 320,
+      "fill": "#c4141d",
+      "z": 7
+    },
+    {
+      "id": "cta_btn",
+      "type": "rect",
+      "x": 64,
+      "y": 940,
+      "width": 952,
+      "height": 104,
+      "fill": "#c4141d",
+      "borderRadius": 4,
+      "z": 7
+    },
+    {
+      "id": "badge",
+      "type": "image",
+      "src": "./assets/batti-badge-onwhite.png",
+      "x": 440,
+      "y": 1666,
+      "width": 200,
+      "height": 200,
+      "objectFit": "contain",
+      "z": 40
+    },
+    {
+      "id": "strip",
+      "type": "rect",
+      "x": 0,
+      "y": 1898,
+      "width": 1080,
+      "height": 22,
+      "fill": "#c4141d",
+      "z": 50
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "x": 64,
+      "y": 120,
+      "text": "MANTENO SPORT PARENTS",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#c4141d",
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "chipBg": "#ffffff",
+      "chipPad": "10px 22px",
+      "chipRadius": 8,
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow"
+      ],
+      "maxChars": 28
+    },
+    {
+      "id": "offer",
+      "tag": "offer",
+      "x": 64,
+      "y": 230,
+      "width": 952,
+      "text": "Claim your athlete analysis now",
+      "fontSize": 84,
+      "fontFamily": "Saira Condensed",
+      "fontWeight": 900,
+      "color": "#ffffff",
+      "lineHeight": 0.9,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "z": 30,
+      "role": "proof",
+      "accepts": [
+        "proof"
+      ],
+      "maxChars": 30
+    },
+    {
+      "id": "guarantee",
+      "tag": "guarantee",
+      "x": 100,
+      "y": 572,
+      "width": 916,
+      "text": "Your athlete will gain AT LEAST 3 inches on their vertical jump and 1mph in speed in 30 sessions — or we train them for FREE until they achieve these results.",
+      "fontSize": 42,
+      "fontFamily": "Saira Condensed",
+      "fontWeight": 600,
+      "color": "#ffffff",
+      "lineHeight": 1.12,
+      "z": 31,
+      "role": "guarantee",
+      "accepts": [
+        "guarantee"
+      ],
+      "maxChars": 170
+    },
+    {
+      "id": "cta",
+      "tag": "cta",
+      "x": 64,
+      "y": 970,
+      "width": 952,
+      "textAlign": "center",
+      "text": "BOOK YOUR FREE ASSESSMENT",
+      "fontSize": 40,
+      "fontFamily": "Saira Condensed",
+      "fontWeight": 800,
+      "color": "#ffffff",
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "z": 32,
+      "role": "cta",
+      "accepts": [
+        "cta"
+      ],
+      "maxChars": 30
+    }
+  ]
+}

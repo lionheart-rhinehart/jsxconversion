@@ -40,8 +40,7 @@ function BattiStatMotion({ data = {} }) {
         style={{ fontFamily: 'Saira Condensed, sans-serif', fontWeight: 800, fontSize: 76, color: '#ffffff', lineHeight: 0.96, letterSpacing: '-0.005em', textTransform: 'uppercase', opacity: claimT, transform: `translateY(${(1 - claimT) * 16}px)` }}
         maxHeight={300} fitKey={claim}>{claim}</TplText>
 
-      <TplText field="brand" data={data} base={{ position: 'absolute', bottom: 96, left: 64, right: 64 }}
-        style={{ fontFamily: 'Saira Condensed, sans-serif', fontWeight: 900, fontSize: 30, color: '#ffffff', letterSpacing: '0.02em', textTransform: 'uppercase', opacity: brandT }}>{brand}</TplText>
+      <img src={(window.__BRAND__ && window.__BRAND__.logo_motion) || "assets/batti-performance-logo.png"} alt="Batti-Performance" style={{ position: "absolute", bottom: 44, left: 440, width: 200, height: 200, opacity: brandT }} />
     </div>
   );
 }

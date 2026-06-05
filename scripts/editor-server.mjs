@@ -557,8 +557,15 @@ const server = createServer(async (req, res) => {
       const angle = (plan.angles || []).find((a) => a.id === angleId);
       const asset = angle && (angle.assets || []).find((a) => a.id === assetId);
       if (!asset) { sendJson(res, 404, { error: `asset "${assetId}" not found` }); return; }
-      if (!asset.template || !asset.template.startsWith("cluster-")) {
-        sendJson(res, 400, { error: `asset "${assetId}" is not a static cluster template (template=${asset.template})` });
+      // Editable statics are ANY static-format template whose config.json lives in
+      // TEMPLATES_DIR — not just cluster-* (Batti/franchisee fresh templates are
+      // named fresh-batti-* / conf-s* etc.). Motion assets have no static config.
+      if (asset.format && asset.format !== "static") {
+        sendJson(res, 400, { error: `asset "${assetId}" is a ${asset.format} (motion) asset, not an editable static` });
+        return;
+      }
+      if (!asset.template || !existsSync(join(TEMPLATES_DIR, `${asset.template}.config.json`))) {
+        sendJson(res, 404, { error: `no static config for template "${asset.template}" in ${TEMPLATES_DIR}` });
         return;
       }
       const location = asset.location || (angle && angle.location) || plan.location || null;
@@ -677,8 +684,9 @@ const server = createServer(async (req, res) => {
     let templates = [];
     try {
       if (type === "static") {
+        // cluster-* (AA bank) + fresh-* / conf-s* (Batti & other franchisee statics)
         templates = readdirSync(TEMPLATES_DIR)
-          .filter((f) => /^cluster-[\w-]+\.config\.json$/.test(f))
+          .filter((f) => /^(cluster-|fresh-|conf-s)[\w-]+\.config\.json$/.test(f))
           .map((f) => f.replace(/\.config\.json$/, ""));
       } else {
         templates = readdirSync(VIDEO_TEMPLATES_DIR)

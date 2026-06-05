@@ -1,0 +1,483 @@
+{
+  "schemaVersion": 1,
+  "campaign": "isp-velocity-plateau",
+  "brand": "ideal-sports-performance",
+  "knobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": {
+      "video": 0.6,
+      "gif": 0.15,
+      "static": 0.25
+    },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 3
+  },
+  "_planNotes": "ISP — The Velocity Plateau (single-angle campaign; one review page per angle, mirroring the AA bank). 20 ISP-native creatives (fresh-isp-* templates). Copy bound verbatim by reference to copy-library.json. Eyebrow auto-anchors FORT WORTH SPORT PARENTS from the fort-worth tier. ISP has no guarantee; offer of record is the free first session.",
+  "angles": [
+    {
+      "id": "velocity-plateau",
+      "name": "The Velocity Plateau",
+      "location": "fort-worth",
+      "mechanism": "Velocity is downstream of movement quality; unassessed throwing reinforces the same ceiling. The plateau is a measurement problem, not an effort problem.",
+      "emotionalJob": "Lift blame off the kid and the parent — the number is stuck because nobody measured the limiter, not because effort failed.",
+      "voice": "Head-coach-to-parent, declarative, metric-driven.",
+      "assets": [
+        {
+          "id": "A1",
+          "beat": "A — Cold hook",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-hook",
+          "copyRefs": {
+            "hook": "ad-1-short.imageHeadline"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-baseball-pitching-high-school-male-isp-zach-deca-a22c6325.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-velocity-plateau/velocity-plateau/A1.mp4",
+          "thumb": "out/campaigns/isp-velocity-plateau/velocity-plateau/A1.mp4",
+          "renderedAt": "2026-06-05T03:33:59.240Z",
+          "kraken": {
+            "id": "b57e3eb4-4f7c-402b-b1d5-c078170faa34",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-velocity-plateau-velocity-plateau-A1-1780635647501.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "A2",
+          "beat": "A — Cold hook",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-isp-hook",
+          "copyRefs": {
+            "hook": "ad-1-short.altHook.1",
+            "reframe": "ad-1-short.imageSubhead"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-sprinting-lifting-pitching-high-school-male-isp--a626613f.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-velocity-plateau/velocity-plateau/A2.png",
+          "thumb": "out/campaigns/isp-velocity-plateau/velocity-plateau/A2.png",
+          "renderedAt": "2026-06-05T04:52:45.458Z",
+          "editedAt": "2026-06-05T04:40:14.015Z",
+          "kraken": {
+            "id": "5e741cdc-54c0-4309-9c04-1a68b4ea4660",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-velocity-plateau-velocity-plateau-A2-1780635649998.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "B1",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-statement",
+          "copyRefs": {
+            "hook": "ad-1-short.altHook.2",
+            "reframe": "ad-1-medium.bodyLine.2.5"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-baseball-pitching-high-school-male-isp-zach-deca-a371a5a6.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-velocity-plateau/velocity-plateau/B1.mp4",
+          "thumb": "out/campaigns/isp-velocity-plateau/velocity-plateau/B1.mp4",
+          "renderedAt": "2026-06-05T03:36:22.918Z",
+          "kraken": {
+            "id": "058c7680-86e3-49d6-840c-9b582ce301f7",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-velocity-plateau-velocity-plateau-B1-1780635652719.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "B2",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-isp-hook",
+          "copyRefs": {
+            "hook": "ad-1-short.altHook.3",
+            "reframe": "ad-1-long.bodyLine.3.5"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-baseball-throwing-drill-unknown-male-isp-zach-de-d0ce5c82.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-velocity-plateau/velocity-plateau/B2.png",
+          "thumb": "out/campaigns/isp-velocity-plateau/velocity-plateau/B2.png",
+          "renderedAt": "2026-06-05T04:53:32.020Z",
+          "editedAt": "2026-06-05T04:44:18.807Z",
+          "kraken": {
+            "id": "6f1bf127-a166-44d7-b35a-109f6a446e47",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-velocity-plateau-velocity-plateau-B2-1780635653902.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "C1",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-claim",
+          "copyRefs": {
+            "mechanism": "ad-1-short.bodyLine.3.1",
+            "reframe": "ad-1-long.bodyLine.6.2"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-cable-rotational-exercise-high-school-male-isp-z-036aa74d.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-velocity-plateau/velocity-plateau/C1.mp4",
+          "thumb": "out/campaigns/isp-velocity-plateau/velocity-plateau/C1.mp4",
+          "kraken": {
+            "id": "8006108f-5171-4b02-b072-d28ef73d9dfd",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-velocity-plateau-velocity-plateau-C1-1780635656160.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "C2",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-isp-mechanism",
+          "copyRefs": {
+            "mechanism": "ad-1-short.bodyLine.3.2",
+            "reframe": "ad-1-long.bodyLine.8.3"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-med-ball-throw-high-school-male-isp-zach-decant--07571665.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-velocity-plateau/velocity-plateau/C2.png",
+          "thumb": "out/campaigns/isp-velocity-plateau/velocity-plateau/C2.png",
+          "renderedAt": "2026-06-05T04:11:10.291Z",
+          "kraken": {
+            "id": "13dae22d-14ff-4153-b7ef-09540e30d699",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-velocity-plateau-velocity-plateau-C2-1780635658066.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "C3",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-claim",
+          "copyRefs": {
+            "mechanism": "ad-1-medium.bodyLine.4.2",
+            "reframe": "ad-1-short.bodyLine.4.1"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-med-ball-throw-high-school-male-isp-zach-decant--29fe1e5f.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-velocity-plateau/velocity-plateau/C3.mp4",
+          "thumb": "out/campaigns/isp-velocity-plateau/velocity-plateau/C3.mp4",
+          "kraken": {
+            "id": "735f99ec-dc08-4aa4-be0e-76b9b3794bc3",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-velocity-plateau-velocity-plateau-C3-1780635660137.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "C4",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-claim",
+          "copyRefs": {
+            "mechanism": "ad-1-short.bodyLine.3.1",
+            "reframe": "ad-1-short.imageSubhead"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-pitching-unknown-male-isp-zach-decant-50ecf848.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-velocity-plateau/velocity-plateau/C4.mp4",
+          "thumb": "out/campaigns/isp-velocity-plateau/velocity-plateau/C4.mp4",
+          "kraken": {
+            "id": "22e7828e-50af-418c-b1ed-d51a191f2d7b",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-velocity-plateau-velocity-plateau-C4-1780635662473.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "D1",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-statement",
+          "copyRefs": {
+            "hook": "ad-1-short.headline",
+            "reframe": "ad-1-medium.bodyLine.2.5"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-promo-throwing-high-school-male-isp-zach-decant-8ca14159.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-velocity-plateau/velocity-plateau/D1.mp4",
+          "thumb": "out/campaigns/isp-velocity-plateau/velocity-plateau/D1.mp4",
+          "kraken": {
+            "id": "cef5a66c-5c25-4997-a201-03f11edf2ef6",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-velocity-plateau-velocity-plateau-D1-1780635664895.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "D2",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-proof",
+          "copyRefs": {
+            "claim": "ad-1-short.bodyLine.2.2"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-med-ball-throw-high-school-male-isp-zach-decant-fc7c8a8d.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-velocity-plateau/velocity-plateau/D2.mp4",
+          "thumb": "out/campaigns/isp-velocity-plateau/velocity-plateau/D2.mp4",
+          "kraken": {
+            "id": "d83ceac1-034e-445d-ba4b-f183ec6f0610",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-velocity-plateau-velocity-plateau-D2-1780635672385.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "D3",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-hook",
+          "copyRefs": {
+            "hook": "ad-1-short.imageHeadline"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-baseball-training-high-school-male-isp-zach-deca-6f3e7191.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-velocity-plateau/velocity-plateau/D3.mp4",
+          "thumb": "out/campaigns/isp-velocity-plateau/velocity-plateau/D3.mp4",
+          "kraken": {
+            "id": "f9faf088-9524-4df9-a69e-890872d3fcf3",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-velocity-plateau-velocity-plateau-D3-1780635674677.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "E1",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-proof",
+          "copyRefs": {
+            "claim": "ad-1-medium.bodyLine.2.3"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-baseball-high-school-male-isp-zach-decant-f348bf83.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-velocity-plateau/velocity-plateau/E1.mp4",
+          "thumb": "out/campaigns/isp-velocity-plateau/velocity-plateau/E1.mp4",
+          "kraken": {
+            "id": "508226d7-b68a-484f-ac0d-4b2791963900",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-velocity-plateau-velocity-plateau-E1-1780635676426.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "E2",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-isp-proof",
+          "copyRefs": {
+            "claim": "ad-1-short.bodyLine.4.2"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-baseball-pitching-high-school-male-isp-zach-deca-cb005592.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-velocity-plateau/velocity-plateau/E2.png",
+          "thumb": "out/campaigns/isp-velocity-plateau/velocity-plateau/E2.png",
+          "renderedAt": "2026-06-05T04:11:54.956Z",
+          "kraken": {
+            "id": "2812b8b1-7990-4961-a640-550537f5173f",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-velocity-plateau-velocity-plateau-E2-1780635678071.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "E3",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-proof",
+          "copyRefs": {
+            "claim": "ad-1-short.bodyLine.4.3"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-throwing-high-school-male-isp-zach-decant-042bea1e.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-velocity-plateau/velocity-plateau/E3.mp4",
+          "thumb": "out/campaigns/isp-velocity-plateau/velocity-plateau/E3.mp4",
+          "kraken": {
+            "id": "040aef5c-f824-467e-8945-1658bddfc628",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-velocity-plateau-velocity-plateau-E3-1780635680086.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "E4",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "gif",
+          "source": "template",
+          "template": "fresh-isp-motion-hook",
+          "copyRefs": {
+            "hook": "ad-1-short.altHook.1"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-pitching-jumping-sprinting-high-school-male-isp--97e07e03.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-velocity-plateau/velocity-plateau/E4.gif",
+          "thumb": "out/campaigns/isp-velocity-plateau/velocity-plateau/E4.gif",
+          "kraken": {
+            "id": "7ea91042-4721-4fb4-ae85-75b02d96e04a",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-velocity-plateau-velocity-plateau-E4-1780635681360.gif",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "F1",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-offer",
+          "copyRefs": {
+            "reframe": "ad-1-long.bodyLine.3.5"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-baseball-pitching-lifting-jumping-high-school-ma-db3f7310.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-velocity-plateau/velocity-plateau/F1.mp4",
+          "thumb": "out/campaigns/isp-velocity-plateau/velocity-plateau/F1.mp4",
+          "kraken": {
+            "id": "356cba06-66ac-4793-8cff-7f1bac0f2563",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-velocity-plateau-velocity-plateau-F1-1780635686314.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "F2",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-isp-offer",
+          "copyRefs": {
+            "offer": "ad-1-short.description",
+            "reframe": "ad-1-long.bodyLine.6.2"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-pitching-sprinting-dynamic-stretching-high-schoo-5cde863a.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-velocity-plateau/velocity-plateau/F2.png",
+          "thumb": "out/campaigns/isp-velocity-plateau/velocity-plateau/F2.png",
+          "renderedAt": "2026-06-05T05:05:13.640Z",
+          "kraken": {
+            "id": "20d89a36-e468-478c-b9f6-db043dae0bcb",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-velocity-plateau-velocity-plateau-F2-1780635914584.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "F3",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-offer",
+          "copyRefs": {
+            "reframe": "ad-1-long.bodyLine.8.3"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-rotational-core-exercise-high-school-male-isp-za-26cc707a.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-velocity-plateau/velocity-plateau/F3.mp4",
+          "thumb": "out/campaigns/isp-velocity-plateau/velocity-plateau/F3.mp4",
+          "templateData": {
+            "duration": 6,
+            "eyebrow": "FORT WORTH SPORT PARENTS",
+            "offer": "YOUR FIRST SESSION AT ISP IS FREE",
+            "subline": "",
+            "cta": "BOOK A FREE FIRST SESSION",
+            "brand": "IDEAL SPORTS PERFORMANCE",
+            "_overrides": {
+              "eyebrow": {
+                "fontSize": 58,
+                "dx": -45,
+                "dy": -61
+              }
+            }
+          },
+          "renderedAt": "2026-06-05T04:54:11.618Z",
+          "kraken": {
+            "id": "20713bf5-f94a-4aa3-a1f7-f23d26cc01a3",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-velocity-plateau-velocity-plateau-F3-1780635689191.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "F4",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "gif",
+          "source": "template",
+          "template": "fresh-isp-motion-offer",
+          "copyRefs": {
+            "reframe": "ad-1-short.bodyLine.4.1"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-baseball-throwing-high-school-male-isp-zach-deca-a05348c4.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-velocity-plateau/velocity-plateau/F4.gif",
+          "thumb": "out/campaigns/isp-velocity-plateau/velocity-plateau/F4.gif",
+          "kraken": {
+            "id": "f8312ed7-d3fd-47a3-9f52-9a9b35784594",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-velocity-plateau-velocity-plateau-F4-1780635690471.gif",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "X1",
+          "beat": null,
+          "temperature": "warm",
+          "format": "gif",
+          "source": "template",
+          "template": "fresh-isp-motion-statement",
+          "copyRefs": {
+            "hook": "ad-1-short.altHook.2",
+            "reframe": "ad-1-short.imageSubhead"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-baseball-pitching-high-school-male-isp-zach-deca-fb544347.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-velocity-plateau/velocity-plateau/X1.gif",
+          "thumb": "out/campaigns/isp-velocity-plateau/velocity-plateau/X1.gif",
+          "kraken": {
+            "id": "cbaacb5b-cb66-4354-9213-62dd7f31a214",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-velocity-plateau-velocity-plateau-X1-1780635694286.gif",
+            "folder": "angle 1"
+          }
+        }
+      ]
+    }
+  ]
+}

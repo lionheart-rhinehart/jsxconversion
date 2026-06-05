@@ -1,0 +1,478 @@
+{
+  "schemaVersion": 1,
+  "campaign": "isp-arm-safety",
+  "brand": "ideal-sports-performance",
+  "knobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": {
+      "video": 0.6,
+      "gif": 0.15,
+      "static": 0.25
+    },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 3
+  },
+  "_planNotes": "ISP — Velo Or A Healthy Arm (single-angle campaign; one review page per angle, mirroring the AA bank). 20 ISP-native creatives (fresh-isp-* templates). Copy bound verbatim by reference to copy-library.json. Eyebrow auto-anchors FORT WORTH SPORT PARENTS from the fort-worth tier. ISP has no guarantee; offer of record is the free first session.",
+  "angles": [
+    {
+      "id": "velo-or-healthy-arm",
+      "name": "Velo Or A Healthy Arm",
+      "location": "fort-worth",
+      "mechanism": "Velocity and arm injury share one root cause — movement efficiency. Cleaning up movement raises the number and lowers the risk at once.",
+      "emotionalJob": "Dissolve the velo-vs-safety binary a pitching parent carries — you don't have to choose.",
+      "voice": "Head-coach-to-parent, declarative, metric-driven.",
+      "assets": [
+        {
+          "id": "A1",
+          "beat": "A — Cold hook",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-hook",
+          "copyRefs": {
+            "hook": "ad-2-short.imageHeadline"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-baseball-pitching-high-school-male-isp-zach-deca-0ede5403.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/A1.mp4",
+          "thumb": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/A1.mp4",
+          "renderedAt": "2026-06-05T03:39:32.928Z",
+          "kraken": {
+            "id": "7b231c67-c475-40c5-a2a6-d65d5c6683d1",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-arm-safety-velo-or-healthy-arm-A1-1780635698847.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "A2",
+          "beat": "A — Cold hook",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-isp-hook",
+          "copyRefs": {
+            "hook": "ad-2-short.altHook.1",
+            "reframe": "ad-2-short.imageSubhead"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-drop-step-throw-high-school-male-isp-zach-decant-bd7a8c14.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/A2.png",
+          "thumb": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/A2.png",
+          "renderedAt": "2026-06-05T03:40:03.959Z",
+          "kraken": {
+            "id": "a8a3eab5-ad96-4bd9-a2cd-df63766acbc0",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-arm-safety-velo-or-healthy-arm-A2-1780635700407.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "B1",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-statement",
+          "copyRefs": {
+            "hook": "ad-2-short.altHook.2",
+            "reframe": "ad-2-short.bodyLine.1.2"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-baseball-throwing-high-school-male-isp-zach-deca-65b4398c.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/B1.mp4",
+          "thumb": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/B1.mp4",
+          "renderedAt": "2026-06-05T03:41:34.037Z",
+          "kraken": {
+            "id": "0d34ed0f-adac-4069-a34b-90c8e301a1e5",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-arm-safety-velo-or-healthy-arm-B1-1780635702332.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "B2",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-isp-hook",
+          "copyRefs": {
+            "hook": "ad-2-short.altHook.3",
+            "reframe": "ad-2-short.bodyLine.2.1"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-lower-body-strength-training-high-school-mixed-i-7790393a.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/B2.png",
+          "thumb": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/B2.png",
+          "renderedAt": "2026-06-05T03:42:09.864Z",
+          "kraken": {
+            "id": "96c1855a-5a26-4a82-a988-681246ccf69f",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-arm-safety-velo-or-healthy-arm-B2-1780635706592.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "C1",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-claim",
+          "copyRefs": {
+            "mechanism": "ad-2-medium.bodyLine.4.1",
+            "reframe": "ad-2-short.bodyLine.2.6"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-single-leg-squat-chin-ups-high-school-mixed-isp--4285f7c6.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/C1.mp4",
+          "thumb": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/C1.mp4",
+          "renderedAt": "2026-06-05T03:44:00.459Z",
+          "kraken": {
+            "id": "1117f045-2bb1-4165-bc39-39198e2661da",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-arm-safety-velo-or-healthy-arm-C1-1780635709413.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "C2",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-isp-mechanism",
+          "copyRefs": {
+            "mechanism": "ad-2-medium.bodyLine.4.4",
+            "reframe": "ad-2-medium.bodyLine.2.6"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-strength-training-high-school-mixed-isp-zach-dec-fb58e9f3.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/C2.png",
+          "thumb": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/C2.png",
+          "renderedAt": "2026-06-05T03:44:30.980Z",
+          "kraken": {
+            "id": "d9f99c28-2aae-4779-92eb-23b9bfe02919",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-arm-safety-velo-or-healthy-arm-C2-1780635710724.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "C3",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-claim",
+          "copyRefs": {
+            "mechanism": "ad-2-long.bodyLine.3.2",
+            "reframe": "ad-2-long.bodyLine.4.5"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-strength-training-high-school-female-isp-zach-de-7511010d.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/C3.mp4",
+          "thumb": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/C3.mp4",
+          "renderedAt": "2026-06-05T03:46:12.271Z",
+          "kraken": {
+            "id": "590e31b5-5851-4499-86ee-5e3c80c330d8",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-arm-safety-velo-or-healthy-arm-C3-1780635712468.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "C4",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-claim",
+          "copyRefs": {
+            "mechanism": "ad-2-medium.bodyLine.4.1",
+            "reframe": "ad-2-short.imageSubhead"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-pushups-high-school-male-isp-zach-decant-slide6o-e9ed7247.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/C4.mp4",
+          "thumb": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/C4.mp4",
+          "renderedAt": "2026-06-05T03:47:57.949Z",
+          "kraken": {
+            "id": "aaed7488-f143-4369-b21a-158bbd0c53c8",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-arm-safety-velo-or-healthy-arm-C4-1780635714706.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "D1",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-statement",
+          "copyRefs": {
+            "hook": "ad-2-short.headline",
+            "reframe": "ad-2-short.bodyLine.1.2"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-pull-ups-high-school-male-isp-zach-decant-slide5-8b4a0d0a.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/D1.mp4",
+          "thumb": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/D1.mp4",
+          "renderedAt": "2026-06-05T03:49:37.660Z",
+          "kraken": {
+            "id": "3f28094e-cdb2-4580-8dc8-4d2a42c8067c",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-arm-safety-velo-or-healthy-arm-D1-1780635717119.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "D2",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-proof",
+          "copyRefs": {
+            "claim": "ad-2-short.bodyLine.2.2"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-reverse-fly-high-school-male-isp-zach-decant-sli-4ae4f526.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/D2.mp4",
+          "thumb": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/D2.mp4",
+          "renderedAt": "2026-06-05T03:51:16.976Z",
+          "kraken": {
+            "id": "1d8423ae-5e50-4f81-b8b9-b5a89c3e0aca",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-arm-safety-velo-or-healthy-arm-D2-1780635719584.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "D3",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-hook",
+          "copyRefs": {
+            "hook": "ad-2-short.imageHeadline"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-kneeling-lat-pulldown-high-school-male-isp-zach--c1cb217e.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/D3.mp4",
+          "thumb": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/D3.mp4",
+          "renderedAt": "2026-06-05T03:53:13.117Z",
+          "kraken": {
+            "id": "62a6f2ee-1620-4b18-9523-d525f0f174b8",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-arm-safety-velo-or-healthy-arm-D3-1780635722102.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "E1",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-proof",
+          "copyRefs": {
+            "claim": "ad-2-short.bodyLine.2.5"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-dumbbell-row-high-school-male-isp-zach-decant-sl-acc1729d.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/E1.mp4",
+          "thumb": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/E1.mp4",
+          "renderedAt": "2026-06-05T03:55:04.181Z",
+          "kraken": {
+            "id": "38ee924a-cb9a-43cf-b2d0-7eb6185508a6",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-arm-safety-velo-or-healthy-arm-E1-1780635723812.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "E2",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-isp-proof",
+          "copyRefs": {
+            "claim": "ad-2-short.bodyLine.4.3"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-lifting-high-school-male-isp-zach-decant-bedadb51.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/E2.png",
+          "thumb": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/E2.png",
+          "renderedAt": "2026-06-05T03:55:45.933Z",
+          "kraken": {
+            "id": "e96009de-d893-43b9-bdfd-ee0214061c2d",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-arm-safety-velo-or-healthy-arm-E2-1780635725496.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "E3",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-proof",
+          "copyRefs": {
+            "claim": "ad-2-medium.bodyLine.2.4"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-landmine-press-high-school-male-isp-zach-decant--c499bc03.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/E3.mp4",
+          "thumb": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/E3.mp4",
+          "renderedAt": "2026-06-05T03:57:29.010Z",
+          "kraken": {
+            "id": "82818670-6159-4f44-87e8-bc05b84607e1",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-arm-safety-velo-or-healthy-arm-E3-1780635727119.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "E4",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "gif",
+          "source": "template",
+          "template": "fresh-isp-motion-hook",
+          "copyRefs": {
+            "hook": "ad-2-short.altHook.1"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-barbell-lunge-high-school-male-isp-zach-decant-s-886332a3.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/E4.gif",
+          "thumb": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/E4.gif",
+          "renderedAt": "2026-06-05T03:59:36.028Z",
+          "kraken": {
+            "id": "f909477c-1f6b-4670-a417-e93761413a54",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-arm-safety-velo-or-healthy-arm-E4-1780635728372.gif",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "F1",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-offer",
+          "copyRefs": {
+            "reframe": "ad-2-short.bodyLine.2.1"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-lunges-high-school-mixed-isp-zach-decant-slide5o-6802a805.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/F1.mp4",
+          "thumb": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/F1.mp4",
+          "renderedAt": "2026-06-05T04:01:32.601Z",
+          "kraken": {
+            "id": "a8359d7b-12e5-4477-9183-454619a6e318",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-arm-safety-velo-or-healthy-arm-F1-1780635735640.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "F2",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-isp-offer",
+          "copyRefs": {
+            "offer": "ad-2-short.description",
+            "reframe": "ad-2-short.bodyLine.2.6"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-pull-ups-high-school-male-isp-zach-decant-slide4-811739a3.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/F2.png",
+          "thumb": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/F2.png",
+          "renderedAt": "2026-06-05T04:02:09.758Z",
+          "kraken": {
+            "id": "18148d83-727b-4abd-8f8c-08290b3bef4c",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-arm-safety-velo-or-healthy-arm-F2-1780635736994.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "F3",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-offer",
+          "copyRefs": {
+            "reframe": "ad-2-medium.bodyLine.2.6"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-deadlift-high-school-male-isp-zach-decant-slide2-eb0e07a0.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/F3.mp4",
+          "thumb": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/F3.mp4",
+          "renderedAt": "2026-06-05T04:04:00.830Z",
+          "kraken": {
+            "id": "ac9a5225-c95d-49da-8d40-7ec853ba25dc",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-arm-safety-velo-or-healthy-arm-F3-1780635738743.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "F4",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "gif",
+          "source": "template",
+          "template": "fresh-isp-motion-offer",
+          "copyRefs": {
+            "reframe": "ad-2-long.bodyLine.4.5"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-talking-head-strength-and-speed-training-high-school-male-is-204d8486.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/F4.gif",
+          "thumb": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/F4.gif",
+          "renderedAt": "2026-06-05T04:06:03.069Z",
+          "kraken": {
+            "id": "cff6eb23-43e8-4c2d-a5ae-93852ba85948",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-arm-safety-velo-or-healthy-arm-F4-1780635739999.gif",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "X1",
+          "beat": null,
+          "temperature": "warm",
+          "format": "gif",
+          "source": "template",
+          "template": "fresh-isp-motion-statement",
+          "copyRefs": {
+            "hook": "ad-2-short.altHook.2",
+            "reframe": "ad-2-short.imageSubhead"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-sprinting-high-school-female-isp-zach-decant-sli-898ed7c0.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/X1.gif",
+          "thumb": "out/campaigns/isp-arm-safety/velo-or-healthy-arm/X1.gif",
+          "renderedAt": "2026-06-05T04:08:15.205Z",
+          "kraken": {
+            "id": "0161e395-47f3-445e-85ce-ad8f174a4bb5",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-arm-safety-velo-or-healthy-arm-X1-1780635749475.gif",
+            "folder": "angle 2"
+          }
+        }
+      ]
+    }
+  ]
+}

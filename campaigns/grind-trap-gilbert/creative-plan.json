@@ -1,0 +1,572 @@
+{
+  "schemaVersion": 1,
+  "campaign": "grind-trap-gilbert",
+  "brand": "batti-performance",
+  "knobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": {
+      "video": 0.6,
+      "gif": 0.15,
+      "static": 0.25
+    },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 3
+  },
+  "_planNotes": {
+    "scope": "Full 20 — speed angle, Gilbert. ALL Batti-native (no AA cards). 14 VIDEO + 6 static = 70% video (>= the canonical 60%). 11 distinct templates (5 Batti motion + 6 Batti static); statics never repeat, motion <= repetitionCap (3).",
+    "eyebrow": "ONE consistent eyebrow on every design: plain letterspaced MONO RED (JetBrains Mono, brand red, 0.22em, uppercase) — Batti's spec, no chip.",
+    "copyRule": "Verbatim by reference (copyRefs by role). eyebrow auto-anchors GILBERT SPORT PARENTS; guarantee LOCKED to Batti's 30-session promise; Saira Condensed. Palette remaps authoring red -> Batti #cb0202."
+  },
+  "angles": [
+    {
+      "id": "grind-trap",
+      "name": "My Kid Tries Hard (the grind trap — speed / The Last Rep Lie) — ad copy series #1",
+      "location": "gilbert",
+      "mechanism": "Fatigued reps train slowness into the nervous system the way muscle memory trains a movement. The last tired reps rehearse slow. Named: The Last Rep Lie / Phantom Progress.",
+      "emotionalJob": "Name the culprit, absolve the parent and kid, then hand over the fix.",
+      "voice": "Head-coach-to-parent, declarative, metric-driven. No emoji / exclamation / em dash.",
+      "assets": [
+        {
+          "id": "HK1",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "batti-hook-motion",
+          "clip": "brand/video-templates/assets/bt-gt-HK1.mp4",
+          "copyRefs": {
+            "hook": [
+              "ad-2.altHook.2"
+            ]
+          },
+          "copySource": "MOTION hook. ad-2.altHook.2.",
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-gilbert/grind-trap/HK1.mp4",
+          "thumb": "out/campaigns/grind-trap-gilbert/grind-trap/HK1.mp4",
+          "renderedAt": "2026-06-05T15:29:33.639Z",
+          "kraken": {
+            "id": "916ac8df-95dd-4a17-bea4-c84ba0e6f82b",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/grind-trap-gilbert-grind-trap-HK1-1780676396704.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "HK2",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "batti-hook-motion",
+          "clip": "brand/video-templates/assets/bt-gt-HK2.mp4",
+          "copyRefs": {
+            "hook": [
+              "ad-1.altHook.3"
+            ]
+          },
+          "copySource": "MOTION hook #2. ad-1.altHook.3.",
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-gilbert/grind-trap/HK2.mp4",
+          "thumb": "out/campaigns/grind-trap-gilbert/grind-trap/HK2.mp4",
+          "renderedAt": "2026-06-05T15:30:42.725Z",
+          "kraken": {
+            "id": "89005ab7-8828-45d3-ac90-f0242662f124",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/grind-trap-gilbert-grind-trap-HK2-1780676406849.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "HK3",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "batti-hook-motion",
+          "clip": "brand/video-templates/assets/bt-gt-HK3.mp4",
+          "copyRefs": {
+            "hook": [
+              "ad-1.altHook.1"
+            ]
+          },
+          "copySource": "MOTION hook #3. ad-1.altHook.1.",
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-gilbert/grind-trap/HK3.mp4",
+          "thumb": "out/campaigns/grind-trap-gilbert/grind-trap/HK3.mp4",
+          "renderedAt": "2026-06-05T15:31:54.998Z",
+          "kraken": {
+            "id": "30c2114d-9bfb-4997-b838-f0826f041c75",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/grind-trap-gilbert-grind-trap-HK3-1780676415604.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "MC1",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "batti-mechanism-motion",
+          "clip": "brand/kraken-cache/grind-trap-manteno/brand-action-clip-sprinting-unknown-male-batti-performance-llc-mp4-349ceaa1.mp4",
+          "copyRefs": {
+            "mechanism": [
+              "ad-3.bodyLine.5.3"
+            ]
+          },
+          "copySource": "MOTION mechanism. \"The instant speed drops, the set ends.\"",
+          "status": "rendered",
+          "notes": "",
+          "templateData": {
+            "duration": 4,
+            "eyebrow": "GILBERT SPORT PARENTS",
+            "statement": "TRAIN FAST. TO BE FAST",
+            "brand": "BATTI-PERFORMANCE",
+            "bgClip": "http://localhost:5173/media-file/brand/kraken-cache/grind-trap-manteno/brand-action-clip-sprinting-unknown-male-batti-performance-llc-mp4-349ceaa1.mp4",
+            "bgClip_clipStart": 7.421881460580913,
+            "bgClip_clipEnd": 11.421881460580911
+          },
+          "output": "out/campaigns/grind-trap-gilbert/grind-trap/MC1.mp4",
+          "thumb": "out/campaigns/grind-trap-gilbert/grind-trap/MC1.mp4",
+          "renderedAt": "2026-06-05T15:32:52.418Z",
+          "kraken": {
+            "id": "f57483b4-453c-4f79-b93e-16fbad5ed210",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/grind-trap-gilbert-grind-trap-MC1-1780676420930.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "MC2",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "batti-mechanism-motion",
+          "clip": "brand/video-templates/assets/bt-gt-MC2.mp4",
+          "copyRefs": {
+            "mechanism": [
+              "ad-3.bodyLine.6.2"
+            ]
+          },
+          "copySource": "MOTION mechanism #2. \"It becomes the first step...\"",
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-gilbert/grind-trap/MC2.mp4",
+          "thumb": "out/campaigns/grind-trap-gilbert/grind-trap/MC2.mp4",
+          "renderedAt": "2026-06-05T15:33:55.614Z",
+          "kraken": {
+            "id": "775e044d-92a2-43b7-a283-7e362e522fad",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/grind-trap-gilbert-grind-trap-MC2-1780676424194.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "MC3",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "batti-mechanism-motion",
+          "clip": "brand/video-templates/assets/bt-gt-MC3.mp4",
+          "copyRefs": {
+            "mechanism": [
+              "ad-3.bodyLine.3.4"
+            ]
+          },
+          "copySource": "MOTION mechanism #3. \"It was Phantom Progress.\"",
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-gilbert/grind-trap/MC3.mp4",
+          "thumb": "out/campaigns/grind-trap-gilbert/grind-trap/MC3.mp4",
+          "renderedAt": "2026-06-05T15:34:51.833Z",
+          "kraken": {
+            "id": "e399d6ac-c49a-4132-8198-749364572b10",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/grind-trap-gilbert-grind-trap-MC3-1780676428682.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "ST1",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "batti-stat-motion",
+          "clip": "brand/video-templates/assets/bt-gt-ST1.mp4",
+          "templateData": {
+            "statValue": "1.2",
+            "statUnit": " MPH",
+            "statLabel": "FASTER IN 8 WEEKS (AGES 7-9 TRIAL)"
+          },
+          "copyRefs": {
+            "claim": [
+              "ad-3.bodyLine.7.1"
+            ]
+          },
+          "copySource": "MOTION stat (1.2 mph / 8-week trial). claim \"The science backs every piece of this.\"",
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-gilbert/grind-trap/ST1.mp4",
+          "thumb": "out/campaigns/grind-trap-gilbert/grind-trap/ST1.mp4",
+          "renderedAt": "2026-06-05T15:36:02.064Z",
+          "kraken": {
+            "id": "817ce3d7-f15c-45ef-ae8f-72a3d53090de",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/grind-trap-gilbert-grind-trap-ST1-1780676433910.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "ST2",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "batti-stat-motion",
+          "clip": "brand/video-templates/assets/bt-gt-ST2.mp4",
+          "templateData": {
+            "statValue": "3",
+            "statUnit": "″",
+            "statLabel": "MINIMUM VERTICAL GAIN, GUARANTEED IN 30 SESSIONS"
+          },
+          "copyRefs": {
+            "claim": [
+              "ad-3.bodyLine.7.4"
+            ]
+          },
+          "copySource": "MOTION stat (+3in guarantee number). claim \"So +1 mph in 30 sessions isn't aggressive.\"",
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-gilbert/grind-trap/ST2.mp4",
+          "thumb": "out/campaigns/grind-trap-gilbert/grind-trap/ST2.mp4",
+          "renderedAt": "2026-06-05T15:37:17.118Z",
+          "kraken": {
+            "id": "c7353a3e-f969-418c-89fe-7ffc15b76f2d",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/grind-trap-gilbert-grind-trap-ST2-1780676440098.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "OF1",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "batti-offer-motion",
+          "clip": "brand/kraken-cache/grind-trap-manteno/batti-performance-action-clip-agility-drill-middle-school-male-batti-performan-eb19e7cd.mp4",
+          "copyRefs": {
+            "offer": [
+              "ad-1.bodyLine.4.1"
+            ]
+          },
+          "templateData": {
+            "duration": 5,
+            "eyebrow": "GILBERT SPORT PARENTS",
+            "offer": "THE FIRST STEP IN IS THE ATHLETE ANALYSIS.",
+            "guarantee": "Your athlete will gain AT LEAST 3 inches on their vertical jump and 1mph in speed in 30 sessions — or we train them for FREE until they achieve these results.",
+            "cta": "BOOK YOUR FREE ASSESSMENT",
+            "brand": "BATTI-PERFORMANCE",
+            "bgClip": "http://localhost:5173/media-file/brand/kraken-cache/grind-trap-manteno/batti-performance-action-clip-agility-drill-middle-school-male-batti-performan-eb19e7cd.mp4"
+          },
+          "copySource": "MOTION offer + locked guarantee + CTA.",
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-gilbert/grind-trap/OF1.mp4",
+          "thumb": "out/campaigns/grind-trap-gilbert/grind-trap/OF1.mp4",
+          "renderedAt": "2026-06-05T15:38:27.843Z",
+          "kraken": {
+            "id": "7d246bf8-441d-4d08-863b-01aff132b96b",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/grind-trap-gilbert-grind-trap-OF1-1780676443115.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "OF2",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "batti-offer-motion",
+          "clip": "brand/kraken-cache/grind-trap-manteno/brand-action-clip-sprinting-high-school-male-batti-performance-llc-1f729bde.mp4",
+          "copyRefs": {
+            "offer": [
+              "ad-1.bodyLine.4.1"
+            ]
+          },
+          "templateData": {
+            "duration": 5,
+            "eyebrow": "GILBERT SPORT PARENTS",
+            "offer": "THE FIRST STEP IN IS THE ATHLETE ANALYSIS.",
+            "guarantee": "Your athlete will gain AT LEAST 3 inches on their vertical jump and 1mph in speed in 30 sessions — or we train them for FREE until they achieve these results.",
+            "cta": "CLAIM YOUR ATHLETE ANALYSIS",
+            "brand": "BATTI-PERFORMANCE",
+            "bgClip": "http://localhost:5173/media-file/brand/kraken-cache/grind-trap-manteno/brand-action-clip-sprinting-high-school-male-batti-performance-llc-1f729bde.mp4"
+          },
+          "copySource": "MOTION offer #2 (distinct CTA + footage).",
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-gilbert/grind-trap/OF2.mp4",
+          "thumb": "out/campaigns/grind-trap-gilbert/grind-trap/OF2.mp4",
+          "renderedAt": "2026-06-05T15:39:39.838Z",
+          "kraken": {
+            "id": "68bb0757-6cc2-4951-a180-b3bdcc743d12",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/grind-trap-gilbert-grind-trap-OF2-1780676448256.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "OF3",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "batti-offer-motion",
+          "clip": "brand/video-templates/assets/bt-gt-OF3.mp4",
+          "copyRefs": {
+            "offer": [
+              "ad-1.bodyLine.4.1"
+            ]
+          },
+          "templateData": {
+            "cta": "BOOK NOW"
+          },
+          "copySource": "MOTION offer #3 (distinct CTA + footage).",
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-gilbert/grind-trap/OF3.mp4",
+          "thumb": "out/campaigns/grind-trap-gilbert/grind-trap/OF3.mp4",
+          "renderedAt": "2026-06-05T15:41:04.372Z",
+          "kraken": {
+            "id": "62787eaf-3c87-4656-9e5b-057c11d48d1a",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/grind-trap-gilbert-grind-trap-OF3-1780676453147.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "QT1",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "batti-quote-motion",
+          "clip": "brand/video-templates/assets/bt-gt-QT1.mp4",
+          "copyRefs": {
+            "reframe": [
+              "ad-2.bodyLine.5.1"
+            ]
+          },
+          "copySource": "MOTION quote. \"And a fast rep isn't just a number.\"",
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-gilbert/grind-trap/QT1.mp4",
+          "thumb": "out/campaigns/grind-trap-gilbert/grind-trap/QT1.mp4",
+          "renderedAt": "2026-06-05T15:42:13.565Z",
+          "kraken": {
+            "id": "19482f93-39ef-434f-8cb0-86540a214a16",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/grind-trap-gilbert-grind-trap-QT1-1780676461520.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "QT2",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "batti-quote-motion",
+          "clip": "brand/video-templates/assets/bt-gt-QT2.mp4",
+          "copyRefs": {
+            "reframe": [
+              "ad-3.bodyLine.4.2"
+            ]
+          },
+          "copySource": "MOTION quote #2. \"The effort was real.\"",
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-gilbert/grind-trap/QT2.mp4",
+          "thumb": "out/campaigns/grind-trap-gilbert/grind-trap/QT2.mp4",
+          "renderedAt": "2026-06-05T15:42:40.727Z",
+          "kraken": {
+            "id": "ac664991-7ea6-45aa-997b-cf796d023783",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/grind-trap-gilbert-grind-trap-QT2-1780676465958.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "QT3",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "batti-quote-motion",
+          "clip": "brand/video-templates/assets/bt-gt-QT3.mp4",
+          "copyRefs": {
+            "reframe": [
+              "ad-3.bodyLine.7.1"
+            ]
+          },
+          "copySource": "MOTION quote #3. \"The science backs every piece of this.\"",
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-gilbert/grind-trap/QT3.mp4",
+          "thumb": "out/campaigns/grind-trap-gilbert/grind-trap/QT3.mp4",
+          "renderedAt": "2026-06-05T15:43:54.549Z",
+          "kraken": {
+            "id": "f5a00cd8-5f0a-4e2d-bf62-93ba901b5684",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/grind-trap-gilbert-grind-trap-QT3-1780676468956.mp4",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "SHK",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-grind-trap-N1",
+          "media": "./assets/bt-gt-SHK.jpg",
+          "copyRefs": {
+            "hook": [
+              "ad-1.imageHeadline"
+            ]
+          },
+          "copySource": "STATIC black-band hook. ad-1.imageHeadline.",
+          "status": "rendered",
+          "templateData": {},
+          "output": "out/campaigns/grind-trap-gilbert/grind-trap/SHK.png",
+          "thumb": "out/campaigns/grind-trap-gilbert/grind-trap/SHK.png",
+          "renderedAt": "2026-06-05T15:44:16.180Z",
+          "kraken": {
+            "id": "acb5e31c-1eb9-46f7-8f39-7ab16b75d287",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/grind-trap-gilbert-grind-trap-SHK-1780676471175.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "SST",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-grind-trap-D1",
+          "media": "./assets/bt-gt-SST.jpg",
+          "copyRefs": {
+            "claim": [
+              "ad-1.headline"
+            ]
+          },
+          "copySource": "STATIC white-band statement. \"Why Hard Work Isn't Enough\".",
+          "status": "rendered",
+          "output": "out/campaigns/grind-trap-gilbert/grind-trap/SST.png",
+          "thumb": "out/campaigns/grind-trap-gilbert/grind-trap/SST.png",
+          "renderedAt": "2026-06-05T15:44:27.242Z",
+          "kraken": {
+            "id": "f82218ef-d4e4-4119-93ef-8051baf7424b",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/grind-trap-gilbert-grind-trap-SST-1780676472887.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "SBG",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-grind-trap-E1",
+          "media": "./assets/bt-gt-SBG.jpg",
+          "copyRefs": {
+            "claim": [
+              "ad-3.bodyLine.7.4"
+            ],
+            "proof": [
+              "ad-3.bodyLine.7.5"
+            ]
+          },
+          "copySource": "STATIC big-stat (224% / 28%).",
+          "status": "rendered",
+          "output": "out/campaigns/grind-trap-gilbert/grind-trap/SBG.png",
+          "thumb": "out/campaigns/grind-trap-gilbert/grind-trap/SBG.png",
+          "renderedAt": "2026-06-05T15:44:38.761Z",
+          "kraken": {
+            "id": "69f14e7f-6214-4d5a-9b43-f3f8c09c6213",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/grind-trap-gilbert-grind-trap-SBG-1780676474575.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "SMC",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-mechanism",
+          "media": "./assets/bt-gt-SMC.jpg",
+          "copyRefs": {
+            "mechanism": [
+              "ad-1.bodyLine.2.4"
+            ]
+          },
+          "copySource": "STATIC full-bleed mechanism. \"It memorizes the speed.\"",
+          "status": "rendered",
+          "output": "out/campaigns/grind-trap-gilbert/grind-trap/SMC.png",
+          "thumb": "out/campaigns/grind-trap-gilbert/grind-trap/SMC.png",
+          "renderedAt": "2026-06-05T15:44:49.744Z",
+          "kraken": {
+            "id": "32cc5f32-b46c-47e5-b60e-5630f509cfe1",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/grind-trap-gilbert-grind-trap-SMC-1780676476537.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "SQT",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-quote",
+          "media": "./assets/bt-gt-SQT.jpg",
+          "copyRefs": {
+            "reframe": [
+              "ad-1.bodyLine.1.5"
+            ]
+          },
+          "copySource": "STATIC red-border quote. \"Here's the reason, and it's not them.\"",
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-gilbert/grind-trap/SQT.png",
+          "thumb": "out/campaigns/grind-trap-gilbert/grind-trap/SQT.png",
+          "renderedAt": "2026-06-05T15:45:00.766Z",
+          "kraken": {
+            "id": "b0de1d9a-8283-41b9-8b64-bb881fc72548",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/grind-trap-gilbert-grind-trap-SQT-1780676479185.png",
+            "folder": "angle 1"
+          }
+        },
+        {
+          "id": "SOF",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-offer",
+          "media": "./assets/bt-gt-SOF.jpg",
+          "copyRefs": {
+            "offer": [
+              "ad-1.bodyLine.4.1"
+            ]
+          },
+          "copySource": "STATIC offer + locked guarantee + CTA.",
+          "status": "rendered",
+          "output": "out/campaigns/grind-trap-gilbert/grind-trap/SOF.png",
+          "thumb": "out/campaigns/grind-trap-gilbert/grind-trap/SOF.png",
+          "renderedAt": "2026-06-05T15:45:11.911Z",
+          "kraken": {
+            "id": "d3eb7471-e642-443e-8b09-bdb01b11788c",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/grind-trap-gilbert-grind-trap-SOF-1780676481924.png",
+            "folder": "angle 1"
+          }
+        }
+      ]
+    }
+  ],
+  "location": "gilbert"
+}

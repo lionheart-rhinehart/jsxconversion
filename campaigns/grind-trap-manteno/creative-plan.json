@@ -15,7 +15,7 @@
   "_planNotes": {
     "scope": "Full 20 — speed angle, Manteno. ALL Batti-native (no AA cards). 14 VIDEO + 6 static = 70% video (>= the canonical 60%). 11 distinct templates (5 Batti motion + 6 Batti static); statics never repeat, motion <= repetitionCap (3).",
     "eyebrow": "ONE consistent eyebrow on every design: plain letterspaced MONO RED (JetBrains Mono, brand red, 0.22em, uppercase) — Batti's spec, no chip.",
-    "copyRule": "Verbatim by reference (copyRefs by role). eyebrow auto-anchors MANTENO SPORT PARENTS; guarantee LOCKED to Batti's 30-session promise; Saira Condensed. Palette remaps authoring red #c4141d -> Batti #cb0202."
+    "copyRule": "Verbatim by reference (copyRefs by role). eyebrow auto-anchors MANTENO SPORT PARENTS; guarantee LOCKED to Batti's 30-session promise; Saira Condensed. Palette remaps authoring red -> Batti #cb0202."
   },
   "angles": [
     {
@@ -40,8 +40,16 @@
             ]
           },
           "copySource": "MOTION hook. ad-2.altHook.2.",
-          "status": "rendering",
-          "notes": ""
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-manteno/grind-trap/HK1.mp4",
+          "thumb": "out/campaigns/grind-trap-manteno/grind-trap/HK1.mp4",
+          "renderedAt": "2026-06-05T14:28:49.937Z",
+          "kraken": {
+            "id": "17b2dea4-145c-470b-b11f-c661e20ac752",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/grind-trap-manteno-grind-trap-HK1-1780672734926.mp4",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "HK2",
@@ -57,8 +65,16 @@
             ]
           },
           "copySource": "MOTION hook #2. ad-1.altHook.3.",
-          "status": "failed",
-          "notes": ""
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-manteno/grind-trap/HK2.mp4",
+          "thumb": "out/campaigns/grind-trap-manteno/grind-trap/HK2.mp4",
+          "renderedAt": "2026-06-05T14:29:59.974Z",
+          "kraken": {
+            "id": "235a72ea-c5b4-4577-8ff6-3469031d4b3b",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/grind-trap-manteno-grind-trap-HK2-1780672738448.mp4",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "HK3",
@@ -74,8 +90,16 @@
             ]
           },
           "copySource": "MOTION hook #3. ad-1.altHook.1.",
-          "status": "failed",
-          "notes": ""
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-manteno/grind-trap/HK3.mp4",
+          "thumb": "out/campaigns/grind-trap-manteno/grind-trap/HK3.mp4",
+          "renderedAt": "2026-06-05T14:31:12.606Z",
+          "kraken": {
+            "id": "47725d74-1438-4465-bef6-fa2cee936e10",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/grind-trap-manteno-grind-trap-HK3-1780672741173.mp4",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "MC1",
@@ -84,15 +108,32 @@
           "format": "video",
           "source": "template",
           "template": "batti-mechanism-motion",
-          "clip": "brand/video-templates/assets/bt-gt-MC1.mp4",
+          "clip": "brand/kraken-cache/grind-trap-manteno/brand-action-clip-sprinting-unknown-male-batti-performance-llc-mp4-349ceaa1.mp4",
           "copyRefs": {
             "mechanism": [
               "ad-3.bodyLine.5.3"
             ]
           },
           "copySource": "MOTION mechanism. \"The instant speed drops, the set ends.\"",
-          "status": "failed",
-          "notes": ""
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-manteno/grind-trap/MC1.mp4",
+          "thumb": "out/campaigns/grind-trap-manteno/grind-trap/MC1.mp4",
+          "renderedAt": "2026-06-05T14:32:10.740Z",
+          "templateData": {
+            "duration": 4,
+            "eyebrow": "MANTENO SPORT PARENTS",
+            "statement": "TRAIN FAST. TO BE FAST",
+            "brand": "BATTI-PERFORMANCE",
+            "bgClip": "http://localhost:5173/media-file/brand/kraken-cache/grind-trap-manteno/brand-action-clip-sprinting-unknown-male-batti-performance-llc-mp4-349ceaa1.mp4",
+            "bgClip_clipStart": 7.421881460580913,
+            "bgClip_clipEnd": 11.421881460580911
+          },
+          "kraken": {
+            "id": "be94b85d-17ec-4f24-8b5d-21744b3b0667",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/grind-trap-manteno-grind-trap-MC1-1780672743416.mp4",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "MC2",
@@ -108,8 +149,16 @@
             ]
           },
           "copySource": "MOTION mechanism #2. \"It becomes the first step...\"",
-          "status": "failed",
-          "notes": ""
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-manteno/grind-trap/MC2.mp4",
+          "thumb": "out/campaigns/grind-trap-manteno/grind-trap/MC2.mp4",
+          "renderedAt": "2026-06-05T14:33:15.138Z",
+          "kraken": {
+            "id": "0bc897d4-63ba-435a-821d-13380cd56f8c",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/grind-trap-manteno-grind-trap-MC2-1780672747062.mp4",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "MC3",
@@ -125,8 +174,16 @@
             ]
           },
           "copySource": "MOTION mechanism #3. \"It was Phantom Progress.\"",
-          "status": "failed",
-          "notes": ""
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-manteno/grind-trap/MC3.mp4",
+          "thumb": "out/campaigns/grind-trap-manteno/grind-trap/MC3.mp4",
+          "renderedAt": "2026-06-05T14:34:11.773Z",
+          "kraken": {
+            "id": "1bd4ebc2-edc7-448f-9f25-fbd5855d1f79",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/grind-trap-manteno-grind-trap-MC3-1780672749885.mp4",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "ST1",
@@ -147,8 +204,16 @@
             ]
           },
           "copySource": "MOTION stat (1.2 mph / 8-week trial). claim \"The science backs every piece of this.\"",
-          "status": "failed",
-          "notes": ""
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-manteno/grind-trap/ST1.mp4",
+          "thumb": "out/campaigns/grind-trap-manteno/grind-trap/ST1.mp4",
+          "renderedAt": "2026-06-05T14:35:22.023Z",
+          "kraken": {
+            "id": "d43b6744-840b-4ffa-a388-5db7258308b9",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/grind-trap-manteno-grind-trap-ST1-1780672755030.mp4",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "ST2",
@@ -169,8 +234,16 @@
             ]
           },
           "copySource": "MOTION stat (+3in guarantee number). claim \"So +1 mph in 30 sessions isn't aggressive.\"",
-          "status": "failed",
-          "notes": ""
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-manteno/grind-trap/ST2.mp4",
+          "thumb": "out/campaigns/grind-trap-manteno/grind-trap/ST2.mp4",
+          "renderedAt": "2026-06-05T14:36:36.168Z",
+          "kraken": {
+            "id": "e06bf22e-1f0a-4f66-bc79-3b16f7d3788e",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/grind-trap-manteno-grind-trap-ST2-1780672757885.mp4",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "OF1",
@@ -179,18 +252,32 @@
           "format": "video",
           "source": "template",
           "template": "batti-offer-motion",
-          "clip": "brand/video-templates/assets/bt-gt-OF1.mp4",
+          "clip": "brand/kraken-cache/grind-trap-manteno/batti-performance-action-clip-agility-drill-middle-school-male-batti-performan-eb19e7cd.mp4",
           "copyRefs": {
             "offer": [
               "ad-1.bodyLine.4.1"
             ]
           },
           "templateData": {
-            "cta": "BOOK YOUR FREE ASSESSMENT"
+            "duration": 5,
+            "eyebrow": "MANTENO SPORT PARENTS",
+            "offer": "THE FIRST STEP IN IS THE ATHLETE ANALYSIS.",
+            "guarantee": "Your athlete will gain AT LEAST 3 inches on their vertical jump and 1mph in speed in 30 sessions — or we train them for FREE until they achieve these results.",
+            "cta": "BOOK YOUR FREE ASSESSMENT",
+            "brand": "BATTI-PERFORMANCE",
+            "bgClip": "http://localhost:5173/media-file/brand/kraken-cache/grind-trap-manteno/batti-performance-action-clip-agility-drill-middle-school-male-batti-performan-eb19e7cd.mp4"
           },
           "copySource": "MOTION offer + locked guarantee + CTA.",
-          "status": "failed",
-          "notes": ""
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-manteno/grind-trap/OF1.mp4",
+          "thumb": "out/campaigns/grind-trap-manteno/grind-trap/OF1.mp4",
+          "renderedAt": "2026-06-05T14:37:46.440Z",
+          "kraken": {
+            "id": "4af030d5-9182-48e6-b068-2c2253716d28",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/grind-trap-manteno-grind-trap-OF1-1780672761797.mp4",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "OF2",
@@ -199,18 +286,32 @@
           "format": "video",
           "source": "template",
           "template": "batti-offer-motion",
-          "clip": "brand/video-templates/assets/bt-gt-OF2.mp4",
+          "clip": "brand/kraken-cache/grind-trap-manteno/brand-action-clip-sprinting-high-school-male-batti-performance-llc-1f729bde.mp4",
           "copyRefs": {
             "offer": [
               "ad-1.bodyLine.4.1"
             ]
           },
           "templateData": {
-            "cta": "CLAIM YOUR ATHLETE ANALYSIS"
+            "duration": 5,
+            "eyebrow": "MANTENO SPORT PARENTS",
+            "offer": "THE FIRST STEP IN IS THE ATHLETE ANALYSIS.",
+            "guarantee": "Your athlete will gain AT LEAST 3 inches on their vertical jump and 1mph in speed in 30 sessions — or we train them for FREE until they achieve these results.",
+            "cta": "CLAIM YOUR ATHLETE ANALYSIS",
+            "brand": "BATTI-PERFORMANCE",
+            "bgClip": "http://localhost:5173/media-file/brand/kraken-cache/grind-trap-manteno/brand-action-clip-sprinting-high-school-male-batti-performance-llc-1f729bde.mp4"
           },
           "copySource": "MOTION offer #2 (distinct CTA + footage).",
-          "status": "failed",
-          "notes": ""
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-manteno/grind-trap/OF2.mp4",
+          "thumb": "out/campaigns/grind-trap-manteno/grind-trap/OF2.mp4",
+          "renderedAt": "2026-06-05T14:38:56.373Z",
+          "kraken": {
+            "id": "f3739c16-ed31-43a0-a89a-4dd30ddf673e",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/grind-trap-manteno-grind-trap-OF2-1780672765699.mp4",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "OF3",
@@ -229,8 +330,16 @@
             "cta": "BOOK NOW"
           },
           "copySource": "MOTION offer #3 (distinct CTA + footage).",
-          "status": "failed",
-          "notes": ""
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-manteno/grind-trap/OF3.mp4",
+          "thumb": "out/campaigns/grind-trap-manteno/grind-trap/OF3.mp4",
+          "renderedAt": "2026-06-05T14:40:19.755Z",
+          "kraken": {
+            "id": "a766beb3-8134-4f7d-9be9-2807ae48d0c3",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/grind-trap-manteno-grind-trap-OF3-1780672768344.mp4",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "QT1",
@@ -246,8 +355,16 @@
             ]
           },
           "copySource": "MOTION quote. \"And a fast rep isn't just a number.\"",
-          "status": "failed",
-          "notes": ""
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-manteno/grind-trap/QT1.mp4",
+          "thumb": "out/campaigns/grind-trap-manteno/grind-trap/QT1.mp4",
+          "renderedAt": "2026-06-05T14:41:29.846Z",
+          "kraken": {
+            "id": "5337a8ca-df32-4814-86f8-dac14df2460d",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/grind-trap-manteno-grind-trap-QT1-1780672771072.mp4",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "QT2",
@@ -263,8 +380,16 @@
             ]
           },
           "copySource": "MOTION quote #2. \"The effort was real.\"",
-          "status": "failed",
-          "notes": ""
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-manteno/grind-trap/QT2.mp4",
+          "thumb": "out/campaigns/grind-trap-manteno/grind-trap/QT2.mp4",
+          "renderedAt": "2026-06-05T14:41:57.413Z",
+          "kraken": {
+            "id": "cde9b24e-37c6-422b-90c3-2af02fe6fd1d",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/grind-trap-manteno-grind-trap-QT2-1780672773551.mp4",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "QT3",
@@ -280,8 +405,16 @@
             ]
           },
           "copySource": "MOTION quote #3. \"The science backs every piece of this.\"",
-          "status": "failed",
-          "notes": ""
+          "status": "rendered",
+          "notes": "",
+          "output": "out/campaigns/grind-trap-manteno/grind-trap/QT3.mp4",
+          "thumb": "out/campaigns/grind-trap-manteno/grind-trap/QT3.mp4",
+          "renderedAt": "2026-06-05T14:43:13.618Z",
+          "kraken": {
+            "id": "abf456d6-6fe8-4233-a4a9-153e37d48965",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/grind-trap-manteno-grind-trap-QT3-1780672777077.mp4",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "SHK",
@@ -300,7 +433,14 @@
           "status": "rendered",
           "output": "out/campaigns/grind-trap-manteno/grind-trap/SHK.png",
           "thumb": "out/campaigns/grind-trap-manteno/grind-trap/SHK.png",
-          "renderedAt": "2026-06-05T02:38:19.377Z"
+          "renderedAt": "2026-06-05T14:43:35.843Z",
+          "templateData": {},
+          "editedAt": "2026-06-05T04:46:55.626Z",
+          "kraken": {
+            "id": "455e4aca-821b-41c4-95ac-6a601e4908d5",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/grind-trap-manteno-grind-trap-SHK-1780672779850.png",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "SST",
@@ -319,7 +459,12 @@
           "status": "rendered",
           "output": "out/campaigns/grind-trap-manteno/grind-trap/SST.png",
           "thumb": "out/campaigns/grind-trap-manteno/grind-trap/SST.png",
-          "renderedAt": "2026-06-05T02:38:43.134Z"
+          "renderedAt": "2026-06-05T14:43:48.397Z",
+          "kraken": {
+            "id": "5481360c-fc94-4f07-a79c-1fc65858fadd",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/grind-trap-manteno-grind-trap-SST-1780672781311.png",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "SBG",
@@ -341,7 +486,12 @@
           "status": "rendered",
           "output": "out/campaigns/grind-trap-manteno/grind-trap/SBG.png",
           "thumb": "out/campaigns/grind-trap-manteno/grind-trap/SBG.png",
-          "renderedAt": "2026-06-05T02:39:37.921Z"
+          "renderedAt": "2026-06-05T14:44:00.588Z",
+          "kraken": {
+            "id": "4cee0304-bad2-40a0-aa1c-466d3b1eacf1",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/grind-trap-manteno-grind-trap-SBG-1780672782829.png",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "SMC",
@@ -360,7 +510,12 @@
           "status": "rendered",
           "output": "out/campaigns/grind-trap-manteno/grind-trap/SMC.png",
           "thumb": "out/campaigns/grind-trap-manteno/grind-trap/SMC.png",
-          "renderedAt": "2026-06-05T02:40:21.947Z"
+          "renderedAt": "2026-06-05T14:44:13.703Z",
+          "kraken": {
+            "id": "2425c634-5833-464a-9dd1-01de23906d15",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/grind-trap-manteno-grind-trap-SMC-1780672784265.png",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "SQT",
@@ -377,9 +532,15 @@
           },
           "copySource": "STATIC red-border quote. \"Here's the reason, and it's not them.\"",
           "status": "rendered",
+          "notes": "",
           "output": "out/campaigns/grind-trap-manteno/grind-trap/SQT.png",
           "thumb": "out/campaigns/grind-trap-manteno/grind-trap/SQT.png",
-          "renderedAt": "2026-06-05T02:41:04.827Z"
+          "renderedAt": "2026-06-05T14:44:25.661Z",
+          "kraken": {
+            "id": "570c7f86-b40a-4b14-b38c-75abb131e306",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/grind-trap-manteno-grind-trap-SQT-1780672785970.png",
+            "folder": "angle 1"
+          }
         },
         {
           "id": "SOF",
@@ -398,7 +559,12 @@
           "status": "rendered",
           "output": "out/campaigns/grind-trap-manteno/grind-trap/SOF.png",
           "thumb": "out/campaigns/grind-trap-manteno/grind-trap/SOF.png",
-          "renderedAt": "2026-06-05T02:41:30.178Z"
+          "renderedAt": "2026-06-05T14:44:37.842Z",
+          "kraken": {
+            "id": "a83849f5-db12-4a3e-ac0e-6e894b0dad7c",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/4b3290f2-6cd8-4fb7-b208-e1c30aeaccad/grind-trap-manteno-grind-trap-SOF-1780672787417.png",
+            "folder": "angle 1"
+          }
         }
       ]
     }

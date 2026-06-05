@@ -1,0 +1,466 @@
+{
+  "schemaVersion": 1,
+  "campaign": "more-games-gilbert",
+  "brand": "batti-performance",
+  "knobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": {
+      "video": 0.6,
+      "gif": 0.15,
+      "static": 0.25
+    },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 1
+  },
+  "_planNotes": {
+    "scope": "More-games, Gilbert. 20 assets / 20 UNIQUE templates (each used ONCE — repetitionCap:1), selected from the Batti template library. 14 video + 6 static. White-pill eyebrow; guarantee LOCKED; verbatim copy."
+  },
+  "angles": [
+    {
+      "id": "more-games",
+      "name": "More Games Isn't Enough — ad copy series #3",
+      "location": "gilbert",
+      "mechanism": "Games measure the athlete training built; they don't build one. A game is a test, not a teacher.",
+      "emotionalJob": "Validate the instinct (more play feels right), then flip it: games reveal, training builds.",
+      "voice": "Head-coach-to-parent, declarative. No emoji / exclamation / em dash.",
+      "assets": [
+        {
+          "id": "M01",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "batti-hook-motion",
+          "clip": "brand/video-templates/assets/bt-mg-M01.mp4",
+          "templateData": {
+            "hook": "Games don't make athletes faster. They just show you how fast training already made them."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-gilbert/more-games/M01.mp4",
+          "thumb": "out/campaigns/more-games-gilbert/more-games/M01.mp4",
+          "renderedAt": "2026-06-05T16:00:53.157Z",
+          "kraken": {
+            "id": "f54345a6-6294-4a01-afb3-451234404d38",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/more-games-gilbert-more-games-M01-1780676557647.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M02",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v01-hook-frame",
+          "clip": "brand/video-templates/assets/bt-mg-M02.mp4",
+          "templateData": {
+            "hook": "Your kid can play a hundred games this year and finish exactly as fast as they started."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-gilbert/more-games/M02.mp4",
+          "thumb": "out/campaigns/more-games-gilbert/more-games/M02.mp4",
+          "renderedAt": "2026-06-05T16:01:59.824Z",
+          "kraken": {
+            "id": "e48a7924-442b-45ea-b2d9-1c1add558a7a",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/more-games-gilbert-more-games-M02-1780676562834.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M03",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v07-caption",
+          "clip": "brand/video-templates/assets/bt-mg-M03.mp4",
+          "templateData": {
+            "line": "More game film won't fix a speed problem. It'll just record it in higher definition."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-gilbert/more-games/M03.mp4",
+          "thumb": "out/campaigns/more-games-gilbert/more-games/M03.mp4",
+          "renderedAt": "2026-06-05T16:03:12.117Z",
+          "kraken": {
+            "id": "8b1b5dad-cbab-4e9e-af84-abb56bbd936e",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/more-games-gilbert-more-games-M03-1780676567247.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M04",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v12-wipe",
+          "clip": "brand/video-templates/assets/bt-mg-M04.mp4",
+          "templateData": {
+            "claim": "A game is a test, not a teacher."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-gilbert/more-games/M04.mp4",
+          "thumb": "out/campaigns/more-games-gilbert/more-games/M04.mp4",
+          "renderedAt": "2026-06-05T16:04:07.679Z",
+          "kraken": {
+            "id": "3db4b10d-2ddb-4546-9679-c4b739776662",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/more-games-gilbert-more-games-M04-1780676576562.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M05",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v03-highlight",
+          "clip": "brand/video-templates/assets/bt-mg-M05.mp4",
+          "templateData": {
+            "claim": "A game doesn't develop an athlete.",
+            "sub": "It reveals one."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-gilbert/more-games/M05.mp4",
+          "thumb": "out/campaigns/more-games-gilbert/more-games/M05.mp4",
+          "renderedAt": "2026-06-05T16:05:08.724Z",
+          "kraken": {
+            "id": "2229dd81-6c9a-4cc1-b160-ee253bb15d61",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/more-games-gilbert-more-games-M05-1780676582201.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M06",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "batti-mechanism-motion",
+          "clip": "brand/video-templates/assets/bt-mg-M06.mp4",
+          "templateData": {
+            "statement": "It becomes the first step that beats the defender to the ball."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-gilbert/more-games/M06.mp4",
+          "thumb": "out/campaigns/more-games-gilbert/more-games/M06.mp4",
+          "renderedAt": "2026-06-05T16:06:06.648Z",
+          "kraken": {
+            "id": "8c628b0e-d89d-41eb-8bd3-4e73008112db",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/more-games-gilbert-more-games-M06-1780676587214.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M07",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v04-climb",
+          "clip": "brand/video-templates/assets/bt-mg-M07.mp4",
+          "templateData": {
+            "statement": "And a bigger engine shows up everywhere the old one fell short."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-gilbert/more-games/M07.mp4",
+          "thumb": "out/campaigns/more-games-gilbert/more-games/M07.mp4",
+          "renderedAt": "2026-06-05T16:07:13.336Z",
+          "kraken": {
+            "id": "65381621-90e3-4ab5-a99f-ede46ec609b4",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/more-games-gilbert-more-games-M07-1780676596002.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M08",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v02-twokinds",
+          "clip": "brand/video-templates/assets/bt-mg-M08.mp4",
+          "templateData": {
+            "line1": "A GAME IS A TEST,",
+            "line2": "NOT A TEACHER."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-gilbert/more-games/M08.mp4",
+          "thumb": "out/campaigns/more-games-gilbert/more-games/M08.mp4",
+          "renderedAt": "2026-06-05T16:08:16.235Z",
+          "kraken": {
+            "id": "8d874140-085f-4eaa-b7bb-60e43c7621b1",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/more-games-gilbert-more-games-M08-1780676599587.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M09",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v08-strike",
+          "clip": "brand/video-templates/assets/bt-mg-M09.mp4",
+          "templateData": {
+            "claim": "A whole season can pass with nothing to show for it.",
+            "sub": "It becomes the first step that beats the defender to the ball."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-gilbert/more-games/M09.mp4",
+          "thumb": "out/campaigns/more-games-gilbert/more-games/M09.mp4",
+          "renderedAt": "2026-06-05T16:09:21.899Z",
+          "kraken": {
+            "id": "2fab31c9-1ff3-4ca7-a26e-6424cd54e714",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/more-games-gilbert-more-games-M09-1780676602333.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M10",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v10-block",
+          "clip": "brand/video-templates/assets/bt-mg-M10.mp4",
+          "templateData": {
+            "headline": "Why More Games Isn't Enough",
+            "sub": "(And What Actually Will)"
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-gilbert/more-games/M10.mp4",
+          "thumb": "out/campaigns/more-games-gilbert/more-games/M10.mp4",
+          "renderedAt": "2026-06-05T16:10:34.152Z",
+          "kraken": {
+            "id": "82f120ee-9a9e-4468-a4c1-38a850cc4b7b",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/more-games-gilbert-more-games-M10-1780676605352.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M11",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v11-outline",
+          "clip": "brand/video-templates/assets/bt-mg-M11.mp4",
+          "templateData": {
+            "headline": "Here's Why More Games Won't Make Them Faster"
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-gilbert/more-games/M11.mp4",
+          "thumb": "out/campaigns/more-games-gilbert/more-games/M11.mp4",
+          "renderedAt": "2026-06-05T16:11:39.403Z",
+          "kraken": {
+            "id": "d28ca845-c8c6-435c-bbe3-e95e86c52918",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/more-games-gilbert-more-games-M11-1780676610899.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M12",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v06-quotemark",
+          "clip": "brand/video-templates/assets/bt-mg-M12.mp4",
+          "templateData": {
+            "quote": "It reveals one."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-gilbert/more-games/M12.mp4",
+          "thumb": "out/campaigns/more-games-gilbert/more-games/M12.mp4",
+          "renderedAt": "2026-06-05T16:12:05.846Z",
+          "kraken": {
+            "id": "fcfa8b1a-7e56-4fb2-a1a7-cbc07a9d326b",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/more-games-gilbert-more-games-M12-1780676616413.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M13",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "batti-quote-motion",
+          "clip": "brand/video-templates/assets/bt-mg-M13.mp4",
+          "templateData": {
+            "quote": "More game film won't fix a speed problem."
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-gilbert/more-games/M13.mp4",
+          "thumb": "out/campaigns/more-games-gilbert/more-games/M13.mp4",
+          "renderedAt": "2026-06-05T16:13:19.796Z",
+          "kraken": {
+            "id": "271d91e4-3f91-44c8-b6ce-0103c90c8789",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/more-games-gilbert-more-games-M13-1780676618557.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "M14",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v09-offer",
+          "clip": "brand/video-templates/assets/bt-mg-M14.mp4",
+          "templateData": {
+            "offer": "The first step in is the Athlete Analysis.",
+            "cta": "Book the Athlete Analysis"
+          },
+          "status": "rendered",
+          "output": "out/campaigns/more-games-gilbert/more-games/M14.mp4",
+          "thumb": "out/campaigns/more-games-gilbert/more-games/M14.mp4",
+          "renderedAt": "2026-06-05T16:14:43.381Z",
+          "kraken": {
+            "id": "80503f80-90ef-483e-bad7-6718845142ef",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/more-games-gilbert-more-games-M14-1780676621373.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "G01",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-grind-trap-N1",
+          "media": "./assets/bt-mg-G01.jpg",
+          "status": "rendered",
+          "copyRefs": {
+            "hook": [
+              "ad-1.imageHeadline"
+            ]
+          },
+          "output": "out/campaigns/more-games-gilbert/more-games/G01.png",
+          "thumb": "out/campaigns/more-games-gilbert/more-games/G01.png",
+          "renderedAt": "2026-06-05T16:15:05.554Z",
+          "kraken": {
+            "id": "1d6ba335-cb5e-4608-b405-f5c1d56bf15a",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/more-games-gilbert-more-games-G01-1780676623768.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "G02",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-grind-trap-D1",
+          "media": "./assets/bt-mg-G02.jpg",
+          "status": "rendered",
+          "copyRefs": {
+            "claim": [
+              "ad-1.headline"
+            ]
+          },
+          "output": "out/campaigns/more-games-gilbert/more-games/G02.png",
+          "thumb": "out/campaigns/more-games-gilbert/more-games/G02.png",
+          "renderedAt": "2026-06-05T16:15:17.259Z",
+          "kraken": {
+            "id": "36910396-6a08-40cc-98cd-3df05880506e",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/more-games-gilbert-more-games-G02-1780676625262.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "G03",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-mechanism",
+          "media": "./assets/bt-mg-G03.jpg",
+          "status": "rendered",
+          "copyRefs": {
+            "mechanism": [
+              "ad-2.bodyLine.2.2"
+            ]
+          },
+          "output": "out/campaigns/more-games-gilbert/more-games/G03.png",
+          "thumb": "out/campaigns/more-games-gilbert/more-games/G03.png",
+          "renderedAt": "2026-06-05T16:15:29.091Z",
+          "kraken": {
+            "id": "571969b6-aae5-4894-968b-64168508c093",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/more-games-gilbert-more-games-G03-1780676626593.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "G04",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-quote",
+          "media": "./assets/bt-mg-G04.jpg",
+          "status": "rendered",
+          "copyRefs": {
+            "reframe": [
+              "ad-1.bodyLine.2.2"
+            ]
+          },
+          "output": "out/campaigns/more-games-gilbert/more-games/G04.png",
+          "thumb": "out/campaigns/more-games-gilbert/more-games/G04.png",
+          "renderedAt": "2026-06-05T16:15:40.651Z",
+          "kraken": {
+            "id": "0b70f98f-4654-4189-a56a-90cfa696c252",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/more-games-gilbert-more-games-G04-1780676628083.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "G05",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-offer",
+          "media": "./assets/bt-mg-G05.jpg",
+          "status": "rendered",
+          "copyRefs": {
+            "offer": [
+              "ad-1.bodyLine.4.1"
+            ]
+          },
+          "output": "out/campaigns/more-games-gilbert/more-games/G05.png",
+          "thumb": "out/campaigns/more-games-gilbert/more-games/G05.png",
+          "renderedAt": "2026-06-05T16:15:52.021Z",
+          "kraken": {
+            "id": "c61e27b4-8a03-4f34-b870-049039813c2a",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/more-games-gilbert-more-games-G05-1780676629685.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "G06",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "conf-s01-whiteband",
+          "media": "./assets/bt-mg-G06.jpg",
+          "status": "rendered",
+          "templateData": {
+            "hook": "Games don't make athletes faster."
+          },
+          "output": "out/campaigns/more-games-gilbert/more-games/G06.png",
+          "thumb": "out/campaigns/more-games-gilbert/more-games/G06.png",
+          "renderedAt": "2026-06-05T16:16:03.431Z",
+          "kraken": {
+            "id": "98290e94-9f4b-4996-9029-d323792056e6",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/more-games-gilbert-more-games-G06-1780676631031.png",
+            "folder": "angle 3"
+          }
+        }
+      ]
+    }
+  ],
+  "location": "gilbert"
+}

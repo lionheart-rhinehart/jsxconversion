@@ -2,5 +2,7 @@
   "workspace": "batti-performance",
   "workspaceId": "4b3290f2-6cd8-4fb7-b208-e1c30aeaccad",
   "sourceFolder": "IG stories",
-  "sourceFolderId": "ee9e93f1-b15e-496a-8ea3-0d07eac86e19"
+  "sourceFolderId": "ee9e93f1-b15e-496a-8ea3-0d07eac86e19",
+  "destFolder": "angle 3",
+  "destFolderId": "4632500d-04e4-42d2-b0f5-a1e88e308650"
 }

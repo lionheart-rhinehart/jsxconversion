@@ -4,7 +4,7 @@
 //  enforcement) in code. Run: node campaigns/isp-baseball-performance/_gen-plan.mjs
 //  Emits campaigns/isp-baseball-performance/creative-plan.json (20 assets/angle).
 // ============================================================================
-import { readFileSync, writeFileSync, readdirSync } from "node:fs";
+import { readFileSync, writeFileSync, readdirSync, mkdirSync, existsSync, copyFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -105,29 +105,31 @@ function buildAngle(adKey) {
   const refs = (map) => { const o = {}; for (const [role, pool] of Object.entries(map)) o[role] = next(pool); return o; };
   const BYLINE = { byline: "ISP FORT WORTH" };
 
-  const S = A.statics;
+  // ALL ISP-native fresh templates (statics: templates/multi-sport-foundations/fresh-isp-*;
+  // motion: brand/video-templates/templates/fresh-isp-motion-*). 9 distinct layouts rotated
+  // across 20 assets/angle, each skeleton <= repetitionCap. No AA bank templates.
   const program = [
     // id, beat, temp, fmt, tpl, exempt, copyRefs(map of role->pool), extra templateData
     ["A1", "A — Cold hook", "cold", "video", "fresh-isp-motion-hook", false, { hook: "hooks" }, {}],
-    ["A2", "A — Cold hook", "cold", "static", S.hook, false, { hook: "hooks" }, {}],
-    ["B1", "B — Reframe", "warm", "video", "fresh-smoke-motion", false, { hook: "hooks", reframe: "reframes", cta: "cta" }, {}],
-    ["B2", "B — Reframe", "warm", "static", S.hookReframe, false, { hook: "hooks", reframe: "reframes" }, {}],
-    ["C1", "C — Mechanism", "warm", "video", "velocity-drop", false, { mechanism: "mech", proof: "proof" }, BYLINE],
-    ["C2", "C — Mechanism", "warm", "static", S.mid, false, { [S.midRole]: S.midPool }, {}],
-    ["C3", "C — Mechanism", "warm", "video", "fresh-smoke-motion", false, { hook: "hooks", reframe: "reframes", cta: "cta" }, {}],
-    ["C4", "C — Mechanism", "warm", "video", "coach-lower-thirds", false, { claim: "claims", proof: "proof" }, BYLINE],
-    ["D1", "D — Proof reframe", "warm", "video", "coach-lower-thirds", false, { claim: "claims", proof: "proof" }, BYLINE],
-    ["D2", "D — Proof reframe", "warm", "video", "stat-reveal", true, { claim: "claims", stat: "proof", cta: "cta" }, {}],
-    ["D3", "D — Proof reframe", "warm", "video", "velocity-drop", false, { mechanism: "mech", proof: "proof" }, BYLINE],
-    ["E1", "E — Proof", "warm", "video", "stat-reveal", true, { claim: "claims", stat: "proof", cta: "cta" }, {}],
-    ["E2", "E — Proof", "warm", "static", S.stat, false, { stat: "proof", proof: "proof", claim: "claims" }, {}],
-    ["E3", "E — Proof", "warm", "video", "coach-lower-thirds", false, { claim: "claims", proof: "proof" }, BYLINE],
-    ["E4", "E — Proof", "warm", "gif", "fresh-smoke-motion", false, { hook: "hooks", reframe: "reframes" }, {}],
-    ["F1", "F — Offer", "hot", "video", "season-clock", false, { hook: "hooks", offer: "offer", cta: "cta" }, {}],
-    ["F2", "F — Offer", "hot", "static", S.offer, false, { offer: "offer", cta: "cta" }, {}],
-    ["F3", "F — Offer", "hot", "video", "fresh-multisport-foundations-grind-trap-FA1", false, { hook: "hooks", mechanism: "mech", reframe: "reframes", stat: "proof", proof: "proof", offer: "offer", cta: "cta" }, {}],
-    ["F4", "F — Offer", "hot", "gif", "season-clock", false, { hook: "hooks", offer: "offer", cta: "cta" }, {}],
-    ["X1", null, "warm", "gif", "logo-sting", true, { claim: "reframes" }, BYLINE],
+    ["A2", "A — Cold hook", "cold", "static", "fresh-isp-hook", false, { hook: "hooks", reframe: "reframes" }, {}],
+    ["B1", "B — Reframe", "warm", "video", "fresh-isp-motion-statement", false, { hook: "hooks", reframe: "reframes" }, {}],
+    ["B2", "B — Reframe", "warm", "static", "fresh-isp-hook", false, { hook: "hooks", reframe: "reframes" }, {}],
+    ["C1", "C — Mechanism", "warm", "video", "fresh-isp-motion-claim", false, { mechanism: "mech", reframe: "reframes" }, {}],
+    ["C2", "C — Mechanism", "warm", "static", "fresh-isp-mechanism", false, { mechanism: "mech", reframe: "reframes" }, {}],
+    ["C3", "C — Mechanism", "warm", "video", "fresh-isp-motion-claim", false, { mechanism: "mech", reframe: "reframes" }, {}],
+    ["C4", "C — Mechanism", "warm", "video", "fresh-isp-motion-claim", false, { mechanism: "mech", reframe: "reframes" }, {}],
+    ["D1", "D — Proof reframe", "warm", "video", "fresh-isp-motion-statement", false, { hook: "hooks", reframe: "reframes" }, {}],
+    ["D2", "D — Proof reframe", "warm", "video", "fresh-isp-motion-proof", false, { claim: "claims" }, {}],
+    ["D3", "D — Proof reframe", "warm", "video", "fresh-isp-motion-hook", false, { hook: "hooks" }, {}],
+    ["E1", "E — Proof", "warm", "video", "fresh-isp-motion-proof", false, { claim: "claims" }, {}],
+    ["E2", "E — Proof", "warm", "static", "fresh-isp-proof", false, { claim: "claims" }, {}],
+    ["E3", "E — Proof", "warm", "video", "fresh-isp-motion-proof", false, { claim: "claims" }, {}],
+    ["E4", "E — Proof", "warm", "gif", "fresh-isp-motion-hook", false, { hook: "hooks" }, {}],
+    ["F1", "F — Offer", "hot", "video", "fresh-isp-motion-offer", false, { reframe: "reframes" }, {}],
+    ["F2", "F — Offer", "hot", "static", "fresh-isp-offer", false, { offer: "offer", reframe: "reframes" }, {}],
+    ["F3", "F — Offer", "hot", "video", "fresh-isp-motion-offer", false, { reframe: "reframes" }, {}],
+    ["F4", "F — Offer", "hot", "gif", "fresh-isp-motion-offer", false, { reframe: "reframes" }, {}],
+    ["X1", null, "warm", "gif", "fresh-isp-motion-statement", false, { hook: "hooks", reframe: "reframes" }, {}],
   ];
 
   const assets = program.map(([id, beat, temp, fmt, tpl, exempt, roleMap, td]) => {
@@ -153,30 +155,45 @@ function buildAngle(adKey) {
   };
 }
 
-// ── verify every referenced copy id exists ──────────────────────────────────
+// ── emit ONE campaign per angle (each = its own review page, like the AA bank) ──
+const CAMPAIGN_SLUG = { "ad-1": "isp-velocity-plateau", "ad-2": "isp-arm-safety", "ad-3": "isp-proof-flip" };
+const SHARED = ["copy-library.json", "copy-library.report.json", "kraken.json", "ad-copy.md", "ad-copy.source.md"];
+const CAMPAIGNS_DIR = join(ROOT, "campaigns");
+const KNOBS = { assetsPerAngle: 20, motionRatio: { video: 0.6, gif: 0.15, static: 0.25 }, freshnessFloor: 0.45, repetitionCap: 3 };
 const missing = [];
-const plan = {
-  schemaVersion: 1,
-  campaign: "isp-baseball-performance",
-  brand: "ideal-sports-performance",
-  knobs: { assetsPerAngle: 20, motionRatio: { video: 0.6, gif: 0.15, static: 0.25 }, freshnessFloor: 0.45, repetitionCap: 3 },
-  _planNotes: "ISP Baseball Performance — 3 angles (velocity plateau / velo-vs-arm-safety / proof flip), 20 assets each. Copy bound verbatim by reference to copy-library.json (Cody's ad copy). Eyebrow auto-anchors FORT WORTH BASEBALL PARENTS from the fort-worth location tier. Media: distinct ISP Kraken clips/stills per asset (baseball-forward for angles 1-2, whole-athlete for angle 3). ISP has no guarantee, so guarantee slots render empty; offer of record is the free first session.",
-  angles: Object.keys(ANGLES).map(buildAngle),
-};
-for (const ang of plan.angles) for (const a of ang.assets) for (const id of Object.values(a.copyRefs)) if (!has(id)) missing.push(`${ang.id}/${a.id}: ${id}`);
-if (missing.length) { console.error("MISSING COPY IDS:\n" + missing.join("\n")); process.exit(1); }
+const allMedia = [];
+const summary = [];
 
-// distinctness assertions
-for (const ang of plan.angles) {
-  const med = ang.assets.map((a) => a.media || a.clip);
+for (const adKey of Object.keys(ANGLES)) {
+  const slug = CAMPAIGN_SLUG[adKey];
+  const angle = buildAngle(adKey);
+  for (const a of angle.assets) {
+    for (const id of Object.values(a.copyRefs)) if (!has(id)) missing.push(`${slug}/${a.id}: ${id}`);
+    allMedia.push(a.media || a.clip);
+  }
+  const med = angle.assets.map((a) => a.media || a.clip);
   const dup = med.filter((m, i) => med.indexOf(m) !== i);
-  if (dup.length) { console.error(`DUP MEDIA in ${ang.id}: ${dup.join(", ")}`); process.exit(1); }
-}
-const allMedia = plan.angles.flatMap((a) => a.assets.map((x) => x.media || x.clip));
-const globalDup = allMedia.filter((m, i) => allMedia.indexOf(m) !== i);
+  if (dup.length) { console.error(`DUP MEDIA in ${slug}: ${dup.join(", ")}`); process.exit(1); }
 
-writeFileSync(join(HERE, "creative-plan.json"), JSON.stringify(plan, null, 2) + "\n");
-const fmtCount = (f) => plan.angles.flatMap((a) => a.assets).filter((x) => x.format === f).length;
-console.log(`wrote creative-plan.json — ${plan.angles.length} angles, ${plan.angles.flatMap((a) => a.assets).length} assets`);
-console.log(`formats: video=${fmtCount("video")} gif=${fmtCount("gif")} static=${fmtCount("static")}`);
-console.log(`media: ${allMedia.length} assigned, ${new Set(allMedia).size} distinct, cross-angle dup=${globalDup.length}`);
+  const plan = {
+    schemaVersion: 1,
+    campaign: slug,
+    brand: "ideal-sports-performance",
+    knobs: KNOBS,
+    _planNotes: `ISP — ${angle.name} (single-angle campaign; one review page per angle, mirroring the AA bank). 20 ISP-native creatives (fresh-isp-* templates). Copy bound verbatim by reference to copy-library.json. Eyebrow auto-anchors FORT WORTH SPORT PARENTS from the fort-worth tier. ISP has no guarantee; offer of record is the free first session.`,
+    angles: [angle],
+  };
+  const dir = join(CAMPAIGNS_DIR, slug);
+  mkdirSync(join(dir, "edits"), { recursive: true });
+  writeFileSync(join(dir, "creative-plan.json"), JSON.stringify(plan, null, 2) + "\n");
+  for (const f of SHARED) { const src = join(HERE, f); if (existsSync(src)) copyFileSync(src, join(dir, f)); }
+
+  const fmt = (x) => angle.assets.filter((a) => a.format === x).length;
+  summary.push(`${slug}: 20 assets (video=${fmt("video")} gif=${fmt("gif")} static=${fmt("static")})`);
+}
+
+if (missing.length) { console.error("MISSING COPY IDS:\n" + missing.join("\n")); process.exit(1); }
+const globalDup = allMedia.filter((m, i) => allMedia.indexOf(m) !== i);
+if (globalDup.length) { console.error(`CROSS-CAMPAIGN DUP MEDIA: ${globalDup.join(", ")}`); process.exit(1); }
+console.log("wrote per-angle campaigns:\n  " + summary.join("\n  "));
+console.log(`media: ${allMedia.length} assigned, ${new Set(allMedia).size} distinct across all 3 campaigns`);

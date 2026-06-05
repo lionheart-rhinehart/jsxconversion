@@ -1,0 +1,204 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/bt-gt-SOF.jpg",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1
+  },
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
+      "z": 1
+    },
+    {
+      "id": "photo_scrim",
+      "tag": "photo_scrim",
+      "label": "Top vignette",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 980,
+      "fill": "linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.4) 100%)",
+      "z": 2
+    },
+    {
+      "id": "black_band",
+      "tag": "black_band",
+      "label": "Black offer band",
+      "type": "rect",
+      "x": 0,
+      "y": 980,
+      "width": 1080,
+      "height": 940,
+      "fill": "#000000",
+      "z": 5
+    },
+    {
+      "id": "band_red_rule",
+      "tag": "band_red_rule",
+      "label": "Red rule at band edge",
+      "type": "rect",
+      "x": 0,
+      "y": 972,
+      "width": 1080,
+      "height": 8,
+      "fill": "#cb0202",
+      "z": 6
+    },
+    {
+      "id": "guar_border",
+      "tag": "guar_border",
+      "label": "Red left border on the guarantee block (Batti quote device)",
+      "type": "rect",
+      "x": 64,
+      "y": 1238,
+      "width": 8,
+      "height": 320,
+      "fill": "#cb0202",
+      "z": 7
+    },
+    {
+      "id": "cta_button",
+      "tag": "cta_button",
+      "label": "Red CTA button",
+      "type": "rect",
+      "x": 64,
+      "y": 1606,
+      "width": 952,
+      "height": 104,
+      "fill": "#cb0202",
+      "borderRadius": 4,
+      "z": 7
+    },
+    {
+      "id": "bp_badge",
+      "tag": "bp_badge",
+      "label": "BP badge (white, on dark)",
+      "type": "image",
+      "src": "./assets/batti-badge-onwhite.png",
+      "x": 465,
+      "y": 1740,
+      "width": 150,
+      "height": 150,
+      "objectFit": "contain",
+      "z": 40
+    },
+    {
+      "id": "bottom_red_strip",
+      "tag": "accent_strip",
+      "label": "Bottom red strip",
+      "type": "rect",
+      "x": 0,
+      "y": 1898,
+      "width": 1080,
+      "height": 22,
+      "fill": "#cb0202",
+      "z": 50
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Mono red eyebrow",
+      "x": 70,
+      "y": 1024,
+      "text": "GILBERT SPORT PARENTS",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#cb0202",
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "chipBg": "#ffffff",
+      "chipPad": "10px 22px",
+      "chipRadius": 8,
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow"
+      ],
+      "maxChars": 28,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "offer",
+      "tag": "offer",
+      "label": "Offer headline (Saira caps)",
+      "x": 64,
+      "y": 1088,
+      "width": 952,
+      "text": "The first step in is the Athlete Analysis.",
+      "fontSize": 84,
+      "fontFamily": "Saira Condensed",
+      "fontWeight": 900,
+      "color": "#ffffff",
+      "lineHeight": 0.9,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "z": 30,
+      "role": "offer",
+      "accepts": [
+        "offer",
+        "claim"
+      ],
+      "maxChars": 30,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "guarantee",
+      "tag": "guarantee",
+      "label": "Guarantee block (LOCKED to Batti's 30-session promise)",
+      "x": 100,
+      "y": 1250,
+      "width": 916,
+      "text": "Your athlete will gain AT LEAST 3 inches on their vertical jump and 1mph in speed in 30 sessions — or we train them for FREE until they achieve these results.",
+      "fontSize": 42,
+      "fontFamily": "Saira Condensed",
+      "fontWeight": 600,
+      "color": "#ffffff",
+      "lineHeight": 1.12,
+      "letterSpacing": "0",
+      "z": 31,
+      "role": "guarantee",
+      "accepts": [
+        "guarantee"
+      ],
+      "maxChars": 170,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "cta",
+      "tag": "cta",
+      "label": "CTA label (centered on red button)",
+      "x": 64,
+      "y": 1636,
+      "width": 952,
+      "text": "BOOK YOUR FREE ASSESSMENT",
+      "fontSize": 40,
+      "fontFamily": "Saira Condensed",
+      "fontWeight": 800,
+      "color": "#ffffff",
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "textAlign": "center",
+      "z": 32,
+      "role": "cta",
+      "accepts": [
+        "cta"
+      ],
+      "maxChars": 30,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    }
+  ]
+}

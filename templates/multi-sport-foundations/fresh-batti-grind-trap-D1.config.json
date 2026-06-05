@@ -5,7 +5,10 @@
     "path": "./assets/bt-gt-D1.jpg",
     "type": "image",
     "tag": "bg_photo",
-    "offsetX": 0, "offsetY": 0, "scale": 1, "z": 0
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1,
+    "z": 0
   },
   "fixedDesign": [
     {
@@ -13,7 +16,10 @@
       "tag": "photo_scrim",
       "label": "Top vignette",
       "type": "rect",
-      "x": 0, "y": 0, "width": 1080, "height": 1392,
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1392,
       "fill": "linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 100%)",
       "z": 2
     },
@@ -22,7 +28,10 @@
       "tag": "white_band",
       "label": "Hard WHITE type band (Batti alternating-band device — black text)",
       "type": "rect",
-      "x": 0, "y": 1392, "width": 1080, "height": 528,
+      "x": 0,
+      "y": 1392,
+      "width": 1080,
+      "height": 528,
       "fill": "#ffffff",
       "z": 5
     },
@@ -31,7 +40,10 @@
       "tag": "band_red_rule",
       "label": "Red rule at the band edge",
       "type": "rect",
-      "x": 0, "y": 1384, "width": 1080, "height": 8,
+      "x": 0,
+      "y": 1384,
+      "width": 1080,
+      "height": 8,
       "fill": "#c4141d",
       "z": 6
     },
@@ -41,7 +53,10 @@
       "label": "BP chrome badge (dark, reads on white)",
       "type": "image",
       "src": "./assets/batti-badge.png",
-      "x": 64, "y": 1788, "width": 76, "height": 76,
+      "x": 465,
+      "y": 1740,
+      "width": 150,
+      "height": 150,
       "objectFit": "contain",
       "z": 40
     },
@@ -50,7 +65,10 @@
       "tag": "accent_strip",
       "label": "Bottom red strip",
       "type": "rect",
-      "x": 0, "y": 1898, "width": 1080, "height": 22,
+      "x": 0,
+      "y": 1898,
+      "width": 1080,
+      "height": 22,
       "fill": "#c4141d",
       "z": 50
     }
@@ -60,24 +78,32 @@
       "id": "eyebrow",
       "tag": "eyebrow",
       "label": "Mono red eyebrow on white band",
-      "x": 70, "y": 1432,
+      "x": 64,
+      "y": 96,
       "text": "MANTENO SPORT PARENTS",
-      "fontSize": 30,
+      "fontSize": 32,
       "fontFamily": "JetBrains Mono",
-      "fontWeight": 600,
+      "fontWeight": 700,
       "color": "#c4141d",
-      "letterSpacing": "0.22em",
+      "letterSpacing": "0.04em",
       "textTransform": "uppercase",
+      "chipBg": "#ffffff",
+      "chipPad": "10px 22px",
+      "chipRadius": 8,
       "z": 20,
       "role": "eyebrow",
-      "accepts": ["eyebrow"],
+      "accepts": [
+        "eyebrow"
+      ],
       "maxChars": 28
     },
     {
       "id": "claim",
       "tag": "claim",
       "label": "Bold black statement on white band (Saira Condensed)",
-      "x": 64, "y": 1496, "width": 952,
+      "x": 64,
+      "y": 1496,
+      "width": 952,
       "text": "Why Hard Work Isn't Enough",
       "fontSize": 118,
       "fontFamily": "Saira Condensed",
@@ -88,25 +114,12 @@
       "textTransform": "uppercase",
       "z": 30,
       "role": "claim",
-      "accepts": ["claim", "reframe", "hook"],
+      "accepts": [
+        "claim",
+        "reframe",
+        "hook"
+      ],
       "maxChars": 40
-    },
-    {
-      "id": "wordmark",
-      "tag": "brand",
-      "label": "Batti wordmark (black on white band)",
-      "x": 160, "y": 1810,
-      "text": "BATTI-PERFORMANCE",
-      "fontSize": 30,
-      "fontFamily": "Saira Condensed",
-      "fontWeight": 900,
-      "color": "#0a0a0a",
-      "letterSpacing": "0.02em",
-      "textTransform": "uppercase",
-      "z": 41,
-      "role": "brand",
-      "accepts": ["brand"],
-      "maxChars": 22
     }
   ]
 }

@@ -1,0 +1,206 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
+      "z": 1
+    },
+    {
+      "id": "ink_wash",
+      "tag": "ink_wash",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(28,28,29,0.74) 0%, rgba(28,28,29,0.82) 55%, rgba(28,28,29,0.97) 100%)",
+      "z": 4
+    },
+    {
+      "id": "accent_bar",
+      "tag": "accent_bar",
+      "type": "rect",
+      "x": 96,
+      "y": 560,
+      "width": 116,
+      "height": 12,
+      "fill": "#2573b7",
+      "z": 18
+    },
+    {
+      "id": "divider",
+      "tag": "divider",
+      "type": "rect",
+      "x": 96,
+      "y": 1190,
+      "width": 888,
+      "height": 2,
+      "fill": "rgba(255,255,255,0.18)",
+      "z": 17
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor chip (auto-filled)",
+      "x": 96,
+      "y": 150,
+      "textAlign": "left",
+      "text": "FORT WORTH SPORT PARENTS",
+      "fontSize": 33,
+      "fontFamily": "Barlow",
+      "fontWeight": 700,
+      "color": "#2573b7",
+      "chipBg": "#ffffff",
+      "chipPad": "13px 28px",
+      "chipRadius": 999,
+      "letterSpacing": "0.16em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 34,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "stat_value",
+      "tag": "stat_value",
+      "label": "Hero stat number",
+      "x": 90,
+      "y": 590,
+      "width": 920,
+      "textAlign": "left",
+      "text": "100+",
+      "fontSize": 300,
+      "fontFamily": "Barlow Condensed",
+      "fontWeight": 800,
+      "color": "#2573b7",
+      "lineHeight": 0.84,
+      "letterSpacing": "-0.01em",
+      "z": 21,
+      "role": "proof",
+      "accepts": [
+        "proof",
+        "stat"
+      ],
+      "maxChars": 8,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "stat_label",
+      "tag": "stat_label",
+      "label": "Hero stat label",
+      "x": 100,
+      "y": 940,
+      "width": 900,
+      "textAlign": "left",
+      "text": "MLB DRAFT PICKS",
+      "fontSize": 84,
+      "fontFamily": "Barlow Condensed",
+      "fontWeight": 700,
+      "color": "#ffffff",
+      "lineHeight": 0.94,
+      "letterSpacing": "0.01em",
+      "textTransform": "uppercase",
+      "z": 22,
+      "role": "proof",
+      "accepts": [
+        "proof",
+        "stat"
+      ],
+      "maxChars": 22,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "stat_row",
+      "tag": "stat_row",
+      "label": "Secondary proof row",
+      "x": 100,
+      "y": 1090,
+      "width": 900,
+      "textAlign": "left",
+      "text": "1500+ ATHLETES TRAINED   ·   6 FIRST-ROUND PICKS",
+      "fontSize": 38,
+      "fontFamily": "Barlow",
+      "fontWeight": 600,
+      "color": "#7db0e3",
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "z": 23,
+      "role": "proof",
+      "accepts": [
+        "proof",
+        "stat"
+      ],
+      "maxChars": 60,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "claim",
+      "tag": "claim",
+      "label": "Proof claim",
+      "x": 96,
+      "y": 1250,
+      "width": 904,
+      "textAlign": "left",
+      "text": "An available arm with a rising number is the one that gets recruited.",
+      "fontSize": 58,
+      "fontFamily": "Barlow Condensed",
+      "fontWeight": 700,
+      "color": "#ffffff",
+      "lineHeight": 0.98,
+      "textTransform": "uppercase",
+      "z": 24,
+      "role": "claim",
+      "accepts": [
+        "claim",
+        "reframe",
+        "hook",
+        "mechanism"
+      ],
+      "maxChars": 92,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark",
+      "x": 98,
+      "y": 1660,
+      "width": 900,
+      "textAlign": "left",
+      "text": "IDEAL SPORTS PERFORMANCE",
+      "fontSize": 30,
+      "fontFamily": "Barlow",
+      "fontWeight": 600,
+      "color": "#ffffff",
+      "letterSpacing": "0.2em",
+      "textTransform": "uppercase",
+      "z": 25,
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 26,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    }
+  ],
+  "media": {
+    "path": "./assets/bg-brand-action-clip-lifting-high-school-male-isp-zach-decant-bedadb51.mp4",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1
+  }
+}

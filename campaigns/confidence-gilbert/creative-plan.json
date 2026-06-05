@@ -1,0 +1,457 @@
+{
+  "schemaVersion": 1,
+  "campaign": "confidence-gilbert",
+  "brand": "batti-performance",
+  "knobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": {
+      "video": 0.6,
+      "gif": 0.15,
+      "static": 0.25
+    },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 1
+  },
+  "_planNotes": {
+    "scope": "Confidence angle, Gilbert. EVERY template used EXACTLY ONCE (repetitionCap:1 — runner HARD-FAILS on any repeat). This batch = the 12 distinct Batti MOTION templates (conf-v01..v12), all video. The 8 distinct STATIC templates are being authored next to complete the 20 at the 60/15/25 ratio.",
+    "eyebrow": "Consistent white-pill eyebrow (engine <Eyebrow> / TplText field=eyebrow). guarantee LOCKED. Saira Condensed. Authoring red remapped to Batti #cb0202.",
+    "copyRule": "templateData carries VERBATIM substrings of the confidence copy-library (verbatimGuard checks each is the user's words)."
+  },
+  "angles": [
+    {
+      "id": "confidence",
+      "name": "Proof = Confidence (the shrinking kid) — ad copy series #2",
+      "location": "gilbert",
+      "mechanism": "Two kinds of confidence: praise (fragile, on loan) vs data the kid builds for themselves (durable). Only the second survives the game.",
+      "emotionalJob": "Name the unsaid moment, validate that encouragement stopped working, hand over the visible-numbers fix.",
+      "voice": "Head-coach-to-parent, declarative, metric-driven. No emoji / exclamation / em dash.",
+      "assets": [
+        {
+          "id": "V01",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v01-hook-frame",
+          "clip": "brand/video-templates/assets/bt-cf-V01.mp4",
+          "templateData": {
+            "hook": "Your kid doesn't need to be told they're good. They need to see it."
+          },
+          "copySource": "hook a1a.altHook.3",
+          "status": "rendered",
+          "output": "out/campaigns/confidence-gilbert/confidence/V01.mp4",
+          "thumb": "out/campaigns/confidence-gilbert/confidence/V01.mp4",
+          "renderedAt": "2026-06-05T15:46:11.252Z",
+          "kraken": {
+            "id": "84c93c30-4cbf-4bc4-a97d-a02fe7d2128d",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/confidence-gilbert-confidence-V01-1780676486526.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "V07",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v07-caption",
+          "clip": "brand/video-templates/assets/bt-cf-V07.mp4",
+          "templateData": {
+            "line": "The hardest part isn't watching them lose. It's watching them stop believing they can win."
+          },
+          "copySource": "hook a1b.altHook.2",
+          "status": "rendered",
+          "output": "out/campaigns/confidence-gilbert/confidence/V07.mp4",
+          "thumb": "out/campaigns/confidence-gilbert/confidence/V07.mp4",
+          "renderedAt": "2026-06-05T15:47:17.679Z",
+          "kraken": {
+            "id": "6cc827b4-0a88-45b7-8d22-0e2d76f640a8",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/confidence-gilbert-confidence-V07-1780676491491.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "V12",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v12-wipe",
+          "clip": "brand/video-templates/assets/bt-cf-V12.mp4",
+          "templateData": {
+            "claim": "There are two kinds of confidence."
+          },
+          "copySource": "claim a1a.bodyLine.2.2",
+          "status": "rendered",
+          "output": "out/campaigns/confidence-gilbert/confidence/V12.mp4",
+          "thumb": "out/campaigns/confidence-gilbert/confidence/V12.mp4",
+          "renderedAt": "2026-06-05T15:48:27.853Z",
+          "kraken": {
+            "id": "65d2ad29-9d0a-4559-8c47-75490bf612fa",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/confidence-gilbert-confidence-V12-1780676495830.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "V02",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v02-twokinds",
+          "clip": "brand/video-templates/assets/bt-cf-V02.mp4",
+          "templateData": {
+            "line1": "The kind that breaks under pressure.",
+            "line2": "And the kind that doesn't."
+          },
+          "copySource": "hook a1b.altHook.3 (split)",
+          "status": "rendered",
+          "output": "out/campaigns/confidence-gilbert/confidence/V02.mp4",
+          "thumb": "out/campaigns/confidence-gilbert/confidence/V02.mp4",
+          "renderedAt": "2026-06-05T15:49:05.793Z",
+          "kraken": {
+            "id": "56527bef-931b-46e2-bab8-c2e2608025f0",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/confidence-gilbert-confidence-V02-1780676499218.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "V03",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v03-highlight",
+          "clip": "brand/video-templates/assets/bt-cf-V03.mp4",
+          "templateData": {
+            "claim": "Encouragement can't fix this.",
+            "sub": "They get solved with evidence."
+          },
+          "copySource": "claim a2b.bodyLine.2.2 + reframe a3a.bodyLine.4.4",
+          "status": "rendered",
+          "output": "out/campaigns/confidence-gilbert/confidence/V03.mp4",
+          "thumb": "out/campaigns/confidence-gilbert/confidence/V03.mp4",
+          "renderedAt": "2026-06-05T15:50:06.136Z",
+          "kraken": {
+            "id": "6fcf31a2-1ea8-4fd0-af4a-95817a5e0c1f",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/confidence-gilbert-confidence-V03-1780676504458.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "V04",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v04-climb",
+          "clip": "brand/video-templates/assets/bt-cf-V04.mp4",
+          "templateData": {
+            "statement": "Real sprint times and jump heights on a screen, climbing every week."
+          },
+          "copySource": "mechanism a1b.bodyLine.3.2",
+          "status": "rendered",
+          "output": "out/campaigns/confidence-gilbert/confidence/V04.mp4",
+          "thumb": "out/campaigns/confidence-gilbert/confidence/V04.mp4",
+          "renderedAt": "2026-06-05T15:50:56.530Z",
+          "kraken": {
+            "id": "dbca58c6-3375-4282-9801-745e535f098f",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/confidence-gilbert-confidence-V04-1780676508396.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "V06",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v06-quotemark",
+          "clip": "brand/video-templates/assets/bt-cf-V06.mp4",
+          "templateData": {
+            "quote": "They have to see it."
+          },
+          "copySource": "reframe a3b.bodyLine.3.4",
+          "status": "rendered",
+          "output": "out/campaigns/confidence-gilbert/confidence/V06.mp4",
+          "thumb": "out/campaigns/confidence-gilbert/confidence/V06.mp4",
+          "renderedAt": "2026-06-05T15:52:07.619Z",
+          "kraken": {
+            "id": "487faad1-55c1-44e7-91d0-67ad1514ad04",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/confidence-gilbert-confidence-V06-1780676512183.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "V08",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v08-strike",
+          "clip": "brand/video-templates/assets/bt-cf-V08.mp4",
+          "templateData": {
+            "claim": "Praise is on loan.",
+            "sub": "Nobody can talk them out of a number they watched go up."
+          },
+          "copySource": "claim a3a.bodyLine.3.1 + reframe a2a.bodyLine.3.4",
+          "status": "rendered",
+          "output": "out/campaigns/confidence-gilbert/confidence/V08.mp4",
+          "thumb": "out/campaigns/confidence-gilbert/confidence/V08.mp4",
+          "renderedAt": "2026-06-05T15:53:22.946Z",
+          "kraken": {
+            "id": "6854c2cd-242a-4267-be11-7c65c5de25c9",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/confidence-gilbert-confidence-V08-1780676517866.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "V05",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v05-stat92",
+          "clip": "brand/video-templates/assets/bt-cf-V05.mp4",
+          "templateData": {
+            "statValue": "92",
+            "statUnit": "%",
+            "labelTop": "of our parents report",
+            "labelBot": "their kid comes out more confident"
+          },
+          "copySource": "stat a2a.bodyLine.5.2 (92%)",
+          "status": "rendered",
+          "output": "out/campaigns/confidence-gilbert/confidence/V05.mp4",
+          "thumb": "out/campaigns/confidence-gilbert/confidence/V05.mp4",
+          "renderedAt": "2026-06-05T15:54:35.834Z",
+          "kraken": {
+            "id": "2a1d9827-0c76-4bd6-aaab-834442e154a8",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/confidence-gilbert-confidence-V05-1780676521763.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "V10",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v10-block",
+          "clip": "brand/video-templates/assets/bt-cf-V10.mp4",
+          "templateData": {
+            "headline": "Why \"Great Job\" Isn't Working",
+            "sub": "(And What Actually Rebuilds It)"
+          },
+          "copySource": "claim a1a.headline + reframe a1a.imageSubhead",
+          "status": "rendered",
+          "output": "out/campaigns/confidence-gilbert/confidence/V10.mp4",
+          "thumb": "out/campaigns/confidence-gilbert/confidence/V10.mp4",
+          "renderedAt": "2026-06-05T15:55:39.614Z",
+          "kraken": {
+            "id": "68e57a5e-193c-47ff-b7b7-6d1d4775c586",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/confidence-gilbert-confidence-V10-1780676529613.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "V11",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v11-outline",
+          "clip": "brand/video-templates/assets/bt-cf-V11.mp4",
+          "templateData": {
+            "headline": "When They Stop Believing"
+          },
+          "copySource": "claim a1b.headline",
+          "status": "rendered",
+          "output": "out/campaigns/confidence-gilbert/confidence/V11.mp4",
+          "thumb": "out/campaigns/confidence-gilbert/confidence/V11.mp4",
+          "renderedAt": "2026-06-05T15:56:51.386Z",
+          "kraken": {
+            "id": "adb594ab-1083-4d21-a96f-a98d38c7ecc3",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/confidence-gilbert-confidence-V11-1780676532864.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "V09",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "conf-v09-offer",
+          "clip": "brand/video-templates/assets/bt-cf-V09.mp4",
+          "templateData": {
+            "offer": "The first step in is the Athlete Analysis.",
+            "cta": "Claim your athlete analysis now"
+          },
+          "copySource": "offer a1a.bodyLine.4.1; guarantee LOCKED",
+          "status": "rendered",
+          "output": "out/campaigns/confidence-gilbert/confidence/V09.mp4",
+          "thumb": "out/campaigns/confidence-gilbert/confidence/V09.mp4",
+          "renderedAt": "2026-06-05T15:58:07.421Z",
+          "kraken": {
+            "id": "f6654fe6-6a20-431d-a08f-01daea647ad2",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/confidence-gilbert-confidence-V09-1780676536591.mp4",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "S01",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "conf-s01-whiteband",
+          "media": "./assets/bt-cf-S01.jpg",
+          "copySource": "STATIC white-band hook (verbatim config text)",
+          "status": "rendered",
+          "output": "out/campaigns/confidence-gilbert/confidence/S01.png",
+          "thumb": "out/campaigns/confidence-gilbert/confidence/S01.png",
+          "renderedAt": "2026-06-05T15:58:29.176Z",
+          "kraken": {
+            "id": "6f07b539-4c71-447e-87ec-c51b3fbd788f",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/confidence-gilbert-confidence-S01-1780676540461.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "S02",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "conf-s02-stat92",
+          "media": "./assets/bt-cf-S02.jpg",
+          "copySource": "STATIC centered 92% stat (verbatim config text)",
+          "status": "rendered",
+          "output": "out/campaigns/confidence-gilbert/confidence/S02.png",
+          "thumb": "out/campaigns/confidence-gilbert/confidence/S02.png",
+          "renderedAt": "2026-06-05T15:58:44.674Z",
+          "kraken": {
+            "id": "5a9b1b86-ca21-4e32-b35d-8bdfc8393363",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/confidence-gilbert-confidence-S02-1780676542817.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "S03",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "conf-s03-diagonal",
+          "media": "./assets/bt-cf-S03.jpg",
+          "copySource": "STATIC diagonal split (verbatim config text)",
+          "status": "rendered",
+          "output": "out/campaigns/confidence-gilbert/confidence/S03.png",
+          "thumb": "out/campaigns/confidence-gilbert/confidence/S03.png",
+          "renderedAt": "2026-06-05T15:58:55.495Z",
+          "kraken": {
+            "id": "f1b56d93-dfe3-4381-970f-1350cc5bf2c1",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/confidence-gilbert-confidence-S03-1780676544625.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "S04",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "conf-s04-pullquote",
+          "media": "./assets/bt-cf-S04.jpg",
+          "copySource": "STATIC pull-quote (verbatim config text)",
+          "status": "rendered",
+          "output": "out/campaigns/confidence-gilbert/confidence/S04.png",
+          "thumb": "out/campaigns/confidence-gilbert/confidence/S04.png",
+          "renderedAt": "2026-06-05T15:59:07.978Z",
+          "kraken": {
+            "id": "7aee71cd-071b-4007-ba58-3f35010ada52",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/confidence-gilbert-confidence-S04-1780676546633.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "S05",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "conf-s05-twocol",
+          "media": "./assets/bt-cf-S05.jpg",
+          "copySource": "STATIC two-kinds rows (verbatim config text)",
+          "status": "rendered",
+          "output": "out/campaigns/confidence-gilbert/confidence/S05.png",
+          "thumb": "out/campaigns/confidence-gilbert/confidence/S05.png",
+          "renderedAt": "2026-06-05T15:59:18.835Z",
+          "kraken": {
+            "id": "5557a4b2-b6e4-4a4b-9962-3a5dc3428911",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/confidence-gilbert-confidence-S05-1780676548677.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "S06",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "static",
+          "source": "template",
+          "template": "conf-s06-offer-top",
+          "media": "./assets/bt-cf-S06.jpg",
+          "copySource": "STATIC top-band offer (verbatim config text)",
+          "status": "rendered",
+          "output": "out/campaigns/confidence-gilbert/confidence/S06.png",
+          "thumb": "out/campaigns/confidence-gilbert/confidence/S06.png",
+          "renderedAt": "2026-06-05T15:59:30.179Z",
+          "kraken": {
+            "id": "6292b4fb-de1e-4659-9861-f41a8832b977",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/confidence-gilbert-confidence-S06-1780676550633.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "S07",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "conf-s07-corner",
+          "media": "./assets/bt-cf-S07.jpg",
+          "copySource": "STATIC corner accent (verbatim config text)",
+          "status": "rendered",
+          "output": "out/campaigns/confidence-gilbert/confidence/S07.png",
+          "thumb": "out/campaigns/confidence-gilbert/confidence/S07.png",
+          "renderedAt": "2026-06-05T15:59:42.062Z",
+          "kraken": {
+            "id": "118adb63-4069-49a1-87e7-7d43c3f170ba",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/confidence-gilbert-confidence-S07-1780676551851.png",
+            "folder": "angle 2"
+          }
+        },
+        {
+          "id": "S08",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "conf-s08-screen",
+          "media": "./assets/bt-cf-S08.jpg",
+          "copySource": "STATIC data-screen mock (verbatim config text)",
+          "status": "rendered",
+          "output": "out/campaigns/confidence-gilbert/confidence/S08.png",
+          "thumb": "out/campaigns/confidence-gilbert/confidence/S08.png",
+          "renderedAt": "2026-06-05T15:59:53.387Z",
+          "kraken": {
+            "id": "30b72c12-16cd-4f8d-a47f-d8f3065841a5",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/177b3e02-f272-43c1-99fd-2b8ee4535889/confidence-gilbert-confidence-S08-1780676553402.png",
+            "folder": "angle 2"
+          }
+        }
+      ]
+    }
+  ],
+  "location": "gilbert"
+}

@@ -334,7 +334,11 @@ async function renderTemplateStatic(asset, angleId) {
     // existing background. photo/clip win over the repurposed a.media. Paths may be
     // TEMPLATE_DIR-relative ("./assets/..") OR PROJECT_ROOT-relative (editor picks);
     // resolve both, then STAGE under the served assets/ dir.
-    const sbg = isFresh ? (asset.photo || asset.clip || asset.media) : (asset.photo || asset.clip);
+    // On the EDITS path the saved config.media is authoritative (it already holds the
+    // first-render bg, OR the user's editor media-swap). Re-applying asset.clip here
+    // would CLOBBER a hand-swapped background, so only an explicit asset.photo pick
+    // overrides on re-render — never the generator's original asset.clip.
+    const sbg = isFresh ? (asset.photo || asset.clip || asset.media) : asset.photo;
     if (sbg) {
       const VID_RE = /\.(mp4|mov|webm|m4v|mkv)$/i;
       const baseName = (p) => String(p).split(/[\\/]/).pop();

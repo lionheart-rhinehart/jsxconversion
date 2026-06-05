@@ -30,8 +30,7 @@ function BattiMechanismMotion({ data = {} }) {
         style={{ fontFamily: 'Saira Condensed, sans-serif', fontWeight: 900, fontSize: 116, color: '#ffffff', lineHeight: 0.9, letterSpacing: '-0.01em', textTransform: 'uppercase', textShadow: '0 2px 24px rgba(0,0,0,0.7)', opacity: stT, transform: `translateY(${(1 - stT) * 22}px)` }}
         maxHeight={420} fitKey={statement}>{statement}</TplText>
 
-      <TplText field="brand" data={data} base={{ position: 'absolute', bottom: 96, left: 64, right: 64 }}
-        style={{ fontFamily: 'Saira Condensed, sans-serif', fontWeight: 900, fontSize: 30, color: '#ffffff', letterSpacing: '0.02em', textTransform: 'uppercase', opacity: brandT }}>{brand}</TplText>
+      <img src={(window.__BRAND__ && window.__BRAND__.logo_motion) || "assets/batti-performance-logo.png"} alt="Batti-Performance" style={{ position: "absolute", bottom: 44, left: 440, width: 200, height: 200, opacity: brandT }} />
     </div>
   );
 }

@@ -1,0 +1,135 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/bt-mg-G01.jpg",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1
+  },
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
+      "z": 1
+    },
+    {
+      "id": "photo_scrim",
+      "tag": "photo_scrim",
+      "label": "Subtle top vignette for depth",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1100,
+      "fill": "linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 28%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.55) 100%)",
+      "z": 2
+    },
+    {
+      "id": "black_band",
+      "tag": "black_band",
+      "label": "Hard black type band (Batti alternating-band device)",
+      "type": "rect",
+      "x": 0,
+      "y": 1392,
+      "width": 1080,
+      "height": 528,
+      "fill": "#000000",
+      "z": 5
+    },
+    {
+      "id": "band_red_rule",
+      "tag": "band_red_rule",
+      "label": "Red rule at the band edge (single emphasized rule)",
+      "type": "rect",
+      "x": 0,
+      "y": 1384,
+      "width": 1080,
+      "height": 8,
+      "fill": "#cb0202",
+      "z": 6
+    },
+    {
+      "id": "bp_badge",
+      "tag": "bp_badge",
+      "label": "BP logo on white disc (visible on the dark band)",
+      "type": "image",
+      "src": "./assets/batti-badge-onwhite.png",
+      "x": 440,
+      "y": 1666,
+      "width": 200,
+      "height": 200,
+      "objectFit": "contain",
+      "z": 40
+    },
+    {
+      "id": "bottom_red_strip",
+      "tag": "accent_strip",
+      "label": "Bottom red strip",
+      "type": "rect",
+      "x": 0,
+      "y": 1898,
+      "width": 1080,
+      "height": 22,
+      "fill": "#cb0202",
+      "z": 50
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Mono red eyebrow (Batti device — plain letterspaced mono, no chip)",
+      "x": 70,
+      "y": 1432,
+      "text": "MANTENO SPORT PARENTS",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#cb0202",
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "chipBg": "#ffffff",
+      "chipPad": "10px 22px",
+      "chipRadius": 8,
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow"
+      ],
+      "maxChars": 28,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "hook",
+      "tag": "hook",
+      "label": "Stacked condensed-caps hook on the black band (Saira Condensed)",
+      "x": 64,
+      "y": 1498,
+      "width": 952,
+      "text": "Here's Why More Games Won't Make Them Faster",
+      "fontSize": 56,
+      "fontFamily": "Saira Condensed",
+      "fontWeight": 800,
+      "color": "#ffffff",
+      "lineHeight": 0.98,
+      "letterSpacing": "-0.005em",
+      "textTransform": "uppercase",
+      "z": 30,
+      "role": "hook",
+      "accepts": [
+        "hook",
+        "claim",
+        "reframe"
+      ],
+      "maxChars": 130,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    }
+  ]
+}

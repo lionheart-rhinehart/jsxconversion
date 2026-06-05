@@ -1,0 +1,163 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/bt-cf-S05.jpg",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1
+  },
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
+      "z": 1
+    },
+    {
+      "id": "scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.62) 45%, rgba(0,0,0,0.9) 100%)",
+      "z": 2
+    },
+    {
+      "id": "midrule",
+      "type": "rect",
+      "x": 64,
+      "y": 1060,
+      "width": 952,
+      "height": 4,
+      "fill": "rgba(255,255,255,0.25)",
+      "z": 6
+    },
+    {
+      "id": "dash1",
+      "type": "rect",
+      "x": 64,
+      "y": 1180,
+      "width": 70,
+      "height": 12,
+      "fill": "#6b6b6b",
+      "z": 7
+    },
+    {
+      "id": "dash2",
+      "type": "rect",
+      "x": 64,
+      "y": 1420,
+      "width": 70,
+      "height": 12,
+      "fill": "#cb0202",
+      "z": 7
+    },
+    {
+      "id": "badge",
+      "type": "image",
+      "src": "./assets/batti-badge-onwhite.png",
+      "x": 440,
+      "y": 1666,
+      "width": 200,
+      "height": 200,
+      "objectFit": "contain",
+      "z": 40
+    },
+    {
+      "id": "strip",
+      "type": "rect",
+      "x": 0,
+      "y": 1898,
+      "width": 1080,
+      "height": 22,
+      "fill": "#cb0202",
+      "z": 50
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "x": 64,
+      "y": 150,
+      "text": "GILBERT SPORT PARENTS",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#cb0202",
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "chipBg": "#ffffff",
+      "chipPad": "10px 22px",
+      "chipRadius": 8,
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow"
+      ],
+      "maxChars": 28,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "claim",
+      "tag": "claim",
+      "x": 64,
+      "y": 760,
+      "width": 952,
+      "text": "There are two kinds of confidence.",
+      "fontSize": 96,
+      "fontFamily": "Saira Condensed",
+      "fontWeight": 900,
+      "color": "#ffffff",
+      "lineHeight": 0.92,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "z": 30,
+      "role": "proof",
+      "accepts": [
+        "proof"
+      ],
+      "maxChars": 40,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "row1",
+      "tag": "row1",
+      "x": 168,
+      "y": 1156,
+      "width": 848,
+      "text": "The kind that breaks under pressure.",
+      "fontSize": 56,
+      "fontFamily": "Saira Condensed",
+      "fontWeight": 700,
+      "color": "#9a9a9a",
+      "lineHeight": 0.98,
+      "textTransform": "uppercase",
+      "z": 31,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "row2",
+      "tag": "row2",
+      "x": 168,
+      "y": 1396,
+      "width": 848,
+      "text": "And the kind that doesn't.",
+      "fontSize": 68,
+      "fontFamily": "Saira Condensed",
+      "fontWeight": 900,
+      "color": "#ffffff",
+      "lineHeight": 0.98,
+      "textTransform": "uppercase",
+      "z": 31,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    }
+  ]
+}

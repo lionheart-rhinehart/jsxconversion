@@ -48,11 +48,11 @@
       "tag": "bp_badge",
       "label": "BP badge (white, on dark)",
       "type": "image",
-      "src": "./assets/batti-badge-white.png",
-      "x": 64,
-      "y": 1786,
-      "width": 76,
-      "height": 76,
+      "src": "./assets/batti-badge-onwhite.png",
+      "x": 440,
+      "y": 1666,
+      "width": 200,
+      "height": 200,
       "objectFit": "contain",
       "z": 40
     },
@@ -77,12 +77,15 @@
       "x": 70,
       "y": 150,
       "text": "MANTENO SPORT PARENTS",
-      "fontSize": 30,
+      "fontSize": 32,
       "fontFamily": "JetBrains Mono",
-      "fontWeight": 600,
+      "fontWeight": 700,
       "color": "#cb0202",
-      "letterSpacing": "0.22em",
+      "letterSpacing": "0.04em",
       "textTransform": "uppercase",
+      "chipBg": "#ffffff",
+      "chipPad": "10px 22px",
+      "chipRadius": 8,
       "z": 20,
       "role": "eyebrow",
       "accepts": [
@@ -116,27 +119,6 @@
         "hook"
       ],
       "maxChars": 64
-    },
-    {
-      "id": "wordmark",
-      "tag": "brand",
-      "label": "Batti wordmark",
-      "x": 160,
-      "y": 1808,
-      "text": "BATTI-PERFORMANCE",
-      "fontSize": 30,
-      "fontFamily": "Saira Condensed",
-      "fontWeight": 900,
-      "color": "#ffffff",
-      "letterSpacing": "0.02em",
-      "textTransform": "uppercase",
-      "z": 41,
-      "role": "brand",
-      "accepts": [
-        "brand"
-      ],
-      "maxChars": 22,
-      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
     }
   ]
 }

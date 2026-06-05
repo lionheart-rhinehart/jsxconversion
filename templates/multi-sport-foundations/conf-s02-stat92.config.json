@@ -1,0 +1,135 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/bt-cf-S02.jpg",
+    "type": "image",
+    "tag": "bg_photo",
+    "z": 0
+  },
+  "fixedDesign": [
+    {
+      "id": "scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.9) 100%)",
+      "z": 2
+    },
+    {
+      "id": "rule",
+      "type": "rect",
+      "x": 460,
+      "y": 1180,
+      "width": 160,
+      "height": 6,
+      "fill": "#c4141d",
+      "z": 6
+    },
+    {
+      "id": "badge",
+      "type": "image",
+      "src": "./assets/batti-badge-onwhite.png",
+      "x": 440,
+      "y": 1666,
+      "width": 200,
+      "height": 200,
+      "objectFit": "contain",
+      "z": 40
+    },
+    {
+      "id": "strip",
+      "type": "rect",
+      "x": 0,
+      "y": 1898,
+      "width": 1080,
+      "height": 22,
+      "fill": "#c4141d",
+      "z": 50
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "x": 64,
+      "y": 150,
+      "text": "MANTENO SPORT PARENTS",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#c4141d",
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "chipBg": "#ffffff",
+      "chipPad": "10px 22px",
+      "chipRadius": 8,
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow"
+      ],
+      "maxChars": 28
+    },
+    {
+      "id": "labeltop",
+      "tag": "stat_top",
+      "x": 0,
+      "y": 600,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "OF OUR PARENTS REPORT",
+      "fontSize": 34,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 500,
+      "color": "#ffffff",
+      "letterSpacing": "0.16em",
+      "textTransform": "uppercase",
+      "z": 21,
+      "role": "proof",
+      "accepts": [
+        "proof"
+      ],
+      "maxChars": 40
+    },
+    {
+      "id": "statnum",
+      "tag": "stat_value",
+      "x": 0,
+      "y": 660,
+      "width": 1080,
+      "textAlign": "center",
+      "text": "92%",
+      "fontSize": 420,
+      "fontFamily": "Saira Condensed",
+      "fontWeight": 900,
+      "color": "#ffffff",
+      "lineHeight": 0.8,
+      "letterSpacing": "-0.03em",
+      "z": 22
+    },
+    {
+      "id": "labelbot",
+      "tag": "stat_bot",
+      "x": 80,
+      "y": 1230,
+      "width": 920,
+      "textAlign": "center",
+      "text": "Their kid comes out more confident",
+      "fontSize": 70,
+      "fontFamily": "Saira Condensed",
+      "fontWeight": 800,
+      "color": "#ffffff",
+      "lineHeight": 0.98,
+      "textTransform": "uppercase",
+      "z": 23,
+      "role": "proof",
+      "accepts": [
+        "proof"
+      ],
+      "maxChars": 48
+    }
+  ]
+}

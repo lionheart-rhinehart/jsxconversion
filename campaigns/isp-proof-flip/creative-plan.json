@@ -1,0 +1,478 @@
+{
+  "schemaVersion": 1,
+  "campaign": "isp-proof-flip",
+  "brand": "ideal-sports-performance",
+  "knobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": {
+      "video": 0.6,
+      "gif": 0.15,
+      "static": 0.25
+    },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 3
+  },
+  "_planNotes": "ISP — The Proof Flip (single-angle campaign; one review page per angle, mirroring the AA bank). 20 ISP-native creatives (fresh-isp-* templates). Copy bound verbatim by reference to copy-library.json. Eyebrow auto-anchors FORT WORTH SPORT PARENTS from the fort-worth tier. ISP has no guarantee; offer of record is the free first session.",
+  "angles": [
+    {
+      "id": "proof-flip",
+      "name": "The Proof Flip",
+      "location": "fort-worth",
+      "mechanism": "Results at that volume come from a repeatable process — whole-athlete development sustained by monthly reassessment — not a talent collection.",
+      "emotionalJob": "Turn an intimidating draft-pick wall into evidence of a process any kid can access.",
+      "voice": "Head-coach-to-parent, declarative, metric-driven.",
+      "assets": [
+        {
+          "id": "A1",
+          "beat": "A — Cold hook",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-hook",
+          "copyRefs": {
+            "hook": "ad-3-short.imageHeadline"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-vertical-jump-high-school-female-isp-zach-decant-3b04aa86.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-proof-flip/proof-flip/A1.mp4",
+          "thumb": "out/campaigns/isp-proof-flip/proof-flip/A1.mp4",
+          "renderedAt": "2026-06-05T04:10:16.849Z",
+          "kraken": {
+            "id": "e7a454b4-17c2-49b0-9d6e-3c0321e826a8",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-proof-flip-proof-flip-A1-1780635757622.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "A2",
+          "beat": "A — Cold hook",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-isp-hook",
+          "copyRefs": {
+            "hook": "ad-3-short.altHook.1",
+            "reframe": "ad-3-short.imageSubhead"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-jumping-high-school-female-isp-zach-decant-slide-9e5319e5.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-proof-flip/proof-flip/A2.png",
+          "thumb": "out/campaigns/isp-proof-flip/proof-flip/A2.png",
+          "renderedAt": "2026-06-05T04:11:04.681Z",
+          "kraken": {
+            "id": "ff663830-4b13-4061-af74-e709606eae6a",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-proof-flip-proof-flip-A2-1780635759394.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "B1",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-statement",
+          "copyRefs": {
+            "hook": "ad-3-short.altHook.2",
+            "reframe": "ad-3-short.bodyLine.1.2"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-agility-drill-high-school-female-isp-zach-decant-a8708eba.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-proof-flip/proof-flip/B1.mp4",
+          "thumb": "out/campaigns/isp-proof-flip/proof-flip/B1.mp4",
+          "renderedAt": "2026-06-05T04:13:16.446Z",
+          "kraken": {
+            "id": "1a1482aa-9856-441f-88b6-e6f293a3f55c",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-proof-flip-proof-flip-B1-1780635761528.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "B2",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-isp-hook",
+          "copyRefs": {
+            "hook": "ad-3-short.altHook.3",
+            "reframe": "ad-3-short.bodyLine.1.3"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-sprinting-high-school-mixed-isp-zach-decant-cc463e25.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-proof-flip/proof-flip/B2.png",
+          "thumb": "out/campaigns/isp-proof-flip/proof-flip/B2.png",
+          "renderedAt": "2026-06-05T04:13:45.662Z",
+          "kraken": {
+            "id": "77a4542a-dcef-4463-858f-d2bd73fe69ab",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-proof-flip-proof-flip-B2-1780635763429.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "C1",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-claim",
+          "copyRefs": {
+            "mechanism": "ad-3-medium.bodyLine.3.2",
+            "reframe": "ad-3-medium.bodyLine.2.3"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-agility-drill-mixed-mixed-isp-zach-decant-b3faf13a.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-proof-flip/proof-flip/C1.mp4",
+          "thumb": "out/campaigns/isp-proof-flip/proof-flip/C1.mp4",
+          "renderedAt": "2026-06-05T04:15:32.855Z",
+          "kraken": {
+            "id": "fce0989a-3fda-44d5-b950-a781b77c52e2",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-proof-flip-proof-flip-C1-1780635765713.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "C2",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-isp-mechanism",
+          "copyRefs": {
+            "mechanism": "ad-3-long.bodyLine.6.5",
+            "reframe": "ad-3-medium.bodyLine.4.3"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-stability-ball-mountain-climbers-high-school-mal-07f10925.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-proof-flip/proof-flip/C2.png",
+          "thumb": "out/campaigns/isp-proof-flip/proof-flip/C2.png",
+          "renderedAt": "2026-06-05T04:15:52.033Z",
+          "kraken": {
+            "id": "bc1685ab-4605-461b-8721-6ca2b81eb343",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-proof-flip-proof-flip-C2-1780635767351.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "C3",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-claim",
+          "copyRefs": {
+            "mechanism": "ad-3-long.bodyLine.5.1",
+            "reframe": "ad-3-medium.bodyLine.5.3"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-agility-drill-middle-school-female-isp-zach-deca-d4dc1c08.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-proof-flip/proof-flip/C3.mp4",
+          "thumb": "out/campaigns/isp-proof-flip/proof-flip/C3.mp4",
+          "renderedAt": "2026-06-05T04:17:50.791Z",
+          "kraken": {
+            "id": "c66eaddf-4dff-4e0b-b066-ae3d62da12aa",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-proof-flip-proof-flip-C3-1780635772310.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "C4",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-claim",
+          "copyRefs": {
+            "mechanism": "ad-3-medium.bodyLine.3.2",
+            "reframe": "ad-3-short.imageSubhead"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-high-knees-middle-school-female-isp-zach-decant--ec7d7d85.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-proof-flip/proof-flip/C4.mp4",
+          "thumb": "out/campaigns/isp-proof-flip/proof-flip/C4.mp4",
+          "renderedAt": "2026-06-05T04:19:45.565Z",
+          "kraken": {
+            "id": "b26d832a-f7f4-4b32-a0ef-d0886aa6cc01",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-proof-flip-proof-flip-C4-1780635775777.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "D1",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-statement",
+          "copyRefs": {
+            "hook": "ad-3-short.headline",
+            "reframe": "ad-3-short.bodyLine.1.2"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-jumping-high-school-male-isp-zach-decant-slide3o-9b549c0f.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-proof-flip/proof-flip/D1.mp4",
+          "thumb": "out/campaigns/isp-proof-flip/proof-flip/D1.mp4",
+          "renderedAt": "2026-06-05T04:21:31.186Z",
+          "kraken": {
+            "id": "52ee9958-43dc-4cc0-868f-b2cfccd39227",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-proof-flip-proof-flip-D1-1780635778429.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "D2",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-proof",
+          "copyRefs": {
+            "claim": "ad-3-medium.bodyLine.3.3"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-sprinting-high-school-male-isp-zach-decant-slide-f1f8e925.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-proof-flip/proof-flip/D2.mp4",
+          "thumb": "out/campaigns/isp-proof-flip/proof-flip/D2.mp4",
+          "renderedAt": "2026-06-05T04:23:20.548Z",
+          "kraken": {
+            "id": "8067dcdc-9565-4855-8caf-e89fa2b47ce6",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-proof-flip-proof-flip-D2-1780635781484.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "D3",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-hook",
+          "copyRefs": {
+            "hook": "ad-3-short.imageHeadline"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-talking-head-interview-high-school-male-isp-zach-decant-bf7254b4.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-proof-flip/proof-flip/D3.mp4",
+          "thumb": "out/campaigns/isp-proof-flip/proof-flip/D3.mp4",
+          "renderedAt": "2026-06-05T04:25:05.309Z",
+          "kraken": {
+            "id": "510abd72-cdd0-4ecd-aa59-da02873fab98",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-proof-flip-proof-flip-D3-1780635784637.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "E1",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-proof",
+          "copyRefs": {
+            "claim": "ad-3-medium.bodyLine.4.2"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-promo-promo-na-male-isp-zach-decant-c7f95734.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-proof-flip/proof-flip/E1.mp4",
+          "thumb": "out/campaigns/isp-proof-flip/proof-flip/E1.mp4",
+          "renderedAt": "2026-06-05T04:26:19.707Z",
+          "kraken": {
+            "id": "7a067e7d-c26e-406f-a7be-e9ab245acaf7",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-proof-flip-proof-flip-E1-1780635786896.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "E2",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-isp-proof",
+          "copyRefs": {
+            "claim": "ad-3-short.bodyLine.4.3"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-talking-head-speaking-high-school-mixed-isp-zach-decant-780f91fb.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-proof-flip/proof-flip/E2.png",
+          "thumb": "out/campaigns/isp-proof-flip/proof-flip/E2.png",
+          "renderedAt": "2026-06-05T04:26:40.097Z",
+          "kraken": {
+            "id": "15603eaa-c0b2-4ec4-ba1d-22eca607c5e1",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-proof-flip-proof-flip-E2-1780635787903.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "E3",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-proof",
+          "copyRefs": {
+            "claim": "ad-3-long.bodyLine.5.5"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-sprinting-high-school-mixed-isp-zach-decant-c179364e.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-proof-flip/proof-flip/E3.mp4",
+          "thumb": "out/campaigns/isp-proof-flip/proof-flip/E3.mp4",
+          "renderedAt": "2026-06-05T04:28:11.412Z",
+          "kraken": {
+            "id": "f54296d9-459c-4fea-afb6-f05811177984",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-proof-flip-proof-flip-E3-1780635789552.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "E4",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "gif",
+          "source": "template",
+          "template": "fresh-isp-motion-hook",
+          "copyRefs": {
+            "hook": "ad-3-short.altHook.1"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-box-step-down-high-school-male-isp-zach-decant-s-2f219395.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-proof-flip/proof-flip/E4.gif",
+          "thumb": "out/campaigns/isp-proof-flip/proof-flip/E4.gif",
+          "renderedAt": "2026-06-05T04:30:00.865Z",
+          "kraken": {
+            "id": "c774f2cf-b13f-4714-a48e-3c422c295e97",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-proof-flip-proof-flip-E4-1780635790690.gif",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "F1",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-offer",
+          "copyRefs": {
+            "reframe": "ad-3-short.bodyLine.1.3"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-multi-sport-training-high-school-male-isp-zach-d-348b50a8.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-proof-flip/proof-flip/F1.mp4",
+          "thumb": "out/campaigns/isp-proof-flip/proof-flip/F1.mp4",
+          "renderedAt": "2026-06-05T04:30:59.243Z",
+          "kraken": {
+            "id": "82c8bda4-2577-4286-9cc0-89d6da4e1689",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-proof-flip-proof-flip-F1-1780635796670.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "F2",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-isp-offer",
+          "copyRefs": {
+            "offer": "ad-3-short.description",
+            "reframe": "ad-3-medium.bodyLine.2.3"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-plyometrics-high-school-mixed-isp-zach-decant-sl-c02bc0ec.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-proof-flip/proof-flip/F2.png",
+          "thumb": "out/campaigns/isp-proof-flip/proof-flip/F2.png",
+          "renderedAt": "2026-06-05T04:31:20.115Z",
+          "kraken": {
+            "id": "d68ec18b-e955-4700-9511-2bebdaa70afd",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-proof-flip-proof-flip-F2-1780635798538.png",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "F3",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "fresh-isp-motion-offer",
+          "copyRefs": {
+            "reframe": "ad-3-medium.bodyLine.4.3"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-sprinting-high-school-male-isp-zach-decant-slide-01cb5a16.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-proof-flip/proof-flip/F3.mp4",
+          "thumb": "out/campaigns/isp-proof-flip/proof-flip/F3.mp4",
+          "renderedAt": "2026-06-05T04:33:10.032Z",
+          "kraken": {
+            "id": "27317269-ba3e-460f-b43c-58e12a4e1c51",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-videos/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-proof-flip-proof-flip-F3-1780635801235.mp4",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "F4",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "gif",
+          "source": "template",
+          "template": "fresh-isp-motion-offer",
+          "copyRefs": {
+            "reframe": "ad-3-medium.bodyLine.5.3"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-action-clip-plyometrics-sprinting-and-agility-drills-high-sc-f360ebf3.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-proof-flip/proof-flip/F4.gif",
+          "thumb": "out/campaigns/isp-proof-flip/proof-flip/F4.gif",
+          "renderedAt": "2026-06-05T04:35:06.252Z",
+          "kraken": {
+            "id": "38dd50ce-c815-4627-880c-6148dbc0e3f4",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-proof-flip-proof-flip-F4-1780635803396.gif",
+            "folder": "angle 3"
+          }
+        },
+        {
+          "id": "X1",
+          "beat": null,
+          "temperature": "warm",
+          "format": "gif",
+          "source": "template",
+          "template": "fresh-isp-motion-statement",
+          "copyRefs": {
+            "hook": "ad-3-short.altHook.2",
+            "reframe": "ad-3-short.imageSubhead"
+          },
+          "clip": "brand/kraken-cache/isp-baseball-performance/brand-talking-head-speaking-high-school-male-isp-zach-decant-86a3f8d0.mp4",
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/isp-proof-flip/proof-flip/X1.gif",
+          "thumb": "out/campaigns/isp-proof-flip/proof-flip/X1.gif",
+          "renderedAt": "2026-06-05T04:36:51.405Z",
+          "kraken": {
+            "id": "dedd56e1-bff7-449b-a01f-493be2ac5bf4",
+            "url": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/creative-engine/dd52254c-0f1c-4f24-acf0-f119d9a9cbbf/isp-proof-flip-proof-flip-X1-1780635809221.gif",
+            "folder": "angle 3"
+          }
+        }
+      ]
+    }
+  ]
+}

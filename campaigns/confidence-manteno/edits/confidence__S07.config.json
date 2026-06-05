@@ -1,0 +1,131 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/bt-cf-S07.jpg",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1
+  },
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
+      "z": 1
+    },
+    {
+      "id": "scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.9) 100%)",
+      "z": 2
+    },
+    {
+      "id": "cbar1",
+      "type": "rect",
+      "x": 0,
+      "y": 360,
+      "width": 380,
+      "height": 64,
+      "fill": "#cb0202",
+      "z": 6
+    },
+    {
+      "id": "cbar2",
+      "type": "rect",
+      "x": 0,
+      "y": 434,
+      "width": 300,
+      "height": 56,
+      "fill": "#000000",
+      "z": 6
+    },
+    {
+      "id": "cbar3",
+      "type": "rect",
+      "x": 0,
+      "y": 500,
+      "width": 210,
+      "height": 44,
+      "fill": "#cb0202",
+      "z": 6
+    },
+    {
+      "id": "badge",
+      "type": "image",
+      "src": "./assets/batti-badge-onwhite.png",
+      "x": 440,
+      "y": 1666,
+      "width": 200,
+      "height": 200,
+      "objectFit": "contain",
+      "z": 40
+    },
+    {
+      "id": "strip",
+      "type": "rect",
+      "x": 0,
+      "y": 1898,
+      "width": 1080,
+      "height": 22,
+      "fill": "#cb0202",
+      "z": 50
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "x": 64,
+      "y": 150,
+      "text": "MANTENO SPORT PARENTS",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#cb0202",
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "chipBg": "#ffffff",
+      "chipPad": "10px 22px",
+      "chipRadius": 8,
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow"
+      ],
+      "maxChars": 28,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "claim",
+      "tag": "claim",
+      "x": 64,
+      "y": 1180,
+      "width": 952,
+      "text": "A kid who's seen that proof stops shrinking.",
+      "fontSize": 108,
+      "fontFamily": "Saira Condensed",
+      "fontWeight": 900,
+      "color": "#ffffff",
+      "lineHeight": 0.92,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "z": 30,
+      "role": "proof",
+      "accepts": [
+        "proof"
+      ],
+      "maxChars": 70,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    }
+  ]
+}
