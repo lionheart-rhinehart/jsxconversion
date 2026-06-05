@@ -1,0 +1,29 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0}
+  body{width:700px;background:var(--gray-50);color:var(--ink);padding:30px 32px;box-sizing:border-box;font-family:var(--font-body)}
+  .tag{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-400);margin:0 0 14px}
+  .grid{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .pill{border-radius:999px;font-weight:600;font-size:13px;padding:7px 16px;display:inline-flex;align-items:center;gap:7px}
+  .solid{background:var(--isp-blue);color:#fff}
+  .softblue{background:var(--isp-blue-tint);color:var(--isp-blue-800)}
+  .dark{background:var(--ink);color:#fff}
+  .outline{border:1.5px solid var(--border-strong);color:var(--fg-muted);background:#fff}
+  .ok{background:#eaf6ef;color:#2e8b57}
+  .dot{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block}
+  .eyebrow{font:var(--eyebrow);text-transform:uppercase;letter-spacing:.18em;color:var(--isp-blue);display:inline-flex;align-items:center;gap:.5em}
+  .eyebrow::before{content:"";width:24px;height:2px;background:var(--isp-blue)}
+</style></head>
+<body>
+  <p class="tag">Badges, chips &amp; tags</p>
+  <div class="grid">
+    <span class="pill solid">Baseball</span>
+    <span class="pill softblue">Speed &amp; Agility</span>
+    <span class="pill dark">Adult Training</span>
+    <span class="pill outline">All Sports</span>
+    <span class="pill ok"><span class="dot"></span>Spot Open</span>
+    <span class="eyebrow">First Class Free</span>
+  </div>
+</body></html>

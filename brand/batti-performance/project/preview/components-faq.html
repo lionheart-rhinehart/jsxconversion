@@ -1,0 +1,21 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:24px 30px;background:var(--bg);}
+  .faq{border-top:1px solid var(--border);}
+  .q{display:flex;align-items:center;justify-content:space-between;padding:16px 4px;border-bottom:1px solid var(--border);cursor:pointer;}
+  .q .t{font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:17px;color:var(--fg);}
+  .q.open .t{color:var(--bp-red);}
+  .ic{color:var(--fg-muted);font-size:22px;}
+  .q.open .ic{color:var(--bp-red);transform:rotate(180deg);}
+  .a{padding:0 4px 16px;border-bottom:1px solid var(--border);font-family:var(--font-body);font-size:14px;color:var(--fg-muted);max-width:560px;}
+</style></head>
+<body>
+  <div class="faq">
+    <div class="q open"><span class="t">Where are you located?</span><svg class="material-symbols-rounded ic" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;flex:none"><path d="m6 9 6 6 6-6"/></svg></div>
+    <div class="a">Orland Park, IL (HQ) · Manteno, IL · Gilbert, AZ. Each location runs the same guaranteed protocol.</div>
+    <div class="q"><span class="t">What times are your classes?</span><svg class="material-symbols-rounded ic" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;flex:none"><path d="m6 9 6 6 6-6"/></svg></div>
+    <div class="q"><span class="t">How does the guarantee work?</span><svg class="material-symbols-rounded ic" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;flex:none"><path d="m6 9 6 6 6-6"/></svg></div>
+  </div>
+</body></html>

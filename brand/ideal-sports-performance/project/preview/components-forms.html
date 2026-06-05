@@ -1,0 +1,31 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0}
+  body{width:700px;background:var(--white);color:var(--ink);padding:30px 32px;box-sizing:border-box;font-family:var(--font-body);display:flex;gap:26px}
+  .col{flex:1}
+  label{display:block;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--gray-600);margin:0 0 7px}
+  .field{width:100%;box-sizing:border-box;padding:13px 14px;border:1.5px solid var(--border-strong);border-radius:var(--radius);font:var(--body);color:var(--ink);background:#fff;margin-bottom:16px}
+  .field::placeholder{color:var(--gray-400)}
+  .field.focus{border-color:var(--isp-blue);box-shadow:var(--focus-ring);outline:none}
+  .hint{font-size:11px;color:var(--gray-500);margin:-10px 0 0}
+  .check{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--fg-muted)}
+  .box{width:20px;height:20px;border-radius:5px;background:var(--isp-blue);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700}
+</style></head>
+<body>
+  <div class="col">
+    <label>Full name</label>
+    <input class="field" placeholder="Jordan Carter">
+    <label>Email</label>
+    <input class="field focus" value="[email protected]">
+    <p class="hint">Focused state · blue ring</p>
+  </div>
+  <div class="col">
+    <label>Program</label>
+    <select class="field"><option>Baseball Performance</option></select>
+    <label>Notes</label>
+    <textarea class="field" rows="2" placeholder="Tell us your goals…"></textarea>
+    <div class="check"><span class="box">&#10003;</span> Text me class reminders</div>
+  </div>
+</body></html>

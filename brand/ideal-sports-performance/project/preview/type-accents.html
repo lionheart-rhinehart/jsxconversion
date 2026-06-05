@@ -1,0 +1,27 @@
+<!-- @dsCard group="Type" -->
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0}
+  body{width:700px;background:var(--white);color:var(--ink);padding:28px 32px;box-sizing:border-box;font-family:var(--font-body);display:flex;gap:40px;align-items:flex-start}
+  .col{flex:1}
+  .eyebrow{font:var(--eyebrow);text-transform:uppercase;letter-spacing:.18em;color:var(--isp-blue);display:inline-flex;align-items:center;gap:.5em}
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--isp-blue);display:inline-block}
+  .stat{font:var(--stat);color:var(--isp-blue);font-size:58px;font-variant-numeric:tabular-nums;line-height:.9}
+  .statlabel{font-family:var(--font-display);font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--gray-600);font-size:14px}
+  .caption{font:var(--caption);color:var(--fg-subtle);text-transform:uppercase;letter-spacing:.08em}
+  .tag{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-400);margin:0 0 8px}
+</style></head>
+<body>
+  <div class="col">
+    <p class="tag">Eyebrow / kicker</p>
+    <span class="eyebrow">Premier Training Facility</span>
+    <p class="tag" style="margin-top:24px">Caption</p>
+    <span class="caption">Fort Worth, TX · Est. 2022</span>
+  </div>
+  <div class="col">
+    <p class="tag">Stat · big metric</p>
+    <div class="stat">+6<span style="font-size:30px">mph</span></div>
+    <div class="statlabel">Avg velocity gain</div>
+  </div>
+</body></html>

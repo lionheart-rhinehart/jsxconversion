@@ -1,0 +1,406 @@
+{
+  "schemaVersion": 1,
+  "campaign": "grind-trap-manteno",
+  "brand": "batti-performance",
+  "knobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": {
+      "video": 0.6,
+      "gif": 0.15,
+      "static": 0.25
+    },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 3
+  },
+  "_planNotes": {
+    "scope": "Full 20 — speed angle, Manteno. ALL Batti-native (no AA cards). 14 VIDEO + 6 static = 70% video (>= the canonical 60%). 11 distinct templates (5 Batti motion + 6 Batti static); statics never repeat, motion <= repetitionCap (3).",
+    "eyebrow": "ONE consistent eyebrow on every design: plain letterspaced MONO RED (JetBrains Mono, brand red, 0.22em, uppercase) — Batti's spec, no chip.",
+    "copyRule": "Verbatim by reference (copyRefs by role). eyebrow auto-anchors MANTENO SPORT PARENTS; guarantee LOCKED to Batti's 30-session promise; Saira Condensed. Palette remaps authoring red #c4141d -> Batti #cb0202."
+  },
+  "angles": [
+    {
+      "id": "grind-trap",
+      "name": "My Kid Tries Hard (the grind trap — speed / The Last Rep Lie) — ad copy series #1",
+      "location": "manteno",
+      "mechanism": "Fatigued reps train slowness into the nervous system the way muscle memory trains a movement. The last tired reps rehearse slow. Named: The Last Rep Lie / Phantom Progress.",
+      "emotionalJob": "Name the culprit, absolve the parent and kid, then hand over the fix.",
+      "voice": "Head-coach-to-parent, declarative, metric-driven. No emoji / exclamation / em dash.",
+      "assets": [
+        {
+          "id": "HK1",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "batti-hook-motion",
+          "clip": "brand/video-templates/assets/bt-gt-HK1.mp4",
+          "copyRefs": {
+            "hook": [
+              "ad-2.altHook.2"
+            ]
+          },
+          "copySource": "MOTION hook. ad-2.altHook.2.",
+          "status": "rendering",
+          "notes": ""
+        },
+        {
+          "id": "HK2",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "batti-hook-motion",
+          "clip": "brand/video-templates/assets/bt-gt-HK2.mp4",
+          "copyRefs": {
+            "hook": [
+              "ad-1.altHook.3"
+            ]
+          },
+          "copySource": "MOTION hook #2. ad-1.altHook.3.",
+          "status": "failed",
+          "notes": ""
+        },
+        {
+          "id": "HK3",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "video",
+          "source": "template",
+          "template": "batti-hook-motion",
+          "clip": "brand/video-templates/assets/bt-gt-HK3.mp4",
+          "copyRefs": {
+            "hook": [
+              "ad-1.altHook.1"
+            ]
+          },
+          "copySource": "MOTION hook #3. ad-1.altHook.1.",
+          "status": "failed",
+          "notes": ""
+        },
+        {
+          "id": "MC1",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "batti-mechanism-motion",
+          "clip": "brand/video-templates/assets/bt-gt-MC1.mp4",
+          "copyRefs": {
+            "mechanism": [
+              "ad-3.bodyLine.5.3"
+            ]
+          },
+          "copySource": "MOTION mechanism. \"The instant speed drops, the set ends.\"",
+          "status": "failed",
+          "notes": ""
+        },
+        {
+          "id": "MC2",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "batti-mechanism-motion",
+          "clip": "brand/video-templates/assets/bt-gt-MC2.mp4",
+          "copyRefs": {
+            "mechanism": [
+              "ad-3.bodyLine.6.2"
+            ]
+          },
+          "copySource": "MOTION mechanism #2. \"It becomes the first step...\"",
+          "status": "failed",
+          "notes": ""
+        },
+        {
+          "id": "MC3",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "batti-mechanism-motion",
+          "clip": "brand/video-templates/assets/bt-gt-MC3.mp4",
+          "copyRefs": {
+            "mechanism": [
+              "ad-3.bodyLine.3.4"
+            ]
+          },
+          "copySource": "MOTION mechanism #3. \"It was Phantom Progress.\"",
+          "status": "failed",
+          "notes": ""
+        },
+        {
+          "id": "ST1",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "batti-stat-motion",
+          "clip": "brand/video-templates/assets/bt-gt-ST1.mp4",
+          "templateData": {
+            "statValue": "1.2",
+            "statUnit": " MPH",
+            "statLabel": "FASTER IN 8 WEEKS (AGES 7-9 TRIAL)"
+          },
+          "copyRefs": {
+            "claim": [
+              "ad-3.bodyLine.7.1"
+            ]
+          },
+          "copySource": "MOTION stat (1.2 mph / 8-week trial). claim \"The science backs every piece of this.\"",
+          "status": "failed",
+          "notes": ""
+        },
+        {
+          "id": "ST2",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "batti-stat-motion",
+          "clip": "brand/video-templates/assets/bt-gt-ST2.mp4",
+          "templateData": {
+            "statValue": "3",
+            "statUnit": "″",
+            "statLabel": "MINIMUM VERTICAL GAIN, GUARANTEED IN 30 SESSIONS"
+          },
+          "copyRefs": {
+            "claim": [
+              "ad-3.bodyLine.7.4"
+            ]
+          },
+          "copySource": "MOTION stat (+3in guarantee number). claim \"So +1 mph in 30 sessions isn't aggressive.\"",
+          "status": "failed",
+          "notes": ""
+        },
+        {
+          "id": "OF1",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "batti-offer-motion",
+          "clip": "brand/video-templates/assets/bt-gt-OF1.mp4",
+          "copyRefs": {
+            "offer": [
+              "ad-1.bodyLine.4.1"
+            ]
+          },
+          "templateData": {
+            "cta": "BOOK YOUR FREE ASSESSMENT"
+          },
+          "copySource": "MOTION offer + locked guarantee + CTA.",
+          "status": "failed",
+          "notes": ""
+        },
+        {
+          "id": "OF2",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "batti-offer-motion",
+          "clip": "brand/video-templates/assets/bt-gt-OF2.mp4",
+          "copyRefs": {
+            "offer": [
+              "ad-1.bodyLine.4.1"
+            ]
+          },
+          "templateData": {
+            "cta": "CLAIM YOUR ATHLETE ANALYSIS"
+          },
+          "copySource": "MOTION offer #2 (distinct CTA + footage).",
+          "status": "failed",
+          "notes": ""
+        },
+        {
+          "id": "OF3",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "template",
+          "template": "batti-offer-motion",
+          "clip": "brand/video-templates/assets/bt-gt-OF3.mp4",
+          "copyRefs": {
+            "offer": [
+              "ad-1.bodyLine.4.1"
+            ]
+          },
+          "templateData": {
+            "cta": "BOOK NOW"
+          },
+          "copySource": "MOTION offer #3 (distinct CTA + footage).",
+          "status": "failed",
+          "notes": ""
+        },
+        {
+          "id": "QT1",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "batti-quote-motion",
+          "clip": "brand/video-templates/assets/bt-gt-QT1.mp4",
+          "copyRefs": {
+            "reframe": [
+              "ad-2.bodyLine.5.1"
+            ]
+          },
+          "copySource": "MOTION quote. \"And a fast rep isn't just a number.\"",
+          "status": "failed",
+          "notes": ""
+        },
+        {
+          "id": "QT2",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "batti-quote-motion",
+          "clip": "brand/video-templates/assets/bt-gt-QT2.mp4",
+          "copyRefs": {
+            "reframe": [
+              "ad-3.bodyLine.4.2"
+            ]
+          },
+          "copySource": "MOTION quote #2. \"The effort was real.\"",
+          "status": "failed",
+          "notes": ""
+        },
+        {
+          "id": "QT3",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "batti-quote-motion",
+          "clip": "brand/video-templates/assets/bt-gt-QT3.mp4",
+          "copyRefs": {
+            "reframe": [
+              "ad-3.bodyLine.7.1"
+            ]
+          },
+          "copySource": "MOTION quote #3. \"The science backs every piece of this.\"",
+          "status": "failed",
+          "notes": ""
+        },
+        {
+          "id": "SHK",
+          "beat": "A — Stop the scroll",
+          "temperature": "cold",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-grind-trap-N1",
+          "media": "./assets/bt-gt-SHK.jpg",
+          "copyRefs": {
+            "hook": [
+              "ad-1.imageHeadline"
+            ]
+          },
+          "copySource": "STATIC black-band hook. ad-1.imageHeadline.",
+          "status": "rendered",
+          "output": "out/campaigns/grind-trap-manteno/grind-trap/SHK.png",
+          "thumb": "out/campaigns/grind-trap-manteno/grind-trap/SHK.png",
+          "renderedAt": "2026-06-05T02:38:19.377Z"
+        },
+        {
+          "id": "SST",
+          "beat": "B — Reframe",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-grind-trap-D1",
+          "media": "./assets/bt-gt-SST.jpg",
+          "copyRefs": {
+            "claim": [
+              "ad-1.headline"
+            ]
+          },
+          "copySource": "STATIC white-band statement. \"Why Hard Work Isn't Enough\".",
+          "status": "rendered",
+          "output": "out/campaigns/grind-trap-manteno/grind-trap/SST.png",
+          "thumb": "out/campaigns/grind-trap-manteno/grind-trap/SST.png",
+          "renderedAt": "2026-06-05T02:38:43.134Z"
+        },
+        {
+          "id": "SBG",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-grind-trap-E1",
+          "media": "./assets/bt-gt-SBG.jpg",
+          "copyRefs": {
+            "claim": [
+              "ad-3.bodyLine.7.4"
+            ],
+            "proof": [
+              "ad-3.bodyLine.7.5"
+            ]
+          },
+          "copySource": "STATIC big-stat (224% / 28%).",
+          "status": "rendered",
+          "output": "out/campaigns/grind-trap-manteno/grind-trap/SBG.png",
+          "thumb": "out/campaigns/grind-trap-manteno/grind-trap/SBG.png",
+          "renderedAt": "2026-06-05T02:39:37.921Z"
+        },
+        {
+          "id": "SMC",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-mechanism",
+          "media": "./assets/bt-gt-SMC.jpg",
+          "copyRefs": {
+            "mechanism": [
+              "ad-1.bodyLine.2.4"
+            ]
+          },
+          "copySource": "STATIC full-bleed mechanism. \"It memorizes the speed.\"",
+          "status": "rendered",
+          "output": "out/campaigns/grind-trap-manteno/grind-trap/SMC.png",
+          "thumb": "out/campaigns/grind-trap-manteno/grind-trap/SMC.png",
+          "renderedAt": "2026-06-05T02:40:21.947Z"
+        },
+        {
+          "id": "SQT",
+          "beat": "D — Proof reframe",
+          "temperature": "warm",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-quote",
+          "media": "./assets/bt-gt-SQT.jpg",
+          "copyRefs": {
+            "reframe": [
+              "ad-1.bodyLine.1.5"
+            ]
+          },
+          "copySource": "STATIC red-border quote. \"Here's the reason, and it's not them.\"",
+          "status": "rendered",
+          "output": "out/campaigns/grind-trap-manteno/grind-trap/SQT.png",
+          "thumb": "out/campaigns/grind-trap-manteno/grind-trap/SQT.png",
+          "renderedAt": "2026-06-05T02:41:04.827Z"
+        },
+        {
+          "id": "SOF",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "static",
+          "source": "template",
+          "template": "fresh-batti-offer",
+          "media": "./assets/bt-gt-SOF.jpg",
+          "copyRefs": {
+            "offer": [
+              "ad-1.bodyLine.4.1"
+            ]
+          },
+          "copySource": "STATIC offer + locked guarantee + CTA.",
+          "status": "rendered",
+          "output": "out/campaigns/grind-trap-manteno/grind-trap/SOF.png",
+          "thumb": "out/campaigns/grind-trap-manteno/grind-trap/SOF.png",
+          "renderedAt": "2026-06-05T02:41:30.178Z"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "_comment": "Creative-engine enforcement rules for Batti-Performance. Mirrors the Athletes Acceleration / Castille ruleset (same youth-sports-performance creative contract) so a repurposed campaign validates under Batti identically to its source. Consumed by scripts/validate-plan.mjs via loadRules(); without this file the brand falls back to DEFAULT_RULES, which is stricter (no mediaExempt) and false-flags motion stat-reveal/logo-sting cards. DEVIATION FROM AA: 'guaranteed' is intentionally NOT in bannedWords — Batti's brand voice explicitly uses 'We GUARANTEE' / '100% guaranteed results' as a core trope (the accountability promise IS the product), so banning it would false-flag the brand's own verbatim copy. eyebrowPattern stays '{CITY} SPORT PARENTS'; Batti cities are Orland Park / Manteno / Gilbert.",
+  "brand": "batti-performance",
+  "aspect": {
+    "width": 1080,
+    "height": 1920
+  },
+  "mediaExempt": [
+    "logo-sting",
+    "stat-reveal"
+  ],
+  "verbatim": "substring",
+  "verbatimRoles": [
+    "hook",
+    "claim",
+    "mechanism",
+    "reframe",
+    "kicker",
+    "testimonial"
+  ],
+  "cityModel": "clone",
+  "locationRotation": {
+    "enabled": false
+  },
+  "voice": {
+    "noEmoji": true,
+    "noExclamation": true
+  },
+  "bannedWords": [
+    "scholarship",
+    "dream",
+    "limited time",
+    "act now",
+    "spots left",
+    "don't miss"
+  ],
+  "eyebrowPattern": "{CITY} SPORT PARENTS",
+  "_beatRolesNote": "anyOf = the beat's VALID role set; an asset must carry >=1.",
+  "beatRoles": {
+    "A": { "anyOf": ["hook"] },
+    "B": { "anyOf": ["hook", "claim", "reframe"] },
+    "C": { "anyOf": ["mechanism", "reframe", "stat"] },
+    "D": { "anyOf": ["reframe", "testimonial", "claim"] },
+    "E": { "anyOf": ["proof", "stat", "testimonial"] },
+    "F": { "anyOf": ["offer", "cta"] }
+  }
+}

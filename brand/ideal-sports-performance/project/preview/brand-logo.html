@@ -1,0 +1,20 @@
+<!-- @dsCard group="Brand" -->
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0}
+  body{width:700px;background:var(--white);color:var(--ink);padding:0;box-sizing:border-box;font-family:var(--font-body);display:flex}
+  .pane{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:34px 20px;min-height:200px}
+  .light{background:#fff}
+  .blue{background:var(--isp-blue)}
+  .dark{background:var(--ink)}
+  .pane img{height:78px;width:auto}
+  .cap{font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:600}
+  .light .cap{color:var(--gray-400)}
+  .blue .cap,.dark .cap{color:rgba(255,255,255,.6)}
+</style></head>
+<body>
+  <div class="pane light"><img src="../assets/logo-full.png" alt="ISP logo"><span class="cap">Primary · on white</span></div>
+  <div class="pane blue"><img src="../assets/logo-on-dark.png" alt="ISP logo on blue"><span class="cap">On ISP blue</span></div>
+  <div class="pane dark"><img src="../assets/logo-on-dark.png" alt="ISP logo on dark"><span class="cap">On ink</span></div>
+</body></html>

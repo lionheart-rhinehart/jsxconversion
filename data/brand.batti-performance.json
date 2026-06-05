@@ -1,0 +1,21 @@
+{
+  "_comment": "Brand kit for Batti-Performance (franchisee) — registered from the Claude Design handoff bundle 'batti-performance-design-system'. Keys under `tags` map a layer's field name (its `tag`) to the value that replaces the layer's content at fill time. Color/font tokens here OVERRIDE the AA authoring baseline at render/clone time (scripts/lib/palette.mjs remaps the bank's #c4141d-family literals to these). See brand/batti-performance/project/README.md for the full brand rules (voice, visual foundations, iconography) and brand/batti-performance/project/colors_and_type.css for the source tokens.",
+  "brand": "Batti-Performance",
+  "_note": "Batti-Performance — results-guaranteed youth/athlete sports-performance training, founded 2015, HQ Orland Park IL + Manteno IL + Gilbert AZ. Founders Ronnie & Marissa Battiato. Shares the AA token ARCHITECTURE (single-accent + ink scale) but its OWN identity: a hard, high-contrast STADIUM look — pure black/white bands with one surgical red #cb0202 (gritty, squared, photographic; distinct from AA's red-on-ink). Color mapping from colors_and_type.css (locked 5-color client palette #000/#fff/#e6e6e6/#6b6b6b/#cb0202): brand_red=--bp-red #cb0202, brand_red_deep=--bp-red-hover #af0202 (color-mix 86% red+black), ink_950=--bp-black #000000, ink_900=--bp-near-black #0d0d0d. TWO GAPS flagged honestly, NOT invented: (1) the kit's greys #e6e6e6 / #6b6b6b have NO slot in the single-accent AA token contract — they will not appear unless a template carries dedicated grey roles; (2) fonts (Saira Condensed / Saira / Spline Sans Mono) are NOT bank families AND are flagged best-match SUBSTITUTES in the kit (no brand font files were provided) — so STATIC font tokenization is deferred and statics fall back to the bank face until the .woff2 binaries are registered in fonts/ + brand/batti-performance/fonts/ (motion honors the fontFamily string). LOGO: circular black BP-monogram badge — logo-badge-white.png (flat white monogram, chosen as canonical because ad creatives lean dark/photographic and the white mark reads on black) with logo-badge.png (chrome, the light-surface primary) and logo-monogram.png (compact) also shipped; the badge's black circle is part of the mark. GUARANTEE: Batti carries its OWN guarantee (different numbers/window than AA — 30 SESSIONS, not 90 days), quoted verbatim from the live site battiperformancetraining.com per brand/batti-performance/project/README.md. CONFIRM the exact wording with the user before it renders onto a creative (verbatim rule), and supply a short-form variant for tight slots.",
+  "kitPath": "brand/batti-performance",
+  "logo_src": "brand/batti-performance/project/assets/logo-badge-white.png",
+  "tags": {
+    "logo": "./project/assets/logo-badge-white.png",
+    "brand_name": "BATTI-PERFORMANCE",
+    "url": "battiperformancetraining.com",
+    "guarantee": "Your athlete will gain AT LEAST 3 inches on their vertical jump and 1mph in speed in 30 sessions — or we train them for FREE until they achieve these results.",
+    "brand_red": "#cb0202",
+    "brand_red_deep": "#af0202",
+    "ink_950": "#000000",
+    "ink_900": "#0d0d0d",
+    "white": "#ffffff",
+    "font_display": "'Saira Condensed', 'Oswald', 'Arial Narrow', system-ui, sans-serif",
+    "font_body": "'Saira', system-ui, -apple-system, 'Segoe UI', sans-serif",
+    "font_mono": "'Spline Sans Mono', ui-monospace, Menlo, monospace"
+  }
+}

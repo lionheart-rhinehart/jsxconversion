@@ -172,7 +172,8 @@ function Eyebrow({ children, top = 150, left = 90, fontSize = 38, style = {} }) 
     React.createElement(
       "span",
       { style: {
-        display: "inline-block", background: "#ffffff", color: "#c4141d",
+        display: "inline-block", background: "#ffffff",
+        color: (typeof window !== "undefined" && window.__BRAND__ && window.__BRAND__.brand_red) || "#c4141d",
         fontFamily: '"JetBrains Mono", monospace', fontSize, fontWeight: 700,
         letterSpacing: "0.04em", textTransform: "uppercase",
         padding: "10px 22px", borderRadius: 8, whiteSpace: "nowrap",
@@ -340,7 +341,8 @@ function TplText({ field, data, base = {}, style = {}, maxWidth, maxHeight, minS
     const box = { ...merged, background: 'transparent', padding: 0, color: undefined };
     return (
       <div ref={ref} data-ov-key={field} style={box}>
-        <span style={{ display: 'inline-block', background: '#ffffff', color: '#c4141d',
+        <span style={{ display: 'inline-block', background: '#ffffff',
+          color: (typeof window !== 'undefined' && window.__BRAND__ && window.__BRAND__.brand_red) || '#c4141d',
           fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase',
           padding: '8px 18px', borderRadius: 8, whiteSpace: 'nowrap' }}>{txt}</span>
       </div>

@@ -1,0 +1,4020 @@
+{
+  "schemaVersion": 1,
+  "campaign": "confidence-manteno",
+  "generatedFrom": [
+    "ad-copy.md"
+  ],
+  "count": 246,
+  "units": [
+    {
+      "id": "ad-1-version-a-consequence-depth.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why \"Great Job\" Isn't Working",
+      "chars": 29,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times. And the second a game gets hard, it's gone.\nHere's the brutal truth. There are two kinds of confidence. The kind adults build by telling a kid they're doing great, and the kind a kid builds by looking at their own data and seeing they're getting faster. Only one of them holds up when the game is on the line, and it isn't the one made of words.\nThat's what our Multi-Sport Foundation Program is built on. Your athlete sees their real sprint time and jump height on a screen, every session, climbing. Proof they can't talk themselves out of, because it competes without hesitating, which means they make the play instead of second-guessing it, until they're the kid who plays like they belong out there.\nThe first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a pep talk. A data set.\nThen the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1159,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times. And the second a game gets hard, it's gone.",
+      "chars": 102,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times.",
+      "chars": 58,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And the second a game gets hard, it's gone.",
+      "chars": 43,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the brutal truth. There are two kinds of confidence. The kind adults build by telling a kid they're doing great, and the kind a kid builds by looking at their own data and seeing they're getting faster. Only one of them holds up when the game is on the line, and it isn't the one made of words.",
+      "chars": 301,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the brutal truth.",
+      "chars": 24,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "There are two kinds of confidence.",
+      "chars": 34,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The kind adults build by telling a kid they're doing great, and the kind a kid builds by looking at their own data and seeing they're getting faster.",
+      "chars": 149,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Only one of them holds up when the game is on the line, and it isn't the one made of words.",
+      "chars": 91,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program is built on. Your athlete sees their real sprint time and jump height on a screen, every session, climbing. Proof they can't talk themselves out of, because it competes without hesitating, which means they make the play instead of second-guessing it, until they're the kid who plays like they belong out there.",
+      "chars": 357,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program is built on.",
+      "chars": 59,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Your athlete sees their real sprint time and jump height on a screen, every session, climbing.",
+      "chars": 94,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.3.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Proof they can't talk themselves out of, because it competes without hesitating, which means they make the play instead of second-guessing it, until they're the kid who plays like they belong out there.",
+      "chars": 202,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a pep talk. A data set.",
+      "chars": 206,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real numbers.",
+      "chars": 135,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.4.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a pep talk.",
+      "chars": 15,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.4.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set.",
+      "chars": 11,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.",
+      "chars": 128,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical.",
+      "chars": 46,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph in speed.",
+      "chars": 16,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.5.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "30 sessions.",
+      "chars": 12,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.5.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free until they get there.",
+      "chars": 51,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence in a young athlete. Only one of them survives a bad game.",
+      "chars": 91,
+      "ad": "AD 1 — VERSION A (Consequence depth)",
+      "archetype": "Oracle",
+      "code": null
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The confidence you're building with encouragement is the kind that breaks first.",
+      "chars": 80,
+      "ad": "AD 1 — VERSION A (Consequence depth)",
+      "archetype": "Warning",
+      "code": null
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid doesn't need to be told they're good. They need to see it.",
+      "chars": 67,
+      "ad": "AD 1 — VERSION A (Consequence depth)",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "When They Stop Believing",
+      "chars": 24,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud. Your kid looks up and says some version of \"I'm not as good as the rest of them.\" And you don't know what to say back, because telling them they're great hasn't been landing for a while now.\nHere's the brutal truth. Encouragement can't fix a confidence problem, because the confidence built out of other people's words is the first thing to crack under pressure. What holds is the kind a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better.\nThat's what our Multi-Sport Foundation Program gives them. Real sprint times and jump heights on a screen, climbing every week. A kid who's seen that proof stops shrinking. They start competing like the play belongs to them, and somewhere in there they go from hoping they belong to knowing it.\nThe first step in is the Athlete Analysis. Same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a pep talk. A data set.\nThen the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1217,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud. Your kid looks up and says some version of \"I'm not as good as the rest of them.\" And you don't know what to say back, because telling them they're great hasn't been landing for a while now.",
+      "chars": 244,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud.",
+      "chars": 53,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Your kid looks up and says some version of \"I'm not as good as the rest of them.\" And you don't know what to say back, because telling them they're great hasn't been landing for a while now.",
+      "chars": 190,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the brutal truth. Encouragement can't fix a confidence problem, because the confidence built out of other people's words is the first thing to crack under pressure. What holds is the kind a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better.",
+      "chars": 312,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the brutal truth.",
+      "chars": 24,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Encouragement can't fix a confidence problem, because the confidence built out of other people's words is the first thing to crack under pressure.",
+      "chars": 146,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "What holds is the kind a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better.",
+      "chars": 140,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program gives them. Real sprint times and jump heights on a screen, climbing every week. A kid who's seen that proof stops shrinking. They start competing like the play belongs to them, and somewhere in there they go from hoping they belong to knowing it.",
+      "chars": 294,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program gives them.",
+      "chars": 58,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Real sprint times and jump heights on a screen, climbing every week.",
+      "chars": 68,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.3.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A kid who's seen that proof stops shrinking.",
+      "chars": 44,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.3.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "They start competing like the play belongs to them, and somewhere in there they go from hoping they belong to knowing it.",
+      "chars": 121,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. Same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a pep talk. A data set.",
+      "chars": 174,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Same timing gates and velocity trackers we use every session, and you walk out with their real numbers.",
+      "chars": 103,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.4.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a pep talk.",
+      "chars": 15,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.4.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set.",
+      "chars": 11,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.",
+      "chars": 128,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical.",
+      "chars": 46,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph in speed.",
+      "chars": 16,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.5.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "30 sessions.",
+      "chars": 12,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.5.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free until they get there.",
+      "chars": 51,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Telling your kid they're great stopped working a while ago. Here's what actually rebuilds it.",
+      "chars": 93,
+      "ad": "AD 1 — VERSION B (Emotional depth)",
+      "archetype": "Oracle",
+      "code": null
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The hardest part isn't watching them lose. It's watching them stop believing they can win.",
+      "chars": 90,
+      "ad": "AD 1 — VERSION B (Emotional depth)",
+      "archetype": "Mirror",
+      "code": null
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence. The kind that breaks under pressure, and the kind that doesn't.",
+      "chars": 98,
+      "ad": "AD 1 — VERSION B (Emotional depth)",
+      "archetype": "Paradox",
+      "code": null
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-1-version-b-emotional-depth.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why \"Great Job\" Isn't Working",
+      "chars": 29,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times. And the second a game gets hard, it's gone.\nHere's the brutal truth. There are two kinds of confidence. The kind adults build by telling a kid they're doing great, and the kind a kid builds by looking at their own data and seeing they're getting faster. Only one of them holds up when the play is on the line, and it isn't the one made of words. Praise is on loan from whoever's saying it, so it goes quiet exactly when your kid reaches for it, on the bench, after a bad rep, when the game stops being easy.\nThat's what our Multi-Sport Foundation Program is built on. Every session your athlete sees their real sprint time and jump height on a screen, climbing. The improvement is measured, it's displayed, and it's theirs. Nobody can talk them out of a number they watched go up.\nAnd a kid who owns that proof competes without hesitating. That turns into making the play instead of second-guessing it, which turns into more reasons to trust themselves, until they're the one on the field who plays like they belong out there.\nAnd it isn't rare. 92% of our parents report their kid comes out more confident.\nThe first step in is the Athlete Analysis. Same timing gates, same velocity trackers we use every session. You'll see your athlete's real numbers before you decide anything. Not a pep talk. A data set.\nThen the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1558,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times. And the second a game gets hard, it's gone.",
+      "chars": 102,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times.",
+      "chars": 58,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And the second a game gets hard, it's gone.",
+      "chars": 43,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the brutal truth. There are two kinds of confidence. The kind adults build by telling a kid they're doing great, and the kind a kid builds by looking at their own data and seeing they're getting faster. Only one of them holds up when the play is on the line, and it isn't the one made of words. Praise is on loan from whoever's saying it, so it goes quiet exactly when your kid reaches for it, on the bench, after a bad rep, when the game stops being easy.",
+      "chars": 463,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the brutal truth.",
+      "chars": 24,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "There are two kinds of confidence.",
+      "chars": 34,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The kind adults build by telling a kid they're doing great, and the kind a kid builds by looking at their own data and seeing they're getting faster.",
+      "chars": 149,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Only one of them holds up when the play is on the line, and it isn't the one made of words.",
+      "chars": 91,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.2.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Praise is on loan from whoever's saying it, so it goes quiet exactly when your kid reaches for it, on the bench, after a bad rep, when the game stops being easy.",
+      "chars": 161,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program is built on. Every session your athlete sees their real sprint time and jump height on a screen, climbing. The improvement is measured, it's displayed, and it's theirs. Nobody can talk them out of a number they watched go up.",
+      "chars": 272,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program is built on.",
+      "chars": 59,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Every session your athlete sees their real sprint time and jump height on a screen, climbing.",
+      "chars": 93,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.3.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The improvement is measured, it's displayed, and it's theirs.",
+      "chars": 61,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.3.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Nobody can talk them out of a number they watched go up.",
+      "chars": 56,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And a kid who owns that proof competes without hesitating. That turns into making the play instead of second-guessing it, which turns into more reasons to trust themselves, until they're the one on the field who plays like they belong out there.",
+      "chars": 245,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And a kid who owns that proof competes without hesitating.",
+      "chars": 58,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That turns into making the play instead of second-guessing it, which turns into more reasons to trust themselves, until they're the one on the field who plays like they belong out there.",
+      "chars": 186,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And it isn't rare. 92% of our parents report their kid comes out more confident.",
+      "chars": 80,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And it isn't rare.",
+      "chars": 18,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "92% of our parents report their kid comes out more confident.",
+      "chars": 61,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. Same timing gates, same velocity trackers we use every session. You'll see your athlete's real numbers before you decide anything. Not a pep talk. A data set.",
+      "chars": 201,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.6.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.6.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Same timing gates, same velocity trackers we use every session.",
+      "chars": 63,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.6.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "You'll see your athlete's real numbers before you decide anything.",
+      "chars": 66,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.6.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a pep talk.",
+      "chars": 15,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.6.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set.",
+      "chars": 11,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyPara.7",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.",
+      "chars": 128,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.7.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical.",
+      "chars": 46,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.7.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph in speed.",
+      "chars": 16,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.7.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "30 sessions.",
+      "chars": 12,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.7.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free until they get there.",
+      "chars": 51,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.bodyPara.8",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence in a young athlete. Only one of them survives a bad game.",
+      "chars": 91,
+      "ad": "AD 2 — VERSION A (Consequence depth)",
+      "archetype": "Oracle",
+      "code": null
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The confidence you're building with encouragement is the kind that breaks first.",
+      "chars": 80,
+      "ad": "AD 2 — VERSION A (Consequence depth)",
+      "archetype": "Warning",
+      "code": null
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid doesn't need to be told they're good. They need to see it.",
+      "chars": 67,
+      "ad": "AD 2 — VERSION A (Consequence depth)",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "When They Stop Believing",
+      "chars": 24,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud. Your kid looks up and says some version of \"I'm not as good as the rest of them.\" And you don't know what to say back, because telling them they're great hasn't been landing for a while now.\nHere's the brutal truth. Encouragement can't fix this. The confidence built out of other people's words is the first thing to crack under pressure, on the bench, after a bad play, in the quiet car ride home. It belongs to whoever's saying it, so it leaves the moment they need it most.\nWhat holds is a different kind entirely. The confidence a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better. That's what our Multi-Sport Foundation Program gives them. Real sprint times and jump heights on a screen, climbing week after week, proof they earned that nobody can talk them out of.\nAnd a kid who's seen that proof changes. The bracing goes out of them. They stop waiting for the play to go wrong and start wanting it, and somewhere over a season they go from hoping they belong on that field to simply knowing they do.\nWe hear it constantly. 92% of our parents report their kid comes out more confident.\nThe first step in is the Athlete Analysis. Same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a pep talk. A data set.\nThen the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1576,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud. Your kid looks up and says some version of \"I'm not as good as the rest of them.\" And you don't know what to say back, because telling them they're great hasn't been landing for a while now.",
+      "chars": 244,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud.",
+      "chars": 53,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Your kid looks up and says some version of \"I'm not as good as the rest of them.\" And you don't know what to say back, because telling them they're great hasn't been landing for a while now.",
+      "chars": 190,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the brutal truth. Encouragement can't fix this. The confidence built out of other people's words is the first thing to crack under pressure, on the bench, after a bad play, in the quiet car ride home. It belongs to whoever's saying it, so it leaves the moment they need it most.",
+      "chars": 285,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the brutal truth.",
+      "chars": 24,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Encouragement can't fix this.",
+      "chars": 29,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The confidence built out of other people's words is the first thing to crack under pressure, on the bench, after a bad play, in the quiet car ride home.",
+      "chars": 152,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It belongs to whoever's saying it, so it leaves the moment they need it most.",
+      "chars": 77,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "What holds is a different kind entirely. The confidence a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better. That's what our Multi-Sport Foundation Program gives them. Real sprint times and jump heights on a screen, climbing week after week, proof they earned that nobody can talk them out of.",
+      "chars": 358,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "What holds is a different kind entirely.",
+      "chars": 40,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The confidence a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better.",
+      "chars": 132,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.3.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program gives them.",
+      "chars": 58,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.3.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Real sprint times and jump heights on a screen, climbing week after week, proof they earned that nobody can talk them out of.",
+      "chars": 125,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And a kid who's seen that proof changes. The bracing goes out of them. They stop waiting for the play to go wrong and start wanting it, and somewhere over a season they go from hoping they belong on that field to simply knowing they do.",
+      "chars": 236,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And a kid who's seen that proof changes.",
+      "chars": 40,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The bracing goes out of them.",
+      "chars": 29,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.4.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "They stop waiting for the play to go wrong and start wanting it, and somewhere over a season they go from hoping they belong on that field to simply knowing they do.",
+      "chars": 165,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "We hear it constantly. 92% of our parents report their kid comes out more confident.",
+      "chars": 84,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "We hear it constantly.",
+      "chars": 22,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "92% of our parents report their kid comes out more confident.",
+      "chars": 61,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. Same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a pep talk. A data set.",
+      "chars": 174,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.6.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.6.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Same timing gates and velocity trackers we use every session, and you walk out with their real numbers.",
+      "chars": 103,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.6.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a pep talk.",
+      "chars": 15,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.6.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set.",
+      "chars": 11,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyPara.7",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.",
+      "chars": 128,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.7.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical.",
+      "chars": 46,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.7.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph in speed.",
+      "chars": 16,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.7.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "30 sessions.",
+      "chars": 12,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.7.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free until they get there.",
+      "chars": 51,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.bodyPara.8",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Telling your kid they're great stopped working a while ago. Here's what actually rebuilds it.",
+      "chars": 93,
+      "ad": "AD 2 — VERSION B (Emotional depth)",
+      "archetype": "Oracle",
+      "code": null
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The hardest part isn't watching them lose. It's watching them stop believing they can win.",
+      "chars": 90,
+      "ad": "AD 2 — VERSION B (Emotional depth)",
+      "archetype": "Mirror",
+      "code": null
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence. The kind that breaks under pressure, and the kind that doesn't.",
+      "chars": 98,
+      "ad": "AD 2 — VERSION B (Emotional depth)",
+      "archetype": "Paradox",
+      "code": null
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-2-version-b-emotional-depth.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why \"Great Job\" Isn't Working",
+      "chars": 29,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times. And the second a game gets hard, it's gone.\nHere's the brutal truth. There are two kinds of confidence, and most of youth sports is built on the wrong one. The first gets handed to a kid by adults, in the form of encouragement and \"good job\" and trophies for showing up. The second a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting faster. Only one of them holds up when the play is on the line.\nPraise is on loan. It belongs to whoever's saying it, so it goes quiet exactly when your kid needs it, on the bench, after a bad rep, in the moment the game stops being easy. That's why the encouragement keeps not landing. It was never really theirs.\nAnd here's the part worth saying plainly: you didn't do anything wrong by encouraging them. Every good parent does. It just isn't the tool that fixes this, because confidence problems don't get solved with words. They get solved with evidence.\nThat's what our Multi-Sport Foundation Program is built on. Every session your athlete sees their real sprint time and jump height on a screen, climbing. The improvement is measured, displayed, and theirs. Nobody can talk them out of a number they watched go up.\nAnd a kid who owns that proof competes without hesitating. That turns into making the play instead of second-guessing it. More plays made becomes more reasons to trust themselves, and that trust becomes the thing coaches notice from across the field, until the kid who used to shrink is the one who plays like the moment belongs to them.\nAnd it isn't rare. 92% of our parents report their kid comes out more confident.\nThe first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you leave with their real sprint time, real jump height, and a clear picture of where they stand. Not a pep talk. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.\nCoach Ronnie Battiato built this, and refined it for the developmental window where it matters most.\nHere's the promise no other program in this market will make. +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.\nTo your athlete's success, Coach Ronnie",
+      "chars": 2419,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times. And the second a game gets hard, it's gone.",
+      "chars": 102,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times.",
+      "chars": 58,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And the second a game gets hard, it's gone.",
+      "chars": 43,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the brutal truth. There are two kinds of confidence, and most of youth sports is built on the wrong one. The first gets handed to a kid by adults, in the form of encouragement and \"good job\" and trophies for showing up. The second a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting faster. Only one of them holds up when the play is on the line.",
+      "chars": 411,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the brutal truth.",
+      "chars": 24,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "There are two kinds of confidence, and most of youth sports is built on the wrong one.",
+      "chars": 86,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first gets handed to a kid by adults, in the form of encouragement and \"good job\" and trophies for showing up.",
+      "chars": 114,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The second a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting faster.",
+      "chars": 128,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.2.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Only one of them holds up when the play is on the line.",
+      "chars": 55,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Praise is on loan. It belongs to whoever's saying it, so it goes quiet exactly when your kid needs it, on the bench, after a bad rep, in the moment the game stops being easy. That's why the encouragement keeps not landing. It was never really theirs.",
+      "chars": 250,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Praise is on loan.",
+      "chars": 18,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It belongs to whoever's saying it, so it goes quiet exactly when your kid needs it, on the bench, after a bad rep, in the moment the game stops being easy.",
+      "chars": 155,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.3.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's why the encouragement keeps not landing.",
+      "chars": 47,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.3.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It was never really theirs.",
+      "chars": 27,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And here's the part worth saying plainly: you didn't do anything wrong by encouraging them. Every good parent does. It just isn't the tool that fixes this, because confidence problems don't get solved with words. They get solved with evidence.",
+      "chars": 243,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And here's the part worth saying plainly: you didn't do anything wrong by encouraging them.",
+      "chars": 91,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Every good parent does.",
+      "chars": 23,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.4.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It just isn't the tool that fixes this, because confidence problems don't get solved with words.",
+      "chars": 96,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.4.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "They get solved with evidence.",
+      "chars": 30,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program is built on. Every session your athlete sees their real sprint time and jump height on a screen, climbing. The improvement is measured, displayed, and theirs. Nobody can talk them out of a number they watched go up.",
+      "chars": 262,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program is built on.",
+      "chars": 59,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Every session your athlete sees their real sprint time and jump height on a screen, climbing.",
+      "chars": 93,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.5.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The improvement is measured, displayed, and theirs.",
+      "chars": 51,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.5.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Nobody can talk them out of a number they watched go up.",
+      "chars": 56,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And a kid who owns that proof competes without hesitating. That turns into making the play instead of second-guessing it. More plays made becomes more reasons to trust themselves, and that trust becomes the thing coaches notice from across the field, until the kid who used to shrink is the one who plays like the moment belongs to them.",
+      "chars": 337,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.6.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And a kid who owns that proof competes without hesitating.",
+      "chars": 58,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.6.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That turns into making the play instead of second-guessing it.",
+      "chars": 62,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.6.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "More plays made becomes more reasons to trust themselves, and that trust becomes the thing coaches notice from across the field, until the kid who used to shrink is the one who plays like the moment belongs to them.",
+      "chars": 215,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.7",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And it isn't rare. 92% of our parents report their kid comes out more confident.",
+      "chars": 80,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.7.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And it isn't rare.",
+      "chars": 18,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.7.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "92% of our parents report their kid comes out more confident.",
+      "chars": 61,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.8",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you leave with their real sprint time, real jump height, and a clear picture of where they stand. Not a pep talk. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.",
+      "chars": 354,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.8.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.8.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "We run your athlete through the same timing gates and velocity trackers we use every session, and you leave with their real sprint time, real jump height, and a clear picture of where they stand.",
+      "chars": 195,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.8.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a pep talk.",
+      "chars": 15,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.8.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set you get to keep.",
+      "chars": 27,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.8.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "From there, the path into the Multi-Sport Foundation Program is simple.",
+      "chars": 71,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.9",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Coach Ronnie Battiato built this, and refined it for the developmental window where it matters most.",
+      "chars": 100,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.10",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the promise no other program in this market will make. +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.",
+      "chars": 170,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.10.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the promise no other program in this market will make.",
+      "chars": 61,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.10.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+3 inches on the vertical.",
+      "chars": 26,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.10.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph in speed.",
+      "chars": 16,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.10.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "30 sessions.",
+      "chars": 12,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.10.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free until they get there.",
+      "chars": 51,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.11",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.12",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "To your athlete's success, Coach Ronnie",
+      "chars": 39,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence in a young athlete. Only one of them survives a bad game.",
+      "chars": 91,
+      "ad": "AD 3 — VERSION A (Consequence depth)",
+      "archetype": "Oracle",
+      "code": null
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The confidence you're building with encouragement is the kind that breaks first.",
+      "chars": 80,
+      "ad": "AD 3 — VERSION A (Consequence depth)",
+      "archetype": "Warning",
+      "code": null
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid doesn't need to be told they're good. They need to see it.",
+      "chars": 67,
+      "ad": "AD 3 — VERSION A (Consequence depth)",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "When They Stop Believing",
+      "chars": 24,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud. You're in the car after a game, and your kid goes quiet, and then comes some version of \"I'm not as good as the rest of them.\" And you don't know what to say, because telling them they're great hasn't been landing for a while now.\nHere's the brutal truth. Encouragement can't fix this, and it isn't your fault that it can't. The confidence built out of other people's words is the first thing to crack under pressure. It belongs to whoever's saying it, so it goes quiet on the bench, after the bad play, in exactly the moment your kid is reaching for it. It was never really theirs.\nWhat holds is a different kind entirely. The confidence a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better. You can't hand it to them, and a coach can't shout it into them. They have to see it.\nThat's what our Multi-Sport Foundation Program gives them. Every session your athlete watches their real sprint time and jump height climb on a screen in front of them. The progress is measured and it's theirs. Nobody can talk them out of a number they watched go up themselves.\nAnd a kid who's seen that proof changes in a way you feel before you can measure it. The bracing goes out of them. They stop waiting for the play to go wrong and start wanting the ball, and somewhere across a season they cross the line from hoping they belong on that field to simply knowing they do.\nWe hear it constantly. 92% of our parents report their kid comes out more confident.\nAnd the coaching behind it isn't guesswork. Coach Ronnie Battiato built this and refined it for the developmental window where it takes hold deepest.\nThe first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you leave with their real numbers and a clear picture of where they stand. Not a pep talk. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.\nHere's the promise no other program in this market will make. +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.\nTo your athlete's success, Coach Ronnie",
+      "chars": 2315,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud. You're in the car after a game, and your kid goes quiet, and then comes some version of \"I'm not as good as the rest of them.\" And you don't know what to say, because telling them they're great hasn't been landing for a while now.",
+      "chars": 284,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud.",
+      "chars": 53,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "You're in the car after a game, and your kid goes quiet, and then comes some version of \"I'm not as good as the rest of them.\" And you don't know what to say, because telling them they're great hasn't been landing for a while now.",
+      "chars": 230,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the brutal truth. Encouragement can't fix this, and it isn't your fault that it can't. The confidence built out of other people's words is the first thing to crack under pressure. It belongs to whoever's saying it, so it goes quiet on the bench, after the bad play, in exactly the moment your kid is reaching for it. It was never really theirs.",
+      "chars": 351,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the brutal truth.",
+      "chars": 24,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Encouragement can't fix this, and it isn't your fault that it can't.",
+      "chars": 68,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The confidence built out of other people's words is the first thing to crack under pressure.",
+      "chars": 92,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It belongs to whoever's saying it, so it goes quiet on the bench, after the bad play, in exactly the moment your kid is reaching for it.",
+      "chars": 136,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.2.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It was never really theirs.",
+      "chars": 27,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "What holds is a different kind entirely. The confidence a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better. You can't hand it to them, and a coach can't shout it into them. They have to see it.",
+      "chars": 259,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "What holds is a different kind entirely.",
+      "chars": 40,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The confidence a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better.",
+      "chars": 132,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.3.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "You can't hand it to them, and a coach can't shout it into them.",
+      "chars": 64,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.3.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "They have to see it.",
+      "chars": 20,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program gives them. Every session your athlete watches their real sprint time and jump height climb on a screen in front of them. The progress is measured and it's theirs. Nobody can talk them out of a number they watched go up themselves.",
+      "chars": 278,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program gives them.",
+      "chars": 58,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Every session your athlete watches their real sprint time and jump height climb on a screen in front of them.",
+      "chars": 109,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.4.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The progress is measured and it's theirs.",
+      "chars": 41,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.4.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Nobody can talk them out of a number they watched go up themselves.",
+      "chars": 67,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And a kid who's seen that proof changes in a way you feel before you can measure it. The bracing goes out of them. They stop waiting for the play to go wrong and start wanting the ball, and somewhere across a season they cross the line from hoping they belong on that field to simply knowing they do.",
+      "chars": 300,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And a kid who's seen that proof changes in a way you feel before you can measure it.",
+      "chars": 84,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The bracing goes out of them.",
+      "chars": 29,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.5.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "They stop waiting for the play to go wrong and start wanting the ball, and somewhere across a season they cross the line from hoping they belong on that field to simply knowing they do.",
+      "chars": 185,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "We hear it constantly. 92% of our parents report their kid comes out more confident.",
+      "chars": 84,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.6.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "We hear it constantly.",
+      "chars": 22,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.6.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "92% of our parents report their kid comes out more confident.",
+      "chars": 61,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.7",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And the coaching behind it isn't guesswork. Coach Ronnie Battiato built this and refined it for the developmental window where it takes hold deepest.",
+      "chars": 149,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.7.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And the coaching behind it isn't guesswork.",
+      "chars": 43,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.7.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Coach Ronnie Battiato built this and refined it for the developmental window where it takes hold deepest.",
+      "chars": 105,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.8",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you leave with their real numbers and a clear picture of where they stand. Not a pep talk. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.",
+      "chars": 331,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.8.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.8.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "We run your athlete through the same timing gates and velocity trackers we use every session, and you leave with their real numbers and a clear picture of where they stand.",
+      "chars": 172,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.8.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a pep talk.",
+      "chars": 15,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.8.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set you get to keep.",
+      "chars": 27,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.8.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "From there, the path into the Multi-Sport Foundation Program is simple.",
+      "chars": 71,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.9",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the promise no other program in this market will make. +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.",
+      "chars": 170,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.9.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the promise no other program in this market will make.",
+      "chars": 61,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.9.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+3 inches on the vertical.",
+      "chars": 26,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.9.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph in speed.",
+      "chars": 16,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.9.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "30 sessions.",
+      "chars": 12,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.9.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free until they get there.",
+      "chars": 51,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.10",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.11",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "To your athlete's success, Coach Ronnie",
+      "chars": 39,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Telling your kid they're great stopped working a while ago. Here's what actually rebuilds it.",
+      "chars": 93,
+      "ad": "AD 3 — VERSION B (Emotional depth)",
+      "archetype": "Oracle",
+      "code": null
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The hardest part isn't watching them lose. It's watching them stop believing they can win.",
+      "chars": 90,
+      "ad": "AD 3 — VERSION B (Emotional depth)",
+      "archetype": "Mirror",
+      "code": null
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence. The kind that breaks under pressure, and the kind that doesn't.",
+      "chars": 98,
+      "ad": "AD 3 — VERSION B (Emotional depth)",
+      "archetype": "Paradox",
+      "code": null
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    {
+      "id": "ad-3-version-b-emotional-depth.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    }
+  ],
+  "byId": {
+    "ad-1-version-a-consequence-depth.headline": {
+      "id": "ad-1-version-a-consequence-depth.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why \"Great Job\" Isn't Working",
+      "chars": 29,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.description": {
+      "id": "ad-1-version-a-consequence-depth.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.primaryText": {
+      "id": "ad-1-version-a-consequence-depth.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times. And the second a game gets hard, it's gone.\nHere's the brutal truth. There are two kinds of confidence. The kind adults build by telling a kid they're doing great, and the kind a kid builds by looking at their own data and seeing they're getting faster. Only one of them holds up when the game is on the line, and it isn't the one made of words.\nThat's what our Multi-Sport Foundation Program is built on. Your athlete sees their real sprint time and jump height on a screen, every session, climbing. Proof they can't talk themselves out of, because it competes without hesitating, which means they make the play instead of second-guessing it, until they're the kid who plays like they belong out there.\nThe first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a pep talk. A data set.\nThen the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1159,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyPara.1": {
+      "id": "ad-1-version-a-consequence-depth.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times. And the second a game gets hard, it's gone.",
+      "chars": 102,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyLine.1.1": {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times.",
+      "chars": 58,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyLine.1.2": {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And the second a game gets hard, it's gone.",
+      "chars": 43,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyPara.2": {
+      "id": "ad-1-version-a-consequence-depth.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the brutal truth. There are two kinds of confidence. The kind adults build by telling a kid they're doing great, and the kind a kid builds by looking at their own data and seeing they're getting faster. Only one of them holds up when the game is on the line, and it isn't the one made of words.",
+      "chars": 301,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyLine.2.1": {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the brutal truth.",
+      "chars": 24,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyLine.2.2": {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "There are two kinds of confidence.",
+      "chars": 34,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyLine.2.3": {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The kind adults build by telling a kid they're doing great, and the kind a kid builds by looking at their own data and seeing they're getting faster.",
+      "chars": 149,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyLine.2.4": {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Only one of them holds up when the game is on the line, and it isn't the one made of words.",
+      "chars": 91,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyPara.3": {
+      "id": "ad-1-version-a-consequence-depth.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program is built on. Your athlete sees their real sprint time and jump height on a screen, every session, climbing. Proof they can't talk themselves out of, because it competes without hesitating, which means they make the play instead of second-guessing it, until they're the kid who plays like they belong out there.",
+      "chars": 357,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyLine.3.1": {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program is built on.",
+      "chars": 59,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyLine.3.2": {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Your athlete sees their real sprint time and jump height on a screen, every session, climbing.",
+      "chars": 94,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyLine.3.3": {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.3.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Proof they can't talk themselves out of, because it competes without hesitating, which means they make the play instead of second-guessing it, until they're the kid who plays like they belong out there.",
+      "chars": 202,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyPara.4": {
+      "id": "ad-1-version-a-consequence-depth.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a pep talk. A data set.",
+      "chars": 206,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyLine.4.1": {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyLine.4.2": {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real numbers.",
+      "chars": 135,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyLine.4.3": {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.4.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a pep talk.",
+      "chars": 15,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyLine.4.4": {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.4.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set.",
+      "chars": 11,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyPara.5": {
+      "id": "ad-1-version-a-consequence-depth.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.",
+      "chars": 128,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyLine.5.1": {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical.",
+      "chars": 46,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyLine.5.2": {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph in speed.",
+      "chars": 16,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyLine.5.3": {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.5.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "30 sessions.",
+      "chars": 12,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyLine.5.4": {
+      "id": "ad-1-version-a-consequence-depth.bodyLine.5.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free until they get there.",
+      "chars": 51,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.bodyPara.6": {
+      "id": "ad-1-version-a-consequence-depth.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.altHook.1": {
+      "id": "ad-1-version-a-consequence-depth.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence in a young athlete. Only one of them survives a bad game.",
+      "chars": 91,
+      "ad": "AD 1 — VERSION A (Consequence depth)",
+      "archetype": "Oracle",
+      "code": null
+    },
+    "ad-1-version-a-consequence-depth.altHook.2": {
+      "id": "ad-1-version-a-consequence-depth.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The confidence you're building with encouragement is the kind that breaks first.",
+      "chars": 80,
+      "ad": "AD 1 — VERSION A (Consequence depth)",
+      "archetype": "Warning",
+      "code": null
+    },
+    "ad-1-version-a-consequence-depth.altHook.3": {
+      "id": "ad-1-version-a-consequence-depth.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid doesn't need to be told they're good. They need to see it.",
+      "chars": 67,
+      "ad": "AD 1 — VERSION A (Consequence depth)",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    "ad-1-version-a-consequence-depth.imageHeadline": {
+      "id": "ad-1-version-a-consequence-depth.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-a-consequence-depth.imageSubhead": {
+      "id": "ad-1-version-a-consequence-depth.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 1 — VERSION A (Consequence depth)"
+    },
+    "ad-1-version-b-emotional-depth.headline": {
+      "id": "ad-1-version-b-emotional-depth.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "When They Stop Believing",
+      "chars": 24,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.description": {
+      "id": "ad-1-version-b-emotional-depth.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.primaryText": {
+      "id": "ad-1-version-b-emotional-depth.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud. Your kid looks up and says some version of \"I'm not as good as the rest of them.\" And you don't know what to say back, because telling them they're great hasn't been landing for a while now.\nHere's the brutal truth. Encouragement can't fix a confidence problem, because the confidence built out of other people's words is the first thing to crack under pressure. What holds is the kind a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better.\nThat's what our Multi-Sport Foundation Program gives them. Real sprint times and jump heights on a screen, climbing every week. A kid who's seen that proof stops shrinking. They start competing like the play belongs to them, and somewhere in there they go from hoping they belong to knowing it.\nThe first step in is the Athlete Analysis. Same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a pep talk. A data set.\nThen the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1217,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyPara.1": {
+      "id": "ad-1-version-b-emotional-depth.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud. Your kid looks up and says some version of \"I'm not as good as the rest of them.\" And you don't know what to say back, because telling them they're great hasn't been landing for a while now.",
+      "chars": 244,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyLine.1.1": {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud.",
+      "chars": 53,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyLine.1.2": {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Your kid looks up and says some version of \"I'm not as good as the rest of them.\" And you don't know what to say back, because telling them they're great hasn't been landing for a while now.",
+      "chars": 190,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyPara.2": {
+      "id": "ad-1-version-b-emotional-depth.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the brutal truth. Encouragement can't fix a confidence problem, because the confidence built out of other people's words is the first thing to crack under pressure. What holds is the kind a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better.",
+      "chars": 312,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyLine.2.1": {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the brutal truth.",
+      "chars": 24,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyLine.2.2": {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Encouragement can't fix a confidence problem, because the confidence built out of other people's words is the first thing to crack under pressure.",
+      "chars": 146,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyLine.2.3": {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "What holds is the kind a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better.",
+      "chars": 140,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyPara.3": {
+      "id": "ad-1-version-b-emotional-depth.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program gives them. Real sprint times and jump heights on a screen, climbing every week. A kid who's seen that proof stops shrinking. They start competing like the play belongs to them, and somewhere in there they go from hoping they belong to knowing it.",
+      "chars": 294,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyLine.3.1": {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program gives them.",
+      "chars": 58,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyLine.3.2": {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Real sprint times and jump heights on a screen, climbing every week.",
+      "chars": 68,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyLine.3.3": {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.3.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A kid who's seen that proof stops shrinking.",
+      "chars": 44,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyLine.3.4": {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.3.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "They start competing like the play belongs to them, and somewhere in there they go from hoping they belong to knowing it.",
+      "chars": 121,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyPara.4": {
+      "id": "ad-1-version-b-emotional-depth.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. Same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a pep talk. A data set.",
+      "chars": 174,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyLine.4.1": {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyLine.4.2": {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Same timing gates and velocity trackers we use every session, and you walk out with their real numbers.",
+      "chars": 103,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyLine.4.3": {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.4.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a pep talk.",
+      "chars": 15,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyLine.4.4": {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.4.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set.",
+      "chars": 11,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyPara.5": {
+      "id": "ad-1-version-b-emotional-depth.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.",
+      "chars": 128,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyLine.5.1": {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical.",
+      "chars": 46,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyLine.5.2": {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph in speed.",
+      "chars": 16,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyLine.5.3": {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.5.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "30 sessions.",
+      "chars": 12,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyLine.5.4": {
+      "id": "ad-1-version-b-emotional-depth.bodyLine.5.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free until they get there.",
+      "chars": 51,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.bodyPara.6": {
+      "id": "ad-1-version-b-emotional-depth.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.altHook.1": {
+      "id": "ad-1-version-b-emotional-depth.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Telling your kid they're great stopped working a while ago. Here's what actually rebuilds it.",
+      "chars": 93,
+      "ad": "AD 1 — VERSION B (Emotional depth)",
+      "archetype": "Oracle",
+      "code": null
+    },
+    "ad-1-version-b-emotional-depth.altHook.2": {
+      "id": "ad-1-version-b-emotional-depth.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The hardest part isn't watching them lose. It's watching them stop believing they can win.",
+      "chars": 90,
+      "ad": "AD 1 — VERSION B (Emotional depth)",
+      "archetype": "Mirror",
+      "code": null
+    },
+    "ad-1-version-b-emotional-depth.altHook.3": {
+      "id": "ad-1-version-b-emotional-depth.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence. The kind that breaks under pressure, and the kind that doesn't.",
+      "chars": 98,
+      "ad": "AD 1 — VERSION B (Emotional depth)",
+      "archetype": "Paradox",
+      "code": null
+    },
+    "ad-1-version-b-emotional-depth.imageHeadline": {
+      "id": "ad-1-version-b-emotional-depth.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-1-version-b-emotional-depth.imageSubhead": {
+      "id": "ad-1-version-b-emotional-depth.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 1 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-a-consequence-depth.headline": {
+      "id": "ad-2-version-a-consequence-depth.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why \"Great Job\" Isn't Working",
+      "chars": 29,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.description": {
+      "id": "ad-2-version-a-consequence-depth.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.primaryText": {
+      "id": "ad-2-version-a-consequence-depth.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times. And the second a game gets hard, it's gone.\nHere's the brutal truth. There are two kinds of confidence. The kind adults build by telling a kid they're doing great, and the kind a kid builds by looking at their own data and seeing they're getting faster. Only one of them holds up when the play is on the line, and it isn't the one made of words. Praise is on loan from whoever's saying it, so it goes quiet exactly when your kid reaches for it, on the bench, after a bad rep, when the game stops being easy.\nThat's what our Multi-Sport Foundation Program is built on. Every session your athlete sees their real sprint time and jump height on a screen, climbing. The improvement is measured, it's displayed, and it's theirs. Nobody can talk them out of a number they watched go up.\nAnd a kid who owns that proof competes without hesitating. That turns into making the play instead of second-guessing it, which turns into more reasons to trust themselves, until they're the one on the field who plays like they belong out there.\nAnd it isn't rare. 92% of our parents report their kid comes out more confident.\nThe first step in is the Athlete Analysis. Same timing gates, same velocity trackers we use every session. You'll see your athlete's real numbers before you decide anything. Not a pep talk. A data set.\nThen the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1558,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyPara.1": {
+      "id": "ad-2-version-a-consequence-depth.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times. And the second a game gets hard, it's gone.",
+      "chars": 102,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.1.1": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times.",
+      "chars": 58,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.1.2": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And the second a game gets hard, it's gone.",
+      "chars": 43,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyPara.2": {
+      "id": "ad-2-version-a-consequence-depth.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the brutal truth. There are two kinds of confidence. The kind adults build by telling a kid they're doing great, and the kind a kid builds by looking at their own data and seeing they're getting faster. Only one of them holds up when the play is on the line, and it isn't the one made of words. Praise is on loan from whoever's saying it, so it goes quiet exactly when your kid reaches for it, on the bench, after a bad rep, when the game stops being easy.",
+      "chars": 463,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.2.1": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the brutal truth.",
+      "chars": 24,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.2.2": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "There are two kinds of confidence.",
+      "chars": 34,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.2.3": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The kind adults build by telling a kid they're doing great, and the kind a kid builds by looking at their own data and seeing they're getting faster.",
+      "chars": 149,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.2.4": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Only one of them holds up when the play is on the line, and it isn't the one made of words.",
+      "chars": 91,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.2.5": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.2.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Praise is on loan from whoever's saying it, so it goes quiet exactly when your kid reaches for it, on the bench, after a bad rep, when the game stops being easy.",
+      "chars": 161,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyPara.3": {
+      "id": "ad-2-version-a-consequence-depth.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program is built on. Every session your athlete sees their real sprint time and jump height on a screen, climbing. The improvement is measured, it's displayed, and it's theirs. Nobody can talk them out of a number they watched go up.",
+      "chars": 272,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.3.1": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program is built on.",
+      "chars": 59,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.3.2": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Every session your athlete sees their real sprint time and jump height on a screen, climbing.",
+      "chars": 93,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.3.3": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.3.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The improvement is measured, it's displayed, and it's theirs.",
+      "chars": 61,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.3.4": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.3.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Nobody can talk them out of a number they watched go up.",
+      "chars": 56,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyPara.4": {
+      "id": "ad-2-version-a-consequence-depth.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And a kid who owns that proof competes without hesitating. That turns into making the play instead of second-guessing it, which turns into more reasons to trust themselves, until they're the one on the field who plays like they belong out there.",
+      "chars": 245,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.4.1": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And a kid who owns that proof competes without hesitating.",
+      "chars": 58,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.4.2": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That turns into making the play instead of second-guessing it, which turns into more reasons to trust themselves, until they're the one on the field who plays like they belong out there.",
+      "chars": 186,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyPara.5": {
+      "id": "ad-2-version-a-consequence-depth.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And it isn't rare. 92% of our parents report their kid comes out more confident.",
+      "chars": 80,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.5.1": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And it isn't rare.",
+      "chars": 18,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.5.2": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "92% of our parents report their kid comes out more confident.",
+      "chars": 61,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyPara.6": {
+      "id": "ad-2-version-a-consequence-depth.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. Same timing gates, same velocity trackers we use every session. You'll see your athlete's real numbers before you decide anything. Not a pep talk. A data set.",
+      "chars": 201,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.6.1": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.6.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.6.2": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.6.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Same timing gates, same velocity trackers we use every session.",
+      "chars": 63,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.6.3": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.6.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "You'll see your athlete's real numbers before you decide anything.",
+      "chars": 66,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.6.4": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.6.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a pep talk.",
+      "chars": 15,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.6.5": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.6.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set.",
+      "chars": 11,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyPara.7": {
+      "id": "ad-2-version-a-consequence-depth.bodyPara.7",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.",
+      "chars": 128,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.7.1": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.7.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical.",
+      "chars": 46,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.7.2": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.7.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph in speed.",
+      "chars": 16,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.7.3": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.7.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "30 sessions.",
+      "chars": 12,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyLine.7.4": {
+      "id": "ad-2-version-a-consequence-depth.bodyLine.7.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free until they get there.",
+      "chars": 51,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.bodyPara.8": {
+      "id": "ad-2-version-a-consequence-depth.bodyPara.8",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.altHook.1": {
+      "id": "ad-2-version-a-consequence-depth.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence in a young athlete. Only one of them survives a bad game.",
+      "chars": 91,
+      "ad": "AD 2 — VERSION A (Consequence depth)",
+      "archetype": "Oracle",
+      "code": null
+    },
+    "ad-2-version-a-consequence-depth.altHook.2": {
+      "id": "ad-2-version-a-consequence-depth.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The confidence you're building with encouragement is the kind that breaks first.",
+      "chars": 80,
+      "ad": "AD 2 — VERSION A (Consequence depth)",
+      "archetype": "Warning",
+      "code": null
+    },
+    "ad-2-version-a-consequence-depth.altHook.3": {
+      "id": "ad-2-version-a-consequence-depth.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid doesn't need to be told they're good. They need to see it.",
+      "chars": 67,
+      "ad": "AD 2 — VERSION A (Consequence depth)",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    "ad-2-version-a-consequence-depth.imageHeadline": {
+      "id": "ad-2-version-a-consequence-depth.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-a-consequence-depth.imageSubhead": {
+      "id": "ad-2-version-a-consequence-depth.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 2 — VERSION A (Consequence depth)"
+    },
+    "ad-2-version-b-emotional-depth.headline": {
+      "id": "ad-2-version-b-emotional-depth.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "When They Stop Believing",
+      "chars": 24,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.description": {
+      "id": "ad-2-version-b-emotional-depth.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.primaryText": {
+      "id": "ad-2-version-b-emotional-depth.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud. Your kid looks up and says some version of \"I'm not as good as the rest of them.\" And you don't know what to say back, because telling them they're great hasn't been landing for a while now.\nHere's the brutal truth. Encouragement can't fix this. The confidence built out of other people's words is the first thing to crack under pressure, on the bench, after a bad play, in the quiet car ride home. It belongs to whoever's saying it, so it leaves the moment they need it most.\nWhat holds is a different kind entirely. The confidence a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better. That's what our Multi-Sport Foundation Program gives them. Real sprint times and jump heights on a screen, climbing week after week, proof they earned that nobody can talk them out of.\nAnd a kid who's seen that proof changes. The bracing goes out of them. They stop waiting for the play to go wrong and start wanting it, and somewhere over a season they go from hoping they belong on that field to simply knowing they do.\nWe hear it constantly. 92% of our parents report their kid comes out more confident.\nThe first step in is the Athlete Analysis. Same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a pep talk. A data set.\nThen the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1576,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyPara.1": {
+      "id": "ad-2-version-b-emotional-depth.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud. Your kid looks up and says some version of \"I'm not as good as the rest of them.\" And you don't know what to say back, because telling them they're great hasn't been landing for a while now.",
+      "chars": 244,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.1.1": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud.",
+      "chars": 53,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.1.2": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Your kid looks up and says some version of \"I'm not as good as the rest of them.\" And you don't know what to say back, because telling them they're great hasn't been landing for a while now.",
+      "chars": 190,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyPara.2": {
+      "id": "ad-2-version-b-emotional-depth.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the brutal truth. Encouragement can't fix this. The confidence built out of other people's words is the first thing to crack under pressure, on the bench, after a bad play, in the quiet car ride home. It belongs to whoever's saying it, so it leaves the moment they need it most.",
+      "chars": 285,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.2.1": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the brutal truth.",
+      "chars": 24,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.2.2": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Encouragement can't fix this.",
+      "chars": 29,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.2.3": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The confidence built out of other people's words is the first thing to crack under pressure, on the bench, after a bad play, in the quiet car ride home.",
+      "chars": 152,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.2.4": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It belongs to whoever's saying it, so it leaves the moment they need it most.",
+      "chars": 77,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyPara.3": {
+      "id": "ad-2-version-b-emotional-depth.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "What holds is a different kind entirely. The confidence a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better. That's what our Multi-Sport Foundation Program gives them. Real sprint times and jump heights on a screen, climbing week after week, proof they earned that nobody can talk them out of.",
+      "chars": 358,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.3.1": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "What holds is a different kind entirely.",
+      "chars": 40,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.3.2": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The confidence a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better.",
+      "chars": 132,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.3.3": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.3.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program gives them.",
+      "chars": 58,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.3.4": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.3.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Real sprint times and jump heights on a screen, climbing week after week, proof they earned that nobody can talk them out of.",
+      "chars": 125,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyPara.4": {
+      "id": "ad-2-version-b-emotional-depth.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And a kid who's seen that proof changes. The bracing goes out of them. They stop waiting for the play to go wrong and start wanting it, and somewhere over a season they go from hoping they belong on that field to simply knowing they do.",
+      "chars": 236,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.4.1": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And a kid who's seen that proof changes.",
+      "chars": 40,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.4.2": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The bracing goes out of them.",
+      "chars": 29,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.4.3": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.4.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "They stop waiting for the play to go wrong and start wanting it, and somewhere over a season they go from hoping they belong on that field to simply knowing they do.",
+      "chars": 165,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyPara.5": {
+      "id": "ad-2-version-b-emotional-depth.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "We hear it constantly. 92% of our parents report their kid comes out more confident.",
+      "chars": 84,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.5.1": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "We hear it constantly.",
+      "chars": 22,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.5.2": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "92% of our parents report their kid comes out more confident.",
+      "chars": 61,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyPara.6": {
+      "id": "ad-2-version-b-emotional-depth.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. Same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a pep talk. A data set.",
+      "chars": 174,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.6.1": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.6.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.6.2": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.6.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Same timing gates and velocity trackers we use every session, and you walk out with their real numbers.",
+      "chars": 103,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.6.3": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.6.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a pep talk.",
+      "chars": 15,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.6.4": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.6.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set.",
+      "chars": 11,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyPara.7": {
+      "id": "ad-2-version-b-emotional-depth.bodyPara.7",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.",
+      "chars": 128,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.7.1": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.7.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee: +3 inches on the vertical.",
+      "chars": 46,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.7.2": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.7.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph in speed.",
+      "chars": 16,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.7.3": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.7.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "30 sessions.",
+      "chars": 12,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyLine.7.4": {
+      "id": "ad-2-version-b-emotional-depth.bodyLine.7.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free until they get there.",
+      "chars": 51,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.bodyPara.8": {
+      "id": "ad-2-version-b-emotional-depth.bodyPara.8",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.altHook.1": {
+      "id": "ad-2-version-b-emotional-depth.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Telling your kid they're great stopped working a while ago. Here's what actually rebuilds it.",
+      "chars": 93,
+      "ad": "AD 2 — VERSION B (Emotional depth)",
+      "archetype": "Oracle",
+      "code": null
+    },
+    "ad-2-version-b-emotional-depth.altHook.2": {
+      "id": "ad-2-version-b-emotional-depth.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The hardest part isn't watching them lose. It's watching them stop believing they can win.",
+      "chars": 90,
+      "ad": "AD 2 — VERSION B (Emotional depth)",
+      "archetype": "Mirror",
+      "code": null
+    },
+    "ad-2-version-b-emotional-depth.altHook.3": {
+      "id": "ad-2-version-b-emotional-depth.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence. The kind that breaks under pressure, and the kind that doesn't.",
+      "chars": 98,
+      "ad": "AD 2 — VERSION B (Emotional depth)",
+      "archetype": "Paradox",
+      "code": null
+    },
+    "ad-2-version-b-emotional-depth.imageHeadline": {
+      "id": "ad-2-version-b-emotional-depth.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-2-version-b-emotional-depth.imageSubhead": {
+      "id": "ad-2-version-b-emotional-depth.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 2 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-a-consequence-depth.headline": {
+      "id": "ad-3-version-a-consequence-depth.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Why \"Great Job\" Isn't Working",
+      "chars": 29,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.description": {
+      "id": "ad-3-version-a-consequence-depth.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.primaryText": {
+      "id": "ad-3-version-a-consequence-depth.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times. And the second a game gets hard, it's gone.\nHere's the brutal truth. There are two kinds of confidence, and most of youth sports is built on the wrong one. The first gets handed to a kid by adults, in the form of encouragement and \"good job\" and trophies for showing up. The second a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting faster. Only one of them holds up when the play is on the line.\nPraise is on loan. It belongs to whoever's saying it, so it goes quiet exactly when your kid needs it, on the bench, after a bad rep, in the moment the game stops being easy. That's why the encouragement keeps not landing. It was never really theirs.\nAnd here's the part worth saying plainly: you didn't do anything wrong by encouraging them. Every good parent does. It just isn't the tool that fixes this, because confidence problems don't get solved with words. They get solved with evidence.\nThat's what our Multi-Sport Foundation Program is built on. Every session your athlete sees their real sprint time and jump height on a screen, climbing. The improvement is measured, displayed, and theirs. Nobody can talk them out of a number they watched go up.\nAnd a kid who owns that proof competes without hesitating. That turns into making the play instead of second-guessing it. More plays made becomes more reasons to trust themselves, and that trust becomes the thing coaches notice from across the field, until the kid who used to shrink is the one who plays like the moment belongs to them.\nAnd it isn't rare. 92% of our parents report their kid comes out more confident.\nThe first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you leave with their real sprint time, real jump height, and a clear picture of where they stand. Not a pep talk. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.\nCoach Ronnie Battiato built this, and refined it for the developmental window where it matters most.\nHere's the promise no other program in this market will make. +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.\nTo your athlete's success, Coach Ronnie",
+      "chars": 2419,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyPara.1": {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times. And the second a game gets hard, it's gone.",
+      "chars": 102,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.1.1": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "You can tell your kid they're doing great a hundred times.",
+      "chars": 58,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.1.2": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And the second a game gets hard, it's gone.",
+      "chars": 43,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyPara.2": {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the brutal truth. There are two kinds of confidence, and most of youth sports is built on the wrong one. The first gets handed to a kid by adults, in the form of encouragement and \"good job\" and trophies for showing up. The second a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting faster. Only one of them holds up when the play is on the line.",
+      "chars": 411,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.2.1": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the brutal truth.",
+      "chars": 24,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.2.2": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "There are two kinds of confidence, and most of youth sports is built on the wrong one.",
+      "chars": 86,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.2.3": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first gets handed to a kid by adults, in the form of encouragement and \"good job\" and trophies for showing up.",
+      "chars": 114,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.2.4": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The second a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting faster.",
+      "chars": 128,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.2.5": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.2.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Only one of them holds up when the play is on the line.",
+      "chars": 55,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyPara.3": {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Praise is on loan. It belongs to whoever's saying it, so it goes quiet exactly when your kid needs it, on the bench, after a bad rep, in the moment the game stops being easy. That's why the encouragement keeps not landing. It was never really theirs.",
+      "chars": 250,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.3.1": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Praise is on loan.",
+      "chars": 18,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.3.2": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It belongs to whoever's saying it, so it goes quiet exactly when your kid needs it, on the bench, after a bad rep, in the moment the game stops being easy.",
+      "chars": 155,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.3.3": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.3.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's why the encouragement keeps not landing.",
+      "chars": 47,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.3.4": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.3.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It was never really theirs.",
+      "chars": 27,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyPara.4": {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And here's the part worth saying plainly: you didn't do anything wrong by encouraging them. Every good parent does. It just isn't the tool that fixes this, because confidence problems don't get solved with words. They get solved with evidence.",
+      "chars": 243,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.4.1": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And here's the part worth saying plainly: you didn't do anything wrong by encouraging them.",
+      "chars": 91,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.4.2": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Every good parent does.",
+      "chars": 23,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.4.3": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.4.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It just isn't the tool that fixes this, because confidence problems don't get solved with words.",
+      "chars": 96,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.4.4": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.4.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "They get solved with evidence.",
+      "chars": 30,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyPara.5": {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program is built on. Every session your athlete sees their real sprint time and jump height on a screen, climbing. The improvement is measured, displayed, and theirs. Nobody can talk them out of a number they watched go up.",
+      "chars": 262,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.5.1": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program is built on.",
+      "chars": 59,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.5.2": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Every session your athlete sees their real sprint time and jump height on a screen, climbing.",
+      "chars": 93,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.5.3": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.5.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The improvement is measured, displayed, and theirs.",
+      "chars": 51,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.5.4": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.5.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Nobody can talk them out of a number they watched go up.",
+      "chars": 56,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyPara.6": {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And a kid who owns that proof competes without hesitating. That turns into making the play instead of second-guessing it. More plays made becomes more reasons to trust themselves, and that trust becomes the thing coaches notice from across the field, until the kid who used to shrink is the one who plays like the moment belongs to them.",
+      "chars": 337,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.6.1": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.6.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And a kid who owns that proof competes without hesitating.",
+      "chars": 58,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.6.2": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.6.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That turns into making the play instead of second-guessing it.",
+      "chars": 62,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.6.3": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.6.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "More plays made becomes more reasons to trust themselves, and that trust becomes the thing coaches notice from across the field, until the kid who used to shrink is the one who plays like the moment belongs to them.",
+      "chars": 215,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyPara.7": {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.7",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And it isn't rare. 92% of our parents report their kid comes out more confident.",
+      "chars": 80,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.7.1": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.7.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And it isn't rare.",
+      "chars": 18,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.7.2": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.7.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "92% of our parents report their kid comes out more confident.",
+      "chars": 61,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyPara.8": {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.8",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you leave with their real sprint time, real jump height, and a clear picture of where they stand. Not a pep talk. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.",
+      "chars": 354,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.8.1": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.8.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.8.2": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.8.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "We run your athlete through the same timing gates and velocity trackers we use every session, and you leave with their real sprint time, real jump height, and a clear picture of where they stand.",
+      "chars": 195,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.8.3": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.8.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a pep talk.",
+      "chars": 15,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.8.4": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.8.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set you get to keep.",
+      "chars": 27,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.8.5": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.8.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "From there, the path into the Multi-Sport Foundation Program is simple.",
+      "chars": 71,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyPara.9": {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.9",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Coach Ronnie Battiato built this, and refined it for the developmental window where it matters most.",
+      "chars": 100,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyPara.10": {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.10",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the promise no other program in this market will make. +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.",
+      "chars": 170,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.10.1": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.10.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the promise no other program in this market will make.",
+      "chars": 61,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.10.2": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.10.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+3 inches on the vertical.",
+      "chars": 26,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.10.3": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.10.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph in speed.",
+      "chars": 16,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.10.4": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.10.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "30 sessions.",
+      "chars": 12,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyLine.10.5": {
+      "id": "ad-3-version-a-consequence-depth.bodyLine.10.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free until they get there.",
+      "chars": 51,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyPara.11": {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.11",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.bodyPara.12": {
+      "id": "ad-3-version-a-consequence-depth.bodyPara.12",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "To your athlete's success, Coach Ronnie",
+      "chars": 39,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.altHook.1": {
+      "id": "ad-3-version-a-consequence-depth.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence in a young athlete. Only one of them survives a bad game.",
+      "chars": 91,
+      "ad": "AD 3 — VERSION A (Consequence depth)",
+      "archetype": "Oracle",
+      "code": null
+    },
+    "ad-3-version-a-consequence-depth.altHook.2": {
+      "id": "ad-3-version-a-consequence-depth.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The confidence you're building with encouragement is the kind that breaks first.",
+      "chars": 80,
+      "ad": "AD 3 — VERSION A (Consequence depth)",
+      "archetype": "Warning",
+      "code": null
+    },
+    "ad-3-version-a-consequence-depth.altHook.3": {
+      "id": "ad-3-version-a-consequence-depth.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid doesn't need to be told they're good. They need to see it.",
+      "chars": 67,
+      "ad": "AD 3 — VERSION A (Consequence depth)",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    "ad-3-version-a-consequence-depth.imageHeadline": {
+      "id": "ad-3-version-a-consequence-depth.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-a-consequence-depth.imageSubhead": {
+      "id": "ad-3-version-a-consequence-depth.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 3 — VERSION A (Consequence depth)"
+    },
+    "ad-3-version-b-emotional-depth.headline": {
+      "id": "ad-3-version-b-emotional-depth.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "When They Stop Believing",
+      "chars": 24,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.description": {
+      "id": "ad-3-version-b-emotional-depth.description",
+      "kind": "description",
+      "role": null,
+      "text": "Confidence from proof.",
+      "chars": 22,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.primaryText": {
+      "id": "ad-3-version-b-emotional-depth.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud. You're in the car after a game, and your kid goes quiet, and then comes some version of \"I'm not as good as the rest of them.\" And you don't know what to say, because telling them they're great hasn't been landing for a while now.\nHere's the brutal truth. Encouragement can't fix this, and it isn't your fault that it can't. The confidence built out of other people's words is the first thing to crack under pressure. It belongs to whoever's saying it, so it goes quiet on the bench, after the bad play, in exactly the moment your kid is reaching for it. It was never really theirs.\nWhat holds is a different kind entirely. The confidence a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better. You can't hand it to them, and a coach can't shout it into them. They have to see it.\nThat's what our Multi-Sport Foundation Program gives them. Every session your athlete watches their real sprint time and jump height climb on a screen in front of them. The progress is measured and it's theirs. Nobody can talk them out of a number they watched go up themselves.\nAnd a kid who's seen that proof changes in a way you feel before you can measure it. The bracing goes out of them. They stop waiting for the play to go wrong and start wanting the ball, and somewhere across a season they cross the line from hoping they belong on that field to simply knowing they do.\nWe hear it constantly. 92% of our parents report their kid comes out more confident.\nAnd the coaching behind it isn't guesswork. Coach Ronnie Battiato built this and refined it for the developmental window where it takes hold deepest.\nThe first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you leave with their real numbers and a clear picture of where they stand. Not a pep talk. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.\nHere's the promise no other program in this market will make. +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.\nTo your athlete's success, Coach Ronnie",
+      "chars": 2315,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyPara.1": {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud. You're in the car after a game, and your kid goes quiet, and then comes some version of \"I'm not as good as the rest of them.\" And you don't know what to say, because telling them they're great hasn't been landing for a while now.",
+      "chars": 284,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.1.1": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "There's a moment a lot of parents never say out loud.",
+      "chars": 53,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.1.2": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "You're in the car after a game, and your kid goes quiet, and then comes some version of \"I'm not as good as the rest of them.\" And you don't know what to say, because telling them they're great hasn't been landing for a while now.",
+      "chars": 230,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyPara.2": {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the brutal truth. Encouragement can't fix this, and it isn't your fault that it can't. The confidence built out of other people's words is the first thing to crack under pressure. It belongs to whoever's saying it, so it goes quiet on the bench, after the bad play, in exactly the moment your kid is reaching for it. It was never really theirs.",
+      "chars": 351,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.2.1": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the brutal truth.",
+      "chars": 24,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.2.2": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Encouragement can't fix this, and it isn't your fault that it can't.",
+      "chars": 68,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.2.3": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The confidence built out of other people's words is the first thing to crack under pressure.",
+      "chars": 92,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.2.4": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It belongs to whoever's saying it, so it goes quiet on the bench, after the bad play, in exactly the moment your kid is reaching for it.",
+      "chars": 136,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.2.5": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.2.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It was never really theirs.",
+      "chars": 27,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyPara.3": {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "What holds is a different kind entirely. The confidence a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better. You can't hand it to them, and a coach can't shout it into them. They have to see it.",
+      "chars": 259,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.3.1": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "What holds is a different kind entirely.",
+      "chars": 40,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.3.2": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The confidence a kid builds for themselves, by looking at their own data and seeing with their own eyes that they're getting better.",
+      "chars": 132,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.3.3": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.3.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "You can't hand it to them, and a coach can't shout it into them.",
+      "chars": 64,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.3.4": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.3.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "They have to see it.",
+      "chars": 20,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyPara.4": {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program gives them. Every session your athlete watches their real sprint time and jump height climb on a screen in front of them. The progress is measured and it's theirs. Nobody can talk them out of a number they watched go up themselves.",
+      "chars": 278,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.4.1": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program gives them.",
+      "chars": 58,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.4.2": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Every session your athlete watches their real sprint time and jump height climb on a screen in front of them.",
+      "chars": 109,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.4.3": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.4.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The progress is measured and it's theirs.",
+      "chars": 41,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.4.4": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.4.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Nobody can talk them out of a number they watched go up themselves.",
+      "chars": 67,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyPara.5": {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And a kid who's seen that proof changes in a way you feel before you can measure it. The bracing goes out of them. They stop waiting for the play to go wrong and start wanting the ball, and somewhere across a season they cross the line from hoping they belong on that field to simply knowing they do.",
+      "chars": 300,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.5.1": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And a kid who's seen that proof changes in a way you feel before you can measure it.",
+      "chars": 84,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.5.2": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The bracing goes out of them.",
+      "chars": 29,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.5.3": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.5.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "They stop waiting for the play to go wrong and start wanting the ball, and somewhere across a season they cross the line from hoping they belong on that field to simply knowing they do.",
+      "chars": 185,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyPara.6": {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "We hear it constantly. 92% of our parents report their kid comes out more confident.",
+      "chars": 84,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.6.1": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.6.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "We hear it constantly.",
+      "chars": 22,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.6.2": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.6.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "92% of our parents report their kid comes out more confident.",
+      "chars": 61,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyPara.7": {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.7",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And the coaching behind it isn't guesswork. Coach Ronnie Battiato built this and refined it for the developmental window where it takes hold deepest.",
+      "chars": 149,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.7.1": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.7.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And the coaching behind it isn't guesswork.",
+      "chars": 43,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.7.2": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.7.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Coach Ronnie Battiato built this and refined it for the developmental window where it takes hold deepest.",
+      "chars": 105,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyPara.8": {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.8",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you leave with their real numbers and a clear picture of where they stand. Not a pep talk. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.",
+      "chars": 331,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.8.1": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.8.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.8.2": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.8.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "We run your athlete through the same timing gates and velocity trackers we use every session, and you leave with their real numbers and a clear picture of where they stand.",
+      "chars": 172,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.8.3": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.8.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a pep talk.",
+      "chars": 15,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.8.4": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.8.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set you get to keep.",
+      "chars": 27,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.8.5": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.8.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "From there, the path into the Multi-Sport Foundation Program is simple.",
+      "chars": 71,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyPara.9": {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.9",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the promise no other program in this market will make. +3 inches on the vertical. +1 mph in speed. 30 sessions. Or we keep training them free until they get there.",
+      "chars": 170,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.9.1": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.9.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the promise no other program in this market will make.",
+      "chars": 61,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.9.2": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.9.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+3 inches on the vertical.",
+      "chars": 26,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.9.3": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.9.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph in speed.",
+      "chars": 16,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.9.4": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.9.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "30 sessions.",
+      "chars": 12,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyLine.9.5": {
+      "id": "ad-3-version-b-emotional-depth.bodyLine.9.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free until they get there.",
+      "chars": 51,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyPara.10": {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.10",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.bodyPara.11": {
+      "id": "ad-3-version-b-emotional-depth.bodyPara.11",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "To your athlete's success, Coach Ronnie",
+      "chars": 39,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.altHook.1": {
+      "id": "ad-3-version-b-emotional-depth.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Telling your kid they're great stopped working a while ago. Here's what actually rebuilds it.",
+      "chars": 93,
+      "ad": "AD 3 — VERSION B (Emotional depth)",
+      "archetype": "Oracle",
+      "code": null
+    },
+    "ad-3-version-b-emotional-depth.altHook.2": {
+      "id": "ad-3-version-b-emotional-depth.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The hardest part isn't watching them lose. It's watching them stop believing they can win.",
+      "chars": 90,
+      "ad": "AD 3 — VERSION B (Emotional depth)",
+      "archetype": "Mirror",
+      "code": null
+    },
+    "ad-3-version-b-emotional-depth.altHook.3": {
+      "id": "ad-3-version-b-emotional-depth.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "There are two kinds of confidence. The kind that breaks under pressure, and the kind that doesn't.",
+      "chars": 98,
+      "ad": "AD 3 — VERSION B (Emotional depth)",
+      "archetype": "Paradox",
+      "code": null
+    },
+    "ad-3-version-b-emotional-depth.imageHeadline": {
+      "id": "ad-3-version-b-emotional-depth.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Here's Why Most Young Athletes Lose Confidence",
+      "chars": 46,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    },
+    "ad-3-version-b-emotional-depth.imageSubhead": {
+      "id": "ad-3-version-b-emotional-depth.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(And What Actually Rebuilds It)",
+      "chars": 31,
+      "ad": "AD 3 — VERSION B (Emotional depth)"
+    }
+  }
+}

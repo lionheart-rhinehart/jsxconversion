@@ -1,0 +1,139 @@
+/* ============================================================
+   IDEAL SPORTS PERFORMANCE (ISP) — Colors & Type Foundations
+   Fort Worth, TX · Premier Performance Training Facility
+   ============================================================ */
+
+/* ---------- Webfonts ---------- */
+@font-face { font-family: "Barlow"; src: url("fonts/Barlow-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Barlow"; src: url("fonts/Barlow-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Barlow"; src: url("fonts/Barlow-600.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Barlow"; src: url("fonts/Barlow-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Barlow Condensed"; src: url("fonts/BarlowCondensed-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Barlow Condensed"; src: url("fonts/BarlowCondensed-600.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Barlow Condensed"; src: url("fonts/BarlowCondensed-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Barlow Condensed"; src: url("fonts/BarlowCondensed-800.woff2") format("woff2"); font-weight: 800; font-style: normal; font-display: swap; }
+
+:root {
+  /* ============ BRAND COLOR ============ */
+  /* ISP Blue — the single hero color, pulled from the logo badge (#2573b7) */
+  --isp-blue:        #2573b7;   /* primary */
+  --isp-blue-700:    #1c5a91;   /* hover / pressed */
+  --isp-blue-800:    #154873;   /* deep, on-dark headings */
+  --isp-blue-900:    #0f3454;   /* deepest, gradients */
+  --isp-blue-400:    #4a90d9;   /* electric accent / focus glow */
+  --isp-blue-300:    #7db0e3;   /* light accent on dark */
+  --isp-blue-100:    #dcebf6;   /* (unused tint placeholder) */
+  --isp-blue-tint:   #eaf2fb;   /* faint blue surface wash */
+
+  /* ============ INK / NEUTRALS ============ */
+  /* Near-black from brand (#1c1c1d) anchors a warm-neutral gray ramp */
+  --ink:        #1c1c1d;   /* primary text, dark surfaces */
+  --ink-900:    #232325;
+  --ink-800:    #2c2c2f;
+  --ink-700:    #3a3a3d;   /* secondary on dark */
+  --gray-600:   #5c5c61;   /* muted body text */
+  --gray-500:   #7a7a80;   /* placeholder / captions */
+  --gray-400:   #a6a6ac;   /* disabled */
+  --gray-300:   #d3d4d8;   /* borders, dividers */
+  --gray-200:   #e6e7ea;   /* hairlines, track */
+  --gray-100:   #f1f2f4;   /* subtle fill */
+  --gray-50:    #f7f8fa;   /* app background */
+  --white:      #ffffff;
+
+  /* ============ SEMANTIC SURFACES ============ */
+  --bg:            var(--gray-50);     /* page background */
+  --surface:       var(--white);       /* cards, panels */
+  --surface-alt:   var(--gray-100);    /* nested fills */
+  --surface-dark:  var(--ink);         /* dark sections, footer */
+  --surface-blue:  var(--isp-blue);    /* CTA bands */
+  --border:        var(--gray-200);
+  --border-strong: var(--gray-300);
+
+  /* ============ TEXT ============ */
+  --fg:        var(--ink);        /* default text */
+  --fg-muted:  var(--gray-600);   /* secondary copy */
+  --fg-subtle: var(--gray-500);   /* captions */
+  --fg-on-dark:       #ffffff;
+  --fg-on-dark-muted: #b9babf;
+  --fg-on-blue:       #ffffff;
+  --link:      var(--isp-blue);
+  --link-hover: var(--isp-blue-700);
+
+  /* ============ STATUS ============ */
+  --success: #2e8b57;
+  --warning: #d98a1f;
+  --danger:  #c63b3b;
+  --info:    var(--isp-blue);
+
+  /* ============ TYPE FAMILIES ============ */
+  --font-display: "Barlow Condensed", "Oswald", "Arial Narrow", sans-serif; /* big athletic headlines, eyebrows, stats */
+  --font-body:    "Barlow", "Helvetica Neue", Arial, sans-serif;            /* body, UI, buttons */
+  --font-mono:    "Barlow", ui-monospace, monospace;                        /* rarely used; fallback only */
+
+  /* ============ TYPE SCALE (semantic) ============
+     Display uses Barlow Condensed, UPPERCASE, tight tracking.
+     Body uses Barlow at comfortable weights. */
+  --display-1: 700 clamp(3.5rem, 7vw, 6rem)/0.92 var(--font-display);     /* hero */
+  --h1:        700 clamp(2.6rem, 5vw, 4rem)/0.95 var(--font-display);
+  --h2:        700 clamp(2rem, 3.5vw, 3rem)/1.0 var(--font-display);
+  --h3:        600 clamp(1.5rem, 2.2vw, 2.1rem)/1.05 var(--font-display);
+  --h4:        600 1.25rem/1.15 var(--font-display);
+  --eyebrow:   600 0.82rem/1.2 var(--font-display);   /* tracked uppercase kicker */
+  --stat:      800 clamp(2.8rem, 5vw, 4.5rem)/0.9 var(--font-display);    /* big metric numbers */
+  --lead:      400 1.2rem/1.55 var(--font-body);
+  --body:      400 1rem/1.6 var(--font-body);
+  --body-sm:   400 0.9rem/1.55 var(--font-body);
+  --label:     600 0.8rem/1.2 var(--font-body);
+  --button:    600 0.95rem/1 var(--font-body);
+  --caption:   500 0.78rem/1.4 var(--font-body);
+
+  /* ============ SPACING (8pt base) ============ */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+  --space-9: 96px; --space-10: 128px;
+
+  /* ============ RADII ============
+     The logo badge uses a generous, friendly radius — echoed in pills & cards. */
+  --radius-sm: 6px;
+  --radius:    10px;   /* default card / input */
+  --radius-lg: 18px;   /* feature cards, badge-like panels */
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* ============ SHADOWS ============ */
+  --shadow-sm:  0 1px 2px rgba(28,28,29,.08);
+  --shadow:     0 4px 14px rgba(28,28,29,.10);
+  --shadow-md:  0 10px 28px rgba(28,28,29,.14);
+  --shadow-lg:  0 22px 50px rgba(28,28,29,.20);
+  --shadow-blue: 0 12px 30px rgba(37,115,183,.35);   /* blue CTA lift */
+  --focus-ring: 0 0 0 3px rgba(74,144,217,.45);
+
+  /* ============ MOTION ============ */
+  --ease: cubic-bezier(.2,.7,.3,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --dur-fast: 120ms;
+  --dur:      200ms;
+  --dur-slow: 360ms;
+}
+
+/* ============================================================
+   SEMANTIC ELEMENT DEFAULTS  (opt-in: wrap content in .isp)
+   ============================================================ */
+.isp { font: var(--body); color: var(--fg); background: var(--bg); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+.isp h1, .isp .h1 { font: var(--h1); text-transform: uppercase; letter-spacing: -.01em; margin: 0; color: var(--fg); }
+.isp h2, .isp .h2 { font: var(--h2); text-transform: uppercase; letter-spacing: -.005em; margin: 0; }
+.isp h3, .isp .h3 { font: var(--h3); text-transform: uppercase; margin: 0; }
+.isp h4, .isp .h4 { font: var(--h4); text-transform: uppercase; margin: 0; }
+.isp p  { margin: 0 0 1em; color: var(--fg-muted); max-width: 64ch; text-wrap: pretty; }
+.isp a  { color: var(--link); text-decoration: none; }
+.isp a:hover { color: var(--link-hover); }
+
+.display-1 { font: var(--display-1); text-transform: uppercase; letter-spacing: -.015em; }
+.eyebrow {
+  font: var(--eyebrow); text-transform: uppercase; letter-spacing: .18em;
+  color: var(--isp-blue); display: inline-flex; align-items: center; gap: .5em;
+}
+.eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--isp-blue); display: inline-block; }
+.lead  { font: var(--lead); color: var(--fg-muted); }
+.stat  { font: var(--stat); color: var(--isp-blue); font-variant-numeric: tabular-nums; }
+.caption { font: var(--caption); color: var(--fg-subtle); text-transform: uppercase; letter-spacing: .08em; }

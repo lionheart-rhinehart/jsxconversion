@@ -1,0 +1,33 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0}
+  body{width:700px;background:var(--gray-50);color:var(--ink);padding:26px 32px;box-sizing:border-box;font-family:var(--font-body);display:flex;gap:22px}
+  .card{flex:1;background:#fff;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md)}
+  .ph{height:128px;background-size:cover;background-position:center;position:relative}
+  .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,28,29,0) 40%,rgba(28,28,29,.55))}
+  .kick{position:absolute;left:14px;bottom:12px;z-index:2;color:#fff;font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:22px;line-height:.95}
+  .bd{padding:16px 18px 18px}
+  .bd p{font-size:13.5px;color:var(--fg-muted);margin:0 0 14px;line-height:1.5}
+  .more{font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--isp-blue);font-size:14px;display:inline-flex;align-items:center;gap:6px}
+  .badge{display:inline-block;background:var(--isp-blue);color:#fff;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:4px 10px;border-radius:999px;margin-bottom:10px}
+</style></head>
+<body>
+  <div class="card">
+    <div class="ph" style="background-image:url(../assets/hero-original.webp)"><span class="kick">Baseball<br>Performance</span></div>
+    <div class="bd">
+      <span class="badge">Velocity</span>
+      <p>Individualized monthly throwing plans built around velocity development and mechanical adjustments.</p>
+      <span class="more">Learn More &rarr;</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ph" style="background:linear-gradient(135deg,#2573b7,#154873)"><span class="kick">Sports<br>Performance</span></div>
+    <div class="bd">
+      <span class="badge" style="background:var(--ink)">All Sports</span>
+      <p>Movement training, linear &amp; lateral speed, foot agility, and explosive power development.</p>
+      <span class="more">Learn More &rarr;</span>
+    </div>
+  </div>
+</body></html>

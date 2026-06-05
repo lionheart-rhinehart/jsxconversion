@@ -1,0 +1,203 @@
+/* ============================================================================
+   BATTI-PERFORMANCE — Colors & Type
+   "Where Athletes Come To Dominate"
+   ----------------------------------------------------------------------------
+   Locked 5-color palette (provided by client):
+     #000000  #ffffff  #e6e6e6  #6b6b6b  #cb0202
+   All state/elevation colors below are derived from these via opacity or
+   color-mix() — no new palette hues are introduced.
+
+   FONTS: best-match substitutes pending the brand's real typefaces.
+   Display  → Saira Condensed (athletic condensed grotesque)
+   Body/UI  → Saira (same superfamily, neutral & technical)
+   Mono     → Spline Sans Mono (tabular metrics / technical labels)
+   ============================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700;800;900&family=Saira:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ---- Raw palette (the only 5 source colors) ---------------------------- */
+  --bp-black:    #000000;
+  --bp-white:    #ffffff;
+  --bp-grey-100: #e6e6e6;   /* light surface / hairline on white */
+  --bp-grey-500: #6b6b6b;   /* mid grey — secondary text/icons   */
+  --bp-red:      #cb0202;   /* brand red — accents, CTAs         */
+
+  /* ---- Derived reds (states only — still "red") -------------------------- */
+  --bp-red-hover:  color-mix(in srgb, var(--bp-red) 86%, #000);
+  --bp-red-press:  color-mix(in srgb, var(--bp-red) 74%, #000);
+  --bp-red-tint:   color-mix(in srgb, var(--bp-red) 10%, transparent);
+
+  /* ---- Derived greys (elevation of black/white only) --------------------- */
+  --bp-near-black: color-mix(in srgb, #fff 5%,  var(--bp-black)); /* dark surface  */
+  --bp-elev-black: color-mix(in srgb, #fff 9%,  var(--bp-black)); /* raised dark   */
+  --bp-grey-300:   color-mix(in srgb, var(--bp-grey-500) 45%, #fff); /* light text on dark */
+
+  /* ---- Semantic — LIGHT canvas (default) --------------------------------- */
+  --bg:          var(--bp-white);
+  --surface:     var(--bp-grey-100);
+  --fg:          var(--bp-black);
+  --fg-muted:    var(--bp-grey-500);
+  --border:      var(--bp-grey-100);
+  --border-strong: color-mix(in srgb, var(--bp-black) 16%, transparent);
+  --accent:      var(--bp-red);
+  --accent-fg:   var(--bp-white);
+
+  /* ---- Semantic — DARK surfaces (hero / footer / pillar cards) ----------- */
+  --bg-dark:        var(--bp-black);
+  --surface-dark:   var(--bp-near-black);
+  --surface-dark-2: var(--bp-elev-black);
+  --fg-on-dark:     var(--bp-white);
+  --fg-muted-dark:  var(--bp-grey-300);
+  --border-dark:    color-mix(in srgb, #fff 14%, transparent);
+
+  /* ---- Typography families ---------------------------------------------- */
+  --font-display: "Saira Condensed", "Arial Narrow", system-ui, sans-serif;
+  --font-body:    "Saira", system-ui, -apple-system, sans-serif;
+  --font-mono:    "Spline Sans Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  /* ---- Type scale (px) --------------------------------------------------- */
+  --text-xs:   12px;
+  --text-sm:   14px;
+  --text-base: 16px;
+  --text-md:   18px;
+  --text-lg:   20px;
+  --text-xl:   24px;
+  --text-2xl:  32px;
+  --text-3xl:  44px;
+  --text-4xl:  64px;
+  --text-5xl:  88px;
+
+  /* fluid display for hero stacks */
+  --display:   clamp(3rem, 9vw, 8.5rem);
+
+  /* ---- Spacing — 8pt base ------------------------------------------------ */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 24px;
+  --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 128px;
+
+  /* ---- Radii — squared / confident -------------------------------------- */
+  --r-xs: 2px; --r-sm: 4px; --r-md: 6px; --r-lg: 10px; --r-pill: 999px;
+
+  /* ---- Shadows / elevation ---------------------------------------------- */
+  --shadow-1: 0 1px 2px rgba(0,0,0,.08);
+  --shadow-2: 0 4px 14px rgba(0,0,0,.10);
+  --shadow-3: 0 12px 34px rgba(0,0,0,.18);
+  --shadow-red: 0 10px 30px color-mix(in srgb, var(--bp-red) 45%, transparent);
+  --inner-top: inset 0 1px 0 rgba(255,255,255,.06);
+
+  /* ---- Motion ------------------------------------------------------------ */
+  --ease-out:  cubic-bezier(.2,.7,.2,1);
+  --ease-snap: cubic-bezier(.3,.9,.1,1);
+  --dur-fast: 120ms; --dur-mid: 200ms; --dur-slow: 360ms;
+}
+
+/* ============================================================================
+   SEMANTIC TYPE RULES
+   ============================================================================ */
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.55;
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Display headline — the brand's signature stacked ALL-CAPS voice */
+.bp-display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--display);
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  margin: 0;
+  text-wrap: balance;
+}
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--text-4xl);
+  line-height: 0.92;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+  margin: 0 0 var(--s-4);
+}
+h2, .h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-3xl);
+  line-height: 0.95;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  margin: 0 0 var(--s-4);
+}
+h3, .h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-xl);
+  line-height: 1.0;
+  text-transform: uppercase;
+  letter-spacing: .01em;
+  margin: 0 0 var(--s-3);
+}
+h4, .h4 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--text-md);
+  line-height: 1.2;
+  margin: 0 0 var(--s-2);
+}
+
+p {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  line-height: 1.6;
+  color: var(--fg);
+  margin: 0 0 var(--s-4);
+  text-wrap: pretty;
+}
+.text-muted { color: var(--fg-muted); }
+
+/* Eyebrow / kicker — uppercase letterspaced label */
+.bp-eyebrow {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 var(--s-3);
+  display: inline-block;
+}
+.bp-eyebrow--muted { color: var(--fg-muted); }
+
+/* Accent word inside a display headline */
+.accent { color: var(--accent); }
+/* Stadium outline word/number */
+.outline {
+  color: transparent;
+  -webkit-text-stroke: 2px currentColor;
+}
+
+/* Metric value — big tabular number */
+.bp-metric {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+/* Small mono technical label */
+.bp-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-sm);
+  letter-spacing: .02em;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--bp-red-hover); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }

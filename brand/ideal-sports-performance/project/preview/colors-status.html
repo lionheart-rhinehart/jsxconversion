@@ -1,0 +1,22 @@
+<!-- @dsCard group="Colors" -->
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0}
+  body{width:700px;background:var(--white);color:var(--ink);padding:28px 32px;box-sizing:border-box;font-family:var(--font-body)}
+  .title{font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;color:var(--gray-600);margin:0 0 14px}
+  .row{display:flex;gap:14px}
+  .item{flex:1;text-align:center}
+  .chip{height:60px;border-radius:8px;border:1px solid rgba(0,0,0,.06);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px}
+  .lbl{font-size:11px;margin-top:6px;color:var(--gray-600)}
+  .hx{font-size:10px;color:var(--gray-400);font-variant-numeric:tabular-nums}
+</style></head>
+<body>
+  <p class="title">Status colors</p>
+  <div class="row">
+    <div class="item"><div class="chip" style="background:#eaf6ef;color:#2e8b57;border-color:#cfe8da">Success</div><div class="lbl">Success</div><div class="hx">#2e8b57</div></div>
+    <div class="item"><div class="chip" style="background:#fbf1e0;color:#b06f12;border-color:#f0ddb9">Warning</div><div class="lbl">Warning</div><div class="hx">#d98a1f</div></div>
+    <div class="item"><div class="chip" style="background:#f8e7e7;color:#c63b3b;border-color:#f0cccc">Danger</div><div class="lbl">Danger</div><div class="hx">#c63b3b</div></div>
+    <div class="item"><div class="chip" style="background:#eaf2fb;color:#2573b7;border-color:#cfe1f3">Info</div><div class="lbl">Info</div><div class="hx">#2573b7</div></div>
+  </div>
+</body></html>

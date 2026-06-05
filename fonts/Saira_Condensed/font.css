@@ -1,0 +1,45 @@
+/* Saira Condensed — Batti-Performance display face (condensed athletic grotesque).
+   Installed from the Google Fonts static TTFs. Family name 'Saira Condensed'
+   matches data/brand.batti-performance.json font_display token. */
+@font-face {
+  font-family: 'Saira Condensed';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(./SairaCondensed-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Saira Condensed';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(./SairaCondensed-Medium.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Saira Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(./SairaCondensed-SemiBold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Saira Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(./SairaCondensed-Bold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Saira Condensed';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(./SairaCondensed-ExtraBold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Saira Condensed';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url(./SairaCondensed-Black.ttf) format('truetype');
+}

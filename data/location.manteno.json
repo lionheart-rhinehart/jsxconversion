@@ -1,0 +1,7 @@
+{
+  "_comment": "Location tier — Manteno, IL (Batti-Performance location). Supplies `city` for the locale eyebrow anchor. buildEyebrowAnchor strips the trailing ', IL' state suffix and applies the pattern '{CITY} SPORT PARENTS' → 'MANTENO SPORT PARENTS'. Merged campaign > location > brand.",
+  "location": "manteno",
+  "tags": {
+    "city": "MANTENO, IL"
+  }
+}

@@ -29,6 +29,12 @@
       "aliases": ["southern maine athlete academy", "southern maine soccer academy", "smaa", "southern maine"],
       "dataTier": "smaa",
       "brandKit": "brand/smaa/project/README.md"
+    },
+    "ideal-sports-performance": {
+      "slug": "ideal-sports-performance",
+      "aliases": ["ideal sports performance", "ideal sports performance and fitness", "isp", "isp fort worth", "ideal sports"],
+      "dataTier": "ideal-sports-performance",
+      "brandKit": "brand/ideal-sports-performance/project/README.md"
     }
   }
 }

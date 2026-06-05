@@ -1,0 +1,26 @@
+{
+  "_comment": "Brand kit for Ideal Sports Performance & Fitness (ISP) — Fort Worth, TX. Franchisee/new-brand intake. Keys under `tags` map a layer's field name (its `tag`) to the value that replaces the layer's content at fill time. Color/font tokens here OVERRIDE the AA authoring baseline at render/clone time (scripts/lib/palette.mjs remaps the bank's #c4141d-family literals to these; scripts/lib/fonts-stage.mjs stages the kit's Barlow binaries under the bank family names so motion renders in ISP's typefaces). Registered from the Claude Design handoff bundle 'isp-ideal-sports-performance-design-system' — see brand/ideal-sports-performance/project/README.md for the full brand rules (voice, visual foundations, iconography) and brand/ideal-sports-performance/project/colors_and_type.css for the source tokens.",
+  "brand": "Ideal Sports Performance",
+  "_note": "ISP is a premier performance-training facility (Baseball Performance / Sports Performance / Adult Training), Fort Worth, TX. It shares the AA token ARCHITECTURE but its OWN identity: a disciplined monochrome-plus-one palette — ISP Blue #2573b7 on white and warm near-black ink, NOT AA's gritty stadium black/red. The AA architecture is SINGLE-ACCENT (brand_red), so ISP's hero blue takes the brand_red slot; brand_red_deep is its deep on-dark shade. Color mapping from colors_and_type.css: brand_red=--isp-blue #2573b7, brand_red_deep=--isp-blue-800 #154873, ink_950=--ink #1c1c1d (warm near-black), ink_900=--ink-900 #232325. Type is Barlow Condensed (700/800, UPPERCASE, athletic display + big stat numbers) + Barlow (400-700 body/UI) — BOTH shipped as woff2 and registered in font_files so they stage under the bank families at render. CAVEATS flagged honestly, NOT invented: (1) guarantee is intentionally EMPTY — ISP has no measurable performance guarantee like AA's; its standing offer is 'Your first class is free / Try ISP Free', which belongs in copy/CTA, not the guarantee token. (2) font_files stages ONE weight per bank family (display=BarlowCondensed-700, body=Barlow-400, mono/stats=BarlowCondensed-800); multi-weight nuance on a single template is therefore approximate until per-weight staging exists. (3) ISP's native aesthetic is blue-on-WHITE; the clean AA-native bank skews dark/ink — recoloring keeps ISP blue correct but the dark-surface bias is a design-fidelity gap to weigh when picking templates. Default logo is logo-on-dark.png (white subhead) so it stays legible on the bank's dark surfaces; logo-full.png (color on light) and logo-badge.png also ship in the kit for the editor to swap.",
+  "kitPath": "brand/ideal-sports-performance",
+  "logo_src": "brand/ideal-sports-performance/project/assets/logo-on-dark.png",
+  "font_files": {
+    "display": "brand/ideal-sports-performance/fonts/BarlowCondensed-700.woff2",
+    "body": "brand/ideal-sports-performance/fonts/Barlow-400.woff2",
+    "mono": "brand/ideal-sports-performance/fonts/BarlowCondensed-800.woff2"
+  },
+  "tags": {
+    "logo": "./project/assets/logo-on-dark.png",
+    "brand_name": "IDEAL SPORTS PERFORMANCE",
+    "guarantee": "",
+    "url": "ispfortworth.com",
+    "brand_red": "#2573b7",
+    "brand_red_deep": "#154873",
+    "ink_950": "#1c1c1d",
+    "ink_900": "#232325",
+    "white": "#ffffff",
+    "font_display": "'Barlow Condensed', 'Oswald', 'Arial Narrow', sans-serif",
+    "font_body": "'Barlow', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif",
+    "font_mono": "'Barlow Condensed', 'Oswald', 'Arial Narrow', sans-serif"
+  }
+}

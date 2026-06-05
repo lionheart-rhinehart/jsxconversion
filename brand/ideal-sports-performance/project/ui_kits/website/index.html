@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ISP — Ideal Sports Performance · Website UI Kit</title>
+  <link rel="stylesheet" href="../../colors_and_type.css">
+  <link rel="icon" href="../../assets/logo-badge.png">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body { font-family: var(--font-body); color: var(--ink); background: var(--white); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+    @media (max-width: 820px) {
+      .isp-desktop-nav { display: none !important; }
+      .isp-burger { display: inline-flex !important; }
+      .isp-signup-grid { grid-template-columns: 1fr !important; }
+      .isp-footer-grid { grid-template-columns: 1fr !important; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+    }
+  </style>
+  <!-- Lucide icon set (documented substitution — see README ICONOGRAPHY) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" src="ui.jsx"></script>
+  <script type="text/babel" src="Header.jsx"></script>
+  <script type="text/babel" src="Hero.jsx"></script>
+  <script type="text/babel" src="StatBand.jsx"></script>
+  <script type="text/babel" src="Programs.jsx"></script>
+  <script type="text/babel" src="SignupForm.jsx"></script>
+  <script type="text/babel" src="Footer.jsx"></script>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function App() {
+      const [active, setActive] = useState("home");
+
+      const onNav = (id) => {
+        setActive(id);
+        if (id === "home") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          return;
+        }
+        const el = document.getElementById(id);
+        if (el) {
+          const y = el.getBoundingClientRect().top + window.scrollY - 70;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
+      };
+
+      // (Re)create icons whenever content changes
+      useEffect(() => { if (window.lucide) window.lucide.createIcons(); });
+
+      return (
+        <React.Fragment>
+          <Header onNav={onNav} active={active} />
+          <Hero onNav={onNav} />
+          <StatBand />
+          <Programs onNav={onNav} />
+          <SignupForm />
+          <Footer onNav={onNav} />
+        </React.Fragment>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>

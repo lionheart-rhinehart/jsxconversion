@@ -1,0 +1,20 @@
+<!-- @dsCard group="Colors" -->
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:28px 32px;background:var(--bg);}
+  .row{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;}
+  .sw{display:flex;flex-direction:column;gap:10px;}
+  .chip{height:96px;border-radius:var(--r-md);border:1px solid var(--border);}
+  .name{font-family:var(--font-body);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--fg);}
+  .hex{font-family:var(--font-mono);font-size:12px;color:var(--fg-muted);}
+</style></head>
+<body>
+  <div class="row">
+    <div class="sw"><div class="chip" style="background:#000000"></div><div class="name">Black</div><div class="hex">#000000</div></div>
+    <div class="sw"><div class="chip" style="background:#ffffff"></div><div class="name">White</div><div class="hex">#ffffff</div></div>
+    <div class="sw"><div class="chip" style="background:#e6e6e6"></div><div class="name">Grey 100</div><div class="hex">#e6e6e6</div></div>
+    <div class="sw"><div class="chip" style="background:#6b6b6b"></div><div class="name">Grey 500</div><div class="hex">#6b6b6b</div></div>
+    <div class="sw"><div class="chip" style="background:#cb0202"></div><div class="name">Red</div><div class="hex">#cb0202</div></div>
+  </div>
+</body></html>

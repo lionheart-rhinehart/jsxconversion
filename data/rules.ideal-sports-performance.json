@@ -1,0 +1,22 @@
+{
+  "_comment": "Creative-engine enforcement rules for Ideal Sports Performance (ISP), Fort Worth TX. Consumed by scripts/validate-plan.mjs via loadRules(). Mirrors the brand-agnostic AA structure; brand-specific differences from AA: (1) eyebrowPattern anchors Fort Worth baseball parents; (2) noExclamation is FALSE — ISP's documented brand voice uses exclamation on CTAs ('Try ISP Free!'), so it is permitted here (emoji still banned); (3) ISP publishes NO guarantee, so the guarantee role renders empty and is not required.",
+  "brand": "ideal-sports-performance",
+  "aspect": { "width": 1080, "height": 1920 },
+  "mediaExempt": ["logo-sting", "stat-reveal"],
+  "verbatim": "substring",
+  "verbatimRoles": ["hook", "claim", "mechanism", "reframe", "kicker", "testimonial"],
+  "cityModel": "clone",
+  "locationRotation": { "enabled": false },
+  "voice": { "noEmoji": true, "noExclamation": false },
+  "bannedWords": ["guaranteed", "limited time", "act now", "spots left", "don't miss"],
+  "eyebrowPattern": "{CITY} SPORT PARENTS",
+  "_beatRolesNote": "anyOf = the beat's VALID role set; an asset must carry >=1 (playbook: 1 dominant + ~2 supporting, ONE dominant beat per static). ISP has no guarantee, so guaranteeDrift is a no-op.",
+  "beatRoles": {
+    "A": { "anyOf": ["hook"] },
+    "B": { "anyOf": ["hook", "claim", "reframe"] },
+    "C": { "anyOf": ["mechanism", "reframe", "stat"] },
+    "D": { "anyOf": ["reframe", "testimonial", "claim"] },
+    "E": { "anyOf": ["proof", "stat", "testimonial"] },
+    "F": { "anyOf": ["offer", "cta"] }
+  }
+}

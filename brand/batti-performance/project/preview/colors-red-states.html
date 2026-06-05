@@ -1,0 +1,20 @@
+<!-- @dsCard group="Colors" -->
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:28px 32px;background:var(--bg);}
+  .row{display:flex;gap:16px;align-items:stretch;}
+  .sw{flex:1;display:flex;flex-direction:column;gap:10px;}
+  .chip{height:84px;border-radius:var(--r-md);border:1px solid var(--border);display:flex;align-items:flex-end;padding:10px;}
+  .name{font-family:var(--font-body);font-weight:700;font-size:13px;color:var(--fg);}
+  .hex{font-family:var(--font-mono);font-size:11px;color:var(--fg-muted);}
+  .onred{color:#fff;font-family:var(--font-mono);font-size:11px;}
+</style></head>
+<body>
+  <div class="row">
+    <div class="sw"><div class="chip" style="background:var(--bp-red)"><span class="onred">default</span></div><div class="name">Red</div><div class="hex">#cb0202</div></div>
+    <div class="sw"><div class="chip" style="background:var(--bp-red-hover)"><span class="onred">hover</span></div><div class="name">Red · hover</div><div class="hex">mix 86% + black</div></div>
+    <div class="sw"><div class="chip" style="background:var(--bp-red-press)"><span class="onred">press</span></div><div class="name">Red · press</div><div class="hex">mix 74% + black</div></div>
+    <div class="sw"><div class="chip" style="background:var(--bp-red-tint)"><span style="color:var(--bp-red);font-family:var(--font-mono);font-size:11px;">tint</span></div><div class="name">Red · tint 10%</div><div class="hex">on white</div></div>
+  </div>
+</body></html>

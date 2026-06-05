@@ -1,0 +1,7 @@
+{
+  "_comment": "Campaign tier for isp-baseball-performance. Merged campaign > location > brand (campaign is MOST specific), so only NON-location-varying campaign values live here. ISP Baseball targets parents of 13-17 pitchers. audience is available for templateData; the eyebrow itself is built city-first from rules.eyebrowPattern.",
+  "campaign": "isp-baseball-performance",
+  "tags": {
+    "audience": "AGES 13-17"
+  }
+}

@@ -1,0 +1,33 @@
+<!-- @dsCard group="Colors" -->
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:0;font-family:var(--font-body);display:grid;grid-template-columns:1fr 1fr;}
+  .pane{padding:26px 30px;}
+  .light{background:var(--bg);color:var(--fg);}
+  .dark{background:var(--bg-dark);color:var(--fg-on-dark);}
+  .lab{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.7;margin-bottom:16px;}
+  .line{display:flex;align-items:center;gap:12px;margin-bottom:12px;font-size:14px;}
+  .dot{width:18px;height:18px;border-radius:4px;flex:none;}
+  .muted{color:var(--fg-muted);}
+  .dark .muted{color:var(--fg-muted-dark);}
+  .tag{font-family:var(--font-mono);font-size:11px;opacity:.6;margin-left:auto;}
+</style></head>
+<body>
+  <div class="pane light">
+    <div class="lab">Light canvas</div>
+    <div class="line"><span class="dot" style="background:var(--bg);border:1px solid var(--border)"></span>Background<span class="tag">--bg</span></div>
+    <div class="line"><span class="dot" style="background:var(--surface)"></span>Surface<span class="tag">--surface</span></div>
+    <div class="line"><span class="dot" style="background:var(--fg)"></span>Text<span class="tag">--fg</span></div>
+    <div class="line muted"><span class="dot" style="background:var(--fg-muted)"></span>Muted text<span class="tag">--fg-muted</span></div>
+    <div class="line"><span class="dot" style="background:var(--accent)"></span>Accent<span class="tag">--accent</span></div>
+  </div>
+  <div class="pane dark">
+    <div class="lab">Dark surface</div>
+    <div class="line"><span class="dot" style="background:var(--bg-dark);border:1px solid var(--border-dark)"></span>Background<span class="tag">--bg-dark</span></div>
+    <div class="line"><span class="dot" style="background:var(--surface-dark);border:1px solid var(--border-dark)"></span>Surface<span class="tag">--surface-dark</span></div>
+    <div class="line"><span class="dot" style="background:var(--fg-on-dark)"></span>Text<span class="tag">--fg-on-dark</span></div>
+    <div class="line muted"><span class="dot" style="background:var(--fg-muted-dark)"></span>Muted text<span class="tag">--fg-muted-dark</span></div>
+    <div class="line"><span class="dot" style="background:var(--accent)"></span>Accent<span class="tag">--accent</span></div>
+  </div>
+</body></html>

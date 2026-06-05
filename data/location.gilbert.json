@@ -1,0 +1,7 @@
+{
+  "_comment": "Location tier — Gilbert, AZ (Batti-Performance location). Supplies `city` for the locale eyebrow anchor. buildEyebrowAnchor strips the trailing ', AZ' state suffix and applies the pattern '{CITY} SPORT PARENTS' → 'GILBERT SPORT PARENTS'. Merged campaign > location > brand.",
+  "location": "gilbert",
+  "tags": {
+    "city": "GILBERT, AZ"
+  }
+}

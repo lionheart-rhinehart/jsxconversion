@@ -1,0 +1,103 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/bt-quote.jpg",
+    "type": "image",
+    "tag": "bg_photo",
+    "offsetX": 0, "offsetY": 0, "scale": 1, "z": 0
+  },
+  "fixedDesign": [
+    {
+      "id": "scrim",
+      "tag": "scrim",
+      "label": "Full dark scrim for an editorial quote",
+      "type": "rect",
+      "x": 0, "y": 0, "width": 1080, "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.5) 45%, rgba(0,0,0,0.78) 100%)",
+      "z": 2
+    },
+    {
+      "id": "quote_border",
+      "tag": "quote_border",
+      "label": "Red left border (Batti quote device)",
+      "type": "rect",
+      "x": 64, "y": 800, "width": 9, "height": 420,
+      "fill": "#c4141d",
+      "z": 6
+    },
+    {
+      "id": "bp_badge",
+      "tag": "bp_badge",
+      "label": "BP badge (white, on dark)",
+      "type": "image",
+      "src": "./assets/batti-badge-white.png",
+      "x": 64, "y": 1786, "width": 76, "height": 76,
+      "objectFit": "contain",
+      "z": 40
+    },
+    {
+      "id": "bottom_red_strip",
+      "tag": "accent_strip",
+      "label": "Bottom red strip",
+      "type": "rect",
+      "x": 0, "y": 1898, "width": 1080, "height": 22,
+      "fill": "#c4141d",
+      "z": 50
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Mono red eyebrow",
+      "x": 70, "y": 150,
+      "text": "MANTENO SPORT PARENTS",
+      "fontSize": 30,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 600,
+      "color": "#c4141d",
+      "letterSpacing": "0.22em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": ["eyebrow"],
+      "maxChars": 28
+    },
+    {
+      "id": "quote",
+      "tag": "reframe",
+      "label": "Editorial quote/reframe line (Saira, mixed case for a quote feel)",
+      "x": 104, "y": 812, "width": 912,
+      "text": "And a fast rep isn't just a number.",
+      "fontSize": 78,
+      "fontFamily": "Saira Condensed",
+      "fontWeight": 700,
+      "color": "#ffffff",
+      "lineHeight": 1.02,
+      "letterSpacing": "-0.005em",
+      "textTransform": "uppercase",
+      "z": 30,
+      "role": "reframe",
+      "accepts": ["reframe", "claim", "proof", "testimonial", "mechanism"],
+      "maxChars": 90
+    },
+    {
+      "id": "wordmark",
+      "tag": "brand",
+      "label": "Batti wordmark",
+      "x": 160, "y": 1808,
+      "text": "BATTI-PERFORMANCE",
+      "fontSize": 30,
+      "fontFamily": "Saira Condensed",
+      "fontWeight": 900,
+      "color": "#ffffff",
+      "letterSpacing": "0.02em",
+      "textTransform": "uppercase",
+      "z": 41,
+      "role": "brand",
+      "accepts": ["brand"],
+      "maxChars": 22
+    }
+  ]
+}

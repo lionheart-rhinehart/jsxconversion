@@ -1,0 +1,7 @@
+{
+  "_comment": "Location tier — ISP Fort Worth facility (3800 Southwest Blvd, Fort Worth, TX 76116). Supplies `city` for the locale eyebrow anchor (rules.eyebrowPattern '{CITY} BASEBALL PARENTS' -> 'FORT WORTH BASEBALL PARENTS'; the state suffix is stripped by buildEyebrowAnchor). {{location.name}} resolves to 'Fort Worth' via cityToName. ISP is single-location, so this is the only location tier.",
+  "location": "fort-worth",
+  "tags": {
+    "city": "FORT WORTH, TX"
+  }
+}

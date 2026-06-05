@@ -1,0 +1,22 @@
+<!-- @dsCard group="Spacing" -->
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0}
+  body{width:700px;background:var(--gray-50);color:var(--ink);padding:34px 32px;box-sizing:border-box;font-family:var(--font-body)}
+  .title{font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;color:var(--gray-600);margin:0 0 22px}
+  .row{display:flex;gap:26px}
+  .item{flex:1;text-align:center}
+  .box{height:72px;background:#fff;border-radius:12px}
+  .lbl{font-size:11px;margin-top:12px;color:var(--gray-600);font-weight:600}
+</style></head>
+<body>
+  <p class="title">Elevation / shadows</p>
+  <div class="row">
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-sm)"></div><div class="lbl">sm</div></div>
+    <div class="item"><div class="box" style="box-shadow:var(--shadow)"></div><div class="lbl">base</div></div>
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-md)"></div><div class="lbl">md</div></div>
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-lg)"></div><div class="lbl">lg</div></div>
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-blue)"></div><div class="lbl">blue lift</div></div>
+  </div>
+</body></html>

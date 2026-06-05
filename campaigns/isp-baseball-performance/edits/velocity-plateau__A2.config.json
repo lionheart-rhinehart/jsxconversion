@@ -1,0 +1,156 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
+      "z": 1
+    },
+    {
+      "id": "scrim_top",
+      "tag": "scrim_top",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 380,
+      "fill": "linear-gradient(180deg, rgba(28,28,29,0.62) 0%, rgba(28,28,29,0) 100%)",
+      "z": 4
+    },
+    {
+      "id": "scrim_bottom",
+      "tag": "scrim_bottom",
+      "type": "rect",
+      "x": 0,
+      "y": 720,
+      "width": 1080,
+      "height": 1200,
+      "fill": "linear-gradient(180deg, rgba(28,28,29,0) 0%, rgba(28,28,29,0.55) 34%, rgba(28,28,29,0.96) 100%)",
+      "z": 5
+    },
+    {
+      "id": "accent_bar",
+      "tag": "accent_bar",
+      "type": "rect",
+      "x": 100,
+      "y": 1158,
+      "width": 116,
+      "height": 12,
+      "fill": "#2573b7",
+      "z": 18
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor chip (auto-filled)",
+      "x": 96,
+      "y": 150,
+      "textAlign": "left",
+      "text": "FORT WORTH SPORT PARENTS",
+      "fontSize": 33,
+      "fontFamily": "Barlow",
+      "fontWeight": 700,
+      "color": "#2573b7",
+      "chipBg": "#ffffff",
+      "chipPad": "13px 28px",
+      "chipRadius": 999,
+      "letterSpacing": "0.16em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 34,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "hook",
+      "tag": "hook",
+      "label": "Primary hook",
+      "x": 96,
+      "y": 1196,
+      "width": 924,
+      "textAlign": "left",
+      "text": "The arm's working harder than ever. The number on the gun hasn't moved since last season.",
+      "fontSize": 100,
+      "fontFamily": "Barlow Condensed",
+      "fontWeight": 800,
+      "color": "#ffffff",
+      "lineHeight": 0.9,
+      "letterSpacing": "0.004em",
+      "textTransform": "uppercase",
+      "z": 21,
+      "role": "hook",
+      "accepts": [
+        "hook",
+        "claim",
+        "reframe"
+      ],
+      "maxChars": 64,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "subhead",
+      "tag": "subhead",
+      "label": "Supporting subhead",
+      "x": 98,
+      "y": 1560,
+      "width": 900,
+      "textAlign": "left",
+      "text": "",
+      "fontSize": 39,
+      "fontFamily": "Barlow",
+      "fontWeight": 600,
+      "color": "#7db0e3",
+      "lineHeight": 1.12,
+      "z": 22,
+      "role": "reframe",
+      "accepts": [
+        "reframe",
+        "claim"
+      ],
+      "maxChars": 84,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark",
+      "x": 98,
+      "y": 1648,
+      "width": 900,
+      "textAlign": "left",
+      "text": "IDEAL SPORTS PERFORMANCE",
+      "fontSize": 30,
+      "fontFamily": "Barlow",
+      "fontWeight": 600,
+      "color": "#ffffff",
+      "letterSpacing": "0.2em",
+      "textTransform": "uppercase",
+      "z": 23,
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 26,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    }
+  ],
+  "media": {
+    "path": "./assets/bg-brand-action-clip-sprinting-lifting-pitching-high-school-male-isp-a626613f.mp4",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1
+  }
+}
