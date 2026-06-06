@@ -1,0 +1,6 @@
+{
+  "note": "Example-library index — the Track-A∥B contract. Schema: scripts/lib/example-library.mjs (validateExampleIndex). Spec: docs/example-index-contract.md. Track B's labeling sidecar writes the real entries; this is the valid EMPTY stub Track A develops against until then.",
+  "schema": "example-library/v1",
+  "generatedAt": null,
+  "examples": {}
+}
