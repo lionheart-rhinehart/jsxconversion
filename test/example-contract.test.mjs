@@ -5,7 +5,10 @@
 //  storage path are the ONE seam between the engine (Track A) and the example
 //  library (Track B). If either side drifts from the other, integration breaks.
 //  These tests pin the contract so a drift fails CI, not a campaign. Pure logic +
-//  one read of the on-disk stub. Run: `npm test`.
+//  one read of the on-disk index. Run: `npm test`.
+//
+//  Vocabulary: ARCHETYPE = the category (subject × composition); CLUSTER = the
+//  embedding-space grouping its examples form (clusterMetrics).
 // ============================================================================
 
 import { test } from "node:test";
@@ -14,7 +17,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import {
-  KINDS, isKind, MEDIA_STYLE_TAGS, isMediaStyleTag, KIND_SPECS, FORMATS,
+  ARCHETYPES, isArchetype, MEDIA_STYLE_TAGS, isMediaStyleTag, ARCHETYPE_SPECS, FORMATS,
   EXAMPLE_ID_RE, isExampleId, slugify, makeExampleId,
   EXAMPLES_DIR, INDEX_PATH, exampleImagePath, exampleMotionPath, exampleSourcePaths,
   emptyIndex, loadExampleIndex, validateExampleEntry, validateExampleIndex,
@@ -25,7 +28,7 @@ const REPO = join(import.meta.dirname, "..");
 // A fully-conformant entry (deep-cloned per test so mutations don't bleed).
 function goodEntry(id = "ex-001-coach-to-camera-gym") {
   return {
-    kind: "coach-direct-address",
+    archetype: "coach-authority",
     format: "video",
     mediaStyleAccepts: ["production:cinematic", "subject:coach-face"],
     slotShape: {
@@ -42,7 +45,7 @@ function goodEntry(id = "ex-001-coach-to-camera-gym") {
       subLook: "gym-warm",
       labeledBy: "gemini-2.x",
       labeledAt: "2026-06-06T00:00:00.000Z",
-      intraKindMaxCosine: 0.61,
+      intraArchetypeMaxCosine: 0.61,
       silhouette: 0.42,
       nearestNeighbor: { exampleId: "ex-002-coach-to-camera-field", cosine: 0.58 },
     },
@@ -94,17 +97,17 @@ test("storage paths are fixed, repo-root-relative, forward-slashed", () => {
 });
 
 // ── enums ────────────────────────────────────────────────────────────────────
-test("KINDS / MEDIA tags are closed and self-consistent with KIND_SPECS", () => {
-  assert.equal(KINDS.length, 12);
-  assert.ok(isKind("giant-stat") && !isKind("nope"));
+test("ARCHETYPES / MEDIA tags are closed and self-consistent with ARCHETYPE_SPECS", () => {
+  assert.equal(ARCHETYPES.length, 12);
+  assert.ok(isArchetype("giant-stat") && !isArchetype("nope"));
   assert.ok(isMediaStyleTag("subject:athlete-face") && !isMediaStyleTag("subject:robot"));
-  // every KIND has a spec; every spec key is a KIND
-  for (const k of KINDS) assert.ok(KIND_SPECS[k], `KIND_SPECS missing ${k}`);
-  for (const k of Object.keys(KIND_SPECS)) assert.ok(isKind(k), `KIND_SPECS has unknown kind ${k}`);
+  // every ARCHETYPE has a spec; every spec key is an ARCHETYPE
+  for (const a of ARCHETYPES) assert.ok(ARCHETYPE_SPECS[a], `ARCHETYPE_SPECS missing ${a}`);
+  for (const a of Object.keys(ARCHETYPE_SPECS)) assert.ok(isArchetype(a), `ARCHETYPE_SPECS has unknown archetype ${a}`);
   // every spec's formats ⊆ FORMATS; every allowed media tag is a known tag
-  for (const [k, spec] of Object.entries(KIND_SPECS)) {
-    for (const f of spec.formats) assert.ok(FORMATS.includes(f), `${k} bad format ${f}`);
-    for (const t of spec.mediaStyleAllowed) assert.ok(isMediaStyleTag(t), `${k} bad media tag ${t}`);
+  for (const [a, spec] of Object.entries(ARCHETYPE_SPECS)) {
+    for (const f of spec.formats) assert.ok(FORMATS.includes(f), `${a} bad format ${f}`);
+    for (const t of spec.mediaStyleAllowed) assert.ok(isMediaStyleTag(t), `${a} bad media tag ${t}`);
     assert.equal(typeof spec.mediaOptional, "boolean");
   }
 });
@@ -117,22 +120,22 @@ test("a conformant entry validates clean (no errors)", () => {
 });
 
 // ── entry validation: each failure mode blocks ───────────────────────────────
-test("unknown kind is an error", () => {
-  const e = clone(goodEntry()); e.kind = "talking-head";
-  assert.ok(validateExampleEntry("ex-001-x", e).errors.some((m) => /not a known KIND/.test(m)));
+test("unknown archetype is an error", () => {
+  const e = clone(goodEntry()); e.archetype = "talking-head";
+  assert.ok(validateExampleEntry("ex-001-x", e).errors.some((m) => /not a known ARCHETYPE/.test(m)));
 });
 
-test("format not allowed for the kind is an error", () => {
-  const e = clone(goodEntry()); e.kind = "versus"; // static-only
+test("format not allowed for the archetype is an error", () => {
+  const e = clone(goodEntry()); e.archetype = "versus"; // static-only
   e.format = "video";
   e.mediaStyleAccepts = []; // versus allows []
-  assert.ok(validateExampleEntry("ex-001-x", e).errors.some((m) => /not allowed for kind/.test(m)));
+  assert.ok(validateExampleEntry("ex-001-x", e).errors.some((m) => /not allowed for archetype/.test(m)));
 });
 
-test("a media tag outside the kind's allowed superset is an error", () => {
-  const e = clone(goodEntry()); // coach-direct-address
-  e.mediaStyleAccepts = ["production:cinematic", "subject:athlete-action"]; // action not allowed for coach kind
-  assert.ok(validateExampleEntry("ex-001-x", e).errors.some((m) => /not allowed for kind "coach-direct-address"/.test(m)));
+test("a media tag outside the archetype's allowed superset is an error", () => {
+  const e = clone(goodEntry()); // coach-authority
+  e.mediaStyleAccepts = ["production:cinematic", "subject:athlete-action"]; // action not allowed for coach archetype
+  assert.ok(validateExampleEntry("ex-001-x", e).errors.some((m) => /not allowed for archetype "coach-authority"/.test(m)));
 });
 
 test("an unknown media tag is an error", () => {
@@ -166,10 +169,10 @@ test("a malformed id key is an error even with a clean body", () => {
   assert.ok(validateExampleEntry("cluster-12", e).errors.some((m) => /does not match the ex-/.test(m)));
 });
 
-test("media-optional kind with [] is clean; clusterMetrics absent only warns", () => {
+test("media-optional archetype with [] is clean; clusterMetrics absent only warns", () => {
   const id = "ex-007-giant-pr";
   const e = {
-    kind: "giant-stat", format: "static", mediaStyleAccepts: [],
+    archetype: "giant-stat", format: "static", mediaStyleAccepts: [],
     slotShape: { slots: [{ id: "stat", role: "stat", maxChars: 6, required: true }] },
     renderedImagePath: exampleImagePath(id),
     // no clusterMetrics — Track B hasn't labeled yet
@@ -179,17 +182,18 @@ test("media-optional kind with [] is clean; clusterMetrics absent only warns", (
   assert.ok(warnings.some((m) => /clusterMetrics absent/.test(m)));
 });
 
-// ── index validation + the on-disk stub ──────────────────────────────────────
-test("emptyIndex() validates and the on-disk stub matches it", () => {
+// ── index validation + the on-disk index ──────────────────────────────────────
+test("emptyIndex() validates and the on-disk index conforms", () => {
   const empty = emptyIndex();
   const r = validateExampleIndex(empty);
   assert.deepEqual(r.errors, []);
   assert.equal(r.count, 0);
+  assert.equal(empty.schema, "example-library/v2");
 
   const onDisk = JSON.parse(readFileSync(join(REPO, INDEX_PATH), "utf8"));
   const d = validateExampleIndex(onDisk);
   assert.deepEqual(d.errors, [], d.errors.join("\n"));
-  assert.equal(onDisk.schema, "example-library/v1");
+  assert.equal(onDisk.schema, "example-library/v2");
   assert.ok(onDisk.examples && typeof onDisk.examples === "object");
 });
 

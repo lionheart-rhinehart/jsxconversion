@@ -3,7 +3,7 @@
 // ============================================================================
 //  Why this file exists: the engine (Track A) and the example library (Track B)
 //  are built in PARALLEL chats, joined by ONE artifact — `templates/_example-index.json`.
-//  If the two sides disagree on the schema, the id convention, the kind vocabulary,
+//  If the two sides disagree on the schema, the id convention, the archetype vocabulary,
 //  the media-style vocabulary, or where rendered images live, they DRIFT and the
 //  seam breaks at integration. So — per the plan's enforcement thesis ("a rule only
 //  counts if it lives in CODE that runs, not in instructions the engine reads") —
@@ -11,19 +11,27 @@
 //  there is only one definition. The human-readable spec is docs/example-index-contract.md;
 //  THIS file is the authority it describes.
 //
-//  What an "example" is (vocabulary — read docs/well-it-happened-again plan):
-//    Examples GUIDE generation ("here's how to build this KIND of thing"); they are
-//    never filled in like the old templates. Each example is one rendered creative,
-//    labeled by its visual KIND (archetype) + the media styles it accepts + the copy
-//    SHAPE its slots expose. The engine references examples BY ID; Track B produces
-//    the rendered images + perceptual metrics. "template" is the leaking old word —
-//    here it is "example."
+//  VOCABULARY (locked with Cody 2026-06-06, grounded in the research doc
+//  ad-creative-kinds-library.md):
+//    • ARCHETYPE = the CATEGORY a creative belongs to (its visual structure:
+//      subject × composition × production × motion). The doc calls this a "kind" /
+//      "archetype"; we use ARCHETYPE. Closed enum, derived from the doc's axes.
+//    • CLUSTER   = the GROUPING that an archetype's examples form in EMBEDDING space
+//      (what CLIP/DINOv2 see). A healthy library = one tight cluster per archetype,
+//      distinct from the others. The perceptual metrics live in `clusterMetrics`.
+//    These are two different things; do not conflate the words.
+//
+//  What an "example" is: examples GUIDE generation ("here's how to build this
+//  ARCHETYPE of thing"); they are never filled in like the old templates. Each
+//  example is one rendered creative, labeled by its ARCHETYPE + the media styles it
+//  accepts + the copy SHAPE its slots expose. The engine references examples BY ID;
+//  Track B produces the rendered images + perceptual metrics.
 //
 //  Exports:
-//    • KINDS / isKind                  — the closed visual-archetype enum (#cluster)
+//    • ARCHETYPES / isArchetype        — the closed visual-archetype enum
 //    • MEDIA_STYLE_TAGS / isMediaStyleTag — the closed media-style vocabulary
-//    • KIND_SPECS                      — per-kind allowed media tags + formats (the
-//                                        map the media-fit gate + Track B labeling share)
+//    • ARCHETYPE_SPECS                 — per-archetype allowed media tags + formats
+//                                        (the map the media-fit gate + Track B share)
 //    • EXAMPLES_DIR / INDEX_PATH       — the fixed storage locations
 //    • makeExampleId / isExampleId / slugify
 //    • exampleImagePath / exampleMotionPath / exampleSourcePaths
@@ -67,41 +75,45 @@ export function exampleSourcePaths(id) {
 }
 
 // ---------------------------------------------------------------------------
-// The closed KIND vocabulary (visual archetypes / clusters)
+// The closed ARCHETYPE vocabulary (visual categories)
 // ---------------------------------------------------------------------------
-// Cut by VISUAL structure (subject × composition × production × motion), NOT by
-// message — that's the axis Meta's Andromeda + the embedding models cluster on.
-// First-pass ACCEPTED (the plan): the CLIP/DINOv2 validation + real performance are
-// the arbiters and may prune/merge these. Extending/merging = edit THIS array (one
-// place; both tracks + the index validator see it at once). Stable kebab ids — a
-// kind id MUST NOT change once examples reference it (re-label by re-running the
-// labeler, which only rewrites the `kind` FIELD, never an example id).
-export const KINDS = [
-  "authentic-selfie",     // UGC lane — one athlete/coach, face fills frame, raw
-  "coach-direct-address", // composed coach talking to camera
-  "action-hero-text",     // athlete in motion, full-bleed footage + bold overlay
-  "training-scene",       // wide gym/field, the PLACE dominates
-  "before-after-split",   // hard dual-frame, same athlete two states
-  "proof-collage",        // grid/mosaic of faces + quotes + ratings
-  "giant-stat",           // one huge numeral owns the frame
-  "metric-reveal",        // a chart/gauge builds to one point (animated)
-  "kinetic-statement",    // full-frame animated type, words ARE the creative
-  "list-steps",           // sequential numbered cards ("3 things…")
-  "offer-guarantee",      // structured deal + guarantee + CTA
-  "versus",               // two-column head-to-head contrast
+// Derived from the research doc's structural axes — each archetype occupies a
+// UNIQUE (dominant-subject × compositional-template) cell, the doc's rule for
+// DINOv2 spatial distinctness ("no two archetypes share the same subject ×
+// composition"). Production-mode + temporal are secondary differentiators. This is
+// a first-pass HYPOTHESIS: the CLIP/DINOv2 validation + real performance are the
+// arbiters and may merge two archetypes that collapse in embedding space (the
+// flagged collision zones: ugc-selfie↔coach-authority, transformation-split↔versus,
+// giant-stat↔kinetic-statement↔metric-reveal). Extending/merging = edit THIS array
+// (one place; both tracks + the validator see it at once). Stable kebab ids — an
+// archetype id MUST NOT change once examples reference it (re-label by re-running the
+// labeler, which only rewrites the `archetype` FIELD, never an example id).
+export const ARCHETYPES = [
+  "ugc-selfie",            // one athlete/coach face fills frame, raw, arm's-length
+  "coach-authority",       // composed coach to camera, intentional framing + credential
+  "action-hero",           // athlete in motion, full-bleed footage + bold overlay
+  "training-scene",        // wide gym/field, the PLACE dominates
+  "transformation-split",  // hard dual-frame, same athlete two states
+  "versus",                // two-column head-to-head contrast
+  "proof-collage",         // grid/mosaic of faces + quotes + ratings
+  "giant-stat",            // one huge numeral owns the frame
+  "metric-reveal",         // a chart/gauge builds to one point (animated)
+  "kinetic-statement",     // full-frame animated type, words ARE the creative
+  "list-steps",            // sequential numbered cards ("3 things…")
+  "offer-guarantee",       // structured deal + guarantee + CTA
 ];
 
-export function isKind(k) {
-  return typeof k === "string" && KINDS.includes(k);
+export function isArchetype(a) {
+  return typeof a === "string" && ARCHETYPES.includes(a);
 }
 
 // ---------------------------------------------------------------------------
 // The closed MEDIA-STYLE vocabulary (mirrors element role/`accepts`)
 // ---------------------------------------------------------------------------
-// Namespaced `facet:value` flat tags. A Kraken media file (Track B tags it) and a
-// KIND both speak this vocabulary; the engine may pull a clip ONLY where the media's
-// tags satisfy the kind's accepts (so it can't fake UGC from cinematic footage, or
-// vice-versa). Closed on purpose — extend HERE, both tracks update together.
+// Namespaced `facet:value` flat tags. A Kraken media file (Track B tags it) and an
+// ARCHETYPE both speak this vocabulary; the engine may pull a clip ONLY where the
+// media's tags satisfy the archetype's accepts (so it can't fake UGC from cinematic
+// footage, or vice-versa). Closed on purpose — extend HERE, both tracks update together.
 export const MEDIA_SUBJECT = [
   "subject:athlete-face", "subject:athlete-action",
   "subject:coach-face", "subject:parent-face", "subject:no-human",
@@ -120,31 +132,30 @@ export function isMediaStyleTag(t) {
 }
 
 // ---------------------------------------------------------------------------
-// KIND_SPECS — per-kind allowed media tags + valid formats (the shared map)
+// ARCHETYPE_SPECS — per-archetype allowed media tags + valid formats (shared map)
 // ---------------------------------------------------------------------------
-// Derived from the plan's "Kinds list — first-pass ACCEPTED." Both the engine's
-// media-fit gate (Tier-1 #12) and Track B's labeler read this:
-//   • formats          — which render formats this kind can be authored as.
-//   • mediaOptional     — true for the text/graphic-dominant kinds where a real
+// Both the engine's media-fit gate (Tier-1 #12) and Track B's labeler read this:
+//   • formats          — which render formats this archetype can be authored as.
+//   • mediaOptional     — true for the text/graphic-dominant archetypes where a real
 //                         clip is allowed but not style-constrained (rule #2 "every
 //                         creative carries real media" still applies — enforced
 //                         elsewhere; this is about STYLE matching only).
-//   • mediaStyleAllowed — the SUPERSET an example of this kind may draw from. An
+//   • mediaStyleAllowed — the SUPERSET an example of this archetype may draw from. An
 //                         example's own `mediaStyleAccepts` must be a SUBSET of this
 //                         (validateExampleEntry enforces it). [] = unconstrained.
 // `summary` is the one-line human gloss.
-export const KIND_SPECS = {
-  "authentic-selfie": {
+export const ARCHETYPE_SPECS = {
+  "ugc-selfie": {
     formats: ["static", "video"], mediaOptional: false,
     mediaStyleAllowed: ["production:ugc-selfie", "subject:athlete-face", "subject:coach-face"],
-    summary: "UGC selfie — face fills frame, arm's-length, raw.",
+    summary: "UGC selfie — one face fills frame, arm's-length, raw.",
   },
-  "coach-direct-address": {
+  "coach-authority": {
     formats: ["video", "static"], mediaOptional: false,
     mediaStyleAllowed: ["production:mid-fi", "production:cinematic", "subject:coach-face"],
-    summary: "Composed coach talking to camera, intentional framing.",
+    summary: "Composed coach to camera, intentional framing + credential.",
   },
-  "action-hero-text": {
+  "action-hero": {
     formats: ["static", "video"], mediaOptional: false,
     mediaStyleAllowed: ["production:cinematic", "subject:athlete-action"],
     summary: "Athlete in motion, full-bleed footage hero + bold overlay text.",
@@ -157,10 +168,14 @@ export const KIND_SPECS = {
     ],
     summary: "Wide gym/field, the place dominates, smaller anchored text.",
   },
-  "before-after-split": {
+  "transformation-split": {
     formats: ["static", "video"], mediaOptional: false,
     mediaStyleAllowed: ["subject:athlete-action", "subject:athlete-face"],
     summary: "Hard dual-frame, same athlete two states.",
+  },
+  "versus": {
+    formats: ["static"], mediaOptional: true, mediaStyleAllowed: [],
+    summary: "Two-column head-to-head contrast; 2 small images.",
   },
   "proof-collage": {
     formats: ["static"], mediaOptional: false,
@@ -187,10 +202,6 @@ export const KIND_SPECS = {
     formats: ["static", "video"], mediaOptional: true, mediaStyleAllowed: [],
     summary: "Structured deal + guarantee + CTA; small support.",
   },
-  "versus": {
-    formats: ["static"], mediaOptional: true, mediaStyleAllowed: [],
-    summary: "Two-column head-to-head contrast; 2 small images.",
-  },
 };
 
 export const FORMATS = ["static", "video"];
@@ -204,8 +215,8 @@ export const FORMATS = ["static", "video"];
 //     • <NNN>             — a zero-padded ≥3-digit sequence: STABLE + unique. The id
 //                           never changes, so example refs survive a re-label.
 //     • <slug>            — a kebab human hint (a-z 0-9, hyph-separated). A HINT only —
-//                           the authoritative kind is the `kind` FIELD, not the slug,
-//                           so a re-label never forces a rename.
+//                           the authoritative archetype is the `archetype` FIELD, not
+//                           the slug, so a re-label never forces a rename.
 //   e.g. ex-001-coach-to-camera-gym, ex-014-giant-pr-number
 export const EXAMPLE_ID_RE = /^ex-\d{3,}-[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -263,36 +274,36 @@ export function validateExampleEntry(id, entry) {
   if (!isExampleId(id)) E(`id does not match the ex-<NNN>-<slug> convention`);
   if (!entry || typeof entry !== "object") { E(`entry is not an object`); return { errors, warnings }; }
 
-  // kind
-  if (!isKind(entry.kind)) E(`kind ${JSON.stringify(entry.kind)} is not a known KIND`);
+  // archetype
+  if (!isArchetype(entry.archetype)) E(`archetype ${JSON.stringify(entry.archetype)} is not a known ARCHETYPE`);
 
-  // format (+ must be a format the kind allows)
+  // format (+ must be a format the archetype allows)
   if (!FORMATS.includes(entry.format)) {
     E(`format ${JSON.stringify(entry.format)} must be one of ${FORMATS.join("/")}`);
-  } else if (isKind(entry.kind) && !KIND_SPECS[entry.kind].formats.includes(entry.format)) {
-    E(`format "${entry.format}" not allowed for kind "${entry.kind}" (allowed: ${KIND_SPECS[entry.kind].formats.join("/")})`);
+  } else if (isArchetype(entry.archetype) && !ARCHETYPE_SPECS[entry.archetype].formats.includes(entry.format)) {
+    E(`format "${entry.format}" not allowed for archetype "${entry.archetype}" (allowed: ${ARCHETYPE_SPECS[entry.archetype].formats.join("/")})`);
   }
 
-  // mediaStyleAccepts — every tag known; subset of the kind's allowed superset.
+  // mediaStyleAccepts — every tag known; subset of the archetype's allowed superset.
   if (!Array.isArray(entry.mediaStyleAccepts)) {
-    E(`mediaStyleAccepts must be an array (use [] for media-optional kinds)`);
+    E(`mediaStyleAccepts must be an array (use [] for media-optional archetypes)`);
   } else {
     for (const t of entry.mediaStyleAccepts) {
       if (!isMediaStyleTag(t)) E(`mediaStyleAccepts: ${JSON.stringify(t)} is not a known media-style tag`);
     }
-    if (isKind(entry.kind)) {
-      const spec = KIND_SPECS[entry.kind];
-      // [] allowed = unconstrained (media-optional kinds): any known tag (or none) ok.
+    if (isArchetype(entry.archetype)) {
+      const spec = ARCHETYPE_SPECS[entry.archetype];
+      // [] allowed = unconstrained (media-optional archetypes): any known tag (or none) ok.
       if (spec.mediaStyleAllowed.length) {
         const allowed = new Set(spec.mediaStyleAllowed);
         for (const t of entry.mediaStyleAccepts) {
           if (isMediaStyleTag(t) && !allowed.has(t)) {
-            E(`mediaStyleAccepts: "${t}" not allowed for kind "${entry.kind}" (allowed: ${spec.mediaStyleAllowed.join(", ")})`);
+            E(`mediaStyleAccepts: "${t}" not allowed for archetype "${entry.archetype}" (allowed: ${spec.mediaStyleAllowed.join(", ")})`);
           }
         }
       }
       if (!spec.mediaOptional && entry.mediaStyleAccepts.length === 0) {
-        W(`kind "${entry.kind}" is not media-optional but mediaStyleAccepts is empty`);
+        W(`archetype "${entry.archetype}" is not media-optional but mediaStyleAccepts is empty`);
       }
     }
   }
@@ -309,7 +320,7 @@ export function validateExampleEntry(id, entry) {
   if (entry.motionPath != null && entry.motionPath !== exampleMotionPath(id)) {
     E(`motionPath, when present, must be "${exampleMotionPath(id)}" (got ${JSON.stringify(entry.motionPath)})`);
   }
-  if (entry.format === "video" && isKind(entry.kind) && KIND_SPECS[entry.kind].formats.includes("video")) {
+  if (entry.format === "video" && isArchetype(entry.archetype) && ARCHETYPE_SPECS[entry.archetype].formats.includes("video")) {
     // not an error to omit motionPath (the labeled poster .png is the contract);
     // just a nudge so a video example without its clip is noticed.
     if (entry.motionPath == null) W(`video example has no motionPath (poster .png is still the labeled artifact)`);
@@ -360,7 +371,7 @@ function validateClusterMetrics(id, cm, E, W) {
   // numeric fields softly when present; unknown fields are allowed (forward-compat
   // so the sidecar can extend without a contract bump).
   const isUnit = (v) => typeof v === "number" && v >= 0 && v <= 1;
-  for (const k of ["intraKindMaxCosine", "silhouette", "meanCrossKindCosine"]) {
+  for (const k of ["intraArchetypeMaxCosine", "silhouette", "meanCrossArchetypeCosine"]) {
     if (cm[k] != null && typeof cm[k] !== "number") E(`${id}: clusterMetrics.${k} must be a number or null`);
   }
   if (cm.nearestNeighbor != null) {
@@ -404,7 +415,7 @@ export function validateExampleIndex(index) {
 export function emptyIndex() {
   return {
     note: "Example-library index — the Track-A∥B contract. Schema: scripts/lib/example-library.mjs (validateExampleIndex). Spec: docs/example-index-contract.md. Track B's labeling sidecar writes the real entries.",
-    schema: "example-library/v1",
+    schema: "example-library/v2",
     generatedAt: null,
     examples: {},
   };

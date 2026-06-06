@@ -41,6 +41,7 @@ const EXAMPLES_DIR = join(ROOT, "templates", "_examples");
 const ASSETS_DIR = join(EXAMPLES_DIR, "assets");
 const INDEX_FILE = join(ROOT, "templates", "_example-index.json");
 const MANIFEST_FILE = join(HERE, "examples.manifest.json");
+const ARTIFACT_FILE = join(HERE, "embeddings.artifact.json");
 const VIEWER_HTML = join(HERE, "viewer.html");
 const PYTHON = process.env.PYTHON || "python";
 
@@ -135,7 +136,7 @@ function buildExamples() {
     const src = existsSync(srcAbs) ? readFileSync(srcAbs, "utf8") : "";
     const cm = entry.clusterMetrics || {};
     out.push({
-      id, kind: entry.kind, format: entry.format,
+      id, archetype: entry.archetype, format: entry.format,
       subLook: cm.subLook ?? null,
       mediaStyleAccepts: entry.mediaStyleAccepts || [],
       slotShape: entry.slotShape || { slots: [] },
@@ -167,6 +168,12 @@ async function handle(req, res) {
   if (path === "/" || path === "/viewer.html") return serveFile(res, VIEWER_HTML, "text/html; charset=utf-8", noCache);
   if (path === "/api/examples" && req.method === "GET") return json(res, 200, buildExamples());
   if (path === "/api/media" && req.method === "GET") return json(res, 200, { media: listMedia() });
+  if (path === "/api/clusters" && req.method === "GET") {
+    // the embedding artifact: archetype-ordered cosine matrix (heatmap) + 2D
+    // projection (scatter) + per-archetype health. Vectors stay out (in the .npz).
+    const a = existsSync(ARTIFACT_FILE) ? JSON.parse(readFileSync(ARTIFACT_FILE, "utf8")) : {};
+    return json(res, 200, { heatmap: a.heatmap || null, projection2d: a.projection2d || null, batch: a.batch || {}, embedder: a.embedder || null });
+  }
 
   if (path.startsWith("/img/") && req.method === "GET") {
     const id = basename(path).replace(/\.png$/, "");

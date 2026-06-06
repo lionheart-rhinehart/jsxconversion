@@ -1,99 +1,189 @@
 {
-  "note": "Vision-LLM kind cross-check. With no GEMINI_API_KEY this is a no-op that defers to the authored (eyeball-confirmed) kind; with a key it records gemini's independent read + agreement so disagreements surface for review. build-index.mjs folds 'labeledBy' + any disagreement flag into clusterMetrics.",
+  "note": "Vision-LLM archetype cross-check. With no GEMINI_API_KEY this is a no-op that defers to the authored (eyeball-confirmed) archetype; with a key it records gemini's independent read + agreement so disagreements surface. build-index.mjs folds 'labeledBy' + any disagreement into clusterMetrics.",
   "provider": "gemini",
-  "model": null,
-  "ranAt": null,
-  "labeledBy": "authored-manifest+curator-eyeball",
+  "model": "gemini-2.5-flash",
+  "ranAt": "2026-06-06T19:13:39.000Z",
+  "labeledBy": "gemini:gemini-2.5-flash",
   "labels": {
-    "ex-001-sprint-hero-overlay": {
-      "authoredKind": "action-hero-text",
-      "geminiKind": null,
-      "agrees": null,
-      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    "ex-001-ugc-selfie-a": {
+      "authoredArchetype": "ugc-selfie",
+      "geminiArchetype": "training-scene",
+      "agrees": false,
+      "note": "DISAGREEMENT: gemini read 'training-scene' vs authored 'ugc-selfie' \u2014 review"
     },
-    "ex-002-jump-hero-topbar": {
-      "authoredKind": "action-hero-text",
-      "geminiKind": null,
-      "agrees": null,
-      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    "ex-002-ugc-selfie-b": {
+      "authoredArchetype": "ugc-selfie",
+      "geminiArchetype": "training-scene",
+      "agrees": false,
+      "note": "DISAGREEMENT: gemini read 'training-scene' vs authored 'ugc-selfie' \u2014 review"
     },
-    "ex-003-lift-hero-center": {
-      "authoredKind": "action-hero-text",
-      "geminiKind": null,
-      "agrees": null,
-      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    "ex-003-ugc-selfie-c": {
+      "authoredArchetype": "ugc-selfie",
+      "geminiArchetype": "training-scene",
+      "agrees": false,
+      "note": "DISAGREEMENT: gemini read 'training-scene' vs authored 'ugc-selfie' \u2014 review"
     },
-    "ex-004-gymwide-training": {
-      "authoredKind": "training-scene",
-      "geminiKind": null,
-      "agrees": null,
-      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    "ex-004-coach-authority-a": {
+      "authoredArchetype": "coach-authority",
+      "geminiArchetype": "coach-authority",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
     },
-    "ex-005-group-training": {
-      "authoredKind": "training-scene",
-      "geminiKind": null,
-      "agrees": null,
-      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    "ex-005-coach-authority-b": {
+      "authoredArchetype": "coach-authority",
+      "geminiArchetype": "coach-authority",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
     },
-    "ex-006-giant-stat-percent": {
-      "authoredKind": "giant-stat",
-      "geminiKind": null,
-      "agrees": null,
-      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    "ex-006-coach-authority-c": {
+      "authoredArchetype": "coach-authority",
+      "geminiArchetype": "coach-authority",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
     },
-    "ex-007-giant-stat-measure": {
-      "authoredKind": "giant-stat",
-      "geminiKind": null,
-      "agrees": null,
-      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    "ex-007-action-hero-a": {
+      "authoredArchetype": "action-hero",
+      "geminiArchetype": "coach-authority",
+      "agrees": false,
+      "note": "DISAGREEMENT: gemini read 'coach-authority' vs authored 'action-hero' \u2014 review"
     },
-    "ex-008-coach-selfie": {
-      "authoredKind": "authentic-selfie",
-      "geminiKind": null,
-      "agrees": null,
-      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    "ex-008-action-hero-b": {
+      "authoredArchetype": "action-hero",
+      "geminiArchetype": "training-scene",
+      "agrees": false,
+      "note": "DISAGREEMENT: gemini read 'training-scene' vs authored 'action-hero' \u2014 review"
     },
-    "ex-009-athlete-selfie": {
-      "authoredKind": "authentic-selfie",
-      "geminiKind": null,
-      "agrees": null,
-      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    "ex-009-action-hero-c": {
+      "authoredArchetype": "action-hero",
+      "geminiArchetype": "training-scene",
+      "agrees": false,
+      "note": "DISAGREEMENT: gemini read 'training-scene' vs authored 'action-hero' \u2014 review"
     },
-    "ex-010-coach-direct-address": {
-      "authoredKind": "coach-direct-address",
-      "geminiKind": null,
-      "agrees": null,
-      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    "ex-010-training-scene-a": {
+      "authoredArchetype": "training-scene",
+      "geminiArchetype": "training-scene",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
     },
-    "ex-011-before-after-split": {
-      "authoredKind": "before-after-split",
-      "geminiKind": null,
-      "agrees": null,
-      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    "ex-011-training-scene-b": {
+      "authoredArchetype": "training-scene",
+      "geminiArchetype": "training-scene",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
     },
-    "ex-012-proof-collage": {
-      "authoredKind": "proof-collage",
-      "geminiKind": null,
-      "agrees": null,
-      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    "ex-012-training-scene-c": {
+      "authoredArchetype": "training-scene",
+      "geminiArchetype": "training-scene",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
     },
-    "ex-013-versus-split": {
-      "authoredKind": "versus",
-      "geminiKind": null,
-      "agrees": null,
-      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    "ex-013-transformation-split-a": {
+      "authoredArchetype": "transformation-split",
+      "geminiArchetype": "transformation-split",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
     },
-    "ex-014-offer-guarantee": {
-      "authoredKind": "offer-guarantee",
-      "geminiKind": null,
-      "agrees": null,
-      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    "ex-014-transformation-split-b": {
+      "authoredArchetype": "transformation-split",
+      "geminiArchetype": "transformation-split",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
     },
-    "ex-015-list-steps": {
-      "authoredKind": "list-steps",
-      "geminiKind": null,
-      "agrees": null,
-      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    "ex-015-transformation-split-c": {
+      "authoredArchetype": "transformation-split",
+      "geminiArchetype": "transformation-split",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-016-proof-collage-a": {
+      "authoredArchetype": "proof-collage",
+      "geminiArchetype": "proof-collage",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-017-proof-collage-b": {
+      "authoredArchetype": "proof-collage",
+      "geminiArchetype": "proof-collage",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-018-proof-collage-c": {
+      "authoredArchetype": "proof-collage",
+      "geminiArchetype": "proof-collage",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-019-giant-stat-a": {
+      "authoredArchetype": "giant-stat",
+      "geminiArchetype": "metric-reveal",
+      "agrees": false,
+      "note": "DISAGREEMENT: gemini read 'metric-reveal' vs authored 'giant-stat' \u2014 review"
+    },
+    "ex-020-giant-stat-b": {
+      "authoredArchetype": "giant-stat",
+      "geminiArchetype": "metric-reveal",
+      "agrees": false,
+      "note": "DISAGREEMENT: gemini read 'metric-reveal' vs authored 'giant-stat' \u2014 review"
+    },
+    "ex-021-giant-stat-c": {
+      "authoredArchetype": "giant-stat",
+      "geminiArchetype": "giant-stat",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-022-versus-a": {
+      "authoredArchetype": "versus",
+      "geminiArchetype": "versus",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-023-versus-b": {
+      "authoredArchetype": "versus",
+      "geminiArchetype": "versus",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-024-versus-c": {
+      "authoredArchetype": "versus",
+      "geminiArchetype": "versus",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-025-list-steps-a": {
+      "authoredArchetype": "list-steps",
+      "geminiArchetype": "list-steps",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-026-list-steps-b": {
+      "authoredArchetype": "list-steps",
+      "geminiArchetype": "list-steps",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-027-list-steps-c": {
+      "authoredArchetype": "list-steps",
+      "geminiArchetype": "list-steps",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-028-offer-guarantee-a": {
+      "authoredArchetype": "offer-guarantee",
+      "geminiArchetype": "training-scene",
+      "agrees": false,
+      "note": "DISAGREEMENT: gemini read 'training-scene' vs authored 'offer-guarantee' \u2014 review"
+    },
+    "ex-029-offer-guarantee-b": {
+      "authoredArchetype": "offer-guarantee",
+      "geminiArchetype": "coach-authority",
+      "agrees": false,
+      "note": "DISAGREEMENT: gemini read 'coach-authority' vs authored 'offer-guarantee' \u2014 review"
+    },
+    "ex-030-offer-guarantee-c": {
+      "authoredArchetype": "offer-guarantee",
+      "geminiArchetype": "coach-authority",
+      "agrees": false,
+      "note": "DISAGREEMENT: gemini read 'coach-authority' vs authored 'offer-guarantee' \u2014 review"
     }
   }
 }

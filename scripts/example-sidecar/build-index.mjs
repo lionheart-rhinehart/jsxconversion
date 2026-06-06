@@ -57,19 +57,19 @@ function main() {
       labeledBy,
       labeledAt,
       embedder: artifact.embedder ?? null,
-      intraKindMaxCosine: m.intraKindMaxCosine ?? null,
-      meanCrossKindCosine: m.meanCrossKindCosine ?? null,
+      intraArchetypeMaxCosine: m.intraArchetypeMaxCosine ?? null,
+      meanCrossArchetypeCosine: m.meanCrossArchetypeCosine ?? null,
       silhouette: m.silhouette ?? null,
       nearestNeighbor: m.nearestNeighbor ?? null,
     };
     // Surface a vision-LLM disagreement (when Gemini ran) so it's visible in the index.
-    if (lab.agrees === false && lab.geminiKind) {
-      clusterMetrics.labelDisagreement = { geminiKind: lab.geminiKind, authoredKind: lab.authoredKind };
+    if (lab.agrees === false && lab.geminiArchetype) {
+      clusterMetrics.labelDisagreement = { geminiArchetype: lab.geminiArchetype, authoredArchetype: lab.authoredArchetype };
     }
 
     const sourceJsx = exampleSourcePaths(ex.id).jsx;
     examples[ex.id] = {
-      kind: ex.kind,
+      archetype: ex.archetype,
       format: ex.format,
       mediaStyleAccepts: ex.mediaStyleAccepts,
       slotShape: ex.slotShape,
@@ -81,7 +81,7 @@ function main() {
 
   const index = {
     note: "Example-library index (Track B). One entry per render-QA-passed example: kind + media-style accepts + copy slotShape + the rendered artifact path + perceptual clusterMetrics. Produced by scripts/example-sidecar (render → QA → embed[CLIP+DINOv2] → label → assemble). Schema authority: scripts/lib/example-library.mjs.",
-    schema: "example-library/v1",
+    schema: "example-library/v2",
     generatedAt: labeledAt,
     diversity: artifact.batch ?? {},   // the 'measured spectrum' (forward-compatible top-level key)
     examples,
@@ -101,8 +101,8 @@ function main() {
   process.stderr.write(`[build-index] wrote ${INDEX_PATH} — ${count} examples, 0 errors, ${warnings.length} warning(s)` +
     (skipped ? `, ${skipped} skipped (failed render-QA)` : "") + "\n");
   const b = index.diversity || {};
-  process.stderr.write(`[build-index] diversity: maxCrossKind=${b.maxCrossKindCosine} meanCrossKind=${b.meanCrossKindCosine} ` +
-    `meanSilhouette=${b.meanSilhouette} vendi=${b.vendiScore} maxIntraKind=${b.maxIntraKindCosine} (labeledBy=${labeledBy})\n`);
+  process.stderr.write(`[build-index] diversity: maxCrossArchetype=${b.maxCrossArchetypeCosine} meanCrossArchetype=${b.meanCrossArchetypeCosine} ` +
+    `meanSilhouette=${b.meanSilhouette} vendi=${b.vendiScore} maxIntraArchetype=${b.maxIntraArchetypeCosine} (labeledBy=${labeledBy})\n`);
 }
 
 main();
