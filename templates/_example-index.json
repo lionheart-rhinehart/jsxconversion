@@ -1,7 +1,7 @@
 {
   "note": "Example-library index (Track B). One entry per render-QA-passed example: kind + media-style accepts + copy slotShape + the rendered artifact path + perceptual clusterMetrics. Produced by scripts/example-sidecar (render → QA → embed[CLIP+DINOv2] → label → assemble). Schema authority: scripts/lib/example-library.mjs.",
   "schema": "example-library/v2",
-  "generatedAt": "2026-06-06T20:12:08.964Z",
+  "generatedAt": "2026-06-06T23:57:44.818Z",
   "diversity": {
     "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
     "count": 15,
@@ -22,12 +22,12 @@
       "ugc-selfie",
       "versus"
     ],
-    "maxCrossArchetypeCosine": 0.6947,
-    "meanCrossArchetypeCosine": 0.3863,
+    "maxCrossArchetypeCosine": 0.6834,
+    "meanCrossArchetypeCosine": 0.3788,
     "maxIntraArchetypeCosine": null,
     "meanWithinArchetypeCosine": null,
     "meanSilhouette": 1,
-    "vendiScore": 7.7624,
+    "vendiScore": 7.9158,
     "kmeansCrossCheck": {
       "k": 15,
       "meanClusterPurity": 1
@@ -47,8 +47,8 @@
         "maxWithin": null,
         "meanWithin": null,
         "maxCrossNeighbor": {
-          "cosine": 0.531,
-          "archetype": "kinetic-text"
+          "cosine": 0.6073,
+          "archetype": "timeline-schedule"
         }
       },
       "kinetic-text": {
@@ -101,8 +101,8 @@
         "maxWithin": null,
         "meanWithin": null,
         "maxCrossNeighbor": {
-          "cosine": 0.6947,
-          "archetype": "timeline-schedule"
+          "cosine": 0.6251,
+          "archetype": "benefit-iconrow"
         }
       },
       "offer-card": {
@@ -155,8 +155,8 @@
         "maxWithin": null,
         "meanWithin": null,
         "maxCrossNeighbor": {
-          "cosine": 0.6947,
-          "archetype": "list-steps"
+          "cosine": 0.6073,
+          "archetype": "metric-reveal"
         }
       },
       "benefit-iconrow": {
@@ -170,11 +170,11 @@
       }
     },
     "closestCrossArchetypePair": {
-      "a": "ex-008-list-steps",
-      "b": "ex-014-timeline-schedule",
-      "archetypeA": "list-steps",
-      "archetypeB": "timeline-schedule",
-      "cosine": 0.6947
+      "a": "ex-005-before-after-split",
+      "b": "ex-012-ugc-selfie",
+      "archetypeA": "before-after-split",
+      "archetypeB": "ugc-selfie",
+      "cosine": 0.6834
     },
     "thresholds": {
       "maxWithinArchetypeCosine": "<0.85",
@@ -223,10 +223,10 @@
       "clusterMetrics": {
         "subLook": "giant-stat-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-06T20:12:08.964Z",
+        "labeledAt": "2026-06-06T23:57:44.818Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": null,
-        "meanCrossArchetypeCosine": 0.4123,
+        "meanCrossArchetypeCosine": 0.4045,
         "silhouette": 1,
         "nearestNeighbor": {
           "exampleId": "ex-003-kinetic-text",
@@ -263,14 +263,14 @@
       "clusterMetrics": {
         "subLook": "metric-reveal-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-06T20:12:08.964Z",
+        "labeledAt": "2026-06-06T23:57:44.818Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": null,
-        "meanCrossArchetypeCosine": 0.3504,
+        "meanCrossArchetypeCosine": 0.3624,
         "silhouette": 1,
         "nearestNeighbor": {
-          "exampleId": "ex-003-kinetic-text",
-          "cosine": 0.531
+          "exampleId": "ex-014-timeline-schedule",
+          "cosine": 0.6073
         }
       }
     },
@@ -310,10 +310,10 @@
       "clusterMetrics": {
         "subLook": "kinetic-text-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-06T20:12:08.964Z",
+        "labeledAt": "2026-06-06T23:57:44.818Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": null,
-        "meanCrossArchetypeCosine": 0.4406,
+        "meanCrossArchetypeCosine": 0.4357,
         "silhouette": 1,
         "nearestNeighbor": {
           "exampleId": "ex-001-giant-stat",
@@ -354,10 +354,10 @@
       "clusterMetrics": {
         "subLook": "quote-card-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-06T20:12:08.964Z",
+        "labeledAt": "2026-06-06T23:57:44.818Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": null,
-        "meanCrossArchetypeCosine": 0.3666,
+        "meanCrossArchetypeCosine": 0.3607,
         "silhouette": 1,
         "nearestNeighbor": {
           "exampleId": "ex-008-list-steps",
@@ -402,10 +402,10 @@
       "clusterMetrics": {
         "subLook": "before-after-split-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-06T20:12:08.964Z",
+        "labeledAt": "2026-06-06T23:57:44.818Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": null,
-        "meanCrossArchetypeCosine": 0.3909,
+        "meanCrossArchetypeCosine": 0.3879,
         "silhouette": 1,
         "nearestNeighbor": {
           "exampleId": "ex-012-ugc-selfie",
@@ -454,10 +454,10 @@
       "clusterMetrics": {
         "subLook": "versus-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-06T20:12:08.964Z",
+        "labeledAt": "2026-06-06T23:57:44.818Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": null,
-        "meanCrossArchetypeCosine": 0.397,
+        "meanCrossArchetypeCosine": 0.387,
         "silhouette": 1,
         "nearestNeighbor": {
           "exampleId": "ex-003-kinetic-text",
@@ -503,7 +503,7 @@
       "clusterMetrics": {
         "subLook": "proof-collage-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-06T20:12:08.964Z",
+        "labeledAt": "2026-06-06T23:57:44.818Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": null,
         "meanCrossArchetypeCosine": 0.3627,
@@ -559,14 +559,14 @@
       "clusterMetrics": {
         "subLook": "list-steps-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-06T20:12:08.964Z",
+        "labeledAt": "2026-06-06T23:57:44.818Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": null,
-        "meanCrossArchetypeCosine": 0.4501,
+        "meanCrossArchetypeCosine": 0.435,
         "silhouette": 1,
         "nearestNeighbor": {
-          "exampleId": "ex-014-timeline-schedule",
-          "cosine": 0.6947
+          "exampleId": "ex-015-benefit-iconrow",
+          "cosine": 0.6251
         }
       }
     },
@@ -613,10 +613,10 @@
       "clusterMetrics": {
         "subLook": "offer-card-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-06T20:12:08.964Z",
+        "labeledAt": "2026-06-06T23:57:44.818Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": null,
-        "meanCrossArchetypeCosine": 0.4056,
+        "meanCrossArchetypeCosine": 0.3963,
         "silhouette": 1,
         "nearestNeighbor": {
           "exampleId": "ex-001-giant-stat",
@@ -656,10 +656,10 @@
       "clusterMetrics": {
         "subLook": "action-hero-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-06T20:12:08.964Z",
+        "labeledAt": "2026-06-06T23:57:44.818Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": null,
-        "meanCrossArchetypeCosine": 0.4085,
+        "meanCrossArchetypeCosine": 0.4094,
         "silhouette": 1,
         "nearestNeighbor": {
           "exampleId": "ex-007-proof-collage",
@@ -704,10 +704,10 @@
       "clusterMetrics": {
         "subLook": "training-scene-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-06T20:12:08.964Z",
+        "labeledAt": "2026-06-06T23:57:44.818Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": null,
-        "meanCrossArchetypeCosine": 0.2942,
+        "meanCrossArchetypeCosine": 0.294,
         "silhouette": 1,
         "nearestNeighbor": {
           "exampleId": "ex-010-action-hero",
@@ -740,10 +740,10 @@
       "clusterMetrics": {
         "subLook": "ugc-selfie-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-06T20:12:08.964Z",
+        "labeledAt": "2026-06-06T23:57:44.818Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": null,
-        "meanCrossArchetypeCosine": 0.3816,
+        "meanCrossArchetypeCosine": 0.3806,
         "silhouette": 1,
         "nearestNeighbor": {
           "exampleId": "ex-005-before-after-split",
@@ -793,10 +793,10 @@
       "clusterMetrics": {
         "subLook": "coach-portrait-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-06T20:12:08.964Z",
+        "labeledAt": "2026-06-06T23:57:44.818Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": null,
-        "meanCrossArchetypeCosine": 0.3066,
+        "meanCrossArchetypeCosine": 0.3039,
         "silhouette": 1,
         "nearestNeighbor": {
           "exampleId": "ex-012-ugc-selfie",
@@ -837,14 +837,14 @@
       "clusterMetrics": {
         "subLook": "timeline-schedule-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-06T20:12:08.964Z",
+        "labeledAt": "2026-06-06T23:57:44.818Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": null,
-        "meanCrossArchetypeCosine": 0.408,
+        "meanCrossArchetypeCosine": 0.3515,
         "silhouette": 1,
         "nearestNeighbor": {
-          "exampleId": "ex-008-list-steps",
-          "cosine": 0.6947
+          "exampleId": "ex-002-metric-reveal",
+          "cosine": 0.6073
         }
       }
     },
@@ -895,10 +895,10 @@
       "clusterMetrics": {
         "subLook": "benefit-iconrow-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-06T20:12:08.964Z",
+        "labeledAt": "2026-06-06T23:57:44.818Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": null,
-        "meanCrossArchetypeCosine": 0.4193,
+        "meanCrossArchetypeCosine": 0.4097,
         "silhouette": 1,
         "nearestNeighbor": {
           "exampleId": "ex-008-list-steps",

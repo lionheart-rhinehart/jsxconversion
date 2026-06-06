@@ -214,16 +214,21 @@ const DESIGNS = [
   { slug: "timeline-schedule", archetype: "timeline-schedule", media: [], accepts: [],
     slotShape: { slots: [{ id: "heading", role: "hook", maxChars: 40, required: true }, { id: "caption", role: "claim", maxChars: 40, required: false }], roleSet: ["hook", "claim"] },
     jsx: () => {
-      const days = [["MON", "SPEED"], ["TUE", "—"], ["WED", "STRENGTH"], ["THU", "—"], ["FRI", "POWER"], ["SAT", "GAME"], ["SUN", "REST"]];
-      const rows = days.map(([d, w]) => `<div style={{ display: "flex", alignItems: "center", borderTop: "1px solid #23232b", padding: "22px 0" }}>
-          <div style={{ width: 160, fontFamily: "JetBrains Mono", color: "#9a9aa3", fontSize: 34, letterSpacing: "0.06em" }}>${d}</div>
-          <div style={{ fontFamily: "Anton", color: "${w === "—" ? "#3a3a42" : "#fff"}", fontSize: 52, textTransform: "uppercase" }}>${w}</div>
-          ${w !== "—" ? '<div style={{ marginLeft: "auto", width: 18, height: 18, borderRadius: "50%", background: "#c4141d" }} />' : ""}
-        </div>`).join("\n        ");
-      return wrap("timeline-schedule", `      <div style={{ position: "absolute", inset: 0, padding: "120px 72px", boxSizing: "border-box" }}>
+      // HORIZONTAL 7-column week grid (calendar strip) — distinct layout family from
+      // list-steps' vertical numbered rows (fixes the list~timeline near-twin).
+      const days = [["MON", "SPEED", 1], ["TUE", "REST", 0], ["WED", "STRENGTH", 1], ["THU", "REST", 0], ["FRI", "POWER", 1], ["SAT", "GAME", 1], ["SUN", "REST", 0]];
+      const cols = days.map(([d, w, on]) => `<div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div style={{ fontFamily: "JetBrains Mono", color: "#9a9aa3", fontSize: 24, letterSpacing: "0.04em", marginBottom: 14 }}>${d}</div>
+          <div style={{ width: "84%", height: 700, borderRadius: 14, background: "${on ? "#c4141d" : "#15151a"}", border: "${on ? "none" : "2px solid #2a2a32"}", display: "flex", alignItems: "flex-end", justifyContent: "center", paddingBottom: 20 }}>
+            <div style={{ fontFamily: "Anton", color: "${on ? "#fff" : "#3a3a42"}", fontSize: 26, textTransform: "uppercase", writingMode: "vertical-rl", transform: "rotate(180deg)" }}>${w}</div>
+          </div>
+        </div>`).join("\n          ");
+      return wrap("timeline-schedule", `      <div style={{ position: "absolute", inset: 0, padding: "120px 48px", boxSizing: "border-box" }}>
         <div style={{ fontFamily: "Anton", color: "#fff", fontSize: 84, textTransform: "uppercase", lineHeight: 0.95 }}>A week at<br/>the facility</div>
-        <div style={{ fontFamily: "Geist", color: "#9a9aa3", fontSize: 32, margin: "16px 0 40px" }}>Every athlete on a real plan</div>
-        ${rows}
+        <div style={{ fontFamily: "Geist", color: "#9a9aa3", fontSize: 30, margin: "16px 0 56px" }}>Every athlete on a real plan</div>
+        <div style={{ display: "flex", gap: 10, alignItems: "flex-end" }}>
+          ${cols}
+        </div>
       </div>`, "#0d0d12");
     } },
 
