@@ -27,3 +27,4 @@ _experiment/assets/
 _experiment/*.jpg
 _experiment/*.jsx
 _experiment/labels.json
+_experiment/facility/
