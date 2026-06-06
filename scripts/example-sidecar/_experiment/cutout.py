@@ -19,6 +19,9 @@ def main():
             print(f"MISSING {src}"); continue
         out = OUT / (Path(n).stem + ".png")
         res = remove(Image.open(src).convert("RGBA"))
+        bbox = res.getbbox()  # tight-crop to the subject's alpha bounds (else full canvas -> bad placement)
+        if bbox:
+            res = res.crop(bbox)
         res.save(out)
         print(f"  {out}")
 

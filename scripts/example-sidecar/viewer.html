@@ -156,6 +156,7 @@ const MT_LABELS = {
   C5: "Knockout CUTOUT on color field",
   SW11: "Inset card · 11% of frame", SW20: "Inset card · 20%", SW30: "Inset card · 30%",
   SW40: "Inset card · 40%", SW50: "Inset card · 50%",
+  C7: "Photo strip · full-width 20%", C8: "Split-panel · 45%", C9: "Masked circle · 25%",
 };
 async function renderMediaTest(){
   let e; try { e = await (await fetch("/api/mediatest")).json(); } catch { e = { rows: [] }; }
@@ -172,7 +173,13 @@ async function renderMediaTest(){
         <span class="tag ${r.distinct?'good':'bad'}" style="font-weight:600">${r.distinct?'DISTINCT ✓':'COLLAPSE ✗'}</span></div>
       <div class="mt-strip">${thumbs}</div></div>`;
   }).join("");
-  $("#view-mediatest").innerHTML = `
+  const wins = e.winners || [];
+  const winBox = wins.length ? `<div class="box" style="margin-bottom:20px"><h3>Purpose-built winners — the distinct patterns done right</h3>
+      <p class="hint">The two large-media patterns that stay distinct (cutout, split-panel), built clean (text + media not colliding). Cutout quality depends on a single-subject source photo + good masking; split-panel is the reliably-clean option with current footage.</p>
+      <div class="mt-strip" style="grid-template-columns:repeat(${Math.min(3,wins.length)},1fr); max-width:720px">
+        ${wins.map(w=>`<div><div class="lab" style="font-size:12px;color:var(--dim);margin-bottom:6px">${w.label}</div><img src="/win/${w.png}" loading="lazy"></div>`).join("")}
+      </div></div>` : "";
+  $("#view-mediatest").innerHTML = winBox + `
     <div class="box" style="margin-bottom:20px"><h3>Media impact — measured (CLIP ViT-L/14 + DINOv2-L)</h3>
       <p class="hint">Each row = the 5 graphic host designs under one media treatment. <b>DISTINCT</b> = max cross-design cosine &lt; 0.70 on BOTH the combined and the DINOv2 view (DINOv2 is what catches duotone). A video is read as its poster frame, so clips behave identically.</p>
       <div class="legend"><span><span class="swatch" style="background:var(--ok)"></span>&lt; 0.70 (distinct)</span><span><span class="swatch" style="background:var(--bad)"></span>≥ 0.70 (collapsed)</span></div>

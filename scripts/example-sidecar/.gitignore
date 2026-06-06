@@ -28,3 +28,4 @@ _experiment/*.jpg
 _experiment/*.jsx
 _experiment/labels.json
 _experiment/facility/
+_experiment/winners/

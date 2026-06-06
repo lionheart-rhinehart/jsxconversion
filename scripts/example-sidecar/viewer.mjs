@@ -180,7 +180,14 @@ async function handle(req, res) {
     const man = existsSync(mf) ? JSON.parse(readFileSync(mf, "utf8")) : {};
     const conditions = {};
     for (const [c, hosts] of Object.entries(man)) conditions[c] = Object.keys(hosts);
-    return json(res, 200, { rows: results.rows || [], conditions });
+    const wf = join(HERE, "_experiment", "winners", "winners.json");
+    const winners = existsSync(wf) ? (JSON.parse(readFileSync(wf, "utf8")).winners || []) : [];
+    return json(res, 200, { rows: results.rows || [], conditions, winners });
+  }
+  if (path.startsWith("/win/") && req.method === "GET") {
+    const name = basename(path);
+    if (!/^[\w.\-]+\.png$/.test(name)) return json(res, 400, { error: "bad name" });
+    return serveFile(res, join(HERE, "_experiment", "winners", name), "image/png", noCache);
   }
   if (path.startsWith("/run/") && req.method === "GET") {
     // /run/<cond>/<id>.png — a treatment render (C0 = the shipped baseline)
