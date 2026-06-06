@@ -2,3 +2,8 @@
 # the index references the vectors; it never embeds them. Re-create with run.mjs.
 embeddings.vectors.npz
 __pycache__/
+# viewer runtime scratch (local only)
+.viewer.log
+.shot.mjs
+.gallery-preview.png
+.editor-preview.png

@@ -83,21 +83,37 @@ function renderOne(ex) {
 }
 
 function main() {
-  const examples = loadManifest();
+  // --only=<id> re-renders a SINGLE example (used by the viewer's live edit→render
+  // loop) and merges its result into the existing render-report, leaving the other
+  // rows untouched. No flag = render the whole manifest.
+  const onlyArg = process.argv.find((a) => a.startsWith("--only="));
+  const onlyId = onlyArg ? onlyArg.slice("--only=".length) : null;
+
+  const all = loadManifest();
+  const examples = onlyId ? all.filter((e) => e.id === onlyId) : all;
+  if (onlyId && examples.length === 0) { process.stderr.write(`[render] no manifest example with id "${onlyId}"\n`); process.exit(1); }
   mkdirSync(OUT_DIR, { recursive: true }); // ensure out/ exists; per-example cleanup happens in renderOne (never nuke the whole dir)
-  const results = [];
+
+  let results = [];
   for (const ex of examples) {
     process.stderr.write(`[render] ${ex.id} … `);
     const res = renderOne(ex);
     process.stderr.write(`${res.ok ? "ok" : "FAIL — " + res.reason}\n`);
     results.push(res);
   }
+  if (onlyId && existsSync(REPORT)) {
+    // merge the single result back into the prior report
+    const prior = JSON.parse(readFileSync(REPORT, "utf8")).results || [];
+    const merged = prior.filter((r) => r.id !== onlyId).concat(results);
+    results = merged;
+  }
   writeFileSync(REPORT, JSON.stringify({ generatedAt: null, results }, null, 2) + "\n");
-  const pass = results.filter((r) => r.ok).length;
-  process.stderr.write(`[render] ${pass}/${results.length} passed QA → ${REPORT}\n`);
-  // Non-zero exit only if EVERY render failed (a total breakage worth stopping on);
-  // partial failures are recorded and the pipeline proceeds with the survivors.
-  process.exit(pass === 0 ? 1 : 0);
+  // Exit reflects THIS run's batch (the examples actually rendered), so a --only
+  // failure is a non-zero exit even if other prior rows in the report passed.
+  const batchPass = examples.filter((ex) => results.find((r) => r.id === ex.id && r.ok)).length;
+  process.stderr.write(`[render] ${batchPass}/${examples.length} passed QA → ${REPORT}\n`);
+  // Non-zero exit only if EVERY render in this batch failed.
+  process.exit(batchPass === 0 ? 1 : 0);
 }
 
 main();

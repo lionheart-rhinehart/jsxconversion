@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Example Library — view + edit</title>
+<style>
+  :root { --red:#c4141d; --ink:#0d0d10; --panel:#16161b; --line:#2a2a32; --txt:#e8e8ea; --dim:#9a9aa3; --ok:#3ddc84; --warn:#ffb300; --bad:#ff5b61; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--ink); color:var(--txt); font:15px/1.45 'Geist',system-ui,Segoe UI,Arial,sans-serif; }
+  header { padding:18px 24px; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:18px; flex-wrap:wrap; position:sticky; top:0; background:var(--ink); z-index:5; }
+  header h1 { font-size:20px; margin:0; letter-spacing:.5px; }
+  header h1 b { color:var(--red); }
+  .spectrum { display:flex; gap:8px; flex-wrap:wrap; margin-left:auto; }
+  .chip { background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:4px 11px; font-size:12px; color:var(--dim); }
+  .chip b { color:var(--txt); }
+  .chip.good b { color:var(--ok);} .chip.warn b { color:var(--warn);} .chip.bad b { color:var(--bad);}
+  .wrap { padding:20px 24px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:16px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:12px; overflow:hidden; cursor:pointer; transition:border-color .12s, transform .12s; }
+  .card:hover { border-color:var(--red); transform:translateY(-2px); }
+  .card img { width:100%; aspect-ratio:9/16; object-fit:cover; display:block; background:#000; }
+  .card .meta { padding:9px 11px; }
+  .card .kind { font-weight:700; font-size:13px; }
+  .card .sub { color:var(--dim); font-size:11px; margin-top:1px; }
+  .card .mrow { margin-top:7px; display:flex; gap:5px; flex-wrap:wrap; }
+  .tag { font-size:10px; padding:2px 6px; border-radius:5px; background:#202028; color:var(--dim); }
+  .tag.bad { background:#3a1416; color:var(--bad);} .tag.warn{ background:#3a2c10; color:var(--warn);} .tag.good{ background:#10301d; color:var(--ok);}
+  /* editor overlay */
+  .overlay { position:fixed; inset:0; background:rgba(0,0,0,.66); display:none; z-index:20; }
+  .overlay.open { display:block; }
+  .editor { position:absolute; top:0; right:0; bottom:0; width:min(940px,96vw); background:var(--ink); border-left:1px solid var(--line); display:flex; flex-direction:column; }
+  .editor .ehead { padding:14px 20px; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:12px; }
+  .editor .ehead .x { margin-left:auto; cursor:pointer; color:var(--dim); font-size:22px; line-height:1; }
+  .ebody { display:grid; grid-template-columns:360px 1fr; gap:0; flex:1; min-height:0; }
+  .preview { border-right:1px solid var(--line); padding:16px; overflow:auto; }
+  .preview img { width:100%; border-radius:8px; background:#000; }
+  .controls { padding:16px 20px; overflow:auto; }
+  .controls h3 { font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); margin:18px 0 8px; }
+  .controls h3:first-child { margin-top:0; }
+  label.f { display:block; margin-bottom:9px; }
+  label.f span { display:block; font-size:11px; color:var(--dim); margin-bottom:3px; }
+  input[type=text], textarea { width:100%; background:var(--panel); border:1px solid var(--line); color:var(--txt); border-radius:7px; padding:8px 10px; font:inherit; }
+  textarea { font-family:ui-monospace,Consolas,monospace; font-size:12px; min-height:240px; white-space:pre; }
+  .media-cur { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .media-cur img { width:44px; height:44px; object-fit:cover; border-radius:6px; }
+  .media-cur code { font-size:12px; color:var(--dim); }
+  .btn { background:var(--red); color:#fff; border:0; border-radius:7px; padding:9px 16px; font:inherit; font-weight:600; cursor:pointer; }
+  .btn.ghost { background:transparent; border:1px solid var(--line); color:var(--txt); }
+  .btn:disabled { opacity:.5; cursor:default; }
+  .bar { display:flex; gap:10px; padding:14px 20px; border-top:1px solid var(--line); align-items:center; }
+  .bar .status { color:var(--dim); font-size:13px; margin-left:auto; }
+  .palette { position:fixed; inset:0; background:rgba(0,0,0,.7); display:none; z-index:30; }
+  .palette.open { display:flex; align-items:center; justify-content:center; }
+  .palette .inner { background:var(--ink); border:1px solid var(--line); border-radius:12px; width:min(820px,94vw); max-height:84vh; display:flex; flex-direction:column; }
+  .palette .phead { padding:12px 16px; border-bottom:1px solid var(--line); display:flex; gap:10px; align-items:center; }
+  .palette .pgrid { padding:14px; overflow:auto; display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:10px; }
+  .palette .pgrid figure { margin:0; cursor:pointer; border:2px solid transparent; border-radius:8px; overflow:hidden; }
+  .palette .pgrid figure:hover { border-color:var(--red); }
+  .palette .pgrid img { width:100%; aspect-ratio:1; object-fit:cover; display:block; }
+  .palette .pgrid figcaption { font-size:10px; color:var(--dim); padding:3px 4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  details summary { cursor:pointer; color:var(--dim); font-size:12px; }
+  .slot { font-size:12px; color:var(--dim); }
+  .slot b { color:var(--txt); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Example <b>Library</b></h1>
+  <div class="spectrum" id="spectrum"></div>
+  <button class="btn ghost" id="relabel">Re-label (refresh metrics)</button>
+</header>
+<div class="wrap"><div class="grid" id="grid"></div></div>
+
+<!-- editor -->
+<div class="overlay" id="overlay">
+  <div class="editor">
+    <div class="ehead"><strong id="eTitle"></strong><span id="eKind" class="slot"></span><span class="x" id="eClose">&times;</span></div>
+    <div class="ebody">
+      <div class="preview"><img id="ePreview" alt="preview"><div id="eMetrics" style="margin-top:12px"></div></div>
+      <div class="controls">
+        <h3>Text</h3><div id="eTexts"></div>
+        <h3>Media</h3><div id="eMedia"></div>
+        <details><summary>Advanced — edit JSX source</summary><textarea id="eSource"></textarea></details>
+      </div>
+    </div>
+    <div class="bar">
+      <button class="btn" id="eRender">Save &amp; re-render</button>
+      <button class="btn ghost" id="eReset">Revert</button>
+      <span class="status" id="eStatus"></span>
+    </div>
+  </div>
+</div>
+
+<!-- media palette -->
+<div class="palette" id="palette"><div class="inner">
+  <div class="phead"><strong>Swap photo</strong><input type="text" id="pSearch" placeholder="filter…" style="flex:1"><span class="x" id="pClose" style="cursor:pointer">&times;</span></div>
+  <div class="pgrid" id="pGrid"></div>
+</div></div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+let DATA = null, MEDIA = [], cur = null, curSource = "", origSource = "", swapTargetRef = null;
+
+const fmt = (v) => v == null ? "—" : (typeof v === "number" ? v.toFixed(3) : v);
+function metricTag(label, v, test) { // test: 'good'|'warn'|'bad'|null
+  return `<span class="tag ${test||''}">${label} ${fmt(v)}</span>`;
+}
+
+async function load() {
+  DATA = await (await fetch("/api/examples")).json();
+  MEDIA = (await (await fetch("/api/media")).json()).media;
+  renderSpectrum(); renderGrid();
+}
+function renderSpectrum() {
+  const d = DATA.diversity || {};
+  const g = (v, ok) => ({ good: ok, warn: false, bad: !ok });
+  const chips = [];
+  const add = (k, v, cls) => chips.push(`<span class="chip ${cls}">${k} <b>${fmt(v)}</b></span>`);
+  chips.push(`<span class="chip">examples <b>${DATA.examples.length}</b></span>`);
+  add("max cross-kind", d.maxCrossKindCosine, d.maxCrossKindCosine!=null ? (d.maxCrossKindCosine<0.70?'good':'bad') : '');
+  add("mean cross-kind", d.meanCrossKindCosine, d.meanCrossKindCosine!=null ? (d.meanCrossKindCosine<0.55?'good':'warn') : '');
+  add("max intra-kind", d.maxIntraKindCosine, d.maxIntraKindCosine!=null ? (d.maxIntraKindCosine<0.75?'good':'bad') : '');
+  add("silhouette", d.meanSilhouette, d.meanSilhouette!=null ? (d.meanSilhouette>=0.35?'good':'warn') : '');
+  add("Vendi", d.vendiScore, "");
+  $("#spectrum").innerHTML = chips.join("");
+}
+function renderGrid() {
+  $("#grid").innerHTML = DATA.examples.map((e) => {
+    const m = e.metrics;
+    const nn = m.nearestNeighbor;
+    const nnBad = nn && nn.cosine != null && nn.cosine >= 0.70;
+    const tags = [];
+    if (nn) tags.push(`<span class="tag ${nnBad?'bad':nn.cosine>=0.6?'warn':'good'}">≈ ${nn.cosine.toFixed(2)}</span>`);
+    tags.push(`<span class="tag">${e.format}</span>`);
+    return `<div class="card" data-id="${e.id}">
+      <img src="${e.png}" loading="lazy" alt="${e.kind}">
+      <div class="meta"><div class="kind">${e.kind}</div>
+      <div class="sub">${e.subLook||''} · ${e.id}</div>
+      <div class="mrow">${tags.join("")}</div></div></div>`;
+  }).join("");
+  document.querySelectorAll(".card").forEach((c) => c.onclick = () => openEditor(c.dataset.id));
+}
+
+async function openEditor(id) {
+  cur = DATA.examples.find((e) => e.id === id);
+  const r = await (await fetch("/api/source/" + id)).json();
+  curSource = origSource = r.source;
+  $("#eTitle").textContent = id;
+  $("#eKind").textContent = cur.kind + (cur.subLook ? " · " + cur.subLook : "");
+  $("#ePreview").src = cur.png + "&r=" + Date.now();
+  $("#eSource").value = curSource;
+  renderMetrics(); renderTexts(); renderMedia();
+  $("#eStatus").textContent = "";
+  $("#overlay").classList.add("open");
+}
+function renderMetrics() {
+  const m = cur.metrics, nn = m.nearestNeighbor;
+  $("#eMetrics").innerHTML = `<div class="slot">
+    ${metricTag("intra-kind max", m.intraKindMaxCosine, m.intraKindMaxCosine!=null?(m.intraKindMaxCosine<0.75?'good':'bad'):'')}
+    ${metricTag("cross-kind mean", m.meanCrossKindCosine, '')}
+    ${metricTag("silhouette", m.silhouette, m.silhouette!=null?(m.silhouette>=0.35?'good':'warn'):'')}
+    <br><br>nearest other: <b>${nn?nn.exampleId:'—'}</b> ${nn?'('+nn.cosine.toFixed(3)+')':''}
+    <br><br>slots: ${(cur.slotShape.slots||[]).map(s=>`<b>${s.id}</b>:${s.role}`).join(' · ')}
+    <br>media accepts: ${(cur.mediaStyleAccepts||[]).join(', ')||'(any)'}</div>`;
+}
+function renderTexts() {
+  const texts = detectTextsFromSource(curSource);
+  $("#eTexts").innerHTML = texts.length ? texts.map((t, i) =>
+    `<label class="f"><span>text ${i+1}</span><input type="text" data-orig="${esc(t)}" value="${esc(t)}"></label>`
+  ).join("") : `<div class="slot">No simple text detected — use the source editor below.</div>`;
+  $("#eTexts").querySelectorAll("input").forEach((inp) => inp.oninput = () => {
+    const orig = inp.dataset.orig, val = inp.value;
+    curSource = replaceLiteral(curSource, orig, val);
+    inp.dataset.orig = val; // keep mapping after the swap so further edits chain
+    $("#eSource").value = curSource;
+    $("#ePreview").style.opacity = .55; // hint: needs re-render
+  });
+}
+function renderMedia() {
+  const media = detectMediaFromSource(curSource);
+  $("#eMedia").innerHTML = media.map((f) =>
+    `<div class="media-cur"><img src="/media/${encodeURIComponent(f)}" onerror="this.style.visibility='hidden'"><code>./assets/${f}</code>
+     <button class="btn ghost" data-ref="${f}" style="margin-left:auto;padding:5px 11px">Swap…</button></div>`
+  ).join("") || `<div class="slot">No image reference found.</div>`;
+  $("#eMedia").querySelectorAll("button").forEach((b) => b.onclick = () => openPalette(b.dataset.ref));
+}
+
+function openPalette(ref) { swapTargetRef = ref; $("#pSearch").value=""; renderPalette(""); $("#palette").classList.add("open"); }
+function renderPalette(filter) {
+  const f = filter.toLowerCase();
+  $("#pGrid").innerHTML = MEDIA.filter(m=>m.name.toLowerCase().includes(f)).map((m) =>
+    `<figure data-name="${esc(m.name)}"><img src="${m.url}" loading="lazy"><figcaption>${m.name}</figcaption></figure>`
+  ).join("");
+  $("#pGrid").querySelectorAll("figure").forEach((fig) => fig.onclick = () => chooseMedia(fig.dataset.name));
+}
+async function chooseMedia(name) {
+  const r = await (await fetch("/api/import-media", { method:"POST", headers:{'content-type':'application/json'}, body:JSON.stringify({name}) })).json();
+  if (!r.ok) { alert(r.error||"import failed"); return; }
+  const newName = r.ref.replace("./assets/","");
+  curSource = curSource.split("./assets/" + swapTargetRef).join("./assets/" + newName);
+  $("#eSource").value = curSource;
+  $("#palette").classList.remove("open");
+  renderMedia();
+  $("#ePreview").style.opacity = .55;
+}
+
+// client-side helpers mirroring the server's detection so edits map back cleanly
+function detectMediaFromSource(src){ const out=[]; const re=/\.\/assets\/([\w.\-]+)/g; let m; while((m=re.exec(src))) if(!out.includes(m[1])) out.push(m[1]); return out; }
+const FONTS=["Anton","Geist","JetBrains Mono","Saira Condensed","Caveat"];
+function keepText(s,seen){ if(!s||seen.has(s))return false;
+  if(s.startsWith("./assets/"))return false; if(/^#[0-9a-f]{3,8}$/i.test(s))return false;
+  if(/(px|em|rem|%|deg|vh|vw|fr)\b/.test(s))return false;
+  if(/(gradient|rgba?\(|absolute|relative|fixed|cover|contain|uppercase|lowercase|center|flex|column|row|pre-line|hidden|solid|translate|rotate|scale)/i.test(s))return false;
+  if(FONTS.includes(s))return false; if(!/[a-z]/i.test(s))return false; if(s.replace(/[^a-z]/gi,"").length<3)return false; return true; }
+function detectTextsFromSource(src){ const out=[],seen=new Set(); let m;
+  const q=/(["'`])((?:\\.|(?!\1).)*?)\1/g; while((m=q.exec(src))){ const s=m[2].trim(); if(keepText(s,seen)){seen.add(s);out.push(s);} }
+  const t=/>([^<>{}]+)</g; while((m=t.exec(src))){ const s=m[1].trim(); if(keepText(s,seen)){seen.add(s);out.push(s);} }
+  return out; }
+// replace a detected text whether it lives in a quoted literal OR a JSX text node.
+function replaceLiteral(src, oldT, newT){
+  for(const q of ['"',"'","`"]){ const a=q+oldT+q; if(src.includes(a)) return src.split(a).join(q+newT+q); }
+  return src.split(oldT).join(newT); // bare JSX text-node copy (phrases are unique enough)
+}
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+$("#eSource").addEventListener("input", () => { curSource = $("#eSource").value; $("#ePreview").style.opacity=.55; });
+$("#eClose").onclick = () => $("#overlay").classList.remove("open");
+$("#pClose").onclick = () => $("#palette").classList.remove("open");
+$("#pSearch").oninput = (e) => renderPalette(e.target.value);
+$("#eReset").onclick = () => { curSource = origSource; $("#eSource").value=curSource; renderTexts(); renderMedia(); $("#ePreview").style.opacity=1; $("#eStatus").textContent="reverted (not yet saved)"; };
+
+$("#eRender").onclick = async () => {
+  const btn = $("#eRender"); btn.disabled=true; $("#eStatus").textContent="saving + rendering…";
+  try {
+    await fetch("/api/save/"+cur.id, { method:"POST", headers:{'content-type':'application/json'}, body:JSON.stringify({source:curSource}) });
+    const r = await (await fetch("/api/render/"+cur.id, { method:"POST" })).json();
+    if (!r.ok) { $("#eStatus").textContent = "render FAILED: " + (r.log||r.err||"").split("\n").pop(); }
+    else { $("#ePreview").src = r.png; $("#ePreview").style.opacity=1; $("#eStatus").textContent = "rendered ✓  (Re-label to refresh metrics)";
+           const card = document.querySelector(`.card[data-id="${cur.id}"] img`); if (card) card.src = r.png; }
+  } catch(e){ $("#eStatus").textContent = "error: "+e; }
+  btn.disabled=false;
+};
+$("#relabel").onclick = async () => {
+  const btn=$("#relabel"); btn.disabled=true; const t=btn.textContent; btn.textContent="re-embedding… (~30s)";
+  try { const r = await (await fetch("/api/relabel",{method:"POST"})).json();
+    if(!r.ok){ alert("relabel failed at "+r.stage+":\n"+(r.log||r.err)); } else { await load(); }
+  } catch(e){ alert("error: "+e); }
+  btn.disabled=false; btn.textContent=t;
+};
+load();
+</script>
+</body>
+</html>

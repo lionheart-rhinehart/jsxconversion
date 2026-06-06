@@ -2,14 +2,6 @@
   "generatedAt": null,
   "results": [
     {
-      "id": "ex-001-sprint-hero-overlay",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-001-sprint-hero-overlay.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
       "id": "ex-002-jump-hero-topbar",
       "format": "static",
       "ok": true,
@@ -118,6 +110,14 @@
       "format": "static",
       "ok": true,
       "png": "templates/_examples/ex-015-list-steps.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-001-sprint-hero-overlay",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-001-sprint-hero-overlay.png",
       "mp4": null,
       "reason": "ok"
     }
