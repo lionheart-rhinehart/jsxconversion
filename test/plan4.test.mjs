@@ -268,3 +268,53 @@ test("INTEG P1: an approved trim (_approvedTrims) is suppressed", () => {
       "an explicitly approved trim no longer re-flags");
   } finally { cleanup(); }
 });
+
+// ── Phase 4 — the trim-approve WRITE path (review button + /approve-trim route) ──
+// The button posts { field, text } to /approve-trim; the route stamps
+// _approvedTrims[field]=text into the edits config (static) or templateData
+// (motion). These lock the two halves of that contract: (1) the gate hands the
+// UI everything it needs to act (slot id + exact text); (2) stamping that exact
+// shape back where the gate consults it makes the flag drop — proven for the
+// STATIC edits-config path the motion test above doesn't cover.
+test("INTEG P4: a copychiefTrim violation carries the field + exact text the button needs", () => {
+  const unit = "The fastest athletes train their first three steps.";
+  const lib = { schemaVersion: 1, units: [{ id: "u1", text: unit }], byId: { u1: { id: "u1", text: unit } } };
+  const trimmed = "The fastest athletes train their first three steps";
+  const plan = { brand: null, angles: [{ id: "a", assets: [{
+    id: "H", beat: null, format: "video", clip: "x.mp4", templateData: { hook: trimmed },
+  }] }] };
+  const { slug, cleanup } = tmpCampaign({ "copy-library.json": lib });
+  try {
+    const r = validatePlan(plan, { campaign: slug, grandfatherSet: new Set(), env: {} });
+    const tv = r.assets["a/H"].violations.find((v) => v.rule === "copychiefTrim");
+    assert.ok(tv, "the trim is flagged");
+    assert.equal(tv.field, "hook", "carries the slot id so the route knows what to stamp");
+    assert.equal(tv.text, trimmed, "carries the EXACT text the route writes into _approvedTrims");
+  } finally { cleanup(); }
+});
+
+test("INTEG P4: stamping _approvedTrims into a STATIC edits config suppresses the trim", () => {
+  const unit = "The fastest athletes train their first three steps.";
+  const lib = { schemaVersion: 1, units: [{ id: "u1", text: unit }], byId: { u1: { id: "u1", text: unit } } };
+  const trimmed = "The fastest athletes train their first three steps";
+  const editsCfg = { width: 1080, height: 1920, media: { path: "m.jpg" }, elements: [{ id: "el1", role: "hook", text: trimmed }] };
+  const plan = { brand: null, angles: [{ id: "a", assets: [{ id: "H", beat: null, format: "static", template: "cluster-1" }] }] };
+  const { slug, dir, cleanup } = tmpCampaign({
+    "copy-library.json": lib,
+    "edits/a__H.config.json": editsCfg,
+  });
+  try {
+    // Before approval: the static trim flags, carrying the element id as its field.
+    const before = validatePlan(plan, { campaign: slug, grandfatherSet: new Set(), env: {} });
+    const tv = before.assets["a/H"].violations.find((v) => v.rule === "copychiefTrim");
+    assert.ok(tv && tv.field === "el1" && tv.text === trimmed, "static trim flags with the element id + text");
+
+    // Exactly what POST /approve-trim writes for a static asset: stamp the
+    // edits-config _approvedTrims[field]=text, then re-validate.
+    writeFileSync(join(dir, "edits/a__H.config.json"),
+      JSON.stringify({ ...editsCfg, _approvedTrims: { [tv.field]: tv.text } }, null, 2));
+    const after = validatePlan(plan, { campaign: slug, grandfatherSet: new Set(), env: {} });
+    assert.equal(after.assets["a/H"].violations.some((v) => v.rule === "copychiefTrim"), false,
+      "the approved static trim no longer re-flags");
+  } finally { cleanup(); }
+});

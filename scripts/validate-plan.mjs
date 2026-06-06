@@ -459,8 +459,12 @@ export function validatePlan(plan, opts = {}) {
               add("verbatim", sev, `copy in "${f.key}" doesn't trace to copy-library (reworded/invented): "${t.slice(0, 50)}"`,
                 { fixHint: "bind a copy-library unit (copyRefs/hookRef) or lift the verbatim text — don't reword/compose" });
             } else if (cls === "trim" && !isApprovedTrim(R.approvedTrims, f.key, fn)) {
+              // Carry `field` (slot id) + `text` (the exact trimmed string) so the
+              // review page's "Approve trim" button can POST them to /approve-trim,
+              // which stamps _approvedTrims[field]=text — the same record this gate
+              // consults via isApprovedTrim, so an approved trim stops re-flagging.
               add("copychiefTrim", "warn", `copy in "${f.key}" is a verbatim TRIM of approved copy — needs Cody's approval: "${t.slice(0, 50)}"`,
-                { needsApproval: true, fixHint: "approve the trim on the review page, or restore the full verbatim line (never reword)" });
+                { needsApproval: true, field: f.key, text: t, fixHint: "approve the trim on the review page, or restore the full verbatim line (never reword)" });
             }
           }
         }

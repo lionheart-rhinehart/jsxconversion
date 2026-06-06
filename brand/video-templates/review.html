@@ -89,6 +89,10 @@
   .act.approve.on { background: #4ade80; border-color: #4ade80; color: #062911; }
   .act.changes.on { background: #f59e0b; border-color: #f59e0b; color: #1a1205; }
   .act.edit { flex: 0 0 auto; }
+  /* Copychief trim-approval row — amber to match the warn badge. */
+  .trim-approve { display: flex; flex-direction: column; gap: 5px; margin: 7px 0; }
+  .act.trim { flex: 1 1 auto; text-align: left; text-transform: none; letter-spacing: 0.04em; background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.45); color: #fbbf24; }
+  .act.trim:hover { border-color: #f59e0b; }
   .act:hover { border-color: rgba(255,255,255,0.4); }
   .act[disabled] { opacity: 0.4; cursor: not-allowed; }
   .act[disabled]:hover { border-color: rgba(255,255,255,0.16); }
@@ -485,6 +489,18 @@ function cardHTML(a) {
       : (wrn > 0 ? `<span class="b comp warn" title="${compTip}">⚠ ${wrn}</span>`
                  : `<span class="b comp ok" title="compliant">✓</span>`);
   }
+  // Copychief trims: verbatim subsets of approved copy that need Cody's explicit
+  // nod (warn, not block). One "Approve trim" button per flagged slot — clicking
+  // it POSTs to /approve-trim, which stamps _approvedTrims so the gate stops
+  // flagging that exact text. The button carries only the slot id; the exact text
+  // is read back from VALIDATION at click time (no arbitrary copy in attributes).
+  const trimVios = (ve && ve.violations ? ve.violations : [])
+    .filter((v) => v.rule === "copychiefTrim" && v.needsApproval && v.field);
+  const trimRow = trimVios.length
+    ? `<div class="trim-approve">${trimVios.map((v) =>
+        `<button class="act trim" data-act="approve-trim" data-field="${String(v.field).replace(/"/g, "&quot;")}" title="${String(v.message || "").replace(/"/g, "&quot;")}">✓ Approve trim: ${String(v.field).replace(/</g, "&lt;")}</button>`
+      ).join("")}</div>`
+    : "";
   // Approve is disabled while a card has a blocking violation (and isn't already
   // approved — so you can still un-approve). Decision: enforce compliance at approval.
   const approveDisabled = blocked && a.status !== "approved";
@@ -503,6 +519,7 @@ function cardHTML(a) {
       ${tref}
       ${flags ? `<div class="flags">${flags}</div>` : ""}
       ${needsRerender(a) ? `<div class="rerender">edited — re-render needed</div>` : ""}
+      ${trimRow}
       <textarea class="note" placeholder="notes…">${a.notes || ""}</textarea>
       <div class="actions">
         <button class="act approve ${a.status === "approved" ? "on" : ""}" data-act="approve"${approveDisabled ? ` disabled title="Fix ${compTip || "blocking violations"}"` : ""}>Approve</button>
@@ -556,6 +573,10 @@ function wire() {
     card.querySelectorAll(".act").forEach((btn) =>
       btn.addEventListener("click", () => {
         const act = btn.dataset.act;
+        if (act === "approve-trim") {
+          approveTrim(angle, asset, btn.dataset.field);
+          return;
+        }
         if (act === "edit") {
           const a = findAsset(angle, asset);
           // ANY static template → embed the position editor on the asset's OWN
@@ -600,6 +621,34 @@ async function patch(angleId, assetId, fields) {
   } catch (e) {
     console.error("patch failed", e);
     alert("Save failed: " + e.message);
+  }
+}
+
+// Approve one copychief trim: read the exact flagged text back from the live
+// validation report (so we stamp precisely what the gate saw), POST it to
+// /approve-trim, then refresh validation + re-render so the warning + button
+// drop away. The server stamps _approvedTrims for that exact text only.
+async function approveTrim(angleId, assetId, field) {
+  const ve = vEntry(angleId, assetId);
+  const vio = ve && (ve.violations || []).find((v) => v.rule === "copychiefTrim" && v.field === field);
+  if (!vio || typeof vio.text !== "string") {
+    // Stale report — refresh and let the user retry.
+    await loadValidation();
+    render();
+    return;
+  }
+  try {
+    const r = await fetch(`${API}/approve-trim/${PLAN.campaign}/${angleId}/${assetId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ field, text: vio.text }),
+    });
+    if (!r.ok) throw new Error(await r.text());
+    await loadValidation();
+    render();
+  } catch (e) {
+    console.error("approve-trim failed", e);
+    alert("Approve trim failed: " + e.message);
   }
 }
 

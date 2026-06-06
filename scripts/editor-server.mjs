@@ -603,6 +603,80 @@ const server = createServer(async (req, res) => {
     }
   }
 
+  // POST /approve-trim/:campaign/:angle/:asset — record Cody's approval of one
+  // copychiefTrim. Body { field, text }. A verbatim TRIM (a long-enough proper
+  // substring of an approved copy-library unit) flags as needs-approval until he
+  // nods; this writes _approvedTrims[field] = <exact text> — the record
+  // validate-plan's isApprovedTrim consults to suppress the flag for THAT exact
+  // text only (a later re-edit changes the text and re-opens it). Static → the
+  // edits config file (cfg._approvedTrims); motion → the plan asset's
+  // templateData (td._approvedTrims). The server is the single writer of both.
+  const approveTrim = path.match(/^\/approve-trim\/([\w.-]+)\/([\w.-]+)\/([\w.-]+)$/);
+  if (approveTrim && req.method === "POST") {
+    const [, campaign, angleId, assetId] = approveTrim;
+    const body = await readBody(req);
+    let patch;
+    try { patch = JSON.parse(body); } catch (e) { sendJson(res, 400, { error: e.message }); return; }
+    const field = patch.field, text = patch.text;
+    if (typeof field !== "string" || !field.trim() || typeof text !== "string" || !text.trim()) {
+      sendJson(res, 400, { error: "approve-trim requires non-empty { field, text }" });
+      return;
+    }
+    const planFile = join(CAMPAIGNS_DIR, campaign, "creative-plan.json");
+    if (!existsSync(planFile)) { sendJson(res, 404, { error: `no plan for "${campaign}"` }); return; }
+    const plan = JSON.parse(readFileSync(planFile, "utf8"));
+    const angle = (plan.angles || []).find((a) => a.id === angleId);
+    const asset = angle && (angle.assets || []).find((a) => a.id === assetId);
+    if (!asset) { sendJson(res, 404, { error: `asset "${assetId}" not found` }); return; }
+    const isMotion = asset.format === "video" || asset.format === "gif";
+
+    if (isMotion) {
+      // Motion: _approvedTrims lives in templateData (validate-plan reads td._approvedTrims).
+      const td = (asset.templateData && typeof asset.templateData === "object") ? { ...asset.templateData } : {};
+      const approved = (td._approvedTrims && typeof td._approvedTrims === "object") ? { ...td._approvedTrims } : {};
+      approved[field] = text;
+      td._approvedTrims = approved;
+      if (!stampPlanAsset(campaign, angleId, assetId, { templateData: td })) {
+        sendJson(res, 500, { approved: false, error: "approval did not persist (asset not found in plan)" });
+        return;
+      }
+      sendJson(res, 200, { approved: true, scope: "motion", field, campaign, angle: angleId, asset: assetId });
+      return;
+    }
+
+    // Static: _approvedTrims lives in the edits config (validate-plan reads
+    // cfg._approvedTrims). Create it from the fill on first touch — mirroring
+    // GET /campaign-config — so an approval persists even before a hand-edit, and
+    // the gate reads the same post-edit bytes it always does.
+    const editsPath = editsConfigPath(campaign, angleId, assetId);
+    let cfg;
+    if (existsSync(editsPath)) {
+      try { cfg = JSON.parse(readFileSync(editsPath, "utf8")); }
+      catch (e) { sendJson(res, 500, { approved: false, error: "edits config unreadable: " + e.message }); return; }
+    } else {
+      if (!asset.template || !existsSync(join(TEMPLATES_DIR, `${asset.template}.config.json`))) {
+        sendJson(res, 404, { error: `no static config for template "${asset.template}" — cannot record approval` });
+        return;
+      }
+      const location = asset.location || (angle && angle.location) || plan.location || null;
+      cfg = resolveStaticConfig({
+        clusterId: asset.template, asset, brand: plan.brand, location, campaign,
+        templateDir: TEMPLATES_DIR, dataDir: DATA_DIR,
+      });
+      if (!cfg) { sendJson(res, 404, { error: `could not resolve config for ${asset.template}` }); return; }
+    }
+    cfg._approvedTrims = { ...(cfg._approvedTrims && typeof cfg._approvedTrims === "object" ? cfg._approvedTrims : {}), [field]: text };
+    try {
+      writeAtomic(editsPath, JSON.stringify(cfg, null, 2));
+      JSON.parse(readFileSync(editsPath, "utf8")); // read-back: did it land + parse?
+    } catch (e) {
+      sendJson(res, 500, { approved: false, error: "approval did not persist: " + ((e && e.message) || e) });
+      return;
+    }
+    sendJson(res, 200, { approved: true, scope: "static", field, campaign, angle: angleId, asset: assetId });
+    return;
+  }
+
   // POST /render-asset/:campaign/:angle/:asset — render ONE asset now, bypassing
   // the approval gate (single-asset edit-render). The runner patches
   // output/thumb/renderedAt back into the plan via this server's single-writer
