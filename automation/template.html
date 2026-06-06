@@ -1,0 +1,155 @@
+<!doctype html>
+<!--
+  ╔════════════════════════════════════════════════════════════════════════════╗
+  ║  AA WEEKLY BIRTHDAY — LOCKED DESIGN. DO NOT EDIT THE CSS BELOW.             ║
+  ║                                                                            ║
+  ║  The look is frozen here: the background plate, the ~5° tilt of the date,  ║
+  ║  the 4.6° bullet column (parallel to the polaroid edge), spacing, and the  ║
+  ║  density tiers. The automation must NEVER touch this file's CSS.           ║
+  ║                                                                            ║
+  ║  The ONLY thing that changes each week is the DATA, injected as:           ║
+  ║     window.BIRTHDAY_DATA = { "dateRange": "...", "athletes": [ ... ] }      ║
+  ║  (render.mjs does this for you). Names + date are editable; nothing else.  ║
+  ╚════════════════════════════════════════════════════════════════════════════╝
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AA Weekly Birthday</title>
+<!--FONT_FACES-->
+<style>
+  html, body { margin: 0; padding: 0; }
+
+  /* 1080×1350 stage. bg-clean.png is the text-free design plate (from Cody):
+     empty black polaroid + empty white date strip, everything else kept.
+     We render the date and names directly onto it — NO cover boxes. */
+  .page {
+    position: relative;
+    width: 1080px;
+    height: 1350px;
+    overflow: hidden;
+    background: #ffffff url('assets/bg-clean.png') no-repeat 0 0;
+    background-size: 1080px 1350px;
+  }
+
+  /* Display face. render.mjs injects the real @font-face (base64 Saira Condensed)
+     into <!--FONT_FACES-->; this chain is the standalone-viewing fallback. */
+  .face { font-family: 'Saira Condensed', 'Barlow Condensed', 'Oswald', sans-serif; }
+
+  /* Date — sits on the empty white strip, top-left, black. Plain caps (no small-caps). */
+  #date {
+    position: absolute;
+    left: 150px;
+    top: 344px;
+    width: 460px;
+    color: #141414;
+    font-weight: 700;
+    font-size: 49px;
+    line-height: 1;
+    letter-spacing: 0.001em;
+    white-space: nowrap;
+    transform: rotate(5.5deg);          /* leans down-right with the strip, like the original */
+    transform-origin: left center;
+  }
+
+  /* Athlete list — inside the empty black polaroid, top-left. White, small-caps,
+     round bullets. Font-size / line-height set per density tier by the script. */
+  #names {
+    position: absolute;
+    left: 261px;
+    top: 475px;
+    width: 610px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: #ffffff;
+    font-weight: 600;
+    font-variant: small-caps;
+    transform: rotate(4.6deg);          /* parallel to the polaroid edge → every bullet equidistant from it */
+    transform-origin: left top;
+  }
+  #names li {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+  #names li::before {
+    content: '';
+    flex: 0 0 auto;
+    width: var(--bullet, 13px);
+    height: var(--bullet, 13px);
+    border-radius: 50%;
+    background: #ffffff;
+    margin-right: 22px;
+  }
+  #names .dt { font-variant: small-caps; margin-left: 0.32em; }   /* "(6/8)" — clear space before paren */
+</style>
+</head>
+<body>
+  <div class="page">
+    <div id="date" class="face"></div>
+    <ul id="names" class="face"></ul>
+  </div>
+
+  <!--BIRTHDAY_DATA-->
+
+  <script>
+    (function () {
+      // Data is injected above as window.BIRTHDAY_DATA. For standalone viewing
+      // (opening this file directly), fall back to the sample so the layout shows.
+      var data = (window.BIRTHDAY_DATA && typeof window.BIRTHDAY_DATA === 'object')
+        ? window.BIRTHDAY_DATA
+        : {
+            dateRange: 'JUNE 8–14, 2026',
+            athletes: [
+              { name: 'Kendrick Murphy', date: '6/8' },
+              { name: 'Graham Wilkerson', date: '6/12' },
+              { name: 'Derek B', date: '6/12' }
+            ]
+          };
+
+      // Date — a plain display string the automation owns.
+      document.getElementById('date').textContent =
+        (typeof data.dateRange === 'string') ? data.dateRange : '';
+
+      // Athletes — coerce to an array so a malformed/empty payload can't throw.
+      var list = Array.isArray(data.athletes) ? data.athletes : [];
+
+      // Density tiers so any week's count fits the polaroid. Hard floor at 13+.
+      var n = list.length, fs, lh, bullet;
+      if (n <= 6)       { fs = 42; lh = 49; bullet = 13; }
+      else if (n <= 12) { fs = 32; lh = 46; bullet = 10; }
+      else              { fs = 24; lh = 34; bullet = 8;  }
+
+      var ul = document.getElementById('names');
+      ul.style.fontSize = fs + 'px';
+      ul.style.lineHeight = lh + 'px';
+      ul.style.setProperty('--bullet', bullet + 'px');
+
+      list.forEach(function (a) {
+        if (!a) return;
+        var li = document.createElement('li');
+        li.style.height = lh + 'px';
+
+        var name = (a.name != null) ? String(a.name) : '';
+        var date = (a.date != null) ? String(a.date) : '';
+
+        var nm = document.createElement('span');
+        nm.className = 'nm';
+        nm.textContent = name;
+        li.appendChild(nm);
+
+        if (date) {
+          var d = document.createElement('span');
+          d.className = 'dt';
+          d.textContent = '(' + date + ')';
+          li.appendChild(d);
+        }
+        ul.appendChild(li);
+      });
+
+      window.__ready = true;
+    })();
+  </script>
+</body>
+</html>
