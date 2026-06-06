@@ -168,6 +168,41 @@ async function handle(req, res) {
   if (path === "/" || path === "/viewer.html") return serveFile(res, VIEWER_HTML, "text/html; charset=utf-8", noCache);
   if (path === "/api/examples" && req.method === "GET") return json(res, 200, buildExamples());
   if (path === "/api/media" && req.method === "GET") return json(res, 200, { media: listMedia() });
+  if (path === "/api/experiment" && req.method === "GET") {
+    const f = join(HERE, "_experiment", "results.json");
+    return json(res, 200, existsSync(f) ? JSON.parse(readFileSync(f, "utf8")) : { scenarios: [], designs: [], columns: [] });
+  }
+  if (path === "/api/mediatest" && req.method === "GET") {
+    // the media-impact treatment matrix: measured rows + which host renders exist per condition
+    const rf = join(HERE, "_experiment", "results.json");
+    const mf = join(HERE, "_experiment", "render-manifest.json");
+    const results = existsSync(rf) ? JSON.parse(readFileSync(rf, "utf8")) : { rows: [] };
+    const man = existsSync(mf) ? JSON.parse(readFileSync(mf, "utf8")) : {};
+    const conditions = {};
+    for (const [c, hosts] of Object.entries(man)) conditions[c] = Object.keys(hosts);
+    return json(res, 200, { rows: results.rows || [], conditions });
+  }
+  if (path.startsWith("/run/") && req.method === "GET") {
+    // /run/<cond>/<id>.png — a treatment render (C0 = the shipped baseline)
+    const parts = path.split("/").filter(Boolean); // ["run", cond, "<id>.png"]
+    const cond = parts[1];
+    const id = basename(parts[2] || "").replace(/\.png$/, "");
+    if (!isExampleId(id) || !/^[A-Za-z0-9]+$/.test(cond)) return json(res, 400, { error: "bad path" });
+    const p = cond === "C0" ? join(ROOT, exampleImagePath(id)) : join(HERE, "_experiment", "runs", cond, `${id}.png`);
+    return serveFile(res, p, "image/png", noCache);
+  }
+  if (path.startsWith("/exp/") && req.method === "GET") {
+    // /exp/<variant>/<id>.png  variant ∈ orig|fb|co (the media-test comparison images)
+    const parts = path.split("/").filter(Boolean); // ["exp", variant, "<id>.png"]
+    const variant = parts[1];
+    const id = basename(parts[2] || "").replace(/\.png$/, "");
+    if (!isExampleId(id)) return json(res, 400, { error: "bad id" });
+    const p = variant === "orig" ? join(ROOT, exampleImagePath(id))
+      : variant === "fb" ? join(HERE, "_experiment", "compare", `${id}-fb.png`)
+      : variant === "co" ? join(HERE, "_experiment", "compare", `${id}-co.png`) : null;
+    if (!p) return json(res, 400, { error: "bad variant" });
+    return serveFile(res, p, "image/png", noCache);
+  }
   if (path === "/api/clusters" && req.method === "GET") {
     // the embedding artifact: archetype-ordered cosine matrix (heatmap) + 2D
     // projection (scatter) + per-archetype health. Vectors stay out (in the .npz).

@@ -11,3 +11,19 @@ __pycache__/
 .editor-preview.png
 .clusters.png
 .heatmap.png
+.mediatest.png
+# Media-test harness: COMMIT the scripts (reusable methodology), IGNORE the heavy
+# regenerable outputs (renders, embeddings, model-derived artifacts).
+_experiment/runs/
+_experiment/_work/
+_experiment/duotone/
+_experiment/cutout/
+_experiment/compare/
+_experiment/*.png
+_experiment/results.json
+_experiment/render-manifest.json
+_experiment/embeddings.vectors.npz
+_experiment/assets/
+_experiment/*.jpg
+_experiment/*.jsx
+_experiment/labels.json

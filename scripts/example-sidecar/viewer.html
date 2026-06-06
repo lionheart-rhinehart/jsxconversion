@@ -48,6 +48,20 @@
   .scatter { width:100%; height:auto; background:#0b0b0e; border-radius:8px; }
   .slegend { display:flex; flex-wrap:wrap; gap:8px 14px; margin-top:10px; font-size:11px; color:var(--dim); }
   .slegend span b { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:5px; vertical-align:middle; }
+  /* media test */
+  .mt-summary { width:100%; border-collapse:collapse; }
+  .mt-summary th, .mt-summary td { text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); font-size:14px; }
+  .mt-summary th { color:var(--dim); font-size:11px; text-transform:uppercase; letter-spacing:.05em; }
+  .mt-summary td.v { font-variant-numeric:tabular-nums; }
+  .mt-row { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:18px; }
+  .mt-row h3 { margin:0 0 12px; font-size:16px; }
+  .mt-cols { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  .mt-col .lab { font-size:12px; color:var(--dim); margin-bottom:6px; min-height:32px; }
+  .mt-col img { width:100%; aspect-ratio:9/16; object-fit:cover; border-radius:8px; background:#000; display:block; }
+  .mt-head { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+  .mt-head strong { font-size:15px; margin-right:6px; }
+  .mt-strip { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
+  .mt-strip img { width:100%; aspect-ratio:9/16; object-fit:cover; border-radius:6px; background:#000; }
   /* editor + palette (unchanged structure) */
   .overlay { position:fixed; inset:0; background:rgba(0,0,0,.66); display:none; z-index:20; } .overlay.open { display:block; }
   .editor { position:absolute; top:0; right:0; bottom:0; width:min(940px,96vw); background:var(--ink); border-left:1px solid var(--line); display:flex; flex-direction:column; }
@@ -73,7 +87,7 @@
 <body>
 <header>
   <h1>Example <b>Library</b></h1>
-  <div class="tabs"><div class="tab on" data-tab="gallery">Gallery</div><div class="tab" data-tab="clusters">Clusters</div></div>
+  <div class="tabs"><div class="tab on" data-tab="gallery">Gallery</div><div class="tab" data-tab="clusters">Clusters</div><div class="tab" data-tab="mediatest">Media Test</div></div>
   <div class="spectrum" id="spectrum"></div>
   <button class="btn ghost" id="relabel">Re-label</button>
 </header>
@@ -96,6 +110,7 @@
       <div id="heatmap-wrap"></div>
     </div>
   </div>
+  <div class="view" id="view-mediatest"></div>
 </div>
 
 <!-- editor -->
@@ -133,7 +148,35 @@ async function loadAll(){
   MEDIA = (await (await fetch("/api/media")).json()).media;
   CLUSTERS = await (await fetch("/api/clusters")).json();
   DATA.examples.forEach(e=>colorFor(e.archetype));
-  renderSpectrum(); renderGallery(); renderClusters();
+  renderSpectrum(); renderGallery(); renderClusters(); renderMediaTest();
+}
+const MT_LABELS = {
+  C0: "Baseline · no media", C1: "Full-bleed raw · same clip", C2: "Full-bleed raw · different clips",
+  C3: "Full-bleed DUOTONE · same clip", C4: "Full-bleed DUOTONE · different clips",
+  C5: "Knockout CUTOUT on color field",
+  SW11: "Inset card · 11% of frame", SW20: "Inset card · 20%", SW30: "Inset card · 30%",
+  SW40: "Inset card · 40%", SW50: "Inset card · 50%",
+};
+async function renderMediaTest(){
+  let e; try { e = await (await fetch("/api/mediatest")).json(); } catch { e = { rows: [] }; }
+  if(!e.rows || !e.rows.length){ $("#view-mediatest").innerHTML = '<div class="box"><p class="hint">No media-test results yet. Run the experiment harness in scripts/example-sidecar/_experiment (tierA/tierB + measure.py).</p></div>'; return; }
+  const conds = e.conditions || {};
+  const badge = (lab, v, ok) => `<span class="tag ${v==null?'':ok?'good':'bad'}">${lab} ${v==null?'—':v}</span>`;
+  const rows = e.rows.map(r => {
+    const ids = conds[r.condition] || [];
+    const thumbs = ids.map(id => `<img src="/run/${r.condition}/${id}.png" loading="lazy" title="${id}" onerror="this.style.opacity=.15">`).join("");
+    const dinoOk = r.dinoMax!=null && r.dinoMax<0.70, combOk = r.combMax!=null && r.combMax<0.70;
+    return `<div class="mt-row">
+      <div class="mt-head"><strong>${MT_LABELS[r.condition]||r.condition}</strong>
+        ${badge("CLIP", r.clipMax, r.clipMax!=null&&r.clipMax<0.70)} ${badge("DINOv2", r.dinoMax, dinoOk)} ${badge("combined", r.combMax, combOk)} ${badge("identity", r.identityMin, r.identityMin==null?true:r.identityMin>=0.55)}
+        <span class="tag ${r.distinct?'good':'bad'}" style="font-weight:600">${r.distinct?'DISTINCT ✓':'COLLAPSE ✗'}</span></div>
+      <div class="mt-strip">${thumbs}</div></div>`;
+  }).join("");
+  $("#view-mediatest").innerHTML = `
+    <div class="box" style="margin-bottom:20px"><h3>Media impact — measured (CLIP ViT-L/14 + DINOv2-L)</h3>
+      <p class="hint">Each row = the 5 graphic host designs under one media treatment. <b>DISTINCT</b> = max cross-design cosine &lt; 0.70 on BOTH the combined and the DINOv2 view (DINOv2 is what catches duotone). A video is read as its poster frame, so clips behave identically.</p>
+      <div class="legend"><span><span class="swatch" style="background:var(--ok)"></span>&lt; 0.70 (distinct)</span><span><span class="swatch" style="background:var(--bad)"></span>≥ 0.70 (collapsed)</span></div>
+    </div>${rows}`;
 }
 function renderSpectrum(){
   const d = DATA.diversity || {};
