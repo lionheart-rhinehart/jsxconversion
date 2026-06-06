@@ -1,0 +1,12 @@
+# Track B example-library sidecar — Python deps.
+# Already present in this repo's environment: torch, transformers, pillow, numpy, scipy.
+# Listed here so a fresh machine can reproduce the embed/label pipeline.
+torch>=2.0
+transformers>=4.40
+pillow>=10.0
+numpy>=1.24
+scipy>=1.10
+# OPTIONAL — only needed to run the automated Gemini kind-labeler (label.py).
+# Without it (and without GEMINI_API_KEY) labeling falls back to the authored,
+# eyeball-confirmed kinds and the pipeline still produces a valid index.
+google-generativeai>=0.8 ; extra == "gemini"

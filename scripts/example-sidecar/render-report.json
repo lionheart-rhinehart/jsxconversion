@@ -1,0 +1,125 @@
+{
+  "generatedAt": null,
+  "results": [
+    {
+      "id": "ex-001-sprint-hero-overlay",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-001-sprint-hero-overlay.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-002-jump-hero-topbar",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-002-jump-hero-topbar.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-003-lift-hero-center",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-003-lift-hero-center.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-004-gymwide-training",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-004-gymwide-training.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-005-group-training",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-005-group-training.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-006-giant-stat-percent",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-006-giant-stat-percent.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-007-giant-stat-measure",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-007-giant-stat-measure.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-008-coach-selfie",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-008-coach-selfie.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-009-athlete-selfie",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-009-athlete-selfie.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-010-coach-direct-address",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-010-coach-direct-address.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-011-before-after-split",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-011-before-after-split.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-012-proof-collage",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-012-proof-collage.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-013-versus-split",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-013-versus-split.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-014-offer-guarantee",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-014-offer-guarantee.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-015-list-steps",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-015-list-steps.png",
+      "mp4": null,
+      "reason": "ok"
+    }
+  ]
+}

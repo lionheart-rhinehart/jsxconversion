@@ -1,0 +1,217 @@
+{
+  "note": "Track-B perceptual metrics for the example library. Raw vectors live in embeddings.vectors.npz (regenerable, gitignored) \u2014 this file holds only the small per-example + batch metrics that build-index.mjs folds into clusterMetrics. Re-run via run.mjs.",
+  "embedder": "clip-vit-base-patch32 + dinov2-base",
+  "labeledBy": "sidecar:clip-vit-base-patch32 + dinov2-base",
+  "seed": 42,
+  "vectorsArtifact": "embeddings.vectors.npz",
+  "examples": {
+    "ex-001-sprint-hero-overlay": {
+      "intraKindMaxCosine": 0.608,
+      "meanCrossKindCosine": 0.5329,
+      "nearestNeighbor": {
+        "exampleId": "ex-011-before-after-split",
+        "cosine": 0.7395
+      },
+      "silhouette": -0.4429,
+      "subLook": "action-hero-text-a"
+    },
+    "ex-002-jump-hero-topbar": {
+      "intraKindMaxCosine": 0.608,
+      "meanCrossKindCosine": 0.5283,
+      "nearestNeighbor": {
+        "exampleId": "ex-004-gymwide-training",
+        "cosine": 0.7525
+      },
+      "silhouette": -0.2225,
+      "subLook": "action-hero-text-b"
+    },
+    "ex-003-lift-hero-center": {
+      "intraKindMaxCosine": 0.548,
+      "meanCrossKindCosine": 0.4209,
+      "nearestNeighbor": {
+        "exampleId": "ex-005-group-training",
+        "cosine": 0.5845
+      },
+      "silhouette": -0.1538,
+      "subLook": "action-hero-text-c"
+    },
+    "ex-004-gymwide-training": {
+      "intraKindMaxCosine": 0.5905,
+      "meanCrossKindCosine": 0.5322,
+      "nearestNeighbor": {
+        "exampleId": "ex-002-jump-hero-topbar",
+        "cosine": 0.7525
+      },
+      "silhouette": -0.2084,
+      "subLook": "training-scene-a"
+    },
+    "ex-005-group-training": {
+      "intraKindMaxCosine": 0.5905,
+      "meanCrossKindCosine": 0.4378,
+      "nearestNeighbor": {
+        "exampleId": "ex-008-coach-selfie",
+        "cosine": 0.635
+      },
+      "silhouette": 0.1,
+      "subLook": "training-scene-b"
+    },
+    "ex-006-giant-stat-percent": {
+      "intraKindMaxCosine": 0.295,
+      "meanCrossKindCosine": 0.5402,
+      "nearestNeighbor": {
+        "exampleId": "ex-011-before-after-split",
+        "cosine": 0.6834
+      },
+      "silhouette": -0.551,
+      "subLook": "giant-stat-a"
+    },
+    "ex-007-giant-stat-measure": {
+      "intraKindMaxCosine": 0.295,
+      "meanCrossKindCosine": 0.2773,
+      "nearestNeighbor": {
+        "exampleId": "ex-015-list-steps",
+        "cosine": 0.5098
+      },
+      "silhouette": -0.3048,
+      "subLook": "giant-stat-b"
+    },
+    "ex-008-coach-selfie": {
+      "intraKindMaxCosine": 0.4614,
+      "meanCrossKindCosine": 0.5072,
+      "nearestNeighbor": {
+        "exampleId": "ex-002-jump-hero-topbar",
+        "cosine": 0.7156
+      },
+      "silhouette": -0.3492,
+      "subLook": "authentic-selfie-a"
+    },
+    "ex-009-athlete-selfie": {
+      "intraKindMaxCosine": 0.4614,
+      "meanCrossKindCosine": 0.4481,
+      "nearestNeighbor": {
+        "exampleId": "ex-001-sprint-hero-overlay",
+        "cosine": 0.6527
+      },
+      "silhouette": -0.2417,
+      "subLook": "authentic-selfie-b"
+    },
+    "ex-010-coach-direct-address": {
+      "intraKindMaxCosine": null,
+      "meanCrossKindCosine": 0.4964,
+      "nearestNeighbor": {
+        "exampleId": "ex-001-sprint-hero-overlay",
+        "cosine": 0.6741
+      },
+      "silhouette": 1.0,
+      "subLook": "coach-direct-address-a"
+    },
+    "ex-011-before-after-split": {
+      "intraKindMaxCosine": null,
+      "meanCrossKindCosine": 0.5464,
+      "nearestNeighbor": {
+        "exampleId": "ex-012-proof-collage",
+        "cosine": 0.7893
+      },
+      "silhouette": 1.0,
+      "subLook": "before-after-split-a"
+    },
+    "ex-012-proof-collage": {
+      "intraKindMaxCosine": null,
+      "meanCrossKindCosine": 0.5598,
+      "nearestNeighbor": {
+        "exampleId": "ex-011-before-after-split",
+        "cosine": 0.7893
+      },
+      "silhouette": 1.0,
+      "subLook": "proof-collage-a"
+    },
+    "ex-013-versus-split": {
+      "intraKindMaxCosine": null,
+      "meanCrossKindCosine": 0.4002,
+      "nearestNeighbor": {
+        "exampleId": "ex-011-before-after-split",
+        "cosine": 0.6187
+      },
+      "silhouette": 1.0,
+      "subLook": "versus-a"
+    },
+    "ex-014-offer-guarantee": {
+      "intraKindMaxCosine": null,
+      "meanCrossKindCosine": 0.4143,
+      "nearestNeighbor": {
+        "exampleId": "ex-015-list-steps",
+        "cosine": 0.5902
+      },
+      "silhouette": 1.0,
+      "subLook": "offer-guarantee-a"
+    },
+    "ex-015-list-steps": {
+      "intraKindMaxCosine": null,
+      "meanCrossKindCosine": 0.3911,
+      "nearestNeighbor": {
+        "exampleId": "ex-014-offer-guarantee",
+        "cosine": 0.5902
+      },
+      "silhouette": 1.0,
+      "subLook": "list-steps-a"
+    }
+  },
+  "batch": {
+    "embedder": "clip-vit-base-patch32 + dinov2-base",
+    "count": 15,
+    "kinds": [
+      "action-hero-text",
+      "authentic-selfie",
+      "before-after-split",
+      "coach-direct-address",
+      "giant-stat",
+      "list-steps",
+      "offer-guarantee",
+      "proof-collage",
+      "training-scene",
+      "versus"
+    ],
+    "maxCrossKindCosine": 0.7893,
+    "meanCrossKindCosine": 0.4685,
+    "maxIntraKindCosine": 0.608,
+    "meanSilhouette": 0.2417,
+    "vendiScore": 6.4956,
+    "kmeansCrossCheck": {
+      "k": 10,
+      "labels": [
+        9,
+        6,
+        2,
+        6,
+        8,
+        5,
+        0,
+        6,
+        4,
+        7,
+        1,
+        1,
+        3,
+        5,
+        0
+      ],
+      "meanClusterPurity": 0.7833
+    },
+    "thresholds": {
+      "maxCrossKindCosine": "<0.70",
+      "meanCrossKindCosine": "<0.55",
+      "meanSilhouette": ">=0.35",
+      "vendiScore": ">=8 (full 12-kind set)",
+      "maxIntraKindCosine": "<0.75"
+    },
+    "seed": 42,
+    "closestCrossKindPair": {
+      "a": "ex-011-before-after-split",
+      "b": "ex-012-proof-collage",
+      "kindA": "before-after-split",
+      "kindB": "proof-collage",
+      "cosine": 0.7893
+    }
+  },
+  "dropped": []
+}

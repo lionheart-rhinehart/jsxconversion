@@ -1,6 +1,751 @@
 {
-  "note": "Example-library index — the Track-A∥B contract. Schema: scripts/lib/example-library.mjs (validateExampleIndex). Spec: docs/example-index-contract.md. Track B's labeling sidecar writes the real entries; this is the valid EMPTY stub Track A develops against until then.",
+  "note": "Example-library index (Track B). One entry per render-QA-passed example: kind + media-style accepts + copy slotShape + the rendered artifact path + perceptual clusterMetrics. Produced by scripts/example-sidecar (render → QA → embed[CLIP+DINOv2] → label → assemble). Schema authority: scripts/lib/example-library.mjs.",
   "schema": "example-library/v1",
-  "generatedAt": null,
-  "examples": {}
+  "generatedAt": "2026-06-06T17:59:36.494Z",
+  "diversity": {
+    "embedder": "clip-vit-base-patch32 + dinov2-base",
+    "count": 15,
+    "kinds": [
+      "action-hero-text",
+      "authentic-selfie",
+      "before-after-split",
+      "coach-direct-address",
+      "giant-stat",
+      "list-steps",
+      "offer-guarantee",
+      "proof-collage",
+      "training-scene",
+      "versus"
+    ],
+    "maxCrossKindCosine": 0.7893,
+    "meanCrossKindCosine": 0.4685,
+    "maxIntraKindCosine": 0.608,
+    "meanSilhouette": 0.2417,
+    "vendiScore": 6.4956,
+    "kmeansCrossCheck": {
+      "k": 10,
+      "labels": [
+        9,
+        6,
+        2,
+        6,
+        8,
+        5,
+        0,
+        6,
+        4,
+        7,
+        1,
+        1,
+        3,
+        5,
+        0
+      ],
+      "meanClusterPurity": 0.7833
+    },
+    "thresholds": {
+      "maxCrossKindCosine": "<0.70",
+      "meanCrossKindCosine": "<0.55",
+      "meanSilhouette": ">=0.35",
+      "vendiScore": ">=8 (full 12-kind set)",
+      "maxIntraKindCosine": "<0.75"
+    },
+    "seed": 42,
+    "closestCrossKindPair": {
+      "a": "ex-011-before-after-split",
+      "b": "ex-012-proof-collage",
+      "kindA": "before-after-split",
+      "kindB": "proof-collage",
+      "cosine": 0.7893
+    }
+  },
+  "examples": {
+    "ex-001-sprint-hero-overlay": {
+      "kind": "action-hero-text",
+      "format": "static",
+      "mediaStyleAccepts": [
+        "production:cinematic",
+        "subject:athlete-action"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": 28,
+            "required": true
+          },
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": 40,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "hook"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-001-sprint-hero-overlay.png",
+      "sourcePath": "templates/_examples/ex-001-sprint-hero-overlay.jsx",
+      "clusterMetrics": {
+        "subLook": "action-hero-text-a",
+        "labeledBy": "authored-manifest+curator-eyeball",
+        "labeledAt": "2026-06-06T17:59:36.494Z",
+        "embedder": "clip-vit-base-patch32 + dinov2-base",
+        "intraKindMaxCosine": 0.608,
+        "meanCrossKindCosine": 0.5329,
+        "silhouette": -0.4429,
+        "nearestNeighbor": {
+          "exampleId": "ex-011-before-after-split",
+          "cosine": 0.7395
+        }
+      }
+    },
+    "ex-002-jump-hero-topbar": {
+      "kind": "action-hero-text",
+      "format": "static",
+      "mediaStyleAccepts": [
+        "production:cinematic",
+        "subject:athlete-action"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": 28,
+            "required": true
+          },
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": 40,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "hook"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-002-jump-hero-topbar.png",
+      "sourcePath": "templates/_examples/ex-002-jump-hero-topbar.jsx",
+      "clusterMetrics": {
+        "subLook": "action-hero-text-b",
+        "labeledBy": "authored-manifest+curator-eyeball",
+        "labeledAt": "2026-06-06T17:59:36.494Z",
+        "embedder": "clip-vit-base-patch32 + dinov2-base",
+        "intraKindMaxCosine": 0.608,
+        "meanCrossKindCosine": 0.5283,
+        "silhouette": -0.2225,
+        "nearestNeighbor": {
+          "exampleId": "ex-004-gymwide-training",
+          "cosine": 0.7525
+        }
+      }
+    },
+    "ex-003-lift-hero-center": {
+      "kind": "action-hero-text",
+      "format": "static",
+      "mediaStyleAccepts": [
+        "production:cinematic",
+        "subject:athlete-action"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "kicker",
+            "role": "kicker",
+            "maxChars": 24,
+            "required": false
+          },
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": 44,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "hook"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-003-lift-hero-center.png",
+      "sourcePath": "templates/_examples/ex-003-lift-hero-center.jsx",
+      "clusterMetrics": {
+        "subLook": "action-hero-text-c",
+        "labeledBy": "authored-manifest+curator-eyeball",
+        "labeledAt": "2026-06-06T17:59:36.494Z",
+        "embedder": "clip-vit-base-patch32 + dinov2-base",
+        "intraKindMaxCosine": 0.548,
+        "meanCrossKindCosine": 0.4209,
+        "silhouette": -0.1538,
+        "nearestNeighbor": {
+          "exampleId": "ex-005-group-training",
+          "cosine": 0.5845
+        }
+      }
+    },
+    "ex-004-gymwide-training": {
+      "kind": "training-scene",
+      "format": "static",
+      "mediaStyleAccepts": [
+        "production:cinematic",
+        "subject:athlete-action",
+        "env:gym"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "claim",
+            "maxChars": 60,
+            "required": true
+          },
+          {
+            "id": "byline",
+            "role": "byline",
+            "maxChars": 48,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "claim",
+          "byline"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-004-gymwide-training.png",
+      "sourcePath": "templates/_examples/ex-004-gymwide-training.jsx",
+      "clusterMetrics": {
+        "subLook": "training-scene-a",
+        "labeledBy": "authored-manifest+curator-eyeball",
+        "labeledAt": "2026-06-06T17:59:36.494Z",
+        "embedder": "clip-vit-base-patch32 + dinov2-base",
+        "intraKindMaxCosine": 0.5905,
+        "meanCrossKindCosine": 0.5322,
+        "silhouette": -0.2084,
+        "nearestNeighbor": {
+          "exampleId": "ex-002-jump-hero-topbar",
+          "cosine": 0.7525
+        }
+      }
+    },
+    "ex-005-group-training": {
+      "kind": "training-scene",
+      "format": "static",
+      "mediaStyleAccepts": [
+        "production:lifestyle",
+        "subject:athlete-action",
+        "env:gym"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "claim",
+            "maxChars": 64,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "claim"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-005-group-training.png",
+      "sourcePath": "templates/_examples/ex-005-group-training.jsx",
+      "clusterMetrics": {
+        "subLook": "training-scene-b",
+        "labeledBy": "authored-manifest+curator-eyeball",
+        "labeledAt": "2026-06-06T17:59:36.494Z",
+        "embedder": "clip-vit-base-patch32 + dinov2-base",
+        "intraKindMaxCosine": 0.5905,
+        "meanCrossKindCosine": 0.4378,
+        "silhouette": 0.1,
+        "nearestNeighbor": {
+          "exampleId": "ex-008-coach-selfie",
+          "cosine": 0.635
+        }
+      }
+    },
+    "ex-006-giant-stat-percent": {
+      "kind": "giant-stat",
+      "format": "static",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "label",
+            "role": "kicker",
+            "maxChars": 20,
+            "required": false
+          },
+          {
+            "id": "stat",
+            "role": "stat",
+            "maxChars": 8,
+            "required": true
+          },
+          {
+            "id": "sub",
+            "role": "claim",
+            "maxChars": 28,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "stat",
+          "claim"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-006-giant-stat-percent.png",
+      "sourcePath": "templates/_examples/ex-006-giant-stat-percent.jsx",
+      "clusterMetrics": {
+        "subLook": "giant-stat-a",
+        "labeledBy": "authored-manifest+curator-eyeball",
+        "labeledAt": "2026-06-06T17:59:36.494Z",
+        "embedder": "clip-vit-base-patch32 + dinov2-base",
+        "intraKindMaxCosine": 0.295,
+        "meanCrossKindCosine": 0.5402,
+        "silhouette": -0.551,
+        "nearestNeighbor": {
+          "exampleId": "ex-011-before-after-split",
+          "cosine": 0.6834
+        }
+      }
+    },
+    "ex-007-giant-stat-measure": {
+      "kind": "giant-stat",
+      "format": "static",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "label",
+            "role": "claim",
+            "maxChars": 28,
+            "required": false
+          },
+          {
+            "id": "stat",
+            "role": "stat",
+            "maxChars": 8,
+            "required": true
+          },
+          {
+            "id": "guarantee",
+            "role": "guarantee",
+            "maxChars": 40,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "claim",
+          "stat",
+          "guarantee"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-007-giant-stat-measure.png",
+      "sourcePath": "templates/_examples/ex-007-giant-stat-measure.jsx",
+      "clusterMetrics": {
+        "subLook": "giant-stat-b",
+        "labeledBy": "authored-manifest+curator-eyeball",
+        "labeledAt": "2026-06-06T17:59:36.494Z",
+        "embedder": "clip-vit-base-patch32 + dinov2-base",
+        "intraKindMaxCosine": 0.295,
+        "meanCrossKindCosine": 0.2773,
+        "silhouette": -0.3048,
+        "nearestNeighbor": {
+          "exampleId": "ex-015-list-steps",
+          "cosine": 0.5098
+        }
+      }
+    },
+    "ex-008-coach-selfie": {
+      "kind": "authentic-selfie",
+      "format": "static",
+      "mediaStyleAccepts": [
+        "production:ugc-selfie",
+        "subject:athlete-face"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "caption",
+            "role": "hook",
+            "maxChars": 90,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "hook"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-008-coach-selfie.png",
+      "sourcePath": "templates/_examples/ex-008-coach-selfie.jsx",
+      "clusterMetrics": {
+        "subLook": "authentic-selfie-a",
+        "labeledBy": "authored-manifest+curator-eyeball",
+        "labeledAt": "2026-06-06T17:59:36.494Z",
+        "embedder": "clip-vit-base-patch32 + dinov2-base",
+        "intraKindMaxCosine": 0.4614,
+        "meanCrossKindCosine": 0.5072,
+        "silhouette": -0.3492,
+        "nearestNeighbor": {
+          "exampleId": "ex-002-jump-hero-topbar",
+          "cosine": 0.7156
+        }
+      }
+    },
+    "ex-009-athlete-selfie": {
+      "kind": "authentic-selfie",
+      "format": "static",
+      "mediaStyleAccepts": [
+        "production:ugc-selfie",
+        "subject:athlete-face"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "sticker",
+            "role": "kicker",
+            "maxChars": 24,
+            "required": false
+          },
+          {
+            "id": "handle",
+            "role": "byline",
+            "maxChars": 30,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "byline"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-009-athlete-selfie.png",
+      "sourcePath": "templates/_examples/ex-009-athlete-selfie.jsx",
+      "clusterMetrics": {
+        "subLook": "authentic-selfie-b",
+        "labeledBy": "authored-manifest+curator-eyeball",
+        "labeledAt": "2026-06-06T17:59:36.494Z",
+        "embedder": "clip-vit-base-patch32 + dinov2-base",
+        "intraKindMaxCosine": 0.4614,
+        "meanCrossKindCosine": 0.4481,
+        "silhouette": -0.2417,
+        "nearestNeighbor": {
+          "exampleId": "ex-001-sprint-hero-overlay",
+          "cosine": 0.6527
+        }
+      }
+    },
+    "ex-010-coach-direct-address": {
+      "kind": "coach-direct-address",
+      "format": "static",
+      "mediaStyleAccepts": [
+        "production:cinematic",
+        "subject:coach-face"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": 36,
+            "required": true
+          },
+          {
+            "id": "name",
+            "role": "byline",
+            "maxChars": 28,
+            "required": false
+          },
+          {
+            "id": "title",
+            "role": "byline",
+            "maxChars": 28,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "hook",
+          "byline"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-010-coach-direct-address.png",
+      "sourcePath": "templates/_examples/ex-010-coach-direct-address.jsx",
+      "clusterMetrics": {
+        "subLook": "coach-direct-address-a",
+        "labeledBy": "authored-manifest+curator-eyeball",
+        "labeledAt": "2026-06-06T17:59:36.494Z",
+        "embedder": "clip-vit-base-patch32 + dinov2-base",
+        "intraKindMaxCosine": null,
+        "meanCrossKindCosine": 0.4964,
+        "silhouette": 1,
+        "nearestNeighbor": {
+          "exampleId": "ex-001-sprint-hero-overlay",
+          "cosine": 0.6741
+        }
+      }
+    },
+    "ex-011-before-after-split": {
+      "kind": "before-after-split",
+      "format": "static",
+      "mediaStyleAccepts": [
+        "subject:athlete-action"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "beforeLabel",
+            "role": "kicker",
+            "maxChars": 12,
+            "required": true
+          },
+          {
+            "id": "afterLabel",
+            "role": "kicker",
+            "maxChars": 12,
+            "required": true
+          },
+          {
+            "id": "stat",
+            "role": "stat",
+            "maxChars": 10,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "stat"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-011-before-after-split.png",
+      "sourcePath": "templates/_examples/ex-011-before-after-split.jsx",
+      "clusterMetrics": {
+        "subLook": "before-after-split-a",
+        "labeledBy": "authored-manifest+curator-eyeball",
+        "labeledAt": "2026-06-06T17:59:36.494Z",
+        "embedder": "clip-vit-base-patch32 + dinov2-base",
+        "intraKindMaxCosine": null,
+        "meanCrossKindCosine": 0.5464,
+        "silhouette": 1,
+        "nearestNeighbor": {
+          "exampleId": "ex-012-proof-collage",
+          "cosine": 0.7893
+        }
+      }
+    },
+    "ex-012-proof-collage": {
+      "kind": "proof-collage",
+      "format": "static",
+      "mediaStyleAccepts": [
+        "subject:athlete-face"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "heading",
+            "role": "claim",
+            "maxChars": 24,
+            "required": true
+          },
+          {
+            "id": "rating",
+            "role": "proof",
+            "maxChars": 8,
+            "required": false
+          },
+          {
+            "id": "quote",
+            "role": "testimonial",
+            "maxChars": 48,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "claim",
+          "proof",
+          "testimonial"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-012-proof-collage.png",
+      "sourcePath": "templates/_examples/ex-012-proof-collage.jsx",
+      "clusterMetrics": {
+        "subLook": "proof-collage-a",
+        "labeledBy": "authored-manifest+curator-eyeball",
+        "labeledAt": "2026-06-06T17:59:36.494Z",
+        "embedder": "clip-vit-base-patch32 + dinov2-base",
+        "intraKindMaxCosine": null,
+        "meanCrossKindCosine": 0.5598,
+        "silhouette": 1,
+        "nearestNeighbor": {
+          "exampleId": "ex-011-before-after-split",
+          "cosine": 0.7893
+        }
+      }
+    },
+    "ex-013-versus-split": {
+      "kind": "versus",
+      "format": "static",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "leftKicker",
+            "role": "kicker",
+            "maxChars": 16,
+            "required": true
+          },
+          {
+            "id": "leftLine",
+            "role": "claim",
+            "maxChars": 24,
+            "required": true
+          },
+          {
+            "id": "rightKicker",
+            "role": "kicker",
+            "maxChars": 24,
+            "required": true
+          },
+          {
+            "id": "rightLine",
+            "role": "claim",
+            "maxChars": 24,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "claim"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-013-versus-split.png",
+      "sourcePath": "templates/_examples/ex-013-versus-split.jsx",
+      "clusterMetrics": {
+        "subLook": "versus-a",
+        "labeledBy": "authored-manifest+curator-eyeball",
+        "labeledAt": "2026-06-06T17:59:36.494Z",
+        "embedder": "clip-vit-base-patch32 + dinov2-base",
+        "intraKindMaxCosine": null,
+        "meanCrossKindCosine": 0.4002,
+        "silhouette": 1,
+        "nearestNeighbor": {
+          "exampleId": "ex-011-before-after-split",
+          "cosine": 0.6187
+        }
+      }
+    },
+    "ex-014-offer-guarantee": {
+      "kind": "offer-guarantee",
+      "format": "static",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "kicker",
+            "role": "kicker",
+            "maxChars": 28,
+            "required": false
+          },
+          {
+            "id": "offer",
+            "role": "offer",
+            "maxChars": 36,
+            "required": true
+          },
+          {
+            "id": "guarantee",
+            "role": "guarantee",
+            "maxChars": 64,
+            "required": true
+          },
+          {
+            "id": "cta",
+            "role": "cta",
+            "maxChars": 20,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "offer",
+          "guarantee",
+          "cta"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-014-offer-guarantee.png",
+      "sourcePath": "templates/_examples/ex-014-offer-guarantee.jsx",
+      "clusterMetrics": {
+        "subLook": "offer-guarantee-a",
+        "labeledBy": "authored-manifest+curator-eyeball",
+        "labeledAt": "2026-06-06T17:59:36.494Z",
+        "embedder": "clip-vit-base-patch32 + dinov2-base",
+        "intraKindMaxCosine": null,
+        "meanCrossKindCosine": 0.4143,
+        "silhouette": 1,
+        "nearestNeighbor": {
+          "exampleId": "ex-015-list-steps",
+          "cosine": 0.5902
+        }
+      }
+    },
+    "ex-015-list-steps": {
+      "kind": "list-steps",
+      "format": "static",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "heading",
+            "role": "hook",
+            "maxChars": 40,
+            "required": true
+          },
+          {
+            "id": "step1",
+            "role": "claim",
+            "maxChars": 36,
+            "required": true
+          },
+          {
+            "id": "step2",
+            "role": "claim",
+            "maxChars": 36,
+            "required": true
+          },
+          {
+            "id": "step3",
+            "role": "claim",
+            "maxChars": 36,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "hook",
+          "claim"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-015-list-steps.png",
+      "sourcePath": "templates/_examples/ex-015-list-steps.jsx",
+      "clusterMetrics": {
+        "subLook": "list-steps-a",
+        "labeledBy": "authored-manifest+curator-eyeball",
+        "labeledAt": "2026-06-06T17:59:36.494Z",
+        "embedder": "clip-vit-base-patch32 + dinov2-base",
+        "intraKindMaxCosine": null,
+        "meanCrossKindCosine": 0.3911,
+        "silhouette": 1,
+        "nearestNeighbor": {
+          "exampleId": "ex-014-offer-guarantee",
+          "cosine": 0.5902
+        }
+      }
+    }
+  }
 }

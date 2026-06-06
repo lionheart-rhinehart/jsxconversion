@@ -1,0 +1,4 @@
+# Big regenerable artifacts — kept OUT of git (and out of the index) per the contract:
+# the index references the vectors; it never embeds them. Re-create with run.mjs.
+embeddings.vectors.npz
+__pycache__/

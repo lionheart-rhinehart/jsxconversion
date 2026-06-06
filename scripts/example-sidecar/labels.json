@@ -1,0 +1,99 @@
+{
+  "note": "Vision-LLM kind cross-check. With no GEMINI_API_KEY this is a no-op that defers to the authored (eyeball-confirmed) kind; with a key it records gemini's independent read + agreement so disagreements surface for review. build-index.mjs folds 'labeledBy' + any disagreement flag into clusterMetrics.",
+  "provider": "gemini",
+  "model": null,
+  "ranAt": null,
+  "labeledBy": "authored-manifest+curator-eyeball",
+  "labels": {
+    "ex-001-sprint-hero-overlay": {
+      "authoredKind": "action-hero-text",
+      "geminiKind": null,
+      "agrees": null,
+      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    },
+    "ex-002-jump-hero-topbar": {
+      "authoredKind": "action-hero-text",
+      "geminiKind": null,
+      "agrees": null,
+      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    },
+    "ex-003-lift-hero-center": {
+      "authoredKind": "action-hero-text",
+      "geminiKind": null,
+      "agrees": null,
+      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    },
+    "ex-004-gymwide-training": {
+      "authoredKind": "training-scene",
+      "geminiKind": null,
+      "agrees": null,
+      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    },
+    "ex-005-group-training": {
+      "authoredKind": "training-scene",
+      "geminiKind": null,
+      "agrees": null,
+      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    },
+    "ex-006-giant-stat-percent": {
+      "authoredKind": "giant-stat",
+      "geminiKind": null,
+      "agrees": null,
+      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    },
+    "ex-007-giant-stat-measure": {
+      "authoredKind": "giant-stat",
+      "geminiKind": null,
+      "agrees": null,
+      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    },
+    "ex-008-coach-selfie": {
+      "authoredKind": "authentic-selfie",
+      "geminiKind": null,
+      "agrees": null,
+      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    },
+    "ex-009-athlete-selfie": {
+      "authoredKind": "authentic-selfie",
+      "geminiKind": null,
+      "agrees": null,
+      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    },
+    "ex-010-coach-direct-address": {
+      "authoredKind": "coach-direct-address",
+      "geminiKind": null,
+      "agrees": null,
+      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    },
+    "ex-011-before-after-split": {
+      "authoredKind": "before-after-split",
+      "geminiKind": null,
+      "agrees": null,
+      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    },
+    "ex-012-proof-collage": {
+      "authoredKind": "proof-collage",
+      "geminiKind": null,
+      "agrees": null,
+      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    },
+    "ex-013-versus-split": {
+      "authoredKind": "versus",
+      "geminiKind": null,
+      "agrees": null,
+      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    },
+    "ex-014-offer-guarantee": {
+      "authoredKind": "offer-guarantee",
+      "geminiKind": null,
+      "agrees": null,
+      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    },
+    "ex-015-list-steps": {
+      "authoredKind": "list-steps",
+      "geminiKind": null,
+      "agrees": null,
+      "note": "GEMINI_API_KEY absent \u2014 authored kind used as source of truth"
+    }
+  }
+}
