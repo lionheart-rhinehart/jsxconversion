@@ -21,16 +21,18 @@
 //  NODE-ONLY.
 // ============================================================================
 
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
 import { resolve, join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import {
   fieldRole, beatLetter, GUARANTEE_TEXT, parseCityFromEyebrow, DEFAULT_EYEBROW_PATTERN,
 } from "./lib/roles.mjs";
-import { CONTENT_ROLES } from "./lib/copy-resolve.mjs";
+import { CONTENT_ROLES, classifyVerbatim, isApprovedTrim } from "./lib/copy-resolve.mjs";
 import { loadCopyLibraryStrict } from "./lib/copy-library.mjs";
+import { loadGrandfatherList, isGrandfathered, overrideHonored, applyCampaignOverride, OVERRIDE_ENV } from "./lib/human-override.mjs";
 import { resolveStaticConfig } from "./lib/fill-core.mjs";
 import { cloneCity, locationCity } from "./lib/location.mjs";
+import { scanBrandIntegrity } from "./lib/brand-integrity.mjs";
 
 const PROJECT_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const CAMPAIGNS_DIR = join(PROJECT_ROOT, "campaigns");
@@ -49,14 +51,21 @@ export const CANONICAL_MOTION_RATIO = { video: 0.6, gif: 0.15, static: 0.25 };
 export const DEFAULT_RULES = {
   aspect: { width: 1080, height: 1920 },
   mediaExempt: [],
-  // Format-mix gate (R3): block | warn | off. Block by default; a grandfathered
-  // campaign relaxes it via campaigns/<c>/validation.config.json {"formatMix":"warn"}.
+  // Format-mix gate (R3): block | warn | off. Block by default. A relax via
+  // campaigns/<c>/validation.config.json is honored ONLY for a grandfathered campaign
+  // or with the out-of-band AA_HUMAN_OVERRIDE marker (see human-override.mjs); a new
+  // campaign's relax-file is ignored.
   formatMix: "block",
-  verbatim: "warn",                 // off | warn | substring(block). Brand file opts into hard.
+  // Verbatim is HARD by default, brand-agnostically (Phase 1): off | warn |
+  // substring(block). Every brand rules file already opts into "substring"; this
+  // default makes a brand-less or new-brand campaign get the hard gate too, instead
+  // of silently degrading to a warning. A grandfathered campaign relaxes it via its
+  // (honored) validation.config.json; a new campaign cannot.
+  verbatim: "substring",
   // Scope the verbatim check to PERSUASIVE copy — the lines that must be Cody's
   // verbatim words. Factual proof/stat/credentials/citations come from research,
   // not ad-copy.md, so they're excluded (decision: persuasive incl. claim).
-  verbatimRoles: ["hook", "claim", "mechanism", "reframe", "kicker", "testimonial"],
+  verbatimRoles: ["hook", "claim", "mechanism", "reframe", "kicker", "testimonial", "body"],
   cityModel: "clone",
   locationRotation: { enabled: false },
   voice: { noEmoji: true, noExclamation: true },
@@ -128,7 +137,7 @@ export function resolveAssetCopy(asset, angle, ctx) {
       cfg = resolveStaticConfig({ clusterId: asset.template, asset, brand, location, campaign, templateDir: TEMPLATE_DIR, dataDir });
       source = cfg ? "fill" : "none";
     }
-    if (!cfg) return { format: fmt, fields: [], mediaPresent: false, cityResolved: null, aspect: null, source };
+    if (!cfg) return { format: fmt, fields: [], mediaPresent: false, cityResolved: null, aspect: null, source, approvedTrims: {} };
     const fields = (cfg.elements || [])
       .filter((el) => typeof el.text === "string")
       .map((el) => ({ key: el.id, role: el.role || null, text: el.text, tag: el.tag }));
@@ -145,7 +154,8 @@ export function resolveAssetCopy(asset, angle, ctx) {
     }
     const aspect = (typeof cfg.width === "number" && typeof cfg.height === "number")
       ? { width: cfg.width, height: cfg.height } : null;
-    return { format: fmt, fields, mediaPresent, cityResolved, aspect, source };
+    const approvedTrims = (cfg._approvedTrims && typeof cfg._approvedTrims === "object") ? cfg._approvedTrims : {};
+    return { format: fmt, fields, mediaPresent, cityResolved, aspect, source, approvedTrims };
   }
 
   // motion
@@ -166,7 +176,8 @@ export function resolveAssetCopy(asset, angle, ctx) {
   // creative WILL show is the asset's resolved location city.
   const slug = asset.location || angle.location || ctx.planLocation || null;
   const cityResolved = slug ? locationCity(slug, dataDir).city : null;
-  return { format: fmt, fields, mediaPresent, cityResolved, aspect: null, source: "motion" };
+  const approvedTrims = (td._approvedTrims && typeof td._approvedTrims === "object") ? td._approvedTrims : {};
+  return { format: fmt, fields, mediaPresent, cityResolved, aspect: null, source: "motion", approvedTrims };
 }
 
 // Is a resolved field "message copy" (subject to verbatim/voice)? Statics use the
@@ -219,15 +230,28 @@ export function validatePlan(plan, opts = {}) {
   const dataDir = opts.dataDir || DATA_DIR;
   const brand = plan.brand || null;
   let rules = opts.rules || loadRules(brand, dataDir);
-  // Per-campaign override (rollout: warn existing / block new). A grandfathered
-  // campaign carries campaigns/<c>/validation.config.json (e.g. {"verbatim":"warn"})
-  // that relaxes the brand rule FOR THAT CAMPAIGN only; brand #2 and any campaign
-  // without the file gets the brand default (hard block).
+  // Per-campaign override — now UN-DOWNGRADABLE by the engine (Phase 0). A
+  // campaigns/<c>/validation.config.json that relaxes a gate (e.g. {"verbatim":
+  // "warn"} or the Batti {"formatMix":"warn"}) is HONORED only when the campaign is
+  // grandfathered OR Cody set the out-of-band marker AA_HUMAN_OVERRIDE=<campaign> in
+  // his own shell. Otherwise the file is IGNORED ENTIRELY and the hard rules stand —
+  // so the engine can't quietly drop a relax-file mid-run to defeat its own gate.
+  // (The honor decision + whole-file ignore live in human-override.mjs, unit-tested.)
+  const env = opts.env || process.env;
+  const grandfatherSet = opts.grandfatherSet || loadGrandfatherList(dataDir);
+  let overrideIgnored = null;          // {keys} → surfaced as a campaign warn below
   if (!opts.rules) {
     const ovPath = join(CAMPAIGNS_DIR, campaign, "validation.config.json");
     if (existsSync(ovPath)) {
-      try { rules = { ...rules, ...JSON.parse(readFileSync(ovPath, "utf8")), _source: `${rules._source} + campaign override` }; }
-      catch { /* malformed override → ignore, keep brand rules (fail toward stricter) */ }
+      let override = null;
+      try { override = JSON.parse(readFileSync(ovPath, "utf8")); }
+      catch { override = null; /* malformed → ignore, keep hard rules (fail toward stricter) */ }
+      if (override) {
+        const honored = overrideHonored({ campaign, grandfatherSet, env });
+        const applied = applyCampaignOverride({ baseRules: rules, override, honored });
+        rules = applied.rules;
+        if (!honored && applied.ignoredKeys.length) overrideIgnored = { keys: applied.ignoredKeys };
+      }
     }
   }
   const eyebrowPattern = rules.eyebrowPattern || DEFAULT_EYEBROW_PATTERN;
@@ -255,6 +279,69 @@ export function validatePlan(plan, opts = {}) {
   if (libError) {
     const v = { rule: "copyLibrary", severity: "block", message: libError, fixHint: "re-run: node scripts/intake-copy.mjs " + campaign };
     campaignViolations.push(v); bump(v);
+  }
+
+  // Phase 0 — an attempted-but-ignored relax-file is surfaced (warn, auditable on
+  // the review page) so a refused downgrade is visible, not silent. It does not
+  // block on its own: the hard gate it tried to relax does the blocking.
+  if (overrideIgnored) {
+    const v = { rule: "overrideIgnored", severity: "warn",
+      message: `validation.config.json present but IGNORED (campaign not grandfathered and no ${OVERRIDE_ENV} marker): keys [${overrideIgnored.keys.join(", ")}] had no effect — the hard gate stands`,
+      fixHint: `fix the underlying violation; or, to deliberately relax, set ${OVERRIDE_ENV}=${campaign} in your own terminal` };
+    campaignViolations.push(v); bump(v);
+  }
+
+  // Phase 1 / precondition-1 — a GENERATE-WORLD campaign (any source:"fresh" asset)
+  // MUST carry a verbatim copy-library; copy enforcement is never optional there. An
+  // ABSENT library returns null (not libError), which would otherwise SKIP the
+  // verbatim gate (L362 `&& libConcat`) — exactly the hole that lets reworded copy
+  // ship. Block it. Scoped to generate-world + not-grandfathered so legacy
+  // no-ad-copy template campaigns (which render authored copy by design) aren't
+  // retroactively broken.
+  const isGenerateWorld = (plan.angles || []).some((a) => (a.assets || []).some((as) => as && as.source === "fresh"));
+  if (isGenerateWorld && !library && !libError && !isGrandfathered(campaign, grandfatherSet)) {
+    const v = { rule: "copyLibrary", severity: "block",
+      message: `generate-world campaign (has source:"fresh" assets) has no copy-library.json — verbatim copy enforcement would be OFF`,
+      fixHint: `author ad-copy.md then run: node scripts/intake-copy.mjs ${campaign}` };
+    campaignViolations.push(v); bump(v);
+  }
+
+  // Phase 2 — brand purity. A franchisee creative must carry ZERO Athletes
+  // Acceleration leak (AA red #c4141d, the "ATHLETES ACCELERATION" wordmark baked
+  // into a field, a known AA source asset; AA people/proof are confirm-or-swap
+  // warnings). scanBrandIntegrity is pure + already unit-tested; previously it ran
+  // only at export — wiring it here catches the leak at the RENDER gate, before the
+  // batch churns. AA campaigns short-circuit to clean (0-diff). We scan the bytes
+  // that actually render: the IN-MEMORY plan (templateData + media paths) + every
+  // frozen edits config. Grandfather-aware: a pre-existing campaign's leak DOWNGRADES
+  // to a warning (don't retroactively break already-shipped franchisee work, per the
+  // Phase 0 grandfather); a NEW campaign's leak is a hard BLOCK.
+  // (Known scope, generalize later: AA→franchisee + one-directional; and when the
+  // generator writes fresh .jsx, that code-scan must carry the validate-templates
+  // brand-red exception for the legit `window.__BRAND__.brand_red || '#c4141d'` idiom.)
+  {
+    const integrityTexts = [{ source: "creative-plan.json", text: JSON.stringify(plan) }];
+    const editsDir = join(CAMPAIGNS_DIR, campaign, "edits");
+    if (existsSync(editsDir)) {
+      try {
+        for (const f of readdirSync(editsDir)) {
+          if (f.endsWith(".config.json")) integrityTexts.push({ source: `edits/${f}`, text: readFileSync(join(editsDir, f), "utf8") });
+        }
+      } catch { /* unreadable edits dir → scan what we have (the plan) */ }
+    }
+    const integrity = scanBrandIntegrity({ brand, texts: integrityTexts });
+    const grandfathered = isGrandfathered(campaign, grandfatherSet);
+    for (const f of integrity.findings) {
+      // AA people/proof stay warn always; AA color/wordmark/asset block on new work,
+      // downgrade to warn on grandfathered work.
+      const severity = f.severity === "block" ? (grandfathered ? "warn" : "block") : "warn";
+      const v = { rule: "brandPurity", severity,
+        message: `${f.kind}: "${f.detail}" leaked onto brand "${brand}" (in ${f.source})${f.severity === "block" && grandfathered ? " — grandfathered to warn" : ""}`,
+        fixHint: f.kind === "aa-people-proof"
+          ? "confirm this AA person/credential belongs on this brand, or swap it for the franchisee's own"
+          : "remove the AA color/wordmark/asset — recolor from the brand kit, re-fill, or swap the media" };
+      campaignViolations.push(v); bump(v);
+    }
   }
   if (clone.ambiguous) {
     const v = { rule: "cityModel", severity: "warn",
@@ -358,15 +445,22 @@ export function validatePlan(plan, opts = {}) {
           }
         }
 
-        // verbatim substring-in-library
+        // verbatim trace-to-library (Phase 1: exact / trim / rewrite, no longer a
+        // silent pass for trims). EXACT → clean. TRIM (verbatim subset, long enough
+        // to be deliberate) → copychief / needs-approval (warn, surfaced for Cody;
+        // suppressed for an already-approved exact text via _approvedTrims). ABSENT
+        // (reworded/invented) → hard block in substring mode, warn otherwise.
         if (verbatimMode !== "off" && libConcat && isContentField(f, R.format)) {
           if (!verbatimRoles || (f.role && verbatimRoles.has(f.role))) {
             const fn = norm(t);
-            const traced = fn.length > 0 && libConcat.some((u) => u.includes(fn));
-            if (!traced) {
+            const cls = classifyVerbatim(fn, libConcat);
+            if (cls === "absent") {
               const sev = verbatimMode === "substring" ? "block" : "warn";
-              add("verbatim", sev, `copy in "${f.key}" doesn't trace to copy-library: "${t.slice(0, 50)}"`,
+              add("verbatim", sev, `copy in "${f.key}" doesn't trace to copy-library (reworded/invented): "${t.slice(0, 50)}"`,
                 { fixHint: "bind a copy-library unit (copyRefs/hookRef) or lift the verbatim text — don't reword/compose" });
+            } else if (cls === "trim" && !isApprovedTrim(R.approvedTrims, f.key, fn)) {
+              add("copychiefTrim", "warn", `copy in "${f.key}" is a verbatim TRIM of approved copy — needs Cody's approval: "${t.slice(0, 50)}"`,
+                { needsApproval: true, fixHint: "approve the trim on the review page, or restore the full verbatim line (never reword)" });
             }
           }
         }
@@ -458,7 +552,7 @@ export function validatePlan(plan, opts = {}) {
         .join(", ");
       const v = { rule: "formatMix", severity: formatMixMode === "warn" ? "warn" : "block",
         message: `format mix off target: ${detail}`,
-        fixHint: "rebalance formats toward the canonical 60% video / 15% gif / 25% static (media-pull is mandatory, so 'no footage' is not a reason to skip motion); or grandfather via campaigns/<c>/validation.config.json {\"formatMix\":\"warn\"}" };
+        fixHint: "rebalance formats toward the canonical 60% video / 15% gif / 25% static (media-pull is mandatory, so 'no footage' is not a reason to skip motion)" };
       campaignViolations.push(v); bump(v);
     }
   }

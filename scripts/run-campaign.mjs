@@ -45,6 +45,7 @@ import { buildRefPools, verbatimGuard } from "./lib/copy-resolve.mjs";
 import { validateTemplateSource } from "./validate-templates.mjs";
 import { BANK_AUTHORING_PALETTE, COLOR_TOKEN_KEYS } from "./lib/palette.mjs";
 import { validatePlan, writeValidationReport } from "./validate-plan.mjs";
+import { forceUnsafeAllowed, OVERRIDE_ENV } from "./lib/human-override.mjs";
 import { verifyRender } from "./lib/render-qa.mjs";
 import { loadBrandFile } from "./lib/brand-kit.mjs";
 import { stageKitFonts } from "./lib/fonts-stage.mjs";
@@ -494,6 +495,11 @@ async function renderTemplateMotion(asset, angleId, wantGif) {
   // present — AA has none, so it keeps its built-in fallback (0-diff).
   if (motionTiers.brand_name) brandPalette.brand_name = motionTiers.brand_name;
   if (motionTiers.url) brandPalette.url = motionTiers.url;
+  // Eyebrow treatment is kit-driven (Phase 2): a franchisee kit with
+  // "eyebrow_style":"plain" renders plain mono-color text instead of the AA white
+  // pill. Absent (AA + every current brand) → the chip default in animations.jsx
+  // (byte-for-byte unchanged). Only propagate a recognized value.
+  if (motionTiers.eyebrow_style === "plain" || motionTiers.eyebrow_style === "chip") brandPalette.eyebrow_style = motionTiers.eyebrow_style;
   const motionLogoRel = `assets/${brand}-logo.png`;
   if (existsSync(join(PROJECT_ROOT, "brand/video-templates", motionLogoRel))) brandPalette.logo_motion = motionLogoRel;
 
@@ -777,12 +783,20 @@ async function main() {
     process.exit(2);
   }
   try { writeValidationReport(CAMPAIGNS_DIR, campaign, report, new Date().toISOString()); } catch { /* report write is best-effort */ }
-  if (report.blocking > 0 && !flag("force-unsafe")) {
+  // --force-unsafe is no longer self-serve (Phase 0): blasting past ALL blocking
+  // violations is honored only with the out-of-band marker AA_HUMAN_OVERRIDE=<campaign>
+  // Cody sets in his own shell. A bare --force-unsafe from the engine is REFUSED.
+  const forceRequested = flag("force-unsafe");
+  const forceAllowed = forceRequested && forceUnsafeAllowed({ env: process.env, campaign });
+  if (report.blocking > 0 && !forceAllowed) {
     console.error(`[campaign] ${report.summaryText}`);
-    console.error(`[campaign] BLOCKED — ${report.blocking} hard violation(s). Run: node scripts/validate-plan.mjs ${campaign}  (or see campaigns/${campaign}/validation.json). Fix them, or re-run with --force-unsafe.`);
+    console.error(`[campaign] BLOCKED — ${report.blocking} hard violation(s). Run: node scripts/validate-plan.mjs ${campaign}  (or see campaigns/${campaign}/validation.json). Fix them.`);
+    if (forceRequested) {
+      console.error(`[campaign] --force-unsafe was passed but is REFUSED — it requires the out-of-band marker ${OVERRIDE_ENV}=${campaign} set in your own terminal (a deliberate human act the engine cannot quietly perform).`);
+    }
     process.exit(2);
   }
-  if (report.blocking > 0) console.error(`[campaign] --force-unsafe set: proceeding despite ${report.blocking} blocking violation(s).`);
+  if (report.blocking > 0) console.error(`[campaign] ${OVERRIDE_ENV} marker present + --force-unsafe set: proceeding despite ${report.blocking} blocking violation(s).`);
 
   const useServer = await serverUp();
   console.error(`[campaign] plan: ${planPath}`);

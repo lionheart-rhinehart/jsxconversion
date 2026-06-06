@@ -13,6 +13,10 @@
 export const ROLES = [
   "eyebrow", "kicker", "hook", "claim", "mechanism", "reframe", "proof",
   "stat", "testimonial", "byline", "offer", "guarantee", "cta", "brand",
+  // `body` is the longest persuasive slot — the bottom bucket of the copychief
+  // ladder (kicker → headline → subhead → body). A verbatim hook/paragraph too
+  // long for the upper three slots spills into `body` rather than being trimmed.
+  "body",
 ];
 
 // Roles the AUTO-fill robot must never overwrite (the editor stays 100% open).
@@ -58,6 +62,7 @@ const FIELD_ROLE_PATTERNS = [
   [/mechanism/i, "mechanism"],
   [/reframe|micro|subhead/i, "reframe"],
   [/cta|button/i, "cta"],
+  [/^body|\bbody\b|paragraph|\bpara\b/i, "body"],
   [/byline|coach|author|handle|url|^name$/i, "byline"],
   [/offer/i, "offer"],
   [/brand|wordmark|tagline|logo/i, "brand"],
@@ -116,11 +121,11 @@ export function parseCityFromEyebrow(text, pattern = DEFAULT_EYEBROW_PATTERN) {
   return m ? m[1].trim().toUpperCase() : null;
 }
 
-// Lay a single VERBATIM hook across the three hook slots (top→bottom):
-//   kicker (small lead-in) · headline (the main thought) · subhead (the rest).
+// Lay a single VERBATIM hook across up to FOUR slots (top→bottom):
+//   kicker (small lead-in) · headline (the main thought) · subhead · body (overflow).
 // Splitting only chooses BREAK POINTS — it never alters words. The concatenation
 // of the returned segments reproduces the hook's words in order. Deterministic
-// (no guessing): break on sentence boundaries, then distribute sentences into 3
+// (no guessing): break on sentence boundaries, then distribute sentences into the
 // ordered buckets; fall back to clause punctuation, then to headline-only.
 // Returns a partial map ({ headline } at minimum); falsy input → {}.
 export function splitHook(text) {
@@ -133,15 +138,24 @@ export function splitHook(text) {
   if (segs.length === 1) {
     segs = t.split(/\s*[—–:;]\s+|,\s+(?=[A-Z])/).map((s) => s.trim()).filter(Boolean);
   }
+  const join = (a) => a.join(" ");
   if (segs.length <= 1) return { headline: t };
   if (segs.length === 2) return { headline: segs[0], subhead: segs[1] };
+  if (segs.length === 3) return { kicker: segs[0], headline: segs[1], subhead: segs[2] };
 
-  // 3+ → three ordered buckets, near-equal by segment count.
-  const per = Math.ceil(segs.length / 3);
-  const join = (a) => a.join(" ");
+  // 4+ → four ordered buckets (kicker · headline · subhead · body), near-equal by
+  // segment count. The remainder is weighted to the FRONT buckets so `body` always
+  // carries the tail and is never left empty when there are 4+ segments.
+  const sizes = [0, 0, 0, 0];
+  const base = Math.floor(segs.length / 4);
+  const rem = segs.length % 4;
+  for (let i = 0; i < 4; i++) sizes[i] = base + (i < rem ? 1 : 0);
+  let pos = 0;
+  const take = (n) => { const s = segs.slice(pos, pos + n); pos += n; return join(s); };
   return {
-    kicker: join(segs.slice(0, per)),
-    headline: join(segs.slice(per, per * 2)),
-    subhead: join(segs.slice(per * 2)),
+    kicker: take(sizes[0]),
+    headline: take(sizes[1]),
+    subhead: take(sizes[2]),
+    body: take(sizes[3]),
   };
 }

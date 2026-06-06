@@ -16,7 +16,8 @@
     "mechanism",
     "reframe",
     "kicker",
-    "testimonial"
+    "testimonial",
+    "body"
   ],
   "cityModel": "clone",
   "locationRotation": {

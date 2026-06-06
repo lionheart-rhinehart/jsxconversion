@@ -161,25 +161,29 @@ function SyncedVideo({ src, loopSeconds, ...rest }) {
 }
 
 // ── Eyebrow ───────────────────────────────────────────────────────────────────
-// The brand's locale eyebrow: red text on a WHITE pill, mono, uppercase. This is
-// the single source of truth for the eyebrow look — every template renders its
-// eyebrow through <Eyebrow> (enforced by scripts/validate-templates.mjs), so the
-// white background can never silently drift away again. `top`/`left` position it.
+// The brand's locale eyebrow: the AA treatment is red text on a WHITE pill, mono,
+// uppercase. This is the single source of truth for the eyebrow look — every
+// template renders its eyebrow through <Eyebrow> (enforced by
+// scripts/validate-templates.mjs). The pill is now BRAND-KIT-DRIVEN (Phase 2): the
+// DEFAULT (no kit key, and AA) is the white pill, byte-for-byte unchanged; a
+// franchisee kit can set window.__BRAND__.eyebrow_style = "plain" for plain
+// mono-color text with no pill (the leak was the white chip being hardcoded for
+// EVERY brand). `top`/`left` position it.
 function Eyebrow({ children, top = 150, left = 90, fontSize = 38, style = {} }) {
+  const B = (typeof window !== "undefined" && window.__BRAND__) || {};
+  const brandRed = B.brand_red || "#c4141d";
+  const span = {
+    display: "inline-block",
+    color: brandRed,
+    fontFamily: '"JetBrains Mono", monospace', fontSize, fontWeight: 700,
+    letterSpacing: "0.04em", textTransform: "uppercase", whiteSpace: "nowrap",
+  };
+  // Default chip = the exact prior bytes; "plain" drops the white pill only.
+  if (B.eyebrow_style !== "plain") { span.background = "#ffffff"; span.padding = "10px 22px"; span.borderRadius = 8; }
   return React.createElement(
     "div",
     { "data-eyebrow": "1", style: { position: "absolute", top, left, zIndex: 6, ...style } },
-    React.createElement(
-      "span",
-      { style: {
-        display: "inline-block", background: "#ffffff",
-        color: (typeof window !== "undefined" && window.__BRAND__ && window.__BRAND__.brand_red) || "#c4141d",
-        fontFamily: '"JetBrains Mono", monospace', fontSize, fontWeight: 700,
-        letterSpacing: "0.04em", textTransform: "uppercase",
-        padding: "10px 22px", borderRadius: 8, whiteSpace: "nowrap",
-      } },
-      children,
-    ),
+    React.createElement("span", { style: span }, children),
   );
 }
 
@@ -339,12 +343,15 @@ function TplText({ field, data, base = {}, style = {}, maxWidth, maxHeight, minS
   if (field === 'eyebrow') {
     const txt = (data && data.eyebrow != null && data.eyebrow !== '') ? data.eyebrow : children;
     const box = { ...merged, background: 'transparent', padding: 0, color: undefined };
+    // Brand-kit-driven (Phase 2): default = the white chip (byte-for-byte unchanged);
+    // a franchisee kit setting window.__BRAND__.eyebrow_style="plain" drops the pill.
+    const B = (typeof window !== 'undefined' && window.__BRAND__) || {};
+    const span = { display: 'inline-block', color: B.brand_red || '#c4141d',
+      fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', whiteSpace: 'nowrap' };
+    if (B.eyebrow_style !== 'plain') { span.background = '#ffffff'; span.padding = '8px 18px'; span.borderRadius = 8; }
     return (
       <div ref={ref} data-ov-key={field} style={box}>
-        <span style={{ display: 'inline-block', background: '#ffffff',
-          color: (typeof window !== 'undefined' && window.__BRAND__ && window.__BRAND__.brand_red) || '#c4141d',
-          fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase',
-          padding: '8px 18px', borderRadius: 8, whiteSpace: 'nowrap' }}>{txt}</span>
+        <span style={span}>{txt}</span>
       </div>
     );
   }

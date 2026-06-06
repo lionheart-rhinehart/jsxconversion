@@ -18,7 +18,8 @@
 //  the job spec; this script owns order + gates.
 //
 //  Usage:
-//    node scripts/repurpose-campaign.mjs --job <spec.json> [--dry-run] [--force]
+//    node scripts/repurpose-campaign.mjs --job <spec.json> [--dry-run]
+//    (--force is deprecated/inert since Phase 0 — grandfather is inherited from the source.)
 //
 //  Job spec:
 //    {
@@ -45,6 +46,7 @@ import { buildPaletteMap, BANK_AUTHORING_PALETTE } from "./lib/palette.mjs";
 import { validateKit } from "./lib/brand-kit.mjs";
 import { cloneTarget } from "./lib/clone-core.mjs";
 import { resolveWorkspaceId, resolveFolder } from "./lib/kraken.mjs";
+import { inheritGrandfather } from "./lib/human-override.mjs";
 
 const ROOT = resolve(".");
 const DATA_DIR = join(ROOT, "data");
@@ -53,7 +55,7 @@ function parseArgs(argv) {
   const a = { dryRun: false, force: false, job: null, renderOnly: false, exportOnly: false };
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === "--dry-run") a.dryRun = true;
-    else if (argv[i] === "--force") a.force = true;
+    else if (argv[i] === "--force") a.force = true;   // DEPRECATED/inert (Phase 0): no longer forwards --force-unsafe; grandfather is now inherited from the source. Accepted for back-compat.
     else if (argv[i] === "--render-only") a.renderOnly = true;   // clone+render+verify; STOP before export (review stop)
     else if (argv[i] === "--export-only") a.exportOnly = true;   // publish already-rendered+reviewed proofs
     else if (argv[i] === "--job") a.job = argv[++i];
@@ -297,11 +299,16 @@ async function main() {
       console.log(`[repurpose] cloned: ${cloneReport.counts.editConfigs} edit configs (${cloneReport.counts.configChanges} changes), ${cloneReport.counts.templateDataSwaps} templateData swaps, media set ${cloneReport.counts.mediaSet}`);
       for (const w of cloneReport.freshWarnings) console.warn(`[repurpose] warn (fresh asset): ${w}`);
 
-      // Phase 3 — render every asset FULLY (no copy-across path). --force forwards
-      // run-campaign's --force-unsafe so a faithful 1:1 of a grandfathered/force-
-      // shipped source renders despite its inherited (non-introduced) hard blocks.
+      // Phase 3 — render every asset FULLY (no copy-across path). A faithful 1:1 of
+      // a GRANDFATHERED source INHERITS grandfather status (it carries the same
+      // already-approved content + the same inherited, non-introduced blocks) — so
+      // its dest's validation.config.json is honored without a self-serve
+      // --force-unsafe (which is now refused without the out-of-band marker, Phase 0).
+      // If the source is NOT grandfathered, nothing is inherited and the dest must
+      // pass the hard gate on its own (a clean source clones to a clean dest).
+      const inh = inheritGrandfather({ dataDir: DATA_DIR, sourceCampaign: target.source, destCampaign: target.dest });
+      console.log(`[repurpose] grandfather: ${inh.inherited ? "inherited" : "not inherited"} — ${inh.reason}`);
       const runArgs = ["scripts/run-campaign.mjs", target.dest, "--all"];
-      if (args.force) runArgs.push("--force-unsafe");
       const rr = sh("node", runArgs);
       if (!rr.ok) {
         console.error(`[repurpose] ABORT ${target.dest}: render failed (exit ${rr.code})`);

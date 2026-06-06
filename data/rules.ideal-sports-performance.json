@@ -4,7 +4,7 @@
   "aspect": { "width": 1080, "height": 1920 },
   "mediaExempt": ["logo-sting", "stat-reveal"],
   "verbatim": "substring",
-  "verbatimRoles": ["hook", "claim", "mechanism", "reframe", "kicker", "testimonial"],
+  "verbatimRoles": ["hook", "claim", "mechanism", "reframe", "kicker", "testimonial", "body"],
   "cityModel": "clone",
   "locationRotation": { "enabled": false },
   "voice": { "noEmoji": true, "noExclamation": false },
