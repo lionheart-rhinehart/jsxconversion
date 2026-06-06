@@ -88,19 +88,27 @@ export function exampleSourcePaths(id) {
 // (one place; both tracks + the validator see it at once). Stable kebab ids — an
 // archetype id MUST NOT change once examples reference it (re-label by re-running the
 // labeler, which only rewrites the `archetype` FIELD, never an example id).
+// 15 DISTINCT DESIGNS — one each (1 design = 1 cluster). Each is a different layout
+// FAMILY: a different dominant element + frame division (the squint test). They must
+// be MUTUALLY distinct in embedding space (every cross-design cosine < 0.70). This is
+// not "archetype families with variations" — it's 15 standalone designs that each look
+// like a different kind of thing.
 export const ARCHETYPES = [
-  "ugc-selfie",            // one athlete/coach face fills frame, raw, arm's-length
-  "coach-authority",       // composed coach to camera, intentional framing + credential
-  "action-hero",           // athlete in motion, full-bleed footage + bold overlay
-  "training-scene",        // wide gym/field, the PLACE dominates
-  "transformation-split",  // hard dual-frame, same athlete two states
-  "versus",                // two-column head-to-head contrast
-  "proof-collage",         // grid/mosaic of faces + quotes + ratings
-  "giant-stat",            // one huge numeral owns the frame
-  "metric-reveal",         // a chart/gauge builds to one point (animated)
-  "kinetic-statement",     // full-frame animated type, words ARE the creative
-  "list-steps",            // sequential numbered cards ("3 things…")
-  "offer-guarantee",       // structured deal + guarantee + CTA
+  "giant-stat",          // one huge NUMBER owns the frame
+  "metric-reveal",       // a CHART / gauge / bars dominate (data-viz)
+  "kinetic-text",        // bold edge-to-edge TYPE, no photo
+  "quote-card",          // a large pull-QUOTE + attribution, text on subtle bg
+  "before-after-split",  // HORIZONTAL dual-frame (two stacked photos)
+  "versus",              // VERTICAL two-column contrast
+  "proof-collage",       // 2x2 GRID of face photos + stars
+  "list-steps",          // numbered ROW stack
+  "offer-card",          // structured deal box + guarantee + CTA button
+  "action-hero",         // full-bleed action photo + a HUGE overlay headline
+  "training-scene",      // WIDE environment, people small, tiny corner text
+  "ugc-selfie",          // a FACE fills the frame, native caption, almost no design
+  "coach-portrait",      // photo on HALF + solid info PANEL on the other half
+  "timeline-schedule",   // a CALENDAR / week grid / program timeline
+  "benefit-iconrow",     // a row/grid of ICONS + short labels, lots of negative space
 ];
 
 export function isArchetype(a) {
@@ -145,20 +153,48 @@ export function isMediaStyleTag(t) {
 //                         (validateExampleEntry enforces it). [] = unconstrained.
 // `summary` is the one-line human gloss.
 export const ARCHETYPE_SPECS = {
-  "ugc-selfie": {
-    formats: ["static", "video"], mediaOptional: false,
-    mediaStyleAllowed: ["production:ugc-selfie", "subject:athlete-face", "subject:coach-face"],
-    summary: "UGC selfie — one face fills frame, arm's-length, raw.",
+  "giant-stat": {
+    formats: ["static"], mediaOptional: true, mediaStyleAllowed: [],
+    summary: "One huge NUMBER owns the frame.",
   },
-  "coach-authority": {
-    formats: ["video", "static"], mediaOptional: false,
-    mediaStyleAllowed: ["production:mid-fi", "production:cinematic", "subject:coach-face"],
-    summary: "Composed coach to camera, intentional framing + credential.",
+  "metric-reveal": {
+    formats: ["static", "video"], mediaOptional: true, mediaStyleAllowed: [],
+    summary: "A chart / gauge / bars dominate; data-viz.",
+  },
+  "kinetic-text": {
+    formats: ["static", "video"], mediaOptional: true, mediaStyleAllowed: [],
+    summary: "Bold edge-to-edge type; no photo.",
+  },
+  "quote-card": {
+    formats: ["static"], mediaOptional: true, mediaStyleAllowed: [],
+    summary: "Large pull-quote + attribution on a subtle background.",
+  },
+  "before-after-split": {
+    formats: ["static", "video"], mediaOptional: false,
+    mediaStyleAllowed: ["subject:athlete-action", "subject:athlete-face"],
+    summary: "Horizontal dual-frame, two states.",
+  },
+  "versus": {
+    formats: ["static"], mediaOptional: true, mediaStyleAllowed: [],
+    summary: "Vertical two-column head-to-head contrast.",
+  },
+  "proof-collage": {
+    formats: ["static"], mediaOptional: false,
+    mediaStyleAllowed: ["subject:athlete-face", "subject:parent-face"],
+    summary: "2x2 grid/mosaic of faces + star ratings.",
+  },
+  "list-steps": {
+    formats: ["static", "video"], mediaOptional: true, mediaStyleAllowed: [],
+    summary: "Numbered row stack.",
+  },
+  "offer-card": {
+    formats: ["static"], mediaOptional: true, mediaStyleAllowed: [],
+    summary: "Structured deal box + guarantee + CTA button.",
   },
   "action-hero": {
     formats: ["static", "video"], mediaOptional: false,
     mediaStyleAllowed: ["production:cinematic", "subject:athlete-action"],
-    summary: "Athlete in motion, full-bleed footage hero + bold overlay text.",
+    summary: "Full-bleed action photo + a huge overlay headline.",
   },
   "training-scene": {
     formats: ["static", "video"], mediaOptional: false,
@@ -166,41 +202,25 @@ export const ARCHETYPE_SPECS = {
       "production:cinematic", "production:lifestyle", "subject:athlete-action",
       "env:gym", "env:field", "env:outdoor",
     ],
-    summary: "Wide gym/field, the place dominates, smaller anchored text.",
+    summary: "Wide environment, people small, tiny corner text.",
   },
-  "transformation-split": {
+  "ugc-selfie": {
     formats: ["static", "video"], mediaOptional: false,
-    mediaStyleAllowed: ["subject:athlete-action", "subject:athlete-face"],
-    summary: "Hard dual-frame, same athlete two states.",
+    mediaStyleAllowed: ["production:ugc-selfie", "subject:athlete-face", "subject:coach-face"],
+    summary: "A face fills the frame, native caption, almost no design.",
   },
-  "versus": {
+  "coach-portrait": {
+    formats: ["static", "video"], mediaOptional: false,
+    mediaStyleAllowed: ["production:mid-fi", "production:cinematic", "subject:coach-face"],
+    summary: "Photo on half + a solid info panel on the other half.",
+  },
+  "timeline-schedule": {
     formats: ["static"], mediaOptional: true, mediaStyleAllowed: [],
-    summary: "Two-column head-to-head contrast; 2 small images.",
+    summary: "A calendar / week grid / program timeline.",
   },
-  "proof-collage": {
-    formats: ["static"], mediaOptional: false,
-    mediaStyleAllowed: ["subject:athlete-face", "subject:parent-face"],
-    summary: "Grid/mosaic of faces + quotes + star ratings.",
-  },
-  "giant-stat": {
+  "benefit-iconrow": {
     formats: ["static"], mediaOptional: true, mediaStyleAllowed: [],
-    summary: "One huge numeral owns the frame; media optional.",
-  },
-  "metric-reveal": {
-    formats: ["video"], mediaOptional: true, mediaStyleAllowed: [],
-    summary: "A chart/gauge/meter builds to one point; optional footage backing.",
-  },
-  "kinetic-statement": {
-    formats: ["video"], mediaOptional: true, mediaStyleAllowed: [],
-    summary: "Full-frame animated type; media none/subtle.",
-  },
-  "list-steps": {
-    formats: ["static", "video"], mediaOptional: true, mediaStyleAllowed: [],
-    summary: "Sequential numbered cards; per-card icon/small image.",
-  },
-  "offer-guarantee": {
-    formats: ["static", "video"], mediaOptional: true, mediaStyleAllowed: [],
-    summary: "Structured deal + guarantee + CTA; small support.",
+    summary: "A row/grid of icons + short labels, lots of negative space.",
   },
 };
 

@@ -28,7 +28,7 @@ const REPO = join(import.meta.dirname, "..");
 // A fully-conformant entry (deep-cloned per test so mutations don't bleed).
 function goodEntry(id = "ex-001-coach-to-camera-gym") {
   return {
-    archetype: "coach-authority",
+    archetype: "coach-portrait",
     format: "video",
     mediaStyleAccepts: ["production:cinematic", "subject:coach-face"],
     slotShape: {
@@ -98,7 +98,7 @@ test("storage paths are fixed, repo-root-relative, forward-slashed", () => {
 
 // ── enums ────────────────────────────────────────────────────────────────────
 test("ARCHETYPES / MEDIA tags are closed and self-consistent with ARCHETYPE_SPECS", () => {
-  assert.equal(ARCHETYPES.length, 12);
+  assert.equal(ARCHETYPES.length, 15);
   assert.ok(isArchetype("giant-stat") && !isArchetype("nope"));
   assert.ok(isMediaStyleTag("subject:athlete-face") && !isMediaStyleTag("subject:robot"));
   // every ARCHETYPE has a spec; every spec key is an ARCHETYPE
@@ -133,9 +133,9 @@ test("format not allowed for the archetype is an error", () => {
 });
 
 test("a media tag outside the archetype's allowed superset is an error", () => {
-  const e = clone(goodEntry()); // coach-authority
+  const e = clone(goodEntry()); // coach-portrait
   e.mediaStyleAccepts = ["production:cinematic", "subject:athlete-action"]; // action not allowed for coach archetype
-  assert.ok(validateExampleEntry("ex-001-x", e).errors.some((m) => /not allowed for archetype "coach-authority"/.test(m)));
+  assert.ok(validateExampleEntry("ex-001-x", e).errors.some((m) => /not allowed for archetype "coach-portrait"/.test(m)));
 });
 
 test("an unknown media tag is an error", () => {

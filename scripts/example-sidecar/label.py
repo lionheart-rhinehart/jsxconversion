@@ -38,9 +38,10 @@ ENV_FILE = HERE / ".env"
 # The closed archetype vocabulary, mirrored from scripts/lib/example-library.mjs
 # (ARCHETYPES). Kept in sync by the contract; the labeler returns only one of these.
 ARCHETYPES = [
-    "ugc-selfie", "coach-authority", "action-hero", "training-scene",
-    "transformation-split", "versus", "proof-collage", "giant-stat",
-    "metric-reveal", "kinetic-statement", "list-steps", "offer-guarantee",
+    "giant-stat", "metric-reveal", "kinetic-text", "quote-card",
+    "before-after-split", "versus", "proof-collage", "list-steps",
+    "offer-card", "action-hero", "training-scene", "ugc-selfie",
+    "coach-portrait", "timeline-schedule", "benefit-iconrow",
 ]
 
 MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")
@@ -141,17 +142,24 @@ def main():
                 note = f"gemini call failed ({e}); kept authored archetype"
         labels[t["id"]] = {"authoredArchetype": t["authoredArchetype"], "geminiArchetype": ga, "agrees": agrees, "note": note}
 
+    # labeledBy counts as gemini ONLY if calls actually SUCCEEDED (>=1 real read) — not
+    # merely because the client constructed. An all-failed run must not claim gemini.
+    succeeded = sum(1 for v in labels.values() if v["geminiArchetype"] is not None)
+    gemini_ran = client is not None and succeeded > 0
     out = {
         "note": "Vision-LLM archetype cross-check. With no GEMINI_API_KEY this is a no-op that defers to the authored (eyeball-confirmed) archetype; with a key it records gemini's independent read + agreement so disagreements surface. build-index.mjs folds 'labeledBy' + any disagreement into clusterMetrics.",
         "provider": provider,
-        "model": model if client is not None else None,
-        "ranAt": ran_at,
-        "labeledBy": f"gemini:{model}" if client is not None else "authored-manifest+curator-eyeball",
+        "model": model if gemini_ran else None,
+        "ranAt": ran_at if gemini_ran else None,
+        "geminiReads": succeeded,
+        "labeledBy": f"gemini:{model}" if gemini_ran else "authored-manifest+curator-eyeball",
         "labels": labels,
     }
     LABELS.write_text(json.dumps(out, indent=2), encoding="utf-8")
     disagreements = sum(1 for v in labels.values() if v["agrees"] is False)
-    log(f"wrote {LABELS.name} ({len(labels)} labels, {disagreements} disagreements, labeledBy={out['labeledBy']})")
+    if client is not None and succeeded == 0:
+        log("WARNING: client constructed but 0 successful gemini reads — labeledBy falls back to authored")
+    log(f"wrote {LABELS.name} ({len(labels)} labels, {succeeded} gemini reads, {disagreements} disagreements, labeledBy={out['labeledBy']})")
     return 0
 
 

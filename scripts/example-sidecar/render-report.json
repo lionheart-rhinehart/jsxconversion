@@ -2,242 +2,122 @@
   "generatedAt": null,
   "results": [
     {
-      "id": "ex-001-ugc-selfie-a",
+      "id": "ex-001-giant-stat",
       "format": "static",
       "ok": true,
-      "png": "templates/_examples/ex-001-ugc-selfie-a.png",
+      "png": "templates/_examples/ex-001-giant-stat.png",
       "mp4": null,
       "reason": "ok"
     },
     {
-      "id": "ex-002-ugc-selfie-b",
+      "id": "ex-002-metric-reveal",
       "format": "static",
       "ok": true,
-      "png": "templates/_examples/ex-002-ugc-selfie-b.png",
+      "png": "templates/_examples/ex-002-metric-reveal.png",
       "mp4": null,
       "reason": "ok"
     },
     {
-      "id": "ex-003-ugc-selfie-c",
+      "id": "ex-003-kinetic-text",
       "format": "static",
       "ok": true,
-      "png": "templates/_examples/ex-003-ugc-selfie-c.png",
+      "png": "templates/_examples/ex-003-kinetic-text.png",
       "mp4": null,
       "reason": "ok"
     },
     {
-      "id": "ex-004-coach-authority-a",
+      "id": "ex-004-quote-card",
       "format": "static",
       "ok": true,
-      "png": "templates/_examples/ex-004-coach-authority-a.png",
+      "png": "templates/_examples/ex-004-quote-card.png",
       "mp4": null,
       "reason": "ok"
     },
     {
-      "id": "ex-005-coach-authority-b",
+      "id": "ex-005-before-after-split",
       "format": "static",
       "ok": true,
-      "png": "templates/_examples/ex-005-coach-authority-b.png",
+      "png": "templates/_examples/ex-005-before-after-split.png",
       "mp4": null,
       "reason": "ok"
     },
     {
-      "id": "ex-006-coach-authority-c",
+      "id": "ex-006-versus",
       "format": "static",
       "ok": true,
-      "png": "templates/_examples/ex-006-coach-authority-c.png",
+      "png": "templates/_examples/ex-006-versus.png",
       "mp4": null,
       "reason": "ok"
     },
     {
-      "id": "ex-007-action-hero-a",
+      "id": "ex-007-proof-collage",
       "format": "static",
       "ok": true,
-      "png": "templates/_examples/ex-007-action-hero-a.png",
+      "png": "templates/_examples/ex-007-proof-collage.png",
       "mp4": null,
       "reason": "ok"
     },
     {
-      "id": "ex-008-action-hero-b",
+      "id": "ex-008-list-steps",
       "format": "static",
       "ok": true,
-      "png": "templates/_examples/ex-008-action-hero-b.png",
+      "png": "templates/_examples/ex-008-list-steps.png",
       "mp4": null,
       "reason": "ok"
     },
     {
-      "id": "ex-009-action-hero-c",
+      "id": "ex-009-offer-card",
       "format": "static",
       "ok": true,
-      "png": "templates/_examples/ex-009-action-hero-c.png",
+      "png": "templates/_examples/ex-009-offer-card.png",
       "mp4": null,
       "reason": "ok"
     },
     {
-      "id": "ex-010-training-scene-a",
+      "id": "ex-010-action-hero",
       "format": "static",
       "ok": true,
-      "png": "templates/_examples/ex-010-training-scene-a.png",
+      "png": "templates/_examples/ex-010-action-hero.png",
       "mp4": null,
       "reason": "ok"
     },
     {
-      "id": "ex-011-training-scene-b",
+      "id": "ex-011-training-scene",
       "format": "static",
       "ok": true,
-      "png": "templates/_examples/ex-011-training-scene-b.png",
+      "png": "templates/_examples/ex-011-training-scene.png",
       "mp4": null,
       "reason": "ok"
     },
     {
-      "id": "ex-012-training-scene-c",
+      "id": "ex-012-ugc-selfie",
       "format": "static",
       "ok": true,
-      "png": "templates/_examples/ex-012-training-scene-c.png",
+      "png": "templates/_examples/ex-012-ugc-selfie.png",
       "mp4": null,
       "reason": "ok"
     },
     {
-      "id": "ex-013-transformation-split-a",
+      "id": "ex-013-coach-portrait",
       "format": "static",
       "ok": true,
-      "png": "templates/_examples/ex-013-transformation-split-a.png",
+      "png": "templates/_examples/ex-013-coach-portrait.png",
       "mp4": null,
       "reason": "ok"
     },
     {
-      "id": "ex-014-transformation-split-b",
+      "id": "ex-014-timeline-schedule",
       "format": "static",
       "ok": true,
-      "png": "templates/_examples/ex-014-transformation-split-b.png",
+      "png": "templates/_examples/ex-014-timeline-schedule.png",
       "mp4": null,
       "reason": "ok"
     },
     {
-      "id": "ex-015-transformation-split-c",
+      "id": "ex-015-benefit-iconrow",
       "format": "static",
       "ok": true,
-      "png": "templates/_examples/ex-015-transformation-split-c.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-016-proof-collage-a",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-016-proof-collage-a.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-017-proof-collage-b",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-017-proof-collage-b.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-018-proof-collage-c",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-018-proof-collage-c.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-019-giant-stat-a",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-019-giant-stat-a.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-020-giant-stat-b",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-020-giant-stat-b.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-021-giant-stat-c",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-021-giant-stat-c.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-022-versus-a",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-022-versus-a.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-023-versus-b",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-023-versus-b.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-024-versus-c",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-024-versus-c.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-025-list-steps-a",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-025-list-steps-a.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-026-list-steps-b",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-026-list-steps-b.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-027-list-steps-c",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-027-list-steps-c.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-028-offer-guarantee-a",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-028-offer-guarantee-a.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-029-offer-guarantee-b",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-029-offer-guarantee-b.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-030-offer-guarantee-c",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-030-offer-guarantee-c.png",
+      "png": "templates/_examples/ex-015-benefit-iconrow.png",
       "mp4": null,
       "reason": "ok"
     }
