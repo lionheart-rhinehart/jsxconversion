@@ -434,6 +434,31 @@
     .kbar-fname { cursor: pointer; padding: 1px 5px; border-radius: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .kbar-folder.on .kbar-fname { background: var(--red); color: #fff; }
     .kbar-msg { font-size: 10px; color: var(--muted); margin-top: 6px; font-family: ui-monospace, monospace; }
+    /* Clip-trim timeline (MEDIA tab, shown when the background is a VIDEO) —
+       vanilla-DOM port of editing.jsx MediaField/TrimmableVideo. Writes
+       config.media.clipStart/clipEnd; the render extracts exactly that window. */
+    .trim-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+    .trim-applied { font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: #6ee7a8; display: flex; align-items: center; gap: 4px; }
+    .trim-dot { width: 6px; height: 6px; border-radius: 50%; background: #6ee7a8; display: inline-block; }
+    .trim-play { font-size: 11px; padding: 4px 9px; cursor: pointer; background: var(--panel-2); border: 1px solid var(--border); color: var(--fg); border-radius: 3px; }
+    .trim-track { position: relative; height: 46px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; margin: 6px 0; user-select: none; touch-action: none; overflow: hidden; }
+    .trim-tick { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(255,255,255,0.08); }
+    .trim-tick-label { position: absolute; bottom: 1px; left: 2px; font-size: 8px; color: var(--muted); font-family: ui-monospace, monospace; }
+    .trim-window { position: absolute; top: 0; bottom: 0; background: rgba(196,20,29,0.28); border: 1.5px solid var(--red); box-sizing: border-box; cursor: grab; display: flex; align-items: center; justify-content: center; }
+    .trim-window:active { cursor: grabbing; }
+    .trim-window-label { font-size: 10px; font-family: ui-monospace, monospace; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.8); pointer-events: none; }
+    .trim-resize { position: absolute; top: 0; bottom: 0; right: -4px; width: 12px; cursor: ew-resize; }
+    .trim-resize::after { content: ''; position: absolute; top: 50%; right: 4px; transform: translateY(-50%); width: 3px; height: 22px; background: var(--red); border-radius: 2px; }
+    .trim-scrub { position: absolute; top: 0; bottom: 0; width: 2px; background: #fff; box-shadow: 0 0 4px rgba(0,0,0,0.6); pointer-events: none; }
+    .trim-info { display: flex; gap: 6px; margin-top: 4px; }
+    .trim-info-cell { flex: 1; background: var(--panel-2); border-radius: 3px; padding: 4px 6px; text-align: center; }
+    .trim-info-label { display: block; font-size: 8px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-family: ui-monospace, monospace; }
+    .trim-info-value { display: block; font-size: 12px; color: var(--fg); font-family: ui-monospace, monospace; }
+    .trim-hint { font-size: 9px; color: var(--muted); margin-top: 5px; letter-spacing: .04em; }
+    .trim-audio { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
+    .trim-audio-label { font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-family: ui-monospace, monospace; }
+    .trim-audio-btn { font-size: 10px; padding: 4px 9px; cursor: pointer; background: var(--bg); border: 1px solid var(--border); color: var(--muted); border-radius: 3px; }
+    .trim-audio-btn.on { background: var(--red); border-color: var(--red); color: #fff; }
     /* All-copy list rows (COPY tab) */
     .copy-row { display: flex; flex-direction: column; gap: 4px; padding: 8px; background: var(--panel-2); border-radius: 6px; margin-bottom: 8px; }
     .copy-row-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-family: ui-monospace, Menlo, monospace; }
@@ -599,6 +624,33 @@
               Click + drag photo to pan · scroll wheel to zoom
             </div>
             <button id="resetCropBtn" style="width: 100%; font-size: 11px;">Reset Crop (use full photo)</button>
+          </div>
+          <!-- Clip-trim timeline: shown only when the background is a VIDEO. The
+               window you drag = the slice of the clip that plays AND the length of
+               the rendered MP4 (preview == render). -->
+          <div class="panel-block" id="trimPanel" style="display: none;">
+            <div class="trim-head">
+              <h3 class="sec-title" style="margin:0">Trim clip</h3>
+              <div class="trim-applied"><span class="trim-dot"></span> LIVE</div>
+            </div>
+            <div class="trim-track" id="trimTrack">
+              <div class="trim-window" id="trimWindow" title="Drag to move the clip window">
+                <div class="trim-window-label" id="trimWindowLabel"></div>
+                <div class="trim-resize" id="trimResize" title="Drag the right edge to shorten / lengthen"></div>
+              </div>
+              <div class="trim-scrub" id="trimScrub" style="display:none"></div>
+            </div>
+            <div class="trim-info">
+              <div class="trim-info-cell"><span class="trim-info-label">Start</span><span class="trim-info-value" id="trimStartVal">0.0s</span></div>
+              <div class="trim-info-cell"><span class="trim-info-label">End</span><span class="trim-info-value" id="trimEndVal">0.0s</span></div>
+              <div class="trim-info-cell"><span class="trim-info-label">Length</span><span class="trim-info-value" id="trimLenVal">0.0s</span></div>
+            </div>
+            <div class="trim-hint">Drag the red window to choose which part of the clip plays · drag the right edge to shorten it. That window is the video's length.</div>
+            <div class="trim-audio">
+              <span class="trim-audio-label">Audio</span>
+              <button type="button" class="trim-audio-btn on" id="trimAudioMuted">Muted</button>
+              <button type="button" class="trim-audio-btn" id="trimAudioNative">Clip audio</button>
+            </div>
           </div>
           <div class="panel-block" id="fgPanel" style="display: none;">
             <h3 class="sec-title">Foreground (cutout)</h3>
@@ -1207,9 +1259,19 @@
       if (media.path && isVideoPath(media.path)) {
         const vid = document.createElement('video');
         vid.className = 'preview';
-        vid.muted = true; vid.loop = true; vid.autoplay = true; vid.playsInline = true; vid.preload = 'auto';
+        vid.muted = true; vid.autoplay = true; vid.playsInline = true; vid.preload = 'auto';
         vid.style.cssText = 'position:absolute;left:0;top:0;display:block;width:' + W + 'px;height:' + H + 'px;object-fit:cover;user-select:none;pointer-events:none;';
         vid.src = state.mediaBase + media.path.replace(/^\.\//, '');
+        // Loop ONLY the trimmed window [clipStart, clipEnd] so the live preview
+        // matches the rendered MP4 (the renderer extracts exactly that span).
+        const cs = Math.max(0, Number(media.clipStart) || 0);
+        const ce = (typeof media.clipEnd === 'number' && media.clipEnd > cs) ? media.clipEnd : null;
+        vid.loop = ce == null; // full-clip loop only when no end is set
+        vid.addEventListener('loadedmetadata', () => { if (cs > 0) { try { vid.currentTime = cs; } catch (e) {} } });
+        vid.addEventListener('timeupdate', () => {
+          if (ce != null && vid.currentTime >= ce) { try { vid.currentTime = cs; } catch (e) {} }
+          else if (vid.currentTime < cs - 0.05) { try { vid.currentTime = cs; } catch (e) {} }
+        });
         vid.onerror = () => { vid.style.background = '#222'; };
         vid.play && vid.play().catch(() => {});
         return vid;
@@ -2135,6 +2197,17 @@
         $('mediaOffsetY').value = Math.round(m.offsetY || 0);
         $('mediaScale').value = m.scale ?? 1;
         $('mediaVideoStart').value = m.videoStartTime ?? 0;
+        // A VIDEO background: pan/zoom/crop don't apply (the clip is cover-fit) —
+        // hide those fields and show the clip-trim timeline instead.
+        const vid = isVideoPath(m.path);
+        const photoOnly = ['mediaOffsetX', 'mediaOffsetY', 'mediaScale', 'mediaVideoStart'];
+        for (const id of photoOnly) { const f = $(id) && $(id).closest('.field'); if (f) f.style.display = vid ? 'none' : ''; }
+        { const rc = $('resetCropBtn'); if (rc) rc.style.display = vid ? 'none' : ''; }
+        const tp = $('trimPanel');
+        if (tp) {
+          tp.style.display = vid ? '' : 'none';
+          if (vid) renderTrimPanel(m);
+        }
         refreshEmpties(); return;
       }
 
@@ -2930,6 +3003,136 @@
       delete m.crop;
       renderStage();
       renderProps();
+    }
+
+    // ── Clip-trim timeline (video background) ────────────────────────────────
+    // Vanilla-DOM port of editing.jsx MediaField/TrimmableVideo. The window the
+    // user drags writes config.media.clipStart/clipEnd; the renderer extracts
+    // exactly that span — so the trimmed window IS both the slice of the clip that
+    // plays AND the length of the rendered MP4 (preview == render). Pan/zoom/crop
+    // stay photo-only (a clip background is cover-fit).
+    const _trimDurCache = {};
+    function trimVideoUrl(m) { return m && m.path ? (state.mediaBase + m.path.replace(/^\.\//, '')) : null; }
+    function trimDurFor(m, cb) {
+      const url = trimVideoUrl(m);
+      if (!url) { cb(null); return; }
+      if (_trimDurCache[url] != null) { cb(_trimDurCache[url]); return; }
+      const v = document.createElement('video');
+      v.preload = 'metadata'; v.muted = true; v.src = url;
+      v.addEventListener('loadedmetadata', () => {
+        const d = (isFinite(v.duration) && v.duration > 0) ? v.duration : null;
+        if (d) _trimDurCache[url] = d;
+        cb(d);
+      });
+      v.addEventListener('error', () => cb(null));
+    }
+    function trimWindowFromMedia(m, dur) {
+      const cs = Math.max(0, Math.min(Number(m.clipStart) || 0, dur - 0.1));
+      let ce = (typeof m.clipEnd === 'number' && m.clipEnd > cs) ? m.clipEnd : dur;
+      ce = Math.min(ce, dur);
+      return { cs, ce };
+    }
+    function renderTrimPanel(m) {
+      trimDurFor(m, (dur) => {
+        if (state.selectedId !== '_media' || !state.config || state.config.media !== m) return; // stale probe
+        const track = $('trimTrack'); if (!track) return;
+        if (!dur) {
+          $('trimStartVal').textContent = (Number(m.clipStart) || 0).toFixed(1) + 's';
+          $('trimEndVal').textContent = (m.clipEnd != null ? Number(m.clipEnd) : 0).toFixed(1) + 's';
+          $('trimLenVal').textContent = '—';
+          $('trimWindowLabel').textContent = '…';
+          return;
+        }
+        // First time on a clip → default to the FULL clip (so an untrimmed render
+        // is the whole clip, not the module's 6s fallback). Persists on save.
+        if (m.clipEnd == null) { m.clipStart = Math.max(0, Number(m.clipStart) || 0); m.clipEnd = dur; }
+        const { cs, ce } = trimWindowFromMedia(m, dur);
+        const len = ce - cs;
+        const win = $('trimWindow');
+        win.style.left = (cs / dur * 100) + '%';
+        win.style.width = (len / dur * 100) + '%';
+        $('trimWindowLabel').textContent = len.toFixed(1) + 's';
+        $('trimStartVal').textContent = cs.toFixed(1) + 's';
+        $('trimEndVal').textContent = ce.toFixed(1) + 's';
+        $('trimLenVal').textContent = len.toFixed(1) + 's';
+        // Ticks (rebuild)
+        [...track.querySelectorAll('.trim-tick')].forEach((t) => t.remove());
+        const step = dur > 30 ? 5 : dur > 15 ? 2 : 1;
+        for (let s = 0; s <= dur + 0.001; s += step) {
+          const tk = document.createElement('div'); tk.className = 'trim-tick';
+          tk.style.left = (s / dur * 100) + '%';
+          const lb = document.createElement('div'); lb.className = 'trim-tick-label'; lb.textContent = Math.round(s) + 's';
+          tk.appendChild(lb); track.insertBefore(tk, track.firstChild);
+        }
+        const native = !!m.audio;
+        $('trimAudioMuted').classList.toggle('on', !native);
+        $('trimAudioNative').classList.toggle('on', native);
+      });
+      wireTrimOnce();
+    }
+    // Attach the drag/resize/audio handlers ONCE; they read live state on each event.
+    function wireTrimOnce() {
+      if (wireTrimOnce._done) return; wireTrimOnce._done = true;
+      const track = $('trimTrack'), win = $('trimWindow'), resize = $('trimResize'), scrub = $('trimScrub');
+      if (!track || !win || !resize) return;
+      let drag = null;
+      const durNow = () => { const m = state.config && state.config.media; const url = trimVideoUrl(m); return url ? _trimDurCache[url] : null; };
+      const pxToTime = (clientX, dur) => {
+        const r = track.getBoundingClientRect();
+        return Math.max(0, Math.min(dur, ((clientX - r.left) / r.width) * dur));
+      };
+      const showScrub = (t, dur) => { scrub.style.display = ''; scrub.style.left = (t / dur * 100) + '%'; };
+      const commit = (cs, ce) => {
+        const m = state.config.media; if (!m) return;
+        m.clipStart = +cs.toFixed(2); m.clipEnd = +ce.toFixed(2);
+        renderTrimPanel(m);
+      };
+      win.addEventListener('pointerdown', (e) => {
+        const dur = durNow(); if (!dur) return;
+        e.preventDefault(); e.stopPropagation();
+        snapshotForUndo();
+        const m = state.config.media; const { cs } = trimWindowFromMedia(m, dur);
+        drag = { mode: 'move', offset: pxToTime(e.clientX, dur) - cs };
+        win.setPointerCapture && win.setPointerCapture(e.pointerId);
+        showScrub(cs, dur);
+      });
+      resize.addEventListener('pointerdown', (e) => {
+        const dur = durNow(); if (!dur) return;
+        e.preventDefault(); e.stopPropagation();
+        snapshotForUndo();
+        drag = { mode: 'resize' };
+        resize.setPointerCapture && resize.setPointerCapture(e.pointerId);
+      });
+      const onMove = (e) => {
+        if (!drag) return; const dur = durNow(); if (!dur) return;
+        const m = state.config.media; const { cs, ce } = trimWindowFromMedia(m, dur);
+        const len = ce - cs;
+        const t = pxToTime(e.clientX, dur);
+        if (drag.mode === 'move') {
+          const ns = Math.max(0, Math.min(dur - len, t - drag.offset));
+          commit(ns, ns + len); showScrub(ns, dur);
+        } else {
+          const ne = Math.max(cs + 0.3, Math.min(dur, t));
+          commit(cs, ne); showScrub(ne, dur);
+        }
+      };
+      const onUp = () => {
+        if (!drag) return;
+        drag = null; scrub.style.display = 'none';
+        renderStage(); // re-point the preview <video> at the new window (preview == render)
+        setStatus('Clip trimmed. Save + Render to apply.');
+      };
+      window.addEventListener('pointermove', onMove);
+      window.addEventListener('pointerup', onUp);
+      window.addEventListener('pointercancel', onUp);
+      const setAudio = (native) => {
+        const m = state.config && state.config.media; if (!m) return;
+        snapshotForUndo();
+        m.audio = native; renderTrimPanel(m);
+        setStatus(native ? 'Clip audio on. Save + Render to apply.' : 'Clip muted. Save + Render to apply.');
+      };
+      $('trimAudioMuted').addEventListener('click', () => setAudio(false));
+      $('trimAudioNative').addEventListener('click', () => setAudio(true));
     }
 
     // Media-specific input bindings

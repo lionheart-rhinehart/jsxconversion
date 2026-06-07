@@ -316,10 +316,20 @@ ${BG_SYNC_PATCH}
     return { ok: false, reason: `renderer ok but out/${id}.mp4 not found`, stagingDir };
   }
 
-  // ── 7) audio mux (the render itself is silent — Stage captures playing:false) ─
+  // ── 7) audio mux (the render itself is silent — Stage captures playing:false,
+  //      and the bg is extracted to silent PNG frames). Two sources, in priority:
+  //      a separate picked track (MusicSync / A2) wins; else the clip's OWN audio
+  //      when the editor's "Clip audio" toggle set config.media.audio = true.
   if (audio && audio.src) {
     const muxed = muxAudioIntoVideo({ videoPath: producedMp4, audio, duration: D, projectRoot, templateDir });
     if (!muxed.ok) console.error(`[layer-video]   note: ${id} audio mux skipped — ${muxed.reason}`);
+  } else if (media.audio) {
+    // Native clip audio: the bg clip is its own audio source, trimmed to the same
+    // [clipStart, clipStart+D] window the frames came from. Small fade-out avoids a
+    // hard cut at the loop point.
+    const clipAudio = { src: media.path, startAt: cs, volume: 1.0, fadeIn: 0, fadeOut: 0.3 };
+    const muxed = muxAudioIntoVideo({ videoPath: producedMp4, audio: clipAudio, duration: D, projectRoot, templateDir });
+    if (!muxed.ok) console.error(`[layer-video]   note: ${id} native clip-audio mux skipped — ${muxed.reason}`);
   }
 
   // ── 8) optional GIF ──────────────────────────────────────────────────────
