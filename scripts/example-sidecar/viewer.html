@@ -13,6 +13,10 @@
   .tabs { display:flex; gap:6px; }
   .tab { background:var(--panel); border:1px solid var(--line); color:var(--dim); border-radius:8px; padding:7px 16px; cursor:pointer; font-weight:600; }
   .tab.on { color:#fff; border-color:var(--red); }
+  .fmtfilter { display:flex; gap:0; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+  .fmtfilter button { background:var(--panel); border:none; border-right:1px solid var(--line); color:var(--dim); padding:7px 14px; cursor:pointer; font-weight:600; font-size:13px; }
+  .fmtfilter button:last-child { border-right:none; }
+  .fmtfilter button.on { background:var(--red); color:#fff; }
   .spectrum { display:flex; gap:8px; flex-wrap:wrap; margin-left:auto; }
   .chip { background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:4px 11px; font-size:12px; color:var(--dim); }
   .chip b { color:var(--txt); } .chip.good b { color:var(--ok);} .chip.warn b { color:var(--warn);} .chip.bad b { color:var(--bad);}
@@ -23,7 +27,7 @@
   .arch h2 { font-size:16px; margin:0 0 4px; display:flex; align-items:baseline; gap:10px; }
   .arch h2 .n { color:var(--dim); font-weight:400; font-size:13px; }
   .arch .sub { color:var(--dim); font-size:12px; margin:0 0 12px; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:18px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px; }
   .card { background:var(--panel); border:1px solid var(--line); border-radius:12px; overflow:hidden; cursor:pointer; transition:border-color .12s, transform .12s; }
   .card:hover { border-color:var(--red); transform:translateY(-2px); }
   .card img, .card video { width:100%; aspect-ratio:9/16; object-fit:cover; display:block; background:#000; }
@@ -88,11 +92,12 @@
 <header>
   <h1>Example <b>Library</b></h1>
   <div class="tabs"><div class="tab on" data-tab="gallery">Gallery</div><div class="tab" data-tab="clusters">Clusters</div><div class="tab" data-tab="mediatest">Media Test</div></div>
-  <div class="spectrum" id="spectrum"></div>
+  <div class="fmtfilter"><button class="on" data-fmt="all">All</button><button data-fmt="static">Static</button><button data-fmt="gif">GIF</button><button data-fmt="video">Video</button></div>
   <button class="btn ghost" id="relabel">Re-label</button>
 </header>
 
 <div class="wrap">
+  <div class="spectrum" id="spectrum"></div>
   <div class="view on" id="view-gallery"></div>
   <div class="view" id="view-clusters">
     <div class="cluster-grid">
@@ -136,6 +141,12 @@
 <script>
 const $ = (s) => document.querySelector(s);
 let DATA = null, CLUSTERS = null, MEDIA = [], cur = null, curSource = "", origSource = "", swapTargetRef = null;
+let FMT = "all"; // F17: active format filter — all | static | gif | video
+const matchesFmt = (e) => FMT === "all" || e.renderKind === FMT;
+// F4: static & video are SEPARATE embed spaces; pick the artifact matching the active filter.
+// Gallery chips merge the two disjoint perArchetype maps (an archetype lives in exactly one).
+const clBatch = () => (FMT === "video" || FMT === "gif") ? ((CLUSTERS && CLUSTERS.video) || {}) : ((CLUSTERS && CLUSTERS.static) || {});
+const perArchMerged = () => Object.assign({}, ((CLUSTERS && CLUSTERS.static && CLUSTERS.static.batch && CLUSTERS.static.batch.perArchetype) || {}), ((CLUSTERS && CLUSTERS.video && CLUSTERS.video.batch && CLUSTERS.video.batch.perArchetype) || {}));
 const ARCH_COLORS = {};
 const PALETTE = ["#ff5b61","#3ddc84","#5b9dff","#ffb300","#c061ff","#27d3c4","#ff8a3d","#e84c9a","#9acd32","#7a8cff","#d9d04a","#46c2ff"];
 const fmt = (v) => v == null ? "—" : (typeof v === "number" ? v.toFixed(3) : v);
@@ -186,9 +197,11 @@ async function renderMediaTest(){
     </div>${rows}`;
 }
 function renderSpectrum(){
-  const d = DATA.diversity || {};
+  // F5: under the Video/GIF filter show the VIDEO diversity block (build-index emits both).
+  const d = ((FMT === "video" || FMT === "gif") ? DATA.diversityVideo : DATA.diversity) || {};
+  const shown = DATA.examples.filter(matchesFmt).length;
   const chips=[]; const add=(k,v,cls)=>chips.push(`<span class="chip ${cls}">${k} <b>${fmt(v)}</b></span>`);
-  chips.push(`<span class="chip">examples <b>${DATA.examples.length}</b></span>`);
+  chips.push(`<span class="chip">examples <b>${shown}</b></span>`);
   add("max cross", d.maxCrossArchetypeCosine, d.maxCrossArchetypeCosine!=null?(d.maxCrossArchetypeCosine<0.70?'good':'bad'):'');
   add("mean cross", d.meanCrossArchetypeCosine, d.meanCrossArchetypeCosine!=null?(d.meanCrossArchetypeCosine<0.55?'good':'warn'):'');
   add("max within", d.maxIntraArchetypeCosine, d.maxIntraArchetypeCosine!=null?(d.maxIntraArchetypeCosine<0.85?'good':'bad'):'');
@@ -197,8 +210,8 @@ function renderSpectrum(){
   $("#spectrum").innerHTML = chips.join("");
 }
 function renderGallery(){
-  const groups={}; DATA.examples.forEach(e=>(groups[e.archetype]=groups[e.archetype]||[]).push(e));
-  const pa = (CLUSTERS && CLUSTERS.batch && CLUSTERS.batch.perArchetype) || {};
+  const groups={}; DATA.examples.filter(matchesFmt).forEach(e=>(groups[e.archetype]=groups[e.archetype]||[]).push(e));
+  const pa = perArchMerged();
   $("#view-gallery").innerHTML = Object.entries(groups).map(([a,items])=>{
     const h = pa[a] || {};
     // intra-spread = max within-cluster cosine (sub-looks should be varied, not clones < ~0.90)
@@ -217,8 +230,9 @@ function renderGallery(){
 function cardHtml(e){
   const nn=e.metrics.nearestNeighbor; const nnBad=nn&&nn.cosine>=0.70;
   const tags=[]; if(nn) tags.push(`<span class="tag ${nnBad?'bad':nn.cosine>=0.6?'warn':'good'}">≈ ${nn.cosine.toFixed(2)}</span>`);
-  if(e.motion) tags.push(`<span class="tag good">▶ video</span>`);
-  tags.push(`<span class="tag">${e.subLook||e.format}</span>`);
+  const kb={static:'▣ static',gif:'◉ gif',video:'▶ video'}[e.renderKind]||e.format;
+  tags.push(`<span class="tag ${e.renderKind==='gif'?'warn':e.renderKind==='video'?'good':''}">${kb}</span>`);
+  if(e.subLook) tags.push(`<span class="tag">${e.subLook}</span>`);
   // video examples play their motion clip in-card (poster = the extracted still); statics show the png
   const visual = e.motion
     ? `<video src="${e.motion}" poster="${e.png}" muted loop autoplay playsinline preload="metadata"></video>`
@@ -226,8 +240,11 @@ function cardHtml(e){
   return `<div class="card" data-id="${e.id}">${visual}<div class="meta"><div class="sub">${e.id}</div><div class="mrow">${tags.join("")}</div></div></div>`;
 }
 function renderClusters(){
+  // F4: the artifact matching the active filter (static & video are separate vector spaces;
+  // All/Static → static, Video/GIF → video). Each is {heatmap, projection2d, batch}.
+  const C = clBatch();
   // health table
-  const pa = (CLUSTERS.batch && CLUSTERS.batch.perArchetype) || {};
+  const pa = (C.batch && C.batch.perArchetype) || {};
   const rows = Object.entries(pa).map(([a,h])=>{
     const mw = h.maxWithin, me = h.meanWithin, xc = h.maxCrossNeighbor;
     const c = (v,bad,warn)=> v==null?'':(v>=bad?'style="color:var(--bad)"':v>=warn?'style="color:var(--warn)"':'style="color:var(--ok)"');
@@ -242,14 +259,14 @@ function renderClusters(){
   $("#health").innerHTML = `<table class="health"><thead><tr><th>archetype</th><th>n</th><th>max within<br>&lt;0.85</th><th>mean within<br>&lt;0.75</th><th>worst cross<br>&lt;0.70</th></tr></thead><tbody>${rows}</tbody></table>`;
 
   // scatter
-  const pts = (CLUSTERS.projection2d && CLUSTERS.projection2d.points) || [];
+  const pts = (C.projection2d && C.projection2d.points) || [];
   const P=24, S=400-2*P;
   $("#scatter").innerHTML = pts.map(p=>`<circle cx="${P+p.x*S}" cy="${P+(1-p.y)*S}" r="6" fill="${colorFor(p.archetype)}" opacity="0.9"><title>${p.id} (${p.archetype})</title></circle>`).join("");
   const seen=[...new Set(pts.map(p=>p.archetype))];
   $("#slegend").innerHTML = seen.map(a=>`<span><b style="background:${colorFor(a)}"></b>${a}</span>`).join("");
 
   // heatmap
-  const hm = CLUSTERS.heatmap;
+  const hm = C.heatmap;
   if(hm && hm.matrix){
     const n=hm.matrix.length; const bset=new Set(hm.boundaries||[]);
     const cells=[];
@@ -300,6 +317,8 @@ function replaceLiteral(src,o,nw){ for(const q of ['"',"'","`"]){ const a=q+o+q;
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{ document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on",x===t)); document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on",v.id==="view-"+t.dataset.tab)); });
+// F17: format filter — re-render ALL THREE views (gallery filters, spectrum + clusters switch artifact).
+document.querySelectorAll(".fmtfilter button").forEach(b=>b.onclick=()=>{ FMT=b.dataset.fmt; document.querySelectorAll(".fmtfilter button").forEach(x=>x.classList.toggle("on",x===b)); renderSpectrum(); renderGallery(); renderClusters(); });
 $("#eSource").addEventListener("input",()=>{ curSource=$("#eSource").value; $("#ePreview").style.opacity=.55; });
 $("#eClose").onclick=()=>$("#overlay").classList.remove("open");
 $("#pClose").onclick=()=>$("#palette").classList.remove("open");

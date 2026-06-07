@@ -616,6 +616,262 @@
       "png": "templates/_examples/ex-024-list-steps.png",
       "mp4": null,
       "reason": "ok"
+    },
+    {
+      "id": "ex-118-velocity-gauge",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-118-velocity-gauge.png",
+      "mp4": "templates/_examples/ex-118-velocity-gauge.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-119-velocity-gauge",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-119-velocity-gauge.png",
+      "mp4": "templates/_examples/ex-119-velocity-gauge.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-096-bracket-tree",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-096-bracket-tree.png",
+      "mp4": "templates/_examples/ex-096-bracket-tree.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-097-bracket-tree",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-097-bracket-tree.png",
+      "mp4": "templates/_examples/ex-097-bracket-tree.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-120-anatomy-diagram",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-120-anatomy-diagram.png",
+      "mp4": "templates/_examples/ex-120-anatomy-diagram.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-121-anatomy-diagram",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-121-anatomy-diagram.png",
+      "mp4": "templates/_examples/ex-121-anatomy-diagram.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-090-count-up-stats",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-090-count-up-stats.png",
+      "mp4": "templates/_examples/ex-090-count-up-stats.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-098-comic-strip",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-098-comic-strip.png",
+      "mp4": "templates/_examples/ex-098-comic-strip.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-099-comic-strip",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-099-comic-strip.png",
+      "mp4": "templates/_examples/ex-099-comic-strip.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-100-star-testimonial",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-100-star-testimonial.png",
+      "mp4": "templates/_examples/ex-100-star-testimonial.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-101-star-testimonial",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-101-star-testimonial.png",
+      "mp4": "templates/_examples/ex-101-star-testimonial.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-106-streak-counter",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-106-streak-counter.png",
+      "mp4": "templates/_examples/ex-106-streak-counter.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-107-streak-counter",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-107-streak-counter.png",
+      "mp4": "templates/_examples/ex-107-streak-counter.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-108-slot-roll",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-108-slot-roll.png",
+      "mp4": "templates/_examples/ex-108-slot-roll.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-109-slot-roll",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-109-slot-roll.png",
+      "mp4": "templates/_examples/ex-109-slot-roll.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-092-radar-stats",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-092-radar-stats.png",
+      "mp4": "templates/_examples/ex-092-radar-stats.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-093-radar-stats",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-093-radar-stats.png",
+      "mp4": "templates/_examples/ex-093-radar-stats.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-094-stopwatch-countdown",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-094-stopwatch-countdown.png",
+      "mp4": "templates/_examples/ex-094-stopwatch-countdown.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-095-stopwatch-countdown",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-095-stopwatch-countdown.png",
+      "mp4": "templates/_examples/ex-095-stopwatch-countdown.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-102-macro-ring",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-102-macro-ring.png",
+      "mp4": "templates/_examples/ex-102-macro-ring.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-103-macro-ring",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-103-macro-ring.png",
+      "mp4": "templates/_examples/ex-103-macro-ring.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-104-scoreboard",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-104-scoreboard.png",
+      "mp4": "templates/_examples/ex-104-scoreboard.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-105-scoreboard",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-105-scoreboard.png",
+      "mp4": "templates/_examples/ex-105-scoreboard.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-110-tier-list",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-110-tier-list.png",
+      "mp4": "templates/_examples/ex-110-tier-list.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-111-tier-list",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-111-tier-list.png",
+      "mp4": "templates/_examples/ex-111-tier-list.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-112-sprint-trace",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-112-sprint-trace.png",
+      "mp4": "templates/_examples/ex-112-sprint-trace.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-114-calendar-fill",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-114-calendar-fill.png",
+      "mp4": "templates/_examples/ex-114-calendar-fill.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-115-calendar-fill",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-115-calendar-fill.png",
+      "mp4": "templates/_examples/ex-115-calendar-fill.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-116-leaderboard-roll",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-116-leaderboard-roll.png",
+      "mp4": "templates/_examples/ex-116-leaderboard-roll.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-117-leaderboard-roll",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-117-leaderboard-roll.png",
+      "mp4": "templates/_examples/ex-117-leaderboard-roll.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-113-sprint-trace",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-113-sprint-trace.png",
+      "mp4": "templates/_examples/ex-113-sprint-trace.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-091-count-up-stats",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-091-count-up-stats.png",
+      "mp4": "templates/_examples/ex-091-count-up-stats.mp4",
+      "reason": "ok"
     }
   ]
 }

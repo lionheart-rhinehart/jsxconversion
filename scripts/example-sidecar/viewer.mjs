@@ -42,6 +42,7 @@ const ASSETS_DIR = join(EXAMPLES_DIR, "assets");
 const INDEX_FILE = join(ROOT, "templates", "_example-index.json");
 const MANIFEST_FILE = join(HERE, "examples.manifest.json");
 const ARTIFACT_FILE = join(HERE, "embeddings.artifact.json");
+const VIDEO_ARTIFACT_FILE = join(HERE, "embeddings.video.artifact.json");
 const VIEWER_HTML = join(HERE, "viewer.html");
 const PYTHON = process.env.PYTHON || "python";
 
@@ -127,6 +128,9 @@ function buildExamples() {
   const index = existsSync(INDEX_FILE) ? JSON.parse(readFileSync(INDEX_FILE, "utf8")) : { examples: {} };
   const manifest = existsSync(MANIFEST_FILE) ? JSON.parse(readFileSync(MANIFEST_FILE, "utf8")) : { examples: [] };
   const order = manifest.examples.map((e) => e.id);
+  // F7: the manifest carries `render` ("gif-composite" / "stage-motion" / undefined); the
+  // index does NOT. Map id→render so the client can tell a GIF from a motion video.
+  const renderById = new Map(manifest.examples.map((m) => [m.id, m.render || null]));
   const out = [];
   for (const id of order) {
     const entry = index.examples[id];
@@ -137,12 +141,17 @@ function buildExamples() {
     const cm = entry.clusterMetrics || {};
     out.push({
       id, archetype: entry.archetype, format: entry.format,
+      // F7: render-kind — static / gif (action-clip composite) / video (motion graphics).
+      // stage-motion + self-contained ANIMATED both read as "video"; only gif-composite → "gif".
+      renderKind: entry.format === "static" ? "static" : (renderById.get(id) === "gif-composite" ? "gif" : "video"),
       subLook: cm.subLook ?? null,
       mediaStyleAccepts: entry.mediaStyleAccepts || [],
       slotShape: entry.slotShape || { slots: [] },
       metrics: {
-        intraKindMaxCosine: cm.intraKindMaxCosine ?? null,
-        meanCrossKindCosine: cm.meanCrossKindCosine ?? null,
+        // F6: build-index writes intraArchetypeMaxCosine / meanCrossArchetypeCosine (NOT
+        // the old *Kind* names) — read the names that actually exist or these stay null.
+        intraArchetypeMaxCosine: cm.intraArchetypeMaxCosine ?? null,
+        meanCrossArchetypeCosine: cm.meanCrossArchetypeCosine ?? null,
         silhouette: cm.silhouette ?? null,
         nearestNeighbor: cm.nearestNeighbor ?? null,
       },
@@ -152,7 +161,8 @@ function buildExamples() {
       media: detectMedia(src),
     });
   }
-  return { examples: out, diversity: index.diversity || {}, generatedAt: index.generatedAt || null };
+  // F5: ship BOTH diversity blocks so the spectrum chips can switch by the active format filter.
+  return { examples: out, diversity: index.diversity || {}, diversityVideo: index.diversityVideo || null, generatedAt: index.generatedAt || null };
 }
 
 function runScript(cmd, args) {
@@ -212,10 +222,11 @@ async function handle(req, res) {
     return serveFile(res, p, "image/png", noCache);
   }
   if (path === "/api/clusters" && req.method === "GET") {
-    // the embedding artifact: archetype-ordered cosine matrix (heatmap) + 2D
-    // projection (scatter) + per-archetype health. Vectors stay out (in the .npz).
-    const a = existsSync(ARTIFACT_FILE) ? JSON.parse(readFileSync(ARTIFACT_FILE, "utf8")) : {};
-    return json(res, 200, { heatmap: a.heatmap || null, projection2d: a.projection2d || null, batch: a.batch || {}, embedder: a.embedder || null });
+    // F4: BOTH embedding artifacts (static + video are separate passes / vector spaces;
+    // the client picks one per the active format filter). Heatmap + 2D scatter + per-
+    // archetype health each. Vectors stay out (in the .npz).
+    const pick = (f) => { const x = existsSync(f) ? JSON.parse(readFileSync(f, "utf8")) : {}; return { heatmap: x.heatmap || null, projection2d: x.projection2d || null, batch: x.batch || {}, embedder: x.embedder || null }; };
+    return json(res, 200, { static: pick(ARTIFACT_FILE), video: pick(VIDEO_ARTIFACT_FILE) });
   }
 
   if (path.startsWith("/img/") && req.method === "GET") {

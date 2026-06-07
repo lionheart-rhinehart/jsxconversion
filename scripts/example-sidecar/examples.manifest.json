@@ -2888,6 +2888,908 @@
         "height": 1920,
         "fps": 30
       }
+    },
+    {
+      "id": "ex-090-count-up-stats",
+      "archetype": "count-up-stats",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "label",
+            "role": "kicker",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "stat",
+            "role": "stat",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "sub",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "stat",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-091-count-up-stats",
+      "archetype": "count-up-stats",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "stat",
+            "role": "stat",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "hook",
+          "stat"
+        ]
+      }
+    },
+    {
+      "id": "ex-092-radar-stats",
+      "archetype": "radar-stats",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "kicker",
+            "role": "kicker",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "hook"
+        ]
+      }
+    },
+    {
+      "id": "ex-093-radar-stats",
+      "archetype": "radar-stats",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "kicker",
+            "role": "kicker",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "hook"
+        ]
+      }
+    },
+    {
+      "id": "ex-094-stopwatch-countdown",
+      "archetype": "stopwatch-countdown",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "kicker",
+            "role": "kicker",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "stat",
+            "role": "stat",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "sub",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "stat",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-095-stopwatch-countdown",
+      "archetype": "stopwatch-countdown",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "kicker",
+            "role": "kicker",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "stat",
+            "role": "stat",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "sub",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "stat",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-096-bracket-tree",
+      "archetype": "bracket-tree",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "kicker",
+            "role": "kicker",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "winner",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "hook",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-097-bracket-tree",
+      "archetype": "bracket-tree",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "kicker",
+            "role": "kicker",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "winner",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "hook",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-098-comic-strip",
+      "archetype": "comic-strip",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "caption",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "hook",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-099-comic-strip",
+      "archetype": "comic-strip",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "hook"
+        ]
+      }
+    },
+    {
+      "id": "ex-100-star-testimonial",
+      "archetype": "star-testimonial",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "quote",
+            "role": "testimonial",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "byline",
+            "role": "byline",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "testimonial",
+          "byline"
+        ]
+      }
+    },
+    {
+      "id": "ex-101-star-testimonial",
+      "archetype": "star-testimonial",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "quote",
+            "role": "testimonial",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "stat",
+            "role": "stat",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "testimonial",
+          "stat"
+        ]
+      }
+    },
+    {
+      "id": "ex-102-macro-ring",
+      "archetype": "macro-ring",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "kicker",
+            "role": "kicker",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "hook"
+        ]
+      }
+    },
+    {
+      "id": "ex-103-macro-ring",
+      "archetype": "macro-ring",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "kicker",
+            "role": "kicker",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "hook"
+        ]
+      }
+    },
+    {
+      "id": "ex-104-scoreboard",
+      "archetype": "scoreboard",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "stat",
+            "role": "stat",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "hook",
+          "stat"
+        ]
+      }
+    },
+    {
+      "id": "ex-105-scoreboard",
+      "archetype": "scoreboard",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "stat",
+            "role": "stat",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "hook",
+          "stat"
+        ]
+      }
+    },
+    {
+      "id": "ex-106-streak-counter",
+      "archetype": "streak-counter",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "label",
+            "role": "kicker",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "stat",
+            "role": "stat",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "sub",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "stat",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-107-streak-counter",
+      "archetype": "streak-counter",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "stat",
+            "role": "stat",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "sub",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "stat",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-108-slot-roll",
+      "archetype": "slot-roll",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "result",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "hook",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-109-slot-roll",
+      "archetype": "slot-roll",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "result",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "hook",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-110-tier-list",
+      "archetype": "tier-list",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "items",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "hook",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-111-tier-list",
+      "archetype": "tier-list",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "items",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "hook",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-112-sprint-trace",
+      "archetype": "sprint-trace",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "kicker",
+            "role": "kicker",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "hook"
+        ]
+      }
+    },
+    {
+      "id": "ex-113-sprint-trace",
+      "archetype": "sprint-trace",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "kicker",
+            "role": "kicker",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "stat",
+            "role": "stat",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "stat"
+        ]
+      }
+    },
+    {
+      "id": "ex-114-calendar-fill",
+      "archetype": "calendar-fill",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "kicker",
+            "role": "kicker",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "sub",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "hook",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-115-calendar-fill",
+      "archetype": "calendar-fill",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "sub",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "hook",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-116-leaderboard-roll",
+      "archetype": "leaderboard-roll",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "names",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "hook",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-117-leaderboard-roll",
+      "archetype": "leaderboard-roll",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "names",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "hook",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-118-velocity-gauge",
+      "archetype": "velocity-gauge",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "label",
+            "role": "kicker",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "stat",
+            "role": "stat",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "headline",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "stat",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-119-velocity-gauge",
+      "archetype": "velocity-gauge",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "label",
+            "role": "kicker",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "stat",
+            "role": "stat",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "headline",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "stat",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-120-anatomy-diagram",
+      "archetype": "anatomy-diagram",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "kicker",
+            "role": "kicker",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "muscle",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "hook",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-121-anatomy-diagram",
+      "archetype": "anatomy-diagram",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "kicker",
+            "role": "kicker",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "muscle",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "hook",
+          "claim"
+        ]
+      }
     }
   ]
 }
