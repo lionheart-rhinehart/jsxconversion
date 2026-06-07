@@ -522,6 +522,10 @@
     #transportTrack { position: relative; flex: 1; height: 22px; background: rgba(255,255,255,0.10); border-radius: 4px; cursor: pointer; }
     #transportPlayhead { position: absolute; top: -2px; bottom: -2px; width: 2px; background: #fff; box-shadow: 0 0 4px rgba(0,0,0,0.6); pointer-events: none; left: 0; }
     .transport-marker { position: absolute; top: 50%; width: 10px; height: 10px; margin-left: -5px; transform: translateY(-50%); border-radius: 50%; background: #f59e0b; border: 1.5px solid #fff; cursor: pointer; }
+    /* Hover-link: glow a markup's on-canvas mark + its comment row together */
+    [data-markup].mk-highlight { filter: drop-shadow(0 0 4px #fff) drop-shadow(0 0 7px #fff); }
+    .markup-item.mk-highlight { filter: none; background: var(--sel); border: 1px solid var(--red); }
+    .markup-item { transition: background-color 0.12s ease; }
     /* All-copy list rows (COPY tab) */
     .copy-row { display: flex; flex-direction: column; gap: 4px; padding: 8px; background: var(--panel-2); border-radius: 6px; margin-bottom: 8px; }
     .copy-row-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-family: ui-monospace, Menlo, monospace; }
@@ -3785,6 +3789,9 @@
       if (!state.config) return;
       const p = clientToDesign(e.clientX, e.clientY); if (!p) return;
       e.preventDefault();
+      // Markup: freeze the frame BEFORE the gesture so you draw on a stable image
+      // and the captured timestamp is deterministic.
+      if (_draw.mode === 'markup' && state.previewPlaying) pausePreview();
       _draw.start = p; _draw.cur = p; _draw.pts = [[p.x, p.y]];
       const inner = stageInner();
       const live = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -3836,13 +3843,16 @@
       // goes into a markup annotation's metadata.shapes, not config.fixedDesign.
       if (_draw.mode === 'markup') {
         const bb = shapeBBox(item);
-        pausePreview();
-        const a = newAnnotation({ x: bb.cx, y: bb.cy }, isVideoCreative() ? livePreviewTime() : null);
+        pausePreview(); // freeze + sync state.previewTime to the frame
+        const ts = isVideoCreative() ? livePreviewTime() : null;
+        if (ts != null) state.previewTime = ts;          // stamp + gate on the SAME value
+        const a = newAnnotation({ x: bb.x, y: bb.y }, ts); // pin at the shape's TOP-LEFT corner (not center → doesn't cover the circle)
         a.metadata.shapes.push(item);
         a.target.selector.region = 'xywh=pixel:' + Math.round(bb.x) + ',' + Math.round(bb.y) + ',' + Math.round(bb.w) + ',' + Math.round(bb.h);
         resetDrawGesture();
         saveMarkup(); renderMarkupOverlays(); renderMarkupList(); renderTransport();
-        const cl = designToClient(bb.cx, bb.cy);
+        applyMarkupVisibility(state.previewTime);          // ensure the just-drawn mark is shown
+        const cl = designToClient(bb.x + bb.w, bb.y);      // comment box near the shape's top-right
         openCommentBox(a, cl.x, cl.y);
         return;
       }
@@ -3921,6 +3931,8 @@
         const pin = document.createElement('div'); pin.className = 'markup-pin'; pin.setAttribute('data-markup', a.id);
         pin.style.left = a.metadata.x + 'px'; pin.style.top = a.metadata.y + 'px';
         const sp = document.createElement('span'); sp.textContent = i + 1; pin.appendChild(sp);
+        pin.addEventListener('mouseenter', () => highlightMarkup(a.id, true));
+        pin.addEventListener('mouseleave', () => highlightMarkup(a.id, false));
         pin.addEventListener('pointerdown', (e) => {
           e.preventDefault(); e.stopPropagation();
           const scale = state.scale || 1, sx = e.clientX, sy = e.clientY, ox = a.metadata.x, oy = a.metadata.y; let moved = false;
@@ -3937,15 +3949,22 @@
     function applyMarkupVisibility(t) {
       const gate = isVideoCreative();
       const shown = {};
-      for (const a of _markup) { let vis = true; if (gate) { const ts = aTime(a); if (ts != null) vis = (t >= ts && t <= aTEnd(a)); } shown[a.id] = vis; }
+      for (const a of _markup) { let vis = true; if (gate) { const ts = aTime(a); if (ts != null) vis = (t >= ts - 0.2 && t <= aTEnd(a) + 0.05); } shown[a.id] = vis; }
       document.querySelectorAll('[data-markup]').forEach((n) => { n.style.display = shown[n.getAttribute('data-markup')] ? '' : 'none'; });
+    }
+    // Link a comment row to its on-canvas mark: glow the shape/pin + the list row together.
+    function highlightMarkup(id, on) {
+      document.querySelectorAll('[data-markup="' + id + '"]').forEach((n) => n.classList.toggle('mk-highlight', !!on));
     }
     function onMarkupClick(e) {
       const p = clientToDesign(e.clientX, e.clientY); if (!p) return;
       e.preventDefault();
-      pausePreview();
-      const a = newAnnotation(p, isVideoCreative() ? livePreviewTime() : null);
+      pausePreview(); // syncs state.previewTime to the frozen frame
+      const ts = isVideoCreative() ? livePreviewTime() : null;
+      if (ts != null) state.previewTime = ts;          // stamp + gate on the SAME value
+      const a = newAnnotation(p, ts);
       saveMarkup(); renderMarkupOverlays(); renderMarkupList(); renderTransport();
+      applyMarkupVisibility(state.previewTime);         // ensure the new mark is shown
       openCommentBox(a, e.clientX, e.clientY);
     }
     function openCommentBox(a, clientX, clientY) {
@@ -3976,7 +3995,8 @@
       if (!_markup.length) { list.innerHTML = '<div class="ed-empty">No notes yet. In markup mode, click the canvas (or draw a circle) to leave timestamped feedback.</div>'; return; }
       const ordered = _markup.slice().sort((x, y) => (aTime(x) ?? 1e9) - (aTime(y) ?? 1e9));
       for (const a of ordered) {
-        const row = document.createElement('div'); row.className = 'markup-item';
+        const row = document.createElement('div'); row.className = 'markup-item'; row.setAttribute('data-markup', a.id);
+        row.onmouseenter = () => highlightMarkup(a.id, true); row.onmouseleave = () => highlightMarkup(a.id, false);
         const num = document.createElement('div'); num.className = 'markup-num'; num.textContent = _markup.indexOf(a) + 1;
         const wrap = document.createElement('div'); wrap.style.cssText = 'flex:1;display:flex;flex-direction:column;gap:3px;min-width:0;';
         const ts = aTime(a);
@@ -3997,10 +4017,10 @@
     }
     function pausePreview() {
       state.previewPlaying = false;
-      const v = state._previewVideo; if (v) { try { v.pause(); } catch (e) {} }
+      const v = state._previewVideo; if (v) { try { v.pause(); state.previewTime = Math.max(0, v.currentTime - clipStartSec()); } catch (e) {} }
       if (typeof _audio !== 'undefined' && _audio && _audio.syncTimer) { clearInterval(_audio.syncTimer); _audio.syncTimer = 0; }
       const el = $('audioEl'); if (el) { try { el.pause(); } catch (e) {} }
-      syncTransportBtn();
+      syncTransportBtn(); updateTransportPlayhead();
     }
     function playPreview() {
       state.previewPlaying = true;
