@@ -36,8 +36,8 @@ These four are binding for every chat on this repo. They exist because each one 
    before touching campaign intake, planning, the review page, or the render runner. And:
    - **Every creative carries real media** (a real image/video/clip, pulled from Kraken) — no bare
      type cards.
-   - **The guarantee is verbatim, never paraphrased:** *+1 mph speed, +3" vertical, 90 days, or
-     training is free.*
+   - **The guarantee is verbatim, never paraphrased:** *+1 mph speed. +3" vertical. 90 days. Or your
+     training is on us.*
    - **Voice:** head-coach-to-parent, declarative, metric-driven — no emoji, no exclamation points.
    - Brand source of truth is `brand/` — read `brand/README.md` + `brand/aa-design-system/project/README.md`
      before authoring any new creative; role/template rules live in `docs/creative-playbook.md`.

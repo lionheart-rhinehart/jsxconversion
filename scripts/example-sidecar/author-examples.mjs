@@ -420,7 +420,7 @@ const ARCHETYPES = [
         <div style={{ width: "100%", background: "#fff", borderRadius: 28, padding: "56px 48px", boxShadow: "0 30px 80px rgba(0,0,0,0.5)" }}>
           <div style={{ fontFamily: "JetBrains Mono", color: "#c4141d", fontSize: 30, letterSpacing: "0.1em" }}>SUMMER PERFORMANCE CAMP</div>
           <div style={{ fontFamily: "Anton", color: "#111", fontSize: 112, lineHeight: 0.92, textTransform: "uppercase", marginTop: 16 }}>8 weeks.<br/>3 days a week.</div>
-          <div style={{ marginTop: 36, padding: "26px 28px", background: "#faf3f3", border: "2px solid #c4141d", borderRadius: 16, fontFamily: "Geist", color: "#111", fontSize: 38, fontWeight: 700, lineHeight: 1.2 }}>+1 mph speed. +3" vertical. 90 days. Or your training is free.</div>
+          <div style={{ marginTop: 36, padding: "26px 28px", background: "#faf3f3", border: "2px solid #c4141d", borderRadius: 16, fontFamily: "Geist", color: "#111", fontSize: 38, fontWeight: 700, lineHeight: 1.2 }}>+1 mph speed. +3" vertical. 90 days. Or your training is on us.</div>
           <div style={{ marginTop: 40, textAlign: "center", background: "#c4141d", color: "#fff", fontFamily: "Anton", fontSize: 52, textTransform: "uppercase", padding: "24px", borderRadius: 12 }}>Claim your spot</div>
         </div>
       </div>`, "#0d0d0d") },
@@ -431,7 +431,7 @@ const ARCHETYPES = [
           <div style={{ fontFamily: "JetBrains Mono", color: "rgba(255,255,255,0.85)", fontSize: 28, letterSpacing: "0.12em" }}>NEW ATHLETE OFFER</div>
           <div style={{ fontFamily: "Anton", color: "#fff", fontSize: 150, lineHeight: 0.86, marginTop: 12 }}>FIRST<br/>MONTH</div>
           <div style={{ fontFamily: "Anton", color: "#16161b", fontSize: 120, lineHeight: 0.9, background: "#fff", display: "inline-block", padding: "0 22px", marginTop: 10 }}>$99</div>
-          <div style={{ marginTop: 30, fontFamily: "Geist", color: "#fff", fontSize: 34, fontWeight: 600, lineHeight: 1.25 }}>+1 mph speed. +3" vertical. 90 days. Or your training is free.</div>
+          <div style={{ marginTop: 30, fontFamily: "Geist", color: "#fff", fontSize: 34, fontWeight: 600, lineHeight: 1.25 }}>+1 mph speed. +3" vertical. 90 days. Or your training is on us.</div>
           <div style={{ marginTop: 36, textAlign: "center", background: "#fff", color: "#c4141d", fontFamily: "Anton", fontSize: 50, textTransform: "uppercase", padding: "22px", borderRadius: 12 }}>Start this week</div>
         </div>
       </div>`, "#0d0d0d") },
@@ -445,7 +445,7 @@ const ARCHETYPES = [
           </div>
           <div style={{ height: 0, borderTop: "4px dashed #cfcfcf" }} />
           <div style={{ padding: "40px 46px" }}>
-            <div style={{ fontFamily: "Geist", color: "#16161b", fontSize: 36, fontWeight: 700, lineHeight: 1.22 }}>+1 mph speed. +3" vertical. 90 days. Or your training is free.</div>
+            <div style={{ fontFamily: "Geist", color: "#16161b", fontSize: 36, fontWeight: 700, lineHeight: 1.22 }}>+1 mph speed. +3" vertical. 90 days. Or your training is on us.</div>
             <div style={{ marginTop: 32, display: "inline-block", border: "3px solid #c4141d", color: "#c4141d", fontFamily: "Anton", fontSize: 46, textTransform: "uppercase", padding: "16px 40px", borderRadius: 10 }}>Book a session</div>
           </div>
         </div>

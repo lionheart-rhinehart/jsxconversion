@@ -2,7 +2,7 @@
 
 > **The drive is theirs. The athlete is ours to build.**
 
-Athletes Acceleration is a professional youth sports-performance training company (ages 8–18) running a small franchise network across Indiana (Indianapolis, Carmel, Noblesville, Westfield) and Ohio (Milford), with a new flagship opening in Westfield. Training centers on three pillars. **Accelerate (speed)**, **Dominate (strength)**, and **Unleash (power)**. And the brand sells a results-guaranteed system: +1 mph speed, +3" vertical in 90 days, or training is free.
+Athletes Acceleration is a professional youth sports-performance training company (ages 8–18) running a small franchise network across Indiana (Indianapolis, Carmel, Noblesville, Westfield) and Ohio (Milford), with a new flagship opening in Westfield. Training centers on three pillars. **Accelerate (speed)**, **Dominate (strength)**, and **Unleash (power)**. And the brand sells a results-guaranteed system: +1 mph speed, +3" vertical in 90 days, or your training is on us.
 
 Many of the action photographs in this kit carry a co-branded **Genesis Sports Performance** watermark; Genesis is a partner facility at the Carmel, IN location. The primary brand here is **Athletes Acceleration**. Use the AA logo in `assets/logo.png` and treat the Genesis mark as legacy.
 

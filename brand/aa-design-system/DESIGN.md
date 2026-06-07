@@ -63,7 +63,5 @@ When designing for **ATHLETES ACCELERATION**:
 - Write head-coach-to-parent: declarative, metric-driven; **no emoji, no exclamation points**.
 - Guarantee (state **verbatim**, the operative value that fills creatives):
 > +1 mph speed. +3" vertical. 90 days. Or your training is on us.
-
-> ⚠️ **Discrepancy to reconcile (Cody):** `CLAUDE.md` quotes the guarantee as "+1 mph speed, +3" vertical, 90 days, or training is free." (…"free"), but `data/brand.athletes-acceleration.json` `tags.guarantee` says "…on us." Creatives fill from the brand-json value; pick one canonical wording and align both.
 - Brand handle / URL: athletesaccel.com.
 - One dominant element per frame; pass the squint test. Distinctness comes from STRUCTURE, not font size.

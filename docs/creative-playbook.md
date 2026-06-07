@@ -25,7 +25,7 @@
 4. **Captions are structural** (~85% watch muted) · hierarchy lives in **size** (1.5–2× jumps).
 5. **Integrity = advantage:** no pro/scholarship dream, no parent guilt, no fake urgency. AA's no-hype, coach-to-parent voice converts *because* of this, not despite it.
 
-## The 14 roles (closed enum)
+## The 15 roles (closed enum)
 | Role | Does | Static zone | maxChars (guide) | Treatment notes | AA example |
 |---|---|---|---|---|---|
 | `eyebrow` | context label, orients (WHO + WHERE) | top chip | 34 | **White-bg / red-text chip** (a filled pill that hugs the text) — pops over footage, far stronger than thin red mono. Set via `el.chipBg`/`chipPad`/`chipRadius` in `renderTextLayer`. Copy pattern: **`{CITY} SPORT PARENTS`** (auto-filled from the location tier; state suffix stripped) | "CARMEL SPORT PARENTS" |
@@ -42,10 +42,11 @@
 | `guarantee` | risk reversal (**verbatim-locked**) | bottom / eyebrow | — | display/mono | `+1 mph speed. +3" vertical. 90 days. Or your training is on us.` |
 | `cta` | the action | bottom (often in a red bar) | 24 | display | "Book your free assessment" |
 | `brand` | lockup / identity | bottom or lockup | 24 | display/mono | "ATHLETES ACCELERATION" |
+| `body` | longest persuasive slot — overflow of a verbatim hook/paragraph (bottom of the copychief ladder) | mid-lower | ~200 | display/mono, multi-line | "Six months in, parents tell us practice finally clicks." |
 
-Notes: 14 is the *dictionary*; a typical frame uses 3–5. `guarantee` is verbatim-locked everywhere: **`+1 mph speed. +3" vertical. 90 days. Or your training is on us.`**
+Notes: 15 is the *dictionary*; a typical frame uses 3–5. `guarantee` is verbatim-locked everywhere: **`+1 mph speed. +3" vertical. 90 days. Or your training is on us.`**
 
-**The hook layout standard (no guessing):** a hook is ONE verbatim unit laid across **`kicker` → `headline` → `subhead`** (top→bottom), split at clause boundaries by `splitHook` (`roles.mjs`) — words never change, only line breaks. This is how a long hook fits on screen. The author's docs often pre-split it: `IMAGE DIRECTION → Headline on image` / `Sub-headline on image` map straight to `headline` / `subhead`. Copy is selected by reference (`asset.copyRefs` / `asset.hookRef` into `copy-library.json`), never authored.
+**The hook layout standard (no guessing):** a hook is ONE verbatim unit laid across **`kicker` → `headline` → `subhead` → `body`** (top→bottom), split at clause boundaries by `splitHook` (`roles.mjs`) — words never change, only line breaks (a long unit overflows into `body`). This is how a long hook fits on screen. The author's docs often pre-split it: `IMAGE DIRECTION → Headline on image` / `Sub-headline on image` map straight to `headline` / `subhead`. Copy is selected by reference (`asset.copyRefs` / `asset.hookRef` into `copy-library.json`), never authored.
 
 **The whole body is magnets, not just the hooks.** `intake-copy` cuts each ad's `PRIMARY TEXT` into referenceable units at two grains: **`bodyPara`** (one blank-line paragraph, whole) and **`bodyLine`** (one sentence, split at `.!?` only — words never change). So a proof line, a blame-removal line, a case-study sentence, or the offer line is a first-class magnet you bind like any hook — `copyRefs: { reframe: "<ad>.bodyLine.3.4" }` drops one sentence in one slot; `hookRef: "<ad>.bodyPara.2"` auto-splits a short paragraph across kicker/headline/subhead. Use a `bodyLine` when you want a clean standalone sentence and a mid-sentence clip would be a rewrite. This is what lets an *entire* angle (not just its A-beat hooks) bind by reference with a clean `verbatimGuard`.
 

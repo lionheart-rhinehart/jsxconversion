@@ -10,7 +10,7 @@ export default function Example() {
           </div>
           <div style={{ height: 0, borderTop: "4px dashed #cfcfcf" }} />
           <div style={{ padding: "40px 46px" }}>
-            <div style={{ fontFamily: "Geist", color: "#16161b", fontSize: 36, fontWeight: 700, lineHeight: 1.22 }}>+1 mph speed. +3" vertical. 90 days. Or your training is free.</div>
+            <div style={{ fontFamily: "Geist", color: "#16161b", fontSize: 36, fontWeight: 700, lineHeight: 1.22 }}>+1 mph speed. +3" vertical. 90 days. Or your training is on us.</div>
             <div style={{ marginTop: 32, display: "inline-block", border: "3px solid #c4141d", color: "#c4141d", fontFamily: "Anton", fontSize: 46, textTransform: "uppercase", padding: "16px 40px", borderRadius: 10 }}>Book a session</div>
           </div>
         </div>

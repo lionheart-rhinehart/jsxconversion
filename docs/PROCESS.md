@@ -47,8 +47,8 @@ run** and saved to `campaigns/<name>/kraken.json` — not hardcoded.
 
 | Concern | File | Notes |
 |---|---|---|
-| Front door | `.claude/skills/creative-engine/SKILL.md` (+ `config.json`) | Orchestrator; phase-aware; brand→Kraken map. |
-| Fresh generator | `.claude/skills/compose-creative/SKILL.md` | New on-brand creatives in the bank's shape (promotable). |
+| Front door | `.claude/skills/creative-engine/SKILL.md` (+ `config.json`) | Orchestrator; phase-aware; brand→Kraken map. Reads the active brand's `<kitPath>/DESIGN.md` first. |
+| Fresh generator | `.claude/skills/compose-creative/SKILL.md` | New on-brand creatives in the bank's shape (promotable). Reads `<kitPath>/DESIGN.md` (the design-constraint layer) before composing. |
 | Renderer | `.claude/skills/jsx-to-mp4/scripts/render.mjs` (+ `claude-design.mjs`, `static-react.mjs`) | Classifies + renders. `claude-design.mjs` injects `window.__CONFIG__`. |
 | Static fill core | `scripts/lib/fill-core.mjs` | Cascade + substitution + variant-emit + render. Shared by CLI + runner. |
 | Single-template CLI | `scripts/fill-template.mjs` | Thin CLI over fill-core. |
@@ -63,6 +63,11 @@ run** and saved to `campaigns/<name>/kraken.json` — not hardcoded.
 | Review API | `scripts/editor-server.mjs` (:5173) | `/plan`, `/plan/:campaign/:angle/:asset` (single writer), `/render`, static `/out`. |
 | Review page | `brand/video-templates/review.html` (:5599 via `serve.mjs`) | Card grid by angle→beat; badges; dashboard; approve/note/edit. |
 | Position editor | `out/editor/editor.html` (:5173) | Hand-tweak layer positions for `cluster-*` statics. |
+| Example-library contract | `scripts/lib/example-library.mjs` | The Track-A∥B contract AS CODE: closed `ARCHETYPES`/`MOTION_ARCHETYPES` + `ARCHETYPE_SPECS` + `MEDIA_STYLE_TAGS`, the `ex-<NNN>-<slug>` id, `slotShape`, `validateExampleIndex`. |
+| Example library (Track B) | `templates/_example-index.json` + `templates/_examples/<id>.png` | The shipped **palette**: 109 examples / 31 archetypes (15 static + 16 motion), labeled + measured. |
+| Example sidecar | `scripts/example-sidecar/` | render → embed (CLIP-L/14 + DINOv2-L) → Gemini label → build-index; produces `clusterMetrics` + the diversity block. |
+| Design-constraint layer | `<kitPath>/DESIGN.md` (gen by `scripts/gen-design-md.mjs`) | Per-brand "how to design for THIS brand" (tokens/voice/placement). Read by the creation skills. |
+| Example viewer | `localhost:5300` (`node scripts/example-sidecar/viewer.mjs`) | Browse the example palette + the media-integration test grid. |
 
 ## Data model
 
@@ -254,6 +259,16 @@ Bare `node scripts/editor-server.mjs` still works but you must restart it manual
 - Flat-image → editable template ("image duplicator").
 - Moving the brand kit into the Kraken; per-template `/make-*` wrappers; autonomous
   brief→creatives agent; direct Meta upload.
+
+**Planned — the generation engine (Track A; see `~/.claude/plans/well-it-happened-again-linked-dream.md`).
+NOT built yet; today's path is template-fill + `compose-creative`:**
+- **Generation FROM the example library** — generate each creative guided by `templates/_example-index.json`
+  (31 archetypes) + the brand `DESIGN.md` + the media rubric, stamped with its archetype. (Replaces "pick a
+  template" with "create around the copy.")
+- **Selection-time distinctness (Marker 2)** — group the selected creatives into mutually-distinct **running
+  segments** (per-segment, not a global library gate).
+- **Media-rubric enforcement gate** — turn `docs/media-integration-findings.md` into a validate-plan check
+  (no full-bleed on graphic designs; cutout/split-panel for large media; accent ≤ ~20%; footage diversity).
 
 ## Superseded
 This doc + the hybrid `/creative-engine` architecture **supersede** the

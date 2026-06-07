@@ -170,30 +170,6 @@
       "reason": "ok"
     },
     {
-      "id": "ex-025-offer-card",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-025-offer-card.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-026-offer-card",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-026-offer-card.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-027-offer-card",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-027-offer-card.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
       "id": "ex-028-action-hero",
       "format": "static",
       "ok": true,
@@ -871,6 +847,30 @@
       "ok": true,
       "png": "templates/_examples/ex-091-count-up-stats.png",
       "mp4": "templates/_examples/ex-091-count-up-stats.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-025-offer-card",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-025-offer-card.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-026-offer-card",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-026-offer-card.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-027-offer-card",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-027-offer-card.png",
+      "mp4": null,
       "reason": "ok"
     }
   ]
