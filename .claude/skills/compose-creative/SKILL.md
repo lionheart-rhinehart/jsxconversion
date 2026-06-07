@@ -16,10 +16,22 @@ bank's own file shape so it is **promotable**. This is invoked per-asset by
 `/creative-engine` for `source:"fresh"` assets, or directly by the user.
 
 ## Brand rails (non-negotiable)
-- Read the brand kit first (e.g. `brand/aa-design-system/project/README.md`).
-- Colors/type/voice from the kit. Brand red `#c4141d`; Anton (display), Geist
-  (body), JetBrains Mono (mono/metrics). **No emoji, no exclamation points.**
-  Guarantee verbatim.
+- **Read the ACTIVE brand's `<kitPath>/DESIGN.md` first** — the design-constraint
+  layer (visual theme, ROLE-labeled colors, typography, placement laws, component
+  specs, do's/don'ts). Resolve the slug from the campaign's recorded brand —
+  `plan.brand` in `creative-plan.json` (canonical: `run-campaign.mjs` does
+  `const brand = plan.brand`); if a campaign hasn't recorded one, default to the
+  single registered brand in `.claude/skills/creative-engine/config.json` (today
+  `athletes-acceleration`) — **never hardcode AA** (a solo-franchisee workspace must
+  resolve to ITS brand). Then `<kitPath>` from that `data/brand.<slug>.json` (e.g.
+  `brand/aa-design-system/DESIGN.md`). **If that `DESIGN.md` is absent** (a brand
+  registered before the generator existed), run `node scripts/gen-design-md.mjs` to
+  create it, then read it — do NOT silently fall back to AA's `#c4141d`/Anton.
+- Colors/type/voice come from that DESIGN.md / the brand kit — **pull every color and
+  font from it, never hardcode** (AA's `#c4141d` + Anton/Geist/JetBrains Mono is just
+  AA's default; franchisees differ — e.g. ideal `#2573b7`, smaa `#017ee6`). Then the
+  kit's `project/README.md` **if present** for anything `DESIGN.md` marks TODO.
+  **No emoji, no exclamation points. Guarantee verbatim** (per the active brand's DESIGN.md).
 - 1080×1920 vertical. Respect safe zones (keep key text within ~8% margins; avoid
   the bottom ~270px where platform UI sits). Ensure text legibility over photos
   (scrim/overlay where needed). **Never** place text the user must later move to

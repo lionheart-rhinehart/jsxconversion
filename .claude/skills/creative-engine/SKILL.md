@@ -81,10 +81,21 @@ single place a kit is created, and `/repurpose-campaign` consumes the same tier:
    — fix every reported error before planning (the kit must be complete or renders fall back).
    Color/identity then flow automatically: the bank's authoring colors are remapped to the
    kit's at render time (`scripts/lib/palette.mjs`); AA's kit is unchanged.
+4. **Generate the brand's design-constraint layer (do this LAST — after step 3 passes):**
+   `node scripts/gen-design-md.mjs` → writes `<kitPath>/DESIGN.md` from the tokens just
+   registered (the agent-facing brand contract `/compose-creative` reads). Run it AFTER
+   validation so it isn't built from a half-written kit; it FLAGS missing tokens as TODO
+   (never substitutes AA), and is idempotent — it regenerates every brand harmlessly.
 
 The resolved brand gives:
 - the **data tier** for the cascade fill (`data/brand.<dataTier>.json`);
-- the brand kit path (read it before composing anything fresh).
+- the brand kit path → **read the active brand's `<kitPath>/DESIGN.md`** (the
+  design-constraint layer: colors/type/voice/placement/components) before selecting
+  templates or composing anything fresh; it's the canonical on-brand contract for that
+  brand. Key it by the brand's OWN slug (`plan.brand` / the kit just resolved), **NOT**
+  the `<dataTier>` above — a franchisee that fills from AA's data tier still uses its OWN
+  DESIGN.md. If the file is absent, run `node scripts/gen-design-md.mjs` first (never fall
+  back to AA's defaults).
 
 Then resolve **The Kraken Content Library** (raw source media lives there — a Supabase
 store, NOT local folders; connector is `scripts/lib/kraken.mjs`):
