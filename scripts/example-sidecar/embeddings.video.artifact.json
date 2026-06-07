@@ -7,26 +7,40 @@
   "examples": {
     "ex-046-metric-reveal": {
       "intraArchetypeMaxCosine": null,
-      "meanCrossArchetypeCosine": null,
-      "nearestNeighbor": null,
-      "silhouette": 0.0,
+      "meanCrossArchetypeCosine": 0.1413,
+      "nearestNeighbor": {
+        "exampleId": "ex-047-coach-portrait",
+        "cosine": 0.1413
+      },
+      "silhouette": 1.0,
       "subLook": "metric-reveal-a"
+    },
+    "ex-047-coach-portrait": {
+      "intraArchetypeMaxCosine": null,
+      "meanCrossArchetypeCosine": 0.1413,
+      "nearestNeighbor": {
+        "exampleId": "ex-046-metric-reveal",
+        "cosine": 0.1413
+      },
+      "silhouette": 1.0,
+      "subLook": "coach-portrait-a"
     }
   },
   "batch": {
     "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
-    "count": 1,
+    "count": 2,
     "archetypes": [
+      "coach-portrait",
       "metric-reveal"
     ],
-    "maxCrossArchetypeCosine": null,
-    "meanCrossArchetypeCosine": null,
+    "maxCrossArchetypeCosine": 0.1413,
+    "meanCrossArchetypeCosine": 0.1413,
     "maxIntraArchetypeCosine": null,
     "meanWithinArchetypeCosine": null,
-    "meanSilhouette": 0.0,
-    "vendiScore": 1.0,
+    "meanSilhouette": 1.0,
+    "vendiScore": 1.9801,
     "kmeansCrossCheck": {
-      "k": 1,
+      "k": 2,
       "meanClusterPurity": 1.0
     },
     "perArchetype": {
@@ -34,10 +48,28 @@
         "count": 1,
         "maxWithin": null,
         "meanWithin": null,
-        "maxCrossNeighbor": null
+        "maxCrossNeighbor": {
+          "cosine": 0.1413,
+          "archetype": "coach-portrait"
+        }
+      },
+      "coach-portrait": {
+        "count": 1,
+        "maxWithin": null,
+        "meanWithin": null,
+        "maxCrossNeighbor": {
+          "cosine": 0.1413,
+          "archetype": "metric-reveal"
+        }
       }
     },
-    "closestCrossArchetypePair": null,
+    "closestCrossArchetypePair": {
+      "a": "ex-046-metric-reveal",
+      "b": "ex-047-coach-portrait",
+      "archetypeA": "metric-reveal",
+      "archetypeB": "coach-portrait",
+      "cosine": 0.1413
+    },
     "thresholds": {
       "maxWithinArchetypeCosine": "<0.85",
       "meanWithinArchetypeCosine": "<0.75",
@@ -50,26 +82,41 @@
   },
   "heatmap": {
     "order": [
+      "ex-047-coach-portrait",
       "ex-046-metric-reveal"
     ],
     "archetypes": [
+      "coach-portrait",
       "metric-reveal"
     ],
     "matrix": [
       [
+        1.0,
+        0.1413
+      ],
+      [
+        0.1413,
         1.0
       ]
     ],
-    "boundaries": []
+    "boundaries": [
+      1
+    ]
   },
   "projection2d": {
-    "method": "trivial",
+    "method": "pca",
     "points": [
       {
         "id": "ex-046-metric-reveal",
         "archetype": "metric-reveal",
-        "x": 0.5,
-        "y": 0.5
+        "x": 0.0,
+        "y": 1.0
+      },
+      {
+        "id": "ex-047-coach-portrait",
+        "archetype": "coach-portrait",
+        "x": 1.0,
+        "y": 0.0
       }
     ]
   },

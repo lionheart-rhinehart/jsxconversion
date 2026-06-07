@@ -81,6 +81,39 @@ const ANIMATED = [
 ];
 
 // ---------------------------------------------------------------------------
+// ACTION-CLIP GIF examples (A3 ffmpeg overlay). Each emits a CHROME static component
+// (the held design with the media region filled chroma-key #00ff00); render-examples
+// composites the clip behind the keyed chrome. `clip` is repo-relative (use committed
+// design-system clips so regeneration works without the gitignored kraken-cache).
+// `rect` is the media region in the 1080×1920 frame. No new designs — the chrome mirrors
+// the matching static layout with its <img> replaced by the key fill.
+// ---------------------------------------------------------------------------
+const GREEN = "#00ff00";
+const chromeWrap = (inner, bg = GREEN) => `export default function Chrome() {
+  return (
+    <div style={{ width: ${W}, height: ${H}, position: "relative", overflow: "hidden", background: "${bg}" }}>
+${inner}
+    </div>
+  );
+}
+`;
+
+const GIFS = [
+  // ex-047 — COACH PORTRAIT GIF: clip plays in the left photo-half; red info panel right.
+  { slug: "coach-portrait", archetype: "coach-portrait", accepts: ["production:cinematic", "subject:coach-face"],
+    clip: "brand/aa-design-system/project/assets/clip-agility.mp4",
+    rect: { x: 0, y: 0, w: 562, h: H }, duration: 4,
+    slotShape: { slots: [{ id: "headline", role: "hook", maxChars: null, required: true }, { id: "name", role: "byline", maxChars: null, required: false }, { id: "title", role: "byline", maxChars: null, required: false }], roleSet: ["hook", "byline"] },
+    chrome: chromeWrap(`      <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "52%", background: "${GREEN}" }} />
+      <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "48%", background: "#c4141d", display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 44px" }}>
+        <div style={{ fontFamily: "Anton, sans-serif", color: "#fff", fontSize: 86, lineHeight: 0.95, textTransform: "uppercase" }}>Speed is coachable</div>
+        <div style={{ width: 80, height: 6, background: "#fff", margin: "28px 0" }} />
+        <div style={{ fontFamily: "Geist, sans-serif", color: "#fff", fontSize: 38, fontWeight: 700 }}>Coach Graham Wilkerson</div>
+        <div style={{ fontFamily: '"JetBrains Mono", monospace', color: "#ffd2d4", fontSize: 26, letterSpacing: "0.04em", marginTop: 4 }}>DIRECTOR OF PERFORMANCE</div>
+      </div>`) },
+];
+
+// ---------------------------------------------------------------------------
 function assertVideoAllowed(archetype) {
   const spec = ARCHETYPE_SPECS[archetype];
   if (!spec || !spec.formats.includes("video")) {
@@ -96,23 +129,32 @@ function main() {
   const ownedIds = new Set();
   for (const e of ANIMATED) {
     const id = makeExampleId(++seq, e.slug);
-    ownedIds.add(id);
-    plan.push({ id, e });
+    ownedIds.add(id); plan.push({ id, kind: "animated", e });
   }
-  // (GIF examples will continue the same seq in a later pass.)
+  for (const g of GIFS) {
+    const id = makeExampleId(++seq, g.slug);
+    ownedIds.add(id); plan.push({ id, kind: "gif", e: g });
+  }
 
   removeOwnedSources({ examplesDir: EXAMPLES_DIR, assetsDir: ASSETS_DIR, ownedIds });
 
   const rows = [];
-  for (const { id, e } of plan) {
+  for (const { id, kind, e } of plan) {
     assertVideoAllowed(e.archetype);
-    const src = stage(e.name, e.duration, e.bg, e.body);
-    writeFileSync(join(EXAMPLES_DIR, `${id}.jsx`), src);
-    rows.push({ id, archetype: e.archetype, format: "video", mediaStyleAccepts: e.accepts || [], slotShape: e.slotShape });
+    if (kind === "animated") {
+      writeFileSync(join(EXAMPLES_DIR, `${id}.jsx`), stage(e.name, e.duration, e.bg, e.body));
+      rows.push({ id, archetype: e.archetype, format: "video", mediaStyleAccepts: e.accepts || [], slotShape: e.slotShape });
+    } else { // gif: the .jsx is the CHROME; render-examples composites the clip behind it
+      writeFileSync(join(EXAMPLES_DIR, `${id}.jsx`), e.chrome);
+      rows.push({
+        id, archetype: e.archetype, format: "video", mediaStyleAccepts: e.accepts || [], slotShape: e.slotShape,
+        render: "gif-composite", gif: { clip: e.clip, rect: e.rect, duration: e.duration },
+      });
+    }
   }
 
   mergeManifest({ manifestPath: MANIFEST, rows, ownedIds });
-  process.stderr.write(`[author-video] wrote ${rows.length} video examples (${ANIMATED.length} animated); static ids preserved\n`);
+  process.stderr.write(`[author-video] wrote ${rows.length} video examples (${ANIMATED.length} animated + ${GIFS.length} gif); static ids preserved\n`);
 }
 
 main();

@@ -25,6 +25,7 @@ import { dirname, join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 import { verifyRender } from "../lib/render-qa.mjs";
+import { composeGif } from "./gif-compose.mjs";
 import { EXAMPLES_DIR, exampleImagePath, exampleMotionPath } from "../lib/example-library.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -71,10 +72,55 @@ function loadManifest() {
   return m.examples;
 }
 
+// Finalize a video example: copy the mp4 to the contract path, extract + QA a poster.
+// Shared by the Stage-motion and GIF-composite paths.
+function finalizeVideo(ex, producedMp4, durationSec) {
+  const destMp4 = join(ROOT, exampleMotionPath(ex.id));
+  mkdirSync(dirname(destMp4), { recursive: true });
+  copyFileSync(producedMp4, destMp4);
+  const destPng = join(ROOT, exampleImagePath(ex.id));
+  const poster = extractPoster(producedMp4, durationSec, destPng);
+  if (!poster) return { id: ex.id, format: ex.format, ok: false, png: null, mp4: exampleMotionPath(ex.id), reason: "poster extraction produced no frame" };
+  const posterQa = verifyRender(destPng, { kind: "png" });
+  if (!posterQa.ok) return { id: ex.id, format: ex.format, ok: false, png: null, mp4: exampleMotionPath(ex.id), reason: `poster frame blocked: ${posterQa.reason}` };
+  return { id: ex.id, format: ex.format, ok: true, png: exampleImagePath(ex.id), mp4: exampleMotionPath(ex.id), reason: "ok" };
+}
+
+// GIF (A3): render the CHROME (static, green media region) via the renderer, then
+// ffmpeg-composite the clip behind the keyed chrome → <id>.mp4, then poster it.
+function renderGif(ex, srcJsx) {
+  for (const f of [`${ex.id}.png`, `${ex.id}.mp4`, `${ex.id}-chrome.png`]) rmSync(join(OUT_DIR, f), { force: true });
+  // 1) render the chrome (the example .jsx is a static React component over chroma-key)
+  const r = spawnSync("node", [RENDERER, srcJsx], { cwd: ROOT, encoding: "utf8", timeout: RENDER_TIMEOUT_MS });
+  if (r.status !== 0) {
+    const tail = `${r.stderr || ""}`.trim().split("\n").slice(-3).join(" | ");
+    return { id: ex.id, format: ex.format, ok: false, png: null, mp4: null, reason: `chrome render exit ${r.status}: ${tail}` };
+  }
+  const chromePng = join(OUT_DIR, `${ex.id}.png`);
+  if (!existsSync(chromePng)) return { id: ex.id, format: ex.format, ok: false, png: null, mp4: null, reason: "chrome png not produced" };
+  // 2) composite the clip behind the keyed chrome
+  const g = ex.gif || {};
+  const clipPath = join(ROOT, g.clip || "");
+  if (!existsSync(clipPath)) return { id: ex.id, format: ex.format, ok: false, png: null, mp4: null, reason: `gif clip missing: ${g.clip} (run kraken-pull?)` };
+  const outMp4 = join(OUT_DIR, `${ex.id}.mp4`);
+  try {
+    composeGif({ chromePng, clipPath, rect: g.rect, durationSec: g.duration, outMp4 });
+  } catch (e) {
+    return { id: ex.id, format: ex.format, ok: false, png: null, mp4: null, reason: `gif compose failed: ${e.message}` };
+  }
+  // 3) QA the composite (frozen-black catches a dead composite), then finalize
+  const qa = verifyRender(outMp4, { kind: "mp4" });
+  if (!qa.ok) return { id: ex.id, format: ex.format, ok: false, png: null, mp4: null, reason: `gif QA blocked: ${qa.reason}` };
+  if (qa.skipped || qa.durationSec == null) return { id: ex.id, format: ex.format, ok: false, png: null, mp4: null, reason: "no ffmpeg/duration → cannot poster gif" };
+  return finalizeVideo(ex, outMp4, qa.durationSec);
+}
+
 // Render one example's JSX → out/<id>.<ext>, then QA, then copy to the contract path.
 function renderOne(ex) {
   const srcJsx = join(ROOT, EXAMPLES_DIR, `${ex.id}.jsx`);
   if (!existsSync(srcJsx)) return { id: ex.id, format: ex.format, ok: false, png: null, mp4: null, reason: `source missing: ${EXAMPLES_DIR}/${ex.id}.jsx` };
+
+  if (ex.render === "gif-composite") return renderGif(ex, srcJsx);
 
   // Clean ONLY this example's own prior output (never the whole out/ dir — other
   // chats + the dev editor server keep tracked files there) so a stale file can't
@@ -107,24 +153,16 @@ function renderOne(ex) {
     copyFileSync(produced, destPng);
     return { id: ex.id, format: ex.format, ok: true, png: exampleImagePath(ex.id), mp4: null, reason: qa.skipped ? qa.reason : "ok" };
   }
-  // video: copy the clip, then extract a poster frame (the contract's labeled still).
-  const destMp4 = join(ROOT, exampleMotionPath(ex.id));
-  copyFileSync(produced, destMp4);
-  // verifyRender(mp4) returns durationSec; if ffmpeg was unavailable it returns
-  // {skipped:true} with NO durationSec → we cannot extract a poster, so this example
-  // can't be embedded. Fail THIS row cleanly (don't crash the batch). (Plan D-2.)
+  // video (Stage motion): verifyRender(mp4) returns durationSec; if ffmpeg was
+  // unavailable it returns {skipped:true} with NO durationSec → we cannot extract a
+  // poster, so this example can't be embedded. Fail THIS row cleanly. (Plan D-2.)
   if (qa.skipped || qa.durationSec == null) {
+    const destMp4 = join(ROOT, exampleMotionPath(ex.id));
+    mkdirSync(dirname(destMp4), { recursive: true });
+    copyFileSync(produced, destMp4);
     return { id: ex.id, format: ex.format, ok: false, png: null, mp4: exampleMotionPath(ex.id), reason: "no ffmpeg/duration → cannot extract poster frame" };
   }
-  const poster = extractPoster(produced, qa.durationSec, destPng);
-  if (!poster) {
-    return { id: ex.id, format: ex.format, ok: false, png: null, mp4: exampleMotionPath(ex.id), reason: "poster extraction produced no frame" };
-  }
-  const posterQa = verifyRender(destPng, { kind: "png" });
-  if (!posterQa.ok) {
-    return { id: ex.id, format: ex.format, ok: false, png: null, mp4: exampleMotionPath(ex.id), reason: `poster frame blocked: ${posterQa.reason}` };
-  }
-  return { id: ex.id, format: ex.format, ok: true, png: exampleImagePath(ex.id), mp4: exampleMotionPath(ex.id), reason: "ok" };
+  return finalizeVideo(ex, produced, qa.durationSec);
 }
 
 function main() {

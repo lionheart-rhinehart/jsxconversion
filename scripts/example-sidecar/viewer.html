@@ -26,7 +26,7 @@
   .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:18px; }
   .card { background:var(--panel); border:1px solid var(--line); border-radius:12px; overflow:hidden; cursor:pointer; transition:border-color .12s, transform .12s; }
   .card:hover { border-color:var(--red); transform:translateY(-2px); }
-  .card img { width:100%; aspect-ratio:9/16; object-fit:cover; display:block; background:#000; }
+  .card img, .card video { width:100%; aspect-ratio:9/16; object-fit:cover; display:block; background:#000; }
   .card .meta { padding:9px 11px; }
   .card .sub { color:var(--dim); font-size:11px; } .card .mrow { margin-top:7px; display:flex; gap:5px; flex-wrap:wrap; }
   .tag { font-size:10px; padding:2px 6px; border-radius:5px; background:#202028; color:var(--dim); }
@@ -217,8 +217,13 @@ function renderGallery(){
 function cardHtml(e){
   const nn=e.metrics.nearestNeighbor; const nnBad=nn&&nn.cosine>=0.70;
   const tags=[]; if(nn) tags.push(`<span class="tag ${nnBad?'bad':nn.cosine>=0.6?'warn':'good'}">≈ ${nn.cosine.toFixed(2)}</span>`);
+  if(e.motion) tags.push(`<span class="tag good">▶ video</span>`);
   tags.push(`<span class="tag">${e.subLook||e.format}</span>`);
-  return `<div class="card" data-id="${e.id}"><img src="${e.png}" loading="lazy" alt="${e.archetype}"><div class="meta"><div class="sub">${e.id}</div><div class="mrow">${tags.join("")}</div></div></div>`;
+  // video examples play their motion clip in-card (poster = the extracted still); statics show the png
+  const visual = e.motion
+    ? `<video src="${e.motion}" poster="${e.png}" muted loop autoplay playsinline preload="metadata"></video>`
+    : `<img src="${e.png}" loading="lazy" alt="${e.archetype}">`;
+  return `<div class="card" data-id="${e.id}">${visual}<div class="meta"><div class="sub">${e.id}</div><div class="mrow">${tags.join("")}</div></div></div>`;
 }
 function renderClusters(){
   // health table

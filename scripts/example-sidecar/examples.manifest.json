@@ -1503,6 +1503,52 @@
           "claim"
         ]
       }
+    },
+    {
+      "id": "ex-047-coach-portrait",
+      "archetype": "coach-portrait",
+      "format": "video",
+      "mediaStyleAccepts": [
+        "production:cinematic",
+        "subject:coach-face"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "name",
+            "role": "byline",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title",
+            "role": "byline",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "hook",
+          "byline"
+        ]
+      },
+      "render": "gif-composite",
+      "gif": {
+        "clip": "brand/aa-design-system/project/assets/clip-agility.mp4",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 562,
+          "h": 1920
+        },
+        "duration": 4
+      }
     }
   ]
 }

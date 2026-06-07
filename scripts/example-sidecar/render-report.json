@@ -368,6 +368,14 @@
       "png": "templates/_examples/ex-046-metric-reveal.png",
       "mp4": "templates/_examples/ex-046-metric-reveal.mp4",
       "reason": "ok"
+    },
+    {
+      "id": "ex-047-coach-portrait",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-047-coach-portrait.png",
+      "mp4": "templates/_examples/ex-047-coach-portrait.mp4",
+      "reason": "ok"
     }
   ]
 }

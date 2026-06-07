@@ -33,7 +33,7 @@ import { dirname, join, resolve, basename, extname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync, spawn } from "node:child_process";
 import { createConnection } from "node:net";
-import { isExampleId, exampleImagePath, exampleSourcePaths } from "../lib/example-library.mjs";
+import { isExampleId, exampleImagePath, exampleMotionPath, exampleSourcePaths } from "../lib/example-library.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, "..", "..");
@@ -147,6 +147,7 @@ function buildExamples() {
         nearestNeighbor: cm.nearestNeighbor ?? null,
       },
       png: `/img/${id}.png?t=${mtimeTag(join(ROOT, exampleImagePath(id)))}`,
+      motion: entry.format === "video" ? `/motion/${id}.mp4?t=${mtimeTag(join(ROOT, exampleMotionPath(id)))}` : null,
       texts: detectTexts(src),
       media: detectMedia(src),
     });
@@ -222,6 +223,11 @@ async function handle(req, res) {
     if (!isExampleId(id)) return json(res, 400, { error: "bad id" });
     return serveFile(res, join(ROOT, exampleImagePath(id)), "image/png", noCache);
   }
+  if (path.startsWith("/motion/") && req.method === "GET") {
+    const id = basename(path).replace(/\.mp4$/, "");
+    if (!isExampleId(id)) return json(res, 400, { error: "bad id" });   // path-traversal guard (D-1)
+    return serveFile(res, join(ROOT, exampleMotionPath(id)), "video/mp4", noCache);
+  }
   if (path.startsWith("/media/") && req.method === "GET") {
     const name = basename(path);
     const p = resolveMedia(name);
@@ -262,8 +268,11 @@ async function handle(req, res) {
   }
 
   if (path === "/api/relabel" && req.method === "POST") {
-    const e = runScript(PYTHON, [join(HERE, "embed.py")]);
-    if (!e.ok) return json(res, 500, { ok: false, stage: "embed", log: e.out, err: e.err });
+    // re-embed BOTH formats (statics and videos are separate passes — D-3) before rebuild
+    const es = runScript(PYTHON, [join(HERE, "embed.py"), "--format=static"]);
+    if (!es.ok) return json(res, 500, { ok: false, stage: "embed:static", log: es.out, err: es.err });
+    const ev = runScript(PYTHON, [join(HERE, "embed.py"), "--format=video"]);
+    if (!ev.ok) return json(res, 500, { ok: false, stage: "embed:video", log: ev.out, err: ev.err });
     const b = runScript("node", [join(HERE, "build-index.mjs")]);
     return json(res, b.ok ? 200 : 500, { ok: b.ok, stage: b.ok ? "done" : "build-index", log: b.out, err: b.err });
   }
