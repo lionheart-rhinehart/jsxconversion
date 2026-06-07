@@ -221,7 +221,7 @@ function renderGallery(){
     return `
     <div class="arch">
       <h2><span style="color:${colorFor(a)}">●</span> ${a} <span class="n">${items.length} sub-look${items.length>1?'s':''} · 1 cluster</span></h2>
-      <p class="sub">${spreadChip} ${crossChip} <span style="color:var(--dim)">spread = max similarity between this cluster's own sub-looks (want &lt; 0.90 = not clones); cross = closest other cluster (want &lt; 0.70).</span></p>
+      <p class="sub" title="spread = max similarity between this cluster's own sub-looks (want < 0.90 = not clones); cross = closest other cluster (want < 0.70).">${spreadChip} ${crossChip}</p>
       <div class="grid">${items.map(cardHtml).join("")}</div>
     </div>`;
   }).join("");
