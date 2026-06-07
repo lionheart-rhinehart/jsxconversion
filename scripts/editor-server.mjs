@@ -83,6 +83,25 @@ const PEAKS_RESOLUTION = 1200;
 const ANNOTATIONS_DIR = join(PROJECT_ROOT, ".annotations-store");
 // Editor ids look like "camp:c:a:as" (colons) — slug them to one safe filename.
 const annSafeId = (id) => String(id).replace(/[^a-z0-9._-]+/gi, "_").slice(0, 200) || "creative";
+// Where "Send to Claude" drops the package for the AI assistant to read (gitignored,
+// inside the already-ignored .annotations-store).
+const AI_INBOX_DIR = join(ANNOTATIONS_DIR, "_inbox");
+// Read one creative's stored note record (self-describing creative block + W3C array).
+function readAnnRecord(id) {
+  const file = join(ANNOTATIONS_DIR, annSafeId(id) + ".json");
+  let rec = { creative: null, annotations: [] };
+  try { if (existsSync(file)) rec = JSON.parse(readFileSync(file, "utf8")); } catch { /* none/corrupt */ }
+  return rec;
+}
+// Build the outbound package (shared by /annotations/publish + /annotations/to-ai).
+function annPackage(id) {
+  const rec = readAnnRecord(id);
+  return {
+    creative: rec.creative || { editorId: id, source: "aa-creative-engine", schemaVersion: 1 },
+    annotations: Array.isArray(rec.annotations) ? rec.annotations : [],
+    publishedAt: new Date().toISOString(),
+  };
+}
 function peaksCachePath(rel) {
   const safe = rel.replace(/[\\/]/g, "__").replace(/[^a-z0-9._-]+/gi, "-");
   return join(PEAKS_CACHE_DIR, safe + ".json");
@@ -1023,14 +1042,7 @@ const server = createServer(async (req, res) => {
   if (path === "/annotations/publish" && (req.method === "GET" || req.method === "POST")) {
     const id = url.searchParams.get("id");
     if (!id) { sendJson(res, 400, { error: "missing ?id=" }); return; }
-    const file = join(ANNOTATIONS_DIR, annSafeId(id) + ".json");
-    let rec = { creative: null, annotations: [] };
-    try { if (existsSync(file)) rec = JSON.parse(readFileSync(file, "utf8")); } catch { /* empty */ }
-    const pkg = {
-      creative: rec.creative || { editorId: id, source: "aa-creative-engine", schemaVersion: 1 },
-      annotations: Array.isArray(rec.annotations) ? rec.annotations : [],
-      publishedAt: new Date().toISOString(),
-    };
+    const pkg = annPackage(id);
     // ── FUTURE INTEGRATION POINT ───────────────────────────────────────────────
     // Wire a real destination here, e.g.:
     //   await fetch(KRAKEN_PORTAL_URL + "/annotations", { method: "POST",
@@ -1038,6 +1050,25 @@ const server = createServer(async (req, res) => {
     // or send an email / push to an MCP. Keep returning `pkg` so the editor still
     // gets the package back as confirmation, and flip `published` to true on success.
     sendJson(res, 200, { ok: true, published: false, package: pkg });
+    return;
+  }
+
+  // POST /annotations/to-ai?id=<editorId> — "Send to Claude": drop the package where
+  // the AI assistant reads it. Writes a per-creative file + a stable `_latest.json`
+  // pointer under .annotations-store/_inbox/ (gitignored). The user clicks the button,
+  // then tells Claude "read the notes" → Claude reads _inbox/_latest.json.
+  if (path === "/annotations/to-ai" && req.method === "POST") {
+    const id = url.searchParams.get("id");
+    if (!id) { sendJson(res, 400, { error: "missing ?id=" }); return; }
+    const pkg = annPackage(id);
+    const safe = annSafeId(id);
+    const fileRel = ".annotations-store/_inbox/" + safe + ".json";
+    try {
+      mkdirSync(AI_INBOX_DIR, { recursive: true });
+      writeFileSync(join(AI_INBOX_DIR, safe + ".json"), JSON.stringify(pkg, null, 2));
+      writeFileSync(join(AI_INBOX_DIR, "_latest.json"), JSON.stringify(Object.assign({ inboxFile: fileRel }, pkg), null, 2));
+      sendJson(res, 200, { ok: true, count: pkg.annotations.length, path: fileRel });
+    } catch (e) { sendJson(res, 500, { error: String((e && e.message) || e) }); }
     return;
   }
 

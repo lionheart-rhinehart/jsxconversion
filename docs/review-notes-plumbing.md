@@ -69,6 +69,7 @@ The editor sends `creative` best-effort on every save; the **server owns** `edit
 | `POST /annotations?id=<editorId>` | Save one creative's notes. Body: `{ creative, annotations }`. |
 | `GET /annotations` *(no id)* | **List every stored note-set** — `{ sets: [{ editorId, creative, count, updatedAt }] }`. How a future dashboard / "send all pending" discovers what exists. |
 | `GET\|POST /annotations/publish?id=<editorId>` | **The publish seam.** Returns the full outbound `{ ok, published, package:{ creative, annotations, publishedAt } }`. |
+| `POST /annotations/to-ai?id=<editorId>` | **Send to Claude.** Writes the package to `.annotations-store/_inbox/<id>.json` + a stable `_inbox/_latest.json` pointer (gitignored). The AI assistant reads `_latest.json`. |
 
 ## The publish seam (the one place to connect later)
 

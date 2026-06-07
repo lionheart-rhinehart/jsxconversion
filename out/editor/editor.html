@@ -528,6 +528,8 @@
     .markup-item.mk-active { background: var(--sel); border-left: 3px solid var(--red); }
     .markup-send { width: 100%; margin-top: 8px; padding: 7px 10px; font-size: 12px; font-weight: 600; cursor: pointer; background: var(--red); color: #fff; border: 1px solid var(--red); border-radius: 5px; }
     .markup-send:disabled { background: var(--panel-2); color: var(--muted); border-color: var(--border); cursor: not-allowed; }
+    .markup-ai { margin-top: 6px; background: var(--ink-800, #2a2a32); border-color: var(--ink-800, #2a2a32); }
+    .markup-ai:disabled { background: var(--panel-2); color: var(--muted); border-color: var(--border); }
     .markup-item.mk-active .markup-num { background: var(--red); color: #fff; }
     .markup-item { transition: background-color 0.12s ease; }
     /* All-copy list rows (COPY tab) */
@@ -838,6 +840,7 @@
               <div class="draw-hint">Play/scrub below the video. Click (or draw) on a frame → it pauses, stamps the timestamp, and opens a comment. The note shows only around that moment.</div>
               <div id="markupList" class="markup-list"></div>
               <button type="button" id="markupSendBtn" class="markup-send" disabled title="Package these notes into a .json you can hand off. Later this becomes the one-click send to the approval portal.">📤 Send for review</button>
+              <button type="button" id="markupAiBtn" class="markup-send markup-ai" disabled title="Drop these notes where Claude reads them, then tell Claude 'read the notes'.">🤖 Send to Claude</button>
             </div>
           </div>
         </div>
@@ -3743,6 +3746,7 @@
       if (mc) mc.onclick = () => setDrawMode('creative');
       if (mm) mm.onclick = () => setDrawMode('markup');
       const sb = $('markupSendBtn'); if (sb) sb.onclick = sendForReview;
+      const ab = $('markupAiBtn'); if (ab) ab.onclick = sendToAI;
     }
     function setDrawColor(c) { _draw.color = c; document.querySelectorAll('.draw-swatch').forEach((s) => s.classList.toggle('on', s.dataset.c === c)); const p = $('drawColorPick'); if (p) p.value = c; }
     function setDrawTool(t) { _draw.tool = t; document.querySelectorAll('.draw-tool').forEach((b) => b.classList.toggle('on', b.dataset.tool === t)); updateDrawCapture(); }
@@ -3936,6 +3940,19 @@
         setStatus('Packaged ' + _markup.length + ' review note' + (_markup.length === 1 ? '' : 's') + ' → downloaded ' + a.download);
       } catch (e) { setStatus('Send for review failed: ' + ((e && e.message) || e)); }
     }
+    // "Send to Claude": flush the save, then drop the package in the AI inbox so the
+    // assistant can read it directly (no manual file handoff). Tell Claude to read it.
+    async function sendToAI() {
+      const id = annId();
+      if (!_markup.length) { setStatus('No review notes to send yet.'); return; }
+      clearTimeout(_markupSaveT);
+      try {
+        await fetch('/annotations?id=' + encodeURIComponent(id), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ creative: buildCreativeMeta(), annotations: _markup }) });
+        const j = await fetch('/annotations/to-ai?id=' + encodeURIComponent(id), { method: 'POST' }).then((r) => r.json());
+        if (j && j.ok) setStatus('Sent ' + _markup.length + ' note' + (_markup.length === 1 ? '' : 's') + ' to Claude (' + j.path + '). Now tell Claude: "read the notes".');
+        else setStatus('Send to Claude failed: ' + ((j && j.error) || 'unknown'));
+      } catch (e) { setStatus('Send to Claude failed: ' + ((e && e.message) || e)); }
+    }
     function newAnnotation(p, ts) {
       const sel = { type: 'FragmentSelector', conformsTo: 'http://www.w3.org/TR/media-frags/' };
       if (ts != null) { sel.timestamp = +ts.toFixed(2); } // single-frame anchor (no default range; tEnd stays optional for future ranges)
@@ -4051,6 +4068,7 @@
     function renderMarkupList() {
       const list = $('markupList'); if (!list) return;
       const sb = $('markupSendBtn'); if (sb) { sb.disabled = !_markup.length; sb.textContent = _markup.length ? ('📤 Send for review (' + _markup.length + ')') : '📤 Send for review'; }
+      const ab = $('markupAiBtn'); if (ab) { ab.disabled = !_markup.length; ab.textContent = _markup.length ? ('🤖 Send to Claude (' + _markup.length + ')') : '🤖 Send to Claude'; }
       list.innerHTML = '';
       if (!_markup.length) { list.innerHTML = '<div class="ed-empty">No notes yet. In markup mode, click the canvas (or draw a circle) to leave timestamped feedback.</div>'; return; }
       const ordered = _markup.slice().sort((x, y) => (aTime(x) ?? 1e9) - (aTime(y) ?? 1e9));
