@@ -61,7 +61,6 @@ const PROJECT_ROOT = resolve(HERE, "..", "..");
 const RENDERER = join(PROJECT_ROOT, ".claude", "skills", "jsx-to-mp4", "scripts", "render.mjs");
 const RUNTIME_DIR = join(PROJECT_ROOT, "brand", "video-templates");          // animations.jsx + editing.jsx live here
 const HELPERS_PATH = join(PROJECT_ROOT, "templates", "multi-sport-foundations", "_helpers.jsx");
-const MUSIC_SYNC_PATH = join(PROJECT_ROOT, "templates", "audio-picker", "music-sync.jsx");
 const RENDER_TIMEOUT_MS = 240000; // a video render is 30fps × N seconds of screenshots — heavier than a static frame
 
 const VID_RE = /\.(mp4|mov|webm|m4v|mkv)$/i;
@@ -212,9 +211,6 @@ export async function renderLayerConfigVideo(opts) {
     return { ok: false, reason: `missing ${HELPERS_PATH}`, stagingDir };
   }
   writeFileSync(join(elementsDir, "_helpers.jsx"), transformHelpersForScript(readFileSync(HELPERS_PATH, "utf8")));
-  if (audio && audio.src && existsSync(MUSIC_SYNC_PATH)) {
-    copyFileSync(MUSIC_SYNC_PATH, join(elementsDir, "music-sync.jsx"));
-  }
 
   // 3c) the template's assets/ so overlay ./assets/.. (cutouts, imageFill) resolve.
   const srcAssets = join(templateDir, "assets");
@@ -246,15 +242,11 @@ export async function renderLayerConfigVideo(opts) {
   delete overlayConfig.media;
 
   const wrapGlobal = "LayerVideoWrapper";
-  const audioTag = (audio && audio.src)
-    ? `{window.MusicSync ? React.createElement(window.MusicSync, ${JSON.stringify({
-        src: audio.src,
-        startAt: Number(audio.startAt) || 0,
-        volume: audio.volume != null ? Number(audio.volume) : 0.85,
-        fadeIn: audio.fadeIn != null ? Number(audio.fadeIn) : 1.0,
-        fadeOut: audio.fadeOut != null ? Number(audio.fadeOut) : 1.5,
-      })}) : null}`
-    : "null";
+  // NOTE: audio is NOT rendered in the wrapper. <MusicSync> only plays during a
+  // LIVE preview (and would paint its "click to enable audio" badge into every
+  // captured frame, since the headless render never gets a user gesture). The
+  // actual sound is muxed into the finished MP4 by ffmpeg below — that's the only
+  // audio path for the render. The live audition is the editor's audio picker.
 
   // ORDER MATTERS (landmine): the renderer's detectVariationGlobal picks the FIRST
   // `window.<Name> = <identifier>` in the file as the component to mount. The bg-sync
@@ -279,7 +271,6 @@ function ${wrapGlobal}() {
       {LayerStack
         ? <LayerStack config={__OVERLAY_CONFIG__} background="transparent" />
         : null}
-      {${audioTag}}
     </Stage>
   );
 }

@@ -29,7 +29,7 @@ import {
   createWriteStream,
 } from "node:fs";
 import { join, resolve, extname, basename, dirname } from "node:path";
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { resolveStaticConfig } from "./lib/fill-core.mjs";
 import { fieldRole, BEAT_HEADLINE_ROLE, beatLetter } from "./lib/roles.mjs";
 import { loadCopyLibrary } from "./lib/copy-library.mjs";
@@ -72,6 +72,60 @@ const CLIP_EXT = new Set([".mp4", ".mov", ".webm"]);
 const AUDIO_EXT = new Set([".mp3", ".wav", ".m4a", ".aac", ".ogg"]);
 const EXT_FOR_KIND = { photo: PHOTO_EXT, clip: CLIP_EXT, audio: AUDIO_EXT };
 const MUSIC_ROOT = join(PROJECT_ROOT, "music-library");
+
+// ── Waveform peaks (Phase A2 audio picker) ──────────────────────────────────
+// Port of the standalone picker's Python _decode_peaks: ffprobe for duration +
+// ffmpeg mono/4kHz/s16le PCM, binned into PEAKS_RESOLUTION max-abs values for a
+// fast waveform. Cached as JSON under .peaks-cache/ (machine-local, gitignored).
+const PEAKS_CACHE_DIR = join(PROJECT_ROOT, ".peaks-cache");
+const PEAKS_RESOLUTION = 1200;
+function peaksCachePath(rel) {
+  const safe = rel.replace(/[\\/]/g, "__").replace(/[^a-z0-9._-]+/gi, "-");
+  return join(PEAKS_CACHE_DIR, safe + ".json");
+}
+function decodePeaks(absPath, numPeaks = PEAKS_RESOLUTION) {
+  const dz = spawnSync("ffprobe", ["-v", "error", "-show_entries", "format=duration",
+    "-of", "default=noprint_wrappers=1:nokey=1", absPath], { encoding: "utf8" });
+  const duration = parseFloat(String(dz.stdout || "").trim()) || 0;
+  const pcm = spawnSync("ffmpeg", ["-v", "error", "-i", absPath, "-ac", "1", "-ar", "4000",
+    "-f", "s16le", "-"], { maxBuffer: 1 << 28 }); // ~256MB ceiling (a long track is a few MB)
+  const buf = pcm.stdout;
+  if (!buf || buf.length < 2) return { peaks: new Array(numPeaks).fill(0), duration };
+  const totalSamples = buf.length >> 1;
+  const binSize = Math.max(1, Math.floor(totalSamples / numPeaks));
+  const peaks = new Array(numPeaks);
+  for (let i = 0; i < numPeaks; i++) {
+    const sb = i * binSize * 2;
+    const eb = Math.min(sb + binSize * 2, buf.length);
+    let mx = 0;
+    for (let j = sb; j + 1 < eb; j += 2) { const v = Math.abs(buf.readInt16LE(j)); if (v > mx) mx = v; }
+    peaks[i] = Math.round((mx / 32768) * 10000) / 10000;
+  }
+  return { peaks, duration };
+}
+// Decode (or read the cache) for one project-relative audio path. Returns the
+// peaks object, or null on failure (missing ffmpeg / unreadable file).
+function ensurePeaks(rel) {
+  const abs = resolve(join(PROJECT_ROOT, rel));
+  if (!underAnyMediaRoot(abs) || !existsSync(abs)) return null;
+  const cacheFile = peaksCachePath(rel);
+  try {
+    if (existsSync(cacheFile) && statSync(cacheFile).mtimeMs >= statSync(abs).mtimeMs) {
+      return JSON.parse(readFileSync(cacheFile, "utf8"));
+    }
+  } catch (_) { /* fall through to decode */ }
+  try {
+    const data = decodePeaks(abs);
+    mkdirSync(PEAKS_CACHE_DIR, { recursive: true });
+    const tmp = cacheFile + ".tmp";
+    writeFileSync(tmp, JSON.stringify(data));
+    renameSync(tmp, cacheFile);
+    return data;
+  } catch (e) {
+    console.error(`[peaks] decode failed for ${rel}: ${(e && e.message) || e}`);
+    return null;
+  }
+}
 
 // Every registered franchisee kit's media dirs. These are SERVABLE (the
 // /media-file guard allows them) but NOT part of the AA shared listing set — the
@@ -918,6 +972,19 @@ const server = createServer(async (req, res) => {
     return;
   }
 
+  // GET /peaks?file=<project-relative-audio-path> — waveform peaks for the audio
+  // picker (Phase A2). Decoded on demand + cached; the boot pre-scan warms the
+  // music library so the first pick is instant. Never 500s the picker — a decode
+  // failure (missing ffmpeg / bad file) returns { error } and the UI degrades.
+  if (path === "/peaks" && req.method === "GET") {
+    const file = url.searchParams.get("file");
+    if (!file) { sendJson(res, 400, { error: "missing file" }); return; }
+    const data = ensurePeaks(file);
+    if (!data) { sendJson(res, 200, { error: "could not decode peaks (missing file or ffmpeg)" }); return; }
+    sendJson(res, 200, data);
+    return;
+  }
+
   // GET /brands — list the brand kits a session can ATTACH (Phase A). The editor is
   // brand-agnostic; this powers the brand-attach control so a user can opt INTO a
   // brand's photos/tokens. Reads data/brand.<slug>.json (slug = filename middle).
@@ -1372,4 +1439,24 @@ server.listen(PORT, () => {
   console.log(`    POST /render/cluster-N`);
   console.log(`    GET  /out/<path>`);
   console.log(`\nOpen http://localhost:${PORT}/ to use the editor.\n`);
+
+  // Phase A2: warm the waveform cache for the music library in the background so
+  // the first track pick in the audio picker draws instantly. Best-effort, fully
+  // non-blocking (one decode at a time on a timer) — never delays boot or a request.
+  try {
+    const tracks = [];
+    try {
+      for (const f of readdirSync(MUSIC_ROOT)) {
+        if (AUDIO_EXT.has(extname(f).toLowerCase())) tracks.push(`music-library/${f}`);
+      }
+    } catch (_) { /* no music-library yet */ }
+    let i = 0;
+    const warmNext = () => {
+      if (i >= tracks.length) return;
+      const rel = tracks[i++];
+      try { if (!existsSync(peaksCachePath(rel))) ensurePeaks(rel); } catch (_) {}
+      setTimeout(warmNext, 50);
+    };
+    if (tracks.length) { console.log(`[peaks] warming ${tracks.length} music-library track(s) in the background…`); setTimeout(warmNext, 1000); }
+  } catch (_) { /* warm-up is best-effort */ }
 });

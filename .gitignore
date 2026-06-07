@@ -39,3 +39,6 @@ campaigns/**/validation.json
 campaigns/**/copy-library.report.json
 # AA weekly-birthday transient render scratch (render.mjs cleans these; ignore crash stragglers)
 automation/.render-*
+
+# Waveform peaks cache (machine-local, A2 audio picker)
+.peaks-cache/

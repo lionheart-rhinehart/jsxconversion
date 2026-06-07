@@ -459,6 +459,23 @@
     .trim-audio-label { font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-family: ui-monospace, monospace; }
     .trim-audio-btn { font-size: 10px; padding: 4px 9px; cursor: pointer; background: var(--bg); border: 1px solid var(--border); color: var(--muted); border-radius: 3px; }
     .trim-audio-btn.on { background: var(--red); border-color: var(--red); color: #fff; }
+    /* Audio picker (MEDIA tab) — waveform + scrub + fades, port of audio-picker.html */
+    .aud-wave-wrap { position: relative; height: 64px; margin: 8px 0; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; cursor: crosshair; }
+    .aud-wave-wrap canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .aud-wave-loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--muted); font-family: ui-monospace, monospace; }
+    .aud-time { position: absolute; right: 5px; bottom: 3px; font-size: 9px; color: rgba(255,255,255,0.7); font-family: ui-monospace, monospace; pointer-events: none; }
+    .aud-controls { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin: 4px 0; }
+    .aud-btn { font-size: 11px; padding: 4px 9px; cursor: pointer; background: var(--panel-2); border: 1px solid var(--border); color: var(--fg); border-radius: 3px; }
+    .aud-btn.primary { background: var(--red); border-color: var(--red); color: #fff; }
+    .aud-btn.play { min-width: 34px; }
+    .aud-markers { display: flex; gap: 10px; margin: 6px 0; }
+    .aud-marker-label { font-size: 8px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-family: ui-monospace, monospace; }
+    .aud-marker-val { font-size: 12px; color: var(--fg); font-family: ui-monospace, monospace; }
+    .aud-row { display: flex; align-items: center; gap: 6px; margin: 4px 0; }
+    .aud-row label { font-size: 10px; color: var(--muted); min-width: 56px; }
+    .aud-row input[type=range] { flex: 1; }
+    .aud-row input[type=number] { width: 56px; background: var(--bg); border: 1px solid var(--border); color: var(--fg); font-size: 11px; padding: 3px 5px; border-radius: 3px; font-family: ui-monospace, monospace; }
+    .aud-val { font-size: 11px; color: var(--fg); font-family: ui-monospace, monospace; min-width: 30px; text-align: right; }
     /* All-copy list rows (COPY tab) */
     .copy-row { display: flex; flex-direction: column; gap: 4px; padding: 8px; background: var(--panel-2); border-radius: 6px; margin-bottom: 8px; }
     .copy-row-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-family: ui-monospace, Menlo, monospace; }
@@ -612,6 +629,41 @@
             </div>
             <button id="browsePhotosBtn" type="button" style="width:100%;font-size:11px;cursor:pointer">Browse media ▾</button>
             <div class="ed-photo-grid" id="photoGrid" hidden></div>
+          </div>
+          <!-- Audio picker (Phase A2): pick music, see its waveform, mark a start
+               point + fades, and HEAR it over the clip ("▶ With clip"). Writes
+               config.audio = { src, startAt, volume, fadeIn, fadeOut } — muxed into
+               the rendered MP4 (takes priority over the clip's own audio). -->
+          <div class="panel-block" id="audioPanel">
+            <h3 class="sec-title">Audio (music)</h3>
+            <select id="audioTrackSel" style="width:100%;font-size:11px;padding:5px 6px;background:var(--bg);border:1px solid var(--border);color:var(--fg);border-radius:3px;font-family:ui-monospace,monospace">
+              <option value="">— no music —</option>
+            </select>
+            <div id="audioBody" hidden>
+              <div class="aud-wave-wrap" id="audioWaveWrap">
+                <canvas id="audioWave"></canvas>
+                <canvas id="audioOverlay"></canvas>
+                <div class="aud-wave-loading" id="audioLoading">Decoding waveform…</div>
+                <div class="aud-time" id="audioTime">0:00.00</div>
+              </div>
+              <audio id="audioEl" preload="auto"></audio>
+              <div class="aud-controls">
+                <button type="button" class="aud-btn play" id="audioPlay">▶</button>
+                <button type="button" class="aud-btn" data-dt="-1">−1s</button>
+                <button type="button" class="aud-btn" data-dt="-0.1">−0.1</button>
+                <button type="button" class="aud-btn" data-dt="0.1">+0.1</button>
+                <button type="button" class="aud-btn" data-dt="1">+1s</button>
+                <span style="flex:1"></span>
+                <button type="button" class="aud-btn primary" id="audioMark">Mark start</button>
+                <button type="button" class="aud-btn" id="audioPreviewClip">▶ With clip</button>
+              </div>
+              <div class="aud-markers">
+                <div><div class="aud-marker-label">Playhead</div><div class="aud-marker-val" id="audioPlayhead">0:00.00</div></div>
+                <div><div class="aud-marker-label">Start (startAt)</div><div class="aud-marker-val" id="audioStartAt">0:00.00</div></div>
+              </div>
+              <div class="aud-row"><label>Volume</label><input type="range" id="audioVol" min="0" max="1" step="0.05" value="0.85"><span class="aud-val" id="audioVolVal">85%</span></div>
+              <div class="aud-row"><label>Fade in</label><input type="number" id="audioFadeIn" min="0" max="10" step="0.1" value="1.0"><label style="min-width:auto">s</label><label style="min-width:auto;margin-left:10px">Fade out</label><input type="number" id="audioFadeOut" min="0" max="10" step="0.1" value="1.5"><label style="min-width:auto">s</label></div>
+            </div>
           </div>
           <div class="panel-block" id="mediaPanel" style="display: none;">
             <h3 class="sec-title">Media (background)</h3>
@@ -3269,6 +3321,159 @@
     };
 
     // ===== Cluster picker =====
+    // ── Audio picker (Phase A2) ──────────────────────────────────────────────
+    // Pick music, draw its waveform from /peaks, scrub by ear, mark a start point
+    // + fades, and HEAR it over the clip ("▶ With clip"). Writes config.audio =
+    // { src, startAt, volume, fadeIn, fadeOut }; the render muxes it (priority over
+    // the clip's own audio). The standalone audio-picker.html, ported into the editor.
+    const _audio = { track: null, dur: 0, peaks: null, raf: 0, syncTimer: 0 };
+    async function initAudioPicker() {
+      const sel = $('audioTrackSel'); if (!sel) return;
+      try {
+        const camp = parseCampId(state.cluster);
+        const q = '/media?kind=audio' + (camp ? '&campaign=' + encodeURIComponent(camp.campaign)
+          : (state.brand ? '&brand=' + encodeURIComponent(state.brand) : ''));
+        const j = await fetch(q).then((r) => r.json());
+        sel.innerHTML = '<option value="">— no music —</option>';
+        for (const it of (j.items || [])) {
+          const o = document.createElement('option');
+          o.value = it.path; o.dataset.url = it.url; o.textContent = it.name.replace(/\.[^.]+$/, '');
+          sel.appendChild(o);
+        }
+      } catch (_) {}
+      wireAudioControlsOnce();
+      syncAudioPanelFromConfig();
+      sel.onchange = () => onAudioTrackChange(sel.value, sel.options[sel.selectedIndex]);
+    }
+    function syncAudioPanelFromConfig() {
+      const sel = $('audioTrackSel'); if (!sel) return;
+      const a = state.config && state.config.audio;
+      if (a && a.src) {
+        let opt = [...sel.options].find((o) => o.value === a.src);
+        if (!opt) { opt = document.createElement('option'); opt.value = a.src; opt.dataset.url = '/media-file/' + a.src; opt.textContent = a.src.split('/').pop().replace(/\.[^.]+$/, ''); sel.appendChild(opt); }
+        sel.value = a.src;
+        $('audioVol').value = a.volume != null ? a.volume : 0.85; $('audioVolVal').textContent = Math.round((a.volume != null ? a.volume : 0.85) * 100) + '%';
+        $('audioFadeIn').value = a.fadeIn != null ? a.fadeIn : 1.0; $('audioFadeOut').value = a.fadeOut != null ? a.fadeOut : 1.5;
+        loadAudioTrack(a.src, opt.dataset.url);
+      } else {
+        sel.value = ''; $('audioBody').hidden = true;
+      }
+    }
+    function onAudioTrackChange(src, opt) {
+      if (!state.config) return;
+      const el = $('audioEl'); if (el) { el.pause(); $('audioPlay').textContent = '▶'; }
+      if (!src) { delete state.config.audio; $('audioBody').hidden = true; setStatus('Music removed. Save + Render to apply.'); return; }
+      snapshotForUndo();
+      state.config.audio = { src, startAt: 0, volume: Number($('audioVol').value) || 0.85, fadeIn: Number($('audioFadeIn').value) || 1.0, fadeOut: Number($('audioFadeOut').value) || 1.5 };
+      loadAudioTrack(src, opt && opt.dataset.url);
+      setStatus('Music set: ' + (opt ? opt.textContent : src) + '. Mark a start, then Save + Render.');
+    }
+    function loadAudioTrack(src, url) {
+      const el = $('audioEl'); if (!el) return;
+      $('audioBody').hidden = false;
+      $('audioLoading').style.display = ''; $('audioLoading').textContent = 'Decoding waveform…';
+      el.src = url || ('/media-file/' + src);
+      _audio.track = src; _audio.peaks = null; _audio.dur = 0;
+      drawAudioOverlay();
+      fetch('/peaks?file=' + encodeURIComponent(src)).then((r) => r.json()).then((d) => {
+        if (_audio.track !== src) return;
+        if (d && d.peaks && !d.error) { _audio.peaks = d.peaks; _audio.dur = d.duration || 0; drawAudioWave(); $('audioLoading').style.display = 'none'; }
+        else { $('audioLoading').textContent = 'No waveform'; }
+        updateAudioReadouts();
+      }).catch(() => { $('audioLoading').textContent = 'No waveform'; });
+    }
+    function drawAudioWave() {
+      const c = $('audioWave'); if (!c || !_audio.peaks) return;
+      const dpr = window.devicePixelRatio || 1, W = c.clientWidth, H = c.clientHeight;
+      c.width = Math.floor(W * dpr); c.height = Math.floor(H * dpr);
+      const ctx = c.getContext('2d'); ctx.scale(dpr, dpr); ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = 'rgba(255,255,255,0.08)'; ctx.fillRect(0, H / 2, W, 1);
+      const spp = _audio.peaks.length / W;
+      for (let x = 0; x < W; x++) { const i = Math.floor(x * spp); const p = _audio.peaks[i] || 0; const h = Math.max(1, p * H * 0.92); ctx.fillStyle = '#c4141d'; ctx.fillRect(x, (H - h) / 2, 1, h); }
+    }
+    function drawAudioOverlay() {
+      const c = $('audioOverlay'); if (!c) return;
+      const dpr = window.devicePixelRatio || 1, W = c.clientWidth, H = c.clientHeight;
+      c.width = Math.floor(W * dpr); c.height = Math.floor(H * dpr);
+      const ctx = c.getContext('2d'); ctx.scale(dpr, dpr); ctx.clearRect(0, 0, W, H);
+      const dur = _audio.dur, a = state.config && state.config.audio, el = $('audioEl');
+      if (dur && a && a.startAt != null) {
+        const mx = (a.startAt / dur) * W;
+        ctx.strokeStyle = '#e6e7e9'; ctx.lineWidth = 2; ctx.setLineDash([6, 4]);
+        ctx.beginPath(); ctx.moveTo(mx, 0); ctx.lineTo(mx, H); ctx.stroke(); ctx.setLineDash([]);
+      }
+      if (dur && el) {
+        const px = (el.currentTime / dur) * W;
+        ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(px, 0); ctx.lineTo(px, H); ctx.stroke();
+        ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(px, 6, 4, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+    function fmtAudTime(t) { t = Math.max(0, t || 0); const m = Math.floor(t / 60); const s = t % 60; return m + ':' + (s < 10 ? '0' : '') + s.toFixed(2); }
+    function updateAudioReadouts() {
+      const el = $('audioEl'); const a = state.config && state.config.audio;
+      $('audioPlayhead').textContent = fmtAudTime(el ? el.currentTime : 0);
+      $('audioTime').textContent = fmtAudTime(el ? el.currentTime : 0);
+      $('audioStartAt').textContent = fmtAudTime(a ? a.startAt : 0);
+      drawAudioOverlay();
+    }
+    function wireAudioControlsOnce() {
+      if (wireAudioControlsOnce._done) return; wireAudioControlsOnce._done = true;
+      const el = $('audioEl'), wrap = $('audioWaveWrap'); if (!el || !wrap) return;
+      const tick = () => { updateAudioReadouts(); if (!el.paused) _audio.raf = requestAnimationFrame(tick); };
+      $('audioPlay').onclick = () => {
+        if (el.paused) { el.play().catch(() => {}); $('audioPlay').textContent = '❚❚'; tick(); }
+        else { el.pause(); $('audioPlay').textContent = '▶'; }
+      };
+      el.addEventListener('pause', () => { $('audioPlay').textContent = '▶'; cancelAnimationFrame(_audio.raf); });
+      el.addEventListener('ended', () => { $('audioPlay').textContent = '▶'; });
+      el.addEventListener('timeupdate', updateAudioReadouts);
+      for (const b of document.querySelectorAll('.aud-btn[data-dt]')) {
+        b.onclick = () => { el.currentTime = Math.max(0, el.currentTime + Number(b.dataset.dt)); updateAudioReadouts(); };
+      }
+      const seekTo = (clientX) => { const r = wrap.getBoundingClientRect(); const pct = Math.max(0, Math.min(1, (clientX - r.left) / r.width)); if (_audio.dur) { try { el.currentTime = pct * _audio.dur; } catch (e) {} updateAudioReadouts(); } };
+      let dragging = false;
+      wrap.addEventListener('pointerdown', (e) => { dragging = true; wrap.setPointerCapture && wrap.setPointerCapture(e.pointerId); seekTo(e.clientX); });
+      wrap.addEventListener('pointermove', (e) => { if (dragging) seekTo(e.clientX); });
+      wrap.addEventListener('pointerup', () => { dragging = false; });
+      $('audioMark').onclick = () => {
+        if (!state.config || !state.config.audio) return;
+        snapshotForUndo();
+        state.config.audio.startAt = +el.currentTime.toFixed(2);
+        updateAudioReadouts();
+        setStatus('Music start marked at ' + fmtAudTime(el.currentTime) + '. Save + Render to apply.');
+      };
+      $('audioVol').oninput = () => { const v = Number($('audioVol').value); $('audioVolVal').textContent = Math.round(v * 100) + '%'; el.volume = v; if (state.config && state.config.audio) state.config.audio.volume = v; };
+      $('audioFadeIn').onchange = () => { if (state.config && state.config.audio) state.config.audio.fadeIn = Number($('audioFadeIn').value) || 0; };
+      $('audioFadeOut').onchange = () => { if (state.config && state.config.audio) state.config.audio.fadeOut = Number($('audioFadeOut').value) || 0; };
+      $('audioPreviewClip').onclick = previewMusicWithClip;
+    }
+    // Listen-while-watching: play the editor's live preview <video> (muted) from
+    // clipStart + the picked music from startAt, in sync, looping the trim window —
+    // so you hear exactly what the rendered MP4 will sound like (no Stage iframe /
+    // postMessage bridge needed; the preview is in this same page).
+    function previewMusicWithClip() {
+      const el = $('audioEl'); const a = state.config && state.config.audio; if (!el || !a) return;
+      const vid = document.querySelector('#stage video');
+      const m = state.config.media || {};
+      const cs = Math.max(0, Number(m.clipStart) || 0);
+      const ce = (typeof m.clipEnd === 'number' && m.clipEnd > cs) ? m.clipEnd : null;
+      const D = ce != null ? (ce - cs) : (_audio.dur || 6);
+      el.volume = a.volume != null ? a.volume : 0.85;
+      try { el.currentTime = a.startAt || 0; } catch (e) {}
+      el.play().catch(() => {});
+      $('audioPlay').textContent = '❚❚';
+      const tick = () => { updateAudioReadouts(); if (!el.paused) _audio.raf = requestAnimationFrame(tick); };
+      tick();
+      if (vid) { try { vid.muted = true; vid.currentTime = cs; } catch (e) {} vid.play && vid.play().catch(() => {}); }
+      if (_audio.syncTimer) clearInterval(_audio.syncTimer);
+      _audio.syncTimer = setInterval(() => {
+        if (el.paused) { clearInterval(_audio.syncTimer); _audio.syncTimer = 0; return; }
+        if (vid && ce != null && vid.currentTime >= ce) { try { vid.currentTime = cs; } catch (e) {} }
+        if ((el.currentTime - (a.startAt || 0)) >= D) { try { el.currentTime = a.startAt || 0; } catch (e) {} if (vid) { try { vid.currentTime = cs; } catch (e) {} } }
+      }, 100);
+      setStatus('Playing music over the clip — start ' + fmtAudTime(a.startAt || 0) + '. Click ❚❚ to stop.');
+    }
+
     async function loadCluster(id) {
       const got = await fetchConfig(id);
       if (!got || !got.cfg) {
@@ -3288,6 +3493,7 @@
       renderStage();
       renderElementList();
       renderProps();
+      if (typeof syncAudioPanelFromConfig === 'function') syncAudioPanelFromConfig();
       setStatus('Loaded ' + id);
       window.location.hash = '#' + id;
     }
@@ -3318,6 +3524,7 @@
       initKrakenBar();
       initBrandSelect();
       initDriveBar();
+      initAudioPicker();
     })();
 
     window.addEventListener('resize', () => state.config && renderStage());
