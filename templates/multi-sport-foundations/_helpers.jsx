@@ -567,7 +567,10 @@ export function renderDesignItem(it, key) {
     // wedge/parallelogram, and transform rotates/skews it. Inert when absent →
     // existing rectangular shapes are unaffected.
     if (it.clipPath) rectStyle.clipPath = it.clipPath;
-    if (it.transform) rectStyle.transform = it.transform;
+    if (it.transform || (typeof it.rotate === "number" && it.rotate)) {
+      rectStyle.transform = [it.transform, (typeof it.rotate === "number" && it.rotate) ? `rotate(${it.rotate}deg)` : ""].filter(Boolean).join(" ");
+      rectStyle.transformOrigin = it.transformOrigin != null ? it.transformOrigin : "center center";
+    }
     // Optional tiled/patterned fill (e.g. a radial-gradient dot grid). When the
     // fill is a repeating gradient, backgroundSize controls the tile and
     // backgroundRepeat the tiling. Set AFTER `background` so the longhand wins
@@ -605,6 +608,7 @@ export function renderDesignItem(it, key) {
     const transforms = [];
     if (it.transform) transforms.push(it.transform);
     if (it.scale != null && it.scale !== 1) transforms.push(`scale(${it.scale})`);
+    if (typeof it.rotate === "number" && it.rotate) transforms.push(`rotate(${it.rotate}deg)`);
     if (transforms.length) {
       imgStyle.transform = transforms.join(" ");
       // An explicit matrix keeps the top-left origin (so it maps the SVG box);
@@ -723,9 +727,14 @@ export function renderTextLayer(el, key) {
   // skew/scale `transform`. All inert when absent → existing configs unchanged.
   if (el.textShadow != null) style.textShadow = el.textShadow;
   if (el.filter != null) style.filter = el.filter;
-  if (el.transform != null) {
-    style.transform = el.transform;
-    if (el.transformOrigin != null) style.transformOrigin = el.transformOrigin;
+  // transform: compose any authored el.transform with el.rotate (deg, from the editor).
+  // Additive — configs with neither are unchanged. Center origin when rotating.
+  if (el.transform != null || (typeof el.rotate === "number" && el.rotate)) {
+    const _parts = [];
+    if (el.transform != null) _parts.push(el.transform);
+    if (typeof el.rotate === "number" && el.rotate) _parts.push(`rotate(${el.rotate}deg)`);
+    style.transform = _parts.join(" ");
+    style.transformOrigin = el.transformOrigin != null ? el.transformOrigin : "center center";
   }
   // Optional photo-filled glyphs: the text becomes a window onto an image via
   // background-clip:text (the recurring Canva "letters filled with a photo"

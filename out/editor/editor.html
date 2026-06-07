@@ -614,6 +614,7 @@
             <h3 class="sec-title">Position &amp; style: <span id="selNameGeom">—</span></h3>
             <div class="field"><label>x</label><input type="number" id="propX" /></div>
             <div class="field"><label>y</label><input type="number" id="propY" /></div>
+            <div class="field"><label>angle°</label><input type="number" id="propRotate" step="1" placeholder="0" title="Rotation in degrees (tilt). Drag the rotate handle on the canvas too." /></div>
             <div class="field"><label>fontSize</label><input type="number" id="propFontSize" /></div>
             <div class="field"><label>weight</label><input type="number" id="propFontWeight" placeholder="400" /></div>
             <div class="field"><label>lineH</label><input type="number" id="propLineHeight" step="0.05" placeholder="1.0" /></div>
@@ -1778,9 +1779,14 @@
       if (el.fontStyle != null) text.style.fontStyle = el.fontStyle;
       if (el.textShadow != null) text.style.textShadow = el.textShadow;
       if (el.filter != null) text.style.filter = el.filter;
-      if (el.transform != null) {
-        box.style.transform = el.transform;
-        if (el.transformOrigin != null) box.style.transformOrigin = el.transformOrigin;
+      // transform: compose authored el.transform + el.rotate (deg) — mirror _helpers
+      // composeRotate so preview == render. Center origin when rotating.
+      if (el.transform != null || (typeof el.rotate === 'number' && el.rotate)) {
+        const _p = [];
+        if (el.transform != null) _p.push(el.transform);
+        if (typeof el.rotate === 'number' && el.rotate) _p.push('rotate(' + el.rotate + 'deg)');
+        box.style.transform = _p.join(' ');
+        box.style.transformOrigin = el.transformOrigin != null ? el.transformOrigin : 'center center';
       }
       if (el.imageFill != null) {
         const fillUrl = state.mediaBase + el.imageFill.replace(/^\.\//, '');
@@ -2129,6 +2135,7 @@
       const geomName = $('selNameGeom'); if (geomName) geomName.textContent = el.id;
       $('propX').value = Math.round(el.x);
       $('propY').value = Math.round(el.y);
+      { const r = $('propRotate'); if (r) r.value = (typeof el.rotate === 'number' && el.rotate) ? el.rotate : ''; }
       $('propFontSize').value = el.fontSize || '';
       $('propText').value = el.text || '';
       populateTextSwap(el);
@@ -2397,6 +2404,7 @@
     }
     bindPropInput('propX', 'x');
     bindPropInput('propY', 'y');
+    bindPropInput('propRotate', 'rotate');
     bindPropInput('propFontSize', 'fontSize');
     bindPropInput('propText', 'text', String);
     // Newlines: when the text gains a line break, switch the element to pre-wrap
