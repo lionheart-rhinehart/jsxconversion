@@ -476,6 +476,28 @@
     .aud-row input[type=range] { flex: 1; }
     .aud-row input[type=number] { width: 56px; background: var(--bg); border: 1px solid var(--border); color: var(--fg); font-size: 11px; padding: 3px 5px; border-radius: 3px; font-family: ui-monospace, monospace; }
     .aud-val { font-size: 11px; color: var(--fg); font-family: ui-monospace, monospace; min-width: 30px; text-align: right; }
+    /* Draw tab (Phase D) — creative shapes + markup notes */
+    .draw-modes { display: flex; gap: 6px; margin-bottom: 8px; }
+    .draw-mode { flex: 1; font-size: 11px; padding: 6px; cursor: pointer; background: var(--bg); border: 1px solid var(--border); color: var(--muted); border-radius: 4px; }
+    .draw-mode.on { background: var(--panel-2); border-color: var(--red); color: var(--fg); }
+    .draw-sub { font-size: 10px; color: var(--muted); margin-bottom: 6px; }
+    .draw-tools { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
+    .draw-tool { font-size: 11px; padding: 5px 9px; cursor: pointer; background: var(--panel-2); border: 1px solid var(--border); color: var(--fg); border-radius: 3px; }
+    .draw-tool.on { background: var(--red); border-color: var(--red); color: #fff; }
+    .draw-swatches { display: inline-flex; gap: 4px; }
+    .draw-swatch { width: 20px; height: 20px; border-radius: 3px; border: 2px solid transparent; cursor: pointer; padding: 0; }
+    .draw-swatch.on { border-color: #fff; }
+    .draw-hint { font-size: 9px; color: var(--muted); margin-top: 6px; letter-spacing: .03em; line-height: 1.4; }
+    .markup-list { margin-top: 8px; display: flex; flex-direction: column; gap: 6px; }
+    .markup-item { display: flex; gap: 6px; align-items: flex-start; background: var(--panel-2); border-radius: 4px; padding: 6px; }
+    .markup-num { flex: none; width: 18px; height: 18px; border-radius: 50%; background: #f59e0b; color: #111; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; font-family: ui-monospace, monospace; }
+    .markup-item textarea { flex: 1; background: var(--bg); border: 1px solid var(--border); color: var(--fg); font-size: 11px; padding: 4px 6px; border-radius: 3px; font-family: ui-monospace, monospace; resize: vertical; min-height: 30px; }
+    .markup-del { flex: none; background: none; border: none; color: var(--muted); cursor: pointer; font-size: 13px; }
+    /* Markup pins overlaid on the stage */
+    .markup-pin { position: absolute; width: 26px; height: 26px; border-radius: 50% 50% 50% 0; background: #f59e0b; transform: translate(-50%, -100%) rotate(-45deg); border: 2px solid #fff; box-shadow: 0 2px 6px rgba(0,0,0,.5); cursor: grab; display: flex; align-items: center; justify-content: center; z-index: 9000; }
+    .markup-pin span { transform: rotate(45deg); color: #111; font-size: 12px; font-weight: 700; font-family: ui-monospace, monospace; }
+    /* Draw capture overlay — intercepts pointer when a draw tool is active */
+    .draw-capture { position: absolute; inset: 0; z-index: 8000; cursor: crosshair; }
     /* All-copy list rows (COPY tab) */
     .copy-row { display: flex; flex-direction: column; gap: 4px; padding: 8px; background: var(--panel-2); border-radius: 6px; margin-bottom: 8px; }
     .copy-row-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-family: ui-monospace, Menlo, monospace; }
@@ -582,6 +604,7 @@
         <button class="ed-tab on" data-tab="copy">Copy</button>
         <button class="ed-tab" data-tab="media">Media</button>
         <button class="ed-tab" data-tab="position">Position</button>
+        <button class="ed-tab" data-tab="draw">Draw</button>
       </div>
 
       <div class="ed-tabbody">
@@ -740,6 +763,39 @@
             <div id="shapeFields"></div>
           </div>
           <div class="ed-empty" id="posEmpty">Select a layer to move, resize, or restyle it — drag on the canvas or use x / y / fontSize.</div>
+        </div>
+
+        <!-- DRAW: creative shapes (baked into the render) + markup notes (review only) -->
+        <div class="ed-pane" data-pane="draw" hidden>
+          <div class="panel-block">
+            <h3 class="sec-title">Draw</h3>
+            <div class="draw-modes">
+              <button type="button" id="drawModeCreative" class="draw-mode on">✎ Creative</button>
+              <button type="button" id="drawModeMarkup" class="draw-mode">💬 Markup</button>
+            </div>
+            <div id="drawCreativePanel">
+              <div class="draw-sub">Shapes are baked into the rendered image/video.</div>
+              <div class="draw-tools">
+                <button type="button" class="draw-tool on" data-tool="select" title="Select / move">Select</button>
+                <button type="button" class="draw-tool" data-tool="arrow" title="Arrow">↗ Arrow</button>
+                <button type="button" class="draw-tool" data-tool="line" title="Line">／ Line</button>
+                <button type="button" class="draw-tool" data-tool="ellipse" title="Ellipse / circle">◯ Ellipse</button>
+                <button type="button" class="draw-tool" data-tool="pen" title="Freehand">✐ Pen</button>
+              </div>
+              <div class="aud-row"><label>Color</label>
+                <span class="draw-swatches" id="drawSwatches"></span>
+                <input type="color" id="drawColorPick" value="#c4141d" title="Custom color" style="width:34px;height:24px;padding:0;border:1px solid var(--border);background:var(--bg);border-radius:3px;cursor:pointer">
+              </div>
+              <div class="aud-row"><label>Thickness</label><input type="range" id="drawStroke" min="2" max="44" step="1" value="12"><span class="aud-val" id="drawStrokeVal">12</span></div>
+              <label style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted);margin-top:4px"><input type="checkbox" id="drawFill"> filled (ellipse)</label>
+              <div class="draw-hint" id="drawHint">Pick a tool, then drag on the canvas. Select tool to move/delete a shape (or use the layer list).</div>
+            </div>
+            <div id="drawMarkupPanel" hidden>
+              <div class="draw-sub">Notes for review — they show here, never in the render.</div>
+              <div class="draw-hint">Click anywhere on the canvas to drop a numbered note.</div>
+              <div id="markupList" class="markup-list"></div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1296,6 +1352,8 @@
       // Phase B: re-point/attach moveable to the (rebuilt) selected node. No-op while
       // an old multi-drag is mid-gesture (guarded inside syncMoveable).
       if (typeof syncMoveable === 'function') syncMoveable();
+      // Phase D: re-attach the draw capture overlay + markup pins to the rebuilt inner.
+      if (typeof updateDrawCapture === 'function') updateDrawCapture();
     }
 
     // Is a media path a video clip? (Phase C — a video background renders to MP4.)
@@ -1547,6 +1605,11 @@
     // ===== Fixed design layer (renders config.fixedDesign items) =====
     // Mirrors _helpers.jsx FixedDesign so the editor preview matches the render.
     function renderFixedDesignItem(it) {
+      // Phase D: line/arrow/path render as a full-cover SVG (design px, 1:1 with
+      // the renderer), not a positioned .shape-box div.
+      if (it.type === 'line' || it.type === 'arrow' || it.type === 'path') {
+        return renderSvgShapeNode(it);
+      }
       const el = document.createElement('div');
       el.className = 'shape-box';
       el.dataset.id = it.id;
@@ -1600,6 +1663,13 @@
         span.textContent = it.label || '';
         span.style.pointerEvents = 'none';
         el.appendChild(span);
+      } else if (it.type === 'ellipse') {
+        el.style.width = it.width + 'px';
+        el.style.height = it.height + 'px';
+        el.style.borderRadius = '50%';
+        el.style.boxSizing = 'border-box';
+        if (it.fill && it.fill !== 'none') el.style.background = it.fill;
+        if (it.strokeWidth) el.style.border = it.strokeWidth + 'px solid ' + (it.stroke || '#c4141d');
       } else {
         return null;
       }
@@ -1663,6 +1733,71 @@
           startH: it.type === 'circle' ? start : (it.height || 0),
           node: handle.parentElement,
         };
+      });
+    }
+
+    // Phase D: build a full-cover SVG node for a line/arrow/path shape (design px,
+    // 1:1 with _helpers.renderDesignItem so preview == render). A wide transparent
+    // "hit" stroke makes the thin line easy to click/drag.
+    function renderSvgShapeNode(it) {
+      const NS = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(NS, 'svg');
+      svg.dataset.id = it.id;
+      svg.setAttribute('width', '100%'); svg.setAttribute('height', '100%');
+      svg.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none;';
+      svg.style.opacity = (it.opacity ?? 1);
+      const col = it.stroke || '#c4141d', sw = it.strokeWidth || 6;
+      const sel = it.id === state.selectedId;
+      const addHit = (maker) => { const h = maker(); h.setAttribute('stroke', 'rgba(0,0,0,0.001)'); h.setAttribute('stroke-width', Math.max(22, sw + 18)); h.setAttribute('fill', 'none'); h.style.pointerEvents = 'stroke'; h.style.cursor = 'move'; svg.appendChild(h); };
+      if (it.type === 'path') {
+        const pts = it.points || []; if (pts.length < 2) return null;
+        const d = 'M ' + pts.map((p) => p[0] + ' ' + p[1]).join(' L ');
+        addHit(() => { const p = document.createElementNS(NS, 'path'); p.setAttribute('d', d); return p; });
+        const path = document.createElementNS(NS, 'path');
+        path.setAttribute('d', d); path.setAttribute('fill', 'none'); path.setAttribute('stroke', col); path.setAttribute('stroke-width', sw); path.setAttribute('stroke-linecap', 'round'); path.setAttribute('stroke-linejoin', 'round');
+        if (sel) path.setAttribute('filter', 'drop-shadow(0 0 3px #f59e0b)');
+        svg.appendChild(path);
+      } else {
+        const x1 = it.x1, y1 = it.y1, x2 = it.x2, y2 = it.y2;
+        addHit(() => { const l = document.createElementNS(NS, 'line'); l.setAttribute('x1', x1); l.setAttribute('y1', y1); l.setAttribute('x2', x2); l.setAttribute('y2', y2); return l; });
+        const line = document.createElementNS(NS, 'line');
+        line.setAttribute('x1', x1); line.setAttribute('y1', y1); line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+        line.setAttribute('stroke', col); line.setAttribute('stroke-width', sw); line.setAttribute('stroke-linecap', 'round');
+        if (sel) line.setAttribute('filter', 'drop-shadow(0 0 3px #f59e0b)');
+        svg.appendChild(line);
+        if (it.type === 'arrow') {
+          const ang = Math.atan2(y2 - y1, x2 - x1), hl = Math.max(14, sw * 3.2), ha = Math.PI / 7;
+          const poly = document.createElementNS(NS, 'polygon');
+          poly.setAttribute('points', `${x2},${y2} ${x2 - hl * Math.cos(ang - ha)},${y2 - hl * Math.sin(ang - ha)} ${x2 - hl * Math.cos(ang + ha)},${y2 - hl * Math.sin(ang + ha)}`);
+          poly.setAttribute('fill', col);
+          svg.appendChild(poly);
+        }
+      }
+      attachSvgShapeDrag(svg, it);
+      return svg;
+    }
+    // Drag a line/arrow/path by translating ALL its coords (design px = client/scale).
+    function attachSvgShapeDrag(svg, it) {
+      svg.addEventListener('mousedown', (e) => {
+        selectElement(it.id);
+        snapshotForUndo();
+        const scale = state.scale || 1, sx = e.clientX, sy = e.clientY;
+        const orig = it.type === 'path' ? { points: it.points.map((p) => p.slice()) } : { x1: it.x1, y1: it.y1, x2: it.x2, y2: it.y2 };
+        const onMove = (ev) => {
+          const dx = (ev.clientX - sx) / scale, dy = (ev.clientY - sy) / scale;
+          if (it.type === 'path') it.points = orig.points.map((p) => [p[0] + dx, p[1] + dy]);
+          else { it.x1 = orig.x1 + dx; it.y1 = orig.y1 + dy; it.x2 = orig.x2 + dx; it.y2 = orig.y2 + dy; }
+          renderStage();
+        };
+        const onUp = () => {
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+          renderProps();
+          setStatus('Moved ' + it.id + '. Save + Render to persist.');
+        };
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+        e.preventDefault(); e.stopPropagation();
       });
     }
 
@@ -2693,6 +2828,9 @@
       state.tab = name;
       document.querySelectorAll('.ed-tab').forEach((b) => b.classList.toggle('on', b.dataset.tab === name));
       document.querySelectorAll('.ed-pane').forEach((p) => { p.hidden = p.dataset.pane !== name; });
+      // Phase D: entering/leaving the Draw tab toggles the capture overlay + pins.
+      if (typeof updateDrawCapture === 'function') updateDrawCapture();
+      if (name === 'draw' && typeof renderMarkupList === 'function') renderMarkupList();
     }
     document.querySelectorAll('.ed-tab').forEach((b) => {
       b.addEventListener('click', () => setEditorTab(b.dataset.tab));
@@ -3474,6 +3612,174 @@
       setStatus('Playing music over the clip — start ' + fmtAudTime(a.startAt || 0) + '. Click ❚❚ to stop.');
     }
 
+    // ── Draw / annotate (Phase D) ────────────────────────────────────────────
+    // Two modes. CREATIVE: draw ellipse/line/arrow/freehand shapes that become
+    // real config.fixedDesign layers, baked into the rendered PNG/MP4 (the new
+    // renderDesignItem types). MARKUP: drop numbered review notes stored OUTSIDE
+    // the config (localStorage) — shown in-editor, NEVER rendered.
+    const _draw = { mode: 'creative', tool: 'select', color: '#c4141d', stroke: 12, fill: false, start: null, cur: null, pts: null, live: null };
+    const DRAW_SWATCHES = ['#c4141d', '#ffd400', '#39d98a', '#3aa0ff', '#ffffff', '#111111'];
+    let _markup = [];
+
+    function initDraw() {
+      const sw = $('drawSwatches');
+      if (sw) {
+        sw.innerHTML = '';
+        for (const c of DRAW_SWATCHES) {
+          const b = document.createElement('button');
+          b.type = 'button'; b.className = 'draw-swatch' + (c === _draw.color ? ' on' : '');
+          b.style.background = c; b.dataset.c = c; b.onclick = () => setDrawColor(c);
+          sw.appendChild(b);
+        }
+      }
+      const pick = $('drawColorPick'); if (pick) pick.oninput = (e) => setDrawColor(e.target.value);
+      const ds = $('drawStroke'); if (ds) ds.oninput = (e) => { _draw.stroke = Number(e.target.value); $('drawStrokeVal').textContent = e.target.value; };
+      const df = $('drawFill'); if (df) df.onchange = (e) => { _draw.fill = e.target.checked; };
+      document.querySelectorAll('.draw-tool').forEach((b) => { b.onclick = () => setDrawTool(b.dataset.tool); });
+      const mc = $('drawModeCreative'), mm = $('drawModeMarkup');
+      if (mc) mc.onclick = () => setDrawMode('creative');
+      if (mm) mm.onclick = () => setDrawMode('markup');
+    }
+    function setDrawColor(c) { _draw.color = c; document.querySelectorAll('.draw-swatch').forEach((s) => s.classList.toggle('on', s.dataset.c === c)); const p = $('drawColorPick'); if (p) p.value = c; }
+    function setDrawTool(t) { _draw.tool = t; document.querySelectorAll('.draw-tool').forEach((b) => b.classList.toggle('on', b.dataset.tool === t)); updateDrawCapture(); }
+    function setDrawMode(m) {
+      _draw.mode = m;
+      $('drawModeCreative').classList.toggle('on', m === 'creative');
+      $('drawModeMarkup').classList.toggle('on', m === 'markup');
+      $('drawCreativePanel').hidden = m !== 'creative';
+      $('drawMarkupPanel').hidden = m !== 'markup';
+      updateDrawCapture();
+    }
+    function stageInner() { return document.querySelector('#stage .stage-inner'); }
+    function clientToDesign(clientX, clientY) {
+      const inner = stageInner(); if (!inner) return null;
+      const r = inner.getBoundingClientRect(); const s = state.scale || 1;
+      return { x: (clientX - r.left) / s, y: (clientY - r.top) / s };
+    }
+    // Create/remove the transparent capture overlay over the frame. Active when the
+    // Draw tab is open AND (creative+a drawing tool) OR markup mode. Also (re)draws
+    // the markup pins. Called at the end of renderStage + on tab/tool/mode change.
+    function updateDrawCapture() {
+      document.querySelectorAll('.draw-capture').forEach((e) => e.remove());
+      renderMarkupPins();
+      const inner = stageInner(); if (!inner || !state.config) return;
+      const drawing = state.tab === 'draw' && _draw.mode === 'creative' && _draw.tool !== 'select';
+      const marking = state.tab === 'draw' && _draw.mode === 'markup';
+      if (!drawing && !marking) return;
+      const cap = document.createElement('div');
+      cap.className = 'draw-capture';
+      cap.style.cursor = marking ? 'copy' : 'crosshair';
+      cap.addEventListener('pointerdown', marking ? onMarkupClick : onDrawStart);
+      inner.appendChild(cap);
+    }
+    function onDrawStart(e) {
+      if (!state.config) return;
+      const p = clientToDesign(e.clientX, e.clientY); if (!p) return;
+      e.preventDefault();
+      _draw.start = p; _draw.cur = p; _draw.pts = [[p.x, p.y]];
+      const inner = stageInner();
+      const live = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      live.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:8500;';
+      inner.appendChild(live); _draw.live = live;
+      const cap = e.currentTarget;
+      cap.setPointerCapture && cap.setPointerCapture(e.pointerId);
+      const onMove = (ev) => { const q = clientToDesign(ev.clientX, ev.clientY); if (!q) return; _draw.cur = q; if (_draw.tool === 'pen') _draw.pts.push([q.x, q.y]); drawLive(); };
+      const onUp = () => { cap.removeEventListener('pointermove', onMove); cap.removeEventListener('pointerup', onUp); commitDraw(); };
+      cap.addEventListener('pointermove', onMove); cap.addEventListener('pointerup', onUp);
+    }
+    function drawLive() {
+      const live = _draw.live; if (!live) return; const NS = 'http://www.w3.org/2000/svg';
+      live.innerHTML = ''; const s = _draw.start, c = _draw.cur, col = _draw.color, sw = _draw.stroke;
+      if (_draw.tool === 'pen') {
+        const d = 'M ' + _draw.pts.map((p) => p[0] + ' ' + p[1]).join(' L ');
+        const path = document.createElementNS(NS, 'path'); path.setAttribute('d', d); path.setAttribute('fill', 'none'); path.setAttribute('stroke', col); path.setAttribute('stroke-width', sw); path.setAttribute('stroke-linecap', 'round'); path.setAttribute('stroke-linejoin', 'round'); live.appendChild(path); return;
+      }
+      if (!c) return;
+      if (_draw.tool === 'ellipse') {
+        const x = Math.min(s.x, c.x), y = Math.min(s.y, c.y), w = Math.abs(c.x - s.x), h = Math.abs(c.y - s.y);
+        const el = document.createElementNS(NS, 'ellipse'); el.setAttribute('cx', x + w / 2); el.setAttribute('cy', y + h / 2); el.setAttribute('rx', w / 2); el.setAttribute('ry', h / 2); el.setAttribute('fill', _draw.fill ? col : 'none'); el.setAttribute('stroke', col); el.setAttribute('stroke-width', sw); live.appendChild(el); return;
+      }
+      const line = document.createElementNS(NS, 'line'); line.setAttribute('x1', s.x); line.setAttribute('y1', s.y); line.setAttribute('x2', c.x); line.setAttribute('y2', c.y); line.setAttribute('stroke', col); line.setAttribute('stroke-width', sw); line.setAttribute('stroke-linecap', 'round'); live.appendChild(line);
+      if (_draw.tool === 'arrow') {
+        const ang = Math.atan2(c.y - s.y, c.x - s.x), hl = Math.max(14, sw * 3.2), ha = Math.PI / 7;
+        const poly = document.createElementNS(NS, 'polygon'); poly.setAttribute('points', `${c.x},${c.y} ${c.x - hl * Math.cos(ang - ha)},${c.y - hl * Math.sin(ang - ha)} ${c.x - hl * Math.cos(ang + ha)},${c.y - hl * Math.sin(ang + ha)}`); poly.setAttribute('fill', col); live.appendChild(poly);
+      }
+    }
+    function commitDraw() {
+      if (_draw.live) { _draw.live.remove(); _draw.live = null; }
+      const s = _draw.start, c = _draw.cur || _draw.start;
+      const id = _draw.tool + '-' + Math.random().toString(36).slice(2, 7);
+      const stroke = _draw.color, strokeWidth = _draw.stroke;
+      let item = null;
+      if (_draw.tool === 'arrow' || _draw.tool === 'line') {
+        if (Math.hypot(c.x - s.x, c.y - s.y) < 8) { resetDrawGesture(); return; }
+        item = { id, type: _draw.tool, x1: Math.round(s.x), y1: Math.round(s.y), x2: Math.round(c.x), y2: Math.round(c.y), stroke, strokeWidth };
+      } else if (_draw.tool === 'ellipse') {
+        const x = Math.min(s.x, c.x), y = Math.min(s.y, c.y), w = Math.abs(c.x - s.x), h = Math.abs(c.y - s.y);
+        if (w < 8 || h < 8) { resetDrawGesture(); return; }
+        item = { id, type: 'ellipse', x: Math.round(x), y: Math.round(y), width: Math.round(w), height: Math.round(h), stroke, strokeWidth, fill: _draw.fill ? stroke : 'none' };
+      } else if (_draw.tool === 'pen') {
+        if ((_draw.pts || []).length < 2) { resetDrawGesture(); return; }
+        item = { id, type: 'path', points: _draw.pts.map((p) => [Math.round(p[0]), Math.round(p[1])]), stroke, strokeWidth };
+      }
+      if (!item) { resetDrawGesture(); return; }
+      snapshotForUndo();
+      state.config.fixedDesign = state.config.fixedDesign || [];
+      const zs = [].concat((state.config.fixedDesign || []).map((x) => x.z || 0), (state.config.elements || []).map((x) => x.z || 0), [20]);
+      item.z = Math.max.apply(null, zs) + 1;
+      state.config.fixedDesign.push(item);
+      resetDrawGesture();
+      renderStage(); renderElementList(); selectElement(item.id);
+      setStatus('Drew ' + item.type + '. Save + Render to bake it in.');
+    }
+    function resetDrawGesture() { _draw.start = null; _draw.cur = null; _draw.pts = null; if (_draw.live) { _draw.live.remove(); _draw.live = null; } }
+
+    // ── Markup (review notes — never rendered) ──
+    function markupStorageKey() { return 'aa-markup:' + (state.cluster || ''); }
+    function loadMarkup() { try { _markup = JSON.parse(localStorage.getItem(markupStorageKey()) || '[]') || []; } catch (_) { _markup = []; } }
+    function saveMarkup() { try { localStorage.setItem(markupStorageKey(), JSON.stringify(_markup)); } catch (_) {} }
+    function onMarkupClick(e) {
+      const p = clientToDesign(e.clientX, e.clientY); if (!p) return;
+      e.preventDefault();
+      const num = (_markup.reduce((m, n) => Math.max(m, n.num || 0), 0)) + 1;
+      _markup.push({ id: 'mk-' + Math.random().toString(36).slice(2, 7), x: Math.round(p.x), y: Math.round(p.y), num, text: '' });
+      saveMarkup(); renderMarkupPins(); renderMarkupList();
+      setStatus('Note ' + num + ' added (review only — not rendered).');
+    }
+    function renderMarkupPins() {
+      document.querySelectorAll('.markup-pin').forEach((e) => e.remove());
+      const inner = stageInner(); if (!inner) return;
+      if (!(state.tab === 'draw' && _draw.mode === 'markup')) return;
+      for (const n of _markup) {
+        const pin = document.createElement('div'); pin.className = 'markup-pin';
+        pin.style.left = n.x + 'px'; pin.style.top = n.y + 'px';
+        const sp = document.createElement('span'); sp.textContent = n.num; pin.appendChild(sp);
+        pin.addEventListener('pointerdown', (e) => {
+          e.preventDefault(); e.stopPropagation();
+          const scale = state.scale || 1, sx = e.clientX, sy = e.clientY, ox = n.x, oy = n.y;
+          const mv = (ev) => { n.x = Math.round(ox + (ev.clientX - sx) / scale); n.y = Math.round(oy + (ev.clientY - sy) / scale); pin.style.left = n.x + 'px'; pin.style.top = n.y + 'px'; };
+          const up = () => { document.removeEventListener('pointermove', mv); document.removeEventListener('pointerup', up); saveMarkup(); };
+          document.addEventListener('pointermove', mv); document.addEventListener('pointerup', up);
+        });
+        inner.appendChild(pin);
+      }
+    }
+    function renderMarkupList() {
+      const list = $('markupList'); if (!list) return;
+      list.innerHTML = '';
+      if (!_markup.length) { list.innerHTML = '<div class="ed-empty">No notes yet. Click the canvas to add one.</div>'; return; }
+      for (const n of _markup) {
+        const row = document.createElement('div'); row.className = 'markup-item';
+        const num = document.createElement('div'); num.className = 'markup-num'; num.textContent = n.num;
+        const ta = document.createElement('textarea'); ta.value = n.text || ''; ta.placeholder = 'note…'; ta.rows = 1;
+        ta.addEventListener('input', () => { n.text = ta.value; saveMarkup(); });
+        const del = document.createElement('button'); del.className = 'markup-del'; del.textContent = '✕'; del.title = 'Delete note';
+        del.onclick = () => { _markup = _markup.filter((x) => x.id !== n.id); saveMarkup(); renderMarkupPins(); renderMarkupList(); };
+        row.appendChild(num); row.appendChild(ta); row.appendChild(del);
+        list.appendChild(row);
+      }
+    }
+
     async function loadCluster(id) {
       const got = await fetchConfig(id);
       if (!got || !got.cfg) {
@@ -3494,6 +3800,7 @@
       renderElementList();
       renderProps();
       if (typeof syncAudioPanelFromConfig === 'function') syncAudioPanelFromConfig();
+      if (typeof loadMarkup === 'function') { loadMarkup(); renderMarkupList(); renderMarkupPins(); }
       setStatus('Loaded ' + id);
       window.location.hash = '#' + id;
     }
@@ -3525,6 +3832,7 @@
       initBrandSelect();
       initDriveBar();
       initAudioPicker();
+      initDraw();
     })();
 
     window.addEventListener('resize', () => state.config && renderStage());

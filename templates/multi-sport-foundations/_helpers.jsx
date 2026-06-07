@@ -645,6 +645,53 @@ export function renderDesignItem(it, key) {
       </div>
     );
   }
+  // ── Draw / annotate primitives (Phase D) ─────────────────────────────────
+  // ellipse: an outlined OR filled oval — same box model as a rect, rounded to
+  // 50%. fill="none"/absent → outline (stroke); a fill → solid oval.
+  if (it.type === "ellipse") {
+    const eStyle = {
+      position: "absolute", left: it.x, top: it.y, width: it.width, height: it.height,
+      borderRadius: "50%", boxSizing: "border-box", opacity: it.opacity ?? 1,
+    };
+    if (it.fill && it.fill !== "none") eStyle.background = it.fill;
+    if (it.strokeWidth) eStyle.border = `${it.strokeWidth}px solid ${it.stroke || AA_RED}`;
+    if (it.transform || (typeof it.rotate === "number" && it.rotate)) {
+      eStyle.transform = [it.transform, (typeof it.rotate === "number" && it.rotate) ? `rotate(${it.rotate}deg)` : ""].filter(Boolean).join(" ");
+      eStyle.transformOrigin = it.transformOrigin != null ? it.transformOrigin : "center center";
+    }
+    return <div key={key} style={eStyle} />;
+  }
+  // line / arrow / path: a full-cover SVG with the primitive in DESIGN px (1:1,
+  // no viewBox), so the editor preview (same SVG) and the render match exactly.
+  if (it.type === "line" || it.type === "arrow" || it.type === "path") {
+    const col = it.stroke || AA_RED;
+    const sw = it.strokeWidth || 6;
+    const svgStyle = { position: "absolute", left: 0, top: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", opacity: it.opacity ?? 1 };
+    if (it.type === "path") {
+      const pts = it.points || [];
+      if (pts.length < 2) return null;
+      const d = "M " + pts.map((p) => `${p[0]} ${p[1]}`).join(" L ");
+      return (
+        <svg key={key} style={svgStyle}>
+          <path d={d} fill="none" stroke={col} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      );
+    }
+    const { x1, y1, x2, y2 } = it;
+    let head = null;
+    if (it.type === "arrow") {
+      const ang = Math.atan2(y2 - y1, x2 - x1);
+      const hl = Math.max(14, sw * 3.2), ha = Math.PI / 7;
+      const pts = `${x2},${y2} ${x2 - hl * Math.cos(ang - ha)},${y2 - hl * Math.sin(ang - ha)} ${x2 - hl * Math.cos(ang + ha)},${y2 - hl * Math.sin(ang + ha)}`;
+      head = <polygon points={pts} fill={col} />;
+    }
+    return (
+      <svg key={key} style={svgStyle}>
+        <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={col} strokeWidth={sw} strokeLinecap="round" />
+        {head}
+      </svg>
+    );
+  }
   return null;
 }
 
