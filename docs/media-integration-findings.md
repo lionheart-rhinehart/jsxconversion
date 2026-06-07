@@ -76,8 +76,44 @@ equipment shots *diversifies* rather than collapses — and explains why athlete
 7. **Gate stays combined < 0.70 AND DINOv2 < 0.70** — DINOv2 alone catches structural collapse the combined
    metric can mask (it's what exposed duotone and the full-width strip).
 
+## The spectrum measurement (45 examples — 15 archetypes × 3 sub-looks, 2026-06-06)
+
+We grew the library from 1 example/archetype to **3 sub-looks each** (genuinely different *executions*
+— composition / tonal register / media treatment / type — not number swaps). Measured with the same
+CLIP-L/14 + DINOv2-L stack. Result:
+
+| Metric | Target | Measured | Read |
+|---|---|---|---|
+| within-cluster max (**sub-looks varied, not clones**) | < 0.90 | **0.82** | ✅ the spectrum is real — each cluster's 3 are distinct executions |
+| mean cross-cluster · Vendi | < 0.55 · ≥ 8 | **0.36 · 14.5** | ✅ broad separation, high diversity |
+| cross-cluster **max** | < 0.70 | **0.76** | ❌ one pair: `action-hero ~ before-after-split` |
+| k-means purity · silhouette | ≥ 0.80 · ≥ 0.35 | **0.71 · 0.05** | ❌ bounded by the photo neighborhood |
+
+**The finding: 9 of 15 archetypes are fully clean; the shortfall is entirely the 6 PHOTO archetypes.**
+At 3 sub-looks each that is ~18 "athlete-in-this-gym" frames, and they cluster *together* — the worst
+pair `action-hero ~ before-after-split = 0.76`. This is **content** similarity (the athlete/gym signal),
+**not layout** — it's the same thing T2 measured (within-athlete 0.725). We proved it's intrinsic:
+
+- **Footage diversity** is the only lever that moved it — giving action-hero and before-after *unique*
+  full-frame clips dropped the worst pair 0.79 → 0.76 (same-clip reuse is the #1 collapse driver, confirmed).
+- **Layout restructuring** cleared every *graphic* collision (iconrow↔list-steps, versus↔offer,
+  proof-collage de-densified to clean) but cannot pull two *full-athlete-photo* archetypes under 0.70.
+- **Gemini agrees independently** — its disagreements on this set are all photo↔photo (action↔training,
+  ugc↔training, coach↔training), triangulating the embedding's photo neighborhood.
+
+**Decision (shipped):** keep the 45-example spectrum. The engine reads the **authored** archetype label
+(not visual nearest-neighbor), so the slightly-overlapping photo clusters still function; the graphic half
+is cleanly distinct; the sub-looks are genuinely varied (the real goal). The path to the strict
+silhouette/purity targets is **more examples per kind** (the README's documented 10–20/kind, where
+silhouette rises) — a future scale step — or treating the photo archetypes as a related family, **not**
+more layout churn (which erodes the archetypes' identities: an action-hero that isn't full-bleed isn't an
+action-hero). The graphic archetypes carry the breadth; the photo archetypes are a distinct-but-adjacent
+family by nature.
+
 ## Open / next
 
+- **Photo neighborhood:** to hit silhouette ≥ 0.35, scale the 6 photo archetypes to 10–20 examples/kind
+  (per the README), or merge/relate them — a Track-A taxonomy seam, not a Track-B layout fix.
 - **Differentiate list-steps vs timeline-schedule** (embedding + Gemini agree they're one family).
 - **Fair quality test for the winners** — build 1–2 purpose-built **cutout** and **split-panel** designs
   (hand-checked masks, no athlete/text collision) and re-score with Gemini to find their real quality ceiling.

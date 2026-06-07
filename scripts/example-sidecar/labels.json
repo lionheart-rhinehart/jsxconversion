@@ -2,8 +2,8 @@
   "note": "Vision-LLM archetype cross-check. With no GEMINI_API_KEY this is a no-op that defers to the authored (eyeball-confirmed) archetype; with a key it records gemini's independent read + agreement so disagreements surface. build-index.mjs folds 'labeledBy' + any disagreement into clusterMetrics.",
   "provider": "gemini",
   "model": "gemini-2.5-flash",
-  "ranAt": "2026-06-06T20:10:51.000Z",
-  "geminiReads": 15,
+  "ranAt": "2026-06-07T00:45:14.000Z",
+  "geminiReads": 45,
   "labeledBy": "gemini:gemini-2.5-flash",
   "labels": {
     "ex-001-giant-stat": {
@@ -12,85 +12,265 @@
       "agrees": true,
       "note": "gemini agrees with authored archetype"
     },
-    "ex-002-metric-reveal": {
+    "ex-002-giant-stat": {
+      "authoredArchetype": "giant-stat",
+      "geminiArchetype": "giant-stat",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-003-giant-stat": {
+      "authoredArchetype": "giant-stat",
+      "geminiArchetype": "giant-stat",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-004-metric-reveal": {
       "authoredArchetype": "metric-reveal",
       "geminiArchetype": "metric-reveal",
       "agrees": true,
       "note": "gemini agrees with authored archetype"
     },
-    "ex-003-kinetic-text": {
-      "authoredArchetype": "kinetic-text",
-      "geminiArchetype": "quote-card",
-      "agrees": false,
-      "note": "DISAGREEMENT: gemini read 'quote-card' vs authored 'kinetic-text' \u2014 review"
+    "ex-005-metric-reveal": {
+      "authoredArchetype": "metric-reveal",
+      "geminiArchetype": "metric-reveal",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
     },
-    "ex-004-quote-card": {
+    "ex-006-metric-reveal": {
+      "authoredArchetype": "metric-reveal",
+      "geminiArchetype": "metric-reveal",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-007-kinetic-text": {
+      "authoredArchetype": "kinetic-text",
+      "geminiArchetype": "kinetic-text",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-008-kinetic-text": {
+      "authoredArchetype": "kinetic-text",
+      "geminiArchetype": "kinetic-text",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-009-kinetic-text": {
+      "authoredArchetype": "kinetic-text",
+      "geminiArchetype": "kinetic-text",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-010-quote-card": {
       "authoredArchetype": "quote-card",
       "geminiArchetype": "quote-card",
       "agrees": true,
       "note": "gemini agrees with authored archetype"
     },
-    "ex-005-before-after-split": {
+    "ex-011-quote-card": {
+      "authoredArchetype": "quote-card",
+      "geminiArchetype": "quote-card",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-012-quote-card": {
+      "authoredArchetype": "quote-card",
+      "geminiArchetype": "quote-card",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-013-before-after-split": {
       "authoredArchetype": "before-after-split",
       "geminiArchetype": "before-after-split",
       "agrees": true,
       "note": "gemini agrees with authored archetype"
     },
-    "ex-006-versus": {
+    "ex-014-before-after-split": {
+      "authoredArchetype": "before-after-split",
+      "geminiArchetype": "before-after-split",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-015-before-after-split": {
+      "authoredArchetype": "before-after-split",
+      "geminiArchetype": "before-after-split",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-016-versus": {
       "authoredArchetype": "versus",
       "geminiArchetype": "versus",
       "agrees": true,
       "note": "gemini agrees with authored archetype"
     },
-    "ex-007-proof-collage": {
+    "ex-017-versus": {
+      "authoredArchetype": "versus",
+      "geminiArchetype": "versus",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-018-versus": {
+      "authoredArchetype": "versus",
+      "geminiArchetype": "versus",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-019-proof-collage": {
       "authoredArchetype": "proof-collage",
       "geminiArchetype": "quote-card",
       "agrees": false,
       "note": "DISAGREEMENT: gemini read 'quote-card' vs authored 'proof-collage' \u2014 review"
     },
-    "ex-008-list-steps": {
+    "ex-020-proof-collage": {
+      "authoredArchetype": "proof-collage",
+      "geminiArchetype": "giant-stat",
+      "agrees": false,
+      "note": "DISAGREEMENT: gemini read 'giant-stat' vs authored 'proof-collage' \u2014 review"
+    },
+    "ex-021-proof-collage": {
+      "authoredArchetype": "proof-collage",
+      "geminiArchetype": "proof-collage",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-022-list-steps": {
       "authoredArchetype": "list-steps",
       "geminiArchetype": "list-steps",
       "agrees": true,
       "note": "gemini agrees with authored archetype"
     },
-    "ex-009-offer-card": {
+    "ex-023-list-steps": {
+      "authoredArchetype": "list-steps",
+      "geminiArchetype": "list-steps",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-024-list-steps": {
+      "authoredArchetype": "list-steps",
+      "geminiArchetype": "benefit-iconrow",
+      "agrees": false,
+      "note": "DISAGREEMENT: gemini read 'benefit-iconrow' vs authored 'list-steps' \u2014 review"
+    },
+    "ex-025-offer-card": {
       "authoredArchetype": "offer-card",
       "geminiArchetype": "offer-card",
       "agrees": true,
       "note": "gemini agrees with authored archetype"
     },
-    "ex-010-action-hero": {
+    "ex-026-offer-card": {
+      "authoredArchetype": "offer-card",
+      "geminiArchetype": "offer-card",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-027-offer-card": {
+      "authoredArchetype": "offer-card",
+      "geminiArchetype": "offer-card",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-028-action-hero": {
       "authoredArchetype": "action-hero",
       "geminiArchetype": "training-scene",
       "agrees": false,
       "note": "DISAGREEMENT: gemini read 'training-scene' vs authored 'action-hero' \u2014 review"
     },
-    "ex-011-training-scene": {
+    "ex-029-action-hero": {
+      "authoredArchetype": "action-hero",
+      "geminiArchetype": "training-scene",
+      "agrees": false,
+      "note": "DISAGREEMENT: gemini read 'training-scene' vs authored 'action-hero' \u2014 review"
+    },
+    "ex-030-action-hero": {
+      "authoredArchetype": "action-hero",
+      "geminiArchetype": "training-scene",
+      "agrees": false,
+      "note": "DISAGREEMENT: gemini read 'training-scene' vs authored 'action-hero' \u2014 review"
+    },
+    "ex-031-training-scene": {
       "authoredArchetype": "training-scene",
       "geminiArchetype": "training-scene",
       "agrees": true,
       "note": "gemini agrees with authored archetype"
     },
-    "ex-012-ugc-selfie": {
+    "ex-032-training-scene": {
+      "authoredArchetype": "training-scene",
+      "geminiArchetype": "training-scene",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-033-training-scene": {
+      "authoredArchetype": "training-scene",
+      "geminiArchetype": "training-scene",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-034-ugc-selfie": {
+      "authoredArchetype": "ugc-selfie",
+      "geminiArchetype": "before-after-split",
+      "agrees": false,
+      "note": "DISAGREEMENT: gemini read 'before-after-split' vs authored 'ugc-selfie' \u2014 review"
+    },
+    "ex-035-ugc-selfie": {
       "authoredArchetype": "ugc-selfie",
       "geminiArchetype": "training-scene",
       "agrees": false,
       "note": "DISAGREEMENT: gemini read 'training-scene' vs authored 'ugc-selfie' \u2014 review"
     },
-    "ex-013-coach-portrait": {
+    "ex-036-ugc-selfie": {
+      "authoredArchetype": "ugc-selfie",
+      "geminiArchetype": "metric-reveal",
+      "agrees": false,
+      "note": "DISAGREEMENT: gemini read 'metric-reveal' vs authored 'ugc-selfie' \u2014 review"
+    },
+    "ex-037-coach-portrait": {
       "authoredArchetype": "coach-portrait",
       "geminiArchetype": "training-scene",
       "agrees": false,
       "note": "DISAGREEMENT: gemini read 'training-scene' vs authored 'coach-portrait' \u2014 review"
     },
-    "ex-014-timeline-schedule": {
+    "ex-038-coach-portrait": {
+      "authoredArchetype": "coach-portrait",
+      "geminiArchetype": "coach-portrait",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-039-coach-portrait": {
+      "authoredArchetype": "coach-portrait",
+      "geminiArchetype": "coach-portrait",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-040-timeline-schedule": {
       "authoredArchetype": "timeline-schedule",
       "geminiArchetype": "timeline-schedule",
       "agrees": true,
       "note": "gemini agrees with authored archetype"
     },
-    "ex-015-benefit-iconrow": {
+    "ex-041-timeline-schedule": {
+      "authoredArchetype": "timeline-schedule",
+      "geminiArchetype": "timeline-schedule",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-042-timeline-schedule": {
+      "authoredArchetype": "timeline-schedule",
+      "geminiArchetype": "timeline-schedule",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-043-benefit-iconrow": {
+      "authoredArchetype": "benefit-iconrow",
+      "geminiArchetype": "benefit-iconrow",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-044-benefit-iconrow": {
+      "authoredArchetype": "benefit-iconrow",
+      "geminiArchetype": "benefit-iconrow",
+      "agrees": true,
+      "note": "gemini agrees with authored archetype"
+    },
+    "ex-045-benefit-iconrow": {
       "authoredArchetype": "benefit-iconrow",
       "geminiArchetype": "benefit-iconrow",
       "agrees": true,

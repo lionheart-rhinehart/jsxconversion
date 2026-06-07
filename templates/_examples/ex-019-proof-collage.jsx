@@ -9,19 +9,19 @@ export default function Example() {
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridGap: 22 }}>
           <div style={{ background: "#fff", borderRadius: 18, overflow: "hidden", boxShadow: "0 12px 30px rgba(0,0,0,0.12)" }}>
-            <div style={{ position: "relative", height: 330, overflow: "hidden" }}>      <img src="./assets/ex-007-proof-collage-0.jpg" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} /></div>
+            <div style={{ position: "relative", height: 330, overflow: "hidden" }}>      <img src="./assets/ex-019-proof-collage-0.jpg" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} /></div>
             <div style={{ padding: "18px 16px", fontFamily: "Geist", color: "#222", fontSize: 26, fontWeight: 600 }}>"Best decision we made."<div style={{ color: "#888", fontSize: 22, marginTop: 6 }}>— Carmel parent</div></div>
           </div>
           <div style={{ background: "#fff", borderRadius: 18, overflow: "hidden", boxShadow: "0 12px 30px rgba(0,0,0,0.12)" }}>
-            <div style={{ position: "relative", height: 330, overflow: "hidden" }}>      <img src="./assets/ex-007-proof-collage-1.jpg" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} /></div>
+            <div style={{ position: "relative", height: 330, overflow: "hidden" }}>      <img src="./assets/ex-019-proof-collage-1.jpg" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} /></div>
             <div style={{ padding: "18px 16px", fontFamily: "Geist", color: "#222", fontSize: 26, fontWeight: 600 }}>"Best decision we made."<div style={{ color: "#888", fontSize: 22, marginTop: 6 }}>— Carmel parent</div></div>
           </div>
           <div style={{ background: "#fff", borderRadius: 18, overflow: "hidden", boxShadow: "0 12px 30px rgba(0,0,0,0.12)" }}>
-            <div style={{ position: "relative", height: 330, overflow: "hidden" }}>      <img src="./assets/ex-007-proof-collage-2.jpg" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} /></div>
+            <div style={{ position: "relative", height: 330, overflow: "hidden" }}>      <img src="./assets/ex-019-proof-collage-2.jpg" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} /></div>
             <div style={{ padding: "18px 16px", fontFamily: "Geist", color: "#222", fontSize: 26, fontWeight: 600 }}>"Best decision we made."<div style={{ color: "#888", fontSize: 22, marginTop: 6 }}>— Carmel parent</div></div>
           </div>
           <div style={{ background: "#fff", borderRadius: 18, overflow: "hidden", boxShadow: "0 12px 30px rgba(0,0,0,0.12)" }}>
-            <div style={{ position: "relative", height: 330, overflow: "hidden" }}>      <img src="./assets/ex-007-proof-collage-3.jpg" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} /></div>
+            <div style={{ position: "relative", height: 330, overflow: "hidden" }}>      <img src="./assets/ex-019-proof-collage-3.jpg" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} /></div>
             <div style={{ padding: "18px 16px", fontFamily: "Geist", color: "#222", fontSize: 26, fontWeight: 600 }}>"Best decision we made."<div style={{ color: "#888", fontSize: 22, marginTop: 6 }}>— Carmel parent</div></div>
           </div>
         </div>

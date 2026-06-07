@@ -198,11 +198,20 @@ function renderSpectrum(){
 }
 function renderGallery(){
   const groups={}; DATA.examples.forEach(e=>(groups[e.archetype]=groups[e.archetype]||[]).push(e));
-  $("#view-gallery").innerHTML = Object.entries(groups).map(([a,items])=>`
+  const pa = (CLUSTERS && CLUSTERS.batch && CLUSTERS.batch.perArchetype) || {};
+  $("#view-gallery").innerHTML = Object.entries(groups).map(([a,items])=>{
+    const h = pa[a] || {};
+    // intra-spread = max within-cluster cosine (sub-looks should be varied, not clones < ~0.90)
+    const mw = h.maxWithin, xc = h.maxCrossNeighbor;
+    const spreadChip = mw==null ? '' : `<span class="tag ${mw>0.90?'bad':mw>0.82?'warn':'good'}">spread ${mw.toFixed(2)} ${mw>0.90?'(clones?)':''}</span>`;
+    const crossChip = xc==null ? '' : `<span class="tag ${xc.cosine>=0.70?'bad':xc.cosine>=0.62?'warn':'good'}">cross ${xc.cosine.toFixed(2)} → ${xc.archetype}</span>`;
+    return `
     <div class="arch">
-      <h2><span style="color:${colorFor(a)}">●</span> ${a} <span class="n">${items.length} example${items.length>1?'s':''} · 1 cluster</span></h2>
+      <h2><span style="color:${colorFor(a)}">●</span> ${a} <span class="n">${items.length} sub-look${items.length>1?'s':''} · 1 cluster</span></h2>
+      <p class="sub">${spreadChip} ${crossChip} <span style="color:var(--dim)">spread = max similarity between this cluster's own sub-looks (want &lt; 0.90 = not clones); cross = closest other cluster (want &lt; 0.70).</span></p>
       <div class="grid">${items.map(cardHtml).join("")}</div>
-    </div>`).join("");
+    </div>`;
+  }).join("");
   document.querySelectorAll(".card").forEach(c=>c.onclick=()=>openEditor(c.dataset.id));
 }
 function cardHtml(e){
