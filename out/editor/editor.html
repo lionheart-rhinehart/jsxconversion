@@ -3053,8 +3053,9 @@
       const bar = $('krakenBar');
       if (!bar) return;
       const camp = parseCampId(state.cluster);
-      if (!camp) { bar.hidden = true; return; } // standalone cluster edit → no campaign
-      bar.hidden = false;
+      const campSlug = camp ? camp.campaign : null; // null on a standalone template
+      bar.hidden = false; // un-gated: browse + per-file pull work on ANY template
+      // (no campaign → media lands in the shared brand/kraken-cache/, like uploads)
       const wsSel = $('kbWorkspace'), tree = $('kbTree'), msg = $('kbMsg');
       const upBtn = $('kbUpload'), fileInput = $('kbFile');
       const filesEl = $('kbFiles');
@@ -3119,7 +3120,7 @@
           const kind = ['.mp4', '.mov', '.webm'].includes(ext) ? 'clip'
             : ['.mp3', '.wav', '.m4a', '.aac', '.ogg'].includes(ext) ? 'audio' : 'photo';
           try {
-            const r = await fetch('/media-upload?campaign=' + encodeURIComponent(camp.campaign) + '&kind=' + kind + '&name=' + encodeURIComponent(f.name), { method: 'POST', body: f });
+            const r = await fetch('/media-upload?' + (campSlug ? 'campaign=' + encodeURIComponent(campSlug) + '&' : '') + 'kind=' + kind + '&name=' + encodeURIComponent(f.name), { method: 'POST', body: f });
             const j = await r.json().catch(() => ({}));
             if (!r.ok) throw new Error(j.error || 'upload failed');
             if (kind === 'photo' && j.path) lastPhoto = { name: j.name || f.name, path: j.path, url: j.url, source: 'uploaded' };
@@ -3199,7 +3200,7 @@
           const wsName = (workspaces.find((w) => w.id === wsSel.value) || {}).name || wsSel.value;
           const r = await fetch('/kraken/pull-file', {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ campaign: camp.campaign, workspace: wsName, folder: folder.id, file: file.id }),
+            body: JSON.stringify({ campaign: campSlug || undefined, workspace: wsName, folder: folder.id, file: file.id }),
           });
           const j = await r.json();
           if (!r.ok || !j.file) throw new Error(j.error || (j.stderr || '').slice(-160) || 'pull failed');
@@ -3218,7 +3219,8 @@
         try {
           const [wj, sj] = await Promise.all([
             fetch('/kraken/workspaces').then((r) => r.json()).catch(() => ({ workspaces: [] })),
-            fetch('/kraken/state?campaign=' + encodeURIComponent(camp.campaign)).then((r) => r.json()).catch(() => ({})),
+            // Saved source-folder picks are per-campaign; a standalone template has none.
+            campSlug ? fetch('/kraken/state?campaign=' + encodeURIComponent(campSlug)).then((r) => r.json()).catch(() => ({})) : Promise.resolve({}),
           ]);
           workspaces = wj.workspaces || [];
           wsSel.innerHTML = '<option value="">' + (workspaces.length ? '— AA location —' : 'No locations configured') + '</option>';

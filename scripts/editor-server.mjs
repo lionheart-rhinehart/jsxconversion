@@ -1324,15 +1324,19 @@ const server = createServer(async (req, res) => {
       try { body = JSON.parse((await readBody(req)) || "{}"); }
       catch (e) { sendJson(res, 400, { error: "bad JSON: " + e.message }); return; }
       const { campaign, workspace, folder, file } = body;
-      if (!campaign || !workspace || !folder || !file) {
-        sendJson(res, 400, { error: "need campaign, workspace, folder, file" });
+      if (!workspace || !folder || !file) {
+        sendJson(res, 400, { error: "need workspace, folder, file" });
         return;
       }
-      const { code, stdout, stderr } = await runNode([
-        "scripts/kraken-pull.mjs", campaign,
-        "--workspace", workspace, "--folder", folder, "--file", file,
-        "--per-campaign", "--json",
-      ]);
+      // Campaign-optional (bare-template pull): WITH a campaign → its per-campaign
+      // cache (unchanged); WITHOUT one → the shared brand/kraken-cache/ root. The
+      // "_library" placeholder just satisfies kraken-pull's required positional; a
+      // per-file pull writes no sidecar, so no campaigns/_library/ folder is created,
+      // and omitting --per-campaign routes the download to the neutral CACHE_ROOT.
+      const pullArgs = campaign
+        ? ["scripts/kraken-pull.mjs", campaign, "--workspace", workspace, "--folder", folder, "--file", file, "--per-campaign", "--json"]
+        : ["scripts/kraken-pull.mjs", "_library", "--workspace", workspace, "--folder", folder, "--file", file, "--json"];
+      const { code, stdout, stderr } = await runNode(pullArgs);
       let summary = null;
       const m = (stdout || "").match(/__PULL_JSON__ (.+)/);
       if (m) { try { summary = JSON.parse(m[1]); } catch (_) {} }
