@@ -18,6 +18,7 @@ import { join } from "node:path";
 
 import {
   ARCHETYPES, isArchetype, MEDIA_STYLE_TAGS, isMediaStyleTag, ARCHETYPE_SPECS, FORMATS,
+  MOTION_ARCHETYPES, isMotionArchetype, MOTION_ARCHETYPE_SPECS, isAnyArchetype, specFor,
   EXAMPLE_ID_RE, isExampleId, slugify, makeExampleId,
   EXAMPLES_DIR, INDEX_PATH, exampleImagePath, exampleMotionPath, exampleSourcePaths,
   emptyIndex, loadExampleIndex, validateExampleEntry, validateExampleIndex,
@@ -28,7 +29,7 @@ const REPO = join(import.meta.dirname, "..");
 // A fully-conformant entry (deep-cloned per test so mutations don't bleed).
 function goodEntry(id = "ex-001-coach-to-camera-gym") {
   return {
-    archetype: "coach-portrait",
+    archetype: "split-panel",
     format: "video",
     mediaStyleAccepts: ["production:cinematic", "subject:coach-face"],
     slotShape: {
@@ -112,6 +113,39 @@ test("ARCHETYPES / MEDIA tags are closed and self-consistent with ARCHETYPE_SPEC
   }
 });
 
+test("MOTION_ARCHETYPES is a SEPARATE closed vocabulary (Option 2 isolation)", () => {
+  assert.equal(MOTION_ARCHETYPES.length, 16);
+  // motion + static vocabularies are DISJOINT (no name collides)
+  for (const m of MOTION_ARCHETYPES) assert.ok(!isArchetype(m), `motion "${m}" must not be a static ARCHETYPE`);
+  for (const s of ARCHETYPES) assert.ok(!isMotionArchetype(s), `static "${s}" must not be a MOTION_ARCHETYPE`);
+  // isMotionArchetype is closed; isArchetype stays STATIC-ONLY (the engine isolation)
+  assert.ok(isMotionArchetype("count-up-stats") && !isMotionArchetype("nope"));
+  assert.ok(!isArchetype("count-up-stats"), "engine's isArchetype must NOT see motion archetypes");
+  // the UNION accepts both; specFor resolves both
+  assert.ok(isAnyArchetype("count-up-stats") && isAnyArchetype("giant-stat") && !isAnyArchetype("nope"));
+  // every motion archetype has a spec; every spec key is a motion archetype; all video-only
+  for (const a of MOTION_ARCHETYPES) {
+    assert.ok(MOTION_ARCHETYPE_SPECS[a], `MOTION_ARCHETYPE_SPECS missing ${a}`);
+    assert.deepEqual(specFor(a).formats, ["video"], `${a} must be video-only`);
+  }
+  for (const a of Object.keys(MOTION_ARCHETYPE_SPECS)) assert.ok(isMotionArchetype(a), `unknown motion archetype ${a}`);
+});
+
+test("a motion-archetype video entry validates clean", () => {
+  const id = "ex-070-count-up-stats";
+  const entry = {
+    archetype: "count-up-stats",
+    format: "video",
+    mediaStyleAccepts: [],
+    slotShape: { slots: [{ id: "stat", role: "stat", maxChars: null, required: true }], roleSet: ["stat"] },
+    renderedImagePath: exampleImagePath(id),
+    motionPath: exampleMotionPath(id),
+    clusterMetrics: { subLook: null, labeledBy: "gemini-2.x", labeledAt: "2026-06-07T00:00:00.000Z" },
+  };
+  const { errors } = validateExampleEntry(id, entry);
+  assert.deepEqual(errors, [], errors.join("\n"));
+});
+
 // ── entry validation: the good case ──────────────────────────────────────────
 test("a conformant entry validates clean (no errors)", () => {
   const id = "ex-001-coach-to-camera-gym";
@@ -133,9 +167,9 @@ test("format not allowed for the archetype is an error", () => {
 });
 
 test("a media tag outside the archetype's allowed superset is an error", () => {
-  const e = clone(goodEntry()); // coach-portrait
-  e.mediaStyleAccepts = ["production:cinematic", "subject:athlete-action"]; // action not allowed for coach archetype
-  assert.ok(validateExampleEntry("ex-001-x", e).errors.some((m) => /not allowed for archetype "coach-portrait"/.test(m)));
+  const e = clone(goodEntry()); // split-panel
+  e.mediaStyleAccepts = ["production:cinematic", "subject:athlete-action"]; // action not allowed for split-panel archetype
+  assert.ok(validateExampleEntry("ex-001-x", e).errors.some((m) => /not allowed for archetype "split-panel"/.test(m)));
 });
 
 test("an unknown media tag is an error", () => {

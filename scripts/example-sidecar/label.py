@@ -36,12 +36,20 @@ LABELS = HERE / "labels.json"
 ENV_FILE = HERE / ".env"
 
 # The closed archetype vocabulary, mirrored from scripts/lib/example-library.mjs
-# (ARCHETYPES). Kept in sync by the contract; the labeler returns only one of these.
+# (ARCHETYPES + MOTION_ARCHETYPES). Kept in sync by the contract; the labeler returns
+# only one of these. Static archetypes first, then the round-2 motion archetypes (a
+# poster of a motion example is still labeled by its dominant structure).
 ARCHETYPES = [
+    # static (15)
     "giant-stat", "metric-reveal", "kinetic-text", "quote-card",
     "before-after-split", "versus", "proof-collage", "list-steps",
     "offer-card", "action-hero", "training-scene", "ugc-selfie",
-    "coach-portrait", "timeline-schedule", "benefit-iconrow",
+    "split-panel", "timeline-schedule", "benefit-iconrow",
+    # motion (16) — was coach-portrait → split-panel above
+    "count-up-stats", "radar-stats", "stopwatch-countdown", "bracket-tree",
+    "comic-strip", "star-testimonial", "macro-ring", "scoreboard",
+    "streak-counter", "slot-roll", "tier-list", "sprint-trace",
+    "calendar-fill", "leaderboard-roll", "velocity-gauge", "anatomy-diagram",
 ]
 
 MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")

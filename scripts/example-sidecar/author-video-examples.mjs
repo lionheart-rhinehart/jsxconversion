@@ -18,10 +18,11 @@
 //  Node-only.
 // ============================================================================
 
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync, readFileSync, rmSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { makeExampleId, ARCHETYPE_SPECS } from "../lib/example-library.mjs";
+import { makeExampleId, specFor, isAnyArchetype } from "../lib/example-library.mjs";
+import { fieldRole } from "../lib/roles.mjs";
 import { removeOwnedSources, mergeManifest } from "./manifest-util.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -212,8 +213,9 @@ const ANIMATED = [
 //  ACTION-CLIP GIF examples (A3). chrome = held design with media rect(s) = chroma-key.
 // ============================================================================
 const GIFS = [
-  // 47 — coach-portrait: clip left, red panel right.
-  { seq: 47, slug: "coach-portrait", archetype: "coach-portrait", accepts: ["production:cinematic", "subject:coach-face"], duration: 4,
+  // 47 — split-panel (was coach-portrait): clip left, red panel right. id keeps the
+  // coach-portrait slug (a hint only) so the rendered artifact + embedding are preserved.
+  { seq: 47, slug: "coach-portrait", archetype: "split-panel", accepts: ["production:cinematic", "subject:coach-face"], duration: 4,
     slotShape: { slots: [{ id: "headline", role: "hook", maxChars: null, required: true }, { id: "name", role: "byline", maxChars: null, required: false }, { id: "title", role: "byline", maxChars: null, required: false }], roleSet: ["hook", "byline"] },
     clips: [{ clip: C.agility, rect: { x: 0, y: 0, w: 562, h: H } }],
     chrome: chromeWrap(`${keyRect('left: 0, top: 0, bottom: 0, width: "52%"')}
@@ -224,8 +226,9 @@ const GIFS = [
         <div style={{ fontFamily: '"JetBrains Mono", monospace', color: "#ffd2d4", fontSize: 26, letterSpacing: "0.04em", marginTop: 4 }}>DIRECTOR OF PERFORMANCE</div>
       </div>`) },
 
-  // 54 — coach-portrait v2: clip RIGHT, ink panel LEFT.
-  { seq: 54, slug: "coach-portrait", archetype: "coach-portrait", accepts: ["production:cinematic", "subject:coach-face"], duration: 4,
+  // 54 — split-panel v2 (was coach-portrait): clip RIGHT, ink panel LEFT. id keeps the
+  // coach-portrait slug (a hint only) so the rendered artifact + embedding are preserved.
+  { seq: 54, slug: "coach-portrait", archetype: "split-panel", accepts: ["production:cinematic", "subject:coach-face"], duration: 4,
     slotShape: { slots: [{ id: "headline", role: "hook", maxChars: null, required: true }, { id: "name", role: "byline", maxChars: null, required: false }, { id: "title", role: "byline", maxChars: null, required: false }], roleSet: ["hook", "byline"] },
     clips: [{ clip: C.band, rect: { x: 497, y: 0, w: 583, h: H } }],
     chrome: chromeWrap(`${keyRect('right: 0, top: 0, bottom: 0, width: "54%"')}
@@ -313,10 +316,75 @@ const GIFS = [
       </div>`) },
 ];
 
+// ============================================================================
+//  STAGED brand-motion examples (round-2, ex-070+). Each wires in a fully-produced
+//  brand motion video from brand/video-templates/templates/ AS an example, mapped to
+//  a distinct MOTION_ARCHETYPE. render-examples.mjs renders these via stage-motion.mjs
+//  (staging the full runtime). slotShape is DERIVED from the source's *_SPEC fields
+//  (faithful, not hand-guessed). All clip-free (per the plan: dodge the bgframes path).
+//  `dur` = the source SPEC's default length. Distinctness is arbitrated by the embed +
+//  Gemini cluster pass; collisions get re-cut or dropped (and their archetype removed).
+// ============================================================================
+const TPL = "brand/video-templates/templates";
+const STAGED = [
+  { seq: 70, archetype: "count-up-stats",      src: "stat-reveal-reel",     dur: 6 },
+  { seq: 72, archetype: "radar-stats",         src: "athlete-profile",      dur: 7 },
+  { seq: 73, archetype: "stopwatch-countdown", src: "beat-the-clock",       dur: 7 },
+  { seq: 74, archetype: "bracket-tree",        src: "bracket-reel",         dur: 7 },
+  { seq: 75, archetype: "comic-strip",         src: "comic-lesson",         dur: 7 },
+  { seq: 76, archetype: "star-testimonial",    src: "five-star-review",     dur: 8 },
+  { seq: 77, archetype: "macro-ring",          src: "fuel-up",              dur: 7 },
+  { seq: 78, archetype: "scoreboard",          src: "gameday-recap",        dur: 7 },
+  { seq: 80, archetype: "streak-counter",      src: "member-milestone",     dur: 7 },
+  { seq: 81, archetype: "slot-roll",           src: "pick-workout",         dur: 7 },
+  { seq: 82, archetype: "tier-list",           src: "position-rankings",    dur: 8 },
+  { seq: 83, archetype: "sprint-trace",        src: "sprint-breakdown",     dur: 8 },
+  { seq: 84, archetype: "calendar-fill",       src: "thirty-day-challenge", dur: 8 },
+  { seq: 85, archetype: "leaderboard-roll",    src: "top10-leaderboard",    dur: 7 },
+  { seq: 87, archetype: "velocity-gauge",      src: "vbt-bar-speed",        dur: 7 },
+  { seq: 89, archetype: "anatomy-diagram",     src: "anatomy-lesson",       dur: 8 },
+];
+// Candidates TRIED in round-2 then CUT for embedding-space collision (≥0.70 cross-
+// archetype cosine — measured, not guessed). Kept here so a re-run clears their stale
+// manifest rows + rendered artifacts (they remain in ownedIds). Why each was cut:
+//   strike-list (three-mistakes)   ~ tier-list 0.749   — numbered text-row stack twins
+//   versus-slider (us-vs-them)     ~ strike-list 0.724 — same row-stack region
+//   poll-bars (hot-take)           ~ bracket-tree 0.733 — horizontal-bar twins
+//   waveform-quote (voiceover)     ~ list-steps 0.712  — collides with a ROUND-1 example
+const RETIRED_IDS = [
+  "ex-071-strike-list", "ex-086-versus-slider", "ex-079-poll-bars", "ex-088-waveform-quote",
+];
+
+// Derive a slotShape from a source motion template's *_SPEC fields. Each copy field
+// (text/textarea/number, excluding the duration slider) becomes a slot; its role is
+// the field's explicit `role` or, failing that, fieldRole(key) (roles.mjs's field-name
+// inference). Roles outside the closed ROLES list are dropped (build-index would block
+// them — better to omit than emit an invalid slot). Returns a {slots,roleSet} or null.
+function deriveSlotShape(sourceSrc) {
+  const m = sourceSrc.match(/fields:\s*\[([\s\S]*?)\]\s*,?\s*\}?;?\s*window\./) || sourceSrc.match(/fields:\s*\[([\s\S]*)\]/);
+  if (!m) return null;
+  const objs = m[1].match(/\{[^{}]*\}/g) || [];
+  const slots = [];
+  const seen = new Set();
+  for (const o of objs) {
+    const key = (o.match(/["']?key["']?\s*:\s*["']([^"']+)["']/) || [])[1];
+    const type = (o.match(/["']?type["']?\s*:\s*["']([^"']+)["']/) || [])[1] || "text";
+    const explicitRole = (o.match(/["']?role["']?\s*:\s*["']([^"']+)["']/) || [])[1];
+    if (!key || key === "duration") continue;
+    if (!["text", "textarea", "number"].includes(type)) continue;
+    const role = explicitRole || fieldRole(key);
+    if (!role || seen.has(key)) continue;
+    seen.add(key);
+    slots.push({ id: key, role, maxChars: null, required: false });
+  }
+  if (!slots.length) return null;
+  return { slots, roleSet: [...new Set(slots.map((s) => s.role))] };
+}
+
 // ---------------------------------------------------------------------------
 function assertVideoAllowed(archetype) {
-  const spec = ARCHETYPE_SPECS[archetype];
-  if (!spec || !spec.formats.includes("video")) {
+  const spec = specFor(archetype);
+  if (!isAnyArchetype(archetype) || !spec || !spec.formats.includes("video")) {
     throw new Error(`author-video: archetype "${archetype}" is not video-capable in the contract. Refusing to emit a format:"video" row the validator would reject.`);
   }
 }
@@ -328,6 +396,13 @@ function main() {
   const ownedIds = new Set();
   for (const e of ANIMATED) { const id = makeExampleId(e.seq, e.slug); ownedIds.add(id); plan.push({ id, kind: "animated", e }); }
   for (const g of GIFS) { const id = makeExampleId(g.seq, g.slug); ownedIds.add(id); plan.push({ id, kind: "gif", e: g }); }
+  for (const s of STAGED) { const id = makeExampleId(s.seq, s.archetype); ownedIds.add(id); plan.push({ id, kind: "staged", e: s }); }
+  // Retired round-2 candidates: own their ids (so mergeManifest drops the stale rows)
+  // and delete their rendered artifacts, but emit NO row.
+  for (const id of RETIRED_IDS) {
+    ownedIds.add(id);
+    for (const ext of [".mp4", ".png", ".jsx"]) rmSync(join(EXAMPLES_DIR, `${id}${ext}`), { force: true });
+  }
 
   removeOwnedSources({ examplesDir: EXAMPLES_DIR, assetsDir: ASSETS_DIR, ownedIds });
 
@@ -337,14 +412,24 @@ function main() {
     if (kind === "animated") {
       writeFileSync(join(EXAMPLES_DIR, `${id}.jsx`), stage(e.name, e.duration, e.bg, e.body));
       rows.push({ id, archetype: e.archetype, format: "video", mediaStyleAccepts: e.accepts || [], slotShape: e.slotShape });
-    } else {
+    } else if (kind === "gif") {
       writeFileSync(join(EXAMPLES_DIR, `${id}.jsx`), e.chrome);
       rows.push({ id, archetype: e.archetype, format: "video", mediaStyleAccepts: e.accepts || [], slotShape: e.slotShape, render: "gif-composite", gif: { clips: e.clips, duration: e.duration } });
+    } else { // staged brand-motion (round-2): slotShape derived from the source SPEC.
+      const sourcePath = `${TPL}/${e.src}.jsx`;
+      const abs = join(ROOT, sourcePath);
+      if (!existsSync(abs)) throw new Error(`author-video: staged source missing: ${sourcePath}`);
+      const slotShape = deriveSlotShape(readFileSync(abs, "utf8"));
+      if (!slotShape) throw new Error(`author-video: could not derive slotShape for ${e.src} (no *_SPEC fields?)`);
+      rows.push({
+        id, archetype: e.archetype, format: "video", mediaStyleAccepts: [], slotShape,
+        render: "stage-motion", source: sourcePath, stage: { duration: e.dur, width: W, height: H, fps: 30 },
+      });
     }
   }
 
   mergeManifest({ manifestPath: MANIFEST, rows, ownedIds });
-  process.stderr.write(`[author-video] wrote ${rows.length} video examples (${ANIMATED.length} animated + ${GIFS.length} gif); static ids preserved\n`);
+  process.stderr.write(`[author-video] wrote ${rows.length} video examples (${ANIMATED.length} animated + ${GIFS.length} gif + ${STAGED.length} staged); static ids preserved\n`);
 }
 
 main();

@@ -355,43 +355,57 @@ const ARCHETYPES = [
   { slug: "list-steps", archetype: "list-steps",
     slotShape: { slots: [{ id: "heading", role: "hook", maxChars: 40, required: true }, { id: "step1", role: "claim", maxChars: 36, required: true }, { id: "step2", role: "claim", maxChars: 36, required: true }, { id: "step3", role: "claim", maxChars: 36, required: true }], roleSet: ["hook", "claim"] },
     variants: [
+      // FILL THE PAGE: editorial dark. Heading top, three rows GROW to fill the height
+      // (each row flex:1 with a full-width rule + a giant index number), footer anchor.
       { media: [], accepts: [], jsx: () => {
         const steps = ["Test the athlete first", "Build the right strength base", "Re-test and prove the gain"];
-        const rows = steps.map((s, i) => `<div style={{ display: "flex", alignItems: "center", gap: 28, marginBottom: 40, borderBottom: "1px solid #23232b", paddingBottom: 28 }}>
-          <div style={{ fontFamily: "Anton", color: "#c4141d", fontSize: 140, lineHeight: 0.9, width: 120 }}>${i + 1}</div>
-          <div style={{ fontFamily: "Geist", color: "#fff", fontSize: 46, fontWeight: 600 }}>${s}</div>
-        </div>`).join("\n        ");
-        return wrap("list-steps", `      <div style={{ position: "absolute", inset: 0, padding: "120px 72px", boxSizing: "border-box" }}>
-        <div style={{ fontFamily: "Anton", color: "#fff", fontSize: 92, textTransform: "uppercase", lineHeight: 0.95, marginBottom: 64 }}>3 steps to a<br/><span style={{ color: "#c4141d" }}>faster season</span></div>
-        ${rows}
+        const rows = steps.map((s, i) => `<div style={{ display: "flex", alignItems: "center", gap: 40, flex: 1, ${i === 0 ? "" : 'borderTop: "2px solid #24242c"'} }}>
+            <div style={{ fontFamily: "Anton", color: "#c4141d", fontSize: 240, lineHeight: 1, flex: "0 0 210px" }}>${i + 1}</div>
+            <div style={{ fontFamily: "Geist", color: "#fff", fontSize: 60, fontWeight: 600, lineHeight: 1.08 }}>${s}</div>
+          </div>`).join("\n          ");
+        return wrap("list-steps", `      <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", padding: "110px 72px 92px", boxSizing: "border-box" }}>
+        <div style={{ fontFamily: "JetBrains Mono", color: "#c4141d", fontSize: 32, letterSpacing: "0.14em", fontWeight: 700, marginBottom: 22 }}>THE PROCESS</div>
+        <div style={{ fontFamily: "Anton", color: "#fff", fontSize: 108, textTransform: "uppercase", lineHeight: 0.92, marginBottom: 28 }}>3 steps to a<br/><span style={{ color: "#c4141d" }}>faster season</span></div>
+        <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+          ${rows}
+        </div>
+        <div style={{ fontFamily: "JetBrains Mono", color: "#6b6b73", fontSize: 28, letterSpacing: "0.1em", marginTop: 18 }}>ATHLETES ACCELERATION</div>
       </div>`, "#101015");
       } },
 
-      // LIGHT register, circled numbers, 4 rows, no rules
+      // FILL THE PAGE: LIGHT register, circled numbers, four rows distributed down the
+      // full frame, anchored by a solid CTA bar at the bottom edge.
       { media: [], accepts: [], jsx: () => {
         const steps = ["Free assessment and goal-set", "Small-group strength + speed", "Weekly coaching and feedback", "Re-test, see the number move"];
-        const rows = steps.map((s, i) => `<div style={{ display: "flex", alignItems: "center", gap: 26, marginBottom: 34 }}>
-          <div style={{ flex: "0 0 84px", width: 84, height: 84, borderRadius: "50%", background: "#c4141d", color: "#fff", fontFamily: "Anton", fontSize: 50, display: "flex", alignItems: "center", justifyContent: "center" }}>${i + 1}</div>
-          <div style={{ fontFamily: "Geist", color: "#16161b", fontSize: 44, fontWeight: 600 }}>${s}</div>
-        </div>`).join("\n        ");
-        return wrap("list-steps", `      <div style={{ position: "absolute", inset: 0, padding: "120px 64px", boxSizing: "border-box" }}>
+        const rows = steps.map((s, i) => `<div style={{ display: "flex", alignItems: "center", gap: 32, flex: 1, ${i === 0 ? "" : 'borderTop: "2px solid #e3e1dd"'} }}>
+            <div style={{ flex: "0 0 116px", width: 116, height: 116, borderRadius: "50%", background: "#c4141d", color: "#fff", fontFamily: "Anton", fontSize: 64, display: "flex", alignItems: "center", justifyContent: "center" }}>${i + 1}</div>
+            <div style={{ fontFamily: "Geist", color: "#16161b", fontSize: 52, fontWeight: 600 }}>${s}</div>
+          </div>`).join("\n          ");
+        return wrap("list-steps", `      <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", padding: "110px 64px 88px", boxSizing: "border-box" }}>
         <div style={{ fontFamily: "JetBrains Mono", color: "#c4141d", fontSize: 32, letterSpacing: "0.12em", fontWeight: 700, marginBottom: 18 }}>HOW IT WORKS</div>
-        <div style={{ fontFamily: "Anton", color: "#16161b", fontSize: 90, textTransform: "uppercase", lineHeight: 0.95, marginBottom: 60 }}>Four steps,<br/>one plan</div>
-        ${rows}
+        <div style={{ fontFamily: "Anton", color: "#16161b", fontSize: 104, textTransform: "uppercase", lineHeight: 0.94, marginBottom: 24 }}>Four steps,<br/>one plan</div>
+        <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+          ${rows}
+        </div>
+        <div style={{ marginTop: 20, background: "#16161b", color: "#fff", fontFamily: "Anton", fontSize: 48, textTransform: "uppercase", textAlign: "center", padding: "30px", borderRadius: 14 }}>Start with a free assessment</div>
       </div>`, "#f4f4f2");
       } },
 
-      // checklist on a red field, check-glyph bullets
+      // FILL THE PAGE: checklist on a red field, big check tiles, rows grow to fill,
+      // bottom band closes it out (CTA, not the verbatim guarantee).
       { media: [], accepts: [], jsx: () => {
         const items = ["A real test on day one", "Coaches who know your sport", "A guarantee in writing"];
-        const checkTile = '<svg width="78" height="78" viewBox="0 0 92 92"><rect width="92" height="92" rx="20" fill="rgba(255,255,255,0.16)"/><path d="M28 48 l12 12 l24 -28" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-        const rows = items.map((s) => `<div style={{ display: "flex", alignItems: "center", gap: 24, marginBottom: 36 }}>
-          ${checkTile}
-          <div style={{ fontFamily: "Geist", color: "#fff", fontSize: 46, fontWeight: 600 }}>${s}</div>
-        </div>`).join("\n        ");
-        return wrap("list-steps", `      <div style={{ position: "absolute", inset: 0, padding: "130px 70px", boxSizing: "border-box" }}>
-        <div style={{ fontFamily: "Anton", color: "#fff", fontSize: 100, textTransform: "uppercase", lineHeight: 0.92, marginBottom: 70 }}>What you<br/>get</div>
-        ${rows}
+        const checkTile = '<div style={{ flex: "0 0 104px" }}><svg width="104" height="104" viewBox="0 0 92 92"><rect width="92" height="92" rx="22" fill="rgba(255,255,255,0.16)"/><path d="M28 48 l12 12 l24 -28" stroke="#fff" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
+        const rows = items.map((s, i) => `<div style={{ display: "flex", alignItems: "center", gap: 32, flex: 1, ${i === 0 ? "" : 'borderTop: "2px solid rgba(255,255,255,0.18)"'} }}>
+            ${checkTile}
+            <div style={{ fontFamily: "Geist", color: "#fff", fontSize: 56, fontWeight: 600 }}>${s}</div>
+          </div>`).join("\n          ");
+        return wrap("list-steps", `      <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", padding: "112px 70px 92px", boxSizing: "border-box" }}>
+        <div style={{ fontFamily: "Anton", color: "#fff", fontSize: 124, textTransform: "uppercase", lineHeight: 0.9, marginBottom: 22 }}>What you<br/>get</div>
+        <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+          ${rows}
+        </div>
+        <div style={{ background: "#fff", color: "#c4141d", fontFamily: "Anton", fontSize: 50, textTransform: "uppercase", textAlign: "center", padding: "30px", borderRadius: 14 }}>Book your free assessment</div>
       </div>`, "#c4141d");
       } },
     ] },
@@ -512,30 +526,38 @@ const ARCHETYPES = [
   { slug: "ugc-selfie", archetype: "ugc-selfie",
     slotShape: { slots: [{ id: "caption", role: "hook", maxChars: 90, required: true }], roleSet: ["hook"] },
     variants: [
+      // ATHLETE first-person — the kid's own voice, native bottom caption + handle.
       { media: ["hero-sprint-male.jpg"], accepts: ["production:ugc-selfie", "subject:athlete-face"], jsx: (m) => wrap("ugc-selfie", `${img(m[0], 'position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", transform: "scale(1.7)", transformOrigin: "55% 22%"')}
-      <div style={{ position: "absolute", left: 48, top: 120, background: "rgba(255,255,255,0.92)", color: "#111", padding: "16px 24px", borderRadius: 18, fontFamily: "Caveat", fontSize: 60, fontWeight: 700, transform: "rotate(-4deg)" }}>day 1 vs day 90</div>
-      <div style={{ position: "absolute", left: 0, right: 0, bottom: 60, textAlign: "center", fontFamily: "JetBrains Mono", color: "#fff", fontSize: 28, letterSpacing: "0.08em", textShadow: "0 2px 8px rgba(0,0,0,0.8)" }}>@ATHLETESACCELERATION</div>`) },
-
-      // different face, bottom caption bar (TikTok-style), different framing
-      { media: ["hero-sprint-female.jpg"], accepts: ["production:ugc-selfie", "subject:athlete-face"], jsx: (m) => wrap("ugc-selfie", `${img(m[0], 'position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", transform: "scale(2.1)", transformOrigin: "78% 30%"')}
-      <div style={{ position: "absolute", left: 40, right: 40, bottom: 150, fontFamily: "Geist", fontWeight: 700, color: "#fff", fontSize: 52, lineHeight: 1.12, textShadow: "0 2px 10px rgba(0,0,0,0.85)" }}>she stopped getting passed on the field</div>
+      <div style={{ position: "absolute", left: 40, right: 40, bottom: 152, fontFamily: "Geist", fontWeight: 800, color: "#fff", fontSize: 62, lineHeight: 1.08, textShadow: "0 2px 12px rgba(0,0,0,0.85)" }}>first time i dunked in a game</div>
       <div style={{ position: "absolute", left: 40, bottom: 80, display: "flex", alignItems: "center", gap: 12 }}>
-        <div style={{ width: 54, height: 54, borderRadius: "50%", background: "#c4141d", color: "#fff", fontFamily: "Anton", fontSize: 26, display: "flex", alignItems: "center", justifyContent: "center" }}>AA</div>
-        <div style={{ fontFamily: "JetBrains Mono", color: "#fff", fontSize: 26, textShadow: "0 2px 8px rgba(0,0,0,0.8)" }}>@athletesacceleration</div>
+        <div style={{ width: 54, height: 54, borderRadius: "50%", background: "#fff", color: "#111", fontFamily: "Anton", fontSize: 24, display: "flex", alignItems: "center", justifyContent: "center" }}>MJ</div>
+        <div style={{ fontFamily: "JetBrains Mono", color: "#fff", fontSize: 26, textShadow: "0 2px 8px rgba(0,0,0,0.8)" }}>@marcus.j</div>
       </div>`) },
 
-      // different face, hand-drawn arrow + sticker note, top-left native UI
+      // PARENT first-person — the parent's voice, the emotional payoff.
+      { media: ["hero-sprint-female.jpg"], accepts: ["production:ugc-selfie", "subject:athlete-face"], jsx: (m) => wrap("ugc-selfie", `${img(m[0], 'position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", transform: "scale(2.1)", transformOrigin: "78% 30%"')}
+      <div style={{ position: "absolute", left: 40, right: 40, bottom: 150, fontFamily: "Geist", fontWeight: 700, color: "#fff", fontSize: 54, lineHeight: 1.12, textShadow: "0 2px 10px rgba(0,0,0,0.85)" }}>she believes in herself now — worth every mile</div>
+      <div style={{ position: "absolute", left: 40, bottom: 80, display: "flex", alignItems: "center", gap: 12 }}>
+        <div style={{ width: 54, height: 54, borderRadius: "50%", background: "#c4141d", color: "#fff", fontFamily: "Anton", fontSize: 24, display: "flex", alignItems: "center", justifyContent: "center" }}>KH</div>
+        <div style={{ fontFamily: "JetBrains Mono", color: "#fff", fontSize: 26, textShadow: "0 2px 8px rgba(0,0,0,0.8)" }}>@thehayesfamily</div>
+      </div>`) },
+
+      // METRIC-led but personal — a real result in the athlete's own words.
       { media: ["photo-agility-male.jpg"], accepts: ["production:ugc-selfie", "subject:athlete-face"], jsx: (m) => wrap("ugc-selfie", `${img(m[0], 'position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", transform: "scale(1.55)", transformOrigin: "48% 30%"')}
-      <div style={{ position: "absolute", right: 44, top: 160, background: "#c4141d", color: "#fff", padding: "14px 22px", borderRadius: 16, fontFamily: "Caveat", fontSize: 58, fontWeight: 700, transform: "rotate(5deg)" }}>+4 inches!!</div>
-      <svg viewBox="0 0 200 200" style={{ position: "absolute", right: 150, top: 300, width: 200, height: 200 }}><path d="M30 20 C120 40 150 120 120 170" stroke="#fff" stroke-width="9" fill="none" stroke-linecap="round"/><path d="M120 170 l-26 -8 m26 8 l-6 -28" stroke="#fff" stroke-width="9" fill="none" stroke-linecap="round"/></svg>
-      <div style={{ position: "absolute", left: 0, right: 0, bottom: 70, textAlign: "center", fontFamily: "JetBrains Mono", color: "#fff", fontSize: 26, letterSpacing: "0.08em", textShadow: "0 2px 8px rgba(0,0,0,0.85)" }}>real athlete · real result</div>`) },
+      <div style={{ position: "absolute", right: 44, top: 150, background: "#c4141d", color: "#fff", padding: "14px 26px", borderRadius: 16, fontFamily: "Caveat", fontSize: 66, fontWeight: 700, transform: "rotate(5deg)" }}>+4 on my vertical</div>
+      <div style={{ position: "absolute", left: 40, right: 40, bottom: 150, fontFamily: "Geist", fontWeight: 700, color: "#fff", fontSize: 52, lineHeight: 1.14, textShadow: "0 2px 10px rgba(0,0,0,0.85)" }}>added a full mph this summer, no joke</div>
+      <div style={{ position: "absolute", left: 40, bottom: 80, display: "flex", alignItems: "center", gap: 12 }}>
+        <div style={{ width: 54, height: 54, borderRadius: "50%", background: "#fff", color: "#111", fontFamily: "Anton", fontSize: 24, display: "flex", alignItems: "center", justifyContent: "center" }}>DR</div>
+        <div style={{ fontFamily: "JetBrains Mono", color: "#fff", fontSize: 26, textShadow: "0 2px 8px rgba(0,0,0,0.8)" }}>@dre.speed</div>
+      </div>`) },
     ] },
 
   // ==========================================================================
-  // 13 — COACH PORTRAIT: photo on HALF + solid info PANEL on the other half. Photo-led.
-  //   Vary side, panel color, tone.
+  // 13 — SPLIT-PANEL (was coach-portrait): photo on HALF + solid info PANEL on the
+  //   other half. Photo-led. Vary side, panel color, tone. The id keeps the
+  //   coach-portrait slug (a hint only) so artifacts + embeddings survive the relabel.
   // ==========================================================================
-  { slug: "coach-portrait", archetype: "coach-portrait",
+  { slug: "coach-portrait", archetype: "split-panel",
     slotShape: { slots: [{ id: "headline", role: "hook", maxChars: 28, required: true }, { id: "name", role: "byline", maxChars: 28, required: false }, { id: "title", role: "byline", maxChars: 28, required: false }], roleSet: ["hook", "byline"] },
     variants: [
       { media: ["photo-coach-action.jpg"], accepts: ["production:cinematic", "subject:coach-face"], jsx: (m) => wrap("coach-portrait", `      <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "52%", overflow: "hidden" }}>${img(m[0], 'position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover"')}</div>

@@ -170,30 +170,6 @@
       "reason": "ok"
     },
     {
-      "id": "ex-022-list-steps",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-022-list-steps.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-023-list-steps",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-023-list-steps.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-024-list-steps",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-024-list-steps.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
       "id": "ex-025-offer-card",
       "format": "static",
       "ok": true,
@@ -262,30 +238,6 @@
       "format": "static",
       "ok": true,
       "png": "templates/_examples/ex-033-training-scene.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-034-ugc-selfie",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-034-ugc-selfie.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-035-ugc-selfie",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-035-ugc-selfie.png",
-      "mp4": null,
-      "reason": "ok"
-    },
-    {
-      "id": "ex-036-ugc-selfie",
-      "format": "static",
-      "ok": true,
-      "png": "templates/_examples/ex-036-ugc-selfie.png",
       "mp4": null,
       "reason": "ok"
     },
@@ -487,6 +439,182 @@
       "ok": true,
       "png": "templates/_examples/ex-061-ugc-selfie.png",
       "mp4": "templates/_examples/ex-061-ugc-selfie.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-070-count-up-stats",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-070-count-up-stats.png",
+      "mp4": "templates/_examples/ex-070-count-up-stats.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-072-radar-stats",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-072-radar-stats.png",
+      "mp4": "templates/_examples/ex-072-radar-stats.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-073-stopwatch-countdown",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-073-stopwatch-countdown.png",
+      "mp4": "templates/_examples/ex-073-stopwatch-countdown.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-074-bracket-tree",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-074-bracket-tree.png",
+      "mp4": "templates/_examples/ex-074-bracket-tree.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-075-comic-strip",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-075-comic-strip.png",
+      "mp4": "templates/_examples/ex-075-comic-strip.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-076-star-testimonial",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-076-star-testimonial.png",
+      "mp4": "templates/_examples/ex-076-star-testimonial.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-077-macro-ring",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-077-macro-ring.png",
+      "mp4": "templates/_examples/ex-077-macro-ring.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-078-scoreboard",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-078-scoreboard.png",
+      "mp4": "templates/_examples/ex-078-scoreboard.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-080-streak-counter",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-080-streak-counter.png",
+      "mp4": "templates/_examples/ex-080-streak-counter.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-081-slot-roll",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-081-slot-roll.png",
+      "mp4": "templates/_examples/ex-081-slot-roll.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-082-tier-list",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-082-tier-list.png",
+      "mp4": "templates/_examples/ex-082-tier-list.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-083-sprint-trace",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-083-sprint-trace.png",
+      "mp4": "templates/_examples/ex-083-sprint-trace.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-084-calendar-fill",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-084-calendar-fill.png",
+      "mp4": "templates/_examples/ex-084-calendar-fill.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-085-leaderboard-roll",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-085-leaderboard-roll.png",
+      "mp4": "templates/_examples/ex-085-leaderboard-roll.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-087-velocity-gauge",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-087-velocity-gauge.png",
+      "mp4": "templates/_examples/ex-087-velocity-gauge.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-089-anatomy-diagram",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-089-anatomy-diagram.png",
+      "mp4": "templates/_examples/ex-089-anatomy-diagram.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-022-list-steps",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-022-list-steps.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-023-list-steps",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-023-list-steps.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-034-ugc-selfie",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-034-ugc-selfie.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-035-ugc-selfie",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-035-ugc-selfie.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-036-ugc-selfie",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-036-ugc-selfie.png",
+      "mp4": null,
+      "reason": "ok"
+    },
+    {
+      "id": "ex-024-list-steps",
+      "format": "static",
+      "ok": true,
+      "png": "templates/_examples/ex-024-list-steps.png",
+      "mp4": null,
       "reason": "ok"
     }
   ]

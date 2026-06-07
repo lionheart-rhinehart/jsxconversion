@@ -11,6 +11,11 @@ templates/**/*.fill.jsx
 templates/**/*.camp-*
 brand/video-templates/_camp-*
 brand/video-templates/__render/
+# Per-example staging scratch for staged brand-motion video examples (stage-motion.mjs):
+# the wrapper + copied runtime (animations/editing/elements) render here; only the
+# resulting <id>.mp4 + <id>.png get copied into templates/_examples/ and committed.
+templates/_examples/_staging/
+templates/_examples/**/*.bgframes/
 # Raw media pulled from The Kraken Content Library (local cache, not source)
 brand/kraken-cache/
 # Kraken photos swapped into static templates via /media-into-template (client media)

@@ -2,25 +2,28 @@
 export default function Example() {
   return (
     <div style={{ width: 1080, height: 1920, position: "relative", overflow: "hidden", background: "#f4f4f2" }}>
-      <div style={{ position: "absolute", inset: 0, padding: "120px 64px", boxSizing: "border-box" }}>
+      <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", padding: "110px 64px 88px", boxSizing: "border-box" }}>
         <div style={{ fontFamily: "JetBrains Mono", color: "#c4141d", fontSize: 32, letterSpacing: "0.12em", fontWeight: 700, marginBottom: 18 }}>HOW IT WORKS</div>
-        <div style={{ fontFamily: "Anton", color: "#16161b", fontSize: 90, textTransform: "uppercase", lineHeight: 0.95, marginBottom: 60 }}>Four steps,<br/>one plan</div>
-        <div style={{ display: "flex", alignItems: "center", gap: 26, marginBottom: 34 }}>
-          <div style={{ flex: "0 0 84px", width: 84, height: 84, borderRadius: "50%", background: "#c4141d", color: "#fff", fontFamily: "Anton", fontSize: 50, display: "flex", alignItems: "center", justifyContent: "center" }}>1</div>
-          <div style={{ fontFamily: "Geist", color: "#16161b", fontSize: 44, fontWeight: 600 }}>Free assessment and goal-set</div>
+        <div style={{ fontFamily: "Anton", color: "#16161b", fontSize: 104, textTransform: "uppercase", lineHeight: 0.94, marginBottom: 24 }}>Four steps,<br/>one plan</div>
+        <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 32, flex: 1,  }}>
+            <div style={{ flex: "0 0 116px", width: 116, height: 116, borderRadius: "50%", background: "#c4141d", color: "#fff", fontFamily: "Anton", fontSize: 64, display: "flex", alignItems: "center", justifyContent: "center" }}>1</div>
+            <div style={{ fontFamily: "Geist", color: "#16161b", fontSize: 52, fontWeight: 600 }}>Free assessment and goal-set</div>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 32, flex: 1, borderTop: "2px solid #e3e1dd" }}>
+            <div style={{ flex: "0 0 116px", width: 116, height: 116, borderRadius: "50%", background: "#c4141d", color: "#fff", fontFamily: "Anton", fontSize: 64, display: "flex", alignItems: "center", justifyContent: "center" }}>2</div>
+            <div style={{ fontFamily: "Geist", color: "#16161b", fontSize: 52, fontWeight: 600 }}>Small-group strength + speed</div>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 32, flex: 1, borderTop: "2px solid #e3e1dd" }}>
+            <div style={{ flex: "0 0 116px", width: 116, height: 116, borderRadius: "50%", background: "#c4141d", color: "#fff", fontFamily: "Anton", fontSize: 64, display: "flex", alignItems: "center", justifyContent: "center" }}>3</div>
+            <div style={{ fontFamily: "Geist", color: "#16161b", fontSize: 52, fontWeight: 600 }}>Weekly coaching and feedback</div>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 32, flex: 1, borderTop: "2px solid #e3e1dd" }}>
+            <div style={{ flex: "0 0 116px", width: 116, height: 116, borderRadius: "50%", background: "#c4141d", color: "#fff", fontFamily: "Anton", fontSize: 64, display: "flex", alignItems: "center", justifyContent: "center" }}>4</div>
+            <div style={{ fontFamily: "Geist", color: "#16161b", fontSize: 52, fontWeight: 600 }}>Re-test, see the number move</div>
+          </div>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 26, marginBottom: 34 }}>
-          <div style={{ flex: "0 0 84px", width: 84, height: 84, borderRadius: "50%", background: "#c4141d", color: "#fff", fontFamily: "Anton", fontSize: 50, display: "flex", alignItems: "center", justifyContent: "center" }}>2</div>
-          <div style={{ fontFamily: "Geist", color: "#16161b", fontSize: 44, fontWeight: 600 }}>Small-group strength + speed</div>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 26, marginBottom: 34 }}>
-          <div style={{ flex: "0 0 84px", width: 84, height: 84, borderRadius: "50%", background: "#c4141d", color: "#fff", fontFamily: "Anton", fontSize: 50, display: "flex", alignItems: "center", justifyContent: "center" }}>3</div>
-          <div style={{ fontFamily: "Geist", color: "#16161b", fontSize: 44, fontWeight: 600 }}>Weekly coaching and feedback</div>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 26, marginBottom: 34 }}>
-          <div style={{ flex: "0 0 84px", width: 84, height: 84, borderRadius: "50%", background: "#c4141d", color: "#fff", fontFamily: "Anton", fontSize: 50, display: "flex", alignItems: "center", justifyContent: "center" }}>4</div>
-          <div style={{ fontFamily: "Geist", color: "#16161b", fontSize: 44, fontWeight: 600 }}>Re-test, see the number move</div>
-        </div>
+        <div style={{ marginTop: 20, background: "#16161b", color: "#fff", fontFamily: "Anton", fontSize: 48, textTransform: "uppercase", textAlign: "center", padding: "30px", borderRadius: 14 }}>Start with a free assessment</div>
       </div>
     </div>
   );

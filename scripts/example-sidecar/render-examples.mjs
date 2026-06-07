@@ -26,6 +26,7 @@ import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 import { verifyRender } from "../lib/render-qa.mjs";
 import { composeGif } from "./gif-compose.mjs";
+import { stageAndRender } from "./stage-motion.mjs";
 import { EXAMPLES_DIR, exampleImagePath, exampleMotionPath } from "../lib/example-library.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -117,8 +118,36 @@ function renderGif(ex, srcJsx) {
   return finalizeVideo(ex, outMp4, qa.durationSec);
 }
 
+// STAGE-MOTION (round-2): a fully-produced brand motion video (brand/video-templates/
+// templates/<x>.jsx) wired in AS an example. The source uses the full runtime and does
+// NOT self-wrap in <Stage>, so stage-motion.mjs assembles a gitignored staging dir
+// (animations.jsx + a <Stage> wrapper that owns the timeline) and renders it to
+// out/<id>.mp4 via the jsx-to-mp4 shipped path. Then the same finalizeVideo as the
+// other video paths copies the mp4 + extracts the poster. ex.source is the brand path;
+// ex.stage carries {duration,width,height,fps}; ex.data is optional curated copy.
+function renderStaged(ex) {
+  const s = ex.stage || {};
+  let r;
+  try {
+    r = stageAndRender({
+      id: ex.id, sourcePath: ex.source,
+      width: s.width ?? 1080, height: s.height ?? 1920, duration: s.duration ?? 6, fps: s.fps ?? 30,
+      data: ex.data ?? null,
+    });
+  } catch (e) {
+    return { id: ex.id, format: ex.format, ok: false, png: null, mp4: null, reason: `stage-motion error: ${e.message}` };
+  }
+  if (!r.ok) return { id: ex.id, format: ex.format, ok: false, png: null, mp4: null, reason: r.reason };
+  const qa = verifyRender(r.mp4, { kind: "mp4" });
+  if (!qa.ok) return { id: ex.id, format: ex.format, ok: false, png: null, mp4: null, reason: `staged QA blocked: ${qa.reason}` };
+  if (qa.skipped || qa.durationSec == null) return { id: ex.id, format: ex.format, ok: false, png: null, mp4: null, reason: "no ffmpeg/duration → cannot poster staged motion" };
+  return finalizeVideo(ex, r.mp4, qa.durationSec);
+}
+
 // Render one example's JSX → out/<id>.<ext>, then QA, then copy to the contract path.
 function renderOne(ex) {
+  if (ex.render === "stage-motion") return renderStaged(ex);
+
   const srcJsx = join(ROOT, EXAMPLES_DIR, `${ex.id}.jsx`);
   if (!existsSync(srcJsx)) return { id: ex.id, format: ex.format, ok: false, png: null, mp4: null, reason: `source missing: ${EXAMPLES_DIR}/${ex.id}.jsx` };
 

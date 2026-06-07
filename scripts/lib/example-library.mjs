@@ -106,7 +106,7 @@ export const ARCHETYPES = [
   "action-hero",         // full-bleed action photo + a HUGE overlay headline
   "training-scene",      // WIDE environment, people small, tiny corner text
   "ugc-selfie",          // a FACE fills the frame, native caption, almost no design
-  "coach-portrait",      // photo on HALF + solid info PANEL on the other half
+  "split-panel",         // photo on HALF + solid info PANEL on the other half (was coach-portrait)
   "timeline-schedule",   // a CALENDAR / week grid / program timeline
   "benefit-iconrow",     // a row/grid of ICONS + short labels, lots of negative space
 ];
@@ -209,10 +209,10 @@ export const ARCHETYPE_SPECS = {
     mediaStyleAllowed: ["production:ugc-selfie", "subject:athlete-face", "subject:coach-face"],
     summary: "A face fills the frame, native caption, almost no design.",
   },
-  "coach-portrait": {
+  "split-panel": {
     formats: ["static", "video"], mediaOptional: false,
     mediaStyleAllowed: ["production:mid-fi", "production:cinematic", "subject:coach-face"],
-    summary: "Photo on half + a solid info panel on the other half.",
+    summary: "Photo on half + a solid info panel on the other half (formerly coach-portrait).",
   },
   "timeline-schedule": {
     formats: ["static"], mediaOptional: true, mediaStyleAllowed: [],
@@ -223,6 +223,71 @@ export const ARCHETYPE_SPECS = {
     summary: "A row/grid of icons + short labels, lots of negative space.",
   },
 };
+
+// ---------------------------------------------------------------------------
+// MOTION ARCHETYPES — a SEPARATE vocabulary for fully-produced motion-graphics
+// video examples (round-2). Decided with Cody 2026-06-07 ("Option 2").
+// ---------------------------------------------------------------------------
+// Why a SEPARATE list (not folded into ARCHETYPES): the 15 static ARCHETYPES are
+// defined by VISUAL STRUCTURE (dominant-subject × composition). Motion-graphics
+// examples are distinguished by their CHOREOGRAPHY + dominant animated element
+// (a count-up vs a bracket build vs a waveform vs a stopwatch) — a different
+// measuring stick. Keeping them apart means (a) the engine's STATIC paths, which
+// import `isArchetype` / `ARCHETYPE_SPECS`, keep seeing ONLY the 15 static tabs and
+// can never accidentally treat a motion archetype as a static design, and (b) the
+// embed pipeline's existing `--format=video` split is mirrored at the vocabulary
+// level. Track B's validator uses the UNION (`isAnyArchetype` / `specFor`); engine
+// code stays static-only. Same distinctness contract as the statics: 1 design = 1
+// cluster, mutually distinct (every cross-design cosine < 0.70 — the squint test).
+// Each entry is a distinct motion-design FAMILY, curated from the brand motion bank
+// (brand/video-templates/templates/*) and proven distinct by the cluster analyzer.
+// Stable kebab ids — never rename one once an example references it (re-label only
+// rewrites the `archetype` FIELD).
+// The 16 that PASSED the distinctness gate (every cross-archetype cosine < 0.70,
+// measured 2026-06-07 via the CLIP-L/14 + DINOv2 video embed pass). Four further
+// candidates were tried and CUT as near-twins (strike-list/versus-slider/poll-bars/
+// waveform-quote — see author-video-examples.mjs RETIRED_IDS for the cosines).
+export const MOTION_ARCHETYPES = [
+  "count-up-stats",        // numbers COUNT UP / stats reveal sequentially
+  "radar-stats",           // a RADAR / spider chart draws its polygon
+  "stopwatch-countdown",   // a big STOPWATCH / timer sweeps
+  "bracket-tree",          // a tournament BRACKET fills round by round
+  "comic-strip",           // sequential COMIC panels reveal
+  "star-testimonial",      // STAR rating fills + a pulled testimonial
+  "macro-ring",            // macro / nutrition RINGS sweep to target
+  "scoreboard",            // a sports SCOREBOARD flips/tallies
+  "streak-counter",        // a STREAK / flame counter ticks up
+  "slot-roll",             // a SLOT-machine reel rolls to a pick
+  "tier-list",             // a TIER-LIST stacks ranked rows
+  "sprint-trace",          // a SPRINT trace / path draws across the frame
+  "calendar-fill",         // a CALENDAR / month grid fills day by day
+  "leaderboard-roll",      // a ranked LEADERBOARD rolls into place
+  "velocity-gauge",        // a VELOCITY bar / meter gauge fills
+  "anatomy-diagram",       // an ANATOMY diagram with callouts builds
+];
+
+export function isMotionArchetype(a) {
+  return typeof a === "string" && MOTION_ARCHETYPES.includes(a);
+}
+
+// Per-motion-archetype spec, same shape as ARCHETYPE_SPECS. All are video-only and
+// media-optional (graphic/data-viz dominant; rule #2 "every creative carries real
+// media" is enforced elsewhere). mediaStyleAllowed [] = unconstrained.
+export const MOTION_ARCHETYPE_SPECS = Object.fromEntries(
+  MOTION_ARCHETYPES.map((a) => [a, {
+    formats: ["video"], mediaOptional: true, mediaStyleAllowed: [],
+    summary: `Motion-graphics: ${a.replace(/-/g, " ")}.`,
+  }]),
+);
+
+// Union helpers — Track B's validator (NOT the engine) checks both vocabularies.
+export function isAnyArchetype(a) {
+  return isArchetype(a) || isMotionArchetype(a);
+}
+// Resolve the spec for either vocabulary. Returns undefined for an unknown name.
+export function specFor(a) {
+  return ARCHETYPE_SPECS[a] ?? MOTION_ARCHETYPE_SPECS[a];
+}
 
 export const FORMATS = ["static", "video"];
 
@@ -294,14 +359,15 @@ export function validateExampleEntry(id, entry) {
   if (!isExampleId(id)) E(`id does not match the ex-<NNN>-<slug> convention`);
   if (!entry || typeof entry !== "object") { E(`entry is not an object`); return { errors, warnings }; }
 
-  // archetype
-  if (!isArchetype(entry.archetype)) E(`archetype ${JSON.stringify(entry.archetype)} is not a known ARCHETYPE`);
+  // archetype — accepts EITHER a static ARCHETYPE or a MOTION_ARCHETYPE (the union;
+  // engine code still uses the static-only isArchetype, preserving the isolation).
+  if (!isAnyArchetype(entry.archetype)) E(`archetype ${JSON.stringify(entry.archetype)} is not a known ARCHETYPE or MOTION_ARCHETYPE`);
 
   // format (+ must be a format the archetype allows)
   if (!FORMATS.includes(entry.format)) {
     E(`format ${JSON.stringify(entry.format)} must be one of ${FORMATS.join("/")}`);
-  } else if (isArchetype(entry.archetype) && !ARCHETYPE_SPECS[entry.archetype].formats.includes(entry.format)) {
-    E(`format "${entry.format}" not allowed for archetype "${entry.archetype}" (allowed: ${ARCHETYPE_SPECS[entry.archetype].formats.join("/")})`);
+  } else if (isAnyArchetype(entry.archetype) && !specFor(entry.archetype).formats.includes(entry.format)) {
+    E(`format "${entry.format}" not allowed for archetype "${entry.archetype}" (allowed: ${specFor(entry.archetype).formats.join("/")})`);
   }
 
   // mediaStyleAccepts — every tag known; subset of the archetype's allowed superset.
@@ -311,8 +377,8 @@ export function validateExampleEntry(id, entry) {
     for (const t of entry.mediaStyleAccepts) {
       if (!isMediaStyleTag(t)) E(`mediaStyleAccepts: ${JSON.stringify(t)} is not a known media-style tag`);
     }
-    if (isArchetype(entry.archetype)) {
-      const spec = ARCHETYPE_SPECS[entry.archetype];
+    if (isAnyArchetype(entry.archetype)) {
+      const spec = specFor(entry.archetype);
       // [] allowed = unconstrained (media-optional archetypes): any known tag (or none) ok.
       if (spec.mediaStyleAllowed.length) {
         const allowed = new Set(spec.mediaStyleAllowed);
@@ -340,7 +406,7 @@ export function validateExampleEntry(id, entry) {
   if (entry.motionPath != null && entry.motionPath !== exampleMotionPath(id)) {
     E(`motionPath, when present, must be "${exampleMotionPath(id)}" (got ${JSON.stringify(entry.motionPath)})`);
   }
-  if (entry.format === "video" && isArchetype(entry.archetype) && ARCHETYPE_SPECS[entry.archetype].formats.includes("video")) {
+  if (entry.format === "video" && isAnyArchetype(entry.archetype) && specFor(entry.archetype).formats.includes("video")) {
     // not an error to omit motionPath (the labeled poster .png is the contract);
     // just a nudge so a video example without its clip is noticed.
     if (entry.motionPath == null) W(`video example has no motionPath (poster .png is still the labeled artifact)`);

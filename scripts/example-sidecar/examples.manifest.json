@@ -1158,7 +1158,7 @@
     },
     {
       "id": "ex-037-coach-portrait",
-      "archetype": "coach-portrait",
+      "archetype": "split-panel",
       "format": "static",
       "mediaStyleAccepts": [
         "production:cinematic",
@@ -1193,7 +1193,7 @@
     },
     {
       "id": "ex-038-coach-portrait",
-      "archetype": "coach-portrait",
+      "archetype": "split-panel",
       "format": "static",
       "mediaStyleAccepts": [
         "production:cinematic",
@@ -1228,7 +1228,7 @@
     },
     {
       "id": "ex-039-coach-portrait",
-      "archetype": "coach-portrait",
+      "archetype": "split-panel",
       "format": "static",
       "mediaStyleAccepts": [
         "production:cinematic",
@@ -1506,7 +1506,7 @@
     },
     {
       "id": "ex-047-coach-portrait",
-      "archetype": "coach-portrait",
+      "archetype": "split-panel",
       "format": "video",
       "mediaStyleAccepts": [
         "production:cinematic",
@@ -1757,7 +1757,7 @@
     },
     {
       "id": "ex-054-coach-portrait",
-      "archetype": "coach-portrait",
+      "archetype": "split-panel",
       "format": "video",
       "mediaStyleAccepts": [
         "production:cinematic",
@@ -2114,6 +2114,779 @@
           }
         ],
         "duration": 4
+      }
+    },
+    {
+      "id": "ex-070-count-up-stats",
+      "archetype": "count-up-stats",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title1",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title2",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "ctaText",
+            "role": "cta",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "claim",
+          "cta"
+        ]
+      },
+      "render": "stage-motion",
+      "source": "brand/video-templates/templates/stat-reveal-reel.jsx",
+      "stage": {
+        "duration": 6,
+        "width": 1080,
+        "height": 1920,
+        "fps": 30
+      }
+    },
+    {
+      "id": "ex-072-radar-stats",
+      "archetype": "radar-stats",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title1",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title2",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "ctaText",
+            "role": "cta",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "claim",
+          "cta"
+        ]
+      },
+      "render": "stage-motion",
+      "source": "brand/video-templates/templates/athlete-profile.jsx",
+      "stage": {
+        "duration": 7,
+        "width": 1080,
+        "height": 1920,
+        "fps": 30
+      }
+    },
+    {
+      "id": "ex-073-stopwatch-countdown",
+      "archetype": "stopwatch-countdown",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title1",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title2",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "recordValue",
+            "role": "stat",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "ctaText",
+            "role": "cta",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "claim",
+          "stat",
+          "cta"
+        ]
+      },
+      "render": "stage-motion",
+      "source": "brand/video-templates/templates/beat-the-clock.jsx",
+      "stage": {
+        "duration": 7,
+        "width": 1080,
+        "height": 1920,
+        "fps": 30
+      }
+    },
+    {
+      "id": "ex-074-bracket-tree",
+      "archetype": "bracket-tree",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title1",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title2",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "ctaText",
+            "role": "cta",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "claim",
+          "cta"
+        ]
+      },
+      "render": "stage-motion",
+      "source": "brand/video-templates/templates/bracket-reel.jsx",
+      "stage": {
+        "duration": 7,
+        "width": 1080,
+        "height": 1920,
+        "fps": 30
+      }
+    },
+    {
+      "id": "ex-075-comic-strip",
+      "archetype": "comic-strip",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title1",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title2",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "ctaText",
+            "role": "cta",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "claim",
+          "cta"
+        ]
+      },
+      "render": "stage-motion",
+      "source": "brand/video-templates/templates/comic-lesson.jsx",
+      "stage": {
+        "duration": 7,
+        "width": 1080,
+        "height": 1920,
+        "fps": 30
+      }
+    },
+    {
+      "id": "ex-076-star-testimonial",
+      "archetype": "star-testimonial",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "quote",
+            "role": "testimonial",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "testimonial"
+        ]
+      },
+      "render": "stage-motion",
+      "source": "brand/video-templates/templates/five-star-review.jsx",
+      "stage": {
+        "duration": 8,
+        "width": 1080,
+        "height": 1920,
+        "fps": 30
+      }
+    },
+    {
+      "id": "ex-077-macro-ring",
+      "archetype": "macro-ring",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "tagline",
+            "role": "brand",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "brand"
+        ]
+      },
+      "render": "stage-motion",
+      "source": "brand/video-templates/templates/fuel-up.jsx",
+      "stage": {
+        "duration": 7,
+        "width": 1080,
+        "height": 1920,
+        "fps": 30
+      }
+    },
+    {
+      "id": "ex-078-scoreboard",
+      "archetype": "scoreboard",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title1",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title2",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "highlight1Stat",
+            "role": "stat",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "highlight2Stat",
+            "role": "stat",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "ctaText",
+            "role": "cta",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "claim",
+          "stat",
+          "cta"
+        ]
+      },
+      "render": "stage-motion",
+      "source": "brand/video-templates/templates/gameday-recap.jsx",
+      "stage": {
+        "duration": 7,
+        "width": 1080,
+        "height": 1920,
+        "fps": 30
+      }
+    },
+    {
+      "id": "ex-080-streak-counter",
+      "archetype": "streak-counter",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "name",
+            "role": "byline",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "byline"
+        ]
+      },
+      "render": "stage-motion",
+      "source": "brand/video-templates/templates/member-milestone.jsx",
+      "stage": {
+        "duration": 7,
+        "width": 1080,
+        "height": 1920,
+        "fps": 30
+      }
+    },
+    {
+      "id": "ex-081-slot-roll",
+      "archetype": "slot-roll",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title1",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title2",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "ctaText",
+            "role": "cta",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "claim",
+          "cta"
+        ]
+      },
+      "render": "stage-motion",
+      "source": "brand/video-templates/templates/pick-workout.jsx",
+      "stage": {
+        "duration": 7,
+        "width": 1080,
+        "height": 1920,
+        "fps": 30
+      }
+    },
+    {
+      "id": "ex-082-tier-list",
+      "archetype": "tier-list",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title1",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title2",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "subhead",
+            "role": "reframe",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "ctaText",
+            "role": "cta",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "claim",
+          "reframe",
+          "cta"
+        ]
+      },
+      "render": "stage-motion",
+      "source": "brand/video-templates/templates/position-rankings.jsx",
+      "stage": {
+        "duration": 8,
+        "width": 1080,
+        "height": 1920,
+        "fps": 30
+      }
+    },
+    {
+      "id": "ex-083-sprint-trace",
+      "archetype": "sprint-trace",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title1",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title2",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "ctaText",
+            "role": "cta",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "claim",
+          "cta"
+        ]
+      },
+      "render": "stage-motion",
+      "source": "brand/video-templates/templates/sprint-breakdown.jsx",
+      "stage": {
+        "duration": 8,
+        "width": 1080,
+        "height": 1920,
+        "fps": 30
+      }
+    },
+    {
+      "id": "ex-084-calendar-fill",
+      "archetype": "calendar-fill",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title1",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title2",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "resultStat",
+            "role": "stat",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "ctaText",
+            "role": "cta",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "claim",
+          "stat",
+          "cta"
+        ]
+      },
+      "render": "stage-motion",
+      "source": "brand/video-templates/templates/thirty-day-challenge.jsx",
+      "stage": {
+        "duration": 8,
+        "width": 1080,
+        "height": 1920,
+        "fps": 30
+      }
+    },
+    {
+      "id": "ex-085-leaderboard-roll",
+      "archetype": "leaderboard-roll",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title1",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title2",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "boardUnit",
+            "role": "stat",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "ctaText",
+            "role": "cta",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "claim",
+          "stat",
+          "cta"
+        ]
+      },
+      "render": "stage-motion",
+      "source": "brand/video-templates/templates/top10-leaderboard.jsx",
+      "stage": {
+        "duration": 7,
+        "width": 1080,
+        "height": 1920,
+        "fps": 30
+      }
+    },
+    {
+      "id": "ex-087-velocity-gauge",
+      "archetype": "velocity-gauge",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title1",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title2",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "subhead",
+            "role": "reframe",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "targetValue",
+            "role": "stat",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "peakValue",
+            "role": "stat",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "maxValue",
+            "role": "stat",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "ctaText",
+            "role": "cta",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "claim",
+          "reframe",
+          "stat",
+          "cta"
+        ]
+      },
+      "render": "stage-motion",
+      "source": "brand/video-templates/templates/vbt-bar-speed.jsx",
+      "stage": {
+        "duration": 7,
+        "width": 1080,
+        "height": 1920,
+        "fps": 30
+      }
+    },
+    {
+      "id": "ex-089-anatomy-diagram",
+      "archetype": "anatomy-diagram",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title1",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title2",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "ctaText",
+            "role": "cta",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "claim",
+          "cta"
+        ]
+      },
+      "render": "stage-motion",
+      "source": "brand/video-templates/templates/anatomy-lesson.jsx",
+      "stage": {
+        "duration": 8,
+        "width": 1080,
+        "height": 1920,
+        "fps": 30
       }
     }
   ]
