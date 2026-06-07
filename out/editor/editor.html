@@ -525,6 +525,8 @@
     /* Hover-link: glow a markup's on-canvas mark + its comment row together */
     [data-markup].mk-highlight { filter: drop-shadow(0 0 4px #fff) drop-shadow(0 0 7px #fff); }
     .markup-item.mk-highlight { filter: none; background: var(--sel); border: 1px solid var(--red); }
+    .markup-item.mk-active { background: var(--sel); border-left: 3px solid var(--red); }
+    .markup-item.mk-active .markup-num { background: var(--red); color: #fff; }
     .markup-item { transition: background-color 0.12s ease; }
     /* All-copy list rows (COPY tab) */
     .copy-row { display: flex; flex-direction: column; gap: 4px; padding: 8px; background: var(--panel-2); border-radius: 6px; margin-bottom: 8px; }
@@ -3851,7 +3853,7 @@
         a.target.selector.region = 'xywh=pixel:' + Math.round(bb.x) + ',' + Math.round(bb.y) + ',' + Math.round(bb.w) + ',' + Math.round(bb.h);
         resetDrawGesture();
         saveMarkup(); renderMarkupOverlays(); renderMarkupList(); renderTransport();
-        applyMarkupVisibility(state.previewTime);          // ensure the just-drawn mark is shown
+        setActiveMarkup(a.id);                             // this drawn note is now the only one shown
         const cl = designToClient(bb.x + bb.w, bb.y);      // comment box near the shape's top-right
         openCommentBox(a, cl.x, cl.y);
         return;
@@ -3897,7 +3899,7 @@
     }
     function newAnnotation(p, ts) {
       const sel = { type: 'FragmentSelector', conformsTo: 'http://www.w3.org/TR/media-frags/' };
-      if (ts != null) { sel.timestamp = +ts.toFixed(2); sel.tEnd = +(ts + MARKUP_WINDOW).toFixed(2); }
+      if (ts != null) { sel.timestamp = +ts.toFixed(2); } // single-frame anchor (no default range; tEnd stays optional for future ranges)
       const a = { id: 'an-' + Math.random().toString(36).slice(2, 8), type: 'Annotation', target: { selector: sel }, metadata: { comment: '', color: _draw.color, x: Math.round(p.x), y: Math.round(p.y), shapes: [] }, createdAt: new Date().toISOString() };
       _markup.push(a); return a;
     }
@@ -3944,13 +3946,31 @@
       });
       applyMarkupVisibility(state.previewTime);
     }
-    // Editor-only time-gating (markup is never exported). On an image creative
-    // (no video clock) every note is always shown.
+    // Editor-only visibility for the ON-CANVAS markup (never exported). One-at-a-time
+    // (Frame.io-style): when a note is "active" (just drawn / its comment clicked) only
+    // that circle shows; otherwise, during playback/scrub a circle shows only when the
+    // playhead is on its frame. Image creatives have no clock → show all.
+    // Scoped to the stage so it can NEVER touch the comment-list rows (they also carry
+    // data-markup for hover-linking).
     function applyMarkupVisibility(t) {
       const gate = isVideoCreative();
+      const active = state.activeMarkup;
       const shown = {};
-      for (const a of _markup) { let vis = true; if (gate) { const ts = aTime(a); if (ts != null) vis = (t >= ts - 0.2 && t <= aTEnd(a) + 0.05); } shown[a.id] = vis; }
-      document.querySelectorAll('[data-markup]').forEach((n) => { n.style.display = shown[n.getAttribute('data-markup')] ? '' : 'none'; });
+      for (const a of _markup) {
+        let vis;
+        if (!gate) vis = true;                               // image: always show all
+        else if (active) vis = (a.id === active);            // video + active: only the active note
+        else { const ts = aTime(a); vis = (ts == null) ? true : (Math.abs(t - ts) <= 0.35); } // playback: on its frame
+        shown[a.id] = vis;
+      }
+      const inner = stageInner();
+      (inner ? inner.querySelectorAll('[data-markup]') : []).forEach((n) => { n.style.display = shown[n.getAttribute('data-markup')] ? '' : 'none'; });
+    }
+    // Make one note "active" (its circle is the only one shown) + flag its list row.
+    function setActiveMarkup(id) {
+      state.activeMarkup = id || null;
+      applyMarkupVisibility(state.previewTime);
+      document.querySelectorAll('#markupList .markup-item').forEach((r) => r.classList.toggle('mk-active', r.getAttribute('data-markup') === state.activeMarkup));
     }
     // Link a comment row to its on-canvas mark: glow the shape/pin + the list row together.
     function highlightMarkup(id, on) {
@@ -3964,7 +3984,7 @@
       if (ts != null) state.previewTime = ts;          // stamp + gate on the SAME value
       const a = newAnnotation(p, ts);
       saveMarkup(); renderMarkupOverlays(); renderMarkupList(); renderTransport();
-      applyMarkupVisibility(state.previewTime);         // ensure the new mark is shown
+      setActiveMarkup(a.id);                            // this note is now the only one shown
       openCommentBox(a, e.clientX, e.clientY);
     }
     function openCommentBox(a, clientX, clientY) {
@@ -3987,7 +4007,7 @@
       const ts = aTime(a); if (ts == null) return;
       pausePreview(); state.previewTime = ts;
       const v = state._previewVideo; if (v) { try { v.currentTime = clipStartSec() + ts; } catch (e) {} }
-      applyMarkupVisibility(ts); updateTransportPlayhead();
+      setActiveMarkup(a.id); updateTransportPlayhead();    // show ONLY this note's circle
     }
     function renderMarkupList() {
       const list = $('markupList'); if (!list) return;
@@ -3995,8 +4015,9 @@
       if (!_markup.length) { list.innerHTML = '<div class="ed-empty">No notes yet. In markup mode, click the canvas (or draw a circle) to leave timestamped feedback.</div>'; return; }
       const ordered = _markup.slice().sort((x, y) => (aTime(x) ?? 1e9) - (aTime(y) ?? 1e9));
       for (const a of ordered) {
-        const row = document.createElement('div'); row.className = 'markup-item'; row.setAttribute('data-markup', a.id);
+        const row = document.createElement('div'); row.className = 'markup-item' + (state.activeMarkup === a.id ? ' mk-active' : ''); row.setAttribute('data-markup', a.id);
         row.onmouseenter = () => highlightMarkup(a.id, true); row.onmouseleave = () => highlightMarkup(a.id, false);
+        row.addEventListener('click', (ev) => { if (ev.target.closest('textarea,button')) return; if (aTime(a) != null) seekMarkup(a); else setActiveMarkup(a.id); });
         const num = document.createElement('div'); num.className = 'markup-num'; num.textContent = _markup.indexOf(a) + 1;
         const wrap = document.createElement('div'); wrap.style.cssText = 'flex:1;display:flex;flex-direction:column;gap:3px;min-width:0;';
         const ts = aTime(a);
@@ -4024,6 +4045,7 @@
     }
     function playPreview() {
       state.previewPlaying = true;
+      setActiveMarkup(null);   // hitting play drops the selection → circles only flash at their own frames
       const v = state._previewVideo; if (v) { try { v.currentTime = clipStartSec() + (state.previewTime || 0); } catch (e) {} v.play && v.play().catch(() => {}); }
       syncTransportBtn();
     }
@@ -4042,7 +4064,7 @@
       const ph = document.createElement('div'); ph.id = 'transportPlayhead'; track.appendChild(ph);
       const D = previewDur();
       if (D) for (const a of _markup) { const ts = aTime(a); if (ts == null) continue; const dot = document.createElement('div'); dot.className = 'transport-marker'; dot.style.left = (ts / D * 100) + '%'; dot.title = a.metadata.comment || 'note'; dot.onclick = (e) => { e.stopPropagation(); seekMarkup(a); }; track.appendChild(dot); }
-      const seekToPx = (clientX) => { const r = track.getBoundingClientRect(); const dd = previewDur(); if (!dd) return; const t = Math.max(0, Math.min(dd, ((clientX - r.left) / r.width) * dd)); pausePreview(); state.previewTime = t; const v = state._previewVideo; if (v) { try { v.currentTime = clipStartSec() + t; } catch (e) {} } applyMarkupVisibility(t); updateTransportPlayhead(); };
+      const seekToPx = (clientX) => { const r = track.getBoundingClientRect(); const dd = previewDur(); if (!dd) return; const t = Math.max(0, Math.min(dd, ((clientX - r.left) / r.width) * dd)); pausePreview(); state.previewTime = t; const v = state._previewVideo; if (v) { try { v.currentTime = clipStartSec() + t; } catch (e) {} } setActiveMarkup(null); updateTransportPlayhead(); }; // scrub drops the selection → show the note at this frame
       let dragging = false;
       track.addEventListener('pointerdown', (e) => { dragging = true; track.setPointerCapture && track.setPointerCapture(e.pointerId); seekToPx(e.clientX); });
       track.addEventListener('pointermove', (e) => { if (dragging) seekToPx(e.clientX); });
