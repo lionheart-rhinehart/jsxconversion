@@ -318,3 +318,29 @@ test("INTEG P4: stamping _approvedTrims into a STATIC edits config suppresses th
       "the approved static trim no longer re-flags");
   } finally { cleanup(); }
 });
+
+// ── G3: generation-engine example-binding gate ───────────────────────────────
+const _aVios = (r) => Object.values(r.assets).flatMap((a) => a.violations || []);
+const _hasExBind = (r) => _aVios(r).some((v) => v.rule === "exampleBinding" && v.severity === "block");
+
+test("INTEG G3: a fresh creative with no exampleId blocks (non-grandfathered); grandfathered is exempt", () => {
+  const fresh = { brand: null, angles: [{ id: "a", assets: [{ id: "F1", source: "fresh", format: "static", media: "x.jpg" }] }] };
+  const { slug, cleanup } = tmpCampaign({});
+  try {
+    const r = validatePlan(fresh, { campaign: slug, grandfatherSet: new Set(), env: {} });
+    assert.ok(_hasExBind(r), "fresh asset without exampleId must block");
+    assert.ok(r.blocking > 0);
+    const gf = validatePlan(fresh, { campaign: slug, grandfatherSet: new Set([slug.toLowerCase()]), env: {} });
+    assert.equal(_hasExBind(gf), false, "grandfathered fresh campaign must NOT be retroactively blocked");
+  } finally { cleanup(); }
+});
+
+test("INTEG G3: a fresh creative WITH exampleId does not trip the gate; a legacy template asset never does", () => {
+  const bound = { brand: null, angles: [{ id: "a", assets: [{ id: "F1", source: "fresh", format: "static", media: "x.jpg", exampleId: "ex-001-giant-stat", archetype: "giant-stat" }] }] };
+  const legacy = { brand: null, angles: [{ id: "a", assets: [{ id: "T1", format: "static", template: "cluster-30", media: "x.jpg" }] }] };
+  const { slug, cleanup } = tmpCampaign({});
+  try {
+    assert.equal(_hasExBind(validatePlan(bound, { campaign: slug, grandfatherSet: new Set(), env: {} })), false, "a bound fresh asset must not trip exampleBinding");
+    assert.equal(_hasExBind(validatePlan(legacy, { campaign: slug, grandfatherSet: new Set(), env: {} })), false, "a non-fresh template asset must never trip exampleBinding");
+  } finally { cleanup(); }
+});

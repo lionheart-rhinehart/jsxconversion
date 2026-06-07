@@ -48,6 +48,7 @@ import { validatePlan, writeValidationReport } from "./validate-plan.mjs";
 import { forceUnsafeAllowed, OVERRIDE_ENV } from "./lib/human-override.mjs";
 import { verifyRender } from "./lib/render-qa.mjs";
 import { loadBrandFile } from "./lib/brand-kit.mjs";
+import { uniquenessProblems } from "./lib/uniqueness.mjs";
 import { stageKitFonts } from "./lib/fonts-stage.mjs";
 import { checkRenderEnv, formatRenderEnvError, REQUIRED_FONT_FAMILIES } from "./lib/preflight.mjs";
 import { capBgExtraction } from "./lib/clip-cap.mjs";
@@ -840,26 +841,7 @@ function isVideoLayerConfig(asset) {
 // skeleton up to the cap still render. Media reuse always warns; in strict mode it
 // throws. Validates the authored plan as a whole (independent of --only).
 function validateUniqueness(plan) {
-  const cap = (plan.knobs && plan.knobs.repetitionCap) || 3;
-  const strict = cap === 1;
-  const push = (map, k, v) => { if (!map.has(k)) map.set(k, []); map.get(k).push(v); };
-  const problems = [];
-  for (const angle of plan.angles || []) {
-    const assets = angle.assets || [];
-    const mediaMap = new Map();
-    const tplMap = new Map();
-    for (const a of assets) {
-      const m = a.media || a.clip || a.photo;
-      if (m) push(mediaMap, m, a.id);
-      if (a.template) push(tplMap, a.template, a.id);
-    }
-    for (const [m, ids] of mediaMap) {
-      if (ids.length > 1) problems.push(`[${angle.id}] media "${m}" reused by ${ids.join(", ")}`);
-    }
-    for (const [tpl, ids] of tplMap) {
-      if (ids.length > cap) problems.push(`[${angle.id}] template "${tpl}" used ${ids.length}× (cap ${cap}) by ${ids.join(", ")}`);
-    }
-  }
+  const { cap, strict, problems } = uniquenessProblems(plan);
   if (!problems.length) return;
   const msg = `uniqueness check failed:\n  - ${problems.join("\n  - ")}`;
   if (strict) throw new Error(msg);

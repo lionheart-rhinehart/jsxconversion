@@ -378,6 +378,17 @@ export function validatePlan(plan, opts = {}) {
         continue;
       }
 
+      // Generation engine — a fresh creative MUST be bound to an example (proof the
+      // engine actually selected from the library, not skipped it). Scoped to fresh +
+      // non-grandfathered so grandfathered fresh campaigns that predate the example
+      // library (e.g. velocity-code-youth) aren't retroactively blocked. Mirrors the
+      // copyLibrary scope above.
+      if (asset.source === "fresh" && !isStr(asset.exampleId) && !isGrandfathered(campaign, grandfatherSet)) {
+        add("exampleBinding", "block",
+          `fresh creative not bound to an example (no exampleId) — example-selection was skipped`,
+          { fixHint: "run the engine's select step (scripts/lib/example-select.mjs) so the asset carries exampleId + archetype" });
+      }
+
       const letter = beatLetter(asset.beat);
       if (letter) beatLetters.add(letter);
       const idx = isStr(asset.template) ? roleIndex[asset.template] : null;
