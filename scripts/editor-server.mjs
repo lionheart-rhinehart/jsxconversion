@@ -36,6 +36,7 @@ import { loadCopyLibrary } from "./lib/copy-library.mjs";
 import { validatePlan } from "./validate-plan.mjs";
 import { scopeMediaRoots, listingRoots, isAABrand } from "./lib/media-scope.mjs";
 import { STATIC_ROOTS, findTemplate, listTemplates, assetsDirFor } from "./lib/template-roots.mjs";
+import { configHasVideoBackground } from "./lib/layer-config-video.mjs";
 
 const PORT = Number(process.env.EDITOR_PORT) || 5173;
 // Hard ceiling for a single-asset render (J): a hung render (the 7-sec clip that
@@ -372,6 +373,43 @@ const server = createServer(async (req, res) => {
       return;
     }
     const jsxPath = found.jsxPath;
+
+    // Phase C — text-on-video → MP4. A layer config whose background is a VIDEO
+    // renders through the staged-Stage path (out/<id>.mp4) instead of the static
+    // PNG renderer. Detect from the on-disk config (the editor saves it before
+    // rendering). A plain photo background keeps the existing PNG path below.
+    let videoBg = false;
+    try {
+      videoBg = found.configPath && existsSync(found.configPath)
+        && configHasVideoBackground(JSON.parse(readFileSync(found.configPath, "utf8")));
+    } catch { videoBg = false; }
+    if (videoBg) {
+      // Spawn the module CLI (async, non-blocking — same close-guard tree-kill as
+      // the PNG path) so a long video render never freezes the editor event loop.
+      const vproc = spawn(
+        "node",
+        ["scripts/lib/layer-config-video.mjs", found.configPath, `--id=${id}`],
+        { cwd: PROJECT_ROOT },
+      );
+      let vout = "", verr = "", vdone = false;
+      req.on("close", () => {
+        if (vdone) return; vdone = true;
+        try {
+          if (process.platform === "win32") spawn("taskkill", ["/PID", String(vproc.pid), "/T", "/F"]);
+          else vproc.kill("SIGTERM");
+        } catch (_) {}
+      });
+      vproc.stdout.on("data", (d) => (vout += d));
+      vproc.stderr.on("data", (d) => (verr += d));
+      vproc.on("exit", (code) => {
+        if (vdone) return; vdone = true;
+        sendJson(res, code === 0 ? 200 : 500, {
+          exitCode: code, format: "video", out: `out/${id}.mp4`,
+          stdout: vout.slice(-2000), stderr: verr.slice(-2000),
+        });
+      });
+      return;
+    }
 
     const proc = spawn(
       "node",

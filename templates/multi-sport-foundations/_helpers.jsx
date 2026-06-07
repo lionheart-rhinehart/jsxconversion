@@ -808,7 +808,12 @@ export function renderTextLayer(el, key) {
 // foreground 100. Templates that interleave layers (e.g. cluster-8 splits its
 // city text behind the cutout and its bottom-band text in front) set explicit
 // `z` per item to express that order.
-export function LayerStack({ config }) {
+//
+// `background` is optional and inert for every existing caller (none pass it →
+// the Frame keeps its INK_950 fill). The Phase-C video wrapper passes
+// "transparent" so the overlay layers paint over a separate full-bleed video
+// background that sits BEHIND this Frame, instead of being hidden by it.
+export function LayerStack({ config, background }) {
   const W = config.width || 1080;
   const H = config.height || 1920;
   const layers = [];
@@ -831,7 +836,7 @@ export function LayerStack({ config }) {
   layers.sort((a, b) => (a.z - b.z) || (a.i - b.i));
 
   return (
-    <Frame width={W} height={H} background={INK_950}>
+    <Frame width={W} height={H} background={background || INK_950}>
       {layers.map((layer, idx) => {
         const d = layer.data;
         const key = d.id || `${layer.kind}-${idx}`;

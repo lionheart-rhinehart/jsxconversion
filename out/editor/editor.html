@@ -1194,10 +1194,26 @@
       if (typeof syncMoveable === 'function') syncMoveable();
     }
 
+    // Is a media path a video clip? (Phase C — a video background renders to MP4.)
+    function isVideoPath(p) { return /\.(mp4|mov|webm|m4v|mkv)(\?|$)/i.test(String(p || '')); }
+
     // Background photo node (cover-fit + crop/offset/scale via repositionPhoto).
     function renderMediaNode(media) {
       const W = state.config.width || 1080;
       const H = state.config.height || 1920;
+      // Phase C: a VIDEO background previews as a muted, looping, cover-fit <video>
+      // (the same clip the MP4 render extracts to frames). Pan/zoom/crop stay
+      // photo-only — for a clip the full-frame cover-fit is the placement.
+      if (media.path && isVideoPath(media.path)) {
+        const vid = document.createElement('video');
+        vid.className = 'preview';
+        vid.muted = true; vid.loop = true; vid.autoplay = true; vid.playsInline = true; vid.preload = 'auto';
+        vid.style.cssText = 'position:absolute;left:0;top:0;display:block;width:' + W + 'px;height:' + H + 'px;object-fit:cover;user-select:none;pointer-events:none;';
+        vid.src = state.mediaBase + media.path.replace(/^\.\//, '');
+        vid.onerror = () => { vid.style.background = '#222'; };
+        vid.play && vid.play().catch(() => {});
+        return vid;
+      }
       const img = document.createElement('img');
       img.className = 'preview';
       img.style.position = 'absolute';
@@ -2641,8 +2657,9 @@
       });
     }
     async function placeDriveFile(file) {
-      if (file.type !== 'image') { $('driveMsg').textContent = '▶ Preview only — video as background lands in the video editor (Phase C).'; return; }
-      $('driveMsg').textContent = 'Placing…';
+      // Phase C: a Drive VIDEO can now be set as the background (renders to MP4).
+      if (file.type !== 'image' && file.type !== 'video') { $('driveMsg').textContent = '▶ Preview only — pick an image or video.'; return; }
+      $('driveMsg').textContent = file.type === 'video' ? 'Placing video background…' : 'Placing…';
       try {
         const j = await fetch('/drive/place', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: file.id }) }).then((r) => r.json());
         if (!j.file) throw new Error(j.error || 'place failed');
@@ -2829,8 +2846,10 @@
         }
       }
       async function placeKrakenFile(folder, file, tile) {
-        if (file.type !== 'image') { setMsg('▶ Preview only for now — selecting a video as the background lands in the video editor (Phase C). Pick an image to place it.'); return; }
-        setBusy(true); setMsg('Placing ' + (file.title || file.id) + '…');
+        // Phase C: a VIDEO can now be the background (renders to MP4). Only animated
+        // GIFs (type 'gif') still aren't a video-bg target here — they place as a still.
+        if (file.type !== 'image' && file.type !== 'video') { setMsg('▶ Preview only — pick an image or video to place it.'); return; }
+        setBusy(true); setMsg('Placing ' + (file.title || file.id) + (file.type === 'video' ? ' (video background)…' : '…'));
         try {
           const wsName = (workspaces.find((w) => w.id === wsSel.value) || {}).name || wsSel.value;
           const r = await fetch('/kraken/pull-file', {
@@ -3004,7 +3023,11 @@
       const r = await triggerRender(state.cluster);
       if (r.exitCode === 0) {
         const camp = parseCampId(state.cluster);
-        setStatus('Rendered ' + (camp ? (r.output || state.cluster) : state.cluster + '.png') + ' ✓');
+        // Phase C: a video-background creative renders to MP4 (out/<id>.mp4), not PNG.
+        const outLabel = camp
+          ? (r.output || state.cluster)
+          : (r.format === 'video' ? (r.out || (state.cluster + '.mp4')) : (state.cluster + '.png'));
+        setStatus('Rendered ' + outLabel + ' ✓' + (r.format === 'video' ? ' — open it from the out/ folder' : ''));
         renderStage();
         // B4: this editor runs cross-origin inside the review page's iframe
         // (:5173 ↔ :5599), so the parent can't read our DOM. Tell it the render

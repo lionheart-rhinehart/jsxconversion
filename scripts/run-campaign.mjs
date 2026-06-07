@@ -52,6 +52,7 @@ import { stageKitFonts } from "./lib/fonts-stage.mjs";
 import { checkRenderEnv, formatRenderEnvError, REQUIRED_FONT_FAMILIES } from "./lib/preflight.mjs";
 import { capBgExtraction } from "./lib/clip-cap.mjs";
 import { STATIC_ROOTS, findTemplate } from "./lib/template-roots.mjs";
+import { renderLayerConfigVideo, configHasVideoBackground } from "./lib/layer-config-video.mjs";
 
 const PROJECT_ROOT = resolve(".");
 const CAMPAIGNS_DIR = join(PROJECT_ROOT, "campaigns");
@@ -449,6 +450,84 @@ async function renderTemplateStatic(asset, angleId) {
   return { ok: true, produced, ext: "png" };
 }
 
+// template (LAYER CONFIG) + video/gif: text-on-video → MP4 (Phase C). A layer
+// config (the editor's document model — background + positioned overlays) whose
+// background is a VIDEO renders through the staged-Stage path, NOT the motion-JSX
+// path (renderTemplateMotion) and NOT the still PNG path (renderTemplateStatic).
+// Reached ONLY via the dispatch discriminator below: format∈{video,gif} AND the
+// template resolves to a layer config (not a brand/video-templates/templates/*.jsx
+// motion JSX). Mirrors renderTemplateStatic's edit-first config resolution, then
+// hands the config (with a video media bg) to renderLayerConfigVideo.
+async function renderTemplateVideoConfig(asset, angleId, wantGif) {
+  const clusterId = asset.template;
+  const _t = clusterId ? findTemplate(clusterId, campaign) : null;
+  if (!_t) return { ok: false, error: `template "${clusterId}" not found in any template root` };
+  const TEMPLATE_DIR = _t.dir;
+  const editsPath = editsConfigPath(angleId, asset.id);
+  let config;
+  let isFresh = false;
+  if (existsSync(editsPath)) {
+    config = JSON.parse(readFileSync(editsPath, "utf8"));
+  } else {
+    const ang = (plan.angles || []).find((a) => a.id === angleId);
+    const location = asset.location || (ang && ang.location) || plan.location || null;
+    config = resolveStaticConfig({ clusterId, asset, brand, location, campaign, templateDir: TEMPLATE_DIR, dataDir: DATA_DIR });
+    if (!config) return { ok: false, error: `could not resolve config for "${clusterId}"` };
+    isFresh = true;
+  }
+  // Apply the picked video background (editor pick or repurpose clone). Unlike the
+  // static path we KEEP it as a video (no still-frame): stage it under the template
+  // assets/ and point config.media at it. On the edits path only an explicit pick
+  // overrides (never clobber a hand-swapped bg). photo wins over clip wins over media.
+  const sbg = isFresh ? (asset.clip || asset.photo || asset.media) : (asset.clip || asset.photo);
+  if (sbg) {
+    const baseName = (p) => String(p).split(/[\\/]/).pop();
+    const assetsDir = join(TEMPLATE_DIR, "assets");
+    let mediaRel = (/^\.\/assets\//.test(String(sbg))
+      && existsSync(join(TEMPLATE_DIR, String(sbg).replace(/^\.\//, "")))) ? String(sbg) : null;
+    if (!mediaRel) {
+      let absSrc = join(TEMPLATE_DIR, String(sbg).replace(/^\.\//, ""));
+      if (!existsSync(absSrc)) { const p2 = join(PROJECT_ROOT, sbg); if (existsSync(p2)) absSrc = p2; }
+      if (existsSync(absSrc)) {
+        mkdirSync(assetsDir, { recursive: true });
+        const staged = "bg-" + baseName(absSrc).replace(/[^a-z0-9.]+/gi, "-").toLowerCase();
+        copyFileSync(absSrc, join(assetsDir, staged));
+        mediaRel = "./assets/" + staged;
+      }
+    }
+    if (mediaRel) {
+      config.media = { ...(config.media || {}), path: mediaRel, tag: "bg_media", z: 0 };
+      if (asset.mediaStart != null) config.media.clipStart = asset.mediaStart;
+      // Legibility over footage: scrim + per-text drop-shadow (same as the static path).
+      config.fixedDesign = config.fixedDesign || [];
+      if (!config.fixedDesign.some((e) => e && e.id === "_bg_scrim")) {
+        config.fixedDesign.unshift({ id: "_bg_scrim", tag: "_bg_scrim", type: "rect", x: 0, y: 0,
+          width: config.width || 1080, height: config.height || 1920,
+          fill: "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)", z: 1 });
+      }
+      for (const el of config.elements || []) {
+        if (typeof el.text === "string" && el.textShadow == null) el.textShadow = "0 2px 12px rgba(0,0,0,0.92)";
+      }
+    }
+  }
+  if (isFresh) {
+    mkdirSync(dirname(editsPath), { recursive: true });
+    writeFileSync(editsPath, JSON.stringify(config, null, 2));
+  }
+  if (!configHasVideoBackground(config)) {
+    return { ok: false, error: `asset ${asset.id} is video format but its layer config has no video background (config.media.path is not a clip)` };
+  }
+  const id = `${clusterId}.camp-${slug(campaign)}-${slug(angleId)}-${slug(asset.id)}`;
+  // Audio (editor A2 picker persists asset.audio = { src, startAt, volume, fadeIn, fadeOut }).
+  const audio = (asset.audio && asset.audio.src) ? asset.audio : null;
+  const res = await renderLayerConfigVideo({
+    id, config, templateDir: TEMPLATE_DIR, projectRoot: PROJECT_ROOT, outDir: OUT_DIR,
+    audio, wantGif,
+  });
+  if (!res.ok) return { ok: false, error: res.reason || "layer-config video render failed" };
+  return { ok: true, produced: res.produced, ext: res.ext };
+}
+
 // template + motion: wrapper variation in brand/video-templates/ (so animations.jsx
 // + elements/* are siblings) that renders the bank template in a <Stage>, with
 // per-asset copy delivered via <id>.data.json → window.__CONFIG__.
@@ -727,16 +806,29 @@ async function renderFresh(asset, angleId) {
     return { ok: false, pending: true,
       error: "fresh asset not composed yet — run compose-creative to author it (it sets asset.template)" };
   }
-  const authored = asset.format === "static"
-    ? !!findTemplate(asset.template, campaign)
-    : existsSync(join(VIDEO_DIR, "templates", `${asset.template}.jsx`));
+  const motionJsx = existsSync(join(VIDEO_DIR, "templates", `${asset.template}.jsx`));
+  const layerCfg = !!findTemplate(asset.template, campaign);
+  const authored = asset.format === "static" ? layerCfg : (motionJsx || layerCfg);
   if (!authored) {
     return { ok: false, pending: true,
       error: `fresh template "${asset.template}" not authored yet — run compose-creative first` };
   }
-  return asset.format === "static"
-    ? renderTemplateStatic(asset, angleId)
-    : renderTemplateMotion(asset, angleId, asset.format === "gif");
+  if (asset.format === "static") return renderTemplateStatic(asset, angleId);
+  // video/gif: a motion JSX → the choreographed motion path; a layer config (no
+  // motion JSX) → the Phase-C text-on-video path.
+  if (!motionJsx && layerCfg) return renderTemplateVideoConfig(asset, angleId, asset.format === "gif");
+  return renderTemplateMotion(asset, angleId, asset.format === "gif");
+}
+
+// Dispatch discriminator (Phase C): a video/gif asset whose template is a LAYER
+// CONFIG (resolves via findTemplate) and NOT a brand/video-templates/templates/*.jsx
+// motion JSX routes to the text-on-video path. The exact AND-NOT guard stops an
+// existing static cluster mistakenly tagged format:video from mis-routing.
+function isVideoLayerConfig(asset) {
+  if (asset.format !== "video" && asset.format !== "gif") return false;
+  if (!asset.template) return false;
+  if (existsSync(join(VIDEO_DIR, "templates", `${asset.template}.jsx`))) return false; // motion JSX wins
+  return !!findTemplate(asset.template, campaign);
 }
 
 // ── uniqueness guard ─────────────────────────────────────────────────────────
@@ -840,6 +932,7 @@ async function main() {
       try {
         if (asset.source === "fresh") res = await renderFresh(asset, angle.id);
         else if (asset.format === "static") res = await renderTemplateStatic(asset, angle.id);
+        else if (isVideoLayerConfig(asset)) res = await renderTemplateVideoConfig(asset, angle.id, asset.format === "gif");
         else res = await renderTemplateMotion(asset, angle.id, asset.format === "gif");
       } catch (e) {
         res = { ok: false, error: e.message };

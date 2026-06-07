@@ -1,0 +1,58 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/clip.mp4",
+    "tag": "bg_media",
+    "z": 0,
+    "clipStart": 0,
+    "clipEnd": 4
+  },
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.45) 0%, rgba(10,11,13,0.25) 45%, rgba(10,11,13,0.88) 100%)",
+      "z": 1
+    }
+  ],
+  "elements": [
+    {
+      "id": "headline",
+      "type": "text",
+      "tag": "headline",
+      "text": "EXPLOSIVE\nPOWER",
+      "x": 80,
+      "y": 1400,
+      "width": 920,
+      "fontSize": 150,
+      "fontWeight": 800,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.95,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 18px rgba(0,0,0,0.92)",
+      "z": 20
+    },
+    {
+      "id": "sub",
+      "type": "text",
+      "tag": "microscript",
+      "text": "TRAINED EVERY SESSION",
+      "x": 82,
+      "y": 1700,
+      "fontSize": 42,
+      "fontWeight": 600,
+      "fontFamily": "JetBrains Mono",
+      "color": "#c4141d",
+      "letterSpacing": "0.04em",
+      "textTransform": "uppercase",
+      "z": 21
+    }
+  ]
+}
