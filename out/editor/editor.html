@@ -648,6 +648,8 @@
     </aside>
   </main>
 
+  <!-- Phase B: moveable (vendored UMD, MIT) → drag/resize/rotate handles + Canva alignment guides -->
+  <script src="/out/editor/vendor/moveable.min.js"></script>
   <script>
     // ===== State =====
     const state = {
@@ -1181,6 +1183,9 @@
       inner.appendChild(frameOutline);
 
       stage.appendChild(inner);
+      // Phase B: re-point/attach moveable to the (rebuilt) selected node. No-op while
+      // an old multi-drag is mid-gesture (guarded inside syncMoveable).
+      if (typeof syncMoveable === 'function') syncMoveable();
     }
 
     // Background photo node (cover-fit + crop/offset/scale via repositionPhoto).
@@ -2273,6 +2278,75 @@
       state.selectedIds = id ? [id] : [];
       applySelectionClasses();
       renderProps();
+      syncMoveable();
+    }
+
+    // ===== Phase B: moveable — drag/resize/rotate handles + Canva alignment guides =====
+    // Scoped to a SINGLE selected TEXT layer. moveable owns that element's drag/resize/
+    // rotate (and shows snap/alignment guides against the other layers + the frame); the
+    // old multi-select drag still owns groups + shapes. Coordinates: moveable reports in
+    // client px; the stage-inner is CSS-scaled by state.scale, so design px = client / scale.
+    let _moveable = null;
+    function detachMoveable() { if (_moveable) { try { _moveable.destroy(); } catch (_) {} _moveable = null; } }
+    function moveableGuidelines(exceptId) {
+      // Other text boxes + shapes + the frame outline = things to snap/measure against.
+      return Array.from(document.querySelectorAll('.element-box, .fixed-design-item, .frame-outline'))
+        .filter((n) => n.dataset.id !== exceptId);
+    }
+    function syncMoveable() {
+      if (typeof Moveable === 'undefined') return;     // UMD not loaded → no-op
+      if (state.drag) return;                          // don't churn during the old multi-drag
+      const single = state.selectedIds.length <= 1 && state.selectedId;
+      const el = single && state.config && (state.config.elements || []).find((e) => e.id === state.selectedId);
+      const node = el && document.querySelector('.element-box[data-id="' + state.selectedId + '"]');
+      if (!el || !node) { detachMoveable(); return; }
+      const guides = moveableGuidelines(state.selectedId);
+      if (_moveable) { _moveable.target = node; _moveable.elementGuidelines = guides; _moveable.updateRect(); return; }
+      const S = () => state.scale || 1;
+      let dragStart = null, rotStart = 0;
+      // Container = document.body (NOT #stage): renderStage() wipes #stage on every
+      // rebuild, which would destroy moveable's control box. Body-level handles survive;
+      // syncMoveable re-points the target + updateRect() after each rebuild.
+      _moveable = new Moveable(document.body, {
+        target: node, draggable: true, resizable: true, rotatable: true,
+        snappable: true, elementGuidelines: guides, isDisplaySnapDigit: true, snapThreshold: 6,
+        snapDirections: { top: true, left: true, bottom: true, right: true, center: true, middle: true },
+        elementSnapDirections: { top: true, left: true, bottom: true, right: true, center: true, middle: true },
+        throttleDrag: 0, throttleRotate: 0, throttleResize: 0,
+      });
+      // Commit from the POINTER's client-px delta ÷ stage scale (robust: moveable's
+      // own dist/translate live in a transformed space and double-count the scale).
+      _moveable.on('dragStart', (e) => { snapshotForUndo(); dragStart = { x: el.x, y: el.y, cx: e.clientX, cy: e.clientY }; });
+      _moveable.on('drag', (e) => { e.target.style.transform = e.transform; });
+      _moveable.on('dragEnd', (e) => {
+        const last = e.lastEvent;
+        if (last && dragStart) {
+          el.x = Math.round(dragStart.x + (last.clientX - dragStart.cx) / S());
+          el.y = Math.round(dragStart.y + (last.clientY - dragStart.cy) / S());
+          renderStage();
+        }
+        dragStart = null;
+      });
+      _moveable.on('rotateStart', () => { rotStart = el.rotate || 0; });
+      _moveable.on('rotate', (e) => { e.target.style.transform = e.transform; });
+      _moveable.on('rotateEnd', (e) => {
+        if (!e.lastEvent) return;
+        let deg = Math.round(e.lastEvent.rotation); // absolute (moveable reads the box's current rotate)
+        // "Is it level?" + "parallel to neighbor": snap to 0/45/90/… and to any neighbor's angle (±4°).
+        const cands = [0, 45, 90, 135, 180, -45, -90, -135];
+        for (const o of (state.config.elements || [])) if (o.id !== el.id && typeof o.rotate === 'number') cands.push(o.rotate);
+        for (const c of cands) { if (Math.abs(((deg - c + 540) % 360) - 180) > 176) { deg = c; break; } }
+        snapshotForUndo(); el.rotate = deg; renderStage();
+      });
+      // Resize: moveable measures the target's offsetWidth (pre-parent-scale = design px),
+      // so e.width is already in design px — commit directly. Live-preview the width during drag.
+      _moveable.on('resizeStart', () => { snapshotForUndo(); });
+      _moveable.on('resize', (e) => { e.target.style.width = e.width + 'px'; });
+      _moveable.on('resizeEnd', (e) => {
+        if (!e.lastEvent) return;
+        el.width = Math.round(e.lastEvent.width);
+        renderStage();
+      });
     }
     // Shift-click: toggle a text layer in/out of the move group (primary follows
     // the last added). Only text-element ids participate in group move.
@@ -2295,6 +2369,9 @@
         // Plain click on a layer outside the current group → make it the sole
         // selection. Clicking a member of the group keeps the group (move all).
         if (!state.selectedIds.includes(el.id)) selectElement(el.id);
+        // Phase B: moveable owns a single-selected text layer's drag/resize/rotate
+        // (+ guides). Let it; the old handler stays for groups + pre-selection.
+        if (_moveable && state.selectedIds.length === 1 && state.selectedId === el.id) { e.preventDefault(); return; }
         const group = state.selectedIds
           .map((id) => state.config.elements.find((x) => x.id === id))
           .filter(Boolean)
