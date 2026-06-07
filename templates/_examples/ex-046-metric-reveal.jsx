@@ -3,11 +3,11 @@ const VW = 1080, VH = 1920;
 function MetricRingReveal() {
   const t = useTime();
   const ce = (start, dur = 0.5) => Easing.easeOutCubic(clamp((t - start) / dur, 0, 1));
-  const R = 300, C = 2 * Math.PI * R, TARGET = 0.9;
+  const R = 300, Cc = 2 * Math.PI * R, TARGET = 0.9;
   const eb = ce(0.1, 0.3);
-  const sweep = TARGET * ce(0.5, 1.4);          // ring fills 0 -> 90%
-  const dash = (C * sweep).toFixed(1) + " " + C.toFixed(1);
-  const val = Math.round(100 * sweep);          // center counter 0 -> 90
+  const sweep = TARGET * ce(0.5, 1.4);
+  const dash = (Cc * sweep).toFixed(1) + " " + Cc.toFixed(1);
+  const val = Math.round(100 * sweep);
   const head = ce(2.4, 0.5);
   const scene = (
     <div style={{ position: "absolute", inset: 0 }}>

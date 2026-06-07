@@ -98,13 +98,15 @@ function renderGif(ex, srcJsx) {
   }
   const chromePng = join(OUT_DIR, `${ex.id}.png`);
   if (!existsSync(chromePng)) return { id: ex.id, format: ex.format, ok: false, png: null, mp4: null, reason: "chrome png not produced" };
-  // 2) composite the clip behind the keyed chrome
+  // 2) composite the clip(s) behind the keyed chrome
   const g = ex.gif || {};
-  const clipPath = join(ROOT, g.clip || "");
-  if (!existsSync(clipPath)) return { id: ex.id, format: ex.format, ok: false, png: null, mp4: null, reason: `gif clip missing: ${g.clip} (run kraken-pull?)` };
+  const clips = (g.clips || []).map((c) => ({ clipPath: join(ROOT, c.clip || ""), rect: c.rect, grayscale: !!c.grayscale }));
+  for (const c of clips) {
+    if (!existsSync(c.clipPath)) return { id: ex.id, format: ex.format, ok: false, png: null, mp4: null, reason: `gif clip missing: ${c.clipPath} (run kraken-pull?)` };
+  }
   const outMp4 = join(OUT_DIR, `${ex.id}.mp4`);
   try {
-    composeGif({ chromePng, clipPath, rect: g.rect, durationSec: g.duration, outMp4 });
+    composeGif({ chromePng, clips, durationSec: g.duration, outMp4 });
   } catch (e) {
     return { id: ex.id, format: ex.format, ok: false, png: null, mp4: null, reason: `gif compose failed: ${e.message}` };
   }

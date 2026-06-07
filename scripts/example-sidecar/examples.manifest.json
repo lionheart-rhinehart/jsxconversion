@@ -1540,13 +1540,579 @@
       },
       "render": "gif-composite",
       "gif": {
-        "clip": "brand/aa-design-system/project/assets/clip-agility.mp4",
-        "rect": {
-          "x": 0,
-          "y": 0,
-          "w": 562,
-          "h": 1920
-        },
+        "clips": [
+          {
+            "clip": "brand/aa-design-system/project/assets/clip-agility.mp4",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 562,
+              "h": 1920
+            }
+          }
+        ],
+        "duration": 4
+      }
+    },
+    {
+      "id": "ex-048-metric-reveal",
+      "archetype": "metric-reveal",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "title",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "caption",
+            "role": "reframe",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "claim",
+          "reframe"
+        ]
+      }
+    },
+    {
+      "id": "ex-049-metric-reveal",
+      "archetype": "metric-reveal",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "label",
+            "role": "kicker",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "stat",
+            "role": "stat",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "sub",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "stat",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-050-kinetic-text",
+      "archetype": "kinetic-text",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "l1",
+            "role": "kicker",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "l2",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "l3",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "hook",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-051-kinetic-text",
+      "archetype": "kinetic-text",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "l1",
+            "role": "kicker",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "l2",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "l3",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "hook",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-052-list-steps",
+      "archetype": "list-steps",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "heading",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "step1",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "step2",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "step3",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "hook",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-053-list-steps",
+      "archetype": "list-steps",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "heading",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "step1",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "step2",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "step3",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "hook",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "ex-054-coach-portrait",
+      "archetype": "coach-portrait",
+      "format": "video",
+      "mediaStyleAccepts": [
+        "production:cinematic",
+        "subject:coach-face"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "name",
+            "role": "byline",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title",
+            "role": "byline",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "hook",
+          "byline"
+        ]
+      },
+      "render": "gif-composite",
+      "gif": {
+        "clips": [
+          {
+            "clip": "brand/kraken-cache/action-clip-band-work-high-school-female-jarosh-slide2of4-423c2eed.mp4",
+            "rect": {
+              "x": 497,
+              "y": 0,
+              "w": 583,
+              "h": 1920
+            }
+          }
+        ],
+        "duration": 4
+      }
+    },
+    {
+      "id": "ex-055-action-hero",
+      "archetype": "action-hero",
+      "format": "video",
+      "mediaStyleAccepts": [
+        "production:cinematic",
+        "subject:athlete-action"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "hook"
+        ]
+      },
+      "render": "gif-composite",
+      "gif": {
+        "clips": [
+          {
+            "clip": "brand/aa-design-system/project/assets/clip-box-jumps.mp4",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1080,
+              "h": 1920
+            }
+          }
+        ],
+        "duration": 4
+      }
+    },
+    {
+      "id": "ex-056-action-hero",
+      "archetype": "action-hero",
+      "format": "video",
+      "mediaStyleAccepts": [
+        "production:cinematic",
+        "subject:athlete-action"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "hook"
+        ]
+      },
+      "render": "gif-composite",
+      "gif": {
+        "clips": [
+          {
+            "clip": "brand/kraken-cache/action-clip-hurdling-high-school-male-jarosh-performance-mp4-95470554.mp4",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1080,
+              "h": 1920
+            }
+          }
+        ],
+        "duration": 4
+      }
+    },
+    {
+      "id": "ex-057-training-scene",
+      "archetype": "training-scene",
+      "format": "video",
+      "mediaStyleAccepts": [
+        "production:cinematic",
+        "subject:athlete-action",
+        "env:gym"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "byline",
+            "role": "byline",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "claim",
+          "byline"
+        ]
+      },
+      "render": "gif-composite",
+      "gif": {
+        "clips": [
+          {
+            "clip": "brand/kraken-cache/action-clip-sled-push-squat-jumping-strength-training-high-s-4b6c5551.mp4",
+            "rect": {
+              "x": 56,
+              "y": 80,
+              "w": 968,
+              "h": 1040
+            }
+          }
+        ],
+        "duration": 4
+      }
+    },
+    {
+      "id": "ex-058-training-scene",
+      "archetype": "training-scene",
+      "format": "video",
+      "mediaStyleAccepts": [
+        "production:cinematic",
+        "subject:athlete-action",
+        "env:gym"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "byline",
+            "role": "byline",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "claim",
+          "byline"
+        ]
+      },
+      "render": "gif-composite",
+      "gif": {
+        "clips": [
+          {
+            "clip": "brand/kraken-cache/action-clip-multiple-exercises-high-school-female-jarosh-16490074.mp4",
+            "rect": {
+              "x": 64,
+              "y": 660,
+              "w": 952,
+              "h": 560
+            }
+          }
+        ],
+        "duration": 4
+      }
+    },
+    {
+      "id": "ex-059-before-after-split",
+      "archetype": "before-after-split",
+      "format": "video",
+      "mediaStyleAccepts": [
+        "subject:athlete-action"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "beforeLabel",
+            "role": "kicker",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "afterLabel",
+            "role": "kicker",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "stat",
+            "role": "stat",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "stat"
+        ]
+      },
+      "render": "gif-composite",
+      "gif": {
+        "clips": [
+          {
+            "clip": "brand/kraken-cache/action-clip-lateral-shuffle-high-school-female-jarosh-slide2-2f08659e.mp4",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1080,
+              "h": 957
+            },
+            "grayscale": true
+          },
+          {
+            "clip": "brand/kraken-cache/action-clip-med-ball-throw-high-school-female-jarosh-slide3o-02af193f.mp4",
+            "rect": {
+              "x": 0,
+              "y": 963,
+              "w": 1080,
+              "h": 957
+            }
+          }
+        ],
+        "duration": 4
+      }
+    },
+    {
+      "id": "ex-060-ugc-selfie",
+      "archetype": "ugc-selfie",
+      "format": "video",
+      "mediaStyleAccepts": [
+        "production:ugc-selfie",
+        "subject:athlete-face"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "caption",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "hook"
+        ]
+      },
+      "render": "gif-composite",
+      "gif": {
+        "clips": [
+          {
+            "clip": "brand/kraken-cache/aqnq8k-ml5qwanaiv6w0arcni8eug-sgjlcv0or6f7drokwglkcc554d-cik-3a19cc3d.mp4",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1080,
+              "h": 1920
+            }
+          }
+        ],
+        "duration": 4
+      }
+    },
+    {
+      "id": "ex-061-ugc-selfie",
+      "archetype": "ugc-selfie",
+      "format": "video",
+      "mediaStyleAccepts": [
+        "production:ugc-selfie",
+        "subject:athlete-face"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "caption",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "hook"
+        ]
+      },
+      "render": "gif-composite",
+      "gif": {
+        "clips": [
+          {
+            "clip": "brand/kraken-cache/aqnrqoiqddtqmy7-r6mirkeprxllgu9gjucp7uoobk-n7o-q81-r8x2bd3cy-3a4a8875.mp4",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1080,
+              "h": 1920
+            }
+          }
+        ],
         "duration": 4
       }
     }

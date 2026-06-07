@@ -1,7 +1,7 @@
 {
   "note": "Example-library index (Track B). One entry per render-QA-passed example: kind + media-style accepts + copy slotShape + the rendered artifact path + perceptual clusterMetrics. Produced by scripts/example-sidecar (render → QA → embed[CLIP+DINOv2] → label → assemble). Schema authority: scripts/lib/example-library.mjs.",
   "schema": "example-library/v2",
-  "generatedAt": "2026-06-07T02:19:27.446Z",
+  "generatedAt": "2026-06-07T13:51:33.087Z",
   "diversity": {
     "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
     "count": 45,
@@ -188,47 +188,107 @@
   },
   "diversityVideo": {
     "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
-    "count": 2,
+    "count": 16,
     "archetypes": [
+      "action-hero",
+      "before-after-split",
       "coach-portrait",
-      "metric-reveal"
+      "kinetic-text",
+      "list-steps",
+      "metric-reveal",
+      "training-scene",
+      "ugc-selfie"
     ],
-    "maxCrossArchetypeCosine": 0.1413,
-    "meanCrossArchetypeCosine": 0.1413,
-    "maxIntraArchetypeCosine": null,
-    "meanWithinArchetypeCosine": null,
-    "meanSilhouette": 1,
-    "vendiScore": 1.9801,
+    "maxCrossArchetypeCosine": 0.7173,
+    "meanCrossArchetypeCosine": 0.3382,
+    "maxIntraArchetypeCosine": 0.7361,
+    "meanWithinArchetypeCosine": 0.5562,
+    "meanSilhouette": 0.0876,
+    "vendiScore": 8.264,
     "kmeansCrossCheck": {
-      "k": 2,
-      "meanClusterPurity": 1
+      "k": 8,
+      "meanClusterPurity": 0.8333
     },
     "perArchetype": {
       "metric-reveal": {
-        "count": 1,
-        "maxWithin": null,
-        "meanWithin": null,
+        "count": 3,
+        "maxWithin": 0.6128,
+        "meanWithin": 0.5433,
         "maxCrossNeighbor": {
-          "cosine": 0.1413,
-          "archetype": "coach-portrait"
+          "cosine": 0.612,
+          "archetype": "kinetic-text"
         }
       },
       "coach-portrait": {
+        "count": 2,
+        "maxWithin": 0.4977,
+        "meanWithin": 0.4977,
+        "maxCrossNeighbor": {
+          "cosine": 0.6075,
+          "archetype": "training-scene"
+        }
+      },
+      "kinetic-text": {
+        "count": 2,
+        "maxWithin": 0.5493,
+        "meanWithin": 0.5493,
+        "maxCrossNeighbor": {
+          "cosine": 0.612,
+          "archetype": "metric-reveal"
+        }
+      },
+      "list-steps": {
+        "count": 2,
+        "maxWithin": 0.692,
+        "meanWithin": 0.692,
+        "maxCrossNeighbor": {
+          "cosine": 0.5911,
+          "archetype": "metric-reveal"
+        }
+      },
+      "action-hero": {
+        "count": 2,
+        "maxWithin": 0.4198,
+        "meanWithin": 0.4198,
+        "maxCrossNeighbor": {
+          "cosine": 0.6995,
+          "archetype": "before-after-split"
+        }
+      },
+      "training-scene": {
+        "count": 2,
+        "maxWithin": 0.4811,
+        "meanWithin": 0.4811,
+        "maxCrossNeighbor": {
+          "cosine": 0.668,
+          "archetype": "ugc-selfie"
+        }
+      },
+      "before-after-split": {
         "count": 1,
         "maxWithin": null,
         "meanWithin": null,
         "maxCrossNeighbor": {
-          "cosine": 0.1413,
-          "archetype": "metric-reveal"
+          "cosine": 0.7173,
+          "archetype": "ugc-selfie"
+        }
+      },
+      "ugc-selfie": {
+        "count": 2,
+        "maxWithin": 0.7361,
+        "meanWithin": 0.7361,
+        "maxCrossNeighbor": {
+          "cosine": 0.7173,
+          "archetype": "before-after-split"
         }
       }
     },
     "closestCrossArchetypePair": {
-      "a": "ex-046-metric-reveal",
-      "b": "ex-047-coach-portrait",
-      "archetypeA": "metric-reveal",
-      "archetypeB": "coach-portrait",
-      "cosine": 0.1413
+      "a": "ex-059-before-after-split",
+      "b": "ex-060-ugc-selfie",
+      "archetypeA": "before-after-split",
+      "archetypeB": "ugc-selfie",
+      "cosine": 0.7173
     },
     "thresholds": {
       "maxWithinArchetypeCosine": "<0.85",
@@ -277,7 +337,7 @@
       "clusterMetrics": {
         "subLook": "giant-stat-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.4932,
         "meanCrossArchetypeCosine": 0.4058,
@@ -326,7 +386,7 @@
       "clusterMetrics": {
         "subLook": "giant-stat-b",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.347,
         "meanCrossArchetypeCosine": 0.3099,
@@ -376,7 +436,7 @@
       "clusterMetrics": {
         "subLook": "giant-stat-c",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.4932,
         "meanCrossArchetypeCosine": 0.3498,
@@ -416,7 +476,7 @@
       "clusterMetrics": {
         "subLook": "metric-reveal-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.6242,
         "meanCrossArchetypeCosine": 0.3617,
@@ -456,7 +516,7 @@
       "clusterMetrics": {
         "subLook": "metric-reveal-b",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.5737,
         "meanCrossArchetypeCosine": 0.3559,
@@ -496,7 +556,7 @@
       "clusterMetrics": {
         "subLook": "metric-reveal-c",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.6242,
         "meanCrossArchetypeCosine": 0.3084,
@@ -543,7 +603,7 @@
       "clusterMetrics": {
         "subLook": "kinetic-text-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.7426,
         "meanCrossArchetypeCosine": 0.4246,
@@ -590,7 +650,7 @@
       "clusterMetrics": {
         "subLook": "kinetic-text-b",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.5688,
         "meanCrossArchetypeCosine": 0.3216,
@@ -637,7 +697,7 @@
       "clusterMetrics": {
         "subLook": "kinetic-text-c",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.7426,
         "meanCrossArchetypeCosine": 0.4023,
@@ -677,7 +737,7 @@
       "clusterMetrics": {
         "subLook": "quote-card-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.5732,
         "meanCrossArchetypeCosine": 0.354,
@@ -717,7 +777,7 @@
       "clusterMetrics": {
         "subLook": "quote-card-b",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.5205,
         "meanCrossArchetypeCosine": 0.3196,
@@ -757,7 +817,7 @@
       "clusterMetrics": {
         "subLook": "quote-card-c",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.5732,
         "meanCrossArchetypeCosine": 0.3238,
@@ -805,7 +865,7 @@
       "clusterMetrics": {
         "subLook": "before-after-split-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.599,
         "meanCrossArchetypeCosine": 0.3752,
@@ -853,7 +913,7 @@
       "clusterMetrics": {
         "subLook": "before-after-split-b",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.7725,
         "meanCrossArchetypeCosine": 0.3699,
@@ -901,7 +961,7 @@
       "clusterMetrics": {
         "subLook": "before-after-split-c",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.7725,
         "meanCrossArchetypeCosine": 0.366,
@@ -953,7 +1013,7 @@
       "clusterMetrics": {
         "subLook": "versus-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.7067,
         "meanCrossArchetypeCosine": 0.3683,
@@ -1005,7 +1065,7 @@
       "clusterMetrics": {
         "subLook": "versus-b",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.7067,
         "meanCrossArchetypeCosine": 0.4276,
@@ -1057,7 +1117,7 @@
       "clusterMetrics": {
         "subLook": "versus-c",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.4915,
         "meanCrossArchetypeCosine": 0.3643,
@@ -1106,7 +1166,7 @@
       "clusterMetrics": {
         "subLook": "proof-collage-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.677,
         "meanCrossArchetypeCosine": 0.3693,
@@ -1159,7 +1219,7 @@
       "clusterMetrics": {
         "subLook": "proof-collage-b",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.677,
         "meanCrossArchetypeCosine": 0.3507,
@@ -1212,7 +1272,7 @@
       "clusterMetrics": {
         "subLook": "proof-collage-c",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.6604,
         "meanCrossArchetypeCosine": 0.3805,
@@ -1264,7 +1324,7 @@
       "clusterMetrics": {
         "subLook": "list-steps-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.6822,
         "meanCrossArchetypeCosine": 0.4134,
@@ -1316,7 +1376,7 @@
       "clusterMetrics": {
         "subLook": "list-steps-b",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.6822,
         "meanCrossArchetypeCosine": 0.3918,
@@ -1368,7 +1428,7 @@
       "clusterMetrics": {
         "subLook": "list-steps-c",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.6815,
         "meanCrossArchetypeCosine": 0.3893,
@@ -1426,7 +1486,7 @@
       "clusterMetrics": {
         "subLook": "offer-card-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.8165,
         "meanCrossArchetypeCosine": 0.3828,
@@ -1480,7 +1540,7 @@
       "clusterMetrics": {
         "subLook": "offer-card-b",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.8165,
         "meanCrossArchetypeCosine": 0.4016,
@@ -1534,7 +1594,7 @@
       "clusterMetrics": {
         "subLook": "offer-card-c",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.809,
         "meanCrossArchetypeCosine": 0.4015,
@@ -1577,7 +1637,7 @@
       "clusterMetrics": {
         "subLook": "action-hero-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.6439,
         "meanCrossArchetypeCosine": 0.3997,
@@ -1624,7 +1684,7 @@
       "clusterMetrics": {
         "subLook": "action-hero-b",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.7447,
         "meanCrossArchetypeCosine": 0.3598,
@@ -1671,7 +1731,7 @@
       "clusterMetrics": {
         "subLook": "action-hero-c",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.7447,
         "meanCrossArchetypeCosine": 0.3951,
@@ -1719,7 +1779,7 @@
       "clusterMetrics": {
         "subLook": "training-scene-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.6117,
         "meanCrossArchetypeCosine": 0.276,
@@ -1763,7 +1823,7 @@
       "clusterMetrics": {
         "subLook": "training-scene-b",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.6117,
         "meanCrossArchetypeCosine": 0.3802,
@@ -1805,7 +1865,7 @@
       "clusterMetrics": {
         "subLook": "training-scene-c",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.5159,
         "meanCrossArchetypeCosine": 0.3748,
@@ -1841,7 +1901,7 @@
       "clusterMetrics": {
         "subLook": "ugc-selfie-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.5809,
         "meanCrossArchetypeCosine": 0.3829,
@@ -1881,7 +1941,7 @@
       "clusterMetrics": {
         "subLook": "ugc-selfie-b",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.5789,
         "meanCrossArchetypeCosine": 0.2897,
@@ -1921,7 +1981,7 @@
       "clusterMetrics": {
         "subLook": "ugc-selfie-c",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.5809,
         "meanCrossArchetypeCosine": 0.3328,
@@ -1974,7 +2034,7 @@
       "clusterMetrics": {
         "subLook": "coach-portrait-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.4006,
         "meanCrossArchetypeCosine": 0.2977,
@@ -2027,7 +2087,7 @@
       "clusterMetrics": {
         "subLook": "coach-portrait-b",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.4558,
         "meanCrossArchetypeCosine": 0.2677,
@@ -2076,7 +2136,7 @@
       "clusterMetrics": {
         "subLook": "coach-portrait-c",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.4558,
         "meanCrossArchetypeCosine": 0.3154,
@@ -2116,7 +2176,7 @@
       "clusterMetrics": {
         "subLook": "timeline-schedule-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.6511,
         "meanCrossArchetypeCosine": 0.3369,
@@ -2156,7 +2216,7 @@
       "clusterMetrics": {
         "subLook": "timeline-schedule-b",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.6511,
         "meanCrossArchetypeCosine": 0.3619,
@@ -2196,7 +2256,7 @@
       "clusterMetrics": {
         "subLook": "timeline-schedule-c",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.4857,
         "meanCrossArchetypeCosine": 0.4126,
@@ -2254,7 +2314,7 @@
       "clusterMetrics": {
         "subLook": "benefit-iconrow-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.6891,
         "meanCrossArchetypeCosine": 0.4008,
@@ -2312,7 +2372,7 @@
       "clusterMetrics": {
         "subLook": "benefit-iconrow-b",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.6891,
         "meanCrossArchetypeCosine": 0.4126,
@@ -2370,7 +2430,7 @@
       "clusterMetrics": {
         "subLook": "benefit-iconrow-c",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
         "intraArchetypeMaxCosine": 0.6842,
         "meanCrossArchetypeCosine": 0.4223,
@@ -2418,14 +2478,14 @@
       "clusterMetrics": {
         "subLook": "metric-reveal-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
-        "intraArchetypeMaxCosine": null,
-        "meanCrossArchetypeCosine": 0.1413,
-        "silhouette": 1,
+        "intraArchetypeMaxCosine": 0.6128,
+        "meanCrossArchetypeCosine": 0.2821,
+        "silhouette": 0.1785,
         "nearestNeighbor": {
-          "exampleId": "ex-047-coach-portrait",
-          "cosine": 0.1413
+          "exampleId": "ex-049-metric-reveal",
+          "cosine": 0.6128
         }
       }
     },
@@ -2468,14 +2528,656 @@
       "clusterMetrics": {
         "subLook": "coach-portrait-a",
         "labeledBy": "gemini:gemini-2.5-flash",
-        "labeledAt": "2026-06-07T02:19:27.446Z",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
         "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
-        "intraArchetypeMaxCosine": null,
-        "meanCrossArchetypeCosine": 0.1413,
-        "silhouette": 1,
+        "intraArchetypeMaxCosine": 0.4977,
+        "meanCrossArchetypeCosine": 0.3515,
+        "silhouette": -0.1143,
+        "nearestNeighbor": {
+          "exampleId": "ex-057-training-scene",
+          "cosine": 0.6075
+        }
+      }
+    },
+    "ex-048-metric-reveal": {
+      "archetype": "metric-reveal",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "title",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "caption",
+            "role": "reframe",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "claim",
+          "reframe"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-048-metric-reveal.png",
+      "motionPath": "templates/_examples/ex-048-metric-reveal.mp4",
+      "sourcePath": "templates/_examples/ex-048-metric-reveal.jsx",
+      "clusterMetrics": {
+        "subLook": "metric-reveal-b",
+        "labeledBy": "gemini:gemini-2.5-flash",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
+        "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
+        "intraArchetypeMaxCosine": 0.5764,
+        "meanCrossArchetypeCosine": 0.2732,
+        "silhouette": 0.121,
         "nearestNeighbor": {
           "exampleId": "ex-046-metric-reveal",
-          "cosine": 0.1413
+          "cosine": 0.5764
+        }
+      }
+    },
+    "ex-049-metric-reveal": {
+      "archetype": "metric-reveal",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "label",
+            "role": "kicker",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "stat",
+            "role": "stat",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "sub",
+            "role": "claim",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "stat",
+          "claim"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-049-metric-reveal.png",
+      "motionPath": "templates/_examples/ex-049-metric-reveal.mp4",
+      "sourcePath": "templates/_examples/ex-049-metric-reveal.jsx",
+      "clusterMetrics": {
+        "subLook": "metric-reveal-c",
+        "labeledBy": "gemini:gemini-2.5-flash",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
+        "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
+        "intraArchetypeMaxCosine": 0.6128,
+        "meanCrossArchetypeCosine": 0.3299,
+        "silhouette": -0.0833,
+        "nearestNeighbor": {
+          "exampleId": "ex-046-metric-reveal",
+          "cosine": 0.6128
+        }
+      }
+    },
+    "ex-050-kinetic-text": {
+      "archetype": "kinetic-text",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "l1",
+            "role": "kicker",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "l2",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "l3",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "hook",
+          "claim"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-050-kinetic-text.png",
+      "motionPath": "templates/_examples/ex-050-kinetic-text.mp4",
+      "sourcePath": "templates/_examples/ex-050-kinetic-text.jsx",
+      "clusterMetrics": {
+        "subLook": "kinetic-text-a",
+        "labeledBy": "gemini:gemini-2.5-flash",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
+        "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
+        "intraArchetypeMaxCosine": 0.5493,
+        "meanCrossArchetypeCosine": 0.3623,
+        "silhouette": -0.08,
+        "nearestNeighbor": {
+          "exampleId": "ex-049-metric-reveal",
+          "cosine": 0.612
+        }
+      }
+    },
+    "ex-051-kinetic-text": {
+      "archetype": "kinetic-text",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "l1",
+            "role": "kicker",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "l2",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "l3",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "hook",
+          "claim"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-051-kinetic-text.png",
+      "motionPath": "templates/_examples/ex-051-kinetic-text.mp4",
+      "sourcePath": "templates/_examples/ex-051-kinetic-text.jsx",
+      "clusterMetrics": {
+        "subLook": "kinetic-text-b",
+        "labeledBy": "gemini:gemini-2.5-flash",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
+        "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
+        "intraArchetypeMaxCosine": 0.5493,
+        "meanCrossArchetypeCosine": 0.2492,
+        "silhouette": 0.2232,
+        "nearestNeighbor": {
+          "exampleId": "ex-050-kinetic-text",
+          "cosine": 0.5493
+        }
+      }
+    },
+    "ex-052-list-steps": {
+      "archetype": "list-steps",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "heading",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "step1",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "step2",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "step3",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "hook",
+          "claim"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-052-list-steps.png",
+      "motionPath": "templates/_examples/ex-052-list-steps.mp4",
+      "sourcePath": "templates/_examples/ex-052-list-steps.jsx",
+      "clusterMetrics": {
+        "subLook": "list-steps-a",
+        "labeledBy": "gemini:gemini-2.5-flash",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
+        "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
+        "intraArchetypeMaxCosine": 0.692,
+        "meanCrossArchetypeCosine": 0.3441,
+        "silhouette": 0.3772,
+        "nearestNeighbor": {
+          "exampleId": "ex-053-list-steps",
+          "cosine": 0.692
+        }
+      }
+    },
+    "ex-053-list-steps": {
+      "archetype": "list-steps",
+      "format": "video",
+      "mediaStyleAccepts": [],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "heading",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "step1",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "step2",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "step3",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "hook",
+          "claim"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-053-list-steps.png",
+      "motionPath": "templates/_examples/ex-053-list-steps.mp4",
+      "sourcePath": "templates/_examples/ex-053-list-steps.jsx",
+      "clusterMetrics": {
+        "subLook": "list-steps-b",
+        "labeledBy": "gemini:gemini-2.5-flash",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
+        "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
+        "intraArchetypeMaxCosine": 0.692,
+        "meanCrossArchetypeCosine": 0.3144,
+        "silhouette": 0.4274,
+        "nearestNeighbor": {
+          "exampleId": "ex-052-list-steps",
+          "cosine": 0.692
+        }
+      }
+    },
+    "ex-054-coach-portrait": {
+      "archetype": "coach-portrait",
+      "format": "video",
+      "mediaStyleAccepts": [
+        "production:cinematic",
+        "subject:coach-face"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "name",
+            "role": "byline",
+            "maxChars": null,
+            "required": false
+          },
+          {
+            "id": "title",
+            "role": "byline",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "hook",
+          "byline"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-054-coach-portrait.png",
+      "motionPath": "templates/_examples/ex-054-coach-portrait.mp4",
+      "sourcePath": "templates/_examples/ex-054-coach-portrait.jsx",
+      "clusterMetrics": {
+        "subLook": "coach-portrait-b",
+        "labeledBy": "gemini:gemini-2.5-flash",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
+        "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
+        "intraArchetypeMaxCosine": 0.4977,
+        "meanCrossArchetypeCosine": 0.2707,
+        "silhouette": 0.0703,
+        "nearestNeighbor": {
+          "exampleId": "ex-047-coach-portrait",
+          "cosine": 0.4977
+        }
+      }
+    },
+    "ex-055-action-hero": {
+      "archetype": "action-hero",
+      "format": "video",
+      "mediaStyleAccepts": [
+        "production:cinematic",
+        "subject:athlete-action"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "hook"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-055-action-hero.png",
+      "motionPath": "templates/_examples/ex-055-action-hero.mp4",
+      "sourcePath": "templates/_examples/ex-055-action-hero.jsx",
+      "clusterMetrics": {
+        "subLook": "action-hero-a",
+        "labeledBy": "gemini:gemini-2.5-flash",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
+        "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
+        "intraArchetypeMaxCosine": 0.4198,
+        "meanCrossArchetypeCosine": 0.4233,
+        "silhouette": -0.482,
+        "nearestNeighbor": {
+          "exampleId": "ex-059-before-after-split",
+          "cosine": 0.6995
+        }
+      }
+    },
+    "ex-056-action-hero": {
+      "archetype": "action-hero",
+      "format": "video",
+      "mediaStyleAccepts": [
+        "production:cinematic",
+        "subject:athlete-action"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "eyebrow",
+            "role": "eyebrow",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "headline",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "eyebrow",
+          "hook"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-056-action-hero.png",
+      "motionPath": "templates/_examples/ex-056-action-hero.mp4",
+      "sourcePath": "templates/_examples/ex-056-action-hero.jsx",
+      "clusterMetrics": {
+        "subLook": "action-hero-b",
+        "labeledBy": "gemini:gemini-2.5-flash",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
+        "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
+        "intraArchetypeMaxCosine": 0.4198,
+        "meanCrossArchetypeCosine": 0.2739,
+        "silhouette": 0.1197,
+        "nearestNeighbor": {
+          "exampleId": "ex-055-action-hero",
+          "cosine": 0.4198
+        }
+      }
+    },
+    "ex-057-training-scene": {
+      "archetype": "training-scene",
+      "format": "video",
+      "mediaStyleAccepts": [
+        "production:cinematic",
+        "subject:athlete-action",
+        "env:gym"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "byline",
+            "role": "byline",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "claim",
+          "byline"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-057-training-scene.png",
+      "motionPath": "templates/_examples/ex-057-training-scene.mp4",
+      "sourcePath": "templates/_examples/ex-057-training-scene.jsx",
+      "clusterMetrics": {
+        "subLook": "training-scene-a",
+        "labeledBy": "gemini:gemini-2.5-flash",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
+        "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
+        "intraArchetypeMaxCosine": 0.4811,
+        "meanCrossArchetypeCosine": 0.3448,
+        "silhouette": -0.2046,
+        "nearestNeighbor": {
+          "exampleId": "ex-047-coach-portrait",
+          "cosine": 0.6075
+        }
+      }
+    },
+    "ex-058-training-scene": {
+      "archetype": "training-scene",
+      "format": "video",
+      "mediaStyleAccepts": [
+        "production:cinematic",
+        "subject:athlete-action",
+        "env:gym"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "headline",
+            "role": "claim",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "byline",
+            "role": "byline",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "claim",
+          "byline"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-058-training-scene.png",
+      "motionPath": "templates/_examples/ex-058-training-scene.mp4",
+      "sourcePath": "templates/_examples/ex-058-training-scene.jsx",
+      "clusterMetrics": {
+        "subLook": "training-scene-b",
+        "labeledBy": "gemini:gemini-2.5-flash",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
+        "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
+        "intraArchetypeMaxCosine": 0.4811,
+        "meanCrossArchetypeCosine": 0.3923,
+        "silhouette": -0.3312,
+        "nearestNeighbor": {
+          "exampleId": "ex-061-ugc-selfie",
+          "cosine": 0.668
+        }
+      }
+    },
+    "ex-059-before-after-split": {
+      "archetype": "before-after-split",
+      "format": "video",
+      "mediaStyleAccepts": [
+        "subject:athlete-action"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "beforeLabel",
+            "role": "kicker",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "afterLabel",
+            "role": "kicker",
+            "maxChars": null,
+            "required": true
+          },
+          {
+            "id": "stat",
+            "role": "stat",
+            "maxChars": null,
+            "required": false
+          }
+        ],
+        "roleSet": [
+          "kicker",
+          "stat"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-059-before-after-split.png",
+      "motionPath": "templates/_examples/ex-059-before-after-split.mp4",
+      "sourcePath": "templates/_examples/ex-059-before-after-split.jsx",
+      "clusterMetrics": {
+        "subLook": "before-after-split-a",
+        "labeledBy": "gemini:gemini-2.5-flash",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
+        "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
+        "intraArchetypeMaxCosine": null,
+        "meanCrossArchetypeCosine": 0.4217,
+        "silhouette": 1,
+        "nearestNeighbor": {
+          "exampleId": "ex-060-ugc-selfie",
+          "cosine": 0.7173
+        }
+      }
+    },
+    "ex-060-ugc-selfie": {
+      "archetype": "ugc-selfie",
+      "format": "video",
+      "mediaStyleAccepts": [
+        "production:ugc-selfie",
+        "subject:athlete-face"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "caption",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "hook"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-060-ugc-selfie.png",
+      "motionPath": "templates/_examples/ex-060-ugc-selfie.mp4",
+      "sourcePath": "templates/_examples/ex-060-ugc-selfie.jsx",
+      "clusterMetrics": {
+        "subLook": "ugc-selfie-a",
+        "labeledBy": "gemini:gemini-2.5-flash",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
+        "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
+        "intraArchetypeMaxCosine": 0.7361,
+        "meanCrossArchetypeCosine": 0.375,
+        "silhouette": 0.0668,
+        "nearestNeighbor": {
+          "exampleId": "ex-061-ugc-selfie",
+          "cosine": 0.7361
+        }
+      }
+    },
+    "ex-061-ugc-selfie": {
+      "archetype": "ugc-selfie",
+      "format": "video",
+      "mediaStyleAccepts": [
+        "production:ugc-selfie",
+        "subject:athlete-face"
+      ],
+      "slotShape": {
+        "slots": [
+          {
+            "id": "caption",
+            "role": "hook",
+            "maxChars": null,
+            "required": true
+          }
+        ],
+        "roleSet": [
+          "hook"
+        ]
+      },
+      "renderedImagePath": "templates/_examples/ex-061-ugc-selfie.png",
+      "motionPath": "templates/_examples/ex-061-ugc-selfie.mp4",
+      "sourcePath": "templates/_examples/ex-061-ugc-selfie.jsx",
+      "clusterMetrics": {
+        "subLook": "ugc-selfie-b",
+        "labeledBy": "gemini:gemini-2.5-flash",
+        "labeledAt": "2026-06-07T13:51:33.087Z",
+        "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
+        "intraArchetypeMaxCosine": 0.7361,
+        "meanCrossArchetypeCosine": 0.3885,
+        "silhouette": 0.1127,
+        "nearestNeighbor": {
+          "exampleId": "ex-060-ugc-selfie",
+          "cosine": 0.7361
         }
       }
     }

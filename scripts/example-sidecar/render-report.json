@@ -376,6 +376,118 @@
       "png": "templates/_examples/ex-047-coach-portrait.png",
       "mp4": "templates/_examples/ex-047-coach-portrait.mp4",
       "reason": "ok"
+    },
+    {
+      "id": "ex-048-metric-reveal",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-048-metric-reveal.png",
+      "mp4": "templates/_examples/ex-048-metric-reveal.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-049-metric-reveal",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-049-metric-reveal.png",
+      "mp4": "templates/_examples/ex-049-metric-reveal.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-050-kinetic-text",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-050-kinetic-text.png",
+      "mp4": "templates/_examples/ex-050-kinetic-text.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-051-kinetic-text",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-051-kinetic-text.png",
+      "mp4": "templates/_examples/ex-051-kinetic-text.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-052-list-steps",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-052-list-steps.png",
+      "mp4": "templates/_examples/ex-052-list-steps.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-053-list-steps",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-053-list-steps.png",
+      "mp4": "templates/_examples/ex-053-list-steps.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-054-coach-portrait",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-054-coach-portrait.png",
+      "mp4": "templates/_examples/ex-054-coach-portrait.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-055-action-hero",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-055-action-hero.png",
+      "mp4": "templates/_examples/ex-055-action-hero.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-056-action-hero",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-056-action-hero.png",
+      "mp4": "templates/_examples/ex-056-action-hero.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-057-training-scene",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-057-training-scene.png",
+      "mp4": "templates/_examples/ex-057-training-scene.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-058-training-scene",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-058-training-scene.png",
+      "mp4": "templates/_examples/ex-058-training-scene.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-059-before-after-split",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-059-before-after-split.png",
+      "mp4": "templates/_examples/ex-059-before-after-split.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-060-ugc-selfie",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-060-ugc-selfie.png",
+      "mp4": "templates/_examples/ex-060-ugc-selfie.mp4",
+      "reason": "ok"
+    },
+    {
+      "id": "ex-061-ugc-selfie",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-061-ugc-selfie.png",
+      "mp4": "templates/_examples/ex-061-ugc-selfie.mp4",
+      "reason": "ok"
     }
   ]
 }

@@ -6,69 +6,269 @@
   "vectorsArtifact": "embeddings.vectors.npz",
   "examples": {
     "ex-046-metric-reveal": {
-      "intraArchetypeMaxCosine": null,
-      "meanCrossArchetypeCosine": 0.1413,
+      "intraArchetypeMaxCosine": 0.6128,
+      "meanCrossArchetypeCosine": 0.2821,
       "nearestNeighbor": {
-        "exampleId": "ex-047-coach-portrait",
-        "cosine": 0.1413
+        "exampleId": "ex-049-metric-reveal",
+        "cosine": 0.6128
       },
-      "silhouette": 1.0,
+      "silhouette": 0.1785,
       "subLook": "metric-reveal-a"
     },
     "ex-047-coach-portrait": {
-      "intraArchetypeMaxCosine": null,
-      "meanCrossArchetypeCosine": 0.1413,
+      "intraArchetypeMaxCosine": 0.4977,
+      "meanCrossArchetypeCosine": 0.3515,
+      "nearestNeighbor": {
+        "exampleId": "ex-057-training-scene",
+        "cosine": 0.6075
+      },
+      "silhouette": -0.1143,
+      "subLook": "coach-portrait-a"
+    },
+    "ex-048-metric-reveal": {
+      "intraArchetypeMaxCosine": 0.5764,
+      "meanCrossArchetypeCosine": 0.2732,
       "nearestNeighbor": {
         "exampleId": "ex-046-metric-reveal",
-        "cosine": 0.1413
+        "cosine": 0.5764
+      },
+      "silhouette": 0.121,
+      "subLook": "metric-reveal-b"
+    },
+    "ex-049-metric-reveal": {
+      "intraArchetypeMaxCosine": 0.6128,
+      "meanCrossArchetypeCosine": 0.3299,
+      "nearestNeighbor": {
+        "exampleId": "ex-046-metric-reveal",
+        "cosine": 0.6128
+      },
+      "silhouette": -0.0833,
+      "subLook": "metric-reveal-c"
+    },
+    "ex-050-kinetic-text": {
+      "intraArchetypeMaxCosine": 0.5493,
+      "meanCrossArchetypeCosine": 0.3623,
+      "nearestNeighbor": {
+        "exampleId": "ex-049-metric-reveal",
+        "cosine": 0.612
+      },
+      "silhouette": -0.08,
+      "subLook": "kinetic-text-a"
+    },
+    "ex-051-kinetic-text": {
+      "intraArchetypeMaxCosine": 0.5493,
+      "meanCrossArchetypeCosine": 0.2492,
+      "nearestNeighbor": {
+        "exampleId": "ex-050-kinetic-text",
+        "cosine": 0.5493
+      },
+      "silhouette": 0.2232,
+      "subLook": "kinetic-text-b"
+    },
+    "ex-052-list-steps": {
+      "intraArchetypeMaxCosine": 0.692,
+      "meanCrossArchetypeCosine": 0.3441,
+      "nearestNeighbor": {
+        "exampleId": "ex-053-list-steps",
+        "cosine": 0.692
+      },
+      "silhouette": 0.3772,
+      "subLook": "list-steps-a"
+    },
+    "ex-053-list-steps": {
+      "intraArchetypeMaxCosine": 0.692,
+      "meanCrossArchetypeCosine": 0.3144,
+      "nearestNeighbor": {
+        "exampleId": "ex-052-list-steps",
+        "cosine": 0.692
+      },
+      "silhouette": 0.4274,
+      "subLook": "list-steps-b"
+    },
+    "ex-054-coach-portrait": {
+      "intraArchetypeMaxCosine": 0.4977,
+      "meanCrossArchetypeCosine": 0.2707,
+      "nearestNeighbor": {
+        "exampleId": "ex-047-coach-portrait",
+        "cosine": 0.4977
+      },
+      "silhouette": 0.0703,
+      "subLook": "coach-portrait-b"
+    },
+    "ex-055-action-hero": {
+      "intraArchetypeMaxCosine": 0.4198,
+      "meanCrossArchetypeCosine": 0.4233,
+      "nearestNeighbor": {
+        "exampleId": "ex-059-before-after-split",
+        "cosine": 0.6995
+      },
+      "silhouette": -0.482,
+      "subLook": "action-hero-a"
+    },
+    "ex-056-action-hero": {
+      "intraArchetypeMaxCosine": 0.4198,
+      "meanCrossArchetypeCosine": 0.2739,
+      "nearestNeighbor": {
+        "exampleId": "ex-055-action-hero",
+        "cosine": 0.4198
+      },
+      "silhouette": 0.1197,
+      "subLook": "action-hero-b"
+    },
+    "ex-057-training-scene": {
+      "intraArchetypeMaxCosine": 0.4811,
+      "meanCrossArchetypeCosine": 0.3448,
+      "nearestNeighbor": {
+        "exampleId": "ex-047-coach-portrait",
+        "cosine": 0.6075
+      },
+      "silhouette": -0.2046,
+      "subLook": "training-scene-a"
+    },
+    "ex-058-training-scene": {
+      "intraArchetypeMaxCosine": 0.4811,
+      "meanCrossArchetypeCosine": 0.3923,
+      "nearestNeighbor": {
+        "exampleId": "ex-061-ugc-selfie",
+        "cosine": 0.668
+      },
+      "silhouette": -0.3312,
+      "subLook": "training-scene-b"
+    },
+    "ex-059-before-after-split": {
+      "intraArchetypeMaxCosine": null,
+      "meanCrossArchetypeCosine": 0.4217,
+      "nearestNeighbor": {
+        "exampleId": "ex-060-ugc-selfie",
+        "cosine": 0.7173
       },
       "silhouette": 1.0,
-      "subLook": "coach-portrait-a"
+      "subLook": "before-after-split-a"
+    },
+    "ex-060-ugc-selfie": {
+      "intraArchetypeMaxCosine": 0.7361,
+      "meanCrossArchetypeCosine": 0.375,
+      "nearestNeighbor": {
+        "exampleId": "ex-061-ugc-selfie",
+        "cosine": 0.7361
+      },
+      "silhouette": 0.0668,
+      "subLook": "ugc-selfie-a"
+    },
+    "ex-061-ugc-selfie": {
+      "intraArchetypeMaxCosine": 0.7361,
+      "meanCrossArchetypeCosine": 0.3885,
+      "nearestNeighbor": {
+        "exampleId": "ex-060-ugc-selfie",
+        "cosine": 0.7361
+      },
+      "silhouette": 0.1127,
+      "subLook": "ugc-selfie-b"
     }
   },
   "batch": {
     "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
-    "count": 2,
+    "count": 16,
     "archetypes": [
+      "action-hero",
+      "before-after-split",
       "coach-portrait",
-      "metric-reveal"
+      "kinetic-text",
+      "list-steps",
+      "metric-reveal",
+      "training-scene",
+      "ugc-selfie"
     ],
-    "maxCrossArchetypeCosine": 0.1413,
-    "meanCrossArchetypeCosine": 0.1413,
-    "maxIntraArchetypeCosine": null,
-    "meanWithinArchetypeCosine": null,
-    "meanSilhouette": 1.0,
-    "vendiScore": 1.9801,
+    "maxCrossArchetypeCosine": 0.7173,
+    "meanCrossArchetypeCosine": 0.3382,
+    "maxIntraArchetypeCosine": 0.7361,
+    "meanWithinArchetypeCosine": 0.5562,
+    "meanSilhouette": 0.0876,
+    "vendiScore": 8.264,
     "kmeansCrossCheck": {
-      "k": 2,
-      "meanClusterPurity": 1.0
+      "k": 8,
+      "meanClusterPurity": 0.8333
     },
     "perArchetype": {
       "metric-reveal": {
-        "count": 1,
-        "maxWithin": null,
-        "meanWithin": null,
+        "count": 3,
+        "maxWithin": 0.6128,
+        "meanWithin": 0.5433,
         "maxCrossNeighbor": {
-          "cosine": 0.1413,
-          "archetype": "coach-portrait"
+          "cosine": 0.612,
+          "archetype": "kinetic-text"
         }
       },
       "coach-portrait": {
+        "count": 2,
+        "maxWithin": 0.4977,
+        "meanWithin": 0.4977,
+        "maxCrossNeighbor": {
+          "cosine": 0.6075,
+          "archetype": "training-scene"
+        }
+      },
+      "kinetic-text": {
+        "count": 2,
+        "maxWithin": 0.5493,
+        "meanWithin": 0.5493,
+        "maxCrossNeighbor": {
+          "cosine": 0.612,
+          "archetype": "metric-reveal"
+        }
+      },
+      "list-steps": {
+        "count": 2,
+        "maxWithin": 0.692,
+        "meanWithin": 0.692,
+        "maxCrossNeighbor": {
+          "cosine": 0.5911,
+          "archetype": "metric-reveal"
+        }
+      },
+      "action-hero": {
+        "count": 2,
+        "maxWithin": 0.4198,
+        "meanWithin": 0.4198,
+        "maxCrossNeighbor": {
+          "cosine": 0.6995,
+          "archetype": "before-after-split"
+        }
+      },
+      "training-scene": {
+        "count": 2,
+        "maxWithin": 0.4811,
+        "meanWithin": 0.4811,
+        "maxCrossNeighbor": {
+          "cosine": 0.668,
+          "archetype": "ugc-selfie"
+        }
+      },
+      "before-after-split": {
         "count": 1,
         "maxWithin": null,
         "meanWithin": null,
         "maxCrossNeighbor": {
-          "cosine": 0.1413,
-          "archetype": "metric-reveal"
+          "cosine": 0.7173,
+          "archetype": "ugc-selfie"
+        }
+      },
+      "ugc-selfie": {
+        "count": 2,
+        "maxWithin": 0.7361,
+        "meanWithin": 0.7361,
+        "maxCrossNeighbor": {
+          "cosine": 0.7173,
+          "archetype": "before-after-split"
         }
       }
     },
     "closestCrossArchetypePair": {
-      "a": "ex-046-metric-reveal",
-      "b": "ex-047-coach-portrait",
-      "archetypeA": "metric-reveal",
-      "archetypeB": "coach-portrait",
-      "cosine": 0.1413
+      "a": "ex-059-before-after-split",
+      "b": "ex-060-ugc-selfie",
+      "archetypeA": "before-after-split",
+      "archetypeB": "ugc-selfie",
+      "cosine": 0.7173
     },
     "thresholds": {
       "maxWithinArchetypeCosine": "<0.85",
@@ -82,25 +282,339 @@
   },
   "heatmap": {
     "order": [
+      "ex-055-action-hero",
+      "ex-056-action-hero",
+      "ex-059-before-after-split",
       "ex-047-coach-portrait",
-      "ex-046-metric-reveal"
+      "ex-054-coach-portrait",
+      "ex-050-kinetic-text",
+      "ex-051-kinetic-text",
+      "ex-052-list-steps",
+      "ex-053-list-steps",
+      "ex-046-metric-reveal",
+      "ex-048-metric-reveal",
+      "ex-049-metric-reveal",
+      "ex-057-training-scene",
+      "ex-058-training-scene",
+      "ex-060-ugc-selfie",
+      "ex-061-ugc-selfie"
     ],
     "archetypes": [
+      "action-hero",
+      "action-hero",
+      "before-after-split",
       "coach-portrait",
-      "metric-reveal"
+      "coach-portrait",
+      "kinetic-text",
+      "kinetic-text",
+      "list-steps",
+      "list-steps",
+      "metric-reveal",
+      "metric-reveal",
+      "metric-reveal",
+      "training-scene",
+      "training-scene",
+      "ugc-selfie",
+      "ugc-selfie"
     ],
     "matrix": [
       [
         1.0,
-        0.1413
+        0.4198,
+        0.6995,
+        0.5516,
+        0.4261,
+        0.3014,
+        0.174,
+        0.3026,
+        0.2355,
+        0.2418,
+        0.2633,
+        0.2946,
+        0.5276,
+        0.6044,
+        0.6453,
+        0.6582
       ],
       [
+        0.4198,
+        1.0,
+        0.3314,
+        0.3147,
+        0.2476,
+        0.2291,
+        0.1475,
+        0.2591,
+        0.2741,
+        0.2193,
+        0.2594,
+        0.2106,
+        0.3162,
+        0.3657,
+        0.3236,
+        0.3364
+      ],
+      [
+        0.6995,
+        0.3314,
+        1.0,
+        0.5551,
+        0.4597,
+        0.2855,
+        0.1608,
+        0.2848,
+        0.2351,
+        0.2051,
+        0.2179,
+        0.2722,
+        0.5873,
+        0.6108,
+        0.7173,
+        0.7026
+      ],
+      [
+        0.5516,
+        0.3147,
+        0.5551,
+        1.0,
+        0.4977,
+        0.2411,
+        0.2006,
+        0.2697,
+        0.2343,
         0.1413,
+        0.1374,
+        0.2552,
+        0.6075,
+        0.418,
+        0.5238,
+        0.4708
+      ],
+      [
+        0.4261,
+        0.2476,
+        0.4597,
+        0.4977,
+        1.0,
+        0.1547,
+        0.1367,
+        0.1808,
+        0.1805,
+        0.085,
+        0.0623,
+        0.1664,
+        0.4975,
+        0.4016,
+        0.4035,
+        0.3879
+      ],
+      [
+        0.3014,
+        0.2291,
+        0.2855,
+        0.2411,
+        0.1547,
+        1.0,
+        0.5493,
+        0.5609,
+        0.4819,
+        0.6089,
+        0.5352,
+        0.612,
+        0.2344,
+        0.2597,
+        0.2574,
+        0.3106
+      ],
+      [
+        0.174,
+        0.1475,
+        0.1608,
+        0.2006,
+        0.1367,
+        0.5493,
+        1.0,
+        0.365,
+        0.4349,
+        0.4041,
+        0.3349,
+        0.5204,
+        0.1453,
+        0.1606,
+        0.1412,
+        0.1623
+      ],
+      [
+        0.3026,
+        0.2591,
+        0.2848,
+        0.2697,
+        0.1808,
+        0.5609,
+        0.365,
+        1.0,
+        0.692,
+        0.4926,
+        0.4325,
+        0.5911,
+        0.229,
+        0.2963,
+        0.2694,
+        0.2828
+      ],
+      [
+        0.2355,
+        0.2741,
+        0.2351,
+        0.2343,
+        0.1805,
+        0.4819,
+        0.4349,
+        0.692,
+        1.0,
+        0.4503,
+        0.4493,
+        0.4866,
+        0.1915,
+        0.2928,
+        0.2258,
+        0.2292
+      ],
+      [
+        0.2418,
+        0.2193,
+        0.2051,
+        0.1413,
+        0.085,
+        0.6089,
+        0.4041,
+        0.4926,
+        0.4503,
+        1.0,
+        0.5764,
+        0.6128,
+        0.1275,
+        0.26,
+        0.1942,
+        0.2374
+      ],
+      [
+        0.2633,
+        0.2594,
+        0.2179,
+        0.1374,
+        0.0623,
+        0.5352,
+        0.3349,
+        0.4325,
+        0.4493,
+        0.5764,
+        1.0,
+        0.4408,
+        0.1327,
+        0.2809,
+        0.1922,
+        0.2531
+      ],
+      [
+        0.2946,
+        0.2106,
+        0.2722,
+        0.2552,
+        0.1664,
+        0.612,
+        0.5204,
+        0.5911,
+        0.4866,
+        0.6128,
+        0.4408,
+        1.0,
+        0.2084,
+        0.2355,
+        0.2021,
+        0.2333
+      ],
+      [
+        0.5276,
+        0.3162,
+        0.5873,
+        0.6075,
+        0.4975,
+        0.2344,
+        0.1453,
+        0.229,
+        0.1915,
+        0.1275,
+        0.1327,
+        0.2084,
+        1.0,
+        0.4811,
+        0.5161,
+        0.5063
+      ],
+      [
+        0.6044,
+        0.3657,
+        0.6108,
+        0.418,
+        0.4016,
+        0.2597,
+        0.1606,
+        0.2963,
+        0.2928,
+        0.26,
+        0.2809,
+        0.2355,
+        0.4811,
+        1.0,
+        0.6379,
+        0.668
+      ],
+      [
+        0.6453,
+        0.3236,
+        0.7173,
+        0.5238,
+        0.4035,
+        0.2574,
+        0.1412,
+        0.2694,
+        0.2258,
+        0.1942,
+        0.1922,
+        0.2021,
+        0.5161,
+        0.6379,
+        1.0,
+        0.7361
+      ],
+      [
+        0.6582,
+        0.3364,
+        0.7026,
+        0.4708,
+        0.3879,
+        0.3106,
+        0.1623,
+        0.2828,
+        0.2292,
+        0.2374,
+        0.2531,
+        0.2333,
+        0.5063,
+        0.668,
+        0.7361,
         1.0
       ]
     ],
     "boundaries": [
-      1
+      2,
+      3,
+      5,
+      7,
+      9,
+      12,
+      14
     ]
   },
   "projection2d": {
@@ -110,13 +624,97 @@
         "id": "ex-046-metric-reveal",
         "archetype": "metric-reveal",
         "x": 0.0,
-        "y": 1.0
+        "y": 0.1505
       },
       {
         "id": "ex-047-coach-portrait",
         "archetype": "coach-portrait",
-        "x": 1.0,
+        "x": 0.9069,
+        "y": 0.8478
+      },
+      {
+        "id": "ex-048-metric-reveal",
+        "archetype": "metric-reveal",
+        "x": 0.0843,
         "y": 0.0
+      },
+      {
+        "id": "ex-049-metric-reveal",
+        "archetype": "metric-reveal",
+        "x": 0.0398,
+        "y": 0.5229
+      },
+      {
+        "id": "ex-050-kinetic-text",
+        "archetype": "kinetic-text",
+        "x": 0.0554,
+        "y": 0.3746
+      },
+      {
+        "id": "ex-051-kinetic-text",
+        "archetype": "kinetic-text",
+        "x": 0.0678,
+        "y": 0.7706
+      },
+      {
+        "id": "ex-052-list-steps",
+        "archetype": "list-steps",
+        "x": 0.1144,
+        "y": 0.4462
+      },
+      {
+        "id": "ex-053-list-steps",
+        "archetype": "list-steps",
+        "x": 0.0957,
+        "y": 0.5067
+      },
+      {
+        "id": "ex-054-coach-portrait",
+        "archetype": "coach-portrait",
+        "x": 0.9078,
+        "y": 1.0
+      },
+      {
+        "id": "ex-055-action-hero",
+        "archetype": "action-hero",
+        "x": 0.9279,
+        "y": 0.2042
+      },
+      {
+        "id": "ex-056-action-hero",
+        "archetype": "action-hero",
+        "x": 0.6311,
+        "y": 0.3184
+      },
+      {
+        "id": "ex-057-training-scene",
+        "archetype": "training-scene",
+        "x": 0.9629,
+        "y": 0.7444
+      },
+      {
+        "id": "ex-058-training-scene",
+        "archetype": "training-scene",
+        "x": 0.884,
+        "y": 0.0473
+      },
+      {
+        "id": "ex-059-before-after-split",
+        "archetype": "before-after-split",
+        "x": 0.9902,
+        "y": 0.2471
+      },
+      {
+        "id": "ex-060-ugc-selfie",
+        "archetype": "ugc-selfie",
+        "x": 1.0,
+        "y": 0.1213
+      },
+      {
+        "id": "ex-061-ugc-selfie",
+        "archetype": "ugc-selfie",
+        "x": 0.9499,
+        "y": 0.0229
       }
     ]
   },
