@@ -31,13 +31,13 @@ import { CONTENT_ROLES, classifyVerbatim, isApprovedTrim } from "./lib/copy-reso
 import { loadCopyLibraryStrict } from "./lib/copy-library.mjs";
 import { loadGrandfatherList, isGrandfathered, overrideHonored, applyCampaignOverride, OVERRIDE_ENV } from "./lib/human-override.mjs";
 import { resolveStaticConfig } from "./lib/fill-core.mjs";
+import { findTemplate } from "./lib/template-roots.mjs";
 import { cloneCity, locationCity } from "./lib/location.mjs";
 import { scanBrandIntegrity } from "./lib/brand-integrity.mjs";
 
 const PROJECT_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const CAMPAIGNS_DIR = join(PROJECT_ROOT, "campaigns");
 const DATA_DIR = join(PROJECT_ROOT, "data");
-const TEMPLATE_DIR = join(PROJECT_ROOT, "templates/multi-sport-foundations");
 const ROLE_INDEX_PATH = join(PROJECT_ROOT, "templates/_role-index.json");
 
 // ── rules config ─────────────────────────────────────────────────────────────
@@ -134,7 +134,11 @@ export function resolveAssetCopy(asset, angle, ctx) {
       cfg = JSON.parse(readFileSync(editsPath, "utf8")); source = "edits";
     } else if (asset.template) {
       const location = asset.location || angle.location || ctx.planLocation || null;
-      cfg = resolveStaticConfig({ clusterId: asset.template, asset, brand, location, campaign, templateDir: TEMPLATE_DIR, dataDir });
+      // Resolve the template's root via the multi-root resolver (was hard-coded to
+      // templates/multi-sport-foundations). Null → cfg stays null → existing
+      // fail-closed "none" path. Gate logic below is UNCHANGED.
+      const _tdir = findTemplate(asset.template, campaign)?.dir; // 4b: brand bank first
+      cfg = _tdir ? resolveStaticConfig({ clusterId: asset.template, asset, brand, location, campaign, templateDir: _tdir, dataDir }) : null;
       source = cfg ? "fill" : "none";
     }
     if (!cfg) return { format: fmt, fields: [], mediaPresent: false, cityResolved: null, aspect: null, source, approvedTrims: {} };

@@ -360,6 +360,14 @@
       "png": "templates/_examples/ex-045-benefit-iconrow.png",
       "mp4": null,
       "reason": "ok"
+    },
+    {
+      "id": "ex-046-metric-reveal",
+      "format": "video",
+      "ok": true,
+      "png": "templates/_examples/ex-046-metric-reveal.png",
+      "mp4": "templates/_examples/ex-046-metric-reveal.mp4",
+      "reason": "ok"
     }
   ]
 }

@@ -24,7 +24,10 @@ const PYTHON = process.env.PYTHON || "python";
 
 const stages = [
   { name: "render", cmd: "node", args: [join(HERE, "render-examples.mjs")] },
-  { name: "embed", cmd: PYTHON, args: [join(HERE, "embed.py")] },
+  // Two embed passes: statics and videos are embedded SEPARATELY so a GIF poster
+  // (≈ its static sibling by design) can't inflate the static within-archetype cosine.
+  { name: "embed:static", cmd: PYTHON, args: [join(HERE, "embed.py"), "--format=static"] },
+  { name: "embed:video", cmd: PYTHON, args: [join(HERE, "embed.py"), "--format=video"] },
   { name: "label", cmd: PYTHON, args: [join(HERE, "label.py")] },
   { name: "build-index", cmd: "node", args: [join(HERE, "build-index.mjs")] },
 ];

@@ -38,10 +38,9 @@ import {
   resolveClusterSvgPath,
   parseHexColor,
 } from "./lib/svg-parser.mjs";
+import { STATIC_ROOTS } from "./lib/template-roots.mjs";
 
 const PROJECT_ROOT = resolve(".");
-const TEMPLATE_DIR = join(PROJECT_ROOT, "templates/multi-sport-foundations");
-const ASSETS_DIR = join(TEMPLATE_DIR, "assets");
 
 const FG_MIN_SIZE = 400; // minimum rendered px for foreground cutout candidate
 
@@ -52,6 +51,7 @@ const args = process.argv.slice(2);
 const clusterId = args.find((a) => !a.startsWith("--"));
 const force = args.includes("--force");
 const dryRun = args.includes("--dry-run");
+const rootOpt = (() => { const i = args.indexOf("--root"); return i >= 0 ? args[i + 1] : null; })();
 
 if (!clusterId) {
   console.error("Usage: node scripts/scaffold-cluster.mjs <cluster-id> [--force] [--dry-run]");
@@ -65,8 +65,13 @@ const svgPath = resolveClusterSvgPath(PROJECT_ROOT, normalizedId);
 console.log(`Source SVG: ${svgPath}`);
 
 // ---------------------------------------------------------------------------
-// Output paths
+// Output paths — write into the chosen root: --root <dir>, else the first
+// resolved template root, else the legacy bank (no longer hard-coded).
 // ---------------------------------------------------------------------------
+const TEMPLATE_DIR = rootOpt
+  ? join(PROJECT_ROOT, rootOpt)
+  : (STATIC_ROOTS()[0] || join(PROJECT_ROOT, "templates/multi-sport-foundations"));
+const ASSETS_DIR = join(TEMPLATE_DIR, "assets");
 const jsxPath = join(TEMPLATE_DIR, `${normalizedId}.jsx`);
 const configPath = join(TEMPLATE_DIR, `${normalizedId}.config.json`);
 const bgPathBase = join(ASSETS_DIR, `${normalizedId}-bg`); // ext appended after classification

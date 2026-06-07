@@ -2,7 +2,7 @@
 // Drag-drop editor backend.
 //
 // Routes:
-//   GET  /                          → editor home (templates/multi-sport-foundations only for now)
+//   GET  /                          → editor home (templates resolved via lib/template-roots.mjs, any root)
 //   GET  /editor                    → drag-drop editor for ?cluster=N
 //   GET  /config/cluster-N          → returns per-template config JSON
 //   POST /config/cluster-N          → writes config JSON
@@ -35,6 +35,7 @@ import { fieldRole, BEAT_HEADLINE_ROLE, beatLetter } from "./lib/roles.mjs";
 import { loadCopyLibrary } from "./lib/copy-library.mjs";
 import { validatePlan } from "./validate-plan.mjs";
 import { scopeMediaRoots } from "./lib/media-scope.mjs";
+import { STATIC_ROOTS, findTemplate, listTemplates, assetsDirFor } from "./lib/template-roots.mjs";
 
 const PORT = Number(process.env.EDITOR_PORT) || 5173;
 // Hard ceiling for a single-asset render (J): a hung render (the 7-sec clip that
@@ -42,6 +43,9 @@ const PORT = Number(process.env.EDITOR_PORT) || 5173;
 // so a legitimate motion render finishes; override via RENDER_TIMEOUT_MS.
 const RENDER_TIMEOUT_MS = Number(process.env.RENDER_TIMEOUT_MS) || 10 * 60 * 1000;
 const PROJECT_ROOT = resolve(".");
+// Legacy bank path — templates now resolve via scripts/lib/template-roots.mjs
+// (multi-root). This constant survives ONLY as the last-resort fallback in
+// /media-into-template when no template id is supplied.
 const TEMPLATES_DIR = join(PROJECT_ROOT, "templates/multi-sport-foundations");
 const OUT_DIR = join(PROJECT_ROOT, "out");
 const EDITOR_DIR = join(OUT_DIR, "editor");
@@ -278,6 +282,16 @@ function readBody(req) {
   });
 }
 
+// The served base URL for a template's media (C2). Id-keyed (NOT a /templates/
+// subpath) so a template root may live anywhere on disk — /template-asset/:id/*
+// resolves it via findTemplate. The editor sends this verbatim as state.mediaBase.
+const templateBase = (id) => `/template-asset/${encodeURIComponent(id)}/`;
+// Campaign-scoped variant (4b): a campaign asset resolves its template through that
+// campaign's banks first (so a brand can override a template by name), so its media
+// must resolve the same way — /template-camp-asset/:campaign/:id/*. Concatenates
+// cleanly with the editor's `state.mediaBase + relpath`, like templateBase.
+const campTemplateBase = (campaign, id) => `/template-camp-asset/${encodeURIComponent(campaign)}/${encodeURIComponent(id)}/`;
+
 const server = createServer(async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
@@ -291,41 +305,44 @@ const server = createServer(async (req, res) => {
   const url = new URL(req.url, `http://localhost:${PORT}`);
   const path = url.pathname;
 
-  // GET /clusters — list available cluster configs
+  // GET /clusters — list ALL templates across every resolved root (not just
+  // cluster-* in one folder). listTemplates() handles dedup + the cluster-N-first
+  // sort. Drives the editor's dropdown, so fresh templates appear here.
   if (path === "/clusters" && req.method === "GET") {
-    const files = readdirSync(TEMPLATES_DIR).filter((f) =>
-      f.match(/^cluster-[\w-]+\.config\.json$/),
-    );
-    const list = files
-      .map((f) => f.replace(/\.config\.json$/, ""))
-      .sort((a, b) => {
-        const num = (s) => parseInt(s.replace(/^cluster-/, ""), 10) || 0;
-        return num(a) - num(b);
-      });
-    sendJson(res, 200, { clusters: list });
+    const campaign = url.searchParams.get("campaign") || undefined; // 4b: include a brand's own bank
+    sendJson(res, 200, { clusters: listTemplates(campaign) });
     return;
   }
 
-  // GET/POST /config/cluster-N
-  const configMatch = path.match(/^\/config\/(cluster-[\w-]+)$/);
+  // GET/POST /config/cluster-N (legacy) OR /template-config/:id (id-agnostic).
+  // Both resolve the id through the multi-root resolver, so a template in ANY
+  // root works. GET also returns the X-Template-Base header (C2/H6) so the editor
+  // knows where to fetch this template's media from.
+  const configMatch = path.match(/^\/(?:config\/(cluster-[\w-]+)|template-config\/([A-Za-z0-9._-]+))$/);
   if (configMatch) {
-    const id = configMatch[1];
-    const configPath = join(TEMPLATES_DIR, `${id}.config.json`);
+    const id = configMatch[1] || configMatch[2];
+    const found = findTemplate(id);
 
     if (req.method === "GET") {
-      if (!existsSync(configPath)) {
-        sendJson(res, 404, { error: `Config not found for ${id}` });
+      if (!found) {
+        sendJson(res, 404, { error: `template "${id}" not found in any template root` });
         return;
       }
-      send(res, 200, readFileSync(configPath, "utf8"));
+      res.setHeader("X-Template-Base", templateBase(id));
+      res.setHeader("Access-Control-Expose-Headers", "X-Template-Base");
+      send(res, 200, readFileSync(found.configPath, "utf8"));
       return;
     }
 
     if (req.method === "POST") {
+      if (!found) {
+        sendJson(res, 404, { error: `template "${id}" not found in any template root` });
+        return;
+      }
       const body = await readBody(req);
       try {
         const parsed = JSON.parse(body);
-        writeFileSync(configPath, JSON.stringify(parsed, null, 2));
+        writeFileSync(found.configPath, JSON.stringify(parsed, null, 2));
         sendJson(res, 200, { saved: true, id });
       } catch (e) {
         sendJson(res, 400, { error: e.message });
@@ -334,15 +351,17 @@ const server = createServer(async (req, res) => {
     }
   }
 
-  // POST /render/cluster-N
-  const renderMatch = path.match(/^\/render\/(cluster-[\w-]+)$/);
+  // POST /render/cluster-N (legacy) OR /render-template/:id (id-agnostic).
+  // jsxPath resolves through the multi-root resolver; output stays out/<id>.png.
+  const renderMatch = path.match(/^\/(?:render\/(cluster-[\w-]+)|render-template\/([A-Za-z0-9._-]+))$/);
   if (renderMatch && req.method === "POST") {
-    const id = renderMatch[1];
-    const jsxPath = join(TEMPLATES_DIR, `${id}.jsx`);
-    if (!existsSync(jsxPath)) {
-      sendJson(res, 404, { error: `Template not found: ${id}.jsx` });
+    const id = renderMatch[1] || renderMatch[2];
+    const found = findTemplate(id);
+    if (!found) {
+      sendJson(res, 404, { error: `template "${id}" not found in any template root` });
       return;
     }
+    const jsxPath = found.jsxPath;
 
     const proc = spawn(
       "node",
@@ -550,28 +569,39 @@ const server = createServer(async (req, res) => {
     const editsPath = editsConfigPath(campaign, angleId, assetId);
 
     if (req.method === "GET") {
-      if (existsSync(editsPath)) { send(res, 200, readFileSync(editsPath, "utf8")); return; }
+      // Resolve the asset's template FIRST so X-Template-Base can be returned even
+      // on the common existing-edits path (that's where the editor fetches media).
+      // Guard the plan parse so a corrupt/missing plan with an existing edits file
+      // still serves the edits verbatim (the legacy behavior).
       const planFile = join(CAMPAIGNS_DIR, campaign, "creative-plan.json");
-      if (!existsSync(planFile)) { sendJson(res, 404, { error: `no plan for "${campaign}"` }); return; }
-      const plan = JSON.parse(readFileSync(planFile, "utf8"));
-      const angle = (plan.angles || []).find((a) => a.id === angleId);
+      let plan = null;
+      try { if (existsSync(planFile)) plan = JSON.parse(readFileSync(planFile, "utf8")); } catch (_) {}
+      const angle = plan && (plan.angles || []).find((a) => a.id === angleId);
       const asset = angle && (angle.assets || []).find((a) => a.id === assetId);
+      if (asset && asset.template) {
+        // 4b: campaign-scoped base so media resolves through THIS campaign's banks.
+        res.setHeader("X-Template-Base", campTemplateBase(campaign, asset.template));
+        res.setHeader("Access-Control-Expose-Headers", "X-Template-Base");
+      }
+      if (existsSync(editsPath)) { send(res, 200, readFileSync(editsPath, "utf8")); return; }
+      if (!plan) { sendJson(res, 404, { error: `no plan for "${campaign}"` }); return; }
       if (!asset) { sendJson(res, 404, { error: `asset "${assetId}" not found` }); return; }
       // Editable statics are ANY static-format template whose config.json lives in
-      // TEMPLATES_DIR — not just cluster-* (Batti/franchisee fresh templates are
+      // a template root — not just cluster-* (Batti/franchisee fresh templates are
       // named fresh-batti-* / conf-s* etc.). Motion assets have no static config.
       if (asset.format && asset.format !== "static") {
         sendJson(res, 400, { error: `asset "${assetId}" is a ${asset.format} (motion) asset, not an editable static` });
         return;
       }
-      if (!asset.template || !existsSync(join(TEMPLATES_DIR, `${asset.template}.config.json`))) {
-        sendJson(res, 404, { error: `no static config for template "${asset.template}" in ${TEMPLATES_DIR}` });
+      const found = findTemplate(asset.template, campaign);
+      if (!asset.template || !found) {
+        sendJson(res, 404, { error: `no static config for template "${asset.template}" in any template root` });
         return;
       }
       const location = asset.location || (angle && angle.location) || plan.location || null;
       const config = resolveStaticConfig({
         clusterId: asset.template, asset, brand: plan.brand, location, campaign,
-        templateDir: TEMPLATES_DIR, dataDir: DATA_DIR,
+        templateDir: found.dir, dataDir: DATA_DIR,
       });
       if (!config) { sendJson(res, 404, { error: `could not resolve config for ${asset.template}` }); return; }
       writeAtomic(editsPath, JSON.stringify(config, null, 2));
@@ -654,14 +684,15 @@ const server = createServer(async (req, res) => {
       try { cfg = JSON.parse(readFileSync(editsPath, "utf8")); }
       catch (e) { sendJson(res, 500, { approved: false, error: "edits config unreadable: " + e.message }); return; }
     } else {
-      if (!asset.template || !existsSync(join(TEMPLATES_DIR, `${asset.template}.config.json`))) {
+      const found = findTemplate(asset.template, campaign);
+      if (!asset.template || !found) {
         sendJson(res, 404, { error: `no static config for template "${asset.template}" — cannot record approval` });
         return;
       }
       const location = asset.location || (angle && angle.location) || plan.location || null;
       cfg = resolveStaticConfig({
         clusterId: asset.template, asset, brand: plan.brand, location, campaign,
-        templateDir: TEMPLATES_DIR, dataDir: DATA_DIR,
+        templateDir: found.dir, dataDir: DATA_DIR,
       });
       if (!cfg) { sendJson(res, 404, { error: `could not resolve config for ${asset.template}` }); return; }
     }
@@ -755,13 +786,13 @@ const server = createServer(async (req, res) => {
   // GET /bank?type=motion|static — bank templates for the swap dropdown.
   if (path === "/bank" && req.method === "GET") {
     const type = url.searchParams.get("type") || "motion";
+    const campaign = url.searchParams.get("campaign") || undefined; // 4b: include the brand's bank
     let templates = [];
     try {
       if (type === "static") {
-        // cluster-* (AA bank) + fresh-* / conf-s* (Batti & other franchisee statics)
-        templates = readdirSync(TEMPLATES_DIR)
-          .filter((f) => /^(cluster-|fresh-|conf-s)[\w-]+\.config\.json$/.test(f))
-          .map((f) => f.replace(/\.config\.json$/, ""));
+        // ALL static templates across every resolved root (not a name-prefix filter
+        // in one folder) — so fresh templates in new folders appear in the swap list.
+        templates = listTemplates(campaign);
       } else {
         templates = readdirSync(VIDEO_TEMPLATES_DIR)
           .filter((f) => f.endsWith(".jsx"))
@@ -1041,7 +1072,7 @@ const server = createServer(async (req, res) => {
   // in the editor preview (/templates/...) AND the PNG render (relative to dir).
   if (path === "/media-into-template" && req.method === "POST") {
     try {
-      const { src } = JSON.parse((await readBody(req)) || "{}");
+      const { src, editorId } = JSON.parse((await readBody(req)) || "{}");
       if (!src) { sendJson(res, 400, { error: "missing src" }); return; }
       const from = resolve(join(PROJECT_ROOT, src));
       // Guard: source must live under a known brand-media root (shared OR a kit).
@@ -1049,13 +1080,30 @@ const server = createServer(async (req, res) => {
         sendJson(res, 404, { error: "source media not found in a brand media root" });
         return;
       }
+      // C3: stage into the RIGHT template's assets/ dir. editorId is the editor's
+      // loaded id — a bare template id, or "camp:<c>:<a>:<as>" for a campaign asset
+      // (whose template name lives in the plan, NOT in the id). Resolve it; fall
+      // back to the legacy single bank only if neither resolves.
+      let tmplId = null, tmplCampaign;
+      if (typeof editorId === "string" && editorId.startsWith("camp:")) {
+        const [, c, a, as] = editorId.split(":");
+        tmplCampaign = c; // 4b: stage into the brand's own bank dir if it overrides
+        try {
+          const plan = JSON.parse(readFileSync(join(CAMPAIGNS_DIR, c, "creative-plan.json"), "utf8"));
+          const ang = (plan.angles || []).find((x) => x.id === a);
+          const asset = ang && (ang.assets || []).find((x) => x.id === as);
+          tmplId = asset && asset.template;
+        } catch (_) {}
+      } else if (typeof editorId === "string" && editorId) {
+        tmplId = editorId;
+      }
       // MUST live under assets/: the static renderer (static-react.mjs) copies
       // ONLY the sibling assets/ dir into its temp render dir, so a photo under
       // any other subdir renders BLACK. Match the proven "./assets/<name>"
       // convention. Prefix "swap-" to stay identifiable + avoid clobbering
       // curated assets. Slug the name (brand photos have spaces/parens) so it's
       // URL-safe in the editor preview regardless of decoding.
-      const assetsDir = join(TEMPLATES_DIR, "assets");
+      const assetsDir = (tmplId && assetsDirFor(tmplId, tmplCampaign)) || join(TEMPLATES_DIR, "assets");
       mkdirSync(assetsDir, { recursive: true });
       const ext = extname(from).toLowerCase();
       const slug = basename(from, extname(from))
@@ -1115,13 +1163,50 @@ const server = createServer(async (req, res) => {
     }
   }
 
-  // GET /templates/... → serve template assets (photos, SVGs, etc.)
+  // GET /template-asset/:id/<relpath> → serve a template's media from ANY root
+  // (C2). Id-keyed so a template folder may live anywhere on disk; the guard keeps
+  // the resolved path under that template's own dir. This is what X-Template-Base
+  // points at, so it's the editor's primary media route.
+  // GET /template-camp-asset/:campaign/:id/<relpath> → 4b: resolve through the
+  // campaign's banks FIRST (brand override-by-name), then serve the media, guarded
+  // to the resolved template's dir. Used for campaign-asset previews.
+  const tcassetMatch = path.match(/^\/template-camp-asset\/([^/]+)\/([A-Za-z0-9._-]+)\/(.+)$/);
+  if (tcassetMatch && req.method === "GET") {
+    const found = findTemplate(tcassetMatch[2], decodeURIComponent(tcassetMatch[1]));
+    if (found) {
+      const resolved = resolve(join(found.dir, decodeURIComponent(tcassetMatch[3])));
+      if (resolved.startsWith(resolve(found.dir)) && existsSync(resolved)) {
+        const mime = MIME[extname(resolved).toLowerCase()] || "application/octet-stream";
+        sendFile(req, res, resolved, mime);
+        return;
+      }
+    }
+    sendJson(res, 404, { error: "template asset not found" });
+    return;
+  }
+
+  const tassetMatch = path.match(/^\/template-asset\/([A-Za-z0-9._-]+)\/(.+)$/);
+  if (tassetMatch && req.method === "GET") {
+    const found = findTemplate(tassetMatch[1]);
+    if (found) {
+      const resolved = resolve(join(found.dir, decodeURIComponent(tassetMatch[2])));
+      if (resolved.startsWith(resolve(found.dir)) && existsSync(resolved)) {
+        const mime = MIME[extname(resolved).toLowerCase()] || "application/octet-stream";
+        sendFile(req, res, resolved, mime);
+        return;
+      }
+    }
+    sendJson(res, 404, { error: "template asset not found" });
+    return;
+  }
+
+  // GET /templates/... → serve template assets (legacy back-compat route).
   if (path.startsWith("/templates/") && req.method === "GET") {
     // Decode so asset names with spaces/parens resolve (url.pathname keeps %20).
     const filePath = join(PROJECT_ROOT, decodeURIComponent(path.slice(1)));
-    // Security: ensure resolved path stays under TEMPLATES_DIR
+    // Security: resolved path must stay under one of the resolved template roots.
     const resolved = resolve(filePath);
-    if (resolved.startsWith(resolve(TEMPLATES_DIR)) && existsSync(resolved)) {
+    if (STATIC_ROOTS().some((r) => resolved.startsWith(resolve(r))) && existsSync(resolved)) {
       const mime = MIME[extname(resolved).toLowerCase()] || "application/octet-stream";
       sendFile(req, res, resolved, mime);
       return;

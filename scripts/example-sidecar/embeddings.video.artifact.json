@@ -1,0 +1,77 @@
+{
+  "note": "Track-B perceptual metrics. Raw vectors + full matrix live in embeddings.vectors.npz (gitignored). This file holds the per-example + batch metrics build-index.mjs folds into clusterMetrics, plus an archetype-ordered cosine matrix (heatmap) and a 2D projection the viewer reads. Re-run via run.mjs.",
+  "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
+  "labeledBy": "sidecar:openai/clip-vit-large-patch14 + facebook/dinov2-large",
+  "seed": 42,
+  "vectorsArtifact": "embeddings.vectors.npz",
+  "examples": {
+    "ex-046-metric-reveal": {
+      "intraArchetypeMaxCosine": null,
+      "meanCrossArchetypeCosine": null,
+      "nearestNeighbor": null,
+      "silhouette": 0.0,
+      "subLook": "metric-reveal-a"
+    }
+  },
+  "batch": {
+    "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
+    "count": 1,
+    "archetypes": [
+      "metric-reveal"
+    ],
+    "maxCrossArchetypeCosine": null,
+    "meanCrossArchetypeCosine": null,
+    "maxIntraArchetypeCosine": null,
+    "meanWithinArchetypeCosine": null,
+    "meanSilhouette": 0.0,
+    "vendiScore": 1.0,
+    "kmeansCrossCheck": {
+      "k": 1,
+      "meanClusterPurity": 1.0
+    },
+    "perArchetype": {
+      "metric-reveal": {
+        "count": 1,
+        "maxWithin": null,
+        "meanWithin": null,
+        "maxCrossNeighbor": null
+      }
+    },
+    "closestCrossArchetypePair": null,
+    "thresholds": {
+      "maxWithinArchetypeCosine": "<0.85",
+      "meanWithinArchetypeCosine": "<0.75",
+      "meanCrossArchetypeCosine": "<0.55",
+      "maxCrossArchetypeCosine": "<0.70",
+      "meanSilhouette": ">=0.35",
+      "vendiScore": ">=8 (full 12-archetype set)"
+    },
+    "seed": 42
+  },
+  "heatmap": {
+    "order": [
+      "ex-046-metric-reveal"
+    ],
+    "archetypes": [
+      "metric-reveal"
+    ],
+    "matrix": [
+      [
+        1.0
+      ]
+    ],
+    "boundaries": []
+  },
+  "projection2d": {
+    "method": "trivial",
+    "points": [
+      {
+        "id": "ex-046-metric-reveal",
+        "archetype": "metric-reveal",
+        "x": 0.5,
+        "y": 0.5
+      }
+    ]
+  },
+  "dropped": []
+}

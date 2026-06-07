@@ -646,6 +646,9 @@
     const state = {
       cluster: null,
       config: null,
+      // Media base for the loaded template (set from the X-Template-Base header on
+      // load). Default to the legacy bank so a render before first load never 404s.
+      mediaBase: '/templates/multi-sport-foundations/',
       selectedId: null,
       selectedIds: [], // group selection (text layers) for multi-move; primary stays selectedId
       scale: 1,
@@ -768,12 +771,16 @@
       if (typeof id === 'string' && id.startsWith('camp:')) {
         throw new Error('malformed campaign id "' + id + '" — expected camp:<campaign>:<angle>:<asset>');
       }
-      return '/config/' + id;
+      // Non-camp ids go through the id-agnostic resolver route so a template in ANY
+      // root works (not just cluster-* in one folder).
+      return '/template-config/' + id;
     }
     async function fetchConfig(cluster) {
       const r = await fetch(configUrl(cluster));
       if (!r.ok) return null;
-      return r.json();
+      // Return the config AND its media base (X-Template-Base) so the editor knows
+      // where to fetch THIS template's photos from, wherever its root lives (C2).
+      return { cfg: await r.json(), base: r.headers.get('X-Template-Base') };
     }
     async function saveConfig(cluster, config) {
       const r = await fetch(configUrl(cluster), {
@@ -787,7 +794,7 @@
       const camp = parseCampId(cluster);
       const url = camp
         ? `/render-asset/${camp.campaign}/${camp.angle}/${camp.asset}`
-        : '/render/' + cluster;
+        : '/render-template/' + cluster;
       const r = await fetch(url, { method: 'POST' });
       return r.json();
     }
@@ -1179,7 +1186,7 @@
       img.style.userSelect = 'none';
       if (media.path) {
         const cleanPath = media.path.replace(/^\.\//, '');
-        img.src = '/templates/multi-sport-foundations/' + cleanPath;
+        img.src = state.mediaBase + cleanPath;
         img.onload = () => repositionPhoto(img);
         // On a stage RE-render the img is cached, so onload often never fires and
         // the photo would stay at natural size / top-left (zoomed, right cut off).
@@ -1222,7 +1229,7 @@
       fgImg.className = 'fg-layer';
       fgImg.alt = '';
       const fgClean = fg.path.replace(/^\.\//, '');
-      fgImg.src = '/templates/multi-sport-foundations/' + fgClean;
+      fgImg.src = state.mediaBase + fgClean;
       if (fg.blendMode && fg.blendMode !== 'normal') fgImg.style.mixBlendMode = fg.blendMode;
       if (state.selectedId === '_foreground') fgImg.classList.add('selected');
       fgImg.onload = () => repositionForeground(fgImg);
@@ -1416,7 +1423,7 @@
         el.style.width = it.width + 'px';
         el.style.height = it.height + 'px';
         const img = document.createElement('img');
-        img.src = '/templates/multi-sport-foundations/' + (it.src || '').replace(/^\.\//, '');
+        img.src = state.mediaBase + (it.src || '').replace(/^\.\//, '');
         img.alt = '';
         img.style.width = '100%';
         img.style.height = '100%';
@@ -1529,7 +1536,7 @@
       const cleanPath = media.path.replace(/^\.\//, '');
       const img = document.createElement('img');
       img.className = 'crop-photo';
-      img.src = '/templates/multi-sport-foundations/' + cleanPath;
+      img.src = state.mediaBase + cleanPath;
       wrap.appendChild(img);
 
       img.onload = () => {
@@ -1769,7 +1776,7 @@
         if (el.transformOrigin != null) box.style.transformOrigin = el.transformOrigin;
       }
       if (el.imageFill != null) {
-        const fillUrl = '/templates/multi-sport-foundations/' + el.imageFill.replace(/^\.\//, '');
+        const fillUrl = state.mediaBase + el.imageFill.replace(/^\.\//, '');
         text.style.backgroundImage = 'url("' + fillUrl + '")';
         text.style.backgroundSize = el.backgroundSize || 'cover';
         text.style.backgroundPosition = el.backgroundPosition || 'center';
@@ -2673,7 +2680,7 @@
       try {
         const r = await fetch('/media-into-template', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ src: item.path }),
+          body: JSON.stringify({ src: item.path, editorId: state.cluster }),
         });
         const j = await r.json();
         if (!r.ok || !j.path) throw new Error(j.error || 'copy failed');
@@ -2830,9 +2837,10 @@
     }, true);
     $('reloadBtn').onclick = async () => {
       if (state.cluster) {
-        const cfg = await fetchConfig(state.cluster);
-        if (cfg) {
-          state.config = cfg;
+        const got = await fetchConfig(state.cluster);
+        if (got && got.cfg) {
+          state.config = got.cfg;
+          state.mediaBase = got.base || '/templates/multi-sport-foundations/';
           renderStage();
           renderElementList();
           renderProps();
@@ -2843,8 +2851,8 @@
 
     // ===== Cluster picker =====
     async function loadCluster(id) {
-      const cfg = await fetchConfig(id);
-      if (!cfg) {
+      const got = await fetchConfig(id);
+      if (!got || !got.cfg) {
         setStatus('No config for ' + id + '. Refactor template first.');
         state.cluster = id;
         state.config = null;
@@ -2853,7 +2861,10 @@
         return;
       }
       state.cluster = id;
-      state.config = cfg;
+      state.config = got.cfg;
+      // Where this template's media is served from (C2). Falls back to the legacy
+      // bank path if the server didn't send the header (O2 — order-safe).
+      state.mediaBase = got.base || '/templates/multi-sport-foundations/';
       state.selectedId = null;
       renderStage();
       renderElementList();

@@ -24,7 +24,7 @@ import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  INDEX_PATH, exampleImagePath, exampleSourcePaths,
+  INDEX_PATH, exampleImagePath, exampleMotionPath, exampleSourcePaths,
   validateExampleIndex,
 } from "../lib/example-library.mjs";
 
@@ -37,8 +37,12 @@ function main() {
   const manifest = readJson(join(HERE, "examples.manifest.json"));
   const report = readJson(join(HERE, "render-report.json"));
   const artifactPath = join(HERE, "embeddings.artifact.json");
+  const videoArtifactPath = join(HERE, "embeddings.video.artifact.json");
   const labelsPath = join(HERE, "labels.json");
   const artifact = existsSync(artifactPath) ? readJson(artifactPath) : { examples: {}, batch: {} };
+  // Video examples are embedded in a SEPARATE pass (a GIF poster ≈ its static sibling
+  // by design; mixing them would inflate within-archetype cosine). Fold both. (Plan A3/D-2.)
+  const videoArtifact = existsSync(videoArtifactPath) ? readJson(videoArtifactPath) : { examples: {}, batch: {} };
   const labels = existsSync(labelsPath) ? readJson(labelsPath) : { labels: {}, labeledBy: "unlabeled" };
 
   const okIds = new Set(report.results.filter((r) => r.ok && r.png).map((r) => r.id));
@@ -49,14 +53,16 @@ function main() {
   let skipped = 0;
   for (const ex of manifest.examples) {
     if (!okIds.has(ex.id)) { skipped++; continue; } // never index an example that failed render-QA
-    const m = artifact.examples?.[ex.id] || {};
+    // metrics come from the format-matched artifact (static or video); ids are disjoint.
+    const m = artifact.examples?.[ex.id] ?? videoArtifact.examples?.[ex.id] ?? {};
+    const embedder = artifact.examples?.[ex.id] ? artifact.embedder : (videoArtifact.examples?.[ex.id] ? videoArtifact.embedder : null);
     const lab = labels.labels?.[ex.id] || {};
 
     const clusterMetrics = {
       subLook: m.subLook ?? null,
       labeledBy,
       labeledAt,
-      embedder: artifact.embedder ?? null,
+      embedder: embedder ?? null,
       intraArchetypeMaxCosine: m.intraArchetypeMaxCosine ?? null,
       meanCrossArchetypeCosine: m.meanCrossArchetypeCosine ?? null,
       silhouette: m.silhouette ?? null,
@@ -74,6 +80,7 @@ function main() {
       mediaStyleAccepts: ex.mediaStyleAccepts,
       slotShape: ex.slotShape,
       renderedImagePath: exampleImagePath(ex.id),
+      ...(ex.format === "video" && existsSync(join(ROOT, exampleMotionPath(ex.id))) ? { motionPath: exampleMotionPath(ex.id) } : {}),
       ...(existsSync(join(ROOT, sourceJsx)) ? { sourcePath: sourceJsx } : {}),
       clusterMetrics,
     };
@@ -83,7 +90,8 @@ function main() {
     note: "Example-library index (Track B). One entry per render-QA-passed example: kind + media-style accepts + copy slotShape + the rendered artifact path + perceptual clusterMetrics. Produced by scripts/example-sidecar (render → QA → embed[CLIP+DINOv2] → label → assemble). Schema authority: scripts/lib/example-library.mjs.",
     schema: "example-library/v2",
     generatedAt: labeledAt,
-    diversity: artifact.batch ?? {},   // the 'measured spectrum' (forward-compatible top-level key)
+    diversity: artifact.batch ?? {},        // static 'measured spectrum'
+    ...(videoArtifact.batch && Object.keys(videoArtifact.batch).length ? { diversityVideo: videoArtifact.batch } : {}),
     examples,
   };
 

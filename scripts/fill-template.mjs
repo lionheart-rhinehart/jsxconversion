@@ -34,9 +34,9 @@ import {
   emitVariant,
   renderJsx,
 } from "./lib/fill-core.mjs";
+import { findTemplate } from "./lib/template-roots.mjs";
 
 const PROJECT_ROOT = resolve(".");
-const TEMPLATE_DIR = join(PROJECT_ROOT, "templates/multi-sport-foundations");
 const DATA_DIR = join(PROJECT_ROOT, "data");
 
 // ---------------------------------------------------------------------------
@@ -59,6 +59,15 @@ if (!clusterArg) {
   process.exit(1);
 }
 const clusterId = clusterArg.startsWith("cluster-") ? clusterArg : `cluster-${clusterArg}`;
+
+// Resolve the template through the multi-root resolver (was hard-coded to
+// templates/multi-sport-foundations). The .fill variant is emitted next to it.
+const _t = findTemplate(clusterId);
+if (!_t) {
+  console.error(`template "${clusterId}" not found in any template root`);
+  process.exit(1);
+}
+const TEMPLATE_DIR = _t.dir;
 
 // ---------------------------------------------------------------------------
 // Load template config

@@ -1,0 +1,8 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": { "path": "./assets/sample.jpg", "tag": "bg_media", "z": 0 },
+  "elements": [
+    { "id": "headline", "type": "text", "tag": "headline", "text": "DEMO", "x": 60, "y": 1760, "fontSize": 90, "color": "#ffffff" }
+  ]
+}

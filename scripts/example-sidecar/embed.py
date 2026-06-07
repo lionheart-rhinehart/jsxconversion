@@ -49,8 +49,21 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
 RENDER_REPORT = HERE / "render-report.json"
 MANIFEST = HERE / "examples.manifest.json"
-VECTORS_NPZ = HERE / "embeddings.vectors.npz"
-ARTIFACT = HERE / "embeddings.artifact.json"
+
+# CLI: `--format=static|video` embeds only that format's examples; `--out=<name>`
+# names the artifact (video runs in a SEPARATE pass so a GIF poster — which ≈ its
+# static sibling by design — doesn't inflate the static within-archetype cosine).
+def _arg(flag, default=None):
+    pre = f"--{flag}="
+    for a in sys.argv[1:]:
+        if a.startswith(pre):
+            return a[len(pre):]
+    return default
+
+FORMAT_FILTER = _arg("format")  # None = all formats (back-compat)
+_out = _arg("out") or ("embeddings.video.artifact.json" if FORMAT_FILTER == "video" else "embeddings.artifact.json")
+VECTORS_NPZ = HERE / ("embeddings.video.vectors.npz" if FORMAT_FILTER == "video" else "embeddings.vectors.npz")
+ARTIFACT = HERE / _out
 
 CLIP_MODEL = "openai/clip-vit-large-patch14"
 DINO_MODEL = "facebook/dinov2-large"
@@ -80,12 +93,15 @@ def log(msg):
 def load_inputs():
     report = json.loads(RENDER_REPORT.read_text(encoding="utf-8"))
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
-    archetypes = {e["id"]: e["archetype"] for e in manifest["examples"]}
+    by_id = {e["id"]: e for e in manifest["examples"]}
     rows = []
     for r in report["results"]:
         if not r.get("ok") or not r.get("png"):
             continue
-        rows.append({"id": r["id"], "png": str(ROOT / r["png"]), "archetype": archetypes.get(r["id"], "?")})
+        ex = by_id.get(r["id"], {})
+        if FORMAT_FILTER and ex.get("format") != FORMAT_FILTER:
+            continue
+        rows.append({"id": r["id"], "png": str(ROOT / r["png"]), "archetype": ex.get("archetype", "?")})
     return rows
 
 
@@ -278,6 +294,12 @@ def kmeans_crosscheck(vecs, archetypes):
 def project_2d(vecs, ids, archetypes):
     """2D map for the scatter: UMAP if installed, else PCA-2D via numpy SVD (seeded,
     dependency-free)."""
+    n = len(ids)
+    # 0/1 points can't be projected to 2D (SVD yields <2 components). Place them at
+    # center — the scatter is meaningless at this size anyway. (Keeps an incremental
+    # 1-example video pass from crashing.)
+    if n < 2:
+        return "trivial", [{"id": ids[i], "archetype": archetypes[i], "x": 0.5, "y": 0.5} for i in range(n)]
     data = l2(vecs)
     method = "pca"
     try:
@@ -290,6 +312,10 @@ def project_2d(vecs, ids, archetypes):
         _, _, vt = np.linalg.svd(c, full_matrices=False)
         xy = c @ vt[:2].T
     xy = np.asarray(xy, dtype=float)
+    if xy.ndim == 1:
+        xy = xy.reshape(-1, 1)
+    if xy.shape[1] < 2:  # only 1 principal component (e.g. 2 points) → pad a zero column
+        xy = np.hstack([xy, np.zeros((xy.shape[0], 2 - xy.shape[1]))])
     # normalize to a friendly range for plotting
     if xy.shape[0] > 1:
         mn, mx = xy.min(axis=0), xy.max(axis=0)

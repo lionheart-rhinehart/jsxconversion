@@ -17,6 +17,8 @@ brand/kraken-cache/
 templates/**/assets/swap-*
 # Per-checkout dev server ports (written by scripts/dev.mjs; machine-local)
 .dev-ports.json
+# Editor template-root overrides (written by scripts/edit.mjs; machine-local)
+.editor-config.json
 *.log
 .DS_Store
 __render/

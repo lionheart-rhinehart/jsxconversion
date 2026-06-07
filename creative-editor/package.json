@@ -1,0 +1,15 @@
+{
+  "name": "creative-editor",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Portable layer/position + media editor for JSX templates. Host-agnostic core; campaigns, Kraken, and rendering are injected adapters/plugins.",
+  "main": "server.mjs",
+  "exports": {
+    ".": "./server.mjs",
+    "./template-roots": "./template-roots.mjs",
+    "./providers/local-media": "./providers/local-media.mjs"
+  },
+  "scripts": {
+    "example": "node example/run.mjs"
+  }
+}

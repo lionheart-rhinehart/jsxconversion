@@ -51,10 +51,10 @@ import { loadBrandFile } from "./lib/brand-kit.mjs";
 import { stageKitFonts } from "./lib/fonts-stage.mjs";
 import { checkRenderEnv, formatRenderEnvError, REQUIRED_FONT_FAMILIES } from "./lib/preflight.mjs";
 import { capBgExtraction } from "./lib/clip-cap.mjs";
+import { STATIC_ROOTS, findTemplate } from "./lib/template-roots.mjs";
 
 const PROJECT_ROOT = resolve(".");
 const CAMPAIGNS_DIR = join(PROJECT_ROOT, "campaigns");
-const TEMPLATE_DIR = join(PROJECT_ROOT, "templates/multi-sport-foundations");
 const VIDEO_DIR = join(PROJECT_ROOT, "brand/video-templates");
 const OUT_DIR = join(PROJECT_ROOT, "out");
 const RENDERER = ".claude/skills/jsx-to-mp4/scripts/render.mjs";
@@ -310,9 +310,15 @@ function buildMotionData(asset, dataKeys, tierTags = {}) {
 // file is the single source of truth for both the editor and the renderer.
 async function renderTemplateStatic(asset, angleId) {
   const clusterId = asset.template;
-  if (!clusterId || !existsSync(join(TEMPLATE_DIR, `${clusterId}.config.json`))) {
-    return { ok: false, error: `template "${clusterId}" not found in ${TEMPLATE_DIR}` };
+  // Resolve the template through the multi-root resolver (C4 null-guarded) so a
+  // template in ANY root renders. The editor preview uses the SAME resolver, so
+  // both agree on the dir (no "edit one creative, render another"). Locally rebind
+  // TEMPLATE_DIR to THIS template's root so the body below is unchanged.
+  const _t = clusterId ? findTemplate(clusterId, campaign) : null; // 4b: brand bank first
+  if (!_t) {
+    return { ok: false, error: `template "${clusterId}" not found in any template root` };
   }
+  const TEMPLATE_DIR = _t.dir;
   const suffix = `.camp-${slug(campaign)}-${slug(angleId)}-${slug(asset.id)}`;
   const editsPath = editsConfigPath(angleId, asset.id);
   let config;
@@ -722,7 +728,7 @@ async function renderFresh(asset, angleId) {
       error: "fresh asset not composed yet — run compose-creative to author it (it sets asset.template)" };
   }
   const authored = asset.format === "static"
-    ? existsSync(join(TEMPLATE_DIR, `${asset.template}.config.json`))
+    ? !!findTemplate(asset.template, campaign)
     : existsSync(join(VIDEO_DIR, "templates", `${asset.template}.jsx`));
   if (!authored) {
     return { ok: false, pending: true,
@@ -813,7 +819,7 @@ async function main() {
   // bank family names so the preflight resolves to them (no source/renderer edits).
   // No-op for AA / any brand that keeps the bank fonts. Removed in finally.
   const brandFile = brand ? loadBrandFile(brand, DATA_DIR).json : null;
-  const cleanupFonts = stageKitFonts({ brandFile, projectRoot: PROJECT_ROOT, projectDirs: [TEMPLATE_DIR, VIDEO_DIR] });
+  const cleanupFonts = stageKitFonts({ brandFile, projectRoot: PROJECT_ROOT, projectDirs: [...STATIC_ROOTS(), VIDEO_DIR] });
   try {
 
   for (const angle of plan.angles || []) {

@@ -20,8 +20,9 @@
 // ============================================================================
 
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, copyFileSync, readFileSync, writeFileSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, copyFileSync, readFileSync, writeFileSync, rmSync, statSync, mkdtempSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
+import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 import { verifyRender } from "../lib/render-qa.mjs";
 import { EXAMPLES_DIR, exampleImagePath, exampleMotionPath } from "../lib/example-library.mjs";
@@ -32,6 +33,36 @@ const RENDERER = join(ROOT, ".claude", "skills", "jsx-to-mp4", "scripts", "rende
 const OUT_DIR = join(ROOT, "out");
 const REPORT = join(HERE, "render-report.json");
 const RENDER_TIMEOUT_MS = 120000;
+
+// Poster-frame extraction for a VIDEO example: the contract's labeled artifact is a
+// representative still (CLIP/DINOv2 + Gemini read it). Extract candidate frames at a
+// few fixed fractions of the clip and keep the LARGEST-bytes one — a flat/black/
+// transition frame compresses tiny, so largest-bytes is a decoder-free non-blank
+// heuristic (mirrors embed.py's blank-std intent; render-qa house rule: no Node image
+// decoder). Deterministic (fixed fractions) so re-runs are stable. Returns the dest
+// path on success, or null (ffmpeg failed on every seek).
+function extractPoster(mp4Path, durationSec, destPng) {
+  const fracs = [0.4, 0.5, 0.6, 0.95]; // 0.95 catches a count-up's final value frame
+  const tmp = mkdtempSync(join(tmpdir(), "poster-"));
+  try {
+    let best = null, bestSize = -1;
+    for (const f of fracs) {
+      const t = Math.max(0, durationSec * f);
+      const cand = join(tmp, `${Math.round(f * 100)}.png`);
+      const r = spawnSync("ffmpeg", ["-y", "-ss", String(t), "-i", mp4Path, "-frames:v", "1", cand], { stdio: "ignore" });
+      if (r.status === 0 && existsSync(cand)) {
+        const sz = statSync(cand).size;
+        if (sz > bestSize) { bestSize = sz; best = cand; }
+      }
+    }
+    if (!best) return null;
+    mkdirSync(dirname(destPng), { recursive: true });
+    copyFileSync(best, destPng);
+    return destPng;
+  } finally {
+    rmSync(tmp, { recursive: true, force: true });
+  }
+}
 
 function loadManifest() {
   const path = join(HERE, "examples.manifest.json");
@@ -76,10 +107,24 @@ function renderOne(ex) {
     copyFileSync(produced, destPng);
     return { id: ex.id, format: ex.format, ok: true, png: exampleImagePath(ex.id), mp4: null, reason: qa.skipped ? qa.reason : "ok" };
   }
-  // video: copy the clip; the poster .png must come from a frame-extract step (TODO motion).
+  // video: copy the clip, then extract a poster frame (the contract's labeled still).
   const destMp4 = join(ROOT, exampleMotionPath(ex.id));
   copyFileSync(produced, destMp4);
-  return { id: ex.id, format: ex.format, ok: false, png: null, mp4: exampleMotionPath(ex.id), reason: "video example: poster-frame extraction not implemented in the static slice" };
+  // verifyRender(mp4) returns durationSec; if ffmpeg was unavailable it returns
+  // {skipped:true} with NO durationSec → we cannot extract a poster, so this example
+  // can't be embedded. Fail THIS row cleanly (don't crash the batch). (Plan D-2.)
+  if (qa.skipped || qa.durationSec == null) {
+    return { id: ex.id, format: ex.format, ok: false, png: null, mp4: exampleMotionPath(ex.id), reason: "no ffmpeg/duration → cannot extract poster frame" };
+  }
+  const poster = extractPoster(produced, qa.durationSec, destPng);
+  if (!poster) {
+    return { id: ex.id, format: ex.format, ok: false, png: null, mp4: exampleMotionPath(ex.id), reason: "poster extraction produced no frame" };
+  }
+  const posterQa = verifyRender(destPng, { kind: "png" });
+  if (!posterQa.ok) {
+    return { id: ex.id, format: ex.format, ok: false, png: null, mp4: exampleMotionPath(ex.id), reason: `poster frame blocked: ${posterQa.reason}` };
+  }
+  return { id: ex.id, format: ex.format, ok: true, png: exampleImagePath(ex.id), mp4: exampleMotionPath(ex.id), reason: "ok" };
 }
 
 function main() {

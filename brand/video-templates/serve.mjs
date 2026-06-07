@@ -8,12 +8,35 @@
 // Optional: pass a port as the first arg (defaults to 5599).
 import http from 'node:http';
 import { readFile } from 'node:fs/promises';
+import { readdirSync } from 'node:fs';
 import { extname, join, normalize, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.argv[2]) || 5599;
 const DEFAULT_PAGE = 'Video Templates Gallery.html';
+
+// Auto-discover the motion editor's babel scripts so dropping a new .jsx into
+// elements/ or templates/ makes it appear with NO hand-editing of review.html
+// (the old ~98-tag hand list). Order matters for babel-standalone: animations.jsx
+// + editing.jsx stay hard-coded ABOVE the <!--AUTO_TEMPLATE_SCRIPTS--> marker in
+// review.html; here we emit elements/* then templates/*, each sorted. Missing dir
+// → [] (never throws). Component names are auto-detected by /template-spec, so any
+// dropped-in template is mountable without further wiring.
+function templateScriptTags() {
+  const tag = (rel) => `<script type="text/babel" src="${rel}"></script>`;
+  const list = (sub) => {
+    try {
+      return readdirSync(join(ROOT, sub))
+        .filter((f) => f.endsWith('.jsx'))
+        .sort()
+        .map((f) => tag(`${sub}/${f}`));
+    } catch {
+      return [];
+    }
+  };
+  return [...list('elements'), ...list('templates')].join('\n');
+}
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -32,6 +55,14 @@ const server = http.createServer(async (req, res) => {
     const file = normalize(join(ROOT, p));
     if (!file.startsWith(ROOT)) { res.writeHead(403); return res.end('forbidden'); }
     const buf = await readFile(file);
+    // H5: ONLY stringify review.html (a Buffer .replace would fail; toString on a
+    // .png/.mp4 would corrupt it). Inject the auto-discovered <script> tags into the
+    // marker; every other file streams as raw bytes, unchanged.
+    if (file.endsWith('review.html')) {
+      const html = buf.toString('utf8').replace('<!--AUTO_TEMPLATE_SCRIPTS-->', templateScriptTags());
+      res.writeHead(200, { 'Content-Type': MIME['.html'], 'Cache-Control': 'no-store' });
+      return res.end(html);
+    }
     res.writeHead(200, {
       'Content-Type': MIME[extname(file).toLowerCase()] || 'application/octet-stream',
       // Dev server: never cache. review.html loads ~96 .jsx over XHR via
