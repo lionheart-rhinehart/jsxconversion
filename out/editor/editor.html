@@ -579,6 +579,12 @@
                 <option value="">— none (neutral) —</option>
               </select>
             </label>
+            <div id="driveBar" hidden style="margin:4px 0;border:1px solid var(--line,#2a2d31);border-radius:6px;padding:6px">
+              <div style="font-size:10px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase">Google Drive</div>
+              <select id="driveFolder" style="width:100%;font-size:11px;margin:4px 0"><option value="">— folder —</option></select>
+              <div id="driveFiles" class="ed-photo-grid" hidden></div>
+              <div id="driveMsg" style="font-size:10px;color:var(--muted)"></div>
+            </div>
             <button id="browsePhotosBtn" type="button" style="width:100%;font-size:11px;cursor:pointer">Browse media ▾</button>
             <div class="ed-photo-grid" id="photoGrid" hidden></div>
           </div>
@@ -2595,6 +2601,55 @@
         setStatus(state.brand ? ('Brand attached: ' + sel.options[sel.selectedIndex].text) : 'Brand detached (neutral)');
       });
     }
+    // Google Drive media source (Phase A): browse folders → files, preview/play, place.
+    // Hidden unless the server reports a configured service-account (degrades gracefully).
+    async function initDriveBar() {
+      const bar = $('driveBar'); if (!bar) return;
+      let st; try { st = await fetch('/drive/status').then((r) => r.json()); } catch (_) { st = { available: false }; }
+      if (!st || !st.available) { bar.hidden = true; return; }
+      bar.hidden = false;
+      const folderSel = $('driveFolder'), filesEl = $('driveFiles'), msg = $('driveMsg');
+      try {
+        const fj = await fetch('/drive/folders').then((r) => r.json());
+        for (const f of (fj.folders || [])) { const o = document.createElement('option'); o.value = f.id; o.textContent = f.name; folderSel.appendChild(o); }
+      } catch (_) {}
+      folderSel.addEventListener('change', async () => {
+        filesEl.hidden = true; filesEl.innerHTML = '';
+        if (!folderSel.value) return;
+        msg.textContent = 'Loading…';
+        let files = [];
+        try { const j = await fetch('/drive/files?folder=' + encodeURIComponent(folderSel.value)).then((r) => r.json()); files = j.files || []; } catch (_) {}
+        msg.textContent = ''; filesEl.hidden = false;
+        if (!files.length) { filesEl.innerHTML = '<div class="ed-empty">No image/video files.</div>'; return; }
+        for (const f of files) {
+          const t = document.createElement('button');
+          t.type = 'button'; t.className = 'ed-photo-tile'; t.title = f.title || f.id; t.style.position = 'relative';
+          const badge = document.createElement('span'); badge.className = 'ed-srcbadge kraken'; badge.textContent = f.type === 'video' ? 'vid' : 'gdr'; t.appendChild(badge);
+          if (f.type === 'video' && f.url) {
+            const v = document.createElement('video'); v.src = f.url; v.muted = true; v.playsInline = true; v.preload = 'metadata'; v.loop = true;
+            v.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;'; t.appendChild(v);
+            const play = document.createElement('span'); play.textContent = '▶';
+            play.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.8);background:rgba(0,0,0,.18);cursor:pointer;';
+            play.addEventListener('click', (e) => { e.stopPropagation(); if (v.paused) { v.play().catch(() => {}); play.textContent = '⏸'; play.style.background = 'transparent'; } else { v.pause(); play.textContent = '▶'; play.style.background = 'rgba(0,0,0,.18)'; } });
+            t.appendChild(play);
+          } else if (f.url) {
+            const img = document.createElement('img'); img.loading = 'lazy'; img.src = f.url; img.alt = ''; t.appendChild(img);
+          }
+          t.addEventListener('click', () => placeDriveFile(f));
+          filesEl.appendChild(t);
+        }
+      });
+    }
+    async function placeDriveFile(file) {
+      if (file.type !== 'image') { $('driveMsg').textContent = '▶ Preview only — video as background lands in the video editor (Phase C).'; return; }
+      $('driveMsg').textContent = 'Placing…';
+      try {
+        const j = await fetch('/drive/place', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: file.id }) }).then((r) => r.json());
+        if (!j.file) throw new Error(j.error || 'place failed');
+        await swapBackgroundPhoto({ path: j.file.path }, null);
+        $('driveMsg').textContent = 'Placed ' + (file.title || file.id);
+      } catch (e) { $('driveMsg').textContent = 'Place failed: ' + e.message; }
+    }
     async function loadPhotoGrid() {
       if (_photoItems) return; // fetch once (reset via resetPhotoGrid)
       const grid = $('photoGrid');
@@ -3036,6 +3091,7 @@
       // above is required: loadCluster sets state.cluster past an internal await.
       initKrakenBar();
       initBrandSelect();
+      initDriveBar();
     })();
 
     window.addEventListener('resize', () => state.config && renderStage());

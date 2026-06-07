@@ -97,10 +97,15 @@ for (const slug of registeredBrandSlugs()) {
     if (![...MEDIA_ROOTS, ...KIT_MEDIA_ROOTS].some((x) => resolve(x) === resolve(r))) KIT_MEDIA_ROOTS.push(r);
   }
 }
-// True if a resolved path sits under any servable media root (shared + kit).
+// True if a resolved path sits under any servable media root (shared + kit + the
+// Drive cache, so placed Drive media passes the /media-into-template guard).
 function underAnyMediaRoot(resolved) {
-  return [...MEDIA_ROOTS, ...KIT_MEDIA_ROOTS].some((r) => resolved.startsWith(resolve(r)));
+  return [...MEDIA_ROOTS, ...KIT_MEDIA_ROOTS, DRIVE_CACHE_ROOT].some((r) => resolved.startsWith(resolve(r)));
 }
+// Google Drive proxy cache (Phase A). NOT a brand-listing root (kept out of
+// MEDIA_ROOTS so Drive media never leaks into the brand grid — like kraken-cache);
+// only servable + placeable via the guard above.
+const DRIVE_CACHE_ROOT = join(PROJECT_ROOT, "brand/drive-cache");
 // The campaign's attached brand slug (plan.brand) — drives media scoping.
 function campaignBrandSlug(campaign) {
   try {
@@ -141,6 +146,11 @@ function runNode(scriptArgs) {
     proc.on("exit", (code) => resolveP({ code, stdout, stderr }));
     proc.on("error", (e) => resolveP({ code: -1, stdout, stderr: stderr + String(e) }));
   });
+}
+
+// Parse a CLI's JSON stdout; fall back to `fallback` on empty/garbage (never throw).
+function safeJson(stdout, fallback) {
+  try { return JSON.parse((stdout || "").trim() || "null") ?? fallback; } catch (_) { return fallback; }
 }
 
 // Per-asset authoritative static config — MUST match run-campaign.mjs so the
@@ -887,6 +897,72 @@ const server = createServer(async (req, res) => {
         .sort((a, b) => a.name.localeCompare(b.name));
     } catch (_) {}
     sendJson(res, 200, { brands });
+    return;
+  }
+
+  // ── Google Drive media source (Phase A) — spawns drive-list.mjs (creds isolated).
+  //    All routes degrade gracefully: no service-account → { available:false } (the
+  //    editor hides the Drive tab), NEVER a 500. Drive video can't play from a plain
+  //    URL, so files are served through the /drive-file/:id proxy (cache-then-serve).
+  if (path === "/drive/status" && req.method === "GET") {
+    try { const { stdout } = await runNode(["scripts/drive-list.mjs", "status"]); sendJson(res, 200, safeJson(stdout, { available: false })); }
+    catch (e) { sendJson(res, 200, { available: false, error: String((e && e.message) || e) }); }
+    return;
+  }
+  if (path === "/drive/folders" && req.method === "GET") {
+    try {
+      const parent = url.searchParams.get("parent");
+      const { stdout } = await runNode(["scripts/drive-list.mjs", "folders", ...(parent ? ["--parent", parent] : [])]);
+      sendJson(res, 200, safeJson(stdout, { available: false, folders: [] }));
+    } catch (e) { sendJson(res, 200, { available: false, folders: [], error: String((e && e.message) || e) }); }
+    return;
+  }
+  if (path === "/drive/files" && req.method === "GET") {
+    try {
+      const folder = url.searchParams.get("folder");
+      if (!folder) { sendJson(res, 400, { available: true, error: "missing ?folder=", files: [] }); return; }
+      const { stdout } = await runNode(["scripts/drive-list.mjs", "files", "--folder", folder]);
+      const j = safeJson(stdout, { available: false, files: [] });
+      // Drive isn't a public CDN → route each file through the proxy below.
+      for (const f of (j.files || [])) f.url = "/drive-file/" + encodeURIComponent(f.id);
+      sendJson(res, 200, j);
+    } catch (e) { sendJson(res, 200, { available: false, files: [], error: String((e && e.message) || e) }); }
+    return;
+  }
+  // Fetch a Drive file into brand/drive-cache/<id>.<ext> once (idempotent). Returns
+  // { path(abs), rel, mime } or { error }. Shared by /drive-file (preview) + /drive/place.
+  const driveFetch = async (id) => {
+    mkdirSync(DRIVE_CACHE_ROOT, { recursive: true });
+    let found = null;
+    try { found = readdirSync(DRIVE_CACHE_ROOT).find((f) => f.startsWith(id + ".")); } catch (_) {}
+    if (found) { const abs = join(DRIVE_CACHE_ROOT, found); return { path: abs, rel: abs.slice(PROJECT_ROOT.length + 1).replace(/\\/g, "/"), mime: MIME[extname(abs).toLowerCase()] || "application/octet-stream" }; }
+    const { stdout } = await runNode(["scripts/drive-list.mjs", "download", "--file", id, "--out", join(DRIVE_CACHE_ROOT, id)]);
+    const j = safeJson(stdout, {});
+    if (!j.available || j.error || !j.path || !existsSync(j.path)) return { error: j.error || "drive download failed" };
+    return { path: j.path, rel: j.path.slice(PROJECT_ROOT.length + 1).replace(/\\/g, "/"), mime: j.mime || MIME[extname(j.path).toLowerCase()] || "application/octet-stream" };
+  };
+  // GET /drive-file/<id> — proxy: download once, then serve with Range (so the picker
+  // can <img>/<video> preview/play before selecting).
+  const driveFile = path.match(/^\/drive-file\/([A-Za-z0-9_-]+)$/);
+  if (driveFile && req.method === "GET") {
+    try {
+      const f = await driveFetch(driveFile[1]);
+      if (f.error) { sendJson(res, 502, { error: f.error }); return; }
+      sendFile(req, res, f.path, f.mime);
+    } catch (e) { sendJson(res, 502, { error: String((e && e.message) || e) }); }
+    return;
+  }
+  // POST /drive/place { id } — fetch the Drive file into the cache and return its
+  // project-relative path so the editor can swapBackgroundPhoto() it (mirrors Kraken
+  // pull-file). The cache is under a media root, so /media-into-template accepts it.
+  if (path === "/drive/place" && req.method === "POST") {
+    try {
+      const { id } = JSON.parse((await readBody(req)) || "{}");
+      if (!id) { sendJson(res, 400, { error: "missing id" }); return; }
+      const f = await driveFetch(id);
+      if (f.error) { sendJson(res, 502, { error: f.error }); return; }
+      sendJson(res, 200, { file: { path: f.rel, mime: f.mime, type: f.mime.startsWith("video/") ? "video" : "image" } });
+    } catch (e) { sendJson(res, 502, { error: String((e && e.message) || e) }); }
     return;
   }
 
