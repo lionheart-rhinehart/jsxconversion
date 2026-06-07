@@ -667,7 +667,11 @@
               <div id="driveFiles" class="ed-photo-grid" hidden></div>
               <div id="driveMsg" style="font-size:10px;color:var(--muted)"></div>
             </div>
-            <button id="browsePhotosBtn" type="button" style="width:100%;font-size:11px;cursor:pointer">Browse media ▾</button>
+            <div style="display:flex;gap:6px;margin-top:4px">
+              <button id="browsePhotosBtn" type="button" style="flex:1;font-size:11px;cursor:pointer">Browse media ▾</button>
+              <button id="bgUploadBtn" type="button" title="Upload an image or video from your computer" style="flex:1;font-size:11px;cursor:pointer">⬆ Upload</button>
+              <input id="bgFile" type="file" accept="image/*,video/*" hidden>
+            </div>
             <div class="ed-photo-grid" id="photoGrid" hidden></div>
           </div>
           <!-- Audio picker (Phase A2): pick music, see its waveform, mark a start
@@ -2866,11 +2870,12 @@
     // pick, the server copies the photo into the template dir and returns a
     // "./library/<name>" path that resolves in BOTH the preview and the render.
     let _photoItems = null;
+    let _photoItemsKind = null; // 'photo' | 'clip' — refetch when the creative's media kind changes
     // After a Kraken pull / upload: drop the fetch-once cache so the grid reloads
     // (without this, the picker keeps showing the pre-pull media — the very bug
     // we're fixing). Reloads immediately only if the grid is currently open.
     function resetPhotoGrid() {
-      _photoItems = null;
+      _photoItems = null; _photoItemsKind = null;
       const g = $('photoGrid');
       if (!g) return;
       // After a pull/upload, REVEAL the grid (it is collapsed by default behind
@@ -2955,13 +2960,17 @@
       } catch (e) { $('driveMsg').textContent = 'Place failed: ' + e.message; }
     }
     async function loadPhotoGrid() {
-      if (_photoItems) return; // fetch once (reset via resetPhotoGrid)
+      // A VIDEO creative browses CLIPS, a photo creative browses photos. Keyed by
+      // kind so switching creatives refetches instead of showing a stale grid.
+      const kind = isVideoPath(state.config && state.config.media && state.config.media.path) ? 'clip' : 'photo';
+      if (_photoItems && _photoItemsKind === kind) return; // fetch once per kind (reset via resetPhotoGrid)
+      _photoItemsKind = kind;
       const grid = $('photoGrid');
-      grid.innerHTML = '<div class="ed-empty">Loading photos…</div>';
+      grid.innerHTML = '<div class="ed-empty">Loading ' + (kind === 'clip' ? 'clips' : 'photos') + '…</div>';
       const camp = parseCampId(state.cluster);
       // Brand-agnostic (Phase A): campaign → its brand; else the session-attached
-      // brand if the user picked one; else neutral (no brand photos).
-      const q = '/media?kind=photo' + (camp ? '&campaign=' + encodeURIComponent(camp.campaign)
+      // brand if the user picked one; else neutral (no brand media).
+      const q = '/media?kind=' + kind + (camp ? '&campaign=' + encodeURIComponent(camp.campaign)
         : (state.brand ? '&brand=' + encodeURIComponent(state.brand) : ''));
       try {
         const r = await fetch(q);
@@ -2969,7 +2978,7 @@
         _photoItems = j.items || [];
       } catch (_) { _photoItems = []; }
       grid.innerHTML = '';
-      if (!_photoItems.length) { grid.innerHTML = '<div class="ed-empty">No photos found — pull from the Kraken or upload above.</div>'; return; }
+      if (!_photoItems.length) { grid.innerHTML = '<div class="ed-empty">No ' + (kind === 'clip' ? 'clips' : 'photos') + ' found — upload above' + (camp ? ' or pull from the Kraken' : '') + '.</div>'; return; }
       for (const it of _photoItems) {
         const t = document.createElement('button');
         t.type = 'button'; t.className = 'ed-photo-tile'; t.title = it.name + (it.source ? ' · ' + it.source : '');
@@ -2979,9 +2988,17 @@
           badge.textContent = it.source === 'uploaded' ? 'up' : 'kr';
           t.appendChild(badge);
         }
-        const img = document.createElement('img');
-        img.loading = 'lazy'; img.src = it.url; img.alt = '';
-        t.appendChild(img);
+        if (isVideoPath(it.url || it.path)) {
+          // Clip tile: muted looping <video> poster (first frame), like the Kraken video tiles.
+          const v = document.createElement('video');
+          v.src = it.url; v.muted = true; v.playsInline = true; v.preload = 'metadata'; v.loop = true;
+          v.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+          t.appendChild(v);
+        } else {
+          const img = document.createElement('img');
+          img.loading = 'lazy'; img.src = it.url; img.alt = '';
+          t.appendChild(img);
+        }
         t.addEventListener('click', () => swapBackgroundPhoto(it, t));
         grid.appendChild(t);
       }
@@ -3203,6 +3220,28 @@
       const grid = $('photoGrid');
       grid.hidden = !grid.hidden;
       if (!grid.hidden) loadPhotoGrid();
+    };
+    // Upload an image/video from the computer — works on ANY template (no campaign
+    // needed). Raw-body POST (matches the Kraken upload + the /media-upload route's
+    // req.pipe(ws)); kind matches the server's CLIP_EXT (mp4/mov/webm), else photo.
+    $('bgUploadBtn').onclick = () => $('bgFile').click();
+    $('bgFile').onchange = async (e) => {
+      const f = e.target.files && e.target.files[0]; if (!f) return;
+      const ext = (f.name.split('.').pop() || '').toLowerCase();
+      const kind = ['mp4', 'mov', 'webm'].includes(ext) ? 'clip' : 'photo';
+      setStatus('Uploading ' + f.name + '…');
+      try {
+        const camp = parseCampId(state.cluster);
+        const url = '/media-upload?kind=' + kind + '&name=' + encodeURIComponent(f.name)
+          + (camp ? '&campaign=' + encodeURIComponent(camp.campaign) : '');
+        const r = await fetch(url, { method: 'POST', body: f });
+        const j = await r.json();
+        if (!r.ok || !j.path) throw new Error(j.error || 'upload failed');
+        resetPhotoGrid();
+        await swapBackgroundPhoto({ path: j.path, source: 'uploaded' }, null);
+        setStatus('Uploaded ' + f.name + ' → background set. Save + Render to persist.');
+      } catch (err) { setStatus('Upload failed: ' + err.message); }
+      e.target.value = '';
     };
 
     // Point the background at a new photo. A crop/pan belongs to ONE photo, so

@@ -1231,14 +1231,15 @@ const server = createServer(async (req, res) => {
       const campaign = url.searchParams.get("campaign");
       const kind = url.searchParams.get("kind") || "photo";
       const rawName = url.searchParams.get("name") || "upload";
-      if (!campaign) { sendJson(res, 400, { error: "missing ?campaign=" }); return; }
       const exts = EXT_FOR_KIND[kind];
       if (!exts) { sendJson(res, 400, { error: `bad kind "${kind}"` }); return; }
       const ext = extname(rawName).toLowerCase();
       if (!exts.has(ext)) { sendJson(res, 400, { error: `extension "${ext}" not allowed for ${kind}` }); return; }
       const slug = basename(rawName, extname(rawName))
         .replace(/[^a-z0-9]+/gi, "-").replace(/^-+|-+$/g, "").toLowerCase() || "file";
-      const destDir = campaignCacheDir(campaign);
+      // Campaign-optional (bare-template upload): with no campaign, land in the
+      // shared kraken-cache root, which /media lists unconditionally (source:"uploaded").
+      const destDir = campaign ? campaignCacheDir(campaign) : KRAKEN_CACHE_ROOT;
       mkdirSync(destDir, { recursive: true });
       const name = "upload-" + slug + ext;
       const dest = join(destDir, name);
