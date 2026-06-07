@@ -81,6 +81,8 @@ const PEAKS_CACHE_DIR = join(PROJECT_ROOT, ".peaks-cache");
 const PEAKS_RESOLUTION = 1200;
 // Review-markup sidecar store (Feature 2) — machine-local, gitignored.
 const ANNOTATIONS_DIR = join(PROJECT_ROOT, ".annotations-store");
+// Editor ids look like "camp:c:a:as" (colons) — slug them to one safe filename.
+const annSafeId = (id) => String(id).replace(/[^a-z0-9._-]+/gi, "_").slice(0, 200) || "creative";
 function peaksCachePath(rel) {
   const safe = rel.replace(/[\\/]/g, "__").replace(/[^a-z0-9._-]+/gi, "-");
   return join(PEAKS_CACHE_DIR, safe + ".json");
@@ -987,26 +989,87 @@ const server = createServer(async (req, res) => {
     return;
   }
 
-  // GET|POST /annotations?id=<editorId> — review markup (Frame.io-style timestamped
-  // comments + drawings) for one creative, stored as a W3C Web-Annotation array in a
-  // machine-local sidecar. NOT exported; structured to later send to the approval
-  // portal. Query param (NOT a path param) because ids look like "camp:c:a:as".
+  // GET /annotations  (NO id) — list every stored note-set. Light metadata only, one
+  // disk scan. This is what a future review dashboard / "send all pending" reads to
+  // DISCOVER which creatives have feedback (you don't need to know the ids up front).
+  if (path === "/annotations" && req.method === "GET" && !url.searchParams.get("id")) {
+    const sets = [];
+    try {
+      for (const f of readdirSync(ANNOTATIONS_DIR)) {
+        if (!f.endsWith(".json") || f.endsWith(".tmp")) continue;
+        try {
+          const rec = JSON.parse(readFileSync(join(ANNOTATIONS_DIR, f), "utf8"));
+          const c = rec.creative || null;
+          sets.push({
+            editorId: (c && c.editorId) || f.replace(/\.json$/, ""),
+            creative: c,
+            count: Array.isArray(rec.annotations) ? rec.annotations.length : 0,
+            updatedAt: (c && c.updatedAt) || null,
+          });
+        } catch { /* skip a corrupt file */ }
+      }
+    } catch { /* no store dir yet */ }
+    sets.sort((a, b) => String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")));
+    sendJson(res, 200, { sets });
+    return;
+  }
+
+  // GET|POST /annotations/publish?id=<editorId> — THE PUBLISH SEAM. Today it just
+  // returns the complete outbound package (creative + annotations + publishedAt) so
+  // the editor's "Send for review" button can hand it off (download). To connect a
+  // REAL destination — the Kraken approval portal, a webhook, email, an MCP — add the
+  // send at the marked integration point below. This is the ONE place to wire it;
+  // nothing else about how notes are authored or stored changes.
+  if (path === "/annotations/publish" && (req.method === "GET" || req.method === "POST")) {
+    const id = url.searchParams.get("id");
+    if (!id) { sendJson(res, 400, { error: "missing ?id=" }); return; }
+    const file = join(ANNOTATIONS_DIR, annSafeId(id) + ".json");
+    let rec = { creative: null, annotations: [] };
+    try { if (existsSync(file)) rec = JSON.parse(readFileSync(file, "utf8")); } catch { /* empty */ }
+    const pkg = {
+      creative: rec.creative || { editorId: id, source: "aa-creative-engine", schemaVersion: 1 },
+      annotations: Array.isArray(rec.annotations) ? rec.annotations : [],
+      publishedAt: new Date().toISOString(),
+    };
+    // ── FUTURE INTEGRATION POINT ───────────────────────────────────────────────
+    // Wire a real destination here, e.g.:
+    //   await fetch(KRAKEN_PORTAL_URL + "/annotations", { method: "POST",
+    //     headers: { "Content-Type": "application/json" }, body: JSON.stringify(pkg) });
+    // or send an email / push to an MCP. Keep returning `pkg` so the editor still
+    // gets the package back as confirmation, and flip `published` to true on success.
+    sendJson(res, 200, { ok: true, published: false, package: pkg });
+    return;
+  }
+
+  // GET|POST /annotations?id=<editorId> — one creative's review markup (Frame.io-style
+  // timestamped comments + drawings). Stored as a SELF-DESCRIBING record: a `creative`
+  // block (which creative/campaign/clip + provenance) alongside a W3C Web-Annotation
+  // array, in a machine-local sidecar. NEVER exported; the `creative` block makes each
+  // file portable so a future consumer needs no outside context. Query param (NOT a
+  // path) because ids look like "camp:c:a:as".
   if (path === "/annotations" && (req.method === "GET" || req.method === "POST")) {
     const id = url.searchParams.get("id");
     if (!id) { sendJson(res, 400, { error: "missing ?id=" }); return; }
-    const safe = String(id).replace(/[^a-z0-9._-]+/gi, "_").slice(0, 200) || "creative";
-    const file = join(ANNOTATIONS_DIR, safe + ".json");
+    const file = join(ANNOTATIONS_DIR, annSafeId(id) + ".json");
     if (req.method === "GET") {
-      try { sendJson(res, 200, existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : { annotations: [] }); }
-      catch { sendJson(res, 200, { annotations: [] }); }
+      try { sendJson(res, 200, existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : { creative: null, annotations: [] }); }
+      catch { sendJson(res, 200, { creative: null, annotations: [] }); }
       return;
     }
     try {
       const body = JSON.parse((await readBody(req)) || "{}");
       const annotations = Array.isArray(body.annotations) ? body.annotations : [];
+      // Self-describing record: the editor sends best-effort creative context; the
+      // server owns the authoritative id + provenance stamps.
+      const creative = Object.assign({}, body.creative || {}, {
+        editorId: id,
+        source: "aa-creative-engine",
+        schemaVersion: 1,
+        updatedAt: new Date().toISOString(),
+      });
       mkdirSync(ANNOTATIONS_DIR, { recursive: true });
       const tmp = file + ".tmp";
-      writeFileSync(tmp, JSON.stringify({ annotations }, null, 2));
+      writeFileSync(tmp, JSON.stringify({ creative, annotations }, null, 2));
       renameSync(tmp, file);
       sendJson(res, 200, { ok: true, count: annotations.length });
     } catch (e) { sendJson(res, 400, { error: String((e && e.message) || e) }); }

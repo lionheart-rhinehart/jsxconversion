@@ -526,6 +526,8 @@
     [data-markup].mk-highlight { filter: drop-shadow(0 0 4px #fff) drop-shadow(0 0 7px #fff); }
     .markup-item.mk-highlight { filter: none; background: var(--sel); border: 1px solid var(--red); }
     .markup-item.mk-active { background: var(--sel); border-left: 3px solid var(--red); }
+    .markup-send { width: 100%; margin-top: 8px; padding: 7px 10px; font-size: 12px; font-weight: 600; cursor: pointer; background: var(--red); color: #fff; border: 1px solid var(--red); border-radius: 5px; }
+    .markup-send:disabled { background: var(--panel-2); color: var(--muted); border-color: var(--border); cursor: not-allowed; }
     .markup-item.mk-active .markup-num { background: var(--red); color: #fff; }
     .markup-item { transition: background-color 0.12s ease; }
     /* All-copy list rows (COPY tab) */
@@ -835,6 +837,7 @@
               </div>
               <div class="draw-hint">Play/scrub below the video. Click (or draw) on a frame → it pauses, stamps the timestamp, and opens a comment. The note shows only around that moment.</div>
               <div id="markupList" class="markup-list"></div>
+              <button type="button" id="markupSendBtn" class="markup-send" disabled title="Package these notes into a .json you can hand off. Later this becomes the one-click send to the approval portal.">📤 Send for review</button>
             </div>
           </div>
         </div>
@@ -3739,6 +3742,7 @@
       const mc = $('drawModeCreative'), mm = $('drawModeMarkup');
       if (mc) mc.onclick = () => setDrawMode('creative');
       if (mm) mm.onclick = () => setDrawMode('markup');
+      const sb = $('markupSendBtn'); if (sb) sb.onclick = sendForReview;
     }
     function setDrawColor(c) { _draw.color = c; document.querySelectorAll('.draw-swatch').forEach((s) => s.classList.toggle('on', s.dataset.c === c)); const p = $('drawColorPick'); if (p) p.value = c; }
     function setDrawTool(t) { _draw.tool = t; document.querySelectorAll('.draw-tool').forEach((b) => b.classList.toggle('on', b.dataset.tool === t)); updateDrawCapture(); }
@@ -3890,12 +3894,47 @@
       _markup = [];
       try { const j = await fetch('/annotations?id=' + encodeURIComponent(annId())).then((r) => r.json()); _markup = (j && j.annotations) || []; } catch (_) { _markup = []; }
     }
+    // Self-describing context saved alongside the notes so a future consumer (the
+    // approval portal, a dashboard, an email) knows WHICH creative they're about
+    // without parsing the filename. The server also stamps source/version/updatedAt.
+    function buildCreativeMeta() {
+      const id = annId();
+      const camp = (typeof parseCampId === 'function') ? parseCampId(id) : null;
+      const m = (state.config && state.config.media) || {};
+      return {
+        editorId: id,
+        kind: isVideoCreative() ? 'video' : 'image',
+        mediaPath: m.path || null,
+        campaign: camp ? camp.campaign : null,
+        angle: camp ? camp.angle : null,
+        asset: camp ? camp.asset : null,
+        brand: state.brand || null,
+      };
+    }
     function saveMarkup() {
       clearTimeout(_markupSaveT);
       const id = annId();
       _markupSaveT = setTimeout(() => {
-        fetch('/annotations?id=' + encodeURIComponent(id), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ annotations: _markup }) }).catch(() => {});
+        fetch('/annotations?id=' + encodeURIComponent(id), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ creative: buildCreativeMeta(), annotations: _markup }) }).catch(() => {});
       }, 250);
+    }
+    // "Send for review": flush the save, ask the publish seam for the outbound package,
+    // and download it as a .json you can hand off today. Later, the seam itself sends
+    // it (portal/webhook/MCP) and this still downloads a confirmation copy.
+    async function sendForReview() {
+      const id = annId();
+      if (!_markup.length) { setStatus('No review notes to send yet.'); return; }
+      clearTimeout(_markupSaveT);
+      try {
+        await fetch('/annotations?id=' + encodeURIComponent(id), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ creative: buildCreativeMeta(), annotations: _markup }) });
+        const j = await fetch('/annotations/publish?id=' + encodeURIComponent(id), { method: 'POST' }).then((r) => r.json());
+        const pkg = (j && j.package) || { creative: buildCreativeMeta(), annotations: _markup, publishedAt: new Date().toISOString() };
+        const blob = new Blob([JSON.stringify(pkg, null, 2)], { type: 'application/json' });
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+        a.download = (String(id).replace(/[^a-z0-9._-]+/gi, '_').slice(0, 80) || 'creative') + '-review-notes.json';
+        document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+        setStatus('Packaged ' + _markup.length + ' review note' + (_markup.length === 1 ? '' : 's') + ' → downloaded ' + a.download);
+      } catch (e) { setStatus('Send for review failed: ' + ((e && e.message) || e)); }
     }
     function newAnnotation(p, ts) {
       const sel = { type: 'FragmentSelector', conformsTo: 'http://www.w3.org/TR/media-frags/' };
@@ -4011,6 +4050,7 @@
     }
     function renderMarkupList() {
       const list = $('markupList'); if (!list) return;
+      const sb = $('markupSendBtn'); if (sb) { sb.disabled = !_markup.length; sb.textContent = _markup.length ? ('📤 Send for review (' + _markup.length + ')') : '📤 Send for review'; }
       list.innerHTML = '';
       if (!_markup.length) { list.innerHTML = '<div class="ed-empty">No notes yet. In markup mode, click the canvas (or draw a circle) to leave timestamped feedback.</div>'; return; }
       const ordered = _markup.slice().sort((x, y) => (aTime(x) ?? 1e9) - (aTime(y) ?? 1e9));
