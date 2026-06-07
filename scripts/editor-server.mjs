@@ -34,7 +34,7 @@ import { resolveStaticConfig } from "./lib/fill-core.mjs";
 import { fieldRole, BEAT_HEADLINE_ROLE, beatLetter } from "./lib/roles.mjs";
 import { loadCopyLibrary } from "./lib/copy-library.mjs";
 import { validatePlan } from "./validate-plan.mjs";
-import { scopeMediaRoots } from "./lib/media-scope.mjs";
+import { scopeMediaRoots, listingRoots, isAABrand } from "./lib/media-scope.mjs";
 import { STATIC_ROOTS, findTemplate, listTemplates, assetsDirFor } from "./lib/template-roots.mjs";
 
 const PORT = Number(process.env.EDITOR_PORT) || 5173;
@@ -807,12 +807,14 @@ const server = createServer(async (req, res) => {
   // GET /media?kind=photo|clip|audio[&campaign=<name>] — selectable media.
   // Tags each item by source: "brand" (shared brand-kit roots), "kraken" (pulled
   // from the campaign's Kraken folder), or "uploaded" (dropped from a computer).
-  // Back-compat: with no ?campaign=, returns the same shape as before (plus the
-  // additive `source` field) from the brand roots + the legacy flat cache.
+  // Brand-agnostic (Phase A): with NO ?campaign= and NO ?brand=, returns NEUTRAL —
+  // zero brand photos (only Kraken/uploads + neutral audio). ?brand=<slug> attaches a
+  // brand's photos for the session; ?campaign= is unchanged (back-compat).
   if (path === "/media" && req.method === "GET") {
     try {
       const kind = url.searchParams.get("kind") || "photo";
       const campaign = url.searchParams.get("campaign") || null;
+      const brandParam = url.searchParams.get("brand") || null; // explicit session brand attach
       const exts = EXT_FOR_KIND[kind] || PHOTO_EXT;
       const items = [];
       const seen = new Set();
@@ -841,28 +843,50 @@ const server = createServer(async (req, res) => {
           items.push(item);
         }
       };
-      // Brand-scoped listing roots (K): AA / legacy plan → the full shared set;
-      // a franchisee campaign → neutral audio + its OWN kit media only, so the
-      // picker never surfaces AA photos under a non-AA brand. The kraken cache
-      // root is excluded here and added per-campaign below.
-      const brandSlug = campaign ? campaignBrandSlug(campaign) : null;
+      // Brand-scoped listing roots (Phase A 3-way gate). A brand is "attached" only
+      // when a campaign OR an explicit ?brand= is given; otherwise the editor is
+      // brand-AGNOSTIC and shows ZERO brand photos (neutral — Kraken/uploads still
+      // added below). Campaign mode is unchanged (back-compat): AA/legacy → full
+      // shared set; franchisee → its own kit only.
+      const brandSlug = campaign ? campaignBrandSlug(campaign) : brandParam;
+      const attached = !!(campaign || brandParam);
       const sharedRoots = MEDIA_ROOTS.filter((r) => resolve(r) !== resolve(KRAKEN_CACHE_ROOT));
-      const listRoots = scopeMediaRoots({
-        brandSlug, sharedRoots, musicRoot: MUSIC_ROOT,
-        kitDir: brandSlug ? kitDirForBrand(brandSlug) : null,
+      const listRoots = listingRoots({
+        attached, brandSlug, sharedRoots, musicRoot: MUSIC_ROOT,
+        kitDir: brandSlug && !isAABrand(brandSlug) ? kitDirForBrand(brandSlug) : null,
       });
       for (const root of listRoots) addFrom(root, "brand");
       // The campaign's pulled media + its uploads, then the legacy flat cache.
       if (campaign) { const cd = campaignCacheDir(campaign); addFrom(cd, "kraken-dir", loadMan(cd)); }
       addFrom(KRAKEN_CACHE_ROOT, "kraken-dir", loadMan(KRAKEN_CACHE_ROOT));
       sendJson(res, 200, {
-        kind, campaign,
+        kind, campaign, brand: brandSlug || null, attached,
         krakenFolder: campaign ? krakenSidecarFolder(campaign) : null,
         items,
       });
     } catch (e) {
       sendJson(res, 500, { error: String((e && e.message) || e) });
     }
+    return;
+  }
+
+  // GET /brands — list the brand kits a session can ATTACH (Phase A). The editor is
+  // brand-agnostic; this powers the brand-attach control so a user can opt INTO a
+  // brand's photos/tokens. Reads data/brand.<slug>.json (slug = filename middle).
+  if (path === "/brands" && req.method === "GET") {
+    let brands = [];
+    try {
+      brands = readdirSync(DATA_DIR)
+        .filter((f) => /^brand\..+\.json$/.test(f))
+        .map((f) => {
+          const slug = f.replace(/^brand\./, "").replace(/\.json$/, "");
+          let name = slug;
+          try { const j = JSON.parse(readFileSync(join(DATA_DIR, f), "utf8")); name = (j.tags && j.tags.brand_name) || j.brand_name || slug; } catch (_) {}
+          return { slug, name };
+        })
+        .sort((a, b) => a.name.localeCompare(b.name));
+    } catch (_) {}
+    sendJson(res, 200, { brands });
     return;
   }
 

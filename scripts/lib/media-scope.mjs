@@ -29,3 +29,15 @@ export function scopeMediaRoots({ brandSlug, sharedRoots = [], musicRoot = null,
   if (kitDir) roots.push(join(kitDir, "assets"), join(kitDir, "uploads"));
   return roots;
 }
+
+// Editor product build (Phase A): the editor is brand-AGNOSTIC. When NO brand or
+// campaign is attached for the session, the picker must show ZERO brand photos —
+// only neutral audio (Kraken/uploads are added by the caller regardless). A brand's
+// photos appear ONLY once a brand/campaign is explicitly attached.
+//   - attached === false → NEUTRAL: music only, no brand photo roots.
+//   - attached === true  → existing scopeMediaRoots rules (AA→shared, franchisee→kit).
+// Pure + unit-tested so the "no-brand-leak" guarantee can't silently regress.
+export function listingRoots({ attached, brandSlug, sharedRoots = [], musicRoot = null, kitDir = null }) {
+  if (!attached) return musicRoot ? [musicRoot] : [];
+  return scopeMediaRoots({ brandSlug, sharedRoots, musicRoot, kitDir });
+}

@@ -573,7 +573,13 @@
               <div id="kbFiles" class="ed-photo-grid" hidden></div>
               <div id="kbMsg" class="kbar-msg"></div>
             </div>
-            <button id="browsePhotosBtn" type="button" style="width:100%;font-size:11px;cursor:pointer">Browse brand photos ▾</button>
+            <label style="display:flex;align-items:center;gap:6px;font-size:11px;margin:4px 0">
+              <span style="color:var(--muted)">Brand</span>
+              <select id="brandSel" style="flex:1;font-size:11px" title="Attach a brand to show its photos — the editor is brand-neutral by default">
+                <option value="">— none (neutral) —</option>
+              </select>
+            </label>
+            <button id="browsePhotosBtn" type="button" style="width:100%;font-size:11px;cursor:pointer">Browse media ▾</button>
             <div class="ed-photo-grid" id="photoGrid" hidden></div>
           </div>
           <div class="panel-block" id="mediaPanel" style="display: none;">
@@ -649,6 +655,7 @@
       // Media base for the loaded template (set from the X-Template-Base header on
       // load). Default to the legacy bank so a render before first load never 404s.
       mediaBase: '/templates/multi-sport-foundations/',
+      brand: null, // session-attached brand slug (Phase A); null = neutral (no brand photos)
       selectedId: null,
       selectedIds: [], // group selection (text layers) for multi-move; primary stays selectedId
       scale: 1,
@@ -2480,12 +2487,38 @@
       loadPhotoGrid();
       try { g.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (_) {}
     }
+    // Brand-attach control (Phase A): the editor is brand-NEUTRAL by default; picking
+    // a brand here shows that brand's photos. A campaign asset drives its brand from
+    // the plan, so the control is disabled in that mode.
+    async function initBrandSelect() {
+      const sel = $('brandSel');
+      if (!sel) return;
+      const camp = parseCampId(state.cluster);
+      if (camp) { sel.disabled = true; sel.title = 'Brand is set by the campaign'; return; }
+      try {
+        const j = await fetch('/brands').then((r) => r.json());
+        for (const b of (j.brands || [])) {
+          const o = document.createElement('option');
+          o.value = b.slug; o.textContent = b.name;
+          sel.appendChild(o);
+        }
+      } catch (_) {}
+      sel.value = state.brand || '';
+      sel.addEventListener('change', () => {
+        state.brand = sel.value || null;
+        resetPhotoGrid(); // re-fetch with the new brand scope + reveal the grid
+        setStatus(state.brand ? ('Brand attached: ' + sel.options[sel.selectedIndex].text) : 'Brand detached (neutral)');
+      });
+    }
     async function loadPhotoGrid() {
       if (_photoItems) return; // fetch once (reset via resetPhotoGrid)
       const grid = $('photoGrid');
       grid.innerHTML = '<div class="ed-empty">Loading photos…</div>';
       const camp = parseCampId(state.cluster);
-      const q = '/media?kind=photo' + (camp ? '&campaign=' + encodeURIComponent(camp.campaign) : '');
+      // Brand-agnostic (Phase A): campaign → its brand; else the session-attached
+      // brand if the user picked one; else neutral (no brand photos).
+      const q = '/media?kind=photo' + (camp ? '&campaign=' + encodeURIComponent(camp.campaign)
+        : (state.brand ? '&brand=' + encodeURIComponent(state.brand) : ''));
       try {
         const r = await fetch(q);
         const j = await r.json();
@@ -2619,10 +2652,30 @@
         for (const f of files) {
           const t = document.createElement('button');
           t.type = 'button'; t.className = 'ed-photo-tile'; t.title = f.title || f.id;
+          t.style.position = 'relative';
           const badge = document.createElement('span');
           badge.className = 'ed-srcbadge kraken'; badge.textContent = f.type === 'video' ? 'vid' : 'kr';
           t.appendChild(badge);
-          if (f.type === 'image' && f.url) {
+          if (f.type === 'video' && f.url) {
+            // Video/GIF: poster + PLAY-BEFORE-SELECT. The Kraken CDN url is directly
+            // playable, so show a muted looping <video> (first frame = poster) with a
+            // ▶ overlay that previews in place without selecting (Phase A2).
+            const v = document.createElement('video');
+            v.src = f.url; v.muted = true; v.playsInline = true; v.preload = 'metadata'; v.loop = true;
+            v.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+            t.appendChild(v);
+            const play = document.createElement('span');
+            play.textContent = '▶';
+            play.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;'
+              + 'font-size:26px;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.8);background:rgba(0,0,0,.18);cursor:pointer;';
+            play.addEventListener('click', (e) => {
+              e.stopPropagation();
+              if (v.paused) { v.play().catch(() => {}); play.textContent = '⏸'; play.style.background = 'transparent'; }
+              else { v.pause(); play.textContent = '▶'; play.style.background = 'rgba(0,0,0,.18)'; }
+            });
+            t.appendChild(play);
+          } else if (f.url) {
+            // image (and animated GIF, which plays as an <img>)
             const img = document.createElement('img'); img.loading = 'lazy'; img.src = f.url; img.alt = '';
             t.appendChild(img);
           } else {
@@ -2636,7 +2689,7 @@
         }
       }
       async function placeKrakenFile(folder, file, tile) {
-        if (file.type !== 'image') { setMsg('Statics use a photo background — pick an image.'); return; }
+        if (file.type !== 'image') { setMsg('▶ Preview only for now — selecting a video as the background lands in the video editor (Phase C). Pick an image to place it.'); return; }
         setBusy(true); setMsg('Placing ' + (file.title || file.id) + '…');
         try {
           const wsName = (workspaces.find((w) => w.id === wsSel.value) || {}).name || wsSel.value;
@@ -2897,6 +2950,7 @@
       // Wire the Kraken bar AFTER state.cluster (and its campaign) is set — await
       // above is required: loadCluster sets state.cluster past an internal await.
       initKrakenBar();
+      initBrandSelect();
     })();
 
     window.addEventListener('resize', () => state.config && renderStage());
