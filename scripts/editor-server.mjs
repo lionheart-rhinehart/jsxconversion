@@ -79,6 +79,8 @@ const MUSIC_ROOT = join(PROJECT_ROOT, "music-library");
 // fast waveform. Cached as JSON under .peaks-cache/ (machine-local, gitignored).
 const PEAKS_CACHE_DIR = join(PROJECT_ROOT, ".peaks-cache");
 const PEAKS_RESOLUTION = 1200;
+// Review-markup sidecar store (Feature 2) — machine-local, gitignored.
+const ANNOTATIONS_DIR = join(PROJECT_ROOT, ".annotations-store");
 function peaksCachePath(rel) {
   const safe = rel.replace(/[\\/]/g, "__").replace(/[^a-z0-9._-]+/gi, "-");
   return join(PEAKS_CACHE_DIR, safe + ".json");
@@ -982,6 +984,32 @@ const server = createServer(async (req, res) => {
     const data = ensurePeaks(file);
     if (!data) { sendJson(res, 200, { error: "could not decode peaks (missing file or ffmpeg)" }); return; }
     sendJson(res, 200, data);
+    return;
+  }
+
+  // GET|POST /annotations?id=<editorId> — review markup (Frame.io-style timestamped
+  // comments + drawings) for one creative, stored as a W3C Web-Annotation array in a
+  // machine-local sidecar. NOT exported; structured to later send to the approval
+  // portal. Query param (NOT a path param) because ids look like "camp:c:a:as".
+  if (path === "/annotations" && (req.method === "GET" || req.method === "POST")) {
+    const id = url.searchParams.get("id");
+    if (!id) { sendJson(res, 400, { error: "missing ?id=" }); return; }
+    const safe = String(id).replace(/[^a-z0-9._-]+/gi, "_").slice(0, 200) || "creative";
+    const file = join(ANNOTATIONS_DIR, safe + ".json");
+    if (req.method === "GET") {
+      try { sendJson(res, 200, existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : { annotations: [] }); }
+      catch { sendJson(res, 200, { annotations: [] }); }
+      return;
+    }
+    try {
+      const body = JSON.parse((await readBody(req)) || "{}");
+      const annotations = Array.isArray(body.annotations) ? body.annotations : [];
+      mkdirSync(ANNOTATIONS_DIR, { recursive: true });
+      const tmp = file + ".tmp";
+      writeFileSync(tmp, JSON.stringify({ annotations }, null, 2));
+      renameSync(tmp, file);
+      sendJson(res, 200, { ok: true, count: annotations.length });
+    } catch (e) { sendJson(res, 400, { error: String((e && e.message) || e) }); }
     return;
   }
 

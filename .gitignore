@@ -42,3 +42,6 @@ automation/.render-*
 
 # Waveform peaks cache (machine-local, A2 audio picker)
 .peaks-cache/
+
+# Review-markup sidecar store (Feature 2 — machine-local)
+.annotations-store/

@@ -515,6 +515,13 @@
     .markup-pin span { transform: rotate(45deg); color: #111; font-size: 12px; font-weight: 700; font-family: ui-monospace, monospace; }
     /* Draw capture overlay — intercepts pointer when a draw tool is active */
     .draw-capture { position: absolute; inset: 0; z-index: 8000; cursor: crosshair; }
+    /* Feature 2: playback transport (play/pause + scrub) under the video preview */
+    #transportBar { position: absolute; left: 12px; right: 12px; bottom: 10px; z-index: 200; display: flex; align-items: center; gap: 8px; background: rgba(20,22,26,0.82); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 6px 8px; backdrop-filter: blur(4px); }
+    #transportBar[hidden] { display: none; }
+    #transportPlay { flex: none; width: 30px; height: 26px; padding: 0; background: var(--red); border: none; color: #fff; border-radius: 5px; cursor: pointer; font-size: 11px; }
+    #transportTrack { position: relative; flex: 1; height: 22px; background: rgba(255,255,255,0.10); border-radius: 4px; cursor: pointer; }
+    #transportPlayhead { position: absolute; top: -2px; bottom: -2px; width: 2px; background: #fff; box-shadow: 0 0 4px rgba(0,0,0,0.6); pointer-events: none; left: 0; }
+    .transport-marker { position: absolute; top: 50%; width: 10px; height: 10px; margin-left: -5px; transform: translateY(-50%); border-radius: 50%; background: #f59e0b; border: 1.5px solid #fff; cursor: pointer; }
     /* All-copy list rows (COPY tab) */
     .copy-row { display: flex; flex-direction: column; gap: 4px; padding: 8px; background: var(--panel-2); border-radius: 6px; margin-bottom: 8px; }
     .copy-row-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-family: ui-monospace, Menlo, monospace; }
@@ -812,8 +819,15 @@
               <div class="draw-hint" id="drawHint">Pick a tool, then drag on the canvas. Select tool to move/delete a shape (or use the layer list).</div>
             </div>
             <div id="drawMarkupPanel" hidden>
-              <div class="draw-sub">Notes for review — they show here, never in the render.</div>
-              <div class="draw-hint">Click anywhere on the canvas to drop a numbered note.</div>
+              <div class="draw-sub">Review feedback — timestamped, shown here, NEVER in the export.</div>
+              <div class="draw-tools">
+                <button type="button" class="draw-tool on" data-tool="select" title="Comment: click the video to pause + leave a note">💬 Comment</button>
+                <button type="button" class="draw-tool" data-tool="ellipse" title="Circle">◯</button>
+                <button type="button" class="draw-tool" data-tool="arrow" title="Arrow">↗</button>
+                <button type="button" class="draw-tool" data-tool="line" title="Line">／</button>
+                <button type="button" class="draw-tool" data-tool="pen" title="Freehand">✐</button>
+              </div>
+              <div class="draw-hint">Play/scrub below the video. Click (or draw) on a frame → it pauses, stamps the timestamp, and opens a comment. The note shows only around that moment.</div>
               <div id="markupList" class="markup-list"></div>
             </div>
           </div>
@@ -855,6 +869,11 @@
       fontsReady: false,
       mode: 'move', // 'move' | 'crop'
       undo: [], redo: [],
+      // Preview playback clock (Feature 2). previewTime is CLIP-RELATIVE seconds
+      // (0 = clipStart). previewPlaying is the single source of truth that the
+      // autoplay loop, the audio "▶ With clip" preview, and the markup transport
+      // all honor — so the preview <video> has ONE master, not three.
+      previewTime: 0, previewPlaying: true, _previewVideo: null,
     };
 
     const $ = (id) => document.getElementById(id);
@@ -1373,8 +1392,10 @@
       // Phase B: re-point/attach moveable to the (rebuilt) selected node. No-op while
       // an old multi-drag is mid-gesture (guarded inside syncMoveable).
       if (typeof syncMoveable === 'function') syncMoveable();
-      // Phase D: re-attach the draw capture overlay + markup pins to the rebuilt inner.
+      // Phase D: re-attach the draw capture overlay + markup overlays to the rebuilt inner.
       if (typeof updateDrawCapture === 'function') updateDrawCapture();
+      // Feature 2: the play/pause + scrub transport (video creatives) + comment markers.
+      if (typeof renderTransport === 'function') renderTransport();
     }
 
     // Is a media path a video clip? (Phase C — a video background renders to MP4.)
@@ -1390,21 +1411,29 @@
       if (media.path && isVideoPath(media.path)) {
         const vid = document.createElement('video');
         vid.className = 'preview';
-        vid.muted = true; vid.autoplay = true; vid.playsInline = true; vid.preload = 'auto';
+        vid.muted = true; vid.playsInline = true; vid.preload = 'auto';
         vid.style.cssText = 'position:absolute;left:0;top:0;display:block;width:' + W + 'px;height:' + H + 'px;object-fit:cover;user-select:none;pointer-events:none;';
         vid.src = state.mediaBase + media.path.replace(/^\.\//, '');
-        // Loop ONLY the trimmed window [clipStart, clipEnd] so the live preview
-        // matches the rendered MP4 (the renderer extracts exactly that span).
+        // The trimmed window [clipStart, clipEnd]. Playback/pause is driven by the
+        // single clock (state.previewPlaying/previewTime) so it survives renderStage
+        // rebuilds and doesn't fight the audio preview or the markup transport.
         const cs = Math.max(0, Number(media.clipStart) || 0);
         const ce = (typeof media.clipEnd === 'number' && media.clipEnd > cs) ? media.clipEnd : null;
-        vid.loop = ce == null; // full-clip loop only when no end is set
-        vid.addEventListener('loadedmetadata', () => { if (cs > 0) { try { vid.currentTime = cs; } catch (e) {} } });
+        vid.loop = false; // looping handled in the gated timeupdate below
+        state._previewVideo = vid;
+        vid.addEventListener('loadedmetadata', () => {
+          try { vid.currentTime = cs + (Number(state.previewTime) || 0); } catch (e) {}
+          if (state.previewPlaying) { vid.play && vid.play().catch(() => {}); } else { try { vid.pause(); } catch (e) {} }
+        });
         vid.addEventListener('timeupdate', () => {
+          if (!state.previewPlaying) return; // paused/scrubbing → don't yank currentTime
           if (ce != null && vid.currentTime >= ce) { try { vid.currentTime = cs; } catch (e) {} }
           else if (vid.currentTime < cs - 0.05) { try { vid.currentTime = cs; } catch (e) {} }
+          state.previewTime = Math.max(0, vid.currentTime - cs); // keep the clip-relative clock current
+          if (typeof applyMarkupVisibility === 'function') applyMarkupVisibility(state.previewTime);
+          if (typeof updateTransportPlayhead === 'function') updateTransportPlayhead();
         });
         vid.onerror = () => { vid.style.background = '#222'; };
-        vid.play && vid.play().catch(() => {});
         return vid;
       }
       const img = document.createElement('img');
@@ -3654,6 +3683,8 @@
     // postMessage bridge needed; the preview is in this same page).
     function previewMusicWithClip() {
       const el = $('audioEl'); const a = state.config && state.config.audio; if (!el || !a) return;
+      // Play "with sound" on the SINGLE clock so it doesn't fight the transport.
+      state.previewPlaying = true; if (typeof syncTransportBtn === 'function') syncTransportBtn();
       const vid = document.querySelector('#stage video');
       const m = state.config.media || {};
       const cs = Math.max(0, Number(m.clipStart) || 0);
@@ -3711,6 +3742,17 @@
       $('drawModeMarkup').classList.toggle('on', m === 'markup');
       $('drawCreativePanel').hidden = m !== 'creative';
       $('drawMarkupPanel').hidden = m !== 'markup';
+      if (m === 'markup') {
+        // Review mode: clear the creative selection + Phase-B handles so they don't
+        // sit under the markup capture overlay. Default to the comment ("select") tool.
+        if (typeof detachMoveable === 'function') detachMoveable();
+        state.selectedId = null; state.selectedIds = [];
+        if (typeof applySelectionClasses === 'function') applySelectionClasses();
+        _draw.tool = 'select';
+        document.querySelectorAll('.draw-tool').forEach((b) => b.classList.toggle('on', b.dataset.tool === 'select'));
+      }
+      renderMarkupList();
+      renderTransport();
       updateDrawCapture();
     }
     function stageInner() { return document.querySelector('#stage .stage-inner'); }
@@ -3724,15 +3766,19 @@
     // the markup pins. Called at the end of renderStage + on tab/tool/mode change.
     function updateDrawCapture() {
       document.querySelectorAll('.draw-capture').forEach((e) => e.remove());
-      renderMarkupPins();
+      renderMarkupOverlays();
       const inner = stageInner(); if (!inner || !state.config) return;
-      const drawing = state.tab === 'draw' && _draw.mode === 'creative' && _draw.tool !== 'select';
+      const drawTool = _draw.tool !== 'select';
+      const creativeDraw = state.tab === 'draw' && _draw.mode === 'creative' && drawTool;
       const marking = state.tab === 'draw' && _draw.mode === 'markup';
-      if (!drawing && !marking) return;
+      if (!creativeDraw && !marking) return;
+      // Markup: a draw tool draws a shape (→ annotation); the "select" tool drops a
+      // comment pin. Creative: always draws a config shape.
+      const useDraw = creativeDraw || (marking && drawTool);
       const cap = document.createElement('div');
       cap.className = 'draw-capture';
-      cap.style.cursor = marking ? 'copy' : 'crosshair';
-      cap.addEventListener('pointerdown', marking ? onMarkupClick : onDrawStart);
+      cap.style.cursor = useDraw ? 'crosshair' : 'copy';
+      cap.addEventListener('pointerdown', useDraw ? onDrawStart : onMarkupClick);
       inner.appendChild(cap);
     }
     function onDrawStart(e) {
@@ -3786,6 +3832,20 @@
         item = { id, type: 'path', points: _draw.pts.map((p) => [Math.round(p[0]), Math.round(p[1])]), stroke, strokeWidth };
       }
       if (!item) { resetDrawGesture(); return; }
+      // MARKUP mode: the shape is review feedback (timestamped, NEVER exported) — it
+      // goes into a markup annotation's metadata.shapes, not config.fixedDesign.
+      if (_draw.mode === 'markup') {
+        const bb = shapeBBox(item);
+        pausePreview();
+        const a = newAnnotation({ x: bb.cx, y: bb.cy }, isVideoCreative() ? livePreviewTime() : null);
+        a.metadata.shapes.push(item);
+        a.target.selector.region = 'xywh=pixel:' + Math.round(bb.x) + ',' + Math.round(bb.y) + ',' + Math.round(bb.w) + ',' + Math.round(bb.h);
+        resetDrawGesture();
+        saveMarkup(); renderMarkupOverlays(); renderMarkupList(); renderTransport();
+        const cl = designToClient(bb.cx, bb.cy);
+        openCommentBox(a, cl.x, cl.y);
+        return;
+      }
       snapshotForUndo();
       state.config.fixedDesign = state.config.fixedDesign || [];
       const zs = [].concat((state.config.fixedDesign || []).map((x) => x.z || 0), (state.config.elements || []).map((x) => x.z || 0), [20]);
@@ -3797,50 +3857,178 @@
     }
     function resetDrawGesture() { _draw.start = null; _draw.cur = null; _draw.pts = null; if (_draw.live) { _draw.live.remove(); _draw.live = null; } }
 
-    // ── Markup (review notes — never rendered) ──
-    function markupStorageKey() { return 'aa-markup:' + (state.cluster || ''); }
-    function loadMarkup() { try { _markup = JSON.parse(localStorage.getItem(markupStorageKey()) || '[]') || []; } catch (_) { _markup = []; } }
-    function saveMarkup() { try { localStorage.setItem(markupStorageKey(), JSON.stringify(_markup)); } catch (_) {} }
-    function onMarkupClick(e) {
-      const p = clientToDesign(e.clientX, e.clientY); if (!p) return;
-      e.preventDefault();
-      const num = (_markup.reduce((m, n) => Math.max(m, n.num || 0), 0)) + 1;
-      _markup.push({ id: 'mk-' + Math.random().toString(36).slice(2, 7), x: Math.round(p.x), y: Math.round(p.y), num, text: '' });
-      saveMarkup(); renderMarkupPins(); renderMarkupList();
-      setStatus('Note ' + num + ' added (review only — not rendered).');
+    // ── Markup / review (Frame.io-style timestamped feedback — NEVER exported) ──
+    // Each note is a W3C Web Annotation (the shape the Kraken approval portal uses):
+    //   { id, type:'Annotation',
+    //     target:{ selector:{ type:'FragmentSelector', conformsTo:'…media-frags/',
+    //                          timestamp, tEnd, region } },   // timestamp omitted on images
+    //     metadata:{ comment, color, x, y, shapes:[…] },      // x/y = pin position
+    //     createdAt }
+    // Persisted to a server sidecar (/annotations?id=…) so it can later be sent to
+    // the approval portal. Shown only in markup mode; on a video, time-gated.
+    const MARKUP_WINDOW = 2.5;
+    let _markupSaveT = 0;
+    function annId() { return state.cluster || ''; }
+    function isVideoCreative() { return !!(state.config && state.config.media && isVideoPath(state.config.media.path)); }
+    function clipStartSec() { return Math.max(0, Number(state.config && state.config.media && state.config.media.clipStart) || 0); }
+    function aTime(a) { const t = a && a.target && a.target.selector && a.target.selector.timestamp; return typeof t === 'number' ? t : null; }
+    function aTEnd(a) { const s = a && a.target && a.target.selector; if (s && typeof s.tEnd === 'number') return s.tEnd; const t = aTime(a); return t != null ? t + MARKUP_WINDOW : null; }
+    function livePreviewTime() { const v = state._previewVideo; if (v && isFinite(v.currentTime)) return Math.max(0, v.currentTime - clipStartSec()); return state.previewTime || 0; }
+    async function loadMarkup() {
+      _markup = [];
+      try { const j = await fetch('/annotations?id=' + encodeURIComponent(annId())).then((r) => r.json()); _markup = (j && j.annotations) || []; } catch (_) { _markup = []; }
     }
-    function renderMarkupPins() {
-      document.querySelectorAll('.markup-pin').forEach((e) => e.remove());
+    function saveMarkup() {
+      clearTimeout(_markupSaveT);
+      const id = annId();
+      _markupSaveT = setTimeout(() => {
+        fetch('/annotations?id=' + encodeURIComponent(id), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ annotations: _markup }) }).catch(() => {});
+      }, 250);
+    }
+    function newAnnotation(p, ts) {
+      const sel = { type: 'FragmentSelector', conformsTo: 'http://www.w3.org/TR/media-frags/' };
+      if (ts != null) { sel.timestamp = +ts.toFixed(2); sel.tEnd = +(ts + MARKUP_WINDOW).toFixed(2); }
+      const a = { id: 'an-' + Math.random().toString(36).slice(2, 8), type: 'Annotation', target: { selector: sel }, metadata: { comment: '', color: _draw.color, x: Math.round(p.x), y: Math.round(p.y), shapes: [] }, createdAt: new Date().toISOString() };
+      _markup.push(a); return a;
+    }
+    function shapeBBox(it) {
+      if (it.type === 'ellipse') return { x: it.x, y: it.y, w: it.width, h: it.height, cx: it.x + it.width / 2, cy: it.y + it.height / 2 };
+      if (it.type === 'path') { const xs = it.points.map((p) => p[0]), ys = it.points.map((p) => p[1]); const x = Math.min(...xs), y = Math.min(...ys); const w = Math.max(...xs) - x, h = Math.max(...ys) - y; return { x, y, w, h, cx: x + w / 2, cy: y + h / 2 }; }
+      const x = Math.min(it.x1, it.x2), y = Math.min(it.y1, it.y2); const w = Math.abs(it.x2 - it.x1), h = Math.abs(it.y2 - it.y1); return { x, y, w, h, cx: x + w / 2, cy: y + h / 2 };
+    }
+    function designToClient(dx, dy) { const inner = stageInner(); if (!inner) return { x: dx, y: dy }; const r = inner.getBoundingClientRect(); const s = state.scale || 1; return { x: r.left + dx * s, y: r.top + dy * s }; }
+    function svgShapeEl(sh, col) {
+      const NS = 'http://www.w3.org/2000/svg'; const sw = sh.strokeWidth || 10; const c = sh.stroke || col;
+      if (sh.type === 'ellipse') { const el = document.createElementNS(NS, 'ellipse'); el.setAttribute('cx', sh.x + sh.width / 2); el.setAttribute('cy', sh.y + sh.height / 2); el.setAttribute('rx', sh.width / 2); el.setAttribute('ry', sh.height / 2); el.setAttribute('fill', sh.fill && sh.fill !== 'none' ? sh.fill : 'none'); el.setAttribute('stroke', c); el.setAttribute('stroke-width', sw); return el; }
+      if (sh.type === 'path') { const el = document.createElementNS(NS, 'path'); el.setAttribute('d', 'M ' + (sh.points || []).map((p) => p[0] + ' ' + p[1]).join(' L ')); el.setAttribute('fill', 'none'); el.setAttribute('stroke', c); el.setAttribute('stroke-width', sw); el.setAttribute('stroke-linecap', 'round'); el.setAttribute('stroke-linejoin', 'round'); return el; }
+      const g = document.createElementNS(NS, 'g');
+      const ln = document.createElementNS(NS, 'line'); ln.setAttribute('x1', sh.x1); ln.setAttribute('y1', sh.y1); ln.setAttribute('x2', sh.x2); ln.setAttribute('y2', sh.y2); ln.setAttribute('stroke', c); ln.setAttribute('stroke-width', sw); ln.setAttribute('stroke-linecap', 'round'); g.appendChild(ln);
+      if (sh.type === 'arrow') { const ang = Math.atan2(sh.y2 - sh.y1, sh.x2 - sh.x1), hl = Math.max(14, sw * 3.2), ha = Math.PI / 7; const poly = document.createElementNS(NS, 'polygon'); poly.setAttribute('points', sh.x2 + ',' + sh.y2 + ' ' + (sh.x2 - hl * Math.cos(ang - ha)) + ',' + (sh.y2 - hl * Math.sin(ang - ha)) + ' ' + (sh.x2 - hl * Math.cos(ang + ha)) + ',' + (sh.y2 - hl * Math.sin(ang + ha))); poly.setAttribute('fill', c); g.appendChild(poly); }
+      return g;
+    }
+    function renderMarkupOverlays() {
+      document.querySelectorAll('[data-markup]').forEach((e) => e.remove());
       const inner = stageInner(); if (!inner) return;
       if (!(state.tab === 'draw' && _draw.mode === 'markup')) return;
-      for (const n of _markup) {
-        const pin = document.createElement('div'); pin.className = 'markup-pin';
-        pin.style.left = n.x + 'px'; pin.style.top = n.y + 'px';
-        const sp = document.createElement('span'); sp.textContent = n.num; pin.appendChild(sp);
+      const NS = 'http://www.w3.org/2000/svg';
+      _markup.forEach((a, i) => {
+        const col = a.metadata.color || '#f59e0b';
+        for (const sh of (a.metadata.shapes || [])) {
+          const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('data-markup', a.id);
+          svg.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none;';
+          svg.appendChild(svgShapeEl(sh, col)); inner.appendChild(svg);
+        }
+        const pin = document.createElement('div'); pin.className = 'markup-pin'; pin.setAttribute('data-markup', a.id);
+        pin.style.left = a.metadata.x + 'px'; pin.style.top = a.metadata.y + 'px';
+        const sp = document.createElement('span'); sp.textContent = i + 1; pin.appendChild(sp);
         pin.addEventListener('pointerdown', (e) => {
           e.preventDefault(); e.stopPropagation();
-          const scale = state.scale || 1, sx = e.clientX, sy = e.clientY, ox = n.x, oy = n.y;
-          const mv = (ev) => { n.x = Math.round(ox + (ev.clientX - sx) / scale); n.y = Math.round(oy + (ev.clientY - sy) / scale); pin.style.left = n.x + 'px'; pin.style.top = n.y + 'px'; };
-          const up = () => { document.removeEventListener('pointermove', mv); document.removeEventListener('pointerup', up); saveMarkup(); };
+          const scale = state.scale || 1, sx = e.clientX, sy = e.clientY, ox = a.metadata.x, oy = a.metadata.y; let moved = false;
+          const mv = (ev) => { moved = true; a.metadata.x = Math.round(ox + (ev.clientX - sx) / scale); a.metadata.y = Math.round(oy + (ev.clientY - sy) / scale); pin.style.left = a.metadata.x + 'px'; pin.style.top = a.metadata.y + 'px'; };
+          const up = (ev) => { document.removeEventListener('pointermove', mv); document.removeEventListener('pointerup', up); if (moved) saveMarkup(); else openCommentBox(a, ev.clientX, ev.clientY); };
           document.addEventListener('pointermove', mv); document.addEventListener('pointerup', up);
         });
         inner.appendChild(pin);
-      }
+      });
+      applyMarkupVisibility(state.previewTime);
+    }
+    // Editor-only time-gating (markup is never exported). On an image creative
+    // (no video clock) every note is always shown.
+    function applyMarkupVisibility(t) {
+      const gate = isVideoCreative();
+      const shown = {};
+      for (const a of _markup) { let vis = true; if (gate) { const ts = aTime(a); if (ts != null) vis = (t >= ts && t <= aTEnd(a)); } shown[a.id] = vis; }
+      document.querySelectorAll('[data-markup]').forEach((n) => { n.style.display = shown[n.getAttribute('data-markup')] ? '' : 'none'; });
+    }
+    function onMarkupClick(e) {
+      const p = clientToDesign(e.clientX, e.clientY); if (!p) return;
+      e.preventDefault();
+      pausePreview();
+      const a = newAnnotation(p, isVideoCreative() ? livePreviewTime() : null);
+      saveMarkup(); renderMarkupOverlays(); renderMarkupList(); renderTransport();
+      openCommentBox(a, e.clientX, e.clientY);
+    }
+    function openCommentBox(a, clientX, clientY) {
+      closeCommentBox();
+      const box = document.createElement('div'); box.id = 'markupCommentBox';
+      box.style.cssText = 'position:fixed;z-index:99999;left:' + Math.min(clientX, window.innerWidth - 280) + 'px;top:' + Math.min(clientY, window.innerHeight - 130) + 'px;background:var(--panel);border:1px solid var(--red);border-radius:8px;box-shadow:var(--shadow);padding:8px;width:260px;';
+      const ts = aTime(a);
+      const lab = document.createElement('div'); lab.style.cssText = 'font-size:10px;color:var(--muted);font-family:ui-monospace,monospace;margin-bottom:4px;'; lab.textContent = ts != null ? ('@ ' + fmtAudTime(ts) + ' · review note') : 'review note';
+      const ta = document.createElement('textarea'); ta.value = a.metadata.comment || ''; ta.placeholder = 'comment… (Enter to save, Esc to cancel)'; ta.rows = 2; ta.style.cssText = 'width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border);color:var(--fg);border-radius:4px;padding:5px;font-size:12px;font-family:ui-monospace,monospace;resize:vertical;';
+      ta.addEventListener('input', () => { a.metadata.comment = ta.value; });
+      ta.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); a.metadata.comment = ta.value.trim(); saveMarkup(); renderMarkupList(); closeCommentBox(); }
+        else if (ev.key === 'Escape') { ev.preventDefault(); if (!ta.value.trim() && !(a.metadata.shapes || []).length) { _markup = _markup.filter((x) => x.id !== a.id); saveMarkup(); renderMarkupOverlays(); renderMarkupList(); renderTransport(); } closeCommentBox(); }
+      });
+      box.appendChild(lab); box.appendChild(ta); document.body.appendChild(box);
+      setTimeout(() => ta.focus(), 30);
+    }
+    function closeCommentBox() { const b = $('markupCommentBox'); if (b) b.remove(); }
+    function seekMarkup(a) {
+      const ts = aTime(a); if (ts == null) return;
+      pausePreview(); state.previewTime = ts;
+      const v = state._previewVideo; if (v) { try { v.currentTime = clipStartSec() + ts; } catch (e) {} }
+      applyMarkupVisibility(ts); updateTransportPlayhead();
     }
     function renderMarkupList() {
       const list = $('markupList'); if (!list) return;
       list.innerHTML = '';
-      if (!_markup.length) { list.innerHTML = '<div class="ed-empty">No notes yet. Click the canvas to add one.</div>'; return; }
-      for (const n of _markup) {
+      if (!_markup.length) { list.innerHTML = '<div class="ed-empty">No notes yet. In markup mode, click the canvas (or draw a circle) to leave timestamped feedback.</div>'; return; }
+      const ordered = _markup.slice().sort((x, y) => (aTime(x) ?? 1e9) - (aTime(y) ?? 1e9));
+      for (const a of ordered) {
         const row = document.createElement('div'); row.className = 'markup-item';
-        const num = document.createElement('div'); num.className = 'markup-num'; num.textContent = n.num;
-        const ta = document.createElement('textarea'); ta.value = n.text || ''; ta.placeholder = 'note…'; ta.rows = 1;
-        ta.addEventListener('input', () => { n.text = ta.value; saveMarkup(); });
-        const del = document.createElement('button'); del.className = 'markup-del'; del.textContent = '✕'; del.title = 'Delete note';
-        del.onclick = () => { _markup = _markup.filter((x) => x.id !== n.id); saveMarkup(); renderMarkupPins(); renderMarkupList(); };
-        row.appendChild(num); row.appendChild(ta); row.appendChild(del);
+        const num = document.createElement('div'); num.className = 'markup-num'; num.textContent = _markup.indexOf(a) + 1;
+        const wrap = document.createElement('div'); wrap.style.cssText = 'flex:1;display:flex;flex-direction:column;gap:3px;min-width:0;';
+        const ts = aTime(a);
+        if (ts != null) { const t = document.createElement('button'); t.textContent = '▶ ' + fmtAudTime(ts); t.title = 'Jump to this moment'; t.style.cssText = 'align-self:flex-start;font-size:10px;padding:2px 6px;background:var(--panel-2);border:1px solid var(--border);border-radius:3px;cursor:pointer;color:var(--red);font-family:ui-monospace,monospace;'; t.onclick = () => seekMarkup(a); wrap.appendChild(t); }
+        const ta = document.createElement('textarea'); ta.value = a.metadata.comment || ''; ta.placeholder = 'note…'; ta.rows = 1; ta.addEventListener('input', () => { a.metadata.comment = ta.value; saveMarkup(); });
+        wrap.appendChild(ta);
+        const del = document.createElement('button'); del.className = 'markup-del'; del.textContent = '✕'; del.title = 'Delete note'; del.onclick = () => { _markup = _markup.filter((x) => x.id !== a.id); saveMarkup(); renderMarkupOverlays(); renderMarkupList(); renderTransport(); };
+        row.appendChild(num); row.appendChild(wrap); row.appendChild(del);
         list.appendChild(row);
       }
+    }
+    // ── Transport (play/pause + scrub) — the single playback clock for video ──
+    function previewDur() {
+      const m = state.config && state.config.media; if (!m) return 0;
+      const cs = clipStartSec(); const ce = (typeof m.clipEnd === 'number' && m.clipEnd > cs) ? m.clipEnd : null;
+      if (ce != null) return ce - cs;
+      const v = state._previewVideo; return (v && isFinite(v.duration) && v.duration > 0) ? (v.duration - cs) : 0;
+    }
+    function pausePreview() {
+      state.previewPlaying = false;
+      const v = state._previewVideo; if (v) { try { v.pause(); } catch (e) {} }
+      if (typeof _audio !== 'undefined' && _audio && _audio.syncTimer) { clearInterval(_audio.syncTimer); _audio.syncTimer = 0; }
+      const el = $('audioEl'); if (el) { try { el.pause(); } catch (e) {} }
+      syncTransportBtn();
+    }
+    function playPreview() {
+      state.previewPlaying = true;
+      const v = state._previewVideo; if (v) { try { v.currentTime = clipStartSec() + (state.previewTime || 0); } catch (e) {} v.play && v.play().catch(() => {}); }
+      syncTransportBtn();
+    }
+    function togglePreview() { state.previewPlaying ? pausePreview() : playPreview(); }
+    function syncTransportBtn() { const b = $('transportPlay'); if (b) b.textContent = state.previewPlaying ? '❚❚' : '▶'; }
+    function updateTransportPlayhead() { const ph = $('transportPlayhead'); const D = previewDur(); if (!ph || !D) return; ph.style.left = Math.max(0, Math.min(100, (state.previewTime / D) * 100)) + '%'; }
+    // renderStage wipes #stage, so (re)build the transport each render (video only).
+    function renderTransport() {
+      const stage = $('stage'); if (!stage) return;
+      const old = $('transportBar'); if (old) old.remove();
+      if (!isVideoCreative()) return;
+      const bar = document.createElement('div'); bar.id = 'transportBar';
+      const play = document.createElement('button'); play.id = 'transportPlay'; play.type = 'button'; play.title = 'Play / pause';
+      play.textContent = state.previewPlaying ? '❚❚' : '▶'; play.onclick = togglePreview;
+      const track = document.createElement('div'); track.id = 'transportTrack';
+      const ph = document.createElement('div'); ph.id = 'transportPlayhead'; track.appendChild(ph);
+      const D = previewDur();
+      if (D) for (const a of _markup) { const ts = aTime(a); if (ts == null) continue; const dot = document.createElement('div'); dot.className = 'transport-marker'; dot.style.left = (ts / D * 100) + '%'; dot.title = a.metadata.comment || 'note'; dot.onclick = (e) => { e.stopPropagation(); seekMarkup(a); }; track.appendChild(dot); }
+      const seekToPx = (clientX) => { const r = track.getBoundingClientRect(); const dd = previewDur(); if (!dd) return; const t = Math.max(0, Math.min(dd, ((clientX - r.left) / r.width) * dd)); pausePreview(); state.previewTime = t; const v = state._previewVideo; if (v) { try { v.currentTime = clipStartSec() + t; } catch (e) {} } applyMarkupVisibility(t); updateTransportPlayhead(); };
+      let dragging = false;
+      track.addEventListener('pointerdown', (e) => { dragging = true; track.setPointerCapture && track.setPointerCapture(e.pointerId); seekToPx(e.clientX); });
+      track.addEventListener('pointermove', (e) => { if (dragging) seekToPx(e.clientX); });
+      track.addEventListener('pointerup', () => { dragging = false; });
+      bar.appendChild(play); bar.appendChild(track); stage.appendChild(bar);
+      updateTransportPlayhead();
     }
 
     async function loadCluster(id) {
@@ -3859,11 +4047,14 @@
       // bank path if the server didn't send the header (O2 — order-safe).
       state.mediaBase = got.base || '/templates/multi-sport-foundations/';
       state.selectedId = null;
+      // Feature 2: reset the preview clock BEFORE renderStage (renderMediaNode reads
+      // previewTime/previewPlaying and sets state._previewVideo — do not null it after).
+      state.previewTime = 0; state.previewPlaying = true;
       renderStage();
       renderElementList();
       renderProps();
       if (typeof syncAudioPanelFromConfig === 'function') syncAudioPanelFromConfig();
-      if (typeof loadMarkup === 'function') { loadMarkup(); renderMarkupList(); renderMarkupPins(); }
+      if (typeof loadMarkup === 'function') { await loadMarkup(); renderMarkupList(); renderMarkupOverlays(); renderTransport(); }
       setStatus('Loaded ' + id);
       window.location.hash = '#' + id;
     }
