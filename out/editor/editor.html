@@ -2613,23 +2613,30 @@
         elementSnapDirections: { top: true, left: true, bottom: true, right: true, center: true, middle: true },
         throttleDrag: 0, throttleRotate: 0, throttleResize: 0,
       });
+      // STALE-TARGET FIX: these handlers are bound ONCE, but the moveable instance
+      // is REUSED across selections (the early-return above just re-points .target).
+      // So they must resolve the CURRENTLY selected element live at event time — if
+      // they closed over the `el` captured at creation, every gesture after the first
+      // would commit to the first-ever-selected layer (the dragged layer snaps back,
+      // a different layer jumps). curEl() reads state.selectedId on each event.
+      const curEl = () => (state.config && (state.config.elements || []).find((x) => x.id === state.selectedId)) || null;
       // Commit from the POINTER's client-px delta ÷ stage scale (robust: moveable's
       // own dist/translate live in a transformed space and double-count the scale).
-      _moveable.on('dragStart', (e) => { snapshotForUndo(); dragStart = { x: el.x, y: el.y, cx: e.clientX, cy: e.clientY }; });
+      _moveable.on('dragStart', (e) => { const el = curEl(); if (!el) return; snapshotForUndo(); dragStart = { id: el.id, x: el.x, y: el.y, cx: e.clientX, cy: e.clientY }; });
       _moveable.on('drag', (e) => { e.target.style.transform = e.transform; });
       _moveable.on('dragEnd', (e) => {
-        const last = e.lastEvent;
-        if (last && dragStart) {
+        const el = curEl(); const last = e.lastEvent;
+        if (last && dragStart && el && dragStart.id === el.id) {
           el.x = Math.round(dragStart.x + (last.clientX - dragStart.cx) / S());
           el.y = Math.round(dragStart.y + (last.clientY - dragStart.cy) / S());
           renderStage();
         }
         dragStart = null;
       });
-      _moveable.on('rotateStart', () => { rotStart = el.rotate || 0; });
+      _moveable.on('rotateStart', () => {});
       _moveable.on('rotate', (e) => { e.target.style.transform = e.transform; });
       _moveable.on('rotateEnd', (e) => {
-        if (!e.lastEvent) return;
+        const el = curEl(); if (!el || !e.lastEvent) return;
         let deg = Math.round(e.lastEvent.rotation); // absolute (moveable reads the box's current rotate)
         // "Is it level?" + "parallel to neighbor": snap to 0/45/90/… and to any neighbor's angle (±4°).
         const cands = [0, 45, 90, 135, 180, -45, -90, -135];
@@ -2642,7 +2649,7 @@
       _moveable.on('resizeStart', () => { snapshotForUndo(); });
       _moveable.on('resize', (e) => { e.target.style.width = e.width + 'px'; });
       _moveable.on('resizeEnd', (e) => {
-        if (!e.lastEvent) return;
+        const el = curEl(); if (!el || !e.lastEvent) return;
         el.width = Math.round(e.lastEvent.width);
         renderStage();
       });
