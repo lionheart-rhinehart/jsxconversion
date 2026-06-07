@@ -237,6 +237,29 @@ The runner uses `templateData` verbatim when present (warning on keys the templa
 doesn't read), and otherwise the **role-aware join** (`buildCopyByRole` → `assemble` in
 `scripts/lib/`) routes headline/microscript onto the right role-slots.
 
+### Step 4a — Example binding (fresh assets — the generation engine)
+For EACH `source:"fresh"` asset, BEFORE the gate, bind it to an example — in THIS order (order matters:
+the copy shape drives the fit). Static-only for now (motion generation is a later follow-up):
+1. **Assign `asset.archetype`** — choose the visual archetype for this creative from the beat + angle
+   intent (the closed list in `scripts/lib/example-library.mjs` `ARCHETYPES`). Pre-assign across the
+   angle's fresh assets so they don't collide on the same archetype (the variety cap enforces it).
+2. **Bind the copy** — set `asset.copyRefs` / `asset.hookRef` to the copy-library ids this creative
+   carries (verbatim; selection ≠ authoring).
+3. **Select the example** — import `selectExample` from `scripts/lib/example-select.mjs` with
+   `{ archetype, asset, library, format: "static", usedExampleIds }`. It fits an example WITHIN the
+   assigned archetype to the copy's shape (the same ladder `fill` uses). **Null → STOP + flag** ("no
+   fitting example for archetype X — choose another archetype or add an example"); never force a mismatch.
+4. **Stamp** `asset.exampleId` + `asset.archetype` into the plan. At initial planning you write
+   `creative-plan.json` directly (Step 4), so stamp them there. (If you later RE-stamp via the
+   editor-server `/plan` route, those keys must be in its ALLOWED patch list — tracked as G2.) Record
+   used example ids per angle so the variety cap (`scripts/lib/uniqueness.mjs`, keyed on
+   archetype/exampleId + `repetitionCap`) stays satisfied.
+5. **Compose** — invoke `/compose-creative` for the asset; it reads the example by `asset.exampleId`,
+   builds guided by it, and sets `asset.template` (see Dispatch).
+
+An unbound fresh asset (no `exampleId`) is a HARD BLOCK at the gate (`exampleBinding`) — Step 4a is not
+optional. (Marker-1 cluster-adherence + Marker-2 selection-time segment grouping are later follow-ups.)
+
 ### Step 4b — Compliance gate (MANDATORY — do not skip)
 Before rendering proofs, validate the plan and **loop-fix until it is clean**:
 
@@ -293,7 +316,7 @@ the plan. The workspace/folder picks persist in `campaigns/<name>/kraken.json`.
 - `template` + `static` → `fill-core` cascade fill → static render (PNG).
 - `template` + `video`/`gif` → motion wrapper + `window.__CONFIG__` injection
   (`brand/video-templates/templates/*.jsx`); gif = mp4 → ffmpeg palette.
-- `fresh` + any → `compose-creative` skill output, then the matching renderer.
+- `fresh` + any → **Step 4a example-binding** (select + stamp `exampleId`/`archetype`) → `compose-creative` skill output, then the matching renderer.
 
 ## Flywheel
 When a `fresh` asset turns out well, offer to **promote it into the bank**

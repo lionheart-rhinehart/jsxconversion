@@ -46,6 +46,22 @@ bank's own file shape so it is **promotable**. This is invoked per-asset by
   the Stage host returns t=0 and everything renders invisible); give **every** text an explicit
   `color`; captions carry the whole message (mute viewing).
 
+## Example-guided (the generation contract — Track A)
+`/creative-engine` selects an EXAMPLE for this asset (via `scripts/lib/example-select.mjs`) and stamps
+`asset.exampleId` + `asset.archetype` before invoking you. Build **guided by that example**:
+- Read the example's `sourcePath` `.jsx` (look it up in `templates/_example-index.json` by
+  `asset.exampleId`) as the **structural reference** — same archetype / layout family — and its
+  `renderedImagePath` for the visual target. You are building *"a creative shaped like this example,
+  with THIS copy + THIS brand kit"* — NOT copying it: brand pours from the kit/`DESIGN.md`, copy comes
+  verbatim from the copy-library.
+- **Media per the measured rubric** (`docs/media-integration-findings.md`): **no full-bleed** photo/video
+  on a graphic design; give media large presence ONLY via a knockout **CUTOUT** on a color field or a
+  ~45% **SPLIT-panel**; contained accent media **≤ ~20%** of the frame (varied position, never a
+  full-width same-position band); **footage diversity is mandatory** (never reuse a clip); facility
+  imagery diversifies. (This rubric is GUIDANCE — it is not gated yet; compose to honor it.)
+- If this asset has **no `asset.exampleId`**, STOP and tell the engine to run its select step — the
+  compliance gate blocks an unbound fresh creative (`exampleBinding`).
+
 ## Must pass the compliance gate
 The fresh asset is validated like any other: after composing, `validate-plan.mjs` checks the
 rendered bytes and **blocks** on no media, non-verbatim persuasive copy, missing/wrong eyebrow city,
@@ -99,8 +115,14 @@ a `data.<key>` read can never be filled, so every fillable slot must read from
 3. Compose the file(s) per the shapes above.
 4. Render; if it fails on fonts, drop the real font into `fonts/<Family>/` (per
    the font-preflight contract) — never substitute silently.
-5. Hand the output path back to the runner / show it on the review page.
-6. **Prove ONE before scaling** a batch of fresh assets — get the user's eyes on
+5. **Set `asset.template = "fresh-<campaign>-<angle>-<assetId>"`** on the plan via the editor-server
+   single-writer `/plan` route (the basename of the files you just wrote) — this is what makes
+   `renderFresh` dispatch and what both the compliance gate and the renderer resolve from.
+   **Single source of truth:** do NOT *also* hand-write a `campaigns/<c>/edits/<angle>__<asset>.config.json`
+   — let the gate AND the render both FILL from `asset.template` so they validate and render identical
+   bytes (writing both risks a split-brain where the gate passes one thing and the render produces another).
+6. Hand the output path back to the runner / show it on the review page.
+7. **Prove ONE before scaling** a batch of fresh assets — get the user's eyes on
    the first fresh creative's quality before generating the rest.
 
 ## Promotion (flywheel)
