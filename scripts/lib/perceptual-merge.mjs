@@ -56,6 +56,15 @@ export function buildPerceptual({ campaign, embed, slop } = {}) {
         fixHint: "re-render against the assigned example, or re-assign the archetype to what it actually looks like",
       });
     }
+    // motion only: the sampled frames disagree on the nearest archetype → the animation
+    // drifts between looks. A soft WARN (the best frame may still be in-lane), not a block.
+    if (adh && adh.frameVariance === true && adh.landedInLane !== false) {
+      add(key, {
+        rule: "clusterAdherence", severity: "warn",
+        message: `motion reads as multiple archetypes across its ${adh.frameCount || 3} sampled frames — verify it holds one lane throughout`,
+        fixHint: "the animation may drift between looks; confirm it reads as a single archetype start-to-finish",
+      });
+    }
     // #14 selection distinctness — too similar to a sibling in the SAME running segment
     for (const p of a.distinctness || []) {
       if (p.combined >= COMBINED_GATE || p.dino >= DINO_GATE) {

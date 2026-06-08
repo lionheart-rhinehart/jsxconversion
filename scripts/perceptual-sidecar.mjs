@@ -18,7 +18,7 @@ import { spawnSync } from "node:child_process";
 import { readFileSync, existsSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { resolve, join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { extractPoster } from "./lib/poster.mjs";
+import { extractPoster, extractFrames } from "./lib/poster.mjs";
 import { buildPerceptual, writePerceptual } from "./lib/perceptual-merge.mjs";
 
 const PROJECT_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -80,14 +80,18 @@ function main() {
       const meta = archMap.get(key) || { archetype: null, segment: cell.angle };
       const outAbs = join(PROJECT_ROOT, cell.output);
       let png = outAbs;
+      let frames = null;
       if (cell.format === "video" || cell.format === "gif" || /\.(mp4|gif)$/i.test(cell.output)) {
         mkdirSync(posterDir, { recursive: true });
-        const dest = join(posterDir, `${cell.angle}__${cell.asset}.png`);
-        png = extractPoster(outAbs, cell.durationSec, dest);
-        if (!png) { log(`skip ${key}: poster extraction failed`); continue; }
+        // 3-frame sampling for #15: adherence uses the best-matching frame + flags variance.
+        frames = extractFrames(outAbs, cell.durationSec, posterDir, `${cell.angle}__${cell.asset}`);
+        if (!frames.length) { log(`skip ${key}: poster extraction failed`); continue; }
+        png = frames[0]; // a single still for slop/tier2 (which only need one image)
       }
       if (!existsSync(png)) { log(`skip ${key}: output missing (${png})`); continue; }
-      items.push({ key, png, archetype: meta.archetype, format: cell.format || "static", segment: meta.segment });
+      const item = { key, png, archetype: meta.archetype, format: cell.format || "static", segment: meta.segment };
+      if (frames && frames.length) item.frames = frames;
+      items.push(item);
     }
     if (!items.length) return sentinel("no rendered outputs to perceive");
 

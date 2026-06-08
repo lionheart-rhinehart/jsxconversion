@@ -23,6 +23,24 @@ export function probeDuration(mp4Path) {
   return Number.isFinite(d) && d > 0 ? d : null;
 }
 
+// Extract up to 3 deterministic frames (for video cluster-adherence #15): a single
+// poster can catch an atypical frame (e.g. a count-up's "0" state), so the gate samples
+// a few and takes the BEST-matching one + flags high cross-frame variance. Returns the
+// non-blank frame paths that ffmpeg produced (largest-bytes filter drops black frames).
+export function extractFrames(mp4Path, durationSec, destDir, prefix, fracs = [0.4, 0.6, 0.95]) {
+  const dur = (Number.isFinite(durationSec) && durationSec > 0) ? durationSec : (probeDuration(mp4Path) || 3.0);
+  mkdirSync(destDir, { recursive: true });
+  const out = [];
+  for (const f of fracs) {
+    const t = Math.max(0, dur * f);
+    const dest = join(destDir, `${prefix}__f${Math.round(f * 100)}.png`);
+    const r = spawnSync("ffmpeg", ["-y", "-ss", String(t), "-i", mp4Path, "-frames:v", "1", dest], { stdio: "ignore" });
+    // drop a near-empty (black/transition) frame by the same largest-bytes intuition
+    if (r.status === 0 && existsSync(dest) && statSync(dest).size > 2048) out.push(dest);
+  }
+  return out;
+}
+
 export function extractPoster(mp4Path, durationSec, destPng) {
   const dur = (Number.isFinite(durationSec) && durationSec > 0) ? durationSec : (probeDuration(mp4Path) || 3.0);
   const tmp = mkdtempSync(join(tmpdir(), "poster-"));

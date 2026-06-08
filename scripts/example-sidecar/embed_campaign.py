@@ -60,63 +60,91 @@ def main():
     cen_vecs = l2(np.asarray(cz["centroids"], dtype=np.float32))
     cen_embedder = str(cz["embedder"])
 
-    # load + blank-drop the output images
-    kept, images = [], []
+    # load + blank-drop — supporting MULTI-FRAME video items (3-frame sampling for #15):
+    # a video item embeds its frames; adherence uses the BEST-matching frame + flags variance.
+    frame_rows, kept = [], []   # frame_rows: (item_idx, image); kept: items with >=1 good frame
     for it in items:
-        img = load_image_rgb(it["png"])
-        if img is None:
-            log(f"drop {it['key']}: open failed ({it['png']})"); continue
-        ok, _std = blank_check(img)
-        if not ok:
-            log(f"drop {it['key']}: near-uniform frame"); continue
-        kept.append(it); images.append(img)
+        paths = it.get("frames") or [it["png"]]
+        any_ok = False
+        for p in paths:
+            img = load_image_rgb(p)
+            if img is None:
+                continue
+            ok, _std = blank_check(img)
+            if not ok:
+                continue
+            frame_rows.append((len(kept), img)); any_ok = True
+        if any_ok:
+            kept.append(it)
+        else:
+            log(f"drop {it['key']}: no embeddable frame")
     if not kept:
         return fail(out_path, "no embeddable outputs (all missing or blank)")
 
-    clip_v, dino_v, combined, embedder = embed_images(images)
+    clip_v, dino_v, combined, embedder = embed_images([img for (_i, img) in frame_rows])
     if embedder != cen_embedder:
         return fail(out_path, f"embedder mismatch: outputs [{embedder}] vs centroids [{cen_embedder}] — different vector space")
 
     comb = l2(combined)
     dino = l2(dino_v)
 
-    # index centroids by format for the adherence lookup
-    fmt_idx = {}
+    frames_of = {}                      # item_idx -> [row indices into comb/dino]
+    for ridx, (item_idx, _img) in enumerate(frame_rows):
+        frames_of.setdefault(item_idx, []).append(ridx)
+
+    fmt_idx = {}                        # centroids by format for the adherence lookup
     for i, f in enumerate(cen_fmt):
         fmt_idx.setdefault(f, []).append(i)
 
     assets = {}
-    for n, it in enumerate(kept):
+    rep = {}                           # item_idx -> representative row (best frame) for distinctness
+    for item_idx, it in enumerate(kept):
         key, arch, fmt, seg = it["key"], it.get("archetype"), it.get("format", "static"), it.get("segment", "")
         rows = fmt_idx.get(fmt, [])
+        ridxs = frames_of[item_idx]
+        rep[item_idx] = ridxs[0]
         adherence = None
         if rows:
-            sims = {cen_arch[i]: float(np.dot(comb[n], cen_vecs[i])) for i in rows}
-            nearest_arch = max(sims, key=sims.get)
-            assigned_cos = sims.get(arch)
+            per = []
+            for r in ridxs:
+                sims = {cen_arch[i]: float(np.dot(comb[r], cen_vecs[i])) for i in rows}
+                nearest = max(sims, key=sims.get)
+                per.append({"r": r, "sims": sims, "nearest": nearest, "assigned": sims.get(arch)})
+            assigned_has_centroid = arch in (cen_arch[i] for i in rows)
+            # best frame = the one that best matches the ASSIGNED lane (or, if no assigned
+            # centroid, the most confident frame) — reduces false off-lane from an atypical still
+            if assigned_has_centroid:
+                best = max(per, key=lambda x: (x["assigned"] if x["assigned"] is not None else -1.0))
+            else:
+                best = max(per, key=lambda x: x["sims"][x["nearest"]])
+            rep[item_idx] = best["r"]
+            assigned_cos, nearest_arch = best["assigned"], best["nearest"]
             adherence = {
                 "assignedArchetype": arch,
                 "assignedCosine": None if assigned_cos is None else round(assigned_cos, 4),
                 "nearestArchetype": nearest_arch,
-                "nearestCosine": round(sims[nearest_arch], 4),
-                # landedInLane is null when the assigned archetype has no centroid for this
-                # format (can't judge) — the JS layer only blocks on an explicit False.
+                "nearestCosine": round(best["sims"][nearest_arch], 4),
+                # null when the assigned archetype has no centroid for this format (can't judge) —
+                # the JS layer only BLOCKS on an explicit False.
                 "landedInLane": None if assigned_cos is None else (nearest_arch == arch),
+                # frames disagree on the nearest archetype → the motion drifts between looks (WARN)
+                "frameVariance": (len({p["nearest"] for p in per}) > 1) if len(per) > 1 else False,
+                "frameCount": len(per),
             }
         assets[key] = {"assignedArchetype": arch, "format": fmt, "segment": seg, "adherence": adherence, "distinctness": []}
 
-    # pairwise distinctness within each running segment
+    # pairwise distinctness within each running segment, over each item's representative frame
     by_seg = {}
-    for n, it in enumerate(kept):
-        by_seg.setdefault(it.get("segment", ""), []).append(n)
+    for item_idx, it in enumerate(kept):
+        by_seg.setdefault(it.get("segment", ""), []).append(item_idx)
     for seg, idxs in by_seg.items():
         for a in range(len(idxs)):
             for b in range(a + 1, len(idxs)):
-                na, nb = idxs[a], idxs[b]
-                c = round(float(np.dot(comb[na], comb[nb])), 4)
-                dn = round(float(np.dot(dino[na], dino[nb])), 4)
-                assets[kept[na]["key"]]["distinctness"].append({"other": kept[nb]["key"], "combined": c, "dino": dn})
-                assets[kept[nb]["key"]]["distinctness"].append({"other": kept[na]["key"], "combined": c, "dino": dn})
+                ra, rb = rep[idxs[a]], rep[idxs[b]]
+                c = round(float(np.dot(comb[ra], comb[rb])), 4)
+                dn = round(float(np.dot(dino[ra], dino[rb])), 4)
+                assets[kept[idxs[a]]["key"]]["distinctness"].append({"other": kept[idxs[b]]["key"], "combined": c, "dino": dn})
+                assets[kept[idxs[b]]["key"]]["distinctness"].append({"other": kept[idxs[a]]["key"], "combined": c, "dino": dn})
 
     out_path.write_text(json.dumps({"ranOk": True, "embedder": embedder, "assets": assets}, indent=2), encoding="utf-8")
     log(f"embedded {len(kept)} outputs [{embedder}] → {out_path.name}")
