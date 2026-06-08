@@ -34,8 +34,14 @@ These four are binding for every chat on this repo. They exist because each one 
 
 4. **Creative-engine non-negotiables.** `docs/PROCESS.md` is the canonical end-to-end map — read it
    before touching campaign intake, planning, the review page, or the render runner. And:
-   - **Every creative carries real media** (a real image/video/clip, pulled from Kraken) — no bare
-     type cards.
+   - **Each creative MIRRORS its example's media.** The engine builds a new design modeled on a
+     chosen example; if that example carries media (a real image/video/clip from Kraken), the new
+     design must too — if the example is media-free (a graphic/data-viz design), the new design may
+     be too. Enforced in `validate-plan.mjs` (Law #0 keys on the bound example's `mediaStyleAccepts`).
+     *(Supersedes the old blanket "every creative carries media / no bare type cards" — the
+     2026-06-06 media-integration findings proved graphic/data-viz designs must stay photo-free;
+     full-bleed media collapses their distinctness. If a design does carry media, no full-bleed on a
+     graphic — cutout / split-panel / ≤20% accent only.)*
    - **The guarantee is verbatim, never paraphrased:** *+1 mph speed. +3" vertical. 90 days. Or your
      training is on us.*
    - **Voice:** head-coach-to-parent, declarative, metric-driven — no emoji, no exclamation points.

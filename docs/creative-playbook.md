@@ -14,11 +14,17 @@
 > `node scripts/validate-plan.mjs <campaign>`.
 
 ## The 6 laws (non-negotiable)
-0. **Every creative carries real media.** No exceptions — static, GIF, or video, each asset is
-   backed by a real image / video / clip (Kraken source still/clip, client photo, or AA brand
-   photo). A pure typographic/data card is not a finished creative. Media is **hand-placed**
-   (never auto-placed), each asset gets a **distinct** clip/still (no reuse), and an asset is not
-   approvable/renderable until its media is placed. (Mirrors SKILL.md hard rule 6.)
+0. **Each creative MIRRORS its example's media.** The engine builds a new design modeled on a chosen
+   example. If that example carries media, the new design must too (a real image / video / clip —
+   Kraken source still/clip, client photo, or AA brand photo); if the example is **media-free** (a
+   graphic / data-viz design), the new design may be too. Keyed on the bound example's
+   `mediaStyleAccepts` in `validate-plan.mjs` (Law #0) — not the archetype, not static-vs-video.
+   *(Supersedes the old blanket "every creative carries real media / no bare type cards": the
+   2026-06-06 media-integration findings (`docs/media-integration-findings.md`) proved graphic/data-viz
+   designs must stay photo-free — full-bleed media collapses their perceptual distinctness.)* When a
+   design DOES carry media it is **hand-placed** (never auto-placed), each asset gets a **distinct**
+   clip/still (no reuse across a batch), and the media obeys the rubric (no full-bleed on a graphic —
+   cutout / split-panel / ≤20% accent). (Mirrors SKILL.md hard rule 6.)
 1. **Beat picks the roles & how many; the reading sequence picks placement** — *space* for static (top→bottom), *time* for video (0s→end).
 2. **Hook first/top · proof in the first half · offer+CTA last/bottom.**
 3. **Emotional hook opens, rational proof closes.** (AA is a considered, high-ticket purchase — data matters, but emotion earns the look.)
