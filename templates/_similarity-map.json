@@ -1,0 +1,2342 @@
+{
+  "note": "Additive unified view over ALL examples (the index's per-pass `diversity` stays as-is). archetypePairs = the cross-archetype SIMILARITY MAP, the selection-time distinctness selector's input (high pair = don't run both in one segment). Built by diversity_all.py.",
+  "count": 109,
+  "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
+  "diversityAll": {
+    "count": 109,
+    "vendi": 22.9602,
+    "meanCrossArchetype": 0.3763,
+    "maxCrossArchetype": {
+      "a": "calendar-fill",
+      "b": "timeline-schedule",
+      "cosine": 0.5942
+    }
+  },
+  "archetypePairs": [
+    {
+      "a": "calendar-fill",
+      "b": "timeline-schedule",
+      "cosine": 0.5942
+    },
+    {
+      "a": "before-after-split",
+      "b": "proof-collage",
+      "cosine": 0.5869
+    },
+    {
+      "a": "action-hero",
+      "b": "before-after-split",
+      "cosine": 0.5847
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "list-steps",
+      "cosine": 0.5788
+    },
+    {
+      "a": "list-steps",
+      "b": "tier-list",
+      "cosine": 0.5686
+    },
+    {
+      "a": "before-after-split",
+      "b": "training-scene",
+      "cosine": 0.5657
+    },
+    {
+      "a": "count-up-stats",
+      "b": "offer-card",
+      "cosine": 0.5642
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "offer-card",
+      "cosine": 0.5599
+    },
+    {
+      "a": "bracket-tree",
+      "b": "timeline-schedule",
+      "cosine": 0.5574
+    },
+    {
+      "a": "before-after-split",
+      "b": "ugc-selfie",
+      "cosine": 0.55
+    },
+    {
+      "a": "offer-card",
+      "b": "slot-roll",
+      "cosine": 0.5499
+    },
+    {
+      "a": "offer-card",
+      "b": "versus",
+      "cosine": 0.5439
+    },
+    {
+      "a": "bracket-tree",
+      "b": "leaderboard-roll",
+      "cosine": 0.5421
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "versus",
+      "cosine": 0.5419
+    },
+    {
+      "a": "bracket-tree",
+      "b": "tier-list",
+      "cosine": 0.5415
+    },
+    {
+      "a": "action-hero",
+      "b": "proof-collage",
+      "cosine": 0.5413
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "count-up-stats",
+      "cosine": 0.5375
+    },
+    {
+      "a": "kinetic-text",
+      "b": "offer-card",
+      "cosine": 0.5368
+    },
+    {
+      "a": "stopwatch-countdown",
+      "b": "velocity-gauge",
+      "cosine": 0.5356
+    },
+    {
+      "a": "radar-stats",
+      "b": "sprint-trace",
+      "cosine": 0.5351
+    },
+    {
+      "a": "bracket-tree",
+      "b": "scoreboard",
+      "cosine": 0.5309
+    },
+    {
+      "a": "calendar-fill",
+      "b": "tier-list",
+      "cosine": 0.5295
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "kinetic-text",
+      "cosine": 0.5263
+    },
+    {
+      "a": "proof-collage",
+      "b": "training-scene",
+      "cosine": 0.5256
+    },
+    {
+      "a": "macro-ring",
+      "b": "stopwatch-countdown",
+      "cosine": 0.5246
+    },
+    {
+      "a": "count-up-stats",
+      "b": "kinetic-text",
+      "cosine": 0.5243
+    },
+    {
+      "a": "offer-card",
+      "b": "velocity-gauge",
+      "cosine": 0.524
+    },
+    {
+      "a": "action-hero",
+      "b": "ugc-selfie",
+      "cosine": 0.5214
+    },
+    {
+      "a": "tier-list",
+      "b": "velocity-gauge",
+      "cosine": 0.5207
+    },
+    {
+      "a": "action-hero",
+      "b": "training-scene",
+      "cosine": 0.5185
+    },
+    {
+      "a": "list-steps",
+      "b": "quote-card",
+      "cosine": 0.5184
+    },
+    {
+      "a": "bracket-tree",
+      "b": "calendar-fill",
+      "cosine": 0.5176
+    },
+    {
+      "a": "bracket-tree",
+      "b": "list-steps",
+      "cosine": 0.5172
+    },
+    {
+      "a": "count-up-stats",
+      "b": "velocity-gauge",
+      "cosine": 0.5171
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "slot-roll",
+      "cosine": 0.5138
+    },
+    {
+      "a": "leaderboard-roll",
+      "b": "tier-list",
+      "cosine": 0.5136
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "tier-list",
+      "cosine": 0.5122
+    },
+    {
+      "a": "kinetic-text",
+      "b": "versus",
+      "cosine": 0.5065
+    },
+    {
+      "a": "calendar-fill",
+      "b": "offer-card",
+      "cosine": 0.5043
+    },
+    {
+      "a": "macro-ring",
+      "b": "metric-reveal",
+      "cosine": 0.5038
+    },
+    {
+      "a": "scoreboard",
+      "b": "stopwatch-countdown",
+      "cosine": 0.503
+    },
+    {
+      "a": "count-up-stats",
+      "b": "versus",
+      "cosine": 0.5022
+    },
+    {
+      "a": "tier-list",
+      "b": "timeline-schedule",
+      "cosine": 0.5022
+    },
+    {
+      "a": "metric-reveal",
+      "b": "timeline-schedule",
+      "cosine": 0.5008
+    },
+    {
+      "a": "list-steps",
+      "b": "timeline-schedule",
+      "cosine": 0.5004
+    },
+    {
+      "a": "calendar-fill",
+      "b": "stopwatch-countdown",
+      "cosine": 0.5002
+    },
+    {
+      "a": "metric-reveal",
+      "b": "stopwatch-countdown",
+      "cosine": 0.4999
+    },
+    {
+      "a": "comic-strip",
+      "b": "timeline-schedule",
+      "cosine": 0.4996
+    },
+    {
+      "a": "stopwatch-countdown",
+      "b": "timeline-schedule",
+      "cosine": 0.4982
+    },
+    {
+      "a": "scoreboard",
+      "b": "timeline-schedule",
+      "cosine": 0.498
+    },
+    {
+      "a": "calendar-fill",
+      "b": "comic-strip",
+      "cosine": 0.4972
+    },
+    {
+      "a": "slot-roll",
+      "b": "versus",
+      "cosine": 0.497
+    },
+    {
+      "a": "macro-ring",
+      "b": "velocity-gauge",
+      "cosine": 0.4964
+    },
+    {
+      "a": "list-steps",
+      "b": "offer-card",
+      "cosine": 0.4954
+    },
+    {
+      "a": "count-up-stats",
+      "b": "scoreboard",
+      "cosine": 0.4944
+    },
+    {
+      "a": "velocity-gauge",
+      "b": "versus",
+      "cosine": 0.4944
+    },
+    {
+      "a": "count-up-stats",
+      "b": "list-steps",
+      "cosine": 0.4932
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "timeline-schedule",
+      "cosine": 0.4926
+    },
+    {
+      "a": "offer-card",
+      "b": "stopwatch-countdown",
+      "cosine": 0.4906
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "star-testimonial",
+      "cosine": 0.4881
+    },
+    {
+      "a": "bracket-tree",
+      "b": "sprint-trace",
+      "cosine": 0.4881
+    },
+    {
+      "a": "list-steps",
+      "b": "slot-roll",
+      "cosine": 0.4875
+    },
+    {
+      "a": "count-up-stats",
+      "b": "slot-roll",
+      "cosine": 0.4871
+    },
+    {
+      "a": "count-up-stats",
+      "b": "stopwatch-countdown",
+      "cosine": 0.4841
+    },
+    {
+      "a": "calendar-fill",
+      "b": "leaderboard-roll",
+      "cosine": 0.4837
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "calendar-fill",
+      "cosine": 0.4833
+    },
+    {
+      "a": "list-steps",
+      "b": "versus",
+      "cosine": 0.4833
+    },
+    {
+      "a": "bracket-tree",
+      "b": "slot-roll",
+      "cosine": 0.4829
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "quote-card",
+      "cosine": 0.4814
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "macro-ring",
+      "cosine": 0.4813
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "metric-reveal",
+      "cosine": 0.4813
+    },
+    {
+      "a": "count-up-stats",
+      "b": "giant-stat",
+      "cosine": 0.4808
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "stopwatch-countdown",
+      "cosine": 0.4806
+    },
+    {
+      "a": "calendar-fill",
+      "b": "slot-roll",
+      "cosine": 0.48
+    },
+    {
+      "a": "list-steps",
+      "b": "stopwatch-countdown",
+      "cosine": 0.48
+    },
+    {
+      "a": "leaderboard-roll",
+      "b": "scoreboard",
+      "cosine": 0.4794
+    },
+    {
+      "a": "sprint-trace",
+      "b": "timeline-schedule",
+      "cosine": 0.4792
+    },
+    {
+      "a": "bracket-tree",
+      "b": "stopwatch-countdown",
+      "cosine": 0.4788
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "stopwatch-countdown",
+      "cosine": 0.4782
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "velocity-gauge",
+      "cosine": 0.4767
+    },
+    {
+      "a": "stopwatch-countdown",
+      "b": "versus",
+      "cosine": 0.476
+    },
+    {
+      "a": "before-after-split",
+      "b": "split-panel",
+      "cosine": 0.4758
+    },
+    {
+      "a": "training-scene",
+      "b": "ugc-selfie",
+      "cosine": 0.4758
+    },
+    {
+      "a": "list-steps",
+      "b": "velocity-gauge",
+      "cosine": 0.4755
+    },
+    {
+      "a": "kinetic-text",
+      "b": "slot-roll",
+      "cosine": 0.4754
+    },
+    {
+      "a": "leaderboard-roll",
+      "b": "timeline-schedule",
+      "cosine": 0.4752
+    },
+    {
+      "a": "bracket-tree",
+      "b": "versus",
+      "cosine": 0.4746
+    },
+    {
+      "a": "offer-card",
+      "b": "tier-list",
+      "cosine": 0.4746
+    },
+    {
+      "a": "kinetic-text",
+      "b": "metric-reveal",
+      "cosine": 0.4739
+    },
+    {
+      "a": "count-up-stats",
+      "b": "tier-list",
+      "cosine": 0.4731
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "velocity-gauge",
+      "cosine": 0.4727
+    },
+    {
+      "a": "calendar-fill",
+      "b": "scoreboard",
+      "cosine": 0.4724
+    },
+    {
+      "a": "bracket-tree",
+      "b": "comic-strip",
+      "cosine": 0.4716
+    },
+    {
+      "a": "kinetic-text",
+      "b": "star-testimonial",
+      "cosine": 0.4693
+    },
+    {
+      "a": "proof-collage",
+      "b": "ugc-selfie",
+      "cosine": 0.4692
+    },
+    {
+      "a": "count-up-stats",
+      "b": "metric-reveal",
+      "cosine": 0.4689
+    },
+    {
+      "a": "slot-roll",
+      "b": "tier-list",
+      "cosine": 0.4687
+    },
+    {
+      "a": "slot-roll",
+      "b": "stopwatch-countdown",
+      "cosine": 0.4684
+    },
+    {
+      "a": "slot-roll",
+      "b": "timeline-schedule",
+      "cosine": 0.4672
+    },
+    {
+      "a": "metric-reveal",
+      "b": "versus",
+      "cosine": 0.4661
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "versus",
+      "cosine": 0.4657
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "bracket-tree",
+      "cosine": 0.4657
+    },
+    {
+      "a": "calendar-fill",
+      "b": "list-steps",
+      "cosine": 0.4657
+    },
+    {
+      "a": "stopwatch-countdown",
+      "b": "tier-list",
+      "cosine": 0.465
+    },
+    {
+      "a": "scoreboard",
+      "b": "tier-list",
+      "cosine": 0.4642
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "benefit-iconrow",
+      "cosine": 0.464
+    },
+    {
+      "a": "calendar-fill",
+      "b": "count-up-stats",
+      "cosine": 0.4635
+    },
+    {
+      "a": "offer-card",
+      "b": "scoreboard",
+      "cosine": 0.4631
+    },
+    {
+      "a": "metric-reveal",
+      "b": "sprint-trace",
+      "cosine": 0.463
+    },
+    {
+      "a": "slot-roll",
+      "b": "velocity-gauge",
+      "cosine": 0.4624
+    },
+    {
+      "a": "comic-strip",
+      "b": "tier-list",
+      "cosine": 0.4619
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "scoreboard",
+      "cosine": 0.4617
+    },
+    {
+      "a": "sprint-trace",
+      "b": "stopwatch-countdown",
+      "cosine": 0.4612
+    },
+    {
+      "a": "bracket-tree",
+      "b": "metric-reveal",
+      "cosine": 0.4607
+    },
+    {
+      "a": "scoreboard",
+      "b": "slot-roll",
+      "cosine": 0.4601
+    },
+    {
+      "a": "macro-ring",
+      "b": "timeline-schedule",
+      "cosine": 0.4596
+    },
+    {
+      "a": "tier-list",
+      "b": "versus",
+      "cosine": 0.459
+    },
+    {
+      "a": "scoreboard",
+      "b": "velocity-gauge",
+      "cosine": 0.4584
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "list-steps",
+      "cosine": 0.4581
+    },
+    {
+      "a": "metric-reveal",
+      "b": "velocity-gauge",
+      "cosine": 0.4578
+    },
+    {
+      "a": "timeline-schedule",
+      "b": "versus",
+      "cosine": 0.4575
+    },
+    {
+      "a": "offer-card",
+      "b": "streak-counter",
+      "cosine": 0.4574
+    },
+    {
+      "a": "sprint-trace",
+      "b": "tier-list",
+      "cosine": 0.4568
+    },
+    {
+      "a": "action-hero",
+      "b": "split-panel",
+      "cosine": 0.4562
+    },
+    {
+      "a": "sprint-trace",
+      "b": "velocity-gauge",
+      "cosine": 0.4562
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "bracket-tree",
+      "cosine": 0.4561
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "timeline-schedule",
+      "cosine": 0.4557
+    },
+    {
+      "a": "count-up-stats",
+      "b": "timeline-schedule",
+      "cosine": 0.4555
+    },
+    {
+      "a": "kinetic-text",
+      "b": "velocity-gauge",
+      "cosine": 0.4548
+    },
+    {
+      "a": "leaderboard-roll",
+      "b": "list-steps",
+      "cosine": 0.4548
+    },
+    {
+      "a": "calendar-fill",
+      "b": "velocity-gauge",
+      "cosine": 0.4545
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "metric-reveal",
+      "cosine": 0.4536
+    },
+    {
+      "a": "list-steps",
+      "b": "scoreboard",
+      "cosine": 0.4535
+    },
+    {
+      "a": "split-panel",
+      "b": "training-scene",
+      "cosine": 0.4533
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "giant-stat",
+      "cosine": 0.4525
+    },
+    {
+      "a": "metric-reveal",
+      "b": "scoreboard",
+      "cosine": 0.4521
+    },
+    {
+      "a": "count-up-stats",
+      "b": "star-testimonial",
+      "cosine": 0.4517
+    },
+    {
+      "a": "scoreboard",
+      "b": "sprint-trace",
+      "cosine": 0.4504
+    },
+    {
+      "a": "leaderboard-roll",
+      "b": "sprint-trace",
+      "cosine": 0.4503
+    },
+    {
+      "a": "kinetic-text",
+      "b": "stopwatch-countdown",
+      "cosine": 0.4498
+    },
+    {
+      "a": "offer-card",
+      "b": "timeline-schedule",
+      "cosine": 0.4493
+    },
+    {
+      "a": "bracket-tree",
+      "b": "count-up-stats",
+      "cosine": 0.4491
+    },
+    {
+      "a": "kinetic-text",
+      "b": "list-steps",
+      "cosine": 0.4488
+    },
+    {
+      "a": "list-steps",
+      "b": "metric-reveal",
+      "cosine": 0.4478
+    },
+    {
+      "a": "proof-collage",
+      "b": "split-panel",
+      "cosine": 0.4475
+    },
+    {
+      "a": "calendar-fill",
+      "b": "versus",
+      "cosine": 0.447
+    },
+    {
+      "a": "calendar-fill",
+      "b": "sprint-trace",
+      "cosine": 0.4463
+    },
+    {
+      "a": "giant-stat",
+      "b": "metric-reveal",
+      "cosine": 0.4461
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "sprint-trace",
+      "cosine": 0.4456
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "radar-stats",
+      "cosine": 0.4454
+    },
+    {
+      "a": "offer-card",
+      "b": "star-testimonial",
+      "cosine": 0.4451
+    },
+    {
+      "a": "kinetic-text",
+      "b": "timeline-schedule",
+      "cosine": 0.4448
+    },
+    {
+      "a": "list-steps",
+      "b": "star-testimonial",
+      "cosine": 0.4448
+    },
+    {
+      "a": "giant-stat",
+      "b": "offer-card",
+      "cosine": 0.4445
+    },
+    {
+      "a": "calendar-fill",
+      "b": "kinetic-text",
+      "cosine": 0.4442
+    },
+    {
+      "a": "giant-stat",
+      "b": "kinetic-text",
+      "cosine": 0.4436
+    },
+    {
+      "a": "count-up-stats",
+      "b": "leaderboard-roll",
+      "cosine": 0.4429
+    },
+    {
+      "a": "calendar-fill",
+      "b": "macro-ring",
+      "cosine": 0.4427
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "offer-card",
+      "cosine": 0.4424
+    },
+    {
+      "a": "scoreboard",
+      "b": "versus",
+      "cosine": 0.4422
+    },
+    {
+      "a": "stopwatch-countdown",
+      "b": "streak-counter",
+      "cosine": 0.4414
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "count-up-stats",
+      "cosine": 0.4407
+    },
+    {
+      "a": "metric-reveal",
+      "b": "offer-card",
+      "cosine": 0.44
+    },
+    {
+      "a": "giant-stat",
+      "b": "velocity-gauge",
+      "cosine": 0.4394
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "tier-list",
+      "cosine": 0.4389
+    },
+    {
+      "a": "quote-card",
+      "b": "star-testimonial",
+      "cosine": 0.4389
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "slot-roll",
+      "cosine": 0.4387
+    },
+    {
+      "a": "metric-reveal",
+      "b": "star-testimonial",
+      "cosine": 0.4387
+    },
+    {
+      "a": "macro-ring",
+      "b": "scoreboard",
+      "cosine": 0.4383
+    },
+    {
+      "a": "bracket-tree",
+      "b": "offer-card",
+      "cosine": 0.438
+    },
+    {
+      "a": "star-testimonial",
+      "b": "versus",
+      "cosine": 0.4379
+    },
+    {
+      "a": "calendar-fill",
+      "b": "metric-reveal",
+      "cosine": 0.4341
+    },
+    {
+      "a": "timeline-schedule",
+      "b": "velocity-gauge",
+      "cosine": 0.4338
+    },
+    {
+      "a": "macro-ring",
+      "b": "versus",
+      "cosine": 0.4336
+    },
+    {
+      "a": "bracket-tree",
+      "b": "velocity-gauge",
+      "cosine": 0.4332
+    },
+    {
+      "a": "comic-strip",
+      "b": "metric-reveal",
+      "cosine": 0.4322
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "calendar-fill",
+      "cosine": 0.4321
+    },
+    {
+      "a": "macro-ring",
+      "b": "radar-stats",
+      "cosine": 0.4319
+    },
+    {
+      "a": "count-up-stats",
+      "b": "streak-counter",
+      "cosine": 0.4318
+    },
+    {
+      "a": "count-up-stats",
+      "b": "macro-ring",
+      "cosine": 0.4315
+    },
+    {
+      "a": "leaderboard-roll",
+      "b": "stopwatch-countdown",
+      "cosine": 0.4315
+    },
+    {
+      "a": "comic-strip",
+      "b": "macro-ring",
+      "cosine": 0.4295
+    },
+    {
+      "a": "macro-ring",
+      "b": "sprint-trace",
+      "cosine": 0.4288
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "streak-counter",
+      "cosine": 0.4278
+    },
+    {
+      "a": "bracket-tree",
+      "b": "macro-ring",
+      "cosine": 0.4271
+    },
+    {
+      "a": "quote-card",
+      "b": "versus",
+      "cosine": 0.4269
+    },
+    {
+      "a": "streak-counter",
+      "b": "velocity-gauge",
+      "cosine": 0.4256
+    },
+    {
+      "a": "giant-stat",
+      "b": "versus",
+      "cosine": 0.4254
+    },
+    {
+      "a": "kinetic-text",
+      "b": "macro-ring",
+      "cosine": 0.4251
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "kinetic-text",
+      "cosine": 0.4248
+    },
+    {
+      "a": "kinetic-text",
+      "b": "streak-counter",
+      "cosine": 0.4246
+    },
+    {
+      "a": "slot-roll",
+      "b": "star-testimonial",
+      "cosine": 0.4242
+    },
+    {
+      "a": "comic-strip",
+      "b": "scoreboard",
+      "cosine": 0.4241
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "leaderboard-roll",
+      "cosine": 0.4238
+    },
+    {
+      "a": "star-testimonial",
+      "b": "timeline-schedule",
+      "cosine": 0.4236
+    },
+    {
+      "a": "leaderboard-roll",
+      "b": "slot-roll",
+      "cosine": 0.4234
+    },
+    {
+      "a": "calendar-fill",
+      "b": "streak-counter",
+      "cosine": 0.4231
+    },
+    {
+      "a": "split-panel",
+      "b": "ugc-selfie",
+      "cosine": 0.4221
+    },
+    {
+      "a": "comic-strip",
+      "b": "versus",
+      "cosine": 0.4214
+    },
+    {
+      "a": "kinetic-text",
+      "b": "quote-card",
+      "cosine": 0.4207
+    },
+    {
+      "a": "kinetic-text",
+      "b": "scoreboard",
+      "cosine": 0.4204
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "scoreboard",
+      "cosine": 0.418
+    },
+    {
+      "a": "leaderboard-roll",
+      "b": "velocity-gauge",
+      "cosine": 0.4179
+    },
+    {
+      "a": "streak-counter",
+      "b": "versus",
+      "cosine": 0.4173
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "macro-ring",
+      "cosine": 0.4172
+    },
+    {
+      "a": "metric-reveal",
+      "b": "radar-stats",
+      "cosine": 0.4172
+    },
+    {
+      "a": "count-up-stats",
+      "b": "sprint-trace",
+      "cosine": 0.4169
+    },
+    {
+      "a": "macro-ring",
+      "b": "tier-list",
+      "cosine": 0.4162
+    },
+    {
+      "a": "comic-strip",
+      "b": "list-steps",
+      "cosine": 0.4161
+    },
+    {
+      "a": "bracket-tree",
+      "b": "radar-stats",
+      "cosine": 0.4159
+    },
+    {
+      "a": "list-steps",
+      "b": "sprint-trace",
+      "cosine": 0.4148
+    },
+    {
+      "a": "radar-stats",
+      "b": "tier-list",
+      "cosine": 0.4146
+    },
+    {
+      "a": "scoreboard",
+      "b": "star-testimonial",
+      "cosine": 0.4143
+    },
+    {
+      "a": "giant-stat",
+      "b": "stopwatch-countdown",
+      "cosine": 0.4141
+    },
+    {
+      "a": "metric-reveal",
+      "b": "slot-roll",
+      "cosine": 0.414
+    },
+    {
+      "a": "scoreboard",
+      "b": "streak-counter",
+      "cosine": 0.4119
+    },
+    {
+      "a": "macro-ring",
+      "b": "offer-card",
+      "cosine": 0.4106
+    },
+    {
+      "a": "slot-roll",
+      "b": "streak-counter",
+      "cosine": 0.4103
+    },
+    {
+      "a": "radar-stats",
+      "b": "velocity-gauge",
+      "cosine": 0.4091
+    },
+    {
+      "a": "list-steps",
+      "b": "macro-ring",
+      "cosine": 0.4089
+    },
+    {
+      "a": "streak-counter",
+      "b": "timeline-schedule",
+      "cosine": 0.408
+    },
+    {
+      "a": "comic-strip",
+      "b": "leaderboard-roll",
+      "cosine": 0.4078
+    },
+    {
+      "a": "leaderboard-roll",
+      "b": "offer-card",
+      "cosine": 0.4078
+    },
+    {
+      "a": "macro-ring",
+      "b": "streak-counter",
+      "cosine": 0.4077
+    },
+    {
+      "a": "metric-reveal",
+      "b": "tier-list",
+      "cosine": 0.4077
+    },
+    {
+      "a": "comic-strip",
+      "b": "velocity-gauge",
+      "cosine": 0.4076
+    },
+    {
+      "a": "comic-strip",
+      "b": "slot-roll",
+      "cosine": 0.4053
+    },
+    {
+      "a": "comic-strip",
+      "b": "stopwatch-countdown",
+      "cosine": 0.4051
+    },
+    {
+      "a": "kinetic-text",
+      "b": "tier-list",
+      "cosine": 0.405
+    },
+    {
+      "a": "leaderboard-roll",
+      "b": "metric-reveal",
+      "cosine": 0.4046
+    },
+    {
+      "a": "bracket-tree",
+      "b": "star-testimonial",
+      "cosine": 0.4042
+    },
+    {
+      "a": "metric-reveal",
+      "b": "streak-counter",
+      "cosine": 0.4041
+    },
+    {
+      "a": "count-up-stats",
+      "b": "quote-card",
+      "cosine": 0.4032
+    },
+    {
+      "a": "giant-stat",
+      "b": "star-testimonial",
+      "cosine": 0.4025
+    },
+    {
+      "a": "radar-stats",
+      "b": "versus",
+      "cosine": 0.4025
+    },
+    {
+      "a": "bracket-tree",
+      "b": "quote-card",
+      "cosine": 0.4018
+    },
+    {
+      "a": "giant-stat",
+      "b": "scoreboard",
+      "cosine": 0.4006
+    },
+    {
+      "a": "quote-card",
+      "b": "slot-roll",
+      "cosine": 0.4004
+    },
+    {
+      "a": "macro-ring",
+      "b": "star-testimonial",
+      "cosine": 0.3996
+    },
+    {
+      "a": "star-testimonial",
+      "b": "stopwatch-countdown",
+      "cosine": 0.3992
+    },
+    {
+      "a": "giant-stat",
+      "b": "list-steps",
+      "cosine": 0.3985
+    },
+    {
+      "a": "metric-reveal",
+      "b": "quote-card",
+      "cosine": 0.3981
+    },
+    {
+      "a": "macro-ring",
+      "b": "slot-roll",
+      "cosine": 0.3975
+    },
+    {
+      "a": "leaderboard-roll",
+      "b": "versus",
+      "cosine": 0.3973
+    },
+    {
+      "a": "giant-stat",
+      "b": "slot-roll",
+      "cosine": 0.3972
+    },
+    {
+      "a": "star-testimonial",
+      "b": "velocity-gauge",
+      "cosine": 0.3963
+    },
+    {
+      "a": "bracket-tree",
+      "b": "kinetic-text",
+      "cosine": 0.3956
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "comic-strip",
+      "cosine": 0.3951
+    },
+    {
+      "a": "quote-card",
+      "b": "timeline-schedule",
+      "cosine": 0.3944
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "star-testimonial",
+      "cosine": 0.3939
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "giant-stat",
+      "cosine": 0.3936
+    },
+    {
+      "a": "slot-roll",
+      "b": "sprint-trace",
+      "cosine": 0.3933
+    },
+    {
+      "a": "comic-strip",
+      "b": "offer-card",
+      "cosine": 0.3921
+    },
+    {
+      "a": "radar-stats",
+      "b": "stopwatch-countdown",
+      "cosine": 0.3911
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "comic-strip",
+      "cosine": 0.3906
+    },
+    {
+      "a": "sprint-trace",
+      "b": "versus",
+      "cosine": 0.3893
+    },
+    {
+      "a": "giant-stat",
+      "b": "streak-counter",
+      "cosine": 0.3889
+    },
+    {
+      "a": "list-steps",
+      "b": "streak-counter",
+      "cosine": 0.3887
+    },
+    {
+      "a": "list-steps",
+      "b": "radar-stats",
+      "cosine": 0.3878
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "streak-counter",
+      "cosine": 0.387
+    },
+    {
+      "a": "calendar-fill",
+      "b": "star-testimonial",
+      "cosine": 0.3867
+    },
+    {
+      "a": "giant-stat",
+      "b": "timeline-schedule",
+      "cosine": 0.3867
+    },
+    {
+      "a": "star-testimonial",
+      "b": "streak-counter",
+      "cosine": 0.3863
+    },
+    {
+      "a": "comic-strip",
+      "b": "kinetic-text",
+      "cosine": 0.3833
+    },
+    {
+      "a": "quote-card",
+      "b": "stopwatch-countdown",
+      "cosine": 0.383
+    },
+    {
+      "a": "offer-card",
+      "b": "quote-card",
+      "cosine": 0.3828
+    },
+    {
+      "a": "comic-strip",
+      "b": "sprint-trace",
+      "cosine": 0.3818
+    },
+    {
+      "a": "giant-stat",
+      "b": "macro-ring",
+      "cosine": 0.3816
+    },
+    {
+      "a": "star-testimonial",
+      "b": "tier-list",
+      "cosine": 0.3815
+    },
+    {
+      "a": "radar-stats",
+      "b": "timeline-schedule",
+      "cosine": 0.3799
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "quote-card",
+      "cosine": 0.3793
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "leaderboard-roll",
+      "cosine": 0.3769
+    },
+    {
+      "a": "comic-strip",
+      "b": "count-up-stats",
+      "cosine": 0.3769
+    },
+    {
+      "a": "bracket-tree",
+      "b": "giant-stat",
+      "cosine": 0.3717
+    },
+    {
+      "a": "kinetic-text",
+      "b": "leaderboard-roll",
+      "cosine": 0.3711
+    },
+    {
+      "a": "quote-card",
+      "b": "tier-list",
+      "cosine": 0.3706
+    },
+    {
+      "a": "comic-strip",
+      "b": "star-testimonial",
+      "cosine": 0.3704
+    },
+    {
+      "a": "giant-stat",
+      "b": "tier-list",
+      "cosine": 0.3702
+    },
+    {
+      "a": "quote-card",
+      "b": "scoreboard",
+      "cosine": 0.3697
+    },
+    {
+      "a": "offer-card",
+      "b": "sprint-trace",
+      "cosine": 0.3693
+    },
+    {
+      "a": "leaderboard-roll",
+      "b": "star-testimonial",
+      "cosine": 0.3685
+    },
+    {
+      "a": "calendar-fill",
+      "b": "giant-stat",
+      "cosine": 0.367
+    },
+    {
+      "a": "leaderboard-roll",
+      "b": "macro-ring",
+      "cosine": 0.3658
+    },
+    {
+      "a": "count-up-stats",
+      "b": "radar-stats",
+      "cosine": 0.3654
+    },
+    {
+      "a": "giant-stat",
+      "b": "quote-card",
+      "cosine": 0.365
+    },
+    {
+      "a": "radar-stats",
+      "b": "scoreboard",
+      "cosine": 0.3594
+    },
+    {
+      "a": "bracket-tree",
+      "b": "streak-counter",
+      "cosine": 0.3577
+    },
+    {
+      "a": "quote-card",
+      "b": "velocity-gauge",
+      "cosine": 0.3567
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "sprint-trace",
+      "cosine": 0.3554
+    },
+    {
+      "a": "calendar-fill",
+      "b": "radar-stats",
+      "cosine": 0.3541
+    },
+    {
+      "a": "leaderboard-roll",
+      "b": "radar-stats",
+      "cosine": 0.3522
+    },
+    {
+      "a": "streak-counter",
+      "b": "tier-list",
+      "cosine": 0.3506
+    },
+    {
+      "a": "giant-stat",
+      "b": "leaderboard-roll",
+      "cosine": 0.3505
+    },
+    {
+      "a": "leaderboard-roll",
+      "b": "streak-counter",
+      "cosine": 0.349
+    },
+    {
+      "a": "comic-strip",
+      "b": "streak-counter",
+      "cosine": 0.3481
+    },
+    {
+      "a": "comic-strip",
+      "b": "radar-stats",
+      "cosine": 0.3463
+    },
+    {
+      "a": "leaderboard-roll",
+      "b": "quote-card",
+      "cosine": 0.3438
+    },
+    {
+      "a": "sprint-trace",
+      "b": "star-testimonial",
+      "cosine": 0.3437
+    },
+    {
+      "a": "comic-strip",
+      "b": "giant-stat",
+      "cosine": 0.3421
+    },
+    {
+      "a": "radar-stats",
+      "b": "slot-roll",
+      "cosine": 0.3402
+    },
+    {
+      "a": "radar-stats",
+      "b": "star-testimonial",
+      "cosine": 0.3392
+    },
+    {
+      "a": "calendar-fill",
+      "b": "quote-card",
+      "cosine": 0.3389
+    },
+    {
+      "a": "quote-card",
+      "b": "sprint-trace",
+      "cosine": 0.3368
+    },
+    {
+      "a": "comic-strip",
+      "b": "quote-card",
+      "cosine": 0.3355
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "radar-stats",
+      "cosine": 0.333
+    },
+    {
+      "a": "giant-stat",
+      "b": "sprint-trace",
+      "cosine": 0.3329
+    },
+    {
+      "a": "quote-card",
+      "b": "streak-counter",
+      "cosine": 0.3312
+    },
+    {
+      "a": "macro-ring",
+      "b": "quote-card",
+      "cosine": 0.3302
+    },
+    {
+      "a": "calendar-fill",
+      "b": "proof-collage",
+      "cosine": 0.3276
+    },
+    {
+      "a": "quote-card",
+      "b": "radar-stats",
+      "cosine": 0.324
+    },
+    {
+      "a": "offer-card",
+      "b": "radar-stats",
+      "cosine": 0.3216
+    },
+    {
+      "a": "kinetic-text",
+      "b": "sprint-trace",
+      "cosine": 0.3154
+    },
+    {
+      "a": "sprint-trace",
+      "b": "streak-counter",
+      "cosine": 0.3091
+    },
+    {
+      "a": "proof-collage",
+      "b": "timeline-schedule",
+      "cosine": 0.306
+    },
+    {
+      "a": "before-after-split",
+      "b": "velocity-gauge",
+      "cosine": 0.3058
+    },
+    {
+      "a": "proof-collage",
+      "b": "tier-list",
+      "cosine": 0.3055
+    },
+    {
+      "a": "offer-card",
+      "b": "proof-collage",
+      "cosine": 0.304
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "proof-collage",
+      "cosine": 0.3035
+    },
+    {
+      "a": "giant-stat",
+      "b": "radar-stats",
+      "cosine": 0.3013
+    },
+    {
+      "a": "proof-collage",
+      "b": "velocity-gauge",
+      "cosine": 0.3007
+    },
+    {
+      "a": "action-hero",
+      "b": "velocity-gauge",
+      "cosine": 0.3002
+    },
+    {
+      "a": "before-after-split",
+      "b": "offer-card",
+      "cosine": 0.3
+    },
+    {
+      "a": "list-steps",
+      "b": "proof-collage",
+      "cosine": 0.2977
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "before-after-split",
+      "cosine": 0.2928
+    },
+    {
+      "a": "action-hero",
+      "b": "benefit-iconrow",
+      "cosine": 0.2912
+    },
+    {
+      "a": "offer-card",
+      "b": "training-scene",
+      "cosine": 0.2908
+    },
+    {
+      "a": "action-hero",
+      "b": "offer-card",
+      "cosine": 0.2892
+    },
+    {
+      "a": "kinetic-text",
+      "b": "radar-stats",
+      "cosine": 0.2883
+    },
+    {
+      "a": "before-after-split",
+      "b": "count-up-stats",
+      "cosine": 0.2871
+    },
+    {
+      "a": "action-hero",
+      "b": "giant-stat",
+      "cosine": 0.2866
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "proof-collage",
+      "cosine": 0.2854
+    },
+    {
+      "a": "before-after-split",
+      "b": "calendar-fill",
+      "cosine": 0.2851
+    },
+    {
+      "a": "action-hero",
+      "b": "list-steps",
+      "cosine": 0.2828
+    },
+    {
+      "a": "giant-stat",
+      "b": "proof-collage",
+      "cosine": 0.2826
+    },
+    {
+      "a": "action-hero",
+      "b": "anatomy-diagram",
+      "cosine": 0.2819
+    },
+    {
+      "a": "before-after-split",
+      "b": "benefit-iconrow",
+      "cosine": 0.2811
+    },
+    {
+      "a": "count-up-stats",
+      "b": "proof-collage",
+      "cosine": 0.2796
+    },
+    {
+      "a": "before-after-split",
+      "b": "versus",
+      "cosine": 0.2785
+    },
+    {
+      "a": "action-hero",
+      "b": "calendar-fill",
+      "cosine": 0.2783
+    },
+    {
+      "a": "macro-ring",
+      "b": "proof-collage",
+      "cosine": 0.2771
+    },
+    {
+      "a": "before-after-split",
+      "b": "giant-stat",
+      "cosine": 0.2767
+    },
+    {
+      "a": "proof-collage",
+      "b": "stopwatch-countdown",
+      "cosine": 0.2762
+    },
+    {
+      "a": "radar-stats",
+      "b": "streak-counter",
+      "cosine": 0.2756
+    },
+    {
+      "a": "before-after-split",
+      "b": "list-steps",
+      "cosine": 0.2753
+    },
+    {
+      "a": "before-after-split",
+      "b": "stopwatch-countdown",
+      "cosine": 0.2751
+    },
+    {
+      "a": "proof-collage",
+      "b": "star-testimonial",
+      "cosine": 0.2749
+    },
+    {
+      "a": "action-hero",
+      "b": "timeline-schedule",
+      "cosine": 0.2748
+    },
+    {
+      "a": "proof-collage",
+      "b": "versus",
+      "cosine": 0.2746
+    },
+    {
+      "a": "action-hero",
+      "b": "count-up-stats",
+      "cosine": 0.2743
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "ugc-selfie",
+      "cosine": 0.2738
+    },
+    {
+      "a": "proof-collage",
+      "b": "sprint-trace",
+      "cosine": 0.2736
+    },
+    {
+      "a": "action-hero",
+      "b": "tier-list",
+      "cosine": 0.2735
+    },
+    {
+      "a": "before-after-split",
+      "b": "tier-list",
+      "cosine": 0.2711
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "ugc-selfie",
+      "cosine": 0.2706
+    },
+    {
+      "a": "list-steps",
+      "b": "ugc-selfie",
+      "cosine": 0.27
+    },
+    {
+      "a": "giant-stat",
+      "b": "ugc-selfie",
+      "cosine": 0.2697
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "training-scene",
+      "cosine": 0.2695
+    },
+    {
+      "a": "training-scene",
+      "b": "velocity-gauge",
+      "cosine": 0.269
+    },
+    {
+      "a": "before-after-split",
+      "b": "sprint-trace",
+      "cosine": 0.2687
+    },
+    {
+      "a": "ugc-selfie",
+      "b": "velocity-gauge",
+      "cosine": 0.2683
+    },
+    {
+      "a": "action-hero",
+      "b": "kinetic-text",
+      "cosine": 0.268
+    },
+    {
+      "a": "bracket-tree",
+      "b": "proof-collage",
+      "cosine": 0.2676
+    },
+    {
+      "a": "before-after-split",
+      "b": "timeline-schedule",
+      "cosine": 0.267
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "training-scene",
+      "cosine": 0.266
+    },
+    {
+      "a": "action-hero",
+      "b": "stopwatch-countdown",
+      "cosine": 0.2631
+    },
+    {
+      "a": "action-hero",
+      "b": "versus",
+      "cosine": 0.2626
+    },
+    {
+      "a": "proof-collage",
+      "b": "radar-stats",
+      "cosine": 0.261
+    },
+    {
+      "a": "proof-collage",
+      "b": "scoreboard",
+      "cosine": 0.2607
+    },
+    {
+      "a": "offer-card",
+      "b": "ugc-selfie",
+      "cosine": 0.2597
+    },
+    {
+      "a": "tier-list",
+      "b": "training-scene",
+      "cosine": 0.2597
+    },
+    {
+      "a": "list-steps",
+      "b": "training-scene",
+      "cosine": 0.2595
+    },
+    {
+      "a": "calendar-fill",
+      "b": "training-scene",
+      "cosine": 0.2594
+    },
+    {
+      "a": "timeline-schedule",
+      "b": "ugc-selfie",
+      "cosine": 0.258
+    },
+    {
+      "a": "proof-collage",
+      "b": "slot-roll",
+      "cosine": 0.2578
+    },
+    {
+      "a": "action-hero",
+      "b": "sprint-trace",
+      "cosine": 0.2564
+    },
+    {
+      "a": "tier-list",
+      "b": "ugc-selfie",
+      "cosine": 0.2561
+    },
+    {
+      "a": "count-up-stats",
+      "b": "ugc-selfie",
+      "cosine": 0.2553
+    },
+    {
+      "a": "action-hero",
+      "b": "metric-reveal",
+      "cosine": 0.2552
+    },
+    {
+      "a": "comic-strip",
+      "b": "proof-collage",
+      "cosine": 0.2528
+    },
+    {
+      "a": "metric-reveal",
+      "b": "proof-collage",
+      "cosine": 0.2521
+    },
+    {
+      "a": "kinetic-text",
+      "b": "proof-collage",
+      "cosine": 0.252
+    },
+    {
+      "a": "before-after-split",
+      "b": "kinetic-text",
+      "cosine": 0.2518
+    },
+    {
+      "a": "count-up-stats",
+      "b": "training-scene",
+      "cosine": 0.2518
+    },
+    {
+      "a": "training-scene",
+      "b": "versus",
+      "cosine": 0.2511
+    },
+    {
+      "a": "before-after-split",
+      "b": "radar-stats",
+      "cosine": 0.2494
+    },
+    {
+      "a": "leaderboard-roll",
+      "b": "proof-collage",
+      "cosine": 0.2484
+    },
+    {
+      "a": "giant-stat",
+      "b": "training-scene",
+      "cosine": 0.2481
+    },
+    {
+      "a": "offer-card",
+      "b": "split-panel",
+      "cosine": 0.2478
+    },
+    {
+      "a": "kinetic-text",
+      "b": "ugc-selfie",
+      "cosine": 0.2472
+    },
+    {
+      "a": "stopwatch-countdown",
+      "b": "training-scene",
+      "cosine": 0.2469
+    },
+    {
+      "a": "sprint-trace",
+      "b": "ugc-selfie",
+      "cosine": 0.2457
+    },
+    {
+      "a": "metric-reveal",
+      "b": "ugc-selfie",
+      "cosine": 0.2456
+    },
+    {
+      "a": "calendar-fill",
+      "b": "ugc-selfie",
+      "cosine": 0.2453
+    },
+    {
+      "a": "before-after-split",
+      "b": "macro-ring",
+      "cosine": 0.2447
+    },
+    {
+      "a": "stopwatch-countdown",
+      "b": "ugc-selfie",
+      "cosine": 0.2439
+    },
+    {
+      "a": "macro-ring",
+      "b": "ugc-selfie",
+      "cosine": 0.2436
+    },
+    {
+      "a": "ugc-selfie",
+      "b": "versus",
+      "cosine": 0.2428
+    },
+    {
+      "a": "action-hero",
+      "b": "macro-ring",
+      "cosine": 0.2414
+    },
+    {
+      "a": "before-after-split",
+      "b": "metric-reveal",
+      "cosine": 0.2402
+    },
+    {
+      "a": "timeline-schedule",
+      "b": "training-scene",
+      "cosine": 0.2393
+    },
+    {
+      "a": "action-hero",
+      "b": "slot-roll",
+      "cosine": 0.2382
+    },
+    {
+      "a": "before-after-split",
+      "b": "slot-roll",
+      "cosine": 0.2364
+    },
+    {
+      "a": "proof-collage",
+      "b": "streak-counter",
+      "cosine": 0.2357
+    },
+    {
+      "a": "action-hero",
+      "b": "star-testimonial",
+      "cosine": 0.2334
+    },
+    {
+      "a": "action-hero",
+      "b": "radar-stats",
+      "cosine": 0.2333
+    },
+    {
+      "a": "benefit-iconrow",
+      "b": "split-panel",
+      "cosine": 0.2321
+    },
+    {
+      "a": "sprint-trace",
+      "b": "training-scene",
+      "cosine": 0.2315
+    },
+    {
+      "a": "action-hero",
+      "b": "scoreboard",
+      "cosine": 0.2314
+    },
+    {
+      "a": "bracket-tree",
+      "b": "ugc-selfie",
+      "cosine": 0.2307
+    },
+    {
+      "a": "action-hero",
+      "b": "bracket-tree",
+      "cosine": 0.2289
+    },
+    {
+      "a": "before-after-split",
+      "b": "scoreboard",
+      "cosine": 0.2288
+    },
+    {
+      "a": "star-testimonial",
+      "b": "ugc-selfie",
+      "cosine": 0.2286
+    },
+    {
+      "a": "split-panel",
+      "b": "tier-list",
+      "cosine": 0.2285
+    },
+    {
+      "a": "split-panel",
+      "b": "velocity-gauge",
+      "cosine": 0.2276
+    },
+    {
+      "a": "proof-collage",
+      "b": "quote-card",
+      "cosine": 0.2275
+    },
+    {
+      "a": "giant-stat",
+      "b": "split-panel",
+      "cosine": 0.2265
+    },
+    {
+      "a": "before-after-split",
+      "b": "streak-counter",
+      "cosine": 0.2257
+    },
+    {
+      "a": "radar-stats",
+      "b": "ugc-selfie",
+      "cosine": 0.2257
+    },
+    {
+      "a": "kinetic-text",
+      "b": "training-scene",
+      "cosine": 0.2239
+    },
+    {
+      "a": "scoreboard",
+      "b": "ugc-selfie",
+      "cosine": 0.2221
+    },
+    {
+      "a": "macro-ring",
+      "b": "training-scene",
+      "cosine": 0.2211
+    },
+    {
+      "a": "star-testimonial",
+      "b": "training-scene",
+      "cosine": 0.2207
+    },
+    {
+      "a": "action-hero",
+      "b": "quote-card",
+      "cosine": 0.2199
+    },
+    {
+      "a": "slot-roll",
+      "b": "ugc-selfie",
+      "cosine": 0.2199
+    },
+    {
+      "a": "slot-roll",
+      "b": "training-scene",
+      "cosine": 0.2187
+    },
+    {
+      "a": "calendar-fill",
+      "b": "split-panel",
+      "cosine": 0.2169
+    },
+    {
+      "a": "metric-reveal",
+      "b": "training-scene",
+      "cosine": 0.2168
+    },
+    {
+      "a": "before-after-split",
+      "b": "star-testimonial",
+      "cosine": 0.2165
+    },
+    {
+      "a": "action-hero",
+      "b": "comic-strip",
+      "cosine": 0.2164
+    },
+    {
+      "a": "radar-stats",
+      "b": "training-scene",
+      "cosine": 0.216
+    },
+    {
+      "a": "action-hero",
+      "b": "leaderboard-roll",
+      "cosine": 0.215
+    },
+    {
+      "a": "scoreboard",
+      "b": "training-scene",
+      "cosine": 0.2149
+    },
+    {
+      "a": "before-after-split",
+      "b": "bracket-tree",
+      "cosine": 0.2139
+    },
+    {
+      "a": "anatomy-diagram",
+      "b": "split-panel",
+      "cosine": 0.2123
+    },
+    {
+      "a": "action-hero",
+      "b": "streak-counter",
+      "cosine": 0.2107
+    },
+    {
+      "a": "comic-strip",
+      "b": "ugc-selfie",
+      "cosine": 0.2101
+    },
+    {
+      "a": "split-panel",
+      "b": "versus",
+      "cosine": 0.2101
+    },
+    {
+      "a": "quote-card",
+      "b": "ugc-selfie",
+      "cosine": 0.21
+    },
+    {
+      "a": "list-steps",
+      "b": "split-panel",
+      "cosine": 0.2099
+    },
+    {
+      "a": "before-after-split",
+      "b": "leaderboard-roll",
+      "cosine": 0.2098
+    },
+    {
+      "a": "count-up-stats",
+      "b": "split-panel",
+      "cosine": 0.2092
+    },
+    {
+      "a": "before-after-split",
+      "b": "comic-strip",
+      "cosine": 0.2041
+    },
+    {
+      "a": "bracket-tree",
+      "b": "training-scene",
+      "cosine": 0.2011
+    },
+    {
+      "a": "split-panel",
+      "b": "stopwatch-countdown",
+      "cosine": 0.1996
+    },
+    {
+      "a": "before-after-split",
+      "b": "quote-card",
+      "cosine": 0.1985
+    },
+    {
+      "a": "leaderboard-roll",
+      "b": "ugc-selfie",
+      "cosine": 0.1975
+    },
+    {
+      "a": "slot-roll",
+      "b": "split-panel",
+      "cosine": 0.196
+    },
+    {
+      "a": "kinetic-text",
+      "b": "split-panel",
+      "cosine": 0.1958
+    },
+    {
+      "a": "streak-counter",
+      "b": "training-scene",
+      "cosine": 0.1935
+    },
+    {
+      "a": "quote-card",
+      "b": "training-scene",
+      "cosine": 0.1897
+    },
+    {
+      "a": "split-panel",
+      "b": "streak-counter",
+      "cosine": 0.1885
+    },
+    {
+      "a": "streak-counter",
+      "b": "ugc-selfie",
+      "cosine": 0.185
+    },
+    {
+      "a": "radar-stats",
+      "b": "split-panel",
+      "cosine": 0.1833
+    },
+    {
+      "a": "split-panel",
+      "b": "sprint-trace",
+      "cosine": 0.1832
+    },
+    {
+      "a": "leaderboard-roll",
+      "b": "training-scene",
+      "cosine": 0.1829
+    },
+    {
+      "a": "comic-strip",
+      "b": "training-scene",
+      "cosine": 0.1786
+    },
+    {
+      "a": "split-panel",
+      "b": "timeline-schedule",
+      "cosine": 0.1724
+    },
+    {
+      "a": "split-panel",
+      "b": "star-testimonial",
+      "cosine": 0.172
+    },
+    {
+      "a": "scoreboard",
+      "b": "split-panel",
+      "cosine": 0.1681
+    },
+    {
+      "a": "leaderboard-roll",
+      "b": "split-panel",
+      "cosine": 0.1678
+    },
+    {
+      "a": "macro-ring",
+      "b": "split-panel",
+      "cosine": 0.1663
+    },
+    {
+      "a": "quote-card",
+      "b": "split-panel",
+      "cosine": 0.1607
+    },
+    {
+      "a": "bracket-tree",
+      "b": "split-panel",
+      "cosine": 0.1538
+    },
+    {
+      "a": "metric-reveal",
+      "b": "split-panel",
+      "cosine": 0.1451
+    },
+    {
+      "a": "comic-strip",
+      "b": "split-panel",
+      "cosine": 0.1296
+    }
+  ]
+}
