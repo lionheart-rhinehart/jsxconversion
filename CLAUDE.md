@@ -42,6 +42,14 @@ These four are binding for every chat on this repo. They exist because each one 
    - Brand source of truth is `brand/` — read `brand/README.md` + `brand/aa-design-system/project/README.md`
      before authoring any new creative; role/template rules live in `docs/creative-playbook.md`.
 
+5. **Multi-chat work — keep the status ledger honest.** Big efforts span many chats and context resets, and
+   the truth of *what's actually built* gets lost (it did — the generation-quality layer was "designed" in
+   one chat and looked done for days). **`docs/creative-engine-status.md` is the single source of truth.**
+   Read it before resuming creative-engine work. When you build a ledger item, update its row with the
+   **commit hash + the test that proves it** *before you wrap up* — a phase is "done" ONLY with commit+test
+   cited; "designed in a chat" never counts. If the ledger looks wrong, rebuild it from `list_sessions` +
+   `search_session_transcripts` + `git log` (recovery routine is in the file).
+
 ---
 
 ## The map (where things live)
@@ -54,7 +62,7 @@ campaigns/     One folder per campaign: brief + ad-copy + microscripts + creativ
 data/          Shared JSON tier: brand.* / location.* / campaign.* / rules.*  (the cascade)
 templates/     Static JSX bank (multi-sport-foundations/cluster-*.jsx) + per-template assets
 scripts/       Pipeline CLIs (run-campaign, kraken-*, fill-template…) + scripts/lib/ shared modules
-docs/          PROCESS.md (canonical), MAP.md (this map), creative-playbook, copy-role-schema, parallel-chats
+docs/          PROCESS.md (canonical), MAP.md (this map), creative-engine-status.md (BUILT-vs-designed ledger), creative-playbook, copy-role-schema, parallel-chats
 lessons-learned/  Dated gotchas (YYYY-MM-DD__slug.md) — new ones land here on every deploy
 fonts/         Font binaries for the renderer's preflight
 out/           Rendered creatives — gitignored (machine-local)
