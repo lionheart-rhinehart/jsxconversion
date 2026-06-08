@@ -37,12 +37,14 @@ memory is the editor's A–F track overlaid on the master plan's 0–6.
 | **Generation spine** (G1/G3/G4) | ✅ BUILT+TESTED | `example-select.mjs`, exampleBinding gate in validate-plan, `uniqueness.mjs` re-key; commit `a301f72`; `npm test` 104 |
 | **Skills wired (G5/G6)** | 🟡 BUILT (prose only) | compose-creative example-guided + creative-engine Step 4a; commit `88fd44a`. NOT auto-invoked by code |
 | — — — | | |
-| **Auto-invoked example-guided generation** | ❌ DESIGNED ONLY | `selectExample` is never called by production code (only tests) → generation is manual agent prose → skippable (the bad-creatives failure) |
-| **#9 element/structure-fit gate** | ❌ ABSENT | nothing blocks a visual that fights the angle |
-| **#12 media-fit + media-rubric gate** | ❌ ABSENT | media PRESENCE gated (Law #0); no style-match, no "no full-bleed on graphics" enforcement |
-| **#14 output distinctness (Marker-2, selection-time segments)** | ❌ ABSENT | library is clustered; no runtime grouping of the chosen batch |
-| **#15 cluster-adherence (Marker-1 vision check)** | ❌ ABSENT | no check a finished creative matches its assigned archetype |
-| **#16 anti-slop** | ❌ ABSENT | no objective huashu guardrails / no vision check |
+| **Auto-invoked example-faithful generation** (selection-in-code + authenticity) | ✅ BUILT+TESTED | `scripts/lib/bind-examples.mjs` + CLI `scripts/bind-examples.mjs` stamp exampleId; `exampleBindingAuthentic` re-derives + blocks a faked/stale id (un-forgeable). commit `a8ae203`; `test/bind-examples.test.mjs` (7) + `test/plan4.test.mjs` T1.1c (4); `npm test` 131 |
+| **Law #0 mirrors the bound example's media** | ✅ BUILT+TESTED | validate-plan `media` block waives when `!exampleHasMedia(exampleId)` (example-aware, format-agnostic); supersedes the stale blanket rule. commit `a8ae203`; plan4 T1.2 (3) |
+| **#9 element/structure-fit gate** | 🟡 DEFERRED → vision #15 | Cody's call: folded into cluster-adherence (the vision gate carries "the visual means the angle"); no separate deterministic map |
+| **#12 media-fit + media-rubric gate** (deterministic core) | ✅ BUILT+TESTED | validate-plan `mediaFit` (no full-bleed on graphic / >20% accent / `mediaDiversity` clip-reuse) from `docs/media-integration-findings.md`; `resolveAssetCopy` mediaGeom. commit `a8ae203`; plan4 T1.3 (4). Style-tag subset + perceptual near-twin → Track 2 |
+| **format-mix INTENT** (override-governed; SMAA dodge shut) | ✅ BUILT+TESTED | `rules.formatMixIntent` (NOT a plan knob); static-only/video-only honored only when grandfathered/marked. commit `a8ae203`; plan4 T1.4 (2) |
+| **#14 output distinctness (Marker-2, selection-time segments)** | ❌ ABSENT | library is clustered; no runtime grouping of the chosen batch (Track 2) |
+| **#15 cluster-adherence (Marker-1 vision check)** | ❌ ABSENT | no check a finished creative matches its assigned archetype (Track 2; also carries #9) |
+| **#16 anti-slop** | 🟡 PARTIAL (objective BUILT) | objective half BUILT: validate-plan `antiSlop` (placeholder text + CSS-silhouette-instead-of-image). commit `a8ae203`; plan4 T1.5 (3). Subjective/vision half → Track 2 |
 | **Sidecar → review merge** | ❌ ABSENT | `/validation` is plan-only; no `campaigns/<c>/perceptual.json` consumer → ML gates have no path to the gate |
 | **Tier-2 advisory panel** (multi-persona) | ❌ ABSENT | no evaluator / per-creative scores |
 | **Phase 5 — harvest** | ❌ DESIGNED ONLY | spec'd as `POST /promote` + `scripts/promote-example.mjs` + "Save as example" button — none exist |
