@@ -1556,12 +1556,28 @@
         vid.addEventListener('loadedmetadata', () => {
           // Resume at the right window frame (virtual previewTime → window position).
           const pt = Number(state.previewTime) || 0;
-          const into = winLen ? (pt % winLen) : pt;
+          let into;
+          if (reelPlaybackActive()) { const lt = Math.max(0, pt - segStart(state.config.activeSegment || 0)); into = winLen ? (lt % winLen) : lt; }
+          else { into = winLen ? (pt % winLen) : pt; }
           try { vid.currentTime = cs + into; } catch (e) {}
           if (state.previewPlaying) { vid.play && vid.play().catch(() => {}); } else { try { vid.pause(); } catch (e) {} }
         });
         vid.addEventListener('timeupdate', () => {
           if (!state.previewPlaying) return; // paused/scrubbing → don't yank currentTime
+          // REEL playback (main view): advance to the next segment at this clip's end; the
+          // master music keeps running (re-anchored only on the reel's wrap).
+          if (reelPlaybackActive()) {
+            const active = state.config.activeSegment || 0; const seq = state.config.sequence;
+            const segDur = _segDur(seq[active]);
+            if (ce != null && vid.currentTime >= ce) { try { vid.currentTime = cs; } catch (e) {} if (winLen) state._loopBase = (Number(state._loopBase) || 0) + winLen; }
+            const winRel = Math.max(0, vid.currentTime - cs);
+            const localT = (Number(state._loopBase) || 0) + winRel;       // segment-local time (accumulates window loops)
+            if (localT >= segDur - 0.04) { const next = active + 1; if (next < seq.length) reelAdvanceTo(next, false); else reelAdvanceTo(0, true); return; }
+            state.previewTime = segStart(active) + localT;
+            if (typeof applyMarkupVisibility === 'function') applyMarkupVisibility(winRel);
+            if (typeof updateTransportPlayhead === 'function') updateTransportPlayhead();
+            return;
+          }
           const total = loopTotal();
           if (ce != null && vid.currentTime >= ce) {
             try { vid.currentTime = cs; } catch (e) {}
@@ -3525,6 +3541,9 @@
         else h.parent.appendChild(el);
       });
       $('clipEditModal').hidden = true;
+      // Back to the main view: for a reel, set the clock to the start of the segment you were
+      // editing so the whole-reel transport playhead is sensible (was segment-relative in the modal).
+      if (isReel()) { state.previewPlaying = false; state.previewTime = segStart(state.config.activeSegment || 0); state._loopBase = 0; }
       requestAnimationFrame(() => renderStage());      // re-fit the main editor view
     }
     { const ob = $('openClipModalBtn'); if (ob) ob.onclick = clipModalOpen;
@@ -4164,8 +4183,7 @@
         if (el.paused || !state.previewPlaying) { clearInterval(_audio.syncTimer); _audio.syncTimer = 0; return; }
         if ((el.currentTime - (a.startAt || 0)) >= D) { // one full loop of music → re-anchor music + clip
           try { el.currentTime = a.startAt || 0; } catch (e) {}
-          if (vid) { try { vid.currentTime = cs; } catch (e) {} }
-          state._loopBase = 0;
+          if (vid && !reelPlaybackActive()) { try { vid.currentTime = cs; } catch (e) {} state._loopBase = 0; } // reel: reelAdvanceTo owns the video on wrap
         }
       }, 100);
       setStatus('Music from ' + fmtAudTime(a.startAt || 0) + ' over the clip. ❚❚ to stop.');
@@ -4566,7 +4584,27 @@
       }
     }
     // ── Transport (play/pause + scrub) — the single playback clock for video ──
+    // ── Reel playback: the WHOLE reel plays in the MAIN view (auto-advance clip→clip with
+    //    the master music running through). The Edit-clip modal still plays just the active
+    //    segment (for trimming). ALL of this is guarded by reelPlaybackActive() so single-clip
+    //    playback is byte-for-behaviour unchanged. ─────────────────────────────────────────
+    function reelTotal() { const s = isReel() ? state.config.sequence : null; return s ? s.reduce((a, seg) => a + _segDur(seg), 0) : 0; }
+    function segStart(i) { const s = isReel() ? state.config.sequence : null; if (!s) return 0; let acc = 0; for (let k = 0; k < i && k < s.length; k++) acc += _segDur(s[k]); return acc; }
+    function segmentAt(t) { const s = isReel() ? state.config.sequence : null; if (!s) return { i: 0, localT: t }; let acc = 0; for (let i = 0; i < s.length; i++) { const d = _segDur(s[i]); if (t < acc + d || i === s.length - 1) return { i, localT: Math.max(0, Math.min(d, t - acc)) }; acc += d; } return { i: 0, localT: 0 }; }
+    function reelPlaybackActive() { const mdl = $('clipEditModal'); return isReel() && (!mdl || mdl.hidden); }   // whole-reel play in the MAIN view only
+    function updateFilmstripActive() { const strip = $('filmstrip'); if (!strip) return; const a = state.config.activeSegment || 0; strip.querySelectorAll('.fs-cell').forEach((c, i) => c.classList.toggle('on', i === a)); }
+    function reelAdvanceTo(i, wrap) {
+      const seq = state.config.sequence; if (!Array.isArray(seq) || !seq[i]) return;
+      state.config.activeSegment = i;
+      const seg = seq[i]; seg.media = seg.media || {}; seg.elements = seg.elements || []; seg.fixedDesign = seg.fixedDesign || [];
+      state.config.media = seg.media; state.config.elements = seg.elements; state.config.fixedDesign = seg.fixedDesign;
+      state.previewTime = segStart(i); state._loopBase = 0;
+      renderStage();                                   // rebuilds #stage → the next clip's <video> autoplays from its cs
+      updateFilmstripActive();
+      if (wrap) { const el = $('audioEl'); const aud = state.config.audio; if (el && aud && aud.src) { try { el.currentTime = aud.startAt || 0; } catch (e) {} } } // reel looped → re-anchor master music
+    }
     function previewDur() {
+      if (reelPlaybackActive()) return reelTotal();
       const m = state.config && state.config.media; if (!m) return 0;
       if (m.loop && Number(m.loopSeconds) > 0) return Math.max(1, Math.min(30, Number(m.loopSeconds))); // looping → full output length
       const cs = clipStartSec(); const ce = (typeof m.clipEnd === 'number' && m.clipEnd > cs) ? m.clipEnd : null;
@@ -4581,7 +4619,8 @@
           v.pause();
           const m = state.config && state.config.media;
           const winRel = Math.max(0, v.currentTime - clipStartSec());
-          state.previewTime = (m && m.loop && Number(m.loopSeconds) > 0) ? ((Number(state._loopBase) || 0) + winRel) : winRel;
+          if (reelPlaybackActive()) state.previewTime = segStart(state.config.activeSegment || 0) + (Number(state._loopBase) || 0) + winRel;
+          else state.previewTime = (m && m.loop && Number(m.loopSeconds) > 0) ? ((Number(state._loopBase) || 0) + winRel) : winRel;
         } catch (e) {}
       }
       if (typeof _audio !== 'undefined' && _audio && _audio.syncTimer) { clearInterval(_audio.syncTimer); _audio.syncTimer = 0; }
@@ -4602,7 +4641,8 @@
         try {
           v.muted = !!state.previewMuted || !(m && m.audio && !(state.config && state.config.audio)); // hear clip audio (muted when music is picked / preview-muted)
           const pt = Number(state.previewTime) || 0;
-          if (looping) { state._loopBase = Math.floor(pt / winLen) * winLen; v.currentTime = cs + (pt % winLen); }
+          if (reelPlaybackActive()) { const local = Math.max(0, pt - segStart(state.config.activeSegment || 0)); state._loopBase = winLen ? Math.floor(local / winLen) * winLen : 0; v.currentTime = cs + (winLen ? (local % winLen) : local); }
+          else if (looping) { state._loopBase = Math.floor(pt / winLen) * winLen; v.currentTime = cs + (pt % winLen); }
           else { v.currentTime = cs + pt; }
         } catch (e) {}
         v.play && v.play().catch(() => {});
@@ -4648,6 +4688,19 @@
         const r = track.getBoundingClientRect(); const dd = previewDur(); if (!dd) return;
         const t = Math.max(0, Math.min(dd, ((clientX - r.left) / r.width) * dd));
         pausePreview(); state.previewTime = t;
+        // REEL: map the reel time → the segment it falls in (switching the active clip if needed).
+        if (reelPlaybackActive()) {
+          const at = segmentAt(t); const i = at.i, localT = at.localT;
+          const switched = i !== (state.config.activeSegment || 0);
+          const seg = state.config.sequence[i];
+          if (switched) { state.config.activeSegment = i; seg.media = seg.media || {}; seg.elements = seg.elements || []; seg.fixedDesign = seg.fixedDesign || []; state.config.media = seg.media; state.config.elements = seg.elements; state.config.fixedDesign = seg.fixedDesign; }
+          const m2 = seg.media; const cs2 = Math.max(0, Number(m2.clipStart) || 0); const ce2 = (typeof m2.clipEnd === 'number' && m2.clipEnd > cs2) ? m2.clipEnd : null; const wl2 = ce2 != null ? (ce2 - cs2) : null;
+          state._loopBase = wl2 ? Math.floor(localT / wl2) * wl2 : 0;
+          if (switched) { updateFilmstripActive(); renderStage(); }   // new clip → its loadedmetadata seeks to cs+localT
+          else { const v = state._previewVideo; if (v) { try { v.currentTime = cs2 + (wl2 ? (localT % wl2) : localT); } catch (e) {} } }
+          setActiveMarkup(null); updateTransportPlayhead();
+          return;
+        }
         const m = state.config && state.config.media;
         const cs = clipStartSec();
         const ce = (m && typeof m.clipEnd === 'number' && m.clipEnd > cs) ? m.clipEnd : null;
