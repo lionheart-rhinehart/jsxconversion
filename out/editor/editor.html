@@ -3383,6 +3383,8 @@
         renderStage();
         if (typeof renderTransport === 'function') renderTransport();
         if (state.config && state.config.media && isVideoPath(state.config.media.path) && typeof renderTrimPanel === 'function') renderTrimPanel(state.config.media);
+        // The audio panel just moved here at a new size → redraw the waveform.
+        if (typeof drawAudioWave === 'function' && _audio && _audio.peaks) { drawAudioWave(); drawAudioOverlay(); }
       });
     }
     function clipModalClose() {
@@ -3834,6 +3836,9 @@
     function wireAudioControlsOnce() {
       if (wireAudioControlsOnce._done) return; wireAudioControlsOnce._done = true;
       const el = $('audioEl'), wrap = $('audioWaveWrap'); if (!el || !wrap) return;
+      // Redraw the waveform when the wrap is resized (e.g. the audio panel relocates into
+      // the clip-edit modal) — drawAudioWave sizes from clientWidth, which is 0 while hidden.
+      if (window.ResizeObserver) { try { new ResizeObserver(() => { if (_audio && _audio.peaks) { drawAudioWave(); drawAudioOverlay(); } }).observe(wrap); } catch (e) {} }
       const tick = () => { updateAudioReadouts(); if (!el.paused) _audio.raf = requestAnimationFrame(tick); };
       $('audioPlay').onclick = () => {
         if (el.paused) { el.play().catch(() => {}); $('audioPlay').textContent = '❚❚'; tick(); }
@@ -3866,29 +3871,44 @@
     // clipStart + the picked music from startAt, in sync, looping the trim window —
     // so you hear exactly what the rendered MP4 will sound like (no Stage iframe /
     // postMessage bridge needed; the preview is in this same page).
-    function previewMusicWithClip() {
-      const el = $('audioEl'); const a = state.config && state.config.audio; if (!el || !a) return;
-      // Play "with sound" on the SINGLE clock so it doesn't fight the transport.
-      state.previewPlaying = true; if (typeof syncTransportBtn === 'function') syncTransportBtn();
+    // Start the picked music at startAt, playing for `total` seconds in sync with the
+    // looping clip (the video's OWN timeupdate loops the trim window; this re-anchors the
+    // MUSIC + the clip to the loop start once per `total`). `total` should be previewDur()
+    // — the loopSeconds when looping, else the trim window. The video stays muted (music
+    // IS the sound, matching the render's music-over-clip priority).
+    function startMusicWithClip(total) {
+      const el = $('audioEl'); const a = state.config && state.config.audio; if (!el || !a || !a.src) return;
       const vid = document.querySelector('#stage video');
       const m = state.config.media || {};
       const cs = Math.max(0, Number(m.clipStart) || 0);
       const ce = (typeof m.clipEnd === 'number' && m.clipEnd > cs) ? m.clipEnd : null;
-      const D = ce != null ? (ce - cs) : (_audio.dur || 6);
+      const D = (Number(total) > 0) ? Number(total) : (ce != null ? (ce - cs) : (_audio.dur || 6));
       el.volume = a.volume != null ? a.volume : 0.85;
       try { el.currentTime = a.startAt || 0; } catch (e) {}
       el.play().catch(() => {});
       $('audioPlay').textContent = '❚❚';
       const tick = () => { updateAudioReadouts(); if (!el.paused) _audio.raf = requestAnimationFrame(tick); };
       tick();
-      if (vid) { try { vid.muted = true; vid.currentTime = cs; } catch (e) {} vid.play && vid.play().catch(() => {}); }
+      if (vid) { try { vid.muted = true; } catch (e) {} }
       if (_audio.syncTimer) clearInterval(_audio.syncTimer);
       _audio.syncTimer = setInterval(() => {
-        if (el.paused) { clearInterval(_audio.syncTimer); _audio.syncTimer = 0; return; }
-        if (vid && ce != null && vid.currentTime >= ce) { try { vid.currentTime = cs; } catch (e) {} }
-        if ((el.currentTime - (a.startAt || 0)) >= D) { try { el.currentTime = a.startAt || 0; } catch (e) {} if (vid) { try { vid.currentTime = cs; } catch (e) {} } }
+        if (el.paused || !state.previewPlaying) { clearInterval(_audio.syncTimer); _audio.syncTimer = 0; return; }
+        if ((el.currentTime - (a.startAt || 0)) >= D) { // one full loop of music → re-anchor music + clip
+          try { el.currentTime = a.startAt || 0; } catch (e) {}
+          if (vid) { try { vid.currentTime = cs; } catch (e) {} }
+          state._loopBase = 0;
+        }
       }, 100);
-      setStatus('Playing music over the clip — start ' + fmtAudTime(a.startAt || 0) + '. Click ❚❚ to stop.');
+      setStatus('Music from ' + fmtAudTime(a.startAt || 0) + ' over the clip. ❚❚ to stop.');
+    }
+    function previewMusicWithClip() {
+      const a = state.config && state.config.audio; if (!a || !a.src) return;
+      // Same as the main play, but explicitly for the audio panel's "▶ With clip".
+      state.previewPlaying = true; if (typeof syncTransportBtn === 'function') syncTransportBtn();
+      const vid = document.querySelector('#stage video');
+      const cs = Math.max(0, Number((state.config.media || {}).clipStart) || 0);
+      if (vid) { try { vid.currentTime = cs; } catch (e) {} vid.play && vid.play().catch(() => {}); }
+      startMusicWithClip(previewDur());
     }
 
     // ── Draw / annotate (Phase D) ────────────────────────────────────────────
@@ -4302,6 +4322,10 @@
         } catch (e) {}
         v.play && v.play().catch(() => {});
       }
+      // A picked music track IS the audio (matches the render's priority): start it from
+      // startAt, in sync over the full preview length. Video stays muted in that case.
+      const aud = state.config && state.config.audio;
+      if (aud && aud.src && typeof startMusicWithClip === 'function') startMusicWithClip(previewDur());
       syncTransportBtn();
     }
     function togglePreview() { state.previewPlaying ? pausePreview() : playPreview(); }
