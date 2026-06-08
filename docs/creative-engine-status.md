@@ -46,27 +46,51 @@ memory is the editor's A–F track overlaid on the master plan's 0–6.
 | **#15 cluster-adherence (Marker-1 vision check, carries #9)** | ✅ BUILT+TESTED | `_archetype-centroids` + `embed_campaign.py` cosine-to-assigned-centroid → landedInLane. commit `12b3c65`; REAL-RENDER verified (F1 in-lane 0.82; mislabeled → block 0.38). `test/centroids.test.mjs` (4) |
 | **#16 anti-slop** | ✅ BUILT+TESTED | objective (T1.5 `antiSlop`, commit `a8ae203`) + subjective (`slop_flag.py` Gemini, fail-soft, commit `12b3c65`) |
 | **Sidecar → review merge** | ✅ BUILT+TESTED | `validatePlan` reads `campaigns/<c>/perceptual.json` + folds (absent-after-render block / sentinel / override-downgrade / corrupt-degrade) — ZERO editor-server edits. commit `12b3c65`; `test/validate-plan-perceptual.test.mjs` (5) |
-| **Tier-2 advisory panel** (multi-persona) | ❌ ABSENT | no evaluator / per-creative scores |
-| **Phase 5 — harvest** | ❌ DESIGNED ONLY | spec'd as `POST /promote` + `scripts/promote-example.mjs` + "Save as example" button — none exist |
-| **Phase 6 — Remotion consolidation / Meta publish / dashboard** | ❌ DESIGNED ONLY | plan text + "for later"; zero `ads_create_creative` calls; no dashboard |
+| **Tier-2 advisory panel** (multi-persona) | ✅ BUILT+TESTED | `tier2-merge.mjs` (warn-only fold) + `tier2_eval.py` (3-persona Gemini, fail-soft) folded via validatePlan. commit `9cbea77`; `test/tier2-merge.test.mjs` (5) + integration; real Gemini scored isp-ad-series-1 |
+| **Phase 5 — harvest** | ✅ BUILT (CLI; button DEFERRED) | `lib/promote-example.mjs` + `scripts/promote-example.mjs` (assert approved → buildEntry/validate → append + centroid rebuild). commit `84721d3`; `test/promote-example.test.mjs` (4). The review.html button → `POST /promote` route is editor-server-coupled → DEFERRED (`docs/DEFERRED-promote-route.md`) |
+| **Phase 6 — Meta publish + dashboard** | ✅ BUILT (dry-run; API call human-fired) | `lib/publish-select.mjs` (approved+rendered+clean only) + `publish-meta.mjs` (dry-run, writes publish-plan.json) + `cockpit.mjs` (standalone read-only dashboard). commit `f4e4415`; `test/publish-select.test.mjs` (4). Actual `ads_create_creative` is a deliberate human-authorized MCP action, never script-fired |
+| **Cleanup — unified similarity map** | ✅ BUILT | `diversity_all.py` → `_similarity-map.json` (109-example cross-archetype map + unified diversity). commit `e22bf8a`; `test/diversity-all.test.mjs` (2) |
 | **G2** editor-server `/plan` ALLOWED += exampleId/archetype | ❌ ABSENT | needed for review-page re-stamps |
-| **Motion generation** | ❌ ABSENT | static-only |
+| **Motion generation + gate** | ✅ BUILT | fresh-motion render already wired (run-campaign); video centroids (T2.0); 3-frame video cluster-adherence + frameVariance warn. commit `076bf81`; `test/motion-adherence.test.mjs` (3); verified on isp-ad-series-1 video |
 
-## What's genuinely LEFT = the master plan's Phases 3–6 (the generation-quality JUDGMENT layer)
+## What's LEFT (2026-06-08) — Phases 3–6 are BUILT; only the pre-live gate + deferred wiring remain
 
-In dependency order (this is the priority list for the next effort — see "Next effort" below):
-1. **Make generation un-skippable + example-faithful** — auto-invoke select→compose; then **media-fit/rubric
-   gate (#12)** + **element-fit (#9)**. (Fixes exactly what produced the bad creatives.)
-2. **Vision/ML gates** — cluster-adherence (#15), anti-slop (#16), output distinctness (#14) + the
-   **sidecar→review merge** so they block approval.
-3. **Resolve two design conflicts** — media-gate vs media-less graphic archetypes; formatMix vs static-only batch.
-4. **Tail** — Phase 5 harvest, Phase 6 publish/dashboard, Tier-2 panel, motion generation, G2, dedup.
+Phases 3–6 (the whole generation-quality layer: un-skippable example-faithful generation, media-fit,
+format-intent, anti-slop, vision #14/#15/#16, sidecar→review merge, Tier-2, motion gate, harvest, publish,
+dashboard, similarity-map) are **BUILT + TESTED + committed + validated by a blind run** (Test Run 1).
+What remains:
+- **The PRE-LIVE HARDENING GATE (PL-1..PL-4 above)** — must clear before any campaign goes live.
+- **Editor-server-coupled wiring (DEFERRED, forbidden-file zone):** the "Save as example" `POST /promote`
+  button (`docs/DEFERRED-promote-route.md`) + G2 (exampleId/archetype in the `/plan` ALLOWED allowlist).
+- **Minor:** the `formatMixIntent` skill-prose note (batched into the PL-2 skill-prose pass — same locked zone).
 
 ## Next effort (do NOT blindly execute the old Phase 3–6 text)
 
 Phases 3–6 predate the Phase-2-era changes (archetype model, measured media rubric, distinctness →
 selection-time) and the verified fact that generation was never automated. The next effort is a **fresh,
 reconciled plan** for the generation-quality layer grounded in this ledger, then `/double-check` + `/ultrathink`.
+
+## Test Run 1 (2026-06-08) — the engine VALIDATED under a blind run + 4 PRE-LIVE items
+
+A blind `/creative-engine` run (Cody's own ISP baseball copy, 6 from-scratch, 2 video/2 gif/2 static →
+`isp-ad-series-1`) confirmed the anti-cheat thesis HOLDS: `--force-unsafe` refused; the 2/2/2 mix hit the
+60%-video block and the agent did NOT silently downgrade it — it STOPPED, surfaced the fork, and proceeded only
+on Cody's explicit override (human-override worked as designed); 0/6 copied (adversarially audited); all 6
+rendered + QA-passed; the perceptual sidecar ran on real pixels. Full record:
+`~/.claude/plans/re-plan-and-build-the-twinkly-micali.md` ("Test Run 1").
+
+### PRE-LIVE HARDENING GATE — must clear before ANY campaign goes live (tabled 2026-06-08; isolated, none block the tail)
+- [ ] **PL-1 — override granularity.** `validate-plan.mjs` T2.2 merge `sev()` downgrades ALL perceptual blocks
+      when an override is honored (set for one gate ⇒ silently waives the vision gate too). Make it gate-specific
+      (downgrade only when the honored `validation.config.json` relaxes THAT rule, e.g. `{"clusterAdherence":"warn"}`;
+      sentinel stays downgradable). + test in `test/validate-plan-perceptual.test.mjs`. (~30–45 min)
+- [ ] **PL-2 — agent reuse-drift.** creative-engine skill: honor "from scratch" + an explicit count/mix literally;
+      don't resume/reuse prior plans or default the mix. (`/unlock-skills`, ~15 min)
+- [ ] **PL-3 — vision-gate franchisee false-positives.** Centroids are AA-styled; a non-AA creative may read
+      "off-lane" from color/font, not structure (isp-ad-series-1 A1/B1/C1 are the test case). Investigate
+      DINOv2-only / per-brand centroids / looser threshold before trusting #15 on franchisees.
+- [ ] **PL-4 — Kraken source-media discipline.** ISP "IG stories" = finished posts with baked-in text/emoji;
+      pulls must use raw-footage folders (data, not engine). Document the source-folder rule.
 
 ## If this ledger ever drifts again (recovery routine)
 
