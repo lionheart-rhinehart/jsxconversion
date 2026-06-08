@@ -18,7 +18,14 @@ angle → creative); the scripts are the hands (rendering).**
 Read `docs/PROCESS.md` for the full machine, and **`docs/creative-playbook.md` — the
 canonical rulebook for WHICH copy roles each beat (A–F) needs, how many, and where they
 sit.** The planner MUST apply it (Step 4). This skill is phase-aware: it inspects what
-already exists on disk for the campaign and resumes from there.
+already exists on disk for the campaign and resumes from there — **UNLESS the user gives an
+explicit directive that overrides it.** When the user says "from scratch" / "don't reuse
+anything" or specifies an EXACT deliverable (a count and/or a format mix like "2 video / 2 gif
+/ 2 static"), those are LITERAL and BINDING: build everything new (`source:"fresh"`), reuse
+NOTHING (no prior plans, templates, rendered assets, or media picks), and honor the EXACT
+count + mix given — never substitute a default (e.g. the canonical 60/15/25) or resume a prior
+plan to save work. If the user's exact mix would trip a gate (e.g. 2/2/2 vs the 60% video
+floor), STOP and surface the fork — never quietly re-balance to make it pass.
 
 ## Hard rules (never violate)
 
@@ -283,6 +290,15 @@ unit, place media, correct the city/guarantee, etc.) and re-run until `blocking:
 the review page or tell the user to review while any blocking violation remains** — the runner will
 refuse to render it anyway (exit 2), so catching it here saves a round trip. The report is written
 to `campaigns/<name>/validation.json` and surfaced live on the review page.
+
+**Format-mix intent (a deliberately single-format batch).** The gate floors video at the canonical
+60% (`formatMix`). A genuinely static-only or video-only batch is declared via `rules.formatMixIntent`
+in the human-honored `campaigns/<c>/validation.config.json` (`{"formatMixIntent":"static-only"}`) — NOT
+a free plan knob (that would re-open the SMAA dodge). It is honored ONLY when the campaign is
+grandfathered or `AA_HUMAN_OVERRIDE=<campaign>`-marked. So a non-default mix the USER mandated needs
+their explicit one-time authorization (a typed marker) — never declare it yourself to make a batch pass.
+After render, run `node scripts/perceptual-sidecar.mjs <campaign>` so the vision gates (#14/#15/#16) +
+the Tier-2 panel reach the review page; an absent perceptual.json on rendered generate-world work is a block.
 
 ### Step 5 — Render proofs (so review has real pixels)
 Review happens on RENDERED proofs, never on a promise — an empty review page was a real
