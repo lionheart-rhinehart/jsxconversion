@@ -3385,6 +3385,11 @@
         if (state.config && state.config.media && isVideoPath(state.config.media.path) && typeof renderTrimPanel === 'function') renderTrimPanel(state.config.media);
         // The audio panel just moved here at a new size → redraw the waveform.
         if (typeof drawAudioWave === 'function' && _audio && _audio.peaks) { drawAudioWave(); drawAudioOverlay(); }
+        // Reparenting #audioEl can reset its playhead to 0 → park it back on the mark so
+        // the white playhead sits on the dashed mark in the pop-up (not just on play).
+        if (state.config && state.config.audio && Number(state.config.audio.startAt) > 0) {
+          const ae = $('audioEl'); if (ae) { try { ae.currentTime = state.config.audio.startAt; } catch (e) {} if (typeof drawAudioOverlay === 'function') drawAudioOverlay(); }
+        }
       });
     }
     function clipModalClose() {
@@ -3791,6 +3796,11 @@
       $('audioLoading').style.display = ''; $('audioLoading').textContent = 'Decoding waveform…';
       el.src = url || ('/media-file/' + src);
       _audio.track = src; _audio.peaks = null; _audio.dur = 0;
+      // Park the playhead ON the saved start mark (setting src reset it to 0), so the
+      // audio-panel ▶ — which plays from the playhead — starts at the mark, not 0.
+      // readyState-guarded: a cached/already-loaded element won't re-fire loadedmetadata.
+      const seekToMark = () => { const a = state.config && state.config.audio; if (a && Number(a.startAt) > 0) { try { el.currentTime = a.startAt; } catch (e) {} updateAudioReadouts(); } };
+      if (el.readyState >= 1) seekToMark(); else el.addEventListener('loadedmetadata', seekToMark, { once: true });
       drawAudioOverlay();
       fetch('/peaks?file=' + encodeURIComponent(src)).then((r) => r.json()).then((d) => {
         if (_audio.track !== src) return;
@@ -3841,8 +3851,14 @@
       if (window.ResizeObserver) { try { new ResizeObserver(() => { if (_audio && _audio.peaks) { drawAudioWave(); drawAudioOverlay(); } }).observe(wrap); } catch (e) {} }
       const tick = () => { updateAudioReadouts(); if (!el.paused) _audio.raf = requestAnimationFrame(tick); };
       $('audioPlay').onclick = () => {
-        if (el.paused) { el.play().catch(() => {}); $('audioPlay').textContent = '❚❚'; tick(); }
-        else { el.pause(); $('audioPlay').textContent = '▶'; }
+        if (el.paused) {
+          // If the playhead is at the very start (fresh load / panel relocation reset it),
+          // snap to the marked start so ▶ plays from the mark. A deliberate scrub to a real
+          // position (>= 0.05s) still plays from there (forward audition preserved).
+          const a = state.config && state.config.audio;
+          if (a && Number(a.startAt) > 0 && el.currentTime < 0.05) { try { el.currentTime = a.startAt; } catch (e) {} }
+          el.play().catch(() => {}); $('audioPlay').textContent = '❚❚'; tick();
+        } else { el.pause(); $('audioPlay').textContent = '▶'; }
       };
       el.addEventListener('pause', () => { $('audioPlay').textContent = '▶'; cancelAnimationFrame(_audio.raf); });
       el.addEventListener('ended', () => { $('audioPlay').textContent = '▶'; });
