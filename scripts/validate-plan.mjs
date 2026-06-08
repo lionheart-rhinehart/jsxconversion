@@ -761,7 +761,14 @@ export function validatePlan(plan, opts = {}) {
   // validatePlan (a crash → /validation {ok:false} → review fails OPEN). ──
   try {
     const honored = overrideHonored({ campaign, grandfatherSet, env });
-    const sev = (s) => (honored && s === "block" ? "warn" : s);   // human-override downgrade
+    // sentinel + absent-after-render: campaign-wide downgradable (the infra / torch-less escape).
+    const sev = (s) => (honored && s === "block" ? "warn" : s);
+    // [PL-1] a REAL perceptual block downgrades ONLY when the honored override relaxes THAT
+    // SPECIFIC rule (e.g. validation.config.json {"clusterAdherence":"warn"}) — never as a
+    // side-effect of an unrelated override (a formatMix relax must NOT silently waive the
+    // vision gate, which it used to). rules[rule] is "warn" only when applyCampaignOverride
+    // honored an explicit per-rule relax.
+    const ruleSev = (rule, s) => (honored && s === "block" && rules[rule] === "warn") ? "warn" : s;
     const campDir = join(CAMPAIGNS_DIR, campaign);
     const perceptual = readPerceptual(campDir);
     let renderedAny = false;
@@ -793,7 +800,7 @@ export function validatePlan(plan, opts = {}) {
           campaignViolations.push(v); bump(v); continue;
         }
         for (const vio of entry.violations || []) {
-          const dv = { ...vio, severity: sev(vio.severity) };
+          const dv = { ...vio, severity: ruleSev(vio.rule, vio.severity) };
           target.violations.push(dv); bump(dv);
         }
       }

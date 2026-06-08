@@ -90,6 +90,26 @@ test("T2.2: a corrupt perceptual.json degrades to a block, never throws the gate
   } finally { c.cleanup(); }
 });
 
+test("PL-1: an UNRELATED honored override (formatMix) does NOT downgrade a real perceptual block", () => {
+  const perceptual = { schemaVersion: 1, ranOk: true, assets: { "a/T1": { violations: [{ rule: "clusterAdherence", severity: "block", message: "off lane" }] } } };
+  const c = tmpCampaign({ "perceptual.json": perceptual, "validation.config.json": { formatMix: "warn" } });
+  try {
+    const r = validatePlan(legacy([tmplAsset]), { campaign: c.slug, grandfatherSet: new Set(), env: { AA_HUMAN_OVERRIDE: c.slug } });
+    assert.ok(r.assets["a/T1"].violations.some((v) => v.rule === "clusterAdherence" && v.severity === "block"), "a formatMix relax must NOT silently waive the vision gate");
+    assert.ok(r.blocking > 0);
+  } finally { c.cleanup(); }
+});
+
+test("PL-1: an EXPLICIT per-rule relax {clusterAdherence:'warn'} (honored) DOES downgrade it", () => {
+  const perceptual = { schemaVersion: 1, ranOk: true, assets: { "a/T1": { violations: [{ rule: "clusterAdherence", severity: "block", message: "off lane" }] } } };
+  const c = tmpCampaign({ "perceptual.json": perceptual, "validation.config.json": { clusterAdherence: "warn" } });
+  try {
+    const r = validatePlan(legacy([tmplAsset]), { campaign: c.slug, grandfatherSet: new Set(), env: { AA_HUMAN_OVERRIDE: c.slug } });
+    assert.equal(r.assets["a/T1"].violations.some((v) => v.rule === "clusterAdherence" && v.severity === "block"), false, "an explicit per-rule relax downgrades it");
+    assert.ok(r.assets["a/T1"].violations.some((v) => v.rule === "clusterAdherence" && v.severity === "warn"));
+  } finally { c.cleanup(); }
+});
+
 test("T2.3: validatePlan folds tier2.json as a warn + attaches the panel; blocking UNCHANGED", () => {
   const tier2 = { schemaVersion: 1, ranOk: true, assets: { "a/T1": {
     mean: 2, disagreement: 3, personas: [{ persona: "perf", score: 1 }, { persona: "consumer", score: 4 }],
