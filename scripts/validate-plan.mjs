@@ -37,6 +37,7 @@ import { scanBrandIntegrity } from "./lib/brand-integrity.mjs";
 import { loadExampleIndex, isAnyArchetype, archetypeForExample, exampleHasMedia, mediaOptionalForArchetype } from "./lib/example-library.mjs";
 import { bindPlanExamples } from "./lib/bind-examples.mjs";
 import { mediaReuseProblems } from "./lib/uniqueness.mjs";
+import { readPerceptual } from "./lib/perceptual-merge.mjs";
 
 const PROJECT_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const CAMPAIGNS_DIR = join(PROJECT_ROOT, "campaigns");
@@ -747,6 +748,66 @@ export function validatePlan(plan, opts = {}) {
   if (assetsEvaluated !== planCount) {
     const v = { rule: "coverage", severity: "block", message: `evaluated ${assetsEvaluated} of ${planCount} assets — coverage gap` };
     campaignViolations.push(v); bump(v);
+  }
+
+  // ── Perceptual gates (#14 distinctness / #15 cluster-adherence / #16 vision-slop),
+  // merged from campaigns/<c>/perceptual.json (written ONCE after render by
+  // scripts/perceptual-sidecar.mjs — the heavy CLIP/DINOv2 NEVER runs in this process).
+  // editor-server's /validation returns validatePlan() verbatim, so this reaches the
+  // review page with ZERO editor-server edits. These JUDGMENT gates FAIL-CLOSED to
+  // HUMAN and are DOWNGRADABLE via the human-override path (a torch-less machine or a
+  // deliberate human review isn't wedged). Wrapped so a perceptual bug can never crash
+  // validatePlan (a crash → /validation {ok:false} → review fails OPEN). ──
+  try {
+    const honored = overrideHonored({ campaign, grandfatherSet, env });
+    const sev = (s) => (honored && s === "block" ? "warn" : s);   // human-override downgrade
+    const campDir = join(CAMPAIGNS_DIR, campaign);
+    const perceptual = readPerceptual(campDir);
+    let renderedAny = false;
+    const manifestPath = join(PROJECT_ROOT, "out", "campaigns", campaign, "manifest.json");
+    if (existsSync(manifestPath)) {
+      try { renderedAny = (JSON.parse(readFileSync(manifestPath, "utf8")).cells || []).some((c) => c && c.status === "rendered"); } catch { /* unreadable → treat as not-rendered */ }
+    }
+    if (!perceptual) {
+      // Absent is NOT a no-op: after render, a missing perceptual.json means the gate
+      // was SKIPPED → block (the un-skippable closer). Pre-render (no rendered cells)
+      // there is nothing to perceive → silent.
+      if (isGenerateWorld && renderedAny && !isGrandfathered(campaign, grandfatherSet)) {
+        const v = { rule: "perceptualGate", severity: sev("block"),
+          message: `perceptual gate not yet run on the rendered outputs — #14/#15/#16 unchecked`,
+          fixHint: `run: node scripts/perceptual-sidecar.mjs ${campaign}` };
+        campaignViolations.push(v); bump(v);
+      }
+    } else if (perceptual.ranOk === false && perceptual.sentinel) {
+      // The sidecar couldn't run → hold for human (block, downgradable). Surface campaign-
+      // level AND on every card (so the per-card approve-disabled holds the whole batch).
+      const sv = { ...perceptual.sentinel, severity: sev(perceptual.sentinel.severity) };
+      campaignViolations.push(sv); bump(sv);
+      for (const a of Object.values(assets)) a.violations.push(sv); // display copy (recount below; not re-bumped)
+    } else if (perceptual.ranOk === true) {
+      for (const [key, entry] of Object.entries(perceptual.assets || {})) {
+        const target = assets[key];
+        if (!target) {
+          const v = { rule: "perceptualStale", severity: "warn", message: `perceptual.json has an entry for ${key} not in the plan` };
+          campaignViolations.push(v); bump(v); continue;
+        }
+        for (const vio of entry.violations || []) {
+          const dv = { ...vio, severity: sev(vio.severity) };
+          target.violations.push(dv); bump(dv);
+        }
+      }
+    }
+  } catch (e) {
+    const v = { rule: "perceptualMergeError", severity: "block", message: `perceptual merge failed: ${e.message} — held for human`, fixHint: "inspect campaigns/<c>/perceptual.json" };
+    campaignViolations.push(v); bump(v);
+  }
+  // Recompute PER-ASSET counts after the folds (review.html reads ve.blocking per card).
+  // Top-level blocking/warnings stay maintained by bump() — one count per logical
+  // violation — so the sentinel's per-card display copies are not double-counted there.
+  for (const a of Object.values(assets)) {
+    a.blocking = a.violations.filter((v) => v.severity === "block").length;
+    a.warnings = a.violations.filter((v) => v.severity === "warn").length;
+    a.ok = a.blocking === 0;
   }
 
   return {

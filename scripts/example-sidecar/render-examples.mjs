@@ -28,6 +28,7 @@ import { verifyRender } from "../lib/render-qa.mjs";
 import { composeGif } from "./gif-compose.mjs";
 import { stageAndRender } from "./stage-motion.mjs";
 import { EXAMPLES_DIR, exampleImagePath, exampleMotionPath } from "../lib/example-library.mjs";
+import { extractPoster } from "../lib/poster.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, "..", "..");
@@ -36,35 +37,8 @@ const OUT_DIR = join(ROOT, "out");
 const REPORT = join(HERE, "render-report.json");
 const RENDER_TIMEOUT_MS = 120000;
 
-// Poster-frame extraction for a VIDEO example: the contract's labeled artifact is a
-// representative still (CLIP/DINOv2 + Gemini read it). Extract candidate frames at a
-// few fixed fractions of the clip and keep the LARGEST-bytes one — a flat/black/
-// transition frame compresses tiny, so largest-bytes is a decoder-free non-blank
-// heuristic (mirrors embed.py's blank-std intent; render-qa house rule: no Node image
-// decoder). Deterministic (fixed fractions) so re-runs are stable. Returns the dest
-// path on success, or null (ffmpeg failed on every seek).
-function extractPoster(mp4Path, durationSec, destPng) {
-  const fracs = [0.4, 0.5, 0.6, 0.95]; // 0.95 catches a count-up's final value frame
-  const tmp = mkdtempSync(join(tmpdir(), "poster-"));
-  try {
-    let best = null, bestSize = -1;
-    for (const f of fracs) {
-      const t = Math.max(0, durationSec * f);
-      const cand = join(tmp, `${Math.round(f * 100)}.png`);
-      const r = spawnSync("ffmpeg", ["-y", "-ss", String(t), "-i", mp4Path, "-frames:v", "1", cand], { stdio: "ignore" });
-      if (r.status === 0 && existsSync(cand)) {
-        const sz = statSync(cand).size;
-        if (sz > bestSize) { bestSize = sz; best = cand; }
-      }
-    }
-    if (!best) return null;
-    mkdirSync(dirname(destPng), { recursive: true });
-    copyFileSync(best, destPng);
-    return destPng;
-  } finally {
-    rmSync(tmp, { recursive: true, force: true });
-  }
-}
+// Poster-frame extraction (for VIDEO examples) now lives in ../lib/poster.mjs — shared
+// with the campaign perceptual sidecar so both poster the same way. Imported above.
 
 function loadManifest() {
   const path = join(HERE, "examples.manifest.json");

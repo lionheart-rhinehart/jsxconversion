@@ -1,0 +1,430 @@
+{
+  "note": "Per-(archetype, format) example centroids for cluster-adherence (#15). Vectors live in _archetype-centroids.npz; this is the human-readable manifest. Built by build_centroids.py from the example embeddings \u2014 NOT hand-edited.",
+  "embedder": "openai/clip-vit-large-patch14 + facebook/dinov2-large",
+  "dim": 1792,
+  "seed": 42,
+  "count": 39,
+  "centroids": [
+    {
+      "archetype": "action-hero",
+      "format": "static",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-028-action-hero",
+        "ex-029-action-hero",
+        "ex-030-action-hero"
+      ]
+    },
+    {
+      "archetype": "before-after-split",
+      "format": "static",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-013-before-after-split",
+        "ex-014-before-after-split",
+        "ex-015-before-after-split"
+      ]
+    },
+    {
+      "archetype": "benefit-iconrow",
+      "format": "static",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-043-benefit-iconrow",
+        "ex-044-benefit-iconrow",
+        "ex-045-benefit-iconrow"
+      ]
+    },
+    {
+      "archetype": "giant-stat",
+      "format": "static",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-001-giant-stat",
+        "ex-002-giant-stat",
+        "ex-003-giant-stat"
+      ]
+    },
+    {
+      "archetype": "kinetic-text",
+      "format": "static",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-007-kinetic-text",
+        "ex-008-kinetic-text",
+        "ex-009-kinetic-text"
+      ]
+    },
+    {
+      "archetype": "list-steps",
+      "format": "static",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-022-list-steps",
+        "ex-023-list-steps",
+        "ex-024-list-steps"
+      ]
+    },
+    {
+      "archetype": "metric-reveal",
+      "format": "static",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-004-metric-reveal",
+        "ex-005-metric-reveal",
+        "ex-006-metric-reveal"
+      ]
+    },
+    {
+      "archetype": "offer-card",
+      "format": "static",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-025-offer-card",
+        "ex-026-offer-card",
+        "ex-027-offer-card"
+      ]
+    },
+    {
+      "archetype": "proof-collage",
+      "format": "static",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-019-proof-collage",
+        "ex-020-proof-collage",
+        "ex-021-proof-collage"
+      ]
+    },
+    {
+      "archetype": "quote-card",
+      "format": "static",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-010-quote-card",
+        "ex-011-quote-card",
+        "ex-012-quote-card"
+      ]
+    },
+    {
+      "archetype": "split-panel",
+      "format": "static",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-037-coach-portrait",
+        "ex-038-coach-portrait",
+        "ex-039-coach-portrait"
+      ]
+    },
+    {
+      "archetype": "timeline-schedule",
+      "format": "static",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-040-timeline-schedule",
+        "ex-041-timeline-schedule",
+        "ex-042-timeline-schedule"
+      ]
+    },
+    {
+      "archetype": "training-scene",
+      "format": "static",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-031-training-scene",
+        "ex-032-training-scene",
+        "ex-033-training-scene"
+      ]
+    },
+    {
+      "archetype": "ugc-selfie",
+      "format": "static",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-034-ugc-selfie",
+        "ex-035-ugc-selfie",
+        "ex-036-ugc-selfie"
+      ]
+    },
+    {
+      "archetype": "versus",
+      "format": "static",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-016-versus",
+        "ex-017-versus",
+        "ex-018-versus"
+      ]
+    },
+    {
+      "archetype": "action-hero",
+      "format": "video",
+      "count": 2,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-055-action-hero",
+        "ex-056-action-hero"
+      ]
+    },
+    {
+      "archetype": "anatomy-diagram",
+      "format": "video",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-089-anatomy-diagram",
+        "ex-120-anatomy-diagram",
+        "ex-121-anatomy-diagram"
+      ]
+    },
+    {
+      "archetype": "before-after-split",
+      "format": "video",
+      "count": 1,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-059-before-after-split"
+      ]
+    },
+    {
+      "archetype": "bracket-tree",
+      "format": "video",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-074-bracket-tree",
+        "ex-096-bracket-tree",
+        "ex-097-bracket-tree"
+      ]
+    },
+    {
+      "archetype": "calendar-fill",
+      "format": "video",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-084-calendar-fill",
+        "ex-114-calendar-fill",
+        "ex-115-calendar-fill"
+      ]
+    },
+    {
+      "archetype": "comic-strip",
+      "format": "video",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-075-comic-strip",
+        "ex-098-comic-strip",
+        "ex-099-comic-strip"
+      ]
+    },
+    {
+      "archetype": "count-up-stats",
+      "format": "video",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-070-count-up-stats",
+        "ex-090-count-up-stats",
+        "ex-091-count-up-stats"
+      ]
+    },
+    {
+      "archetype": "kinetic-text",
+      "format": "video",
+      "count": 2,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-050-kinetic-text",
+        "ex-051-kinetic-text"
+      ]
+    },
+    {
+      "archetype": "leaderboard-roll",
+      "format": "video",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-085-leaderboard-roll",
+        "ex-116-leaderboard-roll",
+        "ex-117-leaderboard-roll"
+      ]
+    },
+    {
+      "archetype": "list-steps",
+      "format": "video",
+      "count": 2,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-052-list-steps",
+        "ex-053-list-steps"
+      ]
+    },
+    {
+      "archetype": "macro-ring",
+      "format": "video",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-077-macro-ring",
+        "ex-102-macro-ring",
+        "ex-103-macro-ring"
+      ]
+    },
+    {
+      "archetype": "metric-reveal",
+      "format": "video",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-046-metric-reveal",
+        "ex-048-metric-reveal",
+        "ex-049-metric-reveal"
+      ]
+    },
+    {
+      "archetype": "radar-stats",
+      "format": "video",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-072-radar-stats",
+        "ex-092-radar-stats",
+        "ex-093-radar-stats"
+      ]
+    },
+    {
+      "archetype": "scoreboard",
+      "format": "video",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-078-scoreboard",
+        "ex-104-scoreboard",
+        "ex-105-scoreboard"
+      ]
+    },
+    {
+      "archetype": "slot-roll",
+      "format": "video",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-081-slot-roll",
+        "ex-108-slot-roll",
+        "ex-109-slot-roll"
+      ]
+    },
+    {
+      "archetype": "split-panel",
+      "format": "video",
+      "count": 2,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-047-coach-portrait",
+        "ex-054-coach-portrait"
+      ]
+    },
+    {
+      "archetype": "sprint-trace",
+      "format": "video",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-083-sprint-trace",
+        "ex-112-sprint-trace",
+        "ex-113-sprint-trace"
+      ]
+    },
+    {
+      "archetype": "star-testimonial",
+      "format": "video",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-076-star-testimonial",
+        "ex-100-star-testimonial",
+        "ex-101-star-testimonial"
+      ]
+    },
+    {
+      "archetype": "stopwatch-countdown",
+      "format": "video",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-073-stopwatch-countdown",
+        "ex-094-stopwatch-countdown",
+        "ex-095-stopwatch-countdown"
+      ]
+    },
+    {
+      "archetype": "streak-counter",
+      "format": "video",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-080-streak-counter",
+        "ex-106-streak-counter",
+        "ex-107-streak-counter"
+      ]
+    },
+    {
+      "archetype": "tier-list",
+      "format": "video",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-082-tier-list",
+        "ex-110-tier-list",
+        "ex-111-tier-list"
+      ]
+    },
+    {
+      "archetype": "training-scene",
+      "format": "video",
+      "count": 2,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-057-training-scene",
+        "ex-058-training-scene"
+      ]
+    },
+    {
+      "archetype": "ugc-selfie",
+      "format": "video",
+      "count": 2,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-060-ugc-selfie",
+        "ex-061-ugc-selfie"
+      ]
+    },
+    {
+      "archetype": "velocity-gauge",
+      "format": "video",
+      "count": 3,
+      "norm": 1.0,
+      "memberIds": [
+        "ex-087-velocity-gauge",
+        "ex-118-velocity-gauge",
+        "ex-119-velocity-gauge"
+      ]
+    }
+  ]
+}
