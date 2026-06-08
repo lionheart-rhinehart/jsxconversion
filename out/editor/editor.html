@@ -701,6 +701,14 @@
             .clip-switcher button{background:#222;color:#fff;border:0;border-radius:4px;padding:2px 9px;cursor:pointer;font-size:13px}
             .clip-switcher button:hover:not(:disabled){background:var(--red,#c4141d)}
             .clip-switcher button:disabled{opacity:.3;cursor:default}
+            /* "+ Add clip" = BROWSE mode: small/empty preview, the browser gets the room, last folder open.
+               (Edit mode = big preview to trim; toggled by the .add-mode class on #clipEditModal.) */
+            #clipAddHint{display:none;align-items:center;justify-content:center;gap:8px;height:60px;color:var(--muted,#9aa);font:600 13px ui-monospace,monospace;background:#0b0c0e;border:1px dashed #3a3d42;border-radius:8px;text-align:center;padding:0 12px}
+            .clip-modal.add-mode #clipStageHost{height:auto !important;min-height:0 !important}
+            .clip-modal.add-mode #clipStageHost #stage{display:none !important}
+            .clip-modal.add-mode #clipAddHint{display:flex}
+            .clip-modal.add-mode #trimPanel{display:none !important}
+            .clip-modal.add-mode .clip-swap-toggle{display:none !important}
           </style>
           <div class="panel-block" id="filmstripPanel" hidden>
             <h3 class="sec-title">Reel — clips in order</h3>
@@ -932,7 +940,7 @@
         <button type="button" id="clipModalClose" class="clip-modal-x" title="Close (Esc)">✕</button>
       </div>
       <div class="clip-modal-body">
-        <div id="clipStageHost"></div>
+        <div id="clipStageHost"><div id="clipAddHint">Pick a clip below to add it to your reel ↓</div></div>
         <div id="clipModalControls">
           <div id="clipTrimAudio"></div>
           <div class="clip-swap">
@@ -3185,7 +3193,7 @@
             const tw = document.createElement('span'); tw.className = 'kbar-tw';
             if (n.children.length) { tw.textContent = expanded[n.id] ? '▾' : '▸'; tw.onclick = () => { expanded[n.id] = !expanded[n.id]; renderTree(); }; }
             const name = document.createElement('span'); name.className = 'kbar-fname'; name.textContent = n.name; name.title = n.name;
-            name.onclick = () => { picked = { id: n.id, name: n.name }; renderTree(); syncButtons(); loadFiles(picked); };
+            name.onclick = () => { picked = { id: n.id, name: n.name }; state._lastKrakenWs = wsSel.value; state._lastKrakenFolder = n.id; renderTree(); syncButtons(); loadFiles(picked); };
             row.appendChild(tw); row.appendChild(name);
             tree.appendChild(row);
             if (n.children.length && expanded[n.id]) addNodes(n.children, depth + 1);
@@ -3205,6 +3213,22 @@
         picked = null; expanded = {}; syncButtons(); loadFiles(null);
         if (wsSel.value) loadFolders(wsSel.value); else { tree.hidden = true; tree.innerHTML = ''; }
       });
+
+      // Re-open a remembered workspace + folder (the "+ Add clip" browse mode calls this so
+      // the user lands on their last folder + its tiles, no re-navigating). Graceful no-op if
+      // the workspace isn't in the (live) list yet.
+      _krakenRestore = async (ws, folderId) => {
+        if (!ws || ![...wsSel.options].some((o) => o.value === ws)) return;
+        wsSel.value = ws;
+        await loadFolders(ws);
+        if (!folderId) return;
+        const f = folders.find((x) => x.id === folderId);
+        if (!f) return;
+        picked = { id: f.id, name: f.name };
+        const byId = new Map(folders.map((x) => [x.id, x]));
+        let pid = f.parent_id; while (pid) { expanded[pid] = true; pid = (byId.get(pid) || {}).parent_id; } // reveal ancestors
+        renderTree(); loadFiles(picked);
+      };
 
       // Whole-folder "Pull" was removed (it bulk-downloaded every file and hung on
       // large folders). Browse the folder's thumbnails and click ONE to place it
@@ -3405,6 +3429,20 @@
       if (body) body.hidden = !!collapsed;
       if (btn) btn.textContent = (collapsed ? '▸' : '▾') + ' Swap clip / browse media';
     }
+    // The clip pop-up has two layouts: ADD (browse a new clip — small/empty preview, big browser
+    // pre-opened to your last folder) and EDIT (trim the clip — big preview, browser collapsed).
+    let _krakenRestore = null;   // set by initKrakenBar; re-opens a remembered workspace+folder
+    function restoreLastKrakenFolder() {
+      if (typeof _krakenRestore === 'function' && state._lastKrakenWs) _krakenRestore(state._lastKrakenWs, state._lastKrakenFolder);
+    }
+    function clipModalSetMode(mode) {
+      const mdl = $('clipEditModal'); if (!mdl) return;
+      state._clipModalMode = mode;
+      mdl.classList.toggle('add-mode', mode === 'add');
+      const h = mdl.querySelector('.clip-modal-head h2'); if (h) h.textContent = mode === 'add' ? 'Add a clip' : 'Edit clip';
+      if (mode === 'add') { setClipSwapCollapsed(false); restoreLastKrakenFolder(); }   // browser open, last folder
+      else { setClipSwapCollapsed(true); }                                              // preview big, browser collapsed
+    }
     function clipModalOpen() {
       if (!state.config) return;
       captureClipHomes();
@@ -3412,10 +3450,10 @@
       const ta = $('clipTrimAudio');
       ['trimPanel'].forEach((id) => { const el = $(id); if (el) ta.appendChild(el); }); // music is reel-level → stays in the Media tab
       $('clipSwapBody').appendChild($('photoSwapPanel'));
-      // For a reel, the user came here to ADD/REPLACE a clip → show the browser open;
-      // for a lone clip, keep it collapsed (just trim). (Add-mode always wants it open.)
-      setClipSwapCollapsed(!(state._addSegmentMode || isReel()));
       $('clipEditModal').hidden = false;
+      // ADD mode (came from "+"): small/empty preview + the browser open to the last folder.
+      // EDIT mode (clicked a clip): big preview to trim. clipModalSetMode handles the rest.
+      clipModalSetMode(state._addSegmentMode ? 'add' : 'edit');
       if (typeof selectElement === 'function') selectElement('_media');
       // Re-fit the relocated stage to the modal host (renderStage reads the new box),
       // then rebuild the transport + trim for the current clip.
@@ -3594,7 +3632,8 @@
     }
     function setMediaPhoto(newPath) {
       if (!state.config) return;
-      if (state._addSegmentMode) {            // +Add clip: this pick starts a NEW segment
+      const wasAdding = !!state._addSegmentMode;
+      if (wasAdding) {                        // +Add clip: this pick starts a NEW segment
         state._addSegmentMode = false;
         ensureSequence();
         state.config.sequence.push({ id: _segId(), media: { offsetX: 0, offsetY: 0, scale: 1, z: 0 }, elements: [], fixedDesign: [] });
@@ -3608,6 +3647,8 @@
       renderStage();
       renderProps();
       renderFilmstrip();
+      // Just ADDED a clip in the pop-up → flip browse-mode → edit-mode so the NEW clip shows big + trim.
+      if (wasAdding) { const mdl = $('clipEditModal'); if (mdl && !mdl.hidden && typeof clipModalSetMode === 'function') clipModalSetMode('edit'); }
     }
 
     // ── Clip-trim timeline (video background) ────────────────────────────────
