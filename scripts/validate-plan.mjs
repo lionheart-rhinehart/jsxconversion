@@ -38,6 +38,7 @@ import { loadExampleIndex, isAnyArchetype, archetypeForExample, exampleHasMedia,
 import { bindPlanExamples } from "./lib/bind-examples.mjs";
 import { mediaReuseProblems } from "./lib/uniqueness.mjs";
 import { readPerceptual } from "./lib/perceptual-merge.mjs";
+import { readTier2, tier2Violations } from "./lib/tier2-merge.mjs";
 
 const PROJECT_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const CAMPAIGNS_DIR = join(PROJECT_ROOT, "campaigns");
@@ -801,6 +802,19 @@ export function validatePlan(plan, opts = {}) {
     const v = { rule: "perceptualMergeError", severity: "block", message: `perceptual merge failed: ${e.message} — held for human`, fixHint: "inspect campaigns/<c>/perceptual.json" };
     campaignViolations.push(v); bump(v);
   }
+  // ── Tier-2 advisory panel (warn-only — NEVER blocks). Folds campaigns/<c>/tier2.json
+  // via the same file-read path so the persona panel reaches the review page. Wrapped
+  // so a tier2 bug can never break the gate; severity is "warn" by construction. ──
+  try {
+    const { byKey } = tier2Violations(readTier2(join(CAMPAIGNS_DIR, campaign)));
+    for (const [key, entry] of Object.entries(byKey)) {
+      const target = assets[key];
+      if (!target) continue;
+      target.tier2 = entry.tier2;
+      if (entry.warn) { target.violations.push(entry.warn); bump(entry.warn); }
+    }
+  } catch { /* Tier-2 is advisory — never break the gate on it */ }
+
   // Recompute PER-ASSET counts after the folds (review.html reads ve.blocking per card).
   // Top-level blocking/warnings stay maintained by bump() — one count per logical
   // violation — so the sentinel's per-card display copies are not double-counted there.

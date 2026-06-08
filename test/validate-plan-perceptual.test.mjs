@@ -89,3 +89,17 @@ test("T2.2: a corrupt perceptual.json degrades to a block, never throws the gate
     assert.ok(r.campaignViolations.some((v) => v.rule === "perceptualMergeError" && v.severity === "block"));
   } finally { c.cleanup(); }
 });
+
+test("T2.3: validatePlan folds tier2.json as a warn + attaches the panel; blocking UNCHANGED", () => {
+  const tier2 = { schemaVersion: 1, ranOk: true, assets: { "a/T1": {
+    mean: 2, disagreement: 3, personas: [{ persona: "perf", score: 1 }, { persona: "consumer", score: 4 }],
+  } } };
+  const c = tmpCampaign({ "tier2.json": tier2 });
+  try {
+    const r = validatePlan(legacy([tmplAsset]), { campaign: c.slug, grandfatherSet: new Set(), env: {} });
+    assert.equal(r.blocking, 0, "Tier-2 can never add a block");
+    assert.ok(r.assets["a/T1"].violations.some((v) => v.rule === "tier2" && v.severity === "warn"), "low-mean/split raises a warn");
+    assert.equal(r.assets["a/T1"].tier2.mean, 2, "the persona panel is attached for the review page");
+    assert.equal(r.assets["a/T1"].ok, true, "warn-only → the card stays approvable");
+  } finally { c.cleanup(); }
+});

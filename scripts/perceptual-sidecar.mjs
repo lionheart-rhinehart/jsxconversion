@@ -106,6 +106,11 @@ function main() {
 
     const doc = buildPerceptual({ campaign, embed, slop });
     writePerceptual(campDir, doc);
+
+    // Stage 3: Tier-2 advisory persona panel (#T2.3, optional/fail-soft → tier2.json;
+    // validatePlan folds it warn-only). Never affects the perceptual blocks above.
+    runPy("tier2_eval.py", campaign);
+
     rmSync(posterDir, { recursive: true, force: true });
 
     const blocks = Object.values(doc.assets).reduce((n, a) => n + a.violations.filter((v) => v.severity === "block").length, 0);
