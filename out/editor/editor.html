@@ -1472,7 +1472,7 @@
         vid.className = 'preview';
         // Muted for autoplay-on-load (browser policy); becomes audible once the user
         // presses play (previewAudioUnlocked) AND "Clip audio" is on AND no picked music.
-        vid.muted = !(state.previewAudioUnlocked && media.audio && !(state.config && state.config.audio));
+        vid.muted = !!state.previewMuted || !(state.previewAudioUnlocked && media.audio && !(state.config && state.config.audio));
         vid.playsInline = true; vid.preload = 'auto';
         vid.style.cssText = 'position:absolute;left:0;top:0;display:block;width:' + W + 'px;height:' + H + 'px;object-fit:cover;user-select:none;pointer-events:none;';
         vid.src = state.mediaBase + media.path.replace(/^\.\//, '');
@@ -3904,6 +3904,7 @@
       // source[startAt + outputTime], and state.previewTime is the output time, so seeking
       // to startAt + previewTime keeps the preview music in step with the looping video.
       try { el.currentTime = (a.startAt || 0) + (Number(state.previewTime) || 0); } catch (e) {}
+      el.muted = !!state.previewMuted; // honor the preview mute toggle
       el.play().catch(() => {});
       $('audioPlay').textContent = '❚❚';
       const tick = () => { updateAudioReadouts(); if (!el.paused) _audio.raf = requestAnimationFrame(tick); };
@@ -4350,7 +4351,7 @@
       const v = state._previewVideo;
       if (v) {
         try {
-          v.muted = !(m && m.audio && !(state.config && state.config.audio)); // hear clip audio (muted when music is picked)
+          v.muted = !!state.previewMuted || !(m && m.audio && !(state.config && state.config.audio)); // hear clip audio (muted when music is picked / preview-muted)
           const pt = Number(state.previewTime) || 0;
           if (looping) { state._loopBase = Math.floor(pt / winLen) * winLen; v.currentTime = cs + (pt % winLen); }
           else { v.currentTime = cs + pt; }
@@ -4366,6 +4367,14 @@
     function togglePreview() { state.previewPlaying ? pausePreview() : playPreview(); }
     function syncTransportBtn() { const b = $('transportPlay'); if (b) b.textContent = state.previewPlaying ? '❚❚' : '▶'; }
     function updateTransportPlayhead() { const ph = $('transportPlayhead'); const D = previewDur(); if (!ph || !D) return; ph.style.left = Math.max(0, Math.min(100, (state.previewTime / D) * 100)) + '%'; }
+    // Preview-only mute (does NOT affect the render). When muted, force both the stage
+    // video and the music element silent; when un-muted, fall back to the normal rule.
+    function applyPreviewMute() {
+      const m = state.config && state.config.media;
+      const v = state._previewVideo;
+      if (v) v.muted = !!state.previewMuted || !(state.previewAudioUnlocked && m && m.audio && !(state.config && state.config.audio));
+      const el = $('audioEl'); if (el) el.muted = !!state.previewMuted;
+    }
     // renderStage wipes #stage, so (re)build the transport each render (video only).
     function renderTransport() {
       const stage = $('stage'); if (!stage) return;
@@ -4403,7 +4412,11 @@
       track.addEventListener('pointerdown', (e) => { dragging = true; track.setPointerCapture && track.setPointerCapture(e.pointerId); seekToPx(e.clientX); });
       track.addEventListener('pointermove', (e) => { if (dragging) seekToPx(e.clientX); });
       track.addEventListener('pointerup', () => { dragging = false; });
-      bar.appendChild(play); if (loopBadge) bar.appendChild(loopBadge); bar.appendChild(track); stage.appendChild(bar);
+      const mute = document.createElement('button'); mute.id = 'transportMute'; mute.type = 'button';
+      mute.textContent = state.previewMuted ? '🔇' : '🔊';
+      mute.title = 'Mute / unmute the preview (does not affect the render)';
+      mute.onclick = () => { state.previewMuted = !state.previewMuted; applyPreviewMute(); mute.textContent = state.previewMuted ? '🔇' : '🔊'; };
+      bar.appendChild(play); if (loopBadge) bar.appendChild(loopBadge); bar.appendChild(track); bar.appendChild(mute); stage.appendChild(bar);
       updateTransportPlayhead();
     }
 
