@@ -185,8 +185,14 @@ export async function renderLayerConfigVideo(opts) {
   const cs = Math.max(0, Number(media.clipStart ?? media.videoStartTime) || 0);
   const ceRaw = media.clipEnd;
   const ce = (typeof ceRaw === "number" && ceRaw > cs) ? ceRaw : null;
-  let D = Number(duration) || (ce != null ? (ce - cs) : null) || Number(config.durationSeconds) || 6;
-  D = Math.max(1, Math.min(30, D)); // floor 1s, cap 30s so a long source can't OOM the capture
+  // winLen = the trimmed SLICE we extract to frames; D = the OUTPUT length. Normally
+  // they're equal. When media.loop is on, D = media.loopSeconds can EXCEED winLen and
+  // the frame-sync driver wraps (loops) the winLen frames to fill D — so a short clip
+  // becomes a longer looped video with no extra frames captured.
+  let winLen = Number(duration) || (ce != null ? (ce - cs) : null) || Number(config.durationSeconds) || 6;
+  winLen = Math.max(1, Math.min(30, winLen)); // floor 1s, cap 30s so a long source can't OOM the capture
+  const looping = !!(media.loop && Number(media.loopSeconds) > 0);
+  let D = looping ? Math.max(1, Math.min(30, Number(media.loopSeconds))) : winLen;
   const totalFrames = Math.round(D * fps);
 
   // ── 3) staging dir ───────────────────────────────────────────────────────
@@ -223,7 +229,7 @@ export async function renderLayerConfigVideo(opts) {
   mkdirSync(bgFramesDir, { recursive: true });
   const ffArgs = ["-y", "-loglevel", "error"];
   if (cs > 0) ffArgs.push("-ss", String(cs));
-  ffArgs.push("-i", absBg, "-t", String(D), "-vf", `fps=${fps}`, join(bgFramesDir, "%05d.png"));
+  ffArgs.push("-i", absBg, "-t", String(winLen), "-vf", `fps=${fps}`, join(bgFramesDir, "%05d.png"));
   const ff = spawnSync("ffmpeg", ffArgs, { encoding: "utf8" });
   const frameCount = ff.status === 0
     ? readdirSync(bgFramesDir).filter((f) => f.endsWith(".png")).length
@@ -319,7 +325,9 @@ ${BG_SYNC_PATCH}
     // [clipStart, clipStart+D] window the frames came from. Small fade-out avoids a
     // hard cut at the loop point.
     const clipAudio = { src: media.path, startAt: cs, volume: 1.0, fadeIn: 0, fadeOut: 0.3 };
-    const muxed = muxAudioIntoVideo({ videoPath: producedMp4, audio: clipAudio, duration: D, projectRoot, templateDir });
+    // When looping, the clip's own audio repeats in step with the picture (the [cs, cs+winLen]
+    // slice looped to fill D); otherwise it plays once over D (= winLen).
+    const muxed = muxAudioIntoVideo({ videoPath: producedMp4, audio: clipAudio, duration: D, loopSlice: looping ? winLen : 0, projectRoot, templateDir });
     if (!muxed.ok) console.error(`[layer-video]   note: ${id} native clip-audio mux skipped — ${muxed.reason}`);
   }
 
@@ -346,7 +354,7 @@ ${BG_SYNC_PATCH}
 // captures with playing:false), so this is the ONLY audio path for the creative.
 // We honor the same startAt/volume/fade fields MusicSync uses, trim the audio to
 // the video duration, and copy the video stream untouched (re-encode audio only).
-function muxAudioIntoVideo({ videoPath, audio, duration, projectRoot, templateDir }) {
+function muxAudioIntoVideo({ videoPath, audio, duration, loopSlice, projectRoot, templateDir }) {
   const absAudio = resolveMediaAbs({ path: audio.src, templateDir, projectRoot });
   if (!absAudio) return { ok: false, reason: `audio not found: ${audio.src}` };
   const startAt = Math.max(0, Number(audio.startAt) || 0);
@@ -358,13 +366,33 @@ function muxAudioIntoVideo({ videoPath, audio, duration, projectRoot, templateDi
   if (fadeOut > 0) af.push(`afade=t=out:st=${Math.max(0, duration - fadeOut)}:d=${fadeOut}`);
   af.push(`volume=${volume}`);
   const tmp = videoPath.replace(/\.mp4$/i, ".muxed.mp4");
-  const args = ["-y", "-loglevel", "error", "-i", videoPath];
-  if (startAt > 0) args.push("-ss", String(startAt));
-  args.push("-i", absAudio, "-t", String(duration),
-    "-filter:a", af.join(","),
-    "-map", "0:v:0", "-map", "1:a:0",
-    "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", tmp);
+  const loopLen = Number(loopSlice) > 0 ? Number(loopSlice) : 0;
+  let sliceFile = null;
+  let args;
+  if (loopLen > 0) {
+    // Loop the clip's [startAt, startAt+loopLen] audio slice to fill `duration`, so the
+    // sound repeats in step with the looping picture. Pre-extract the slice (so -ss is
+    // applied once), then -stream_loop it; -t caps the output to `duration`.
+    sliceFile = videoPath.replace(/\.mp4$/i, ".aslice.m4a");
+    const exSlice = spawnSync("ffmpeg", ["-y", "-loglevel", "error", "-ss", String(startAt), "-t", String(loopLen), "-i", absAudio, "-vn", "-c:a", "aac", "-b:a", "192k", sliceFile], { encoding: "utf8" });
+    if (exSlice.status !== 0 || !existsSync(sliceFile)) {
+      rmSync(sliceFile, { force: true });
+      return { ok: false, reason: "audio slice extract failed" };
+    }
+    args = ["-y", "-loglevel", "error", "-i", videoPath, "-stream_loop", "-1", "-i", sliceFile, "-t", String(duration),
+      "-filter:a", af.join(","),
+      "-map", "0:v:0", "-map", "1:a:0",
+      "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", tmp];
+  } else {
+    args = ["-y", "-loglevel", "error", "-i", videoPath];
+    if (startAt > 0) args.push("-ss", String(startAt));
+    args.push("-i", absAudio, "-t", String(duration),
+      "-filter:a", af.join(","),
+      "-map", "0:v:0", "-map", "1:a:0",
+      "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", tmp);
+  }
   const ex = spawnSync("ffmpeg", args, { encoding: "utf8" });
+  if (sliceFile) rmSync(sliceFile, { force: true });
   if (ex.status !== 0 || !existsSync(tmp)) {
     const tail = String(ex.stderr || ex.error?.message || "").trim().split(/\r?\n/).filter(Boolean).slice(-2).join(" | ");
     rmSync(tmp, { force: true });

@@ -780,6 +780,15 @@
               <button type="button" class="trim-audio-btn on" id="trimAudioMuted">Muted</button>
               <button type="button" class="trim-audio-btn" id="trimAudioNative">Clip audio</button>
             </div>
+            <div class="trim-audio" id="trimLoopRow">
+              <span class="trim-audio-label">Loop</span>
+              <button type="button" class="trim-audio-btn on" id="trimLoopOff">Off</button>
+              <button type="button" class="trim-audio-btn" id="trimLoopOn" title="Repeat this clip to a chosen length">🔁 Loop</button>
+              <span id="trimLoopFields" style="display:none;align-items:center;gap:4px;margin-left:6px">
+                <input type="number" id="trimLoopSecs" min="1" max="30" step="0.5" value="6" style="width:54px;font-size:11px;background:var(--bg);border:1px solid var(--border);color:var(--fg);border-radius:3px;padding:2px 4px"> s
+              </span>
+            </div>
+            <div class="trim-hint" id="trimLoopNote" style="display:none"></div>
           </div>
           <div class="panel-block" id="fgPanel" style="display: none;">
             <h3 class="sec-title">Foreground (cutout)</h3>
@@ -3481,6 +3490,17 @@
         const native = !!m.audio;
         $('trimAudioMuted').classList.toggle('on', !native);
         $('trimAudioNative').classList.toggle('on', native);
+        // Loop state
+        const lp = !!(m.loop && Number(m.loopSeconds) > 0);
+        $('trimLoopOff').classList.toggle('on', !lp);
+        $('trimLoopOn').classList.toggle('on', lp);
+        $('trimLoopFields').style.display = lp ? 'inline-flex' : 'none';
+        if (lp) $('trimLoopSecs').value = m.loopSeconds;
+        const note = $('trimLoopNote');
+        if (note) {
+          if (lp) { const wl = (m.clipEnd != null && m.clipEnd > (m.clipStart || 0)) ? (m.clipEnd - (m.clipStart || 0)) : null; note.style.display = ''; note.textContent = 'Renders as a ' + (+m.loopSeconds) + 's loop' + (wl ? ' of a ' + wl.toFixed(1) + 's clip' : '') + '.'; }
+          else { note.style.display = 'none'; }
+        }
       });
       wireTrimOnce();
     }
@@ -3547,6 +3567,25 @@
       };
       $('trimAudioMuted').addEventListener('click', () => setAudio(false));
       $('trimAudioNative').addEventListener('click', () => setAudio(true));
+      // Loop: repeat the trimmed clip to a chosen output length (render-side; the
+      // frame driver already wraps, so this just sets media.loop + media.loopSeconds).
+      const setLoop = (on) => {
+        const m = state.config && state.config.media; if (!m) return;
+        snapshotForUndo();
+        if (on) { m.loop = true; if (!(Number(m.loopSeconds) > 0)) m.loopSeconds = 6; }
+        else { m.loop = false; }
+        renderTrimPanel(m);
+        setStatus(on ? ('Loop on — renders as a ' + (+m.loopSeconds) + 's video. Save + Render to apply.') : 'Loop off — renders at the trim length. Save + Render to apply.');
+      };
+      $('trimLoopOff').addEventListener('click', () => setLoop(false));
+      $('trimLoopOn').addEventListener('click', () => setLoop(true));
+      $('trimLoopSecs').addEventListener('input', (e) => {
+        const m = state.config && state.config.media; if (!m) return;
+        const v = Math.max(1, Math.min(30, Number(e.target.value) || 6));
+        m.loopSeconds = v;
+        const note = $('trimLoopNote');
+        if (note && m.loop) { const wl = (m.clipEnd != null && m.clipEnd > (m.clipStart || 0)) ? (m.clipEnd - (m.clipStart || 0)) : null; note.textContent = 'Renders as a ' + v + 's loop' + (wl ? ' of a ' + wl.toFixed(1) + 's clip' : '') + '.'; }
+      });
     }
 
     // Media-specific input bindings
