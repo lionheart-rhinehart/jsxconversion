@@ -14,13 +14,17 @@
 // ============================================================================
 import { spawn } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
-import { configHasVideoBackground } from "./layer-config-video.mjs";
+import { configHasVideoBackground, configHasSequence } from "./layer-config-video.mjs";
 
 // Pure dispatch decision — exported so it can be unit-tested without spawning.
+// A video background OR a multi-clip sequence both route to layer-config-video.mjs
+// (its CLI then dispatches single-clip vs. renderMultiClipSequence).
 export function chooseRender({ id, jsxPath, configPath }) {
   let videoBg = false;
-  try { videoBg = !!(configPath && existsSync(configPath) && configHasVideoBackground(JSON.parse(readFileSync(configPath, "utf8")))); }
-  catch { videoBg = false; }
+  try {
+    const cfg = configPath && existsSync(configPath) ? JSON.parse(readFileSync(configPath, "utf8")) : null;
+    videoBg = !!(cfg && (configHasVideoBackground(cfg) || configHasSequence(cfg)));
+  } catch { videoBg = false; }
   return videoBg
     ? { videoBg: true, format: "video", outPath: `out/${id}.mp4`, args: ["scripts/lib/layer-config-video.mjs", configPath, `--id=${id}`] }
     : { videoBg: false, format: "image", outPath: `out/${id}.png`, args: [".claude/skills/jsx-to-mp4/scripts/render.mjs", jsxPath] };

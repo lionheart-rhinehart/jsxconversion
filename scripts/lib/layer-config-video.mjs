@@ -137,6 +137,26 @@ export function configHasVideoBackground(config) {
   return !!(config && config.media && config.media.path && VID_RE.test(String(config.media.path)));
 }
 
+// Multi-clip reel: config.sequence is an array of segments, each with its own
+// media (clip + trim/loop) + per-segment elements/fixedDesign (captions/shapes).
+// The render keys on THIS first (config.media in a reel is only the editor's edit
+// subject). True when at least one segment has a video clip.
+export function configHasSequence(config) {
+  return !!(config && Array.isArray(config.sequence) && config.sequence.length >= 1
+    && config.sequence.some((s) => s && s.media && s.media.path && VID_RE.test(String(s.media.path))));
+}
+
+// One segment's OUTPUT duration — mirrors the single-clip winLen/D rule
+// (loop ? loopSeconds : trim length), so a short clip can loop to fill a slot.
+function segmentDuration(seg) {
+  const m = (seg && seg.media) || {};
+  const cs = Math.max(0, Number(m.clipStart ?? m.videoStartTime) || 0);
+  const ce = (typeof m.clipEnd === "number" && m.clipEnd > cs) ? m.clipEnd : null;
+  const winLen = Math.max(1, Math.min(30, (ce != null ? (ce - cs) : null) || Number(m.durationSeconds) || 6));
+  const looping = !!(m.loop && Number(m.loopSeconds) > 0);
+  return looping ? Math.max(1, Math.min(30, Number(m.loopSeconds))) : winLen;
+}
+
 // ── renderLayerConfigVideo ───────────────────────────────────────────────────
 //  opts:
 //    id           output basename → out/<id>.mp4 (or .gif)
@@ -415,6 +435,77 @@ function mp4ToGif(mp4Path, gifPath) {
   return p2.status === 0;
 }
 
+// ── renderMultiClipSequence ──────────────────────────────────────────────────
+//  Stitch config.sequence[] into ONE reel: render each segment via the existing
+//  single-clip path (SILENT — per-seg captions baked, no per-seg audio), ffmpeg
+//  concat-demuxer them (identical codec/fps/dims → clean -c copy, no re-encode),
+//  then mux ONE master track (config.audio) over the whole reel. Hard cuts (v1).
+//  Returns the same shape as renderLayerConfigVideo ({ ok, produced, ext, reason }).
+export async function renderMultiClipSequence(opts) {
+  const {
+    id, config, templateDir,
+    projectRoot = PROJECT_ROOT,
+    outDir = join(PROJECT_ROOT, "out"),
+    fps = 30,
+    audio = null,
+    wantGif = false,
+  } = opts;
+  if (!id) throw new Error("renderMultiClipSequence: id required");
+  if (!templateDir) throw new Error("renderMultiClipSequence: templateDir required");
+  const segs = (config && Array.isArray(config.sequence)) ? config.sequence : [];
+  if (!segs.length) return { ok: false, reason: "config.sequence is empty", stagingDir: null };
+
+  mkdirSync(outDir, { recursive: true });
+  const segFiles = [];
+  let reelTotal = 0;
+  const cleanup = () => segFiles.forEach((f) => { try { rmSync(f, { force: true }); } catch (_) {} });
+
+  // 1) render each segment to its own SILENT mp4 (captions baked per segment)
+  for (let i = 0; i < segs.length; i++) {
+    const seg = segs[i];
+    if (!seg || !seg.media || !seg.media.path) { cleanup(); return { ok: false, reason: `segment ${i + 1} has no media`, stagingDir: null }; }
+    const segId = `${id}__seg${i + 1}`;
+    const segConfig = {
+      width: config.width, height: config.height,
+      media: seg.media,
+      elements: Array.isArray(seg.elements) ? seg.elements : [],
+      fixedDesign: Array.isArray(seg.fixedDesign) ? seg.fixedDesign : [],
+      // NO audio here — the master track is muxed once over the whole reel below.
+    };
+    const r = await renderLayerConfigVideo({ id: segId, config: segConfig, templateDir, projectRoot, outDir, fps, audio: null });
+    if (!r.ok) { cleanup(); return { ok: false, reason: `segment ${i + 1} render failed: ${r.reason}`, stagingDir: null }; }
+    segFiles.push(join(outDir, `${segId}.mp4`));
+    reelTotal += segmentDuration(seg);
+  }
+
+  // 2) concat-demuxer the silent segments → out/<id>.mp4 (stream copy, no re-encode)
+  const listFile = join(outDir, `${id}.concat.txt`);
+  writeFileSync(listFile, segFiles.map((f) => `file '${f.replace(/\\/g, "/").replace(/'/g, "'\\''")}'`).join("\n") + "\n");
+  const reelOut = join(outDir, `${id}.mp4`);
+  const cc = spawnSync("ffmpeg", ["-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", listFile, "-c", "copy", reelOut], { encoding: "utf8" });
+  rmSync(listFile, { force: true });
+  cleanup();
+  if (cc.status !== 0 || !existsSync(reelOut)) {
+    const tail = String(cc.stderr || cc.error?.message || "").trim().split(/\r?\n/).filter(Boolean).slice(-2).join(" | ");
+    return { ok: false, reason: "concat failed: " + (tail || "ffmpeg"), stagingDir: null };
+  }
+
+  // 3) ONE master track over the whole reel (config.audio); silent if absent.
+  if (audio && audio.src) {
+    const m = muxAudioIntoVideo({ videoPath: reelOut, audio, duration: reelTotal, loopSlice: 0, projectRoot, templateDir });
+    if (!m.ok) return { ok: false, reason: "master audio mux failed: " + m.reason, stagingDir: null };
+  }
+
+  // 4) optional GIF
+  let produced = reelOut, ext = "mp4";
+  if (wantGif) {
+    const gif = reelOut.replace(/\.mp4$/i, ".gif");
+    if (mp4ToGif(reelOut, gif)) { rmSync(reelOut, { force: true }); produced = gif; ext = "gif"; }
+    else return { ok: false, reason: "gif conversion failed", stagingDir: null };
+  }
+  return { ok: true, produced, ext, reason: "ok", segments: segs.length, reelTotal, stagingDir: null };
+}
+
 // ── CLI (the Phase-C spike): node layer-config-video.mjs <config.json> [--id=…] ──
 //   <config.json> is a layer config whose media.path is a video. The CLI resolves
 //   ./assets/.. against the config's own folder.
@@ -434,17 +525,20 @@ function mainCli() {
   const config = JSON.parse(readFileSync(absConfig, "utf8"));
   const templateDir = dirname(absConfig);
   const id = flag("id", basename(absConfig).replace(/\.config\.json$|\.json$/i, ""));
-  renderLayerConfigVideo({
-    id,
-    config,
-    templateDir,
-    duration: flag("duration") ? Number(flag("duration")) : null,
-    // Audio rides along on the config (the editor's A2 audio picker writes
-    // config.audio = { src, startAt, volume, fadeIn, fadeOut }). Silent if absent.
-    audio: (config && config.audio && config.audio.src) ? config.audio : null,
-    wantGif: args.includes("--gif"),
-    keepStaging: args.includes("--keep"),
-  }).then((res) => {
+  // Audio rides along on the config (the editor's A2 picker writes
+  // config.audio = { src, startAt, volume, fadeIn, fadeOut }). Silent if absent.
+  const cfgAudio = (config && config.audio && config.audio.src) ? config.audio : null;
+  // A reel (config.sequence) routes to the multi-clip renderer; else the single clip.
+  const task = configHasSequence(config)
+    ? renderMultiClipSequence({ id, config, templateDir, audio: cfgAudio, wantGif: args.includes("--gif") })
+    : renderLayerConfigVideo({
+        id, config, templateDir,
+        duration: flag("duration") ? Number(flag("duration")) : null,
+        audio: cfgAudio,
+        wantGif: args.includes("--gif"),
+        keepStaging: args.includes("--keep"),
+      });
+  task.then((res) => {
     console.log(JSON.stringify(res, null, 2));
     process.exit(res.ok ? 0 : 1);
   }).catch((e) => {
