@@ -51,7 +51,7 @@ def main():
     examples = index.get("examples", {})
     arch_of = {eid: e.get("archetype") for eid, e in examples.items()}
 
-    archetypes, formats, centroids, rows = [], [], [], []
+    archetypes, formats, centroids, dino_centroids, rows = [], [], [], [], []
     embedder = None
 
     for fmt, npz_path, artifact_path in SOURCES:
@@ -61,6 +61,7 @@ def main():
         d = np.load(npz_path, allow_pickle=True)
         ids = [str(x) for x in d["ids"]]
         combined = np.asarray(d["combined"], dtype=np.float32)
+        dino = np.asarray(d["dino"], dtype=np.float32)   # [PL-3] structure-only (brand-agnostic) for #15
         # embedder tag — every source must agree (same CLIP+DINO run)
         emb = json.loads(artifact_path.read_text(encoding="utf-8")).get("embedder") if artifact_path.exists() else None
         if embedder is None:
@@ -85,9 +86,11 @@ def main():
             members = groups[a]
             vecs = l2(combined[members])                 # re-normalize each member
             centroid = l2(np.mean(vecs, axis=0, keepdims=True))[0]  # mean then unit
+            dino_centroid = l2(np.mean(l2(dino[members]), axis=0, keepdims=True))[0]  # [PL-3] DINOv2-only
             archetypes.append(a)
             formats.append(fmt)
             centroids.append(centroid.astype(np.float32))
+            dino_centroids.append(dino_centroid.astype(np.float32))
             rows.append({
                 "archetype": a, "format": fmt, "count": len(members),
                 "norm": round(float(np.linalg.norm(centroid)), 6),
@@ -99,12 +102,14 @@ def main():
         return 2
 
     C = np.vstack(centroids).astype(np.float32)
+    DC = np.vstack(dino_centroids).astype(np.float32)   # [PL-3] DINOv2-only centroids
     dim = int(C.shape[1])
 
     if selfcheck:
         norms = np.linalg.norm(C, axis=1)
-        bad = int(np.sum(np.abs(norms - 1.0) > 1e-4))
-        log(f"selfcheck: {len(rows)} centroids, dim={dim}, embedder={embedder}, non-unit={bad}")
+        dnorms = np.linalg.norm(DC, axis=1)
+        bad = int(np.sum(np.abs(norms - 1.0) > 1e-4)) + int(np.sum(np.abs(dnorms - 1.0) > 1e-4))
+        log(f"selfcheck: {len(rows)} centroids (combined dim={dim}, dino dim={DC.shape[1]}), embedder={embedder}, non-unit={bad}")
         assert bad == 0, "every centroid must be unit-norm"
         log("selfcheck OK")
         return 0
@@ -112,7 +117,8 @@ def main():
     np.savez_compressed(
         OUT_NPZ,
         archetypes=np.array(archetypes), formats=np.array(formats),
-        centroids=C, embedder=np.array(embedder or "unknown"), dim=np.array(dim), seed=np.array(42),
+        centroids=C, dino_centroids=DC,
+        embedder=np.array(embedder or "unknown"), dim=np.array(dim), dino_dim=np.array(int(DC.shape[1])), seed=np.array(42),
     )
     OUT_JSON.write_text(json.dumps({
         "note": "Per-(archetype, format) example centroids for cluster-adherence (#15). Vectors live in _archetype-centroids.npz; this is the human-readable manifest. Built by build_centroids.py from the example embeddings — NOT hand-edited.",

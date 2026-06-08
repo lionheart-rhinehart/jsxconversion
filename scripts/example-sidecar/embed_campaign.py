@@ -58,6 +58,12 @@ def main():
     cen_arch = [str(x) for x in cz["archetypes"]]
     cen_fmt = [str(x) for x in cz["formats"]]
     cen_vecs = l2(np.asarray(cz["centroids"], dtype=np.float32))
+    # [PL-3] cluster-adherence (#15) uses DINOv2-ONLY centroids (structure, brand-agnostic):
+    # the archetype is a LAYOUT family, and CLIP carries brand color/text — so a blue franchisee
+    # action-hero would read "off-lane" vs red AA centroids on COLOR, not structure. DINOv2 is the
+    # color-blind structure embedder, so it judges the lane by layout, not brand. (Distinctness #14
+    # stays combined — Meta collapses on semantics+color too.) Fallback to combined for old files.
+    cen_dino = l2(np.asarray(cz["dino_centroids"], dtype=np.float32)) if "dino_centroids" in cz.files else cen_vecs
     cen_embedder = str(cz["embedder"])
 
     # load + blank-drop — supporting MULTI-FRAME video items (3-frame sampling for #15):
@@ -107,7 +113,8 @@ def main():
         if rows:
             per = []
             for r in ridxs:
-                sims = {cen_arch[i]: float(np.dot(comb[r], cen_vecs[i])) for i in rows}
+                # adherence on the DINOv2 (structure) axis — brand-agnostic [PL-3]
+                sims = {cen_arch[i]: float(np.dot(dino[r], cen_dino[i])) for i in rows}
                 nearest = max(sims, key=sims.get)
                 per.append({"r": r, "sims": sims, "nearest": nearest, "assigned": sims.get(arch)})
             assigned_has_centroid = arch in (cen_arch[i] for i in rows)
