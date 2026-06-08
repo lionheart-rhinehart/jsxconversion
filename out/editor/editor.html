@@ -3900,7 +3900,10 @@
       const ce = (typeof m.clipEnd === 'number' && m.clipEnd > cs) ? m.clipEnd : null;
       const D = (Number(total) > 0) ? Number(total) : (ce != null ? (ce - cs) : (_audio.dur || 6));
       el.volume = a.volume != null ? a.volume : 0.85;
-      try { el.currentTime = a.startAt || 0; } catch (e) {}
+      // Align the music to the video's CURRENT output position: the render plays
+      // source[startAt + outputTime], and state.previewTime is the output time, so seeking
+      // to startAt + previewTime keeps the preview music in step with the looping video.
+      try { el.currentTime = (a.startAt || 0) + (Number(state.previewTime) || 0); } catch (e) {}
       el.play().catch(() => {});
       $('audioPlay').textContent = '❚❚';
       const tick = () => { updateAudioReadouts(); if (!el.paused) _audio.raf = requestAnimationFrame(tick); };
@@ -3923,9 +3926,25 @@
       state.previewPlaying = true; if (typeof syncTransportBtn === 'function') syncTransportBtn();
       const vid = document.querySelector('#stage video');
       const cs = Math.max(0, Number((state.config.media || {}).clipStart) || 0);
+      // Restart from the loop start so video (cs) + music (startAt + 0) align.
+      state.previewTime = 0; state._loopBase = 0;
       if (vid) { try { vid.currentTime = cs; } catch (e) {} vid.play && vid.play().catch(() => {}); }
       startMusicWithClip(previewDur());
     }
+    // Attach the picked music to the stage preview. The video autoplays muted (browsers
+    // block autoplay sound), so on the FIRST/any interaction OUTSIDE the audio panel, if
+    // the preview is playing + a music track is set + the music isn't already going, start
+    // it in sync with the video you're watching. (Clicks inside #audioPanel are left to the
+    // picker's own ▶/scrub.)
+    document.addEventListener('click', (e) => {
+      if (e.target && e.target.closest && e.target.closest('#audioPanel')) return;
+      const a = state.config && state.config.audio;
+      const el = $('audioEl');
+      if (state.previewPlaying && a && a.src && el && el.paused && typeof startMusicWithClip === 'function') {
+        state.previewAudioUnlocked = true;
+        startMusicWithClip(previewDur());
+      }
+    });
 
     // ── Draw / annotate (Phase D) ────────────────────────────────────────────
     // Two modes. CREATIVE: draw ellipse/line/arrow/freehand shapes that become
