@@ -47,8 +47,8 @@ bank's own file shape so it is **promotable**. This is invoked per-asset by
   `color`; captions carry the whole message (mute viewing).
 
 ## Example-guided (the generation contract — Track A)
-`/creative-engine` selects an EXAMPLE for this asset (via `scripts/lib/example-select.mjs`) and stamps
-`asset.exampleId` + `asset.archetype` before invoking you. Build **guided by that example**:
+`/creative-engine` selects an EXAMPLE for this asset (in CODE, via `node scripts/bind-examples.mjs`) and
+stamps `asset.exampleId` + `asset.archetype` before invoking you. Build **guided by that example**:
 - Read the example's `sourcePath` `.jsx` (look it up in `templates/_example-index.json` by
   `asset.exampleId`) as the **structural reference** — same archetype / layout family — and its
   `renderedImagePath` for the visual target. You are building *"a creative shaped like this example,
@@ -58,9 +58,12 @@ bank's own file shape so it is **promotable**. This is invoked per-asset by
   on a graphic design; give media large presence ONLY via a knockout **CUTOUT** on a color field or a
   ~45% **SPLIT-panel**; contained accent media **≤ ~20%** of the frame (varied position, never a
   full-width same-position band); **footage diversity is mandatory** (never reuse a clip); facility
-  imagery diversifies. (This rubric is GUIDANCE — it is not gated yet; compose to honor it.)
-- If this asset has **no `asset.exampleId`**, STOP and tell the engine to run its select step — the
-  compliance gate blocks an unbound fresh creative (`exampleBinding`).
+  imagery diversifies. **This rubric is now ENFORCED** — the `mediaFit` gate blocks full-bleed media on a
+  graphic/data-viz design and accent media over ~20%, and `mediaDiversity` blocks a reused clip. Also: a
+  creative MIRRORS its example's media — if the bound example is media-free (graphic/data-viz), the new
+  design may be too (Law #0 waives media-presence); if the example carries media, the new design must.
+- If this asset has **no `asset.exampleId`**, STOP and run `node scripts/bind-examples.mjs <campaign>` —
+  the compliance gate blocks an unbound fresh creative (`exampleBinding`).
 
 ## Must pass the compliance gate
 The fresh asset is validated like any other: after composing, `validate-plan.mjs` checks the

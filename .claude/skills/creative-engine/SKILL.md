@@ -238,27 +238,33 @@ doesn't read), and otherwise the **role-aware join** (`buildCopyByRole` → `ass
 `scripts/lib/`) routes headline/microscript onto the right role-slots.
 
 ### Step 4a — Example binding (fresh assets — the generation engine)
-For EACH `source:"fresh"` asset, BEFORE the gate, bind it to an example — in THIS order (order matters:
-the copy shape drives the fit). Static-only for now (motion generation is a later follow-up):
-1. **Assign `asset.archetype`** — choose the visual archetype for this creative from the beat + angle
-   intent (the closed list in `scripts/lib/example-library.mjs` `ARCHETYPES`). Pre-assign across the
-   angle's fresh assets so they don't collide on the same archetype (the variety cap enforces it).
-2. **Bind the copy** — set `asset.copyRefs` / `asset.hookRef` to the copy-library ids this creative
+For EACH `source:"fresh"` asset, BEFORE the gate, bind it to an example. CRITICAL: the SELECTION runs as
+CODE (`scripts/bind-examples.mjs`), NOT your own reasoning — so it can't be skipped or hand-picked, and
+the gate re-derives it and blocks any mismatch. Your job is only to assign the archetype + bind the copy;
+the code does the fit.
+1. **Assign `asset.archetype`** — choose the visual archetype for each fresh creative from the beat +
+   angle intent (`scripts/lib/example-library.mjs` `ARCHETYPES` for static, `MOTION_ARCHETYPES` for
+   video). Spread archetypes across the angle's fresh assets so they don't collide (the variety cap
+   enforces it). Match the archetype's MEANING to the angle (a velocity chart fits "getting faster," not
+   "more games").
+2. **Bind the copy** — set `asset.copyRefs` / `asset.hookRef` to the copy-library ids each creative
    carries (verbatim; selection ≠ authoring).
-3. **Select the example** — import `selectExample` from `scripts/lib/example-select.mjs` with
-   `{ archetype, asset, library, format: "static", usedExampleIds }`. It fits an example WITHIN the
-   assigned archetype to the copy's shape (the same ladder `fill` uses). **Null → STOP + flag** ("no
-   fitting example for archetype X — choose another archetype or add an example"); never force a mismatch.
-4. **Stamp** `asset.exampleId` + `asset.archetype` into the plan. At initial planning you write
-   `creative-plan.json` directly (Step 4), so stamp them there. (If you later RE-stamp via the
-   editor-server `/plan` route, those keys must be in its ALLOWED patch list — tracked as G2.) Record
-   used example ids per angle so the variety cap (`scripts/lib/uniqueness.mjs`, keyed on
-   archetype/exampleId + `repetitionCap`) stays satisfied.
-5. **Compose** — invoke `/compose-creative` for the asset; it reads the example by `asset.exampleId`,
-   builds guided by it, and sets `asset.template` (see Dispatch).
+3. **Write the plan** (Step 4) with `archetype` + `copyRefs`/`hookRef` on every fresh asset — but NOT
+   `exampleId` yet.
+4. **Run the code-driven selection: `node scripts/bind-examples.mjs <campaign>`.** It fits a real example
+   WITHIN each assigned archetype to that asset's copy shape (the same ladder `fill` uses) and stamps
+   `asset.exampleId` + `asset.archetype` back into `creative-plan.json`. A non-zero exit + a listed
+   "unbound" asset = no fitting example for that archetype → choose another archetype (or add an example);
+   NEVER force a mismatch. This is un-skippable: an unbound fresh asset is a HARD BLOCK at the gate
+   (`exampleBinding`), and a hand-faked id is blocked by `exampleBindingAuthentic` (the gate re-runs the
+   exact same selection and refuses an id it would not have produced). Re-run this after any plan reorder.
+5. **Compose** — invoke `/compose-creative` for each asset; it reads the example by `asset.exampleId`,
+   builds faithfully guided by it, and sets `asset.template` (see Dispatch).
 
-An unbound fresh asset (no `exampleId`) is a HARD BLOCK at the gate (`exampleBinding`) — Step 4a is not
-optional. (Marker-1 cluster-adherence + Marker-2 selection-time segment grouping are later follow-ups.)
+Step 4a is not optional. After render, run `node scripts/perceptual-sidecar.mjs <campaign>` so the vision
+gates (#15 cluster-adherence — did each creative build the archetype it was assigned? + #14 distinctness +
+#16 vision-slop) reach the review page; an absent perceptual.json on rendered generate-world work is itself
+a block. (The editor-server `/plan` ALLOWED += exampleId/archetype re-stamp path is tracked as G2.)
 
 ### Step 4b — Compliance gate (MANDATORY — do not skip)
 Before rendering proofs, validate the plan and **loop-fix until it is clean**:
