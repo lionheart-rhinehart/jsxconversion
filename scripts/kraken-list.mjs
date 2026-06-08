@@ -13,7 +13,7 @@
 //  go to stderr so stdout stays parse-clean for the spawning server.
 // ============================================================================
 
-import { loadWorkspaces, resolveWorkspaceId, listFolders, resolveFolder, listFolderMedia } from "./lib/kraken.mjs";
+import { loadWorkspaces, listWorkspacesLive, resolveWorkspaceId, listFolders, resolveFolder, listFolderMedia } from "./lib/kraken.mjs";
 
 const args = process.argv.slice(2);
 const cmd = args.find((a) => !a.startsWith("--"));
@@ -23,7 +23,18 @@ function out(obj) { process.stdout.write(JSON.stringify(obj) + "\n"); }
 
 async function main() {
   if (cmd === "workspaces") {
-    // loadWorkspaces() → { name: uuid }. Many aliases map to one UUID
+    // LIVE list from the Kraken DB (every workspace, always current). Fall back to
+    // the static client-workspaces.json dedupe if the live query fails (offline/creds).
+    try {
+      const live = await listWorkspacesLive();
+      if (live && live.length) {
+        out({ workspaces: live.map((w) => ({ name: w.name, id: w.id, label: w.label })) });
+        return;
+      }
+    } catch (e) {
+      process.stderr.write(`[kraken-list] live workspaces query failed, falling back to static: ${e.message}\n`);
+    }
+    // Fallback: loadWorkspaces() → { name: uuid }. Many aliases map to one UUID
     // (genesis / gsp / genesis-sports-performance → same id). Dedupe by id and
     // label each with its longest (most descriptive) alias.
     const map = loadWorkspaces();

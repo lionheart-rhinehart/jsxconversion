@@ -149,6 +149,17 @@ export function resolveWorkspaceId(input) {
   return null;
 }
 
+// LIVE workspace list straight from the Kraken DB (the `workspaces` table) — the
+// canonical, always-current source, unlike the static client-workspaces.json.
+// Returns every workspace, sorted by name. `name` is the slug (the recognizable
+// handle, e.g. "aa-carmel"); `label` is the display name.
+export async function listWorkspacesLive() {
+  const rows = await restGet("workspaces?select=id,name,slug&order=name.asc");
+  return (rows || [])
+    .filter((r) => r && r.id)
+    .map((r) => ({ id: r.id, name: r.slug || r.name || r.id, label: r.name || r.slug || r.id, slug: r.slug || null }));
+}
+
 // ── mime / bucket helpers ─────────────────────────────────────────────────────
 const MIME = {
   ".png": "image/png",

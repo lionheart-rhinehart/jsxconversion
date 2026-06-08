@@ -664,7 +664,7 @@
             <h3 class="sec-title">Swap background photo</h3>
             <div id="krakenBar" class="kbar" hidden>
               <div class="kbar-row">
-                <select id="kbWorkspace"><option value="">— AA location —</option></select>
+                <select id="kbWorkspace"><option value="">— Workspace —</option></select>
                 <button id="kbUpload" type="button">Upload</button>
                 <input id="kbFile" type="file" multiple hidden accept="image/*,video/*,audio/*">
               </div>
@@ -2893,6 +2893,7 @@
     // Tab bar (Copy / Media / Position). User-driven view switch — selecting a
     // layer does NOT change tabs, because selectElement fires on canvas
     // drag-start and switching would yank the Position view mid-drag.
+    let _krakenRefresh = null; // set by initKrakenBar → re-pulls the live workspace list
     function setEditorTab(name) {
       state.tab = name;
       document.querySelectorAll('.ed-tab').forEach((b) => b.classList.toggle('on', b.dataset.tab === name));
@@ -2900,6 +2901,8 @@
       // Phase D: entering/leaving the Draw tab toggles the capture overlay + pins.
       if (typeof updateDrawCapture === 'function') updateDrawCapture();
       if (name === 'draw' && typeof renderMarkupList === 'function') renderMarkupList();
+      // Opening Media re-pulls the live workspace list so new Kraken workspaces appear.
+      if (name === 'media' && _krakenRefresh) _krakenRefresh();
     }
     document.querySelectorAll('.ed-tab').forEach((b) => {
       b.addEventListener('click', () => setEditorTab(b.dataset.tab));
@@ -3146,8 +3149,9 @@
         filesEl.innerHTML = '<div class="ed-empty">Loading files in ' + folder.name + '…</div>';
         let files = [];
         try {
-          const wsName = (workspaces.find((w) => w.id === wsSel.value) || {}).name || wsSel.value;
-          const j = await fetch('/kraken/files?workspace=' + encodeURIComponent(wsName) + '&folder=' + encodeURIComponent(folder.id)).then((r) => r.json());
+          // Pass the workspace UUID (not its name) so ANY live workspace works —
+          // name→uuid resolution depended on the static client-workspaces.json.
+          const j = await fetch('/kraken/files?workspace=' + encodeURIComponent(wsSel.value) + '&folder=' + encodeURIComponent(folder.id)).then((r) => r.json());
           files = j.files || [];
         } catch (_) { files = []; }
         filesEl.innerHTML = '';
@@ -3197,10 +3201,10 @@
         if (file.type !== 'image' && file.type !== 'video') { setMsg('▶ Preview only — pick an image or video to place it.'); return; }
         setBusy(true); setMsg('Placing ' + (file.title || file.id) + (file.type === 'video' ? ' (video background)…' : '…'));
         try {
-          const wsName = (workspaces.find((w) => w.id === wsSel.value) || {}).name || wsSel.value;
           const r = await fetch('/kraken/pull-file', {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ campaign: campSlug || undefined, workspace: wsName, folder: folder.id, file: file.id }),
+            // workspace = UUID (works for any live workspace, not just static-file ones)
+            body: JSON.stringify({ campaign: campSlug || undefined, workspace: wsSel.value, folder: folder.id, file: file.id }),
           });
           const j = await r.json();
           if (!r.ok || !j.file) throw new Error(j.error || (j.stderr || '').slice(-160) || 'pull failed');
@@ -3214,23 +3218,33 @@
         setBusy(false);
       }
 
-      // Load workspaces + the campaign's saved default location.
-      (async () => {
+      // Load + render the LIVE workspace dropdown. Re-callable (each Media-tab open):
+      // re-pulls the list and preserves the current selection so new Kraken workspaces
+      // appear without disrupting a browse in progress. restore=true (first load only)
+      // also restores a campaign's saved source folder.
+      async function populateWorkspaces({ restore = false } = {}) {
+        const prev = wsSel.value;
         try {
           const [wj, sj] = await Promise.all([
             fetch('/kraken/workspaces').then((r) => r.json()).catch(() => ({ workspaces: [] })),
             // Saved source-folder picks are per-campaign; a standalone template has none.
-            campSlug ? fetch('/kraken/state?campaign=' + encodeURIComponent(campSlug)).then((r) => r.json()).catch(() => ({})) : Promise.resolve({}),
+            (restore && campSlug) ? fetch('/kraken/state?campaign=' + encodeURIComponent(campSlug)).then((r) => r.json()).catch(() => ({})) : Promise.resolve({}),
           ]);
           workspaces = wj.workspaces || [];
-          wsSel.innerHTML = '<option value="">' + (workspaces.length ? '— AA location —' : 'No locations configured') + '</option>';
-          for (const w of workspaces) { const o = document.createElement('option'); o.value = w.id; o.textContent = w.name; wsSel.appendChild(o); }
-          if (sj && sj.sourceFolder) setMsg('Source: ' + sj.sourceFolder);
-          const def = workspaces.find((w) => w.id === (sj && sj.workspaceId)) ||
-                      workspaces.find((w) => w.name === (sj && sj.workspace)) || null;
-          if (def) { wsSel.value = def.id; loadFolders(def.id); }
+          wsSel.innerHTML = '<option value="">' + (workspaces.length ? '— Workspace —' : 'No workspaces found') + '</option>';
+          for (const w of workspaces) { const o = document.createElement('option'); o.value = w.id; o.textContent = w.label || w.name; o.title = w.name; wsSel.appendChild(o); }
+          if (prev && workspaces.some((w) => w.id === prev)) {
+            wsSel.value = prev; // keep the user's current selection across a refresh
+          } else if (restore) {
+            if (sj && sj.sourceFolder) setMsg('Source: ' + sj.sourceFolder);
+            const def = workspaces.find((w) => w.id === (sj && sj.workspaceId)) ||
+                        workspaces.find((w) => w.name === (sj && sj.workspace)) || null;
+            if (def) { wsSel.value = def.id; loadFolders(def.id); }
+          }
         } catch (_) {}
-      })();
+      }
+      _krakenRefresh = populateWorkspaces;         // Media-tab open → live re-pull
+      populateWorkspaces({ restore: true });
     }
     async function swapBackgroundPhoto(item, tile) {
       if (!state.config) return;
