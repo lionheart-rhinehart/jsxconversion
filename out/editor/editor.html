@@ -1470,7 +1470,10 @@
       if (media.path && isVideoPath(media.path)) {
         const vid = document.createElement('video');
         vid.className = 'preview';
-        vid.muted = true; vid.playsInline = true; vid.preload = 'auto';
+        // Muted for autoplay-on-load (browser policy); becomes audible once the user
+        // presses play (previewAudioUnlocked) AND "Clip audio" is on AND no picked music.
+        vid.muted = !(state.previewAudioUnlocked && media.audio && !(state.config && state.config.audio));
+        vid.playsInline = true; vid.preload = 'auto';
         vid.style.cssText = 'position:absolute;left:0;top:0;display:block;width:' + W + 'px;height:' + H + 'px;object-fit:cover;user-select:none;pointer-events:none;';
         vid.src = state.mediaBase + media.path.replace(/^\.\//, '');
         // The trimmed window [clipStart, clipEnd]. Playback/pause is driven by the
@@ -1478,18 +1481,29 @@
         // rebuilds and doesn't fight the audio preview or the markup transport.
         const cs = Math.max(0, Number(media.clipStart) || 0);
         const ce = (typeof media.clipEnd === 'number' && media.clipEnd > cs) ? media.clipEnd : null;
+        const winLen = (ce != null) ? (ce - cs) : null;
+        const loopTotal = () => (media.loop && Number(media.loopSeconds) > 0) ? Math.max(1, Math.min(30, Number(media.loopSeconds))) : null;
         vid.loop = false; // looping handled in the gated timeupdate below
         state._previewVideo = vid;
         vid.addEventListener('loadedmetadata', () => {
-          try { vid.currentTime = cs + (Number(state.previewTime) || 0); } catch (e) {}
+          // Resume at the right window frame (virtual previewTime → window position).
+          const pt = Number(state.previewTime) || 0;
+          const into = winLen ? (pt % winLen) : pt;
+          try { vid.currentTime = cs + into; } catch (e) {}
           if (state.previewPlaying) { vid.play && vid.play().catch(() => {}); } else { try { vid.pause(); } catch (e) {} }
         });
         vid.addEventListener('timeupdate', () => {
           if (!state.previewPlaying) return; // paused/scrubbing → don't yank currentTime
-          if (ce != null && vid.currentTime >= ce) { try { vid.currentTime = cs; } catch (e) {} }
-          else if (vid.currentTime < cs - 0.05) { try { vid.currentTime = cs; } catch (e) {} }
-          state.previewTime = Math.max(0, vid.currentTime - cs); // keep the clip-relative clock current
-          if (typeof applyMarkupVisibility === 'function') applyMarkupVisibility(state.previewTime);
+          const total = loopTotal();
+          if (ce != null && vid.currentTime >= ce) {
+            try { vid.currentTime = cs; } catch (e) {}
+            if (total != null && winLen) state._loopBase = (Number(state._loopBase) || 0) + winLen; // advance the virtual clock one window
+          } else if (vid.currentTime < cs - 0.05) { try { vid.currentTime = cs; } catch (e) {} }
+          const winRel = Math.max(0, vid.currentTime - cs);            // position WITHIN the window
+          let pt = (total != null) ? ((Number(state._loopBase) || 0) + winRel) : winRel;
+          if (total != null && pt >= total) { pt = 0; state._loopBase = 0; try { vid.currentTime = cs; } catch (e) {} } // wrap the full loop
+          state.previewTime = pt;                                     // virtual 0…loopSeconds (transport)
+          if (typeof applyMarkupVisibility === 'function') applyMarkupVisibility(winRel); // markup gates on the window
           if (typeof updateTransportPlayhead === 'function') updateTransportPlayhead();
         });
         vid.onerror = () => { vid.style.background = '#222'; };
@@ -4249,21 +4263,45 @@
     // ── Transport (play/pause + scrub) — the single playback clock for video ──
     function previewDur() {
       const m = state.config && state.config.media; if (!m) return 0;
+      if (m.loop && Number(m.loopSeconds) > 0) return Math.max(1, Math.min(30, Number(m.loopSeconds))); // looping → full output length
       const cs = clipStartSec(); const ce = (typeof m.clipEnd === 'number' && m.clipEnd > cs) ? m.clipEnd : null;
       if (ce != null) return ce - cs;
       const v = state._previewVideo; return (v && isFinite(v.duration) && v.duration > 0) ? (v.duration - cs) : 0;
     }
     function pausePreview() {
       state.previewPlaying = false;
-      const v = state._previewVideo; if (v) { try { v.pause(); state.previewTime = Math.max(0, v.currentTime - clipStartSec()); } catch (e) {} }
+      const v = state._previewVideo;
+      if (v) {
+        try {
+          v.pause();
+          const m = state.config && state.config.media;
+          const winRel = Math.max(0, v.currentTime - clipStartSec());
+          state.previewTime = (m && m.loop && Number(m.loopSeconds) > 0) ? ((Number(state._loopBase) || 0) + winRel) : winRel;
+        } catch (e) {}
+      }
       if (typeof _audio !== 'undefined' && _audio && _audio.syncTimer) { clearInterval(_audio.syncTimer); _audio.syncTimer = 0; }
       const el = $('audioEl'); if (el) { try { el.pause(); } catch (e) {} }
       syncTransportBtn(); updateTransportPlayhead();
     }
     function playPreview() {
       state.previewPlaying = true;
+      state.previewAudioUnlocked = true;   // user gesture → clip audio may now play
       setActiveMarkup(null);   // hitting play drops the selection → circles only flash at their own frames
-      const v = state._previewVideo; if (v) { try { v.currentTime = clipStartSec() + (state.previewTime || 0); } catch (e) {} v.play && v.play().catch(() => {}); }
+      const m = state.config && state.config.media;
+      const cs = clipStartSec();
+      const ce = (m && typeof m.clipEnd === 'number' && m.clipEnd > cs) ? m.clipEnd : null;
+      const winLen = (ce != null) ? (ce - cs) : null;
+      const looping = !!(m && m.loop && Number(m.loopSeconds) > 0) && winLen;
+      const v = state._previewVideo;
+      if (v) {
+        try {
+          v.muted = !(m && m.audio && !(state.config && state.config.audio)); // hear clip audio (muted when music is picked)
+          const pt = Number(state.previewTime) || 0;
+          if (looping) { state._loopBase = Math.floor(pt / winLen) * winLen; v.currentTime = cs + (pt % winLen); }
+          else { v.currentTime = cs + pt; }
+        } catch (e) {}
+        v.play && v.play().catch(() => {});
+      }
       syncTransportBtn();
     }
     function togglePreview() { state.previewPlaying ? pausePreview() : playPreview(); }
@@ -4277,16 +4315,36 @@
       const bar = document.createElement('div'); bar.id = 'transportBar';
       const play = document.createElement('button'); play.id = 'transportPlay'; play.type = 'button'; play.title = 'Play / pause';
       play.textContent = state.previewPlaying ? '❚❚' : '▶'; play.onclick = togglePreview;
+      const m0 = state.config && state.config.media;
+      let loopBadge = null;
+      if (m0 && m0.loop && Number(m0.loopSeconds) > 0) {
+        loopBadge = document.createElement('span'); loopBadge.id = 'transportLoopBadge';
+        loopBadge.textContent = '🔁 ' + (+m0.loopSeconds) + 's';
+        loopBadge.title = 'This clip renders as a ' + (+m0.loopSeconds) + 's loop';
+        loopBadge.style.cssText = 'font-size:11px;color:#fff;background:var(--red);padding:2px 8px;border-radius:10px;margin-right:6px;font-weight:600;white-space:nowrap;';
+      }
       const track = document.createElement('div'); track.id = 'transportTrack';
       const ph = document.createElement('div'); ph.id = 'transportPlayhead'; track.appendChild(ph);
       const D = previewDur();
       if (D) for (const a of _markup) { const ts = aTime(a); if (ts == null) continue; const dot = document.createElement('div'); dot.className = 'transport-marker'; dot.style.left = (ts / D * 100) + '%'; dot.title = a.metadata.comment || 'note'; dot.onclick = (e) => { e.stopPropagation(); seekMarkup(a); }; track.appendChild(dot); }
-      const seekToPx = (clientX) => { const r = track.getBoundingClientRect(); const dd = previewDur(); if (!dd) return; const t = Math.max(0, Math.min(dd, ((clientX - r.left) / r.width) * dd)); pausePreview(); state.previewTime = t; const v = state._previewVideo; if (v) { try { v.currentTime = clipStartSec() + t; } catch (e) {} } setActiveMarkup(null); updateTransportPlayhead(); }; // scrub drops the selection → show the note at this frame
+      const seekToPx = (clientX) => {
+        const r = track.getBoundingClientRect(); const dd = previewDur(); if (!dd) return;
+        const t = Math.max(0, Math.min(dd, ((clientX - r.left) / r.width) * dd));
+        pausePreview(); state.previewTime = t;
+        const m = state.config && state.config.media;
+        const cs = clipStartSec();
+        const ce = (m && typeof m.clipEnd === 'number' && m.clipEnd > cs) ? m.clipEnd : null;
+        const winLen = (ce != null) ? (ce - cs) : null;
+        const looping = !!(m && m.loop && Number(m.loopSeconds) > 0) && winLen;
+        const v = state._previewVideo;
+        if (v) { try { if (looping) { state._loopBase = Math.floor(t / winLen) * winLen; v.currentTime = cs + (t % winLen); } else { v.currentTime = cs + t; } } catch (e) {} }
+        setActiveMarkup(null); updateTransportPlayhead(); // scrub drops the selection → show the note at this frame
+      };
       let dragging = false;
       track.addEventListener('pointerdown', (e) => { dragging = true; track.setPointerCapture && track.setPointerCapture(e.pointerId); seekToPx(e.clientX); });
       track.addEventListener('pointermove', (e) => { if (dragging) seekToPx(e.clientX); });
       track.addEventListener('pointerup', () => { dragging = false; });
-      bar.appendChild(play); bar.appendChild(track); stage.appendChild(bar);
+      bar.appendChild(play); if (loopBadge) bar.appendChild(loopBadge); bar.appendChild(track); stage.appendChild(bar);
       updateTransportPlayhead();
     }
 
@@ -4308,7 +4366,7 @@
       state.selectedId = null;
       // Feature 2: reset the preview clock BEFORE renderStage (renderMediaNode reads
       // previewTime/previewPlaying and sets state._previewVideo — do not null it after).
-      state.previewTime = 0; state.previewPlaying = true;
+      state.previewTime = 0; state.previewPlaying = true; state._loopBase = 0;
       renderStage();
       renderElementList();
       renderProps();
