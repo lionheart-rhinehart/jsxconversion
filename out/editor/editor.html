@@ -701,6 +701,11 @@
             .clip-switcher button{background:#222;color:#fff;border:0;border-radius:4px;padding:2px 9px;cursor:pointer;font-size:13px}
             .clip-switcher button:hover:not(:disabled){background:var(--red,#c4141d)}
             .clip-switcher button:disabled{opacity:.3;cursor:default}
+            /* "Preview reel" — the discoverable way to watch all clips play through (in the big preview). */
+            #reelPreviewBar{display:flex;align-items:center;gap:10px;margin:2px 0 8px}
+            #reelPlayBtn{background:var(--red,#c4141d);color:#fff;border:0;border-radius:6px;padding:7px 14px;font:600 13px ui-monospace,monospace;cursor:pointer;white-space:nowrap}
+            #reelPlayBtn:hover{filter:brightness(1.1)}
+            #reelPreviewBar .reel-hint{font:500 11px ui-monospace,monospace;color:var(--muted,#9aa)}
             /* "+ Add clip" = BROWSE mode: small/empty preview, the browser gets the room, last folder open.
                (Edit mode = big preview to trim; toggled by the .add-mode class on #clipEditModal.) */
             #clipAddHint{display:none;align-items:center;justify-content:center;gap:8px;height:60px;color:var(--muted,#9aa);font:600 13px ui-monospace,monospace;background:#0b0c0e;border:1px dashed #3a3d42;border-radius:8px;text-align:center;padding:0 12px}
@@ -723,6 +728,10 @@
           </style>
           <div class="panel-block" id="filmstripPanel" hidden>
             <h3 class="sec-title">Reel — clips in order</h3>
+            <div id="reelPreviewBar" hidden>
+              <button type="button" id="reelPlayBtn">▶ Preview reel</button>
+              <span class="reel-hint">plays all clips in order in the big preview ↑</span>
+            </div>
             <div id="filmstrip"></div>
             <button type="button" id="fsAddBtn">+ Add clip</button>
           </div>
@@ -3654,10 +3663,20 @@
       if (pv) { pv.disabled = a <= 0; pv.onclick = () => setActiveSegment((state.config.activeSegment || 0) - 1); }
       if (nx) { nx.disabled = a >= n - 1; nx.onclick = () => setActiveSegment((state.config.activeSegment || 0) + 1); }
     }
+    // "▶ Preview reel" — the discoverable way to watch the WHOLE reel play through (in the big
+    // left preview). Closes the per-clip pop-up (so whole-reel playback engages) + plays from clip 1.
+    function playReel() {
+      const start = () => { if (isReel() && typeof reelAdvanceTo === 'function') reelAdvanceTo(0, false); state.previewTime = 0; state._loopBase = 0; if (typeof playPreview === 'function') playPreview(); };
+      const mdl = $('clipEditModal');
+      if (mdl && !mdl.hidden && typeof clipModalClose === 'function') { clipModalClose(); requestAnimationFrame(() => requestAnimationFrame(start)); }
+      else start();
+    }
     function renderFilmstrip() {
       const panel = $('filmstripPanel'), strip = $('filmstrip'); if (!panel || !strip) return;
       const isVid = typeof isVideoCreative === 'function' && isVideoCreative();
       panel.hidden = !(state.config && (isReel() || isVid));   // the reel strip is the whole Media tab for a video creative
+      const reelBar = $('reelPreviewBar'); if (reelBar) reelBar.hidden = !isReel();   // "Preview reel" shows only for 2+ clips
+      const rpb = $('reelPlayBtn'); if (rpb && !rpb._wired) { rpb._wired = true; rpb.onclick = playReel; }
       strip.innerHTML = '';
       if (!state.config) return;
       // Cells = the reel's segments, OR (single clip) one virtual cell for config.media.
