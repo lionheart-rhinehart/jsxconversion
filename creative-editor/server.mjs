@@ -346,6 +346,35 @@ export function createEditorServer(config = {}) {
         return;
       }
 
+      // 7e) Content-library browse — the GENERIC workspaces->folders->files->pull-file
+      //     via mediaProvider.remoteBrowse. Campaign-specific routes (/kraken/state and
+      //     the whole-folder /kraken/pull) are NOT here: a host plugin owns those and,
+      //     since plugins run BEFORE core (above), it intercepts them first (U2/C5).
+      const rb = mediaProvider && mediaProvider.remoteBrowse;
+      if (rb && path === "/kraken/workspaces" && req.method === "GET") {
+        try { sendJson(res, 200, await rb.workspaces()); }
+        catch (e) { sendJson(res, 200, { workspaces: [], error: String((e && e.message) || e) }); }
+        return;
+      }
+      if (rb && path === "/kraken/folders" && req.method === "GET") {
+        try { sendJson(res, 200, await rb.folders({ workspace: url.searchParams.get("workspace") })); }
+        catch (e) { sendJson(res, 502, { error: String((e && e.message) || e) }); }
+        return;
+      }
+      if (rb && path === "/kraken/files" && req.method === "GET") {
+        try { sendJson(res, 200, await rb.files({ workspace: url.searchParams.get("workspace"), folder: url.searchParams.get("folder") })); }
+        catch (e) { sendJson(res, 502, { error: String((e && e.message) || e) }); }
+        return;
+      }
+      if (rb && path === "/kraken/pull-file" && req.method === "POST") {
+        try {
+          const body = JSON.parse((await readBody(req)) || "{}");
+          const r = await rb.pullFile({ workspace: body.workspace, folder: body.folder, file: body.file, campaign: body.campaign || null });
+          sendJson(res, r && r.exitCode === 0 ? 200 : 500, r);
+        } catch (e) { sendJson(res, 500, { error: String((e && e.message) || e) }); }
+        return;
+      }
+
       // 8) Rendered output + the editor UI.
       if (path.startsWith("/out/") && req.method === "GET") {
         const fp = join(outDir, path.slice("/out/".length));
