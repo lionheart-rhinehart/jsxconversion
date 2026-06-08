@@ -42,10 +42,10 @@ memory is the editor's A–F track overlaid on the master plan's 0–6.
 | **#9 element/structure-fit gate** | 🟡 DEFERRED → vision #15 | Cody's call: folded into cluster-adherence (the vision gate carries "the visual means the angle"); no separate deterministic map |
 | **#12 media-fit + media-rubric gate** (deterministic core) | ✅ BUILT+TESTED | validate-plan `mediaFit` (no full-bleed on graphic / >20% accent / `mediaDiversity` clip-reuse) from `docs/media-integration-findings.md`; `resolveAssetCopy` mediaGeom. commit `a8ae203`; plan4 T1.3 (4). Style-tag subset + perceptual near-twin → Track 2 |
 | **format-mix INTENT** (override-governed; SMAA dodge shut) | ✅ BUILT+TESTED | `rules.formatMixIntent` (NOT a plan knob); static-only/video-only honored only when grandfathered/marked. commit `a8ae203`; plan4 T1.4 (2) |
-| **#14 output distinctness (Marker-2, selection-time segments)** | ❌ ABSENT | library is clustered; no runtime grouping of the chosen batch (Track 2) |
-| **#15 cluster-adherence (Marker-1 vision check)** | ❌ ABSENT | no check a finished creative matches its assigned archetype (Track 2; also carries #9) |
-| **#16 anti-slop** | 🟡 PARTIAL (objective BUILT) | objective half BUILT: validate-plan `antiSlop` (placeholder text + CSS-silhouette-instead-of-image). commit `a8ae203`; plan4 T1.5 (3). Subjective/vision half → Track 2 |
-| **Sidecar → review merge** | ❌ ABSENT | `/validation` is plan-only; no `campaigns/<c>/perceptual.json` consumer → ML gates have no path to the gate |
+| **#14 output distinctness (Marker-2, selection-time segments)** | ✅ BUILT+TESTED | `embed_campaign.py` per-segment pairwise (combined<0.70 AND dino<0.70), folded by `perceptual-merge.mjs`. commit `12b3c65`; `test/perceptual-merge.test.mjs` (6) |
+| **#15 cluster-adherence (Marker-1 vision check, carries #9)** | ✅ BUILT+TESTED | `_archetype-centroids` + `embed_campaign.py` cosine-to-assigned-centroid → landedInLane. commit `12b3c65`; REAL-RENDER verified (F1 in-lane 0.82; mislabeled → block 0.38). `test/centroids.test.mjs` (4) |
+| **#16 anti-slop** | ✅ BUILT+TESTED | objective (T1.5 `antiSlop`, commit `a8ae203`) + subjective (`slop_flag.py` Gemini, fail-soft, commit `12b3c65`) |
+| **Sidecar → review merge** | ✅ BUILT+TESTED | `validatePlan` reads `campaigns/<c>/perceptual.json` + folds (absent-after-render block / sentinel / override-downgrade / corrupt-degrade) — ZERO editor-server edits. commit `12b3c65`; `test/validate-plan-perceptual.test.mjs` (5) |
 | **Tier-2 advisory panel** (multi-persona) | ❌ ABSENT | no evaluator / per-creative scores |
 | **Phase 5 — harvest** | ❌ DESIGNED ONLY | spec'd as `POST /promote` + `scripts/promote-example.mjs` + "Save as example" button — none exist |
 | **Phase 6 — Remotion consolidation / Meta publish / dashboard** | ❌ DESIGNED ONLY | plan text + "for later"; zero `ads_create_creative` calls; no dashboard |
