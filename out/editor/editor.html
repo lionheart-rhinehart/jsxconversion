@@ -689,6 +689,18 @@
             .fs-ctl button{flex:1;border:0;background:#222b;color:#fff;font-size:10px;cursor:pointer;padding:1px 0}
             .fs-ctl button:hover{background:var(--red,#c4141d)}
             #fsAddBtn{margin-top:4px;width:100%;font-size:11px;padding:5px;background:var(--red,#c4141d);color:#fff;border:0;border-radius:4px;cursor:pointer}
+            /* Filmstrip-first declutter: per-clip browse + trim live ONLY in the editor; the
+               Media tab shows just the reel + Reel music. (Descendant rule = hidden while the
+               panels sit in the Media tab; the Edit-clip modal relocates them out → visible there.) */
+            .ed-pane[data-pane="media"] #photoSwapPanel,
+            .ed-pane[data-pane="media"] #trimPanel { display:none !important; }
+            #openClipModalBtn, #fsAddBtn { display:none !important; }   /* replaced by click-a-clip + the "+" tile */
+            .fs-add{display:flex;align-items:center;justify-content:center;font-size:30px;line-height:1;color:#fff;background:#1a1a22;border:2px dashed #555;width:84px;height:148px;border-radius:6px;cursor:pointer;flex:0 0 auto}
+            .fs-add:hover{border-color:var(--red,#c4141d);color:var(--red,#c4141d)}
+            .clip-switcher{display:flex;align-items:center;gap:8px;font:600 12px ui-monospace,monospace;color:var(--fg,#fff)}
+            .clip-switcher button{background:#222;color:#fff;border:0;border-radius:4px;padding:2px 9px;cursor:pointer;font-size:13px}
+            .clip-switcher button:hover:not(:disabled){background:var(--red,#c4141d)}
+            .clip-switcher button:disabled{opacity:.3;cursor:default}
           </style>
           <div class="panel-block" id="filmstripPanel" hidden>
             <h3 class="sec-title">Reel — clips in order</h3>
@@ -731,7 +743,7 @@
                config.audio = { src, startAt, volume, fadeIn, fadeOut } — muxed into
                the rendered MP4 (takes priority over the clip's own audio). -->
           <div class="panel-block" id="audioPanel">
-            <h3 class="sec-title">Audio (music)</h3>
+            <h3 class="sec-title">Reel music <span style="font-weight:400;color:var(--muted);font-size:10px">— one track for the whole reel</span></h3>
             <select id="audioTrackSel" style="width:100%;font-size:11px;padding:5px 6px;background:var(--bg);border:1px solid var(--border);color:var(--fg);border-radius:3px;font-family:ui-monospace,monospace">
               <option value="">— no music —</option>
             </select>
@@ -912,6 +924,11 @@
     <div class="clip-modal-card">
       <div class="clip-modal-head">
         <h2>Edit clip</h2>
+        <div id="clipSwitcher" class="clip-switcher" hidden>
+          <button type="button" id="clipPrev" title="Previous clip">◀</button>
+          <span id="clipSwitchLabel">Clip 1 / 1</span>
+          <button type="button" id="clipNext" title="Next clip">▶</button>
+        </div>
         <button type="button" id="clipModalClose" class="clip-modal-x" title="Close (Esc)">✕</button>
       </div>
       <div class="clip-modal-body">
@@ -3371,7 +3388,9 @@
     // them back. (Designed as the surface the future multi-clip timeline drops into.)
     // Moved into the modal on open (and restored on close). #stage is the LIVE composed
     // video preview → moving it shows the big, already-synced video for free.
-    const CLIP_MOVED = new Set(['stage', 'photoSwapPanel', 'trimPanel', 'audioPanel']);
+    // Reel music is REEL-LEVEL (one track) → #audioPanel stays in the Media tab, NOT
+    // relocated into the per-clip editor. The editor holds the clip's stage + trim + browse.
+    const CLIP_MOVED = new Set(['stage', 'photoSwapPanel', 'trimPanel']);
     const _clipHome = {};
     function captureClipHomes() {
       CLIP_MOVED.forEach((id) => {
@@ -3391,15 +3410,18 @@
       captureClipHomes();
       $('clipStageHost').appendChild($('stage'));      // the live composed video preview, big
       const ta = $('clipTrimAudio');
-      ['trimPanel', 'audioPanel'].forEach((id) => { const el = $(id); if (el) ta.appendChild(el); });
+      ['trimPanel'].forEach((id) => { const el = $(id); if (el) ta.appendChild(el); }); // music is reel-level → stays in the Media tab
       $('clipSwapBody').appendChild($('photoSwapPanel'));
-      setClipSwapCollapsed(true);                       // browser collapsed by default
+      // For a reel, the user came here to ADD/REPLACE a clip → show the browser open;
+      // for a lone clip, keep it collapsed (just trim). (Add-mode always wants it open.)
+      setClipSwapCollapsed(!(state._addSegmentMode || isReel()));
       $('clipEditModal').hidden = false;
       if (typeof selectElement === 'function') selectElement('_media');
       // Re-fit the relocated stage to the modal host (renderStage reads the new box),
       // then rebuild the transport + trim for the current clip.
       requestAnimationFrame(() => {
         renderStage();
+        if (typeof renderClipSwitcher === 'function') renderClipSwitcher();
         if (typeof renderTransport === 'function') renderTransport();
         if (state.config && state.config.media && isVideoPath(state.config.media.path) && typeof renderTrimPanel === 'function') renderTrimPanel(state.config.media);
         // The audio panel just moved here at a new size → redraw the waveform.
@@ -3484,6 +3506,13 @@
       if (typeof setActiveMarkup === 'function') setActiveMarkup(null);
       state.previewTime = 0; state._loopBase = 0;
       renderStage(); if (typeof renderElementList === 'function') renderElementList(); renderFilmstrip();
+      if (typeof renderClipSwitcher === 'function') renderClipSwitcher();
+      // If the per-clip editor is open, re-fit its transport + trim for the NEW clip (hop+trim without closing).
+      const mdl = $('clipEditModal');
+      if (mdl && !mdl.hidden) {
+        if (typeof renderTransport === 'function') renderTransport();
+        if (typeof renderTrimPanel === 'function' && state.config.media && typeof isVideoPath === 'function' && isVideoPath(state.config.media.path)) renderTrimPanel(state.config.media);
+      }
     }
     function addClipSegment() {           // "+ Add clip": the NEXT clip pick becomes a new segment
       ensureSequence(); state._addSegmentMode = true;
@@ -3503,18 +3532,40 @@
       snapshotForUndo(); const t = seq[i]; seq[i] = seq[j]; seq[j] = t;
       setActiveSegment(j);
     }
+    // Open the per-clip editor (the focused pop-up) on a given segment.
+    function openClipEditor(i) {
+      if (isReel() && typeof i === 'number') setActiveSegment(i);
+      const mdl = $('clipEditModal');
+      if (typeof clipModalOpen === 'function' && mdl && mdl.hidden) clipModalOpen();
+      else if (typeof renderClipSwitcher === 'function') renderClipSwitcher();
+    }
+    // The ◀ N/M ▶ clip switcher in the editor head (reel only) — hop + trim without closing.
+    function renderClipSwitcher() {
+      const sw = $('clipSwitcher'); if (!sw) return;
+      if (!isReel()) { sw.hidden = true; return; }
+      sw.hidden = false;
+      const n = state.config.sequence.length, a = state.config.activeSegment || 0;
+      const lbl = $('clipSwitchLabel'); if (lbl) lbl.textContent = 'Clip ' + (a + 1) + ' / ' + n;
+      const pv = $('clipPrev'), nx = $('clipNext');
+      if (pv) { pv.disabled = a <= 0; pv.onclick = () => setActiveSegment((state.config.activeSegment || 0) - 1); }
+      if (nx) { nx.disabled = a >= n - 1; nx.onclick = () => setActiveSegment((state.config.activeSegment || 0) + 1); }
+    }
     function renderFilmstrip() {
       const panel = $('filmstripPanel'), strip = $('filmstrip'); if (!panel || !strip) return;
-      const addBtn = $('fsAddBtn'); if (addBtn) addBtn.onclick = addClipSegment;
       const isVid = typeof isVideoCreative === 'function' && isVideoCreative();
-      panel.hidden = !(state.config && (isReel() || isVid));   // strip shows on any video creative (so +Add is reachable)
+      panel.hidden = !(state.config && (isReel() || isVid));   // the reel strip is the whole Media tab for a video creative
       strip.innerHTML = '';
-      const seq = (state.config && state.config.sequence) || null;
-      if (!seq) return;                                         // single clip: panel shows only the +Add button
-      seq.forEach((seg, i) => {
+      if (!state.config) return;
+      // Cells = the reel's segments, OR (single clip) one virtual cell for config.media.
+      const reel = isReel();
+      const cells = reel
+        ? state.config.sequence.map((seg, i) => ({ seg, i, single: false }))
+        : ((state.config.media && state.config.media.path) ? [{ seg: { media: state.config.media, elements: state.config.elements }, i: 0, single: true }] : []);
+      cells.forEach(({ seg, i, single }) => {
         const cell = document.createElement('div');
-        cell.className = 'fs-cell' + (i === (state.config.activeSegment || 0) ? ' on' : '');
-        cell.title = 'Segment ' + (i + 1) + ' — click to edit';
+        const active = single || i === (state.config.activeSegment || 0);
+        cell.className = 'fs-cell' + (active ? ' on' : '');
+        cell.title = single ? 'Your clip — click to trim / edit' : ('Clip ' + (i + 1) + ' — click to trim / edit');
         const cap = (seg.elements && seg.elements[0] && seg.elements[0].text) || '';
         const thumb = document.createElement('div'); thumb.className = 'fs-thumb';
         if (seg.media && seg.media.path && typeof isVideoPath === 'function' && isVideoPath(seg.media.path)) {
@@ -3525,15 +3576,21 @@
         meta.innerHTML = '<span>' + (i + 1) + '</span><span>' + _segDur(seg).toFixed(1) + 's</span>';
         cell.appendChild(thumb); cell.appendChild(meta);
         if (cap) { const cb = document.createElement('div'); cb.className = 'fs-cap'; cb.textContent = cap.slice(0, 18); cell.appendChild(cb); }
-        const ctl = document.createElement('div'); ctl.className = 'fs-ctl';
-        ctl.innerHTML = '<button data-a="left" title="Move left">◀</button><button data-a="right" title="Move right">▶</button><button data-a="rm" title="Remove">✕</button>';
-        ctl.querySelector('[data-a=left]').onclick = (e) => { e.stopPropagation(); moveSegment(i, -1); };
-        ctl.querySelector('[data-a=right]').onclick = (e) => { e.stopPropagation(); moveSegment(i, 1); };
-        ctl.querySelector('[data-a=rm]').onclick = (e) => { e.stopPropagation(); removeSegment(i); };
-        cell.appendChild(ctl);
-        cell.onclick = () => setActiveSegment(i);
+        if (!single) {   // reorder/remove only make sense for a real reel (2+ via the model)
+          const ctl = document.createElement('div'); ctl.className = 'fs-ctl';
+          ctl.innerHTML = '<button data-a="left" title="Move left">◀</button><button data-a="right" title="Move right">▶</button><button data-a="rm" title="Remove">✕</button>';
+          ctl.querySelector('[data-a=left]').onclick = (e) => { e.stopPropagation(); moveSegment(i, -1); };
+          ctl.querySelector('[data-a=right]').onclick = (e) => { e.stopPropagation(); moveSegment(i, 1); };
+          ctl.querySelector('[data-a=rm]').onclick = (e) => { e.stopPropagation(); removeSegment(i); };
+          cell.appendChild(ctl);
+        }
+        cell.onclick = () => openClipEditor(single ? undefined : i);
         strip.appendChild(cell);
       });
+      // The "+" add tile (always last) — pick a NEW clip to append to the reel.
+      const add = document.createElement('div'); add.className = 'fs-add'; add.textContent = '+';
+      add.title = 'Add a clip to the reel'; add.onclick = addClipSegment;
+      strip.appendChild(add);
     }
     function setMediaPhoto(newPath) {
       if (!state.config) return;
