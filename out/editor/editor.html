@@ -579,6 +579,18 @@
       padding: 24px;
       text-align: center;
     }
+    /* "Edit clip" pop-up: media browser + trim + audio, no scrolling */
+    .clip-open-btn { width: 100%; margin-bottom: 10px; padding: 9px 12px; font-size: 13px; font-weight: 600; cursor: pointer; background: var(--red); color: #fff; border: 1px solid var(--red); border-radius: 6px; }
+    .clip-modal { position: fixed; inset: 0; z-index: 9000; display: flex; align-items: center; justify-content: center; }
+    .clip-modal[hidden] { display: none; }
+    .clip-modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.5); }
+    .clip-modal-card { position: relative; width: 92vw; max-width: 1120px; height: 88vh; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); display: flex; flex-direction: column; overflow: hidden; }
+    .clip-modal-head { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid var(--border); flex: 0 0 auto; }
+    .clip-modal-head h2 { margin: 0; font-size: 15px; }
+    .clip-modal-x { background: var(--panel-2); border: 1px solid var(--border); color: var(--fg); border-radius: 6px; width: 30px; height: 30px; cursor: pointer; font-size: 14px; }
+    .clip-modal-body { flex: 1 1 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 14px; overflow: auto; min-height: 0; }
+    .clip-modal-col { min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 10px; overflow: auto; }
+    @media (max-width: 820px) { .clip-modal-body { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -660,6 +672,7 @@
 
         <!-- MEDIA: background photo / foreground cutout -->
         <div class="ed-pane" data-pane="media" hidden>
+          <button type="button" id="openClipModalBtn" class="clip-open-btn" title="Open a focused window to browse media, trim the clip, and pick audio">✂ Edit clip / media</button>
           <div class="panel-block" id="photoSwapPanel">
             <h3 class="sec-title">Swap background photo</h3>
             <div id="krakenBar" class="kbar" hidden>
@@ -3276,7 +3289,54 @@
       setStatus(item.krakenUrl
         ? 'Background swapped — durable (re-fetches from the Kraken on a fresh checkout). Save + Render to persist.'
         : 'Background swapped. Save + Render to persist. (Local to this checkout until committed; re-pull restores it.)');
+      // Pop the Edit-clip window when a VIDEO is placed from the inline grid; if it's
+      // already open (placed from inside the modal), just refresh the trim for the new clip.
+      if (isVideoPath(newPath)) {
+        const m = $('clipEditModal');
+        if (m && m.hidden && typeof clipModalOpen === 'function') clipModalOpen();
+        else if (typeof selectElement === 'function') selectElement('_media');
+      }
     }
+    // ── "Edit clip" pop-up ──────────────────────────────────────────────────────
+    // Relocates the media browser + trim + audio into a focused window so they're
+    // never buried at the bottom of the Media tab. These panels are static, id-wired
+    // singletons → MOVING them (appendChild) preserves every listener; closing puts
+    // them back. (Designed as the surface the future multi-clip timeline drops into.)
+    const CLIP_MOVE = { left: ['photoSwapPanel'], right: ['trimPanel', 'audioPanel'] };
+    const CLIP_MOVED = new Set([...CLIP_MOVE.left, ...CLIP_MOVE.right]);
+    const _clipHome = {};
+    function captureClipHomes() {
+      CLIP_MOVED.forEach((id) => {
+        const el = $(id); if (!el || _clipHome[id]) return;
+        let a = el.nextElementSibling;
+        while (a && CLIP_MOVED.has(a.id)) a = a.nextElementSibling; // nearest NON-moved anchor
+        _clipHome[id] = { parent: el.parentNode, anchor: a };
+      });
+    }
+    function clipModalOpen() {
+      if (!state.config) return;
+      captureClipHomes();
+      const L = $('clipModalLeft'), R = $('clipModalRight');
+      CLIP_MOVE.left.forEach((id) => { const el = $(id); if (el) L.appendChild(el); });
+      CLIP_MOVE.right.forEach((id) => { const el = $(id); if (el) R.appendChild(el); });
+      $('clipEditModal').hidden = false;
+      // Activate media editing for the current bg so the trim renders for a video.
+      if (typeof selectElement === 'function') selectElement('_media');
+      if (state.config.media && isVideoPath(state.config.media.path) && typeof renderTrimPanel === 'function') renderTrimPanel(state.config.media);
+    }
+    function clipModalClose() {
+      [...CLIP_MOVE.left, ...CLIP_MOVE.right].forEach((id) => {
+        const el = $(id), h = _clipHome[id]; if (!el || !h || !h.parent) return;
+        if (h.anchor && h.anchor.parentNode === h.parent) h.parent.insertBefore(el, h.anchor);
+        else h.parent.appendChild(el);
+      });
+      $('clipEditModal').hidden = true;
+    }
+    { const ob = $('openClipModalBtn'); if (ob) ob.onclick = clipModalOpen;
+      const cb = $('clipModalClose'); if (cb) cb.onclick = clipModalClose;
+      const bd = $('clipModalBackdrop'); if (bd) bd.onclick = clipModalClose;
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && $('clipEditModal') && !$('clipEditModal').hidden) clipModalClose(); }); }
+
     $('browsePhotosBtn').onclick = () => {
       const grid = $('photoGrid');
       grid.hidden = !grid.hidden;
@@ -4211,5 +4271,19 @@
 
     window.addEventListener('resize', () => state.config && renderStage());
   </script>
+  <!-- "Edit clip" pop-up — the media browser + trim + audio relocate into here on open -->
+  <div id="clipEditModal" class="clip-modal" hidden>
+    <div class="clip-modal-backdrop" id="clipModalBackdrop"></div>
+    <div class="clip-modal-card">
+      <div class="clip-modal-head">
+        <h2>Edit clip</h2>
+        <button type="button" id="clipModalClose" class="clip-modal-x" title="Close (Esc)">✕</button>
+      </div>
+      <div class="clip-modal-body">
+        <div class="clip-modal-col" id="clipModalLeft"></div>
+        <div class="clip-modal-col" id="clipModalRight"></div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
