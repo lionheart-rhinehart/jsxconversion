@@ -21,8 +21,9 @@
 //  NODE-ONLY.
 // ============================================================================
 import { createServer } from "node:http";
-import { readFileSync, writeFileSync, existsSync, statSync, mkdirSync, copyFileSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, statSync, mkdirSync, copyFileSync, renameSync, readdirSync } from "node:fs";
 import { join, resolve, extname, basename } from "node:path";
+import { spawnSync } from "node:child_process";
 
 const MIME = {
   ".html": "text/html", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
@@ -89,6 +90,68 @@ export function createEditorServer(config = {}) {
     copySwap: !!capabilities.copySwap,
   };
 
+  // ── Generic editor features that live in the engine (audio peaks, review markup,
+  //    upload). These are file/ffmpeg utilities every host wants; host-specifics stay
+  //    injected. All disk writes go under `dataDir` (default cwd) so the caches land
+  //    in the HOST project, never in this package. ────────────────────────────────
+  const DATA_DIR = config.dataDir ? resolve(config.dataDir) : resolve(".");
+  const PEAKS_CACHE_DIR = join(DATA_DIR, ".peaks-cache");
+  const ANNOTATIONS_DIR = join(DATA_DIR, ".annotations-store");
+  const AI_INBOX_DIR = join(ANNOTATIONS_DIR, "_inbox");
+  const PEAKS_RESOLUTION = Number(config.peaksResolution) || 1200;
+  const UPLOAD_MAX_BYTES = Number(config.uploadMaxBytes) || 500 * 1024 * 1024;
+  const SOURCE = config.source || "creative-editor";
+  const EXT_FOR_KIND = config.extForKind || {
+    photo: new Set([".jpg", ".jpeg", ".png", ".webp", ".gif"]),
+    clip: new Set([".mp4", ".mov", ".webm"]),
+    audio: new Set([".mp3", ".wav", ".m4a", ".aac", ".ogg"]),
+  };
+  // Slug an editor id (which can look like "camp:c:a:as") to one safe filename — this
+  // doubles as the path-traversal guard for the annotations/peaks stores (U9).
+  const annSafeId = (id) => String(id).replace(/[^a-z0-9._-]+/gi, "_").slice(0, 200) || "creative";
+  const peaksCachePath = (rel) => join(PEAKS_CACHE_DIR, String(rel).replace(/[\\/]/g, "__").replace(/[^a-z0-9._-]+/gi, "-") + ".json");
+  // Resolve an audio ref to an absolute path: the media provider first, else
+  // dataDir-relative — refusing any path that escapes dataDir (U9).
+  function resolveMediaAbs(rel) {
+    if (mediaProvider && typeof mediaProvider.filePath === "function") { const a = mediaProvider.filePath(rel); if (a && existsSync(a)) return a; }
+    const abs = resolve(join(DATA_DIR, String(rel)));
+    return abs.startsWith(resolve(DATA_DIR)) && existsSync(abs) ? abs : null;
+  }
+  function decodePeaks(absPath, numPeaks = PEAKS_RESOLUTION) {
+    const dz = spawnSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", absPath], { encoding: "utf8" });
+    const duration = parseFloat(String(dz.stdout || "").trim()) || 0;
+    const pcm = spawnSync("ffmpeg", ["-v", "error", "-i", absPath, "-ac", "1", "-ar", "4000", "-f", "s16le", "-"], { maxBuffer: 1 << 28 });
+    const buf = pcm.stdout;
+    if (!buf || buf.length < 2) return { peaks: new Array(numPeaks).fill(0), duration };
+    const totalSamples = buf.length >> 1;
+    const binSize = Math.max(1, Math.floor(totalSamples / numPeaks));
+    const peaks = new Array(numPeaks);
+    for (let i = 0; i < numPeaks; i++) {
+      const sb = i * binSize * 2, eb = Math.min(sb + binSize * 2, buf.length); let mx = 0;
+      for (let j = sb; j + 1 < eb; j += 2) { const v = Math.abs(buf.readInt16LE(j)); if (v > mx) mx = v; }
+      peaks[i] = Math.round((mx / 32768) * 10000) / 10000;
+    }
+    return { peaks, duration };
+  }
+  function ensurePeaks(rel) {
+    const abs = resolveMediaAbs(rel); if (!abs) return null;
+    const cacheFile = peaksCachePath(rel);
+    try { if (existsSync(cacheFile) && statSync(cacheFile).mtimeMs >= statSync(abs).mtimeMs) return JSON.parse(readFileSync(cacheFile, "utf8")); } catch { /* re-decode */ }
+    try {
+      const data = decodePeaks(abs); mkdirSync(PEAKS_CACHE_DIR, { recursive: true });
+      const tmp = cacheFile + ".tmp"; writeFileSync(tmp, JSON.stringify(data)); renameSync(tmp, cacheFile); return data;
+    } catch (e) { console.error(`[peaks] decode failed for ${rel}: ${(e && e.message) || e}`); return null; }
+  }
+  const readAnnRecord = (id) => {
+    const file = join(ANNOTATIONS_DIR, annSafeId(id) + ".json"); let rec = { creative: null, annotations: [] };
+    try { if (existsSync(file)) rec = JSON.parse(readFileSync(file, "utf8")); } catch { /* none/corrupt */ }
+    return rec;
+  };
+  const annPackage = (id) => {
+    const rec = readAnnRecord(id);
+    return { creative: rec.creative || { editorId: id, source: SOURCE, schemaVersion: 1 }, annotations: Array.isArray(rec.annotations) ? rec.annotations : [], publishedAt: new Date().toISOString() };
+  };
+
   const server = createServer(async (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
@@ -130,15 +193,26 @@ export function createEditorServer(config = {}) {
       }
 
       // 5) POST /render-template/:id (needs an injected renderer).
+      //    The contract is WIDE so a host can render PNG *or* MP4: the renderer gets
+      //    the template's configPath (to detect a video background), the outDir, and an
+      //    abort `signal` (wired to the client closing the connection so a long render
+      //    can't orphan), and returns { ok, format, outPath, exitCode, stdout?, stderr? }.
       const rnd = path.match(/^\/render-template\/([A-Za-z0-9._-]+)$/);
       if (rnd && req.method === "POST") {
         const id = rnd[1]; const found = findTemplate(id);
         if (!found) { sendJson(res, 404, { error: `template "${id}" not found` }); return; }
         if (!renderer) { sendJson(res, 501, { error: "no renderer configured for this host" }); return; }
-        const out = join(outDir, `${id}.png`);
+        const ac = new AbortController();
+        req.on("close", () => { try { ac.abort(); } catch (_) {} });
         try {
-          const r = await renderer.render(found.jsxPath, { out });
-          sendJson(res, r && r.ok ? 200 : 500, { exitCode: r ? r.exitCode : -1, output: r && r.outPath });
+          const r = await renderer.render({ id, jsxPath: found.jsxPath, configPath: found.configPath, outDir, signal: ac.signal });
+          const ok = !!(r && r.ok);
+          // Emit every key the UI may read across PNG/MP4 paths (shape-stable, U3).
+          sendJson(res, ok ? 200 : 500, {
+            exitCode: r ? r.exitCode : -1, format: (r && r.format) || "image",
+            output: r && r.outPath, out: r && r.outPath,
+            stdout: r && r.stdout, stderr: r && r.stderr,
+          });
         } catch (e) { sendJson(res, 500, { error: String((e && e.message) || e) }); }
         return;
       }
@@ -184,6 +258,91 @@ export function createEditorServer(config = {}) {
           copyFileSync(from, join(dir, name));
           sendJson(res, 200, { path: "./assets/" + name });
         } catch (e) { sendJson(res, 500, { error: String((e && e.message) || e) }); }
+        return;
+      }
+
+      // 7b) Audio waveform peaks — ffmpeg decode + mtime cache under dataDir. Never
+      //     500s the picker: a decode failure returns { error } and the UI degrades.
+      if (path === "/peaks" && req.method === "GET") {
+        const file = url.searchParams.get("file");
+        if (!file) { sendJson(res, 400, { error: "missing file" }); return; }
+        const data = ensurePeaks(file);
+        if (!data) { sendJson(res, 200, { error: "could not decode peaks (missing file or ffmpeg)" }); return; }
+        sendJson(res, 200, data); return;
+      }
+
+      // 7c) Review markup (Frame.io-style timestamped annotations) — self-describing
+      //     sidecars under dataDir/.annotations-store. NEVER exported. id is a query
+      //     param (ids can look like "camp:c:a:as").
+      if (path === "/annotations" && req.method === "GET" && !url.searchParams.get("id")) {
+        const sets = [];
+        try {
+          for (const f of readdirSync(ANNOTATIONS_DIR)) {
+            if (!f.endsWith(".json") || f.endsWith(".tmp")) continue;
+            try {
+              const rec = JSON.parse(readFileSync(join(ANNOTATIONS_DIR, f), "utf8")); const c = rec.creative || null;
+              sets.push({ editorId: (c && c.editorId) || f.replace(/\.json$/, ""), creative: c, count: Array.isArray(rec.annotations) ? rec.annotations.length : 0, updatedAt: (c && c.updatedAt) || null });
+            } catch { /* skip a corrupt file */ }
+          }
+        } catch { /* no store dir yet */ }
+        sets.sort((a, b) => String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")));
+        sendJson(res, 200, { sets }); return;
+      }
+      if (path === "/annotations/publish" && (req.method === "GET" || req.method === "POST")) {
+        const id = url.searchParams.get("id"); if (!id) { sendJson(res, 400, { error: "missing ?id=" }); return; }
+        // FUTURE INTEGRATION POINT — wire a real destination (portal/webhook/MCP) here.
+        sendJson(res, 200, { ok: true, published: false, package: annPackage(id) }); return;
+      }
+      if (path === "/annotations/to-ai" && req.method === "POST") {
+        const id = url.searchParams.get("id"); if (!id) { sendJson(res, 400, { error: "missing ?id=" }); return; }
+        const pkg = annPackage(id); const safe = annSafeId(id); const fileRel = ".annotations-store/_inbox/" + safe + ".json";
+        try {
+          mkdirSync(AI_INBOX_DIR, { recursive: true });
+          writeFileSync(join(AI_INBOX_DIR, safe + ".json"), JSON.stringify(pkg, null, 2));
+          writeFileSync(join(AI_INBOX_DIR, "_latest.json"), JSON.stringify(Object.assign({ inboxFile: fileRel }, pkg), null, 2));
+          sendJson(res, 200, { ok: true, count: pkg.annotations.length, path: fileRel });
+        } catch (e) { sendJson(res, 500, { error: String((e && e.message) || e) }); }
+        return;
+      }
+      if (path === "/annotations" && (req.method === "GET" || req.method === "POST")) {
+        const id = url.searchParams.get("id"); if (!id) { sendJson(res, 400, { error: "missing ?id=" }); return; }
+        const file = join(ANNOTATIONS_DIR, annSafeId(id) + ".json");
+        if (req.method === "GET") { try { sendJson(res, 200, existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : { creative: null, annotations: [] }); } catch { sendJson(res, 200, { creative: null, annotations: [] }); } return; }
+        try {
+          const body = JSON.parse((await readBody(req)) || "{}");
+          const annotations = Array.isArray(body.annotations) ? body.annotations : [];
+          const creative = Object.assign({}, body.creative || {}, { editorId: id, source: SOURCE, schemaVersion: 1, updatedAt: new Date().toISOString() });
+          mkdirSync(ANNOTATIONS_DIR, { recursive: true });
+          const tmp = file + ".tmp"; writeFileSync(tmp, JSON.stringify({ creative, annotations }, null, 2)); renameSync(tmp, file);
+          sendJson(res, 200, { ok: true, count: annotations.length });
+        } catch (e) { sendJson(res, 400, { error: String((e && e.message) || e) }); }
+        return;
+      }
+
+      // 7d) Upload from the user's computer — the PROVIDER owns the destination (C3),
+      //     so the engine never hardcodes a cache path. Buffered with a hard cap.
+      if (path === "/media-upload" && req.method === "POST") {
+        const kind = url.searchParams.get("kind") || "photo";
+        const rawName = url.searchParams.get("name") || "upload";
+        const exts = EXT_FOR_KIND[kind];
+        if (!exts) { sendJson(res, 400, { error: `bad kind "${kind}"` }); return; }
+        const ext = extname(rawName).toLowerCase();
+        if (!exts.has(ext)) { sendJson(res, 400, { error: `extension "${ext}" not allowed for ${kind}` }); return; }
+        if (!mediaProvider || typeof mediaProvider.upload !== "function") { sendJson(res, 501, { error: "no upload provider configured" }); return; }
+        const chunks = []; let size = 0, aborted = false;
+        req.on("data", (c) => {
+          if (aborted) return; size += c.length;
+          if (size > UPLOAD_MAX_BYTES) { aborted = true; try { req.destroy(); } catch (_) {} if (!res.headersSent) sendJson(res, 413, { error: "file too large (>500MB)" }); return; }
+          chunks.push(c);
+        });
+        req.on("end", () => {
+          if (aborted) return;
+          try {
+            const ref = mediaProvider.upload(Buffer.concat(chunks), rawName, kind, { campaign: url.searchParams.get("campaign") || null });
+            const out = (ref && typeof ref === "object") ? ref : { name: basename(String(ref)), path: ref, url: "/media-file/" + ref };
+            sendJson(res, 200, Object.assign({ source: "uploaded" }, out));
+          } catch (e) { if (!res.headersSent) sendJson(res, 500, { error: String((e && e.message) || e) }); }
+        });
         return;
       }
 
