@@ -3173,12 +3173,16 @@
             t.appendChild(v);
             const play = document.createElement('span');
             play.textContent = '▶';
-            play.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;'
-              + 'font-size:26px;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.8);background:rgba(0,0,0,.18);cursor:pointer;';
+            play.title = 'Preview (play/pause). Click the tile to select.';
+            // Small centered control — NOT a full-tile overlay — so clicking the tile
+            // anywhere else selects/places the clip (the button only previews).
+            play.style.cssText = 'position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);'
+              + 'width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;'
+              + 'font-size:15px;color:#fff;background:rgba(0,0,0,.55);cursor:pointer;line-height:1;';
             play.addEventListener('click', (e) => {
               e.stopPropagation();
-              if (v.paused) { v.play().catch(() => {}); play.textContent = '⏸'; play.style.background = 'transparent'; }
-              else { v.pause(); play.textContent = '▶'; play.style.background = 'rgba(0,0,0,.18)'; }
+              if (v.paused) { v.play().catch(() => {}); play.textContent = '⏸'; play.style.background = 'rgba(0,0,0,.4)'; }
+              else { v.pause(); play.textContent = '▶'; play.style.background = 'rgba(0,0,0,.55)'; }
             });
             t.appendChild(play);
           } else if (f.url) {
