@@ -23,6 +23,7 @@ import { createEditorServer } from "../creative-editor/server.mjs";
 import { findTemplate, listTemplates, assetsDirFor } from "./lib/template-roots.mjs";
 import { createAaMediaProvider } from "./lib/aa-media-provider.mjs";
 import { createAaRenderer } from "./lib/aa-renderer.mjs";
+import { createCampaignPlugin } from "./lib/aa-campaign-plugin.mjs";
 
 const ROOT = resolve(join(dirname(fileURLToPath(import.meta.url)), ".."));
 const PORT = Number(process.env.EDITOR_PORT) || 5173;
@@ -35,8 +36,10 @@ const templateRoots = {
   assetsDirFor: (id) => assetsDirFor(id),
 };
 
-// TODO (Phase C remaining): const campaignPlugin = createCampaignPlugin({ cwd: ROOT });
-const plugins = [];
+// The campaign plugin owns all AA-campaign routes (review API, brand-scoped /media,
+// drive, bank, template-spec, /kraken/state + whole-folder pull). It runs BEFORE the
+// engine core, so the generic /kraken browse still falls through to the provider.
+const plugins = [createCampaignPlugin({ cwd: ROOT })];
 
 const server = createEditorServer({
   templateRoots,
