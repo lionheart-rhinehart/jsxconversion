@@ -21,7 +21,7 @@ import {
 } from "../scripts/lib/human-override.mjs";
 import { splitHook } from "../scripts/lib/roles.mjs";
 import { classifyVerbatim, isApprovedTrim, verbatimGuard } from "../scripts/lib/copy-resolve.mjs";
-import { validatePlan } from "../scripts/validate-plan.mjs";
+import { validatePlan, checkFormatMix } from "../scripts/validate-plan.mjs";
 
 const REPO = join(import.meta.dirname, "..");
 const CAMPAIGNS = join(REPO, "campaigns");
@@ -343,4 +343,199 @@ test("INTEG G3: a fresh creative WITH exampleId does not trip the gate; a legacy
     assert.equal(_hasExBind(validatePlan(bound, { campaign: slug, grandfatherSet: new Set(), env: {} })), false, "a bound fresh asset must not trip exampleBinding");
     assert.equal(_hasExBind(validatePlan(legacy, { campaign: slug, grandfatherSet: new Set(), env: {} })), false, "a non-fresh template asset must never trip exampleBinding");
   } finally { cleanup(); }
+});
+
+// ── T1.1c: exampleBindingAuthentic — the stamped id must equal the deterministic pick ──
+const _hasAuth = (r) => _aVios(r).some((v) => v.rule === "exampleBindingAuthentic" && v.severity === "block");
+// one giant-stat example; an asset bound to giant-stat deterministically selects it
+const AUTH_IDX = { examples: {
+  "ex-001-giant-stat": {
+    archetype: "giant-stat", format: "static", mediaStyleAccepts: ["subject:athlete-face"],
+    slotShape: { slots: [{ id: "stat", role: "stat", maxChars: null, required: true }] },
+    renderedImagePath: "templates/_examples/ex-001-giant-stat.png",
+    clusterMetrics: { nearestNeighbor: { cosine: 0.5 } },
+  },
+} };
+const AUTH_LIB = { schemaVersion: 1, units: [{ id: "u1", text: '+4"' }], byId: { u1: { id: "u1", text: '+4"' } } };
+const authAsset = (over = {}) => ({ brand: null, angles: [{ id: "a", assets: [
+  { id: "F1", source: "fresh", format: "static", media: "x.jpg", archetype: "giant-stat", copyRefs: { stat: "u1" }, exampleId: "ex-001-giant-stat", ...over },
+] }] });
+
+test("T1.1c: a stamped exampleId that EQUALS the deterministic pick passes authenticity", () => {
+  const { slug, cleanup } = tmpCampaign({ "copy-library.json": AUTH_LIB });
+  try {
+    const r = validatePlan(authAsset(), { campaign: slug, grandfatherSet: new Set(), env: {}, index: AUTH_IDX });
+    assert.equal(_hasAuth(r), false, "the deterministic id must not trip the authenticity gate");
+  } finally { cleanup(); }
+});
+
+test("T1.1c: a hand-faked exampleId (≠ the deterministic pick) is a hard block", () => {
+  const { slug, cleanup } = tmpCampaign({ "copy-library.json": AUTH_LIB });
+  try {
+    const r = validatePlan(authAsset({ exampleId: "ex-999-faked" }), { campaign: slug, grandfatherSet: new Set(), env: {}, index: AUTH_IDX });
+    assert.ok(_hasAuth(r), "a stamped id that selection would not produce must block");
+  } finally { cleanup(); }
+});
+
+test("T1.1c: an archetype with no fitting example blocks; an invalid archetype blocks", () => {
+  const { slug, cleanup } = tmpCampaign({ "copy-library.json": AUTH_LIB });
+  try {
+    const noFit = validatePlan(authAsset({ archetype: "versus", exampleId: "ex-001-giant-stat" }), { campaign: slug, grandfatherSet: new Set(), env: {}, index: AUTH_IDX });
+    assert.ok(_aVios(noFit).some((v) => v.rule === "exampleBindingAuthentic" && /no fitting example/.test(v.message)), "a valid archetype with no example blocks");
+    const bad = validatePlan(authAsset({ archetype: "not-a-real-archetype" }), { campaign: slug, grandfatherSet: new Set(), env: {}, index: AUTH_IDX });
+    assert.ok(_aVios(bad).some((v) => v.rule === "exampleBindingAuthentic" && /not a known/.test(v.message)), "an invalid archetype blocks");
+  } finally { cleanup(); }
+});
+
+test("T1.1c: grandfathered campaigns skip authenticity; an empty index fails OPEN (no block)", () => {
+  const { slug, cleanup } = tmpCampaign({ "copy-library.json": AUTH_LIB });
+  try {
+    const gf = validatePlan(authAsset({ exampleId: "ex-999-faked" }), { campaign: slug, grandfatherSet: new Set([slug.toLowerCase()]), env: {}, index: AUTH_IDX });
+    assert.equal(_hasAuth(gf), false, "grandfathered work is not retroactively blocked");
+    const empty = validatePlan(authAsset({ exampleId: "ex-999-faked" }), { campaign: slug, grandfatherSet: new Set(), env: {}, index: { examples: {} } });
+    assert.equal(_hasAuth(empty), false, "an empty/absent index fails open (infra-absence, not forgery)");
+  } finally { cleanup(); }
+});
+
+// ── T1.2: Law #0 mirrors the bound example's media (presence) ──────────────────
+const _hasMedia = (r) => _aVios(r).some((v) => v.rule === "media" && v.severity === "block");
+const IDX_FREE = { examples: { "ex-050-giant-stat-free": {
+  archetype: "giant-stat", format: "static", mediaStyleAccepts: [], // media-FREE example
+  slotShape: { slots: [{ id: "stat", role: "stat", maxChars: null, required: true }] },
+  renderedImagePath: "templates/_examples/ex-050-giant-stat-free.png", clusterMetrics: { nearestNeighbor: { cosine: 0.5 } },
+} } };
+const mediaFreeAsset = () => ({ brand: null, angles: [{ id: "a", assets: [
+  { id: "F1", source: "fresh", format: "static", archetype: "giant-stat", copyRefs: { stat: "u1" }, exampleId: "ex-050-giant-stat-free" },
+] }] });
+
+test("T1.2: a design built from a MEDIA-FREE example may omit media (no Law#0 block)", () => {
+  const { slug, cleanup } = tmpCampaign({ "copy-library.json": AUTH_LIB });
+  try {
+    const r = validatePlan(mediaFreeAsset(), { campaign: slug, grandfatherSet: new Set(), env: {}, index: IDX_FREE });
+    assert.equal(_hasMedia(r), false, "media-free example → new design needn't carry media");
+    assert.equal(_hasAuth(r), false, "and it binds cleanly");
+  } finally { cleanup(); }
+});
+
+test("T1.2: a design built from a MEDIA-CARRYING example must carry media (Law#0 blocks)", () => {
+  const { slug, cleanup } = tmpCampaign({ "copy-library.json": AUTH_LIB });
+  try {
+    // AUTH_IDX's ex-001-giant-stat carries media (mediaStyleAccepts non-empty); strip the asset's media
+    const r = validatePlan(authAsset({ media: undefined }), { campaign: slug, grandfatherSet: new Set(), env: {}, index: AUTH_IDX });
+    assert.ok(_hasMedia(r), "media-carrying example → new design must mirror it");
+  } finally { cleanup(); }
+});
+
+test("T1.2: a legacy template asset keeps the blanket media rule", () => {
+  const legacyNoMedia = { brand: null, angles: [{ id: "a", assets: [{ id: "T1", format: "static", template: "cluster-30" }] }] };
+  const { slug, cleanup } = tmpCampaign({});
+  try {
+    const r = validatePlan(legacyNoMedia, { campaign: slug, grandfatherSet: new Set(), env: {} });
+    assert.ok(_hasMedia(r), "a legacy template asset with no media still blocks");
+  } finally { cleanup(); }
+});
+
+// ── T1.3: media-fit gate #12 (full-bleed / accent ceiling / clip reuse) ────────
+const _hasFit = (r) => _aVios(r).some((v) => v.rule === "mediaFit" && v.severity === "block");
+// media-CARRYING giant-stat (graphic, mediaOptional) + action-hero (photo-led)
+const MF_IDX = { examples: {
+  "ex-001-giant-stat": { archetype: "giant-stat", format: "static", mediaStyleAccepts: ["subject:athlete-face"],
+    slotShape: { slots: [{ id: "stat", role: "stat", maxChars: null, required: true }] },
+    renderedImagePath: "templates/_examples/ex-001-giant-stat.png", clusterMetrics: { nearestNeighbor: { cosine: 0.5 } } },
+  "ex-010-action-hero": { archetype: "action-hero", format: "static", mediaStyleAccepts: ["subject:athlete-action"],
+    slotShape: { slots: [{ id: "stat", role: "stat", maxChars: null, required: true }] },
+    renderedImagePath: "templates/_examples/ex-010-action-hero.png", clusterMetrics: { nearestNeighbor: { cosine: 0.5 } } },
+} };
+const mfAsset = (archetype, exampleId, over = {}) => ({ brand: null, angles: [{ id: "a", assets: [
+  { id: "F1", source: "fresh", format: "static", archetype, exampleId, copyRefs: { stat: "u1" }, media: "x.jpg", ...over },
+] }] });
+const mfRun = (plan, edits) => {
+  const files = { "copy-library.json": AUTH_LIB };
+  if (edits) files["edits/a__F1.config.json"] = edits;
+  const { slug, cleanup } = tmpCampaign(files);
+  try { return validatePlan(plan, { campaign: slug, grandfatherSet: new Set(), env: {}, index: MF_IDX }); }
+  finally { cleanup(); }
+};
+
+test("T1.3: full-bleed media on a graphic design blocks", () => {
+  const r = mfRun(mfAsset("giant-stat", "ex-001-giant-stat"), { width: 1080, height: 1920, media: { path: "bg.jpg", tag: "bg_media", z: 0 } });
+  assert.ok(_hasFit(r), "full-bleed bg on a graphic archetype must block");
+});
+
+test("T1.3: a >20% accent on a graphic design blocks; ≤20% passes", () => {
+  const big = mfRun(mfAsset("giant-stat", "ex-001-giant-stat"), { width: 1080, height: 1920, elements: [{ id: "photo", type: "image", x: 100, y: 100, width: 600, height: 800 }] });
+  assert.ok(_hasFit(big), "a 23% accent must block");
+  const small = mfRun(mfAsset("giant-stat", "ex-001-giant-stat"), { width: 1080, height: 1920, elements: [{ id: "photo", type: "image", x: 100, y: 100, width: 400, height: 400 }] });
+  assert.equal(_hasFit(small), false, "a ~8% accent is within the ceiling");
+});
+
+test("T1.3: full-bleed media on a PHOTO-LED archetype is fine (its whole point)", () => {
+  const r = mfRun(mfAsset("action-hero", "ex-010-action-hero"), { width: 1080, height: 1920, media: { path: "bg.jpg", tag: "bg_media", z: 0 } });
+  assert.equal(_hasFit(r), false, "action-hero full-bleed must NOT trip media-fit");
+});
+
+test("T1.3: exact clip reuse across the batch is a mediaDiversity block (generate-world)", () => {
+  const plan = { brand: null, angles: [{ id: "a", assets: [
+    { id: "F1", source: "fresh", format: "video", clip: "same.mp4" },
+    { id: "F2", source: "fresh", format: "video", clip: "same.mp4" },
+  ] }] };
+  const { slug, cleanup } = tmpCampaign({});
+  try {
+    const r = validatePlan(plan, { campaign: slug, grandfatherSet: new Set(), env: {} });
+    assert.ok(r.campaignViolations.some((v) => v.rule === "mediaDiversity" && v.severity === "block"), "reused clip must block in generate-world");
+  } finally { cleanup(); }
+});
+
+// ── T1.4: format-mix declared intent (override-governed; SMAA-dodge stays shut) ──
+const _hasFmtBlock = (r) => r.campaignViolations.some((v) => v.rule === "formatMix" && v.severity === "block");
+
+test("T1.4: checkFormatMix honors intent — mixed floors video, static-only waives, video-only demands it", () => {
+  const p = staticHeavyPlan(); // 4 static, 0 video
+  assert.equal(checkFormatMix(p, { intent: "mixed" }).ok, false, "mixed: a 0-video batch fails the floor");
+  assert.equal(checkFormatMix(p, { intent: "static-only" }).ok, true, "static-only: floor waived");
+  assert.equal(checkFormatMix(p, { intent: "video-only" }).ok, false, "video-only: a static batch fails");
+});
+
+test("T1.4: a static-only declaration passes ONLY when human-honored (grandfathered/marked)", () => {
+  // honored (grandfathered) → intent takes effect, floor waived, audited as a warn
+  const gf = tmpCampaign({ "validation.config.json": { formatMixIntent: "static-only" } });
+  try {
+    const r = validatePlan(staticHeavyPlan(), { campaign: gf.slug, grandfatherSet: new Set([gf.slug.toLowerCase()]), env: {} });
+    assert.equal(_hasFmtBlock(r), false, "honored static-only waives the video floor");
+    assert.ok(r.campaignViolations.some((v) => v.rule === "formatMix" && v.severity === "warn" && /intent: static-only/.test(v.message)), "the declaration is audited");
+  } finally { gf.cleanup(); }
+
+  // NOT honored (fresh, unmarked) → the whole relax-file is ignored → floor STANDS
+  const fresh = tmpCampaign({ "validation.config.json": { formatMixIntent: "static-only" } });
+  try {
+    const r = validatePlan(staticHeavyPlan(), { campaign: fresh.slug, grandfatherSet: new Set(), env: {} });
+    assert.ok(_hasFmtBlock(r), "an unmarked fresh campaign cannot silently declare static-only (SMAA dodge stays shut)");
+  } finally { fresh.cleanup(); }
+});
+
+// ── T1.5: objective anti-slop #16 (placeholder text / CSS-silhouette media) ────
+const _hasSlop = (r) => _aVios(r).some((v) => v.rule === "antiSlop" && v.severity === "block");
+
+test("T1.5: placeholder text is a hard block", () => {
+  const plan = { brand: null, angles: [{ id: "a", assets: [{ id: "M1", format: "video", clip: "x.mp4", templateData: { line1: "Your text here" } }] }] };
+  const { slug, cleanup } = tmpCampaign({});
+  try {
+    assert.ok(_hasSlop(validatePlan(plan, { campaign: slug, grandfatherSet: new Set(), env: {} })), "a 'your text here' placeholder must block");
+  } finally { cleanup(); }
+});
+
+test("T1.5: a media slot faked with a CSS shape (no image src) is a hard block; a real image is clean", () => {
+  const silhouette = { brand: null, angles: [{ id: "a", assets: [{ id: "S1", format: "static" }] }] };
+  const r1 = (() => {
+    const { slug, cleanup } = tmpCampaign({ "edits/a__S1.config.json": { width: 1080, height: 1920, elements: [{ id: "bg_media", type: "rect", fill: "#cccccc", x: 0, y: 0, width: 500, height: 500 }] } });
+    try { return validatePlan(silhouette, { campaign: slug, grandfatherSet: new Set(), env: {} }); } finally { cleanup(); }
+  })();
+  assert.ok(_hasSlop(r1), "a media-roled rect/gradient with no image must block");
+
+  const real = { brand: null, angles: [{ id: "a", assets: [{ id: "S1", format: "static" }] }] };
+  const r2 = (() => {
+    const { slug, cleanup } = tmpCampaign({ "edits/a__S1.config.json": { width: 1080, height: 1920, media: { path: "real.jpg" }, elements: [{ id: "photo", type: "image", path: "real.jpg", x: 100, y: 100, width: 400, height: 400 }] } });
+    try { return validatePlan(real, { campaign: slug, grandfatherSet: new Set(), env: {} }); } finally { cleanup(); }
+  })();
+  assert.equal(_hasSlop(r2), false, "a real image element is not slop");
 });

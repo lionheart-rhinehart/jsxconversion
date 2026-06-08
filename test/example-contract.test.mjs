@@ -22,6 +22,7 @@ import {
   EXAMPLE_ID_RE, isExampleId, slugify, makeExampleId,
   EXAMPLES_DIR, INDEX_PATH, exampleImagePath, exampleMotionPath, exampleSourcePaths,
   emptyIndex, loadExampleIndex, validateExampleEntry, validateExampleIndex,
+  archetypeForExample, exampleHasMedia, mediaOptionalForArchetype,
 } from "../scripts/lib/example-library.mjs";
 
 const REPO = join(import.meta.dirname, "..");
@@ -242,4 +243,42 @@ test("validateExampleIndex aggregates per-entry errors", () => {
   const r = validateExampleIndex(idx);
   assert.equal(r.count, 2);
   assert.ok(r.errors.some((m) => /does not match the ex-/.test(m)));
+});
+
+// ── engine lookup helpers (T1.0) — the generation gate's read of the index ────
+const FAKE_INDEX = {
+  examples: {
+    "ex-010-quote-card": { archetype: "quote-card", format: "static", mediaStyleAccepts: [] },
+    "ex-029-action-hero": { archetype: "action-hero", format: "static", mediaStyleAccepts: ["subject:athlete-action"] },
+    "ex-099-giant-stat-photo": { archetype: "giant-stat", format: "static", mediaStyleAccepts: ["subject:athlete-face"] },
+    "ex-046-metric-reveal": { archetype: "metric-reveal", format: "video", mediaStyleAccepts: [] },
+  },
+};
+
+test("archetypeForExample resolves a bound id, null for unknown", () => {
+  assert.equal(archetypeForExample("ex-010-quote-card", FAKE_INDEX), "quote-card");
+  assert.equal(archetypeForExample("ex-046-metric-reveal", FAKE_INDEX), "metric-reveal");
+  assert.equal(archetypeForExample("ex-999-nope", FAKE_INDEX), null);
+  assert.equal(archetypeForExample("ex-010-quote-card", null), null);
+});
+
+test("exampleHasMedia mirrors the bound example (non-empty mediaStyleAccepts), fail-closed on unknown", () => {
+  // media-free example (graphic / data-viz) → new design needn't carry media
+  assert.equal(exampleHasMedia("ex-010-quote-card", FAKE_INDEX), false);
+  assert.equal(exampleHasMedia("ex-046-metric-reveal", FAKE_INDEX), false); // data-viz motion
+  // example carries media → new design must mirror it (the case the archetype flag would miss:
+  // giant-stat is media-OPTIONAL but THIS example carries media → required)
+  assert.equal(exampleHasMedia("ex-029-action-hero", FAKE_INDEX), true);
+  assert.equal(exampleHasMedia("ex-099-giant-stat-photo", FAKE_INDEX), true);
+  // unknown id → fail-closed: REQUIRE media (don't wrongly waive Law #0 on a bad/forged ref)
+  assert.equal(exampleHasMedia("ex-999-nope", FAKE_INDEX), true);
+  assert.equal(exampleHasMedia("ex-010-quote-card", null), true);
+});
+
+test("mediaOptionalForArchetype keys the TREATMENT gate (#12), not presence", () => {
+  assert.equal(mediaOptionalForArchetype("quote-card"), true);   // graphic
+  assert.equal(mediaOptionalForArchetype("giant-stat"), true);   // graphic (optional even though an example carries media)
+  assert.equal(mediaOptionalForArchetype("action-hero"), false); // photo-led
+  assert.equal(mediaOptionalForArchetype("count-up-stats"), true); // data-viz motion
+  assert.equal(mediaOptionalForArchetype("nope-not-real"), false); // unknown → false (no throw)
 });

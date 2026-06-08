@@ -34,6 +34,9 @@ import { resolveStaticConfig } from "./lib/fill-core.mjs";
 import { findTemplate } from "./lib/template-roots.mjs";
 import { cloneCity, locationCity } from "./lib/location.mjs";
 import { scanBrandIntegrity } from "./lib/brand-integrity.mjs";
+import { loadExampleIndex, isAnyArchetype, archetypeForExample, exampleHasMedia, mediaOptionalForArchetype } from "./lib/example-library.mjs";
+import { bindPlanExamples } from "./lib/bind-examples.mjs";
+import { mediaReuseProblems } from "./lib/uniqueness.mjs";
 
 const PROJECT_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const CAMPAIGNS_DIR = join(PROJECT_ROOT, "campaigns");
@@ -56,6 +59,14 @@ export const DEFAULT_RULES = {
   // or with the out-of-band AA_HUMAN_OVERRIDE marker (see human-override.mjs); a new
   // campaign's relax-file is ignored.
   formatMix: "block",
+  // Format-mix INTENT (the target), distinct from formatMix (the severity). "mixed"
+  // (default) holds the canonical 60% video floor; "static-only"/"video-only" declare
+  // a deliberately single-format batch. CRITICAL: intent is a RULES key (set in the
+  // human-honored validation.config.json), NOT a plan.knobs value — a free plan knob
+  // would re-open the SMAA dodge (the engine declaring static-only to skip the floor).
+  // A fresh campaign's static-only declaration is honored ONLY when grandfathered or
+  // AA_HUMAN_OVERRIDE-marked (same gate as a severity relax).
+  formatMixIntent: "mixed",
   // Verbatim is HARD by default, brand-agnostically (Phase 1): off | warn |
   // substring(block). Every brand rules file already opts into "substring"; this
   // default makes a brand-less or new-brand campaign get the hard gate too, instead
@@ -110,6 +121,20 @@ const EMOJI_RE = /\p{Extended_Pictographic}/u;
 // Motion templateData keys that are NOT message copy (identity/structural/media/numeric).
 const NON_CONTENT_KEY = /^(eyebrow|brand|cta|guarantee|duration|audio)$/i;
 const MEDIA_KEY = /(clip|photo|media|bg|src|poster|url|logo|color|font|frames)/i;
+// Objective anti-slop (#16): literal placeholder strings that must never ship.
+const PLACEHOLDER_RE = /\b(lorem ipsum|your (?:text|headline|copy) here|(?:headline|subhead|text|image|photo) goes here|placeholder|tktk|tk tk|xxxx+)\b/i;
+
+// Is a static edits-config ELEMENT a media element (vs a text/shape element)? Used
+// by the media-fit gate (#12) to measure media geometry. Matches an explicit media
+// type, a media-ish tag/id, or a media-style `accepts` list. NEVER scans fixedDesign
+// (the run-campaign scrim lives there and must not count as media).
+function isMediaEl(el) {
+  if (!el || typeof el !== "object") return false;
+  if (el.type === "image" || el.type === "video") return true;
+  if (MEDIA_KEY.test(`${el.tag || ""} ${el.id || ""}`) || /\bcutout\b/i.test(`${el.tag || ""} ${el.id || ""}`)) return true;
+  if (Array.isArray(el.accepts) && el.accepts.some((a) => /^(subject|production|env):/.test(a))) return true;
+  return false;
+}
 
 function loadRoleIndex() {
   try {
@@ -141,7 +166,7 @@ export function resolveAssetCopy(asset, angle, ctx) {
       cfg = _tdir ? resolveStaticConfig({ clusterId: asset.template, asset, brand, location, campaign, templateDir: _tdir, dataDir }) : null;
       source = cfg ? "fill" : "none";
     }
-    if (!cfg) return { format: fmt, fields: [], mediaPresent: false, cityResolved: null, aspect: null, source, approvedTrims: {} };
+    if (!cfg) return { format: fmt, fields: [], mediaPresent: false, cityResolved: null, aspect: null, source, approvedTrims: {}, mediaGeom: null };
     const fields = (cfg.elements || [])
       .filter((el) => typeof el.text === "string")
       .map((el) => ({ key: el.id, role: el.role || null, text: el.text, tag: el.tag }));
@@ -159,7 +184,16 @@ export function resolveAssetCopy(asset, angle, ctx) {
     const aspect = (typeof cfg.width === "number" && typeof cfg.height === "number")
       ? { width: cfg.width, height: cfg.height } : null;
     const approvedTrims = (cfg._approvedTrims && typeof cfg._approvedTrims === "object") ? cfg._approvedTrims : {};
-    return { format: fmt, fields, mediaPresent, cityResolved, aspect, source, approvedTrims };
+    // media geometry for the media-fit gate (#12): the background-plane media + the
+    // media elements + the frame size. Scans elements + top-level media ONLY (never
+    // fixedDesign — the scrim is there). Additive return field; existing callers ignore it.
+    const mediaGeom = {
+      topMedia: (cfg.media && typeof cfg.media === "object") ? cfg.media : null,
+      mediaEls: (cfg.elements || []).filter(isMediaEl),
+      width: typeof cfg.width === "number" ? cfg.width : null,
+      height: typeof cfg.height === "number" ? cfg.height : null,
+    };
+    return { format: fmt, fields, mediaPresent, cityResolved, aspect, source, approvedTrims, mediaGeom };
   }
 
   // motion
@@ -181,7 +215,9 @@ export function resolveAssetCopy(asset, angle, ctx) {
   const slug = asset.location || angle.location || ctx.planLocation || null;
   const cityResolved = slug ? locationCity(slug, dataDir).city : null;
   const approvedTrims = (td._approvedTrims && typeof td._approvedTrims === "object") ? td._approvedTrims : {};
-  return { format: fmt, fields, mediaPresent, cityResolved, aspect: null, source: "motion", approvedTrims };
+  // motion templateData carries no element geometry → media-fit geometry is unknowable
+  // here; routes to the vision layer (#15). mediaGeom null.
+  return { format: fmt, fields, mediaPresent, cityResolved, aspect: null, source: "motion", approvedTrims, mediaGeom: null };
 }
 
 // Is a resolved field "message copy" (subject to verbatim/voice)? Statics use the
@@ -201,7 +237,7 @@ function isContentField(f, format) {
 // still pass). Slack = max(1 asset, 15 percentage points) so small batches and a few
 // points of drift don't trip; a gross miss does. Pure + exported for unit tests.
 // Returns { ok, total, target, actual, videoShare, deviations, skipped? }.
-export function checkFormatMix(plan, { target = CANONICAL_MOTION_RATIO, minAssets = 4 } = {}) {
+export function checkFormatMix(plan, { target = CANONICAL_MOTION_RATIO, minAssets = 4, intent = "mixed" } = {}) {
   const assets = (plan.angles || []).flatMap((a) => a.assets || []);
   const total = assets.length;
   const actual = { video: 0, gif: 0, static: 0 };
@@ -210,10 +246,17 @@ export function checkFormatMix(plan, { target = CANONICAL_MOTION_RATIO, minAsset
     actual[f]++;
   }
   // Too few assets → rounding dominates; skip (not enough signal to fail on).
-  if (total < minAssets) return { ok: true, total, target, actual, videoShare: null, deviations: [], skipped: true };
-  const slackShare = Math.max(1 / total, 0.15);
-  const targetVideo = typeof target.video === "number" ? target.video : 0;
+  if (total < minAssets) return { ok: true, total, target, actual, videoShare: null, deviations: [], skipped: true, intent };
   const videoShare = actual.video / total;
+  // A DECLARED static-only batch waives the video floor entirely (honored only via the
+  // human-override path — see formatMixIntent). More motion than declared is never a
+  // problem, so static-only with some motion still passes.
+  if (intent === "static-only") {
+    return { ok: true, total, target, actual, videoShare: +videoShare.toFixed(2), deviations: [], intent };
+  }
+  const slackShare = Math.max(1 / total, 0.15);
+  // video-only declares an all-video batch → the floor is ~100% video.
+  const targetVideo = intent === "video-only" ? 1 : (typeof target.video === "number" ? target.video : 0);
   const deviations = [];
   // Only UNDER-target video is a failure (more motion than target is never a problem).
   if (videoShare < targetVideo - slackShare) {
@@ -225,7 +268,7 @@ export function checkFormatMix(plan, { target = CANONICAL_MOTION_RATIO, minAsset
       actualShare: +videoShare.toFixed(2),
     });
   }
-  return { ok: deviations.length === 0, total, target, actual, videoShare: +videoShare.toFixed(2), deviations, slackShare };
+  return { ok: deviations.length === 0, total, target, actual, videoShare: +videoShare.toFixed(2), deviations, slackShare, intent };
 }
 
 // ── the validator ────────────────────────────────────────────────────────────
@@ -267,6 +310,20 @@ export function validatePlan(plan, opts = {}) {
   catch (e) { libError = e.message; }
   if (library && Array.isArray(library.units)) {
     libConcat = library.units.map((u) => norm(u.text)).filter(Boolean);
+  }
+
+  // Generation-engine binding — re-derive the deterministic example selection so the
+  // gate can verify each fresh asset's stamped exampleId is AUTHENTIC (exactly what
+  // code selection produces), not hand-faked or stale. scripts/bind-examples.mjs is
+  // the PRODUCER; this is the un-forgeable ENFORCEMENT (the gate runs regardless of
+  // who wrote the plan). Pure; never throws. opts.index lets tests inject a fake.
+  const exampleIndex = opts.index || loadExampleIndex(PROJECT_ROOT);
+  const exampleIndexEmpty = !exampleIndex || !exampleIndex.examples || Object.keys(exampleIndex.examples).length === 0;
+  const rebind = library ? bindPlanExamples(plan, { library, index: exampleIndex }) : null;
+  const expectedExampleId = new Map();   // "angleId/assetId" → exampleId | null
+  if (rebind) {
+    for (const b of rebind.report.bound) expectedExampleId.set(`${b.angleId}/${b.assetId}`, b.exampleId);
+    for (const n of rebind.report.nulls) expectedExampleId.set(`${n.angleId}/${n.assetId}`, null);
   }
 
   const clone = cloneCity(plan, dataDir);
@@ -386,7 +443,31 @@ export function validatePlan(plan, opts = {}) {
       if (asset.source === "fresh" && !isStr(asset.exampleId) && !isGrandfathered(campaign, grandfatherSet)) {
         add("exampleBinding", "block",
           `fresh creative not bound to an example (no exampleId) — example-selection was skipped`,
-          { fixHint: "run the engine's select step (scripts/lib/example-select.mjs) so the asset carries exampleId + archetype" });
+          { fixHint: "run the engine's select step: node scripts/bind-examples.mjs " + campaign });
+      }
+
+      // Authenticity — the stamped exampleId must EQUAL what deterministic selection
+      // produces (re-derived above). A hand-faked / stale id, an unbindable archetype,
+      // or a reordered batch is caught here. Fail-OPEN on infra-absence (no library /
+      // empty index): the legacy exampleBinding + media blocks hold the floor; we only
+      // fail-CLOSED on forgery. (The "no id at all" case is the legacy block above.)
+      if (asset.source === "fresh" && !isGrandfathered(campaign, grandfatherSet) && rebind && !exampleIndexEmpty) {
+        if (!isAnyArchetype(asset.archetype)) {
+          add("exampleBindingAuthentic", "block",
+            `archetype "${asset.archetype}" is not a known ARCHETYPE/MOTION_ARCHETYPE`,
+            { fixHint: "assign a valid archetype (see scripts/lib/example-library.mjs ARCHETYPES / MOTION_ARCHETYPES)" });
+        } else {
+          const expected = expectedExampleId.get(key);
+          if (expected === null) {
+            add("exampleBindingAuthentic", "block",
+              `no fitting example for archetype "${asset.archetype}" — deterministic selection yields nothing`,
+              { fixHint: "choose another archetype for this asset, or add a library example of this archetype" });
+          } else if (isStr(asset.exampleId) && asset.exampleId !== expected) {
+            add("exampleBindingAuthentic", "block",
+              `stamped exampleId "${asset.exampleId}" ≠ deterministically-selected "${expected}" — id was hand-faked, stale, or assets were reordered`,
+              { fixHint: `re-run: node scripts/bind-examples.mjs ${campaign}` });
+          }
+        }
       }
 
       const letter = beatLetter(asset.beat);
@@ -394,10 +475,74 @@ export function validatePlan(plan, opts = {}) {
       const idx = isStr(asset.template) ? roleIndex[asset.template] : null;
       const templateRoles = idx ? new Set([...(idx.roles || []), ...(idx.accepts || [])]) : null;
 
-      // ── Rule 1: media on every creative ──
-      if (!R.mediaPresent && !isMediaExempt(asset.template)) {
-        add("media", "block", `no image/video — every creative must carry real media (template "${asset.template}")`,
-          { fixHint: "place a clip/photo in the editor, or add this template to rules.mediaExempt if it is a bare brand card" });
+      // ── Rule 1: media presence MIRRORS the bound example. The engine builds a
+      // NEW design modeled on an example; if that example carries media the new
+      // design must too, if the example is media-free it needn't (the 2026-06-06
+      // findings: graphic/data-viz designs stay photo-free — full-bleed collapses
+      // distinctness). Keyed on the bound EXAMPLE (mediaStyleAccepts), NOT the
+      // archetype and NOT static-vs-video — within one media-optional archetype some
+      // examples carry media and some don't. Unknown id → fail-closed (require media).
+      // Legacy/template assets keep the blanket rule. ──
+      const exampleIsMediaFree = asset.source === "fresh" && isStr(asset.exampleId) && !exampleHasMedia(asset.exampleId, exampleIndex);
+      if (!R.mediaPresent && !isMediaExempt(asset.template) && !exampleIsMediaFree) {
+        const who = (asset.source === "fresh" && isStr(asset.exampleId))
+          ? `the example it is built from ("${asset.exampleId}", ${archetypeForExample(asset.exampleId, exampleIndex) || "?"}) carries media — mirror it`
+          : `every creative must carry real media (template "${asset.template}")`;
+        add("media", "block", `no image/video — ${who}`,
+          { fixHint: "place a clip/photo in the editor; a design modeled on a media-free example may omit media, or add the template to rules.mediaExempt if it is a bare brand card" });
+      }
+
+      // ── #12 media-fit (TREATMENT). When a graphic/data-viz design DOES carry media,
+      // the measured rubric (docs/media-integration-findings.md) limits HOW: no
+      // full-bleed (collapses distinctness), contained accent ≤ ~20% of the frame.
+      // Static only (motion geometry routes to vision #15); scoped to media-optional
+      // archetypes — full-bleed IS the point of the photo-led ones. ──
+      const boundArch = (asset.source === "fresh" && isStr(asset.exampleId)) ? archetypeForExample(asset.exampleId, exampleIndex) : null;
+      if (R.format === "static" && R.mediaGeom && boundArch && mediaOptionalForArchetype(boundArch)) {
+        const FA = (R.mediaGeom.width || 1080) * (R.mediaGeom.height || 1920);
+        const isBg = (el) => el && (el.z == null || el.z <= 1);
+        const areaOf = (el) => (typeof el.width === "number" && typeof el.height === "number") ? el.width * el.height : null;
+        const tm = R.mediaGeom.topMedia;
+        const topFull = tm && isBg(tm) && (areaOf(tm) == null || areaOf(tm) >= 0.9 * FA);
+        const elFull = R.mediaGeom.mediaEls.some((el) => isBg(el) && areaOf(el) != null && areaOf(el) >= 0.9 * FA);
+        if (topFull || elFull) {
+          add("mediaFit", "block", `full-bleed media on a graphic/data-viz design (archetype "${boundArch}") — the rubric: graphic designs stay photo-free`,
+            { fixHint: "remove the full-bleed background; use a knockout cutout, a split-panel, or a ≤20% accent — or switch to a photo-led archetype" });
+        } else {
+          for (const el of R.mediaGeom.mediaEls) {
+            const a = areaOf(el);
+            if (a != null && a > 0.20 * FA) {
+              add("mediaFit", "block", `accent media is ${Math.round((a / FA) * 100)}% of the frame on a graphic/data-viz design (archetype "${boundArch}") — rubric ceiling is ~20%`,
+                { fixHint: "shrink the accent to ≤20% of the frame, or use a split-panel / cutout layout" });
+            } else if (a == null) {
+              add("mediaFit", "warn", `media element "${el.id || el.tag || "?"}" has no width/height — cannot verify the ~20% accent ceiling`,
+                { fixHint: "give the media element explicit width/height in the edits config" });
+            }
+          }
+        }
+      }
+
+      // ── #16 anti-slop (objective / byte-detectable). The subjective "looks cheap /
+      // off-brand / rough cutout" judgment is the vision layer (#15/#16); here we catch
+      // what a script can prove: placeholder text, and a media slot faked with a CSS
+      // shape/gradient instead of real footage (Law #0's "no bare type cards" cousin). ──
+      for (const f of R.fields) {
+        if (isStr(f.text) && PLACEHOLDER_RE.test(f.text)) {
+          add("antiSlop", "block", `placeholder text in "${f.key}": "${f.text.slice(0, 40)}"`,
+            { fixHint: "replace the placeholder with the real verbatim copy" });
+        }
+      }
+      if (R.mediaGeom && Array.isArray(R.mediaGeom.mediaEls)) {
+        const hasSrc = (el) => isStr(el.path) || isStr(el.src) || isStr(el.url) || isStr(el.media);
+        const looksLikeShape = (el) => el.type === "rect" || el.type === "shape" || isStr(el.fill) || isStr(el.background) || isStr(el.gradient);
+        const mediaRoled = (el) => (Array.isArray(el.accepts) && el.accepts.some((a) => /^(subject|production|env):/.test(a)))
+          || /\b(bg[_-]?media|photo|clip|cutout)\b/i.test(`${el.tag || ""} ${el.id || ""}`);
+        for (const el of R.mediaGeom.mediaEls) {
+          if (mediaRoled(el) && !hasSrc(el) && looksLikeShape(el)) {
+            add("antiSlop", "block", `media slot "${el.id || el.tag || "?"}" is a CSS shape/gradient, not a real image`,
+              { fixHint: "place real footage in this slot — a gradient/solid block is not media" });
+          }
+        }
       }
 
       // ── Rule 5: aspect (static only; motion is wrapper-forced 1080×1920) ──
@@ -561,10 +706,32 @@ export function validatePlan(plan, opts = {}) {
     }
   }
 
+  // ── #12 media diversity (campaign-level). Exact clip/photo reuse across the batch
+  // is a hard block in generate-world — same media is the #1 perceptual-collapse
+  // driver (docs/media-integration-findings.md #4). Legacy/grandfathered campaigns
+  // keep run-campaign's existing warn-or-throw (uniquenessProblems); this only adds
+  // teeth for NEW generate-world work. ──
+  if (isGenerateWorld && !isGrandfathered(campaign, grandfatherSet)) {
+    for (const { angleId, media, ids } of mediaReuseProblems(plan)) {
+      const v = { rule: "mediaDiversity", severity: "block",
+        message: `[${angleId}] media "${media}" reused by ${ids.join(", ")} — footage diversity is mandatory (same clip is the #1 collapse driver)`,
+        fixHint: "give each creative a distinct clip/photo" };
+      campaignViolations.push(v); bump(v);
+    }
+  }
+
   // ── R3: format-mix (campaign-level). Block by default; relaxable per-campaign. ──
   const formatMixMode = rules.formatMix || "block";
+  const formatMixIntent = rules.formatMixIntent || "mixed";
+  // Surface a non-default intent so a (human-honored) static-only/video-only batch is
+  // AUDITED on the review page, never a silent floor-waiver.
+  if (formatMixIntent !== "mixed") {
+    const v = { rule: "formatMix", severity: "warn",
+      message: `format-mix intent: ${formatMixIntent} — the canonical 60% video floor is waived by this human-honored declaration` };
+    campaignViolations.push(v); bump(v);
+  }
   if (formatMixMode !== "off") {
-    const mix = checkFormatMix(plan);
+    const mix = checkFormatMix(plan, { intent: formatMixIntent });
     if (!mix.ok) {
       const detail = mix.deviations
         .map((d) => `${d.bucket} ${d.actual}/${mix.total} (${Math.round(d.actualShare * 100)}%, target ${Math.round(d.target * 100)}% ≈ ${d.expected})`)

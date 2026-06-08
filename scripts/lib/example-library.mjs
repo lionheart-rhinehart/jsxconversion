@@ -289,6 +289,33 @@ export function specFor(a) {
   return ARCHETYPE_SPECS[a] ?? MOTION_ARCHETYPE_SPECS[a];
 }
 
+// ── engine lookup helpers (the generation gate reads these) ──────────────────
+// Resolve a bound example's archetype from the index. Pure; null for an unknown
+// id (a stale/forged ref) so the gate can fail-closed on it.
+export function archetypeForExample(exampleId, index) {
+  const e = index && index.examples && index.examples[exampleId];
+  return e && typeof e.archetype === "string" ? e.archetype : null;
+}
+
+// Does the BOUND EXAMPLE carry media? This is the per-example signal the engine
+// MIRRORS for Law #0 presence: a new design must carry media IFF its example does
+// (mediaStyleAccepts non-empty). Keyed on the example, NOT the archetype and NOT
+// the format — within a media-optional archetype some examples carry media and
+// some don't, and the new design must match the one it was built from. Unknown id
+// → true (fail-closed: REQUIRE media rather than wrongly waive on a bad ref).
+export function exampleHasMedia(exampleId, index) {
+  const e = index && index.examples && index.examples[exampleId];
+  if (!e) return true;
+  return Array.isArray(e.mediaStyleAccepts) && e.mediaStyleAccepts.length > 0;
+}
+
+// Is the archetype media-OPTIONAL (graphic/data-viz)? Used ONLY by the media-fit
+// TREATMENT gate (#12 — "no full-bleed on a graphic/data-viz design"), NEVER by
+// Law #0 presence (which mirrors the example via exampleHasMedia). Unknown → false.
+export function mediaOptionalForArchetype(archetype) {
+  return specFor(archetype)?.mediaOptional === true;
+}
+
 export const FORMATS = ["static", "video"];
 
 // ---------------------------------------------------------------------------
