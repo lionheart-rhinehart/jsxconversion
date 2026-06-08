@@ -25,6 +25,11 @@
    design DOES carry media it is **hand-placed** (never auto-placed), each asset gets a **distinct**
    clip/still (no reuse across a batch), and the media obeys the rubric (no full-bleed on a graphic —
    cutout / split-panel / ≤20% accent). (Mirrors SKILL.md hard rule 6.)
+   **Source discipline (PL-4):** pull from RAW-FOOTAGE Kraken folders only. A franchisee's "IG stories" /
+   finished-post folders carry **baked-in text + emoji burned into the footage** (e.g. ISP's "IG stories")
+   — using them double-stacks captions and even smuggles emoji past the no-emoji gate (the text is pixels
+   inside the media, not a design field the gate can see). If the only footage available is contaminated,
+   FLAG + STOP and ask Cody for a clean raw-footage folder — never ship baked-in-text media.
 1. **Beat picks the roles & how many; the reading sequence picks placement** — *space* for static (top→bottom), *time* for video (0s→end).
 2. **Hook first/top · proof in the first half · offer+CTA last/bottom.**
 3. **Emotional hook opens, rational proof closes.** (AA is a considered, high-ticket purchase — data matters, but emotion earns the look.)

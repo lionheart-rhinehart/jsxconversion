@@ -79,18 +79,20 @@ on Cody's explicit override (human-override worked as designed); 0/6 copied (adv
 rendered + QA-passed; the perceptual sidecar ran on real pixels. Full record:
 `~/.claude/plans/re-plan-and-build-the-twinkly-micali.md` ("Test Run 1").
 
-### PRE-LIVE HARDENING GATE — must clear before ANY campaign goes live (tabled 2026-06-08; isolated, none block the tail)
-- [ ] **PL-1 — override granularity.** `validate-plan.mjs` T2.2 merge `sev()` downgrades ALL perceptual blocks
-      when an override is honored (set for one gate ⇒ silently waives the vision gate too). Make it gate-specific
-      (downgrade only when the honored `validation.config.json` relaxes THAT rule, e.g. `{"clusterAdherence":"warn"}`;
-      sentinel stays downgradable). + test in `test/validate-plan-perceptual.test.mjs`. (~30–45 min)
-- [ ] **PL-2 — agent reuse-drift.** creative-engine skill: honor "from scratch" + an explicit count/mix literally;
-      don't resume/reuse prior plans or default the mix. (`/unlock-skills`, ~15 min)
-- [ ] **PL-3 — vision-gate franchisee false-positives.** Centroids are AA-styled; a non-AA creative may read
-      "off-lane" from color/font, not structure (isp-ad-series-1 A1/B1/C1 are the test case). Investigate
-      DINOv2-only / per-brand centroids / looser threshold before trusting #15 on franchisees.
-- [ ] **PL-4 — Kraken source-media discipline.** ISP "IG stories" = finished posts with baked-in text/emoji;
-      pulls must use raw-footage folders (data, not engine). Document the source-folder rule.
+### PRE-LIVE HARDENING GATE — CLEARED 2026-06-08 (was tabled, then completed before go-live)
+- [x] **PL-1 — override granularity.** `validate-plan.mjs` `ruleSev`: a real perceptual block downgrades ONLY
+      when the honored `validation.config.json` relaxes THAT rule (`{"clusterAdherence":"warn"}`); the sentinel +
+      absent stay campaign-wide downgradable. commit `322daca`; +2 tests.
+- [x] **PL-2 — agent reuse-drift.** creative-engine skill: an explicit "from scratch" / exact count+mix overrides
+      the phase-aware resume + is honored literally; + the `formatMixIntent` note. commit `5ed525e`.
+- [x] **PL-3 — vision-gate franchisee false-positives.** #15 cluster-adherence now uses **DINOv2-only**
+      (brand-agnostic structure); distinctness #14 stays combined. commit `4763c9a`. **FINDING: the color-
+      false-positive hypothesis is REFUTED** — isp-ad-series-1 A1/B1/C1 stay off-lane on the structure axis
+      (assigned 0.29–0.50), so they're genuine structural mismatches (A1 confounded by PL-4 baked-in text), and
+      the gate is correctly fail-closed-to-human (per-rule override via PL-1 after review).
+- [x] **PL-4 — Kraken source-media discipline.** Raw-footage folders only; finished-post folders (IG stories)
+      bake text/emoji into pixels (invisible to the gate). Documented: `docs/creative-playbook.md` Law 0 +
+      memory `feedback-kraken-raw-footage-source`.
 
 ## If this ledger ever drifts again (recovery routine)
 
