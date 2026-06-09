@@ -1,0 +1,29 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Bolt Scale" subtitle="Lightning-bolt yellow — the energy accent (50→900)" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../../styles.css" />
+<style>
+  body { background: var(--ink-900); padding: 22px; }
+  .scale { display: flex; gap: 6px; }
+  .step { flex: 1; }
+  .bar { height: 64px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); }
+  .lab { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); margin-top: 6px; text-align: center; }
+</style>
+</head>
+<body>
+  <div class="scale">
+    <div class="step"><div class="bar" style="background:var(--bolt-50)"></div><div class="lab">50</div></div>
+    <div class="step"><div class="bar" style="background:var(--bolt-100)"></div><div class="lab">100</div></div>
+    <div class="step"><div class="bar" style="background:var(--bolt-200)"></div><div class="lab">200</div></div>
+    <div class="step"><div class="bar" style="background:var(--bolt-300)"></div><div class="lab">300</div></div>
+    <div class="step"><div class="bar" style="background:var(--bolt-400);outline:2px solid var(--white);outline-offset:1px"></div><div class="lab">400</div></div>
+    <div class="step"><div class="bar" style="background:var(--bolt-500)"></div><div class="lab">500</div></div>
+    <div class="step"><div class="bar" style="background:var(--bolt-600)"></div><div class="lab">600</div></div>
+    <div class="step"><div class="bar" style="background:var(--bolt-700)"></div><div class="lab">700</div></div>
+    <div class="step"><div class="bar" style="background:var(--bolt-800)"></div><div class="lab">800</div></div>
+    <div class="step"><div class="bar" style="background:var(--bolt-900)"></div><div class="lab">900</div></div>
+  </div>
+</body>
+</html>

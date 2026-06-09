@@ -1,0 +1,3208 @@
+{
+  "schemaVersion": 1,
+  "campaign": "engine-transfer-noblesville",
+  "generatedFrom": [
+    "ad-copy.md"
+  ],
+  "count": 196,
+  "units": [
+    {
+      "id": "ad-1-version-a-consequence-depth-short.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "The Engine Under Every Sport",
+      "chars": 28,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "A fair question stops a lot of parents before they book: how does getting faster in a gym make my kid better at their actual sport?\nHere's the honest answer. Every sport skill rides on top of one engine, how much force a kid puts into the ground, how fast, how explosively. A great swing or a sharp cut still has to be powered by something. Train the engine and you don't make them better at one drill. You make them better at every move the sport asks for.\nThat's what our Multi-Sport Foundation Program develops. A bigger engine is a first step that beats the defender to the ball, which turns into more plays made, until the kid who used to get there a beat late is the one arriving first.\nThe first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real sprint and jump numbers. Not a tryout. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1053,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "A fair question stops a lot of parents before they book: how does getting faster in a gym make my kid better at their actual sport?",
+      "chars": 131,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the honest answer. Every sport skill rides on top of one engine, how much force a kid puts into the ground, how fast, how explosively. A great swing or a sharp cut still has to be powered by something. Train the engine and you don't make them better at one drill. You make them better at every move the sport asks for.",
+      "chars": 325,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the honest answer.",
+      "chars": 25,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Every sport skill rides on top of one engine, how much force a kid puts into the ground, how fast, how explosively.",
+      "chars": 115,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A great swing or a sharp cut still has to be powered by something.",
+      "chars": 66,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Train the engine and you don't make them better at one drill.",
+      "chars": 61,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.2.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "You make them better at every move the sport asks for.",
+      "chars": 54,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program develops. A bigger engine is a first step that beats the defender to the ball, which turns into more plays made, until the kid who used to get there a beat late is the one arriving first.",
+      "chars": 234,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program develops.",
+      "chars": 56,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A bigger engine is a first step that beats the defender to the ball, which turns into more plays made, until the kid who used to get there a beat late is the one arriving first.",
+      "chars": 177,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real sprint and jump numbers. Not a tryout. A data set.",
+      "chars": 220,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real sprint and jump numbers.",
+      "chars": 151,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.4.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a tryout.",
+      "chars": 13,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.4.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set.",
+      "chars": 11,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.",
+      "chars": 78,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee: +1 mph.",
+      "chars": 27,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+3 inches.",
+      "chars": 10,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.5.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "90 days.",
+      "chars": 8,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.5.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free.",
+      "chars": 30,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Speed and power are the engine. Every sport skill runs on it.",
+      "chars": 61,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "A great swing still has to be powered by something.",
+      "chars": 51,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short",
+      "archetype": "Paradox",
+      "code": null
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "You can't out-skill a slow engine. Here's why.",
+      "chars": 46,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short",
+      "archetype": "Warning",
+      "code": null
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "How Training Transfers to Every Sport",
+      "chars": 37,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-a-consequence-depth-short.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(The Part No One Explains)",
+      "chars": 26,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "The Engine, Not The Paint",
+      "chars": 25,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "Think of your athlete like a car. The sport-specific drills, the swing work, the footwork, the position coaching, that's the paint job and the trim. It matters. But none of it moves the car.\nThe engine is the athletic part. How much force the kid puts into the ground, how fast, how explosively. That's what actually makes them faster to the ball and harder to keep up with, in any sport they play.\nMost families spend everything on paint and never touch the engine. Our Multi-Sport Foundation Program builds the engine, which shows up as a first step that beats the defender, more plays made, and a kid who stops arriving a beat late.\nThe first step in is the Athlete Analysis. Same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a tryout. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 948,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Think of your athlete like a car. The sport-specific drills, the swing work, the footwork, the position coaching, that's the paint job and the trim. It matters. But none of it moves the car.",
+      "chars": 190,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Think of your athlete like a car.",
+      "chars": 33,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The sport-specific drills, the swing work, the footwork, the position coaching, that's the paint job and the trim.",
+      "chars": 114,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.1.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It matters.",
+      "chars": 11,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.1.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "But none of it moves the car.",
+      "chars": 29,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The engine is the athletic part. How much force the kid puts into the ground, how fast, how explosively. That's what actually makes them faster to the ball and harder to keep up with, in any sport they play.",
+      "chars": 207,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The engine is the athletic part.",
+      "chars": 32,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "How much force the kid puts into the ground, how fast, how explosively.",
+      "chars": 71,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's what actually makes them faster to the ball and harder to keep up with, in any sport they play.",
+      "chars": 102,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Most families spend everything on paint and never touch the engine. Our Multi-Sport Foundation Program builds the engine, which shows up as a first step that beats the defender, more plays made, and a kid who stops arriving a beat late.",
+      "chars": 236,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Most families spend everything on paint and never touch the engine.",
+      "chars": 67,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Our Multi-Sport Foundation Program builds the engine, which shows up as a first step that beats the defender, more plays made, and a kid who stops arriving a beat late.",
+      "chars": 168,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. Same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a tryout. A data set.",
+      "chars": 172,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Same timing gates and velocity trackers we use every session, and you walk out with their real numbers.",
+      "chars": 103,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.4.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a tryout.",
+      "chars": 13,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.4.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set.",
+      "chars": 11,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.",
+      "chars": 78,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee: +1 mph.",
+      "chars": 27,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+3 inches.",
+      "chars": 10,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.5.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "90 days.",
+      "chars": 8,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.5.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free.",
+      "chars": 30,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Sport drills are the paint job. Athleticism is the engine.",
+      "chars": 58,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Most families spend everything on the paint and never touch the engine.",
+      "chars": 71,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short",
+      "archetype": "Paradox",
+      "code": null
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "You can coach the swing all you want. Something still has to power it.",
+      "chars": 70,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short",
+      "archetype": "Oracle",
+      "code": null
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "How Training Transfers to Every Sport",
+      "chars": 37,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(The Part No One Explains)",
+      "chars": 26,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "The Engine Under Every Sport",
+      "chars": 28,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "A fair question stops a lot of parents before they book: how does getting faster in a gym make my kid better at their actual sport?\nHere's the honest answer. Every sport skill rides on top of one engine, how much force a kid puts into the ground, how fast, how explosively. The swing, the cut, the first step to the ball, all of it has to be powered by something underneath it. A perfectly coached skill on top of a weak engine still loses the race to the ball. That's why so much sport-specific work doesn't show up in games the way parents expect, the skill got sharper but the engine never changed.\nThat's the part our Multi-Sport Foundation Program develops. Not one sport's drills, the speed and power that every sport draws from.\nAnd when the engine grows, it shows up everywhere at once. It's the first step that beats the defender to the ball, which turns into more plays made every game, which becomes the kind of tape a coach stops to watch, until the kid who used to arrive a beat late is the one getting there first.\nOne mom shared that her son built himself up with us the right way, and that the strength and speed carried all the way to a D2 college scholarship. The training was never sport-specific. It was the foundation every sport sat on.\nThe first step in is the Athlete Analysis. Same timing gates, same velocity trackers we use every session. You'll see your athlete's real numbers before you decide anything. Not a tryout. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1598,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "A fair question stops a lot of parents before they book: how does getting faster in a gym make my kid better at their actual sport?",
+      "chars": 131,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the honest answer. Every sport skill rides on top of one engine, how much force a kid puts into the ground, how fast, how explosively. The swing, the cut, the first step to the ball, all of it has to be powered by something underneath it. A perfectly coached skill on top of a weak engine still loses the race to the ball. That's why so much sport-specific work doesn't show up in games the way parents expect, the skill got sharper but the engine never changed.",
+      "chars": 469,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the honest answer.",
+      "chars": 25,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Every sport skill rides on top of one engine, how much force a kid puts into the ground, how fast, how explosively.",
+      "chars": 115,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The swing, the cut, the first step to the ball, all of it has to be powered by something underneath it.",
+      "chars": 103,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A perfectly coached skill on top of a weak engine still loses the race to the ball.",
+      "chars": 83,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.2.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's why so much sport-specific work doesn't show up in games the way parents expect, the skill got sharper but the engine never changed.",
+      "chars": 139,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's the part our Multi-Sport Foundation Program develops. Not one sport's drills, the speed and power that every sport draws from.",
+      "chars": 133,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's the part our Multi-Sport Foundation Program develops.",
+      "chars": 60,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not one sport's drills, the speed and power that every sport draws from.",
+      "chars": 72,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And when the engine grows, it shows up everywhere at once. It's the first step that beats the defender to the ball, which turns into more plays made every game, which becomes the kind of tape a coach stops to watch, until the kid who used to arrive a beat late is the one getting there first.",
+      "chars": 292,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And when the engine grows, it shows up everywhere at once.",
+      "chars": 58,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It's the first step that beats the defender to the ball, which turns into more plays made every game, which becomes the kind of tape a coach stops to watch, until the kid who used to arrive a beat late is the one getting there first.",
+      "chars": 233,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "One mom shared that her son built himself up with us the right way, and that the strength and speed carried all the way to a D2 college scholarship. The training was never sport-specific. It was the foundation every sport sat on.",
+      "chars": 229,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "One mom shared that her son built himself up with us the right way, and that the strength and speed carried all the way to a D2 college scholarship.",
+      "chars": 148,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The training was never sport-specific.",
+      "chars": 38,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.5.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It was the foundation every sport sat on.",
+      "chars": 41,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. Same timing gates, same velocity trackers we use every session. You'll see your athlete's real numbers before you decide anything. Not a tryout. A data set.",
+      "chars": 199,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.6.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.6.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Same timing gates, same velocity trackers we use every session.",
+      "chars": 63,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.6.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "You'll see your athlete's real numbers before you decide anything.",
+      "chars": 66,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.6.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a tryout.",
+      "chars": 13,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.6.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set.",
+      "chars": 11,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyPara.7",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.",
+      "chars": 78,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.7.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee: +1 mph.",
+      "chars": 27,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.7.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+3 inches.",
+      "chars": 10,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.7.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "90 days.",
+      "chars": 8,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.7.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free.",
+      "chars": 30,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyPara.8",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Speed and power are the engine. Every sport skill runs on it.",
+      "chars": 61,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "A great swing still has to be powered by something.",
+      "chars": 51,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium",
+      "archetype": "Paradox",
+      "code": null
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "You can't out-skill a slow engine. Here's why.",
+      "chars": 46,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium",
+      "archetype": "Warning",
+      "code": null
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "How Training Transfers to Every Sport",
+      "chars": 37,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-a-consequence-depth-medium.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(The Part No One Explains)",
+      "chars": 26,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "The Engine, Not The Paint",
+      "chars": 25,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "Think of your athlete like a car. The sport-specific stuff, the swing work, the footwork drills, the position coaching, is the paint job and the trim. It matters, and it's worth doing. But none of it moves the car.\nThe engine is the athletic part underneath. How much force the kid drives into the ground, how fast, how explosively. That engine is what makes them quicker to the ball and harder to keep up with, and it powers every sport they'll ever play, not just one.\nHere's the catch. Most families pour years and money into the paint and never once touch the engine. Then they wonder why a kid with clean mechanics still gets beat to the spot. The mechanics were never the problem. The engine was.\nThat's the only thing our Multi-Sport Foundation Program builds, and a bigger engine shows up everywhere. It's the first step that beats the defender to the ball, which turns into more plays made, which becomes the tape a coach stops to watch, until your kid is the one arriving first instead of a step late.\nOne mom told us her son built his foundation with us the right way, and it carried all the way to a D2 scholarship. None of that training was sport-specific. It was the engine everything else ran on.\nThe first step in is the Athlete Analysis. Same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a tryout. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1524,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Think of your athlete like a car. The sport-specific stuff, the swing work, the footwork drills, the position coaching, is the paint job and the trim. It matters, and it's worth doing. But none of it moves the car.",
+      "chars": 214,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Think of your athlete like a car.",
+      "chars": 33,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The sport-specific stuff, the swing work, the footwork drills, the position coaching, is the paint job and the trim.",
+      "chars": 116,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.1.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It matters, and it's worth doing.",
+      "chars": 33,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.1.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "But none of it moves the car.",
+      "chars": 29,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The engine is the athletic part underneath. How much force the kid drives into the ground, how fast, how explosively. That engine is what makes them quicker to the ball and harder to keep up with, and it powers every sport they'll ever play, not just one.",
+      "chars": 255,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The engine is the athletic part underneath.",
+      "chars": 43,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "How much force the kid drives into the ground, how fast, how explosively.",
+      "chars": 73,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That engine is what makes them quicker to the ball and harder to keep up with, and it powers every sport they'll ever play, not just one.",
+      "chars": 137,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the catch. Most families pour years and money into the paint and never once touch the engine. Then they wonder why a kid with clean mechanics still gets beat to the spot. The mechanics were never the problem. The engine was.",
+      "chars": 231,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the catch.",
+      "chars": 17,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Most families pour years and money into the paint and never once touch the engine.",
+      "chars": 82,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.3.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then they wonder why a kid with clean mechanics still gets beat to the spot.",
+      "chars": 76,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.3.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The mechanics were never the problem.",
+      "chars": 37,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.3.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The engine was.",
+      "chars": 15,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's the only thing our Multi-Sport Foundation Program builds, and a bigger engine shows up everywhere. It's the first step that beats the defender to the ball, which turns into more plays made, which becomes the tape a coach stops to watch, until your kid is the one arriving first instead of a step late.",
+      "chars": 308,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's the only thing our Multi-Sport Foundation Program builds, and a bigger engine shows up everywhere.",
+      "chars": 105,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It's the first step that beats the defender to the ball, which turns into more plays made, which becomes the tape a coach stops to watch, until your kid is the one arriving first instead of a step late.",
+      "chars": 202,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "One mom told us her son built his foundation with us the right way, and it carried all the way to a D2 scholarship. None of that training was sport-specific. It was the engine everything else ran on.",
+      "chars": 199,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "One mom told us her son built his foundation with us the right way, and it carried all the way to a D2 scholarship.",
+      "chars": 115,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "None of that training was sport-specific.",
+      "chars": 41,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.5.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It was the engine everything else ran on.",
+      "chars": 41,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. Same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a tryout. A data set.",
+      "chars": 172,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.6.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.6.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Same timing gates and velocity trackers we use every session, and you walk out with their real numbers.",
+      "chars": 103,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.6.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a tryout.",
+      "chars": 13,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.6.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set.",
+      "chars": 11,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.7",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.",
+      "chars": 78,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.7.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee: +1 mph.",
+      "chars": 27,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.7.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+3 inches.",
+      "chars": 10,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.7.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "90 days.",
+      "chars": 8,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.7.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free.",
+      "chars": 30,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.8",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Sport drills are the paint job. Athleticism is the engine.",
+      "chars": 58,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Most families spend everything on the paint and never touch the engine.",
+      "chars": 71,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium",
+      "archetype": "Paradox",
+      "code": null
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "You can coach the swing all you want. Something still has to power it.",
+      "chars": 70,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium",
+      "archetype": "Oracle",
+      "code": null
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "How Training Transfers to Every Sport",
+      "chars": 37,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(The Part No One Explains)",
+      "chars": 26,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "The Engine Under Every Sport",
+      "chars": 28,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "A fair question stops a lot of parents before they ever book: how does getting faster and jumping higher in a gym actually make my kid better at baseball, or soccer, or whatever they play?\nHere's the honest answer. Every sport skill rides on top of one engine. How much force a kid puts into the ground, how fast they put it there, how explosively. The swing, the crossover, the first step to a loose ball, all of it is powered by that engine underneath. A beautifully coached skill sitting on top of a weak engine still loses the foot race, still gets bodied off the ball, still arrives a half step late.\nThat's the piece most families never get told. They pour years into sport-specific coaching, sharpen the mechanics, refine the technique, and then can't understand why it doesn't show up in games. The skill got better. The engine never changed. And the engine is what the game actually runs on.\nThis isn't a knock on skill coaching, by the way. Skill work matters, and a kid needs it. It just can't do a job it was never built to do. You can't coach a kid into more force production with a clipboard, the same way you can't paint a car into going faster. Those are two different jobs, and almost nobody is doing the second one.\nThat second job is the only thing our Multi-Sport Foundation Program does. It runs on The Velocity Code™, and every session we build the real, measured speed and power that sits underneath every sport, then prove it's moving with numbers you can see.\nAnd when that engine grows, it doesn't show up in one drill. It shows up everywhere at once. It's the first step that beats the defender to the ball. That turns into more plays made every single game. More plays become the kind of tape a coach actually stops to watch, until one season in, the kid who used to get there a beat late is the one arriving first, in every sport they play.\nOne mom shared what that looked like for her son. He built himself up here the right way, added real strength and speed, and it carried all the way to a D2 college scholarship. None of his training with us was sport-specific. It was the foundation his sport was built on.\nThe first step in is the Athlete Analysis. We run your athlete through the same Dashr timing gates and GymAware velocity trackers the NFL uses, and you leave with their real sprint time, real jump height, and a clear picture of where they stand. Not a tryout. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.\nCoach Graham Wilkerson built this. He's a CSCS, the same credential D1 and NFL strength coaches carry, and he trained NFL athletes Zack Martin, Ted Karras, and Nick Martin before adapting these principles for the developmental window where they matter most.\nHere's the promise no other program in this market will make. +1 mph. +3 inches. 90 days. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.\nTo your athlete's success, Coach {{user.first_name}}",
+      "chars": 3015,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "A fair question stops a lot of parents before they ever book: how does getting faster and jumping higher in a gym actually make my kid better at baseball, or soccer, or whatever they play?",
+      "chars": 188,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the honest answer. Every sport skill rides on top of one engine. How much force a kid puts into the ground, how fast they put it there, how explosively. The swing, the crossover, the first step to a loose ball, all of it is powered by that engine underneath. A beautifully coached skill sitting on top of a weak engine still loses the foot race, still gets bodied off the ball, still arrives a half step late.",
+      "chars": 416,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the honest answer.",
+      "chars": 25,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Every sport skill rides on top of one engine.",
+      "chars": 45,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "How much force a kid puts into the ground, how fast they put it there, how explosively.",
+      "chars": 87,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The swing, the crossover, the first step to a loose ball, all of it is powered by that engine underneath.",
+      "chars": 105,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.2.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A beautifully coached skill sitting on top of a weak engine still loses the foot race, still gets bodied off the ball, still arrives a half step late.",
+      "chars": 150,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's the piece most families never get told. They pour years into sport-specific coaching, sharpen the mechanics, refine the technique, and then can't understand why it doesn't show up in games. The skill got better. The engine never changed. And the engine is what the game actually runs on.",
+      "chars": 294,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's the piece most families never get told.",
+      "chars": 46,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "They pour years into sport-specific coaching, sharpen the mechanics, refine the technique, and then can't understand why it doesn't show up in games.",
+      "chars": 149,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.3.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The skill got better.",
+      "chars": 21,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.3.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The engine never changed.",
+      "chars": 25,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.3.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And the engine is what the game actually runs on.",
+      "chars": 49,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "This isn't a knock on skill coaching, by the way. Skill work matters, and a kid needs it. It just can't do a job it was never built to do. You can't coach a kid into more force production with a clipboard, the same way you can't paint a car into going faster. Those are two different jobs, and almost nobody is doing the second one.",
+      "chars": 332,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "This isn't a knock on skill coaching, by the way.",
+      "chars": 49,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Skill work matters, and a kid needs it.",
+      "chars": 39,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.4.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It just can't do a job it was never built to do.",
+      "chars": 48,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.4.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "You can't coach a kid into more force production with a clipboard, the same way you can't paint a car into going faster.",
+      "chars": 120,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.4.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Those are two different jobs, and almost nobody is doing the second one.",
+      "chars": 72,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That second job is the only thing our Multi-Sport Foundation Program does. It runs on The Velocity Code™, and every session we build the real, measured speed and power that sits underneath every sport, then prove it's moving with numbers you can see.",
+      "chars": 250,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That second job is the only thing our Multi-Sport Foundation Program does.",
+      "chars": 74,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It runs on The Velocity Code™, and every session we build the real, measured speed and power that sits underneath every sport, then prove it's moving with numbers you can see.",
+      "chars": 175,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And when that engine grows, it doesn't show up in one drill. It shows up everywhere at once. It's the first step that beats the defender to the ball. That turns into more plays made every single game. More plays become the kind of tape a coach actually stops to watch, until one season in, the kid who used to get there a beat late is the one arriving first, in every sport they play.",
+      "chars": 384,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.6.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And when that engine grows, it doesn't show up in one drill.",
+      "chars": 60,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.6.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It shows up everywhere at once.",
+      "chars": 31,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.6.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It's the first step that beats the defender to the ball.",
+      "chars": 56,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.6.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That turns into more plays made every single game.",
+      "chars": 50,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.6.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "More plays become the kind of tape a coach actually stops to watch, until one season in, the kid who used to get there a beat late is the one arriving first, in every sport they play.",
+      "chars": 183,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.7",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "One mom shared what that looked like for her son. He built himself up here the right way, added real strength and speed, and it carried all the way to a D2 college scholarship. None of his training with us was sport-specific. It was the foundation his sport was built on.",
+      "chars": 271,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.7.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "One mom shared what that looked like for her son.",
+      "chars": 49,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.7.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "He built himself up here the right way, added real strength and speed, and it carried all the way to a D2 college scholarship.",
+      "chars": 126,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.7.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "None of his training with us was sport-specific.",
+      "chars": 48,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.7.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It was the foundation his sport was built on.",
+      "chars": 45,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.8",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. We run your athlete through the same Dashr timing gates and GymAware velocity trackers the NFL uses, and you leave with their real sprint time, real jump height, and a clear picture of where they stand. Not a tryout. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.",
+      "chars": 359,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.8.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.8.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "We run your athlete through the same Dashr timing gates and GymAware velocity trackers the NFL uses, and you leave with their real sprint time, real jump height, and a clear picture of where they stand.",
+      "chars": 202,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.8.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a tryout.",
+      "chars": 13,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.8.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set you get to keep.",
+      "chars": 27,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.8.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "From there, the path into the Multi-Sport Foundation Program is simple.",
+      "chars": 71,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.9",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Coach Graham Wilkerson built this. He's a CSCS, the same credential D1 and NFL strength coaches carry, and he trained NFL athletes Zack Martin, Ted Karras, and Nick Martin before adapting these principles for the developmental window where they matter most.",
+      "chars": 257,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.9.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Coach Graham Wilkerson built this.",
+      "chars": 34,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.9.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "He's a CSCS, the same credential D1 and NFL strength coaches carry, and he trained NFL athletes Zack Martin, Ted Karras, and Nick Martin before adapting these principles for the developmental window where they matter most.",
+      "chars": 222,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.10",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the promise no other program in this market will make. +1 mph. +3 inches. 90 days. Or we keep training them free until they get there.",
+      "chars": 141,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.10.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the promise no other program in this market will make.",
+      "chars": 61,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.10.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph.",
+      "chars": 7,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.10.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+3 inches.",
+      "chars": 10,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.10.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "90 days.",
+      "chars": 8,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.10.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free until they get there.",
+      "chars": 51,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.11",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.12",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "To your athlete's success, Coach {{user.first_name}}",
+      "chars": 52,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Speed and power are the engine. Every sport skill runs on it.",
+      "chars": 61,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "A great swing still has to be powered by something.",
+      "chars": 51,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long",
+      "archetype": "Paradox",
+      "code": null
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "You can't out-skill a slow engine. Here's why.",
+      "chars": 46,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long",
+      "archetype": "Warning",
+      "code": null
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "How Training Transfers to Every Sport",
+      "chars": 37,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    {
+      "id": "ad-3-version-a-consequence-depth-long.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(The Part No One Explains)",
+      "chars": 26,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    }
+  ],
+  "byId": {
+    "ad-1-version-a-consequence-depth-short.headline": {
+      "id": "ad-1-version-a-consequence-depth-short.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "The Engine Under Every Sport",
+      "chars": 28,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.description": {
+      "id": "ad-1-version-a-consequence-depth-short.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.primaryText": {
+      "id": "ad-1-version-a-consequence-depth-short.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "A fair question stops a lot of parents before they book: how does getting faster in a gym make my kid better at their actual sport?\nHere's the honest answer. Every sport skill rides on top of one engine, how much force a kid puts into the ground, how fast, how explosively. A great swing or a sharp cut still has to be powered by something. Train the engine and you don't make them better at one drill. You make them better at every move the sport asks for.\nThat's what our Multi-Sport Foundation Program develops. A bigger engine is a first step that beats the defender to the ball, which turns into more plays made, until the kid who used to get there a beat late is the one arriving first.\nThe first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real sprint and jump numbers. Not a tryout. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1053,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyPara.1": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "A fair question stops a lot of parents before they book: how does getting faster in a gym make my kid better at their actual sport?",
+      "chars": 131,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyPara.2": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the honest answer. Every sport skill rides on top of one engine, how much force a kid puts into the ground, how fast, how explosively. A great swing or a sharp cut still has to be powered by something. Train the engine and you don't make them better at one drill. You make them better at every move the sport asks for.",
+      "chars": 325,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyLine.2.1": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the honest answer.",
+      "chars": 25,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyLine.2.2": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Every sport skill rides on top of one engine, how much force a kid puts into the ground, how fast, how explosively.",
+      "chars": 115,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyLine.2.3": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A great swing or a sharp cut still has to be powered by something.",
+      "chars": 66,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyLine.2.4": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Train the engine and you don't make them better at one drill.",
+      "chars": 61,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyLine.2.5": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.2.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "You make them better at every move the sport asks for.",
+      "chars": 54,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyPara.3": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program develops. A bigger engine is a first step that beats the defender to the ball, which turns into more plays made, until the kid who used to get there a beat late is the one arriving first.",
+      "chars": 234,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyLine.3.1": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's what our Multi-Sport Foundation Program develops.",
+      "chars": 56,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyLine.3.2": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A bigger engine is a first step that beats the defender to the ball, which turns into more plays made, until the kid who used to get there a beat late is the one arriving first.",
+      "chars": 177,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyPara.4": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real sprint and jump numbers. Not a tryout. A data set.",
+      "chars": 220,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyLine.4.1": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyLine.4.2": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "We run your athlete through the same timing gates and velocity trackers we use every session, and you walk out with their real sprint and jump numbers.",
+      "chars": 151,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyLine.4.3": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.4.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a tryout.",
+      "chars": 13,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyLine.4.4": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.4.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set.",
+      "chars": 11,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyPara.5": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.",
+      "chars": 78,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyLine.5.1": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee: +1 mph.",
+      "chars": 27,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyLine.5.2": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+3 inches.",
+      "chars": 10,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyLine.5.3": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.5.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "90 days.",
+      "chars": 8,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyLine.5.4": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyLine.5.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free.",
+      "chars": 30,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.bodyPara.6": {
+      "id": "ad-1-version-a-consequence-depth-short.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.altHook.1": {
+      "id": "ad-1-version-a-consequence-depth-short.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Speed and power are the engine. Every sport skill runs on it.",
+      "chars": 61,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    "ad-1-version-a-consequence-depth-short.altHook.2": {
+      "id": "ad-1-version-a-consequence-depth-short.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "A great swing still has to be powered by something.",
+      "chars": 51,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short",
+      "archetype": "Paradox",
+      "code": null
+    },
+    "ad-1-version-a-consequence-depth-short.altHook.3": {
+      "id": "ad-1-version-a-consequence-depth-short.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "You can't out-skill a slow engine. Here's why.",
+      "chars": 46,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short",
+      "archetype": "Warning",
+      "code": null
+    },
+    "ad-1-version-a-consequence-depth-short.imageHeadline": {
+      "id": "ad-1-version-a-consequence-depth-short.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "How Training Transfers to Every Sport",
+      "chars": 37,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-a-consequence-depth-short.imageSubhead": {
+      "id": "ad-1-version-a-consequence-depth-short.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(The Part No One Explains)",
+      "chars": 26,
+      "ad": "AD 1 — VERSION A (Consequence depth) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.headline": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "The Engine, Not The Paint",
+      "chars": 25,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.description": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.primaryText": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "Think of your athlete like a car. The sport-specific drills, the swing work, the footwork, the position coaching, that's the paint job and the trim. It matters. But none of it moves the car.\nThe engine is the athletic part. How much force the kid puts into the ground, how fast, how explosively. That's what actually makes them faster to the ball and harder to keep up with, in any sport they play.\nMost families spend everything on paint and never touch the engine. Our Multi-Sport Foundation Program builds the engine, which shows up as a first step that beats the defender, more plays made, and a kid who stops arriving a beat late.\nThe first step in is the Athlete Analysis. Same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a tryout. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 948,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyPara.1": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Think of your athlete like a car. The sport-specific drills, the swing work, the footwork, the position coaching, that's the paint job and the trim. It matters. But none of it moves the car.",
+      "chars": 190,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.1.1": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Think of your athlete like a car.",
+      "chars": 33,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.1.2": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The sport-specific drills, the swing work, the footwork, the position coaching, that's the paint job and the trim.",
+      "chars": 114,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.1.3": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.1.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It matters.",
+      "chars": 11,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.1.4": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.1.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "But none of it moves the car.",
+      "chars": 29,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyPara.2": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The engine is the athletic part. How much force the kid puts into the ground, how fast, how explosively. That's what actually makes them faster to the ball and harder to keep up with, in any sport they play.",
+      "chars": 207,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.2.1": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The engine is the athletic part.",
+      "chars": 32,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.2.2": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "How much force the kid puts into the ground, how fast, how explosively.",
+      "chars": 71,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.2.3": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's what actually makes them faster to the ball and harder to keep up with, in any sport they play.",
+      "chars": 102,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyPara.3": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Most families spend everything on paint and never touch the engine. Our Multi-Sport Foundation Program builds the engine, which shows up as a first step that beats the defender, more plays made, and a kid who stops arriving a beat late.",
+      "chars": 236,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.3.1": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Most families spend everything on paint and never touch the engine.",
+      "chars": 67,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.3.2": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Our Multi-Sport Foundation Program builds the engine, which shows up as a first step that beats the defender, more plays made, and a kid who stops arriving a beat late.",
+      "chars": 168,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyPara.4": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. Same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a tryout. A data set.",
+      "chars": 172,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.4.1": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.4.2": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Same timing gates and velocity trackers we use every session, and you walk out with their real numbers.",
+      "chars": 103,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.4.3": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.4.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a tryout.",
+      "chars": 13,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.4.4": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.4.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set.",
+      "chars": 11,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyPara.5": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.",
+      "chars": 78,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.5.1": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee: +1 mph.",
+      "chars": 27,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.5.2": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+3 inches.",
+      "chars": 10,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.5.3": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.5.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "90 days.",
+      "chars": 8,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.5.4": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.5.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free.",
+      "chars": 30,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.bodyPara.6": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.altHook.1": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Sport drills are the paint job. Athleticism is the engine.",
+      "chars": 58,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.altHook.2": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Most families spend everything on the paint and never touch the engine.",
+      "chars": 71,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short",
+      "archetype": "Paradox",
+      "code": null
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.altHook.3": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "You can coach the swing all you want. Something still has to power it.",
+      "chars": 70,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short",
+      "archetype": "Oracle",
+      "code": null
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.imageHeadline": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "How Training Transfers to Every Sport",
+      "chars": 37,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-1-version-b-mechanism-curiosity-led-short.imageSubhead": {
+      "id": "ad-1-version-b-mechanism-curiosity-led-short.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(The Part No One Explains)",
+      "chars": 26,
+      "ad": "AD 1 — VERSION B (Mechanism Curiosity-led) Short"
+    },
+    "ad-2-version-a-consequence-depth-medium.headline": {
+      "id": "ad-2-version-a-consequence-depth-medium.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "The Engine Under Every Sport",
+      "chars": 28,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.description": {
+      "id": "ad-2-version-a-consequence-depth-medium.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.primaryText": {
+      "id": "ad-2-version-a-consequence-depth-medium.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "A fair question stops a lot of parents before they book: how does getting faster in a gym make my kid better at their actual sport?\nHere's the honest answer. Every sport skill rides on top of one engine, how much force a kid puts into the ground, how fast, how explosively. The swing, the cut, the first step to the ball, all of it has to be powered by something underneath it. A perfectly coached skill on top of a weak engine still loses the race to the ball. That's why so much sport-specific work doesn't show up in games the way parents expect, the skill got sharper but the engine never changed.\nThat's the part our Multi-Sport Foundation Program develops. Not one sport's drills, the speed and power that every sport draws from.\nAnd when the engine grows, it shows up everywhere at once. It's the first step that beats the defender to the ball, which turns into more plays made every game, which becomes the kind of tape a coach stops to watch, until the kid who used to arrive a beat late is the one getting there first.\nOne mom shared that her son built himself up with us the right way, and that the strength and speed carried all the way to a D2 college scholarship. The training was never sport-specific. It was the foundation every sport sat on.\nThe first step in is the Athlete Analysis. Same timing gates, same velocity trackers we use every session. You'll see your athlete's real numbers before you decide anything. Not a tryout. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1598,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyPara.1": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "A fair question stops a lot of parents before they book: how does getting faster in a gym make my kid better at their actual sport?",
+      "chars": 131,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyPara.2": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the honest answer. Every sport skill rides on top of one engine, how much force a kid puts into the ground, how fast, how explosively. The swing, the cut, the first step to the ball, all of it has to be powered by something underneath it. A perfectly coached skill on top of a weak engine still loses the race to the ball. That's why so much sport-specific work doesn't show up in games the way parents expect, the skill got sharper but the engine never changed.",
+      "chars": 469,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.2.1": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the honest answer.",
+      "chars": 25,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.2.2": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Every sport skill rides on top of one engine, how much force a kid puts into the ground, how fast, how explosively.",
+      "chars": 115,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.2.3": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The swing, the cut, the first step to the ball, all of it has to be powered by something underneath it.",
+      "chars": 103,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.2.4": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A perfectly coached skill on top of a weak engine still loses the race to the ball.",
+      "chars": 83,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.2.5": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.2.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's why so much sport-specific work doesn't show up in games the way parents expect, the skill got sharper but the engine never changed.",
+      "chars": 139,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyPara.3": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's the part our Multi-Sport Foundation Program develops. Not one sport's drills, the speed and power that every sport draws from.",
+      "chars": 133,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.3.1": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's the part our Multi-Sport Foundation Program develops.",
+      "chars": 60,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.3.2": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not one sport's drills, the speed and power that every sport draws from.",
+      "chars": 72,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyPara.4": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And when the engine grows, it shows up everywhere at once. It's the first step that beats the defender to the ball, which turns into more plays made every game, which becomes the kind of tape a coach stops to watch, until the kid who used to arrive a beat late is the one getting there first.",
+      "chars": 292,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.4.1": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And when the engine grows, it shows up everywhere at once.",
+      "chars": 58,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.4.2": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It's the first step that beats the defender to the ball, which turns into more plays made every game, which becomes the kind of tape a coach stops to watch, until the kid who used to arrive a beat late is the one getting there first.",
+      "chars": 233,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyPara.5": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "One mom shared that her son built himself up with us the right way, and that the strength and speed carried all the way to a D2 college scholarship. The training was never sport-specific. It was the foundation every sport sat on.",
+      "chars": 229,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.5.1": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "One mom shared that her son built himself up with us the right way, and that the strength and speed carried all the way to a D2 college scholarship.",
+      "chars": 148,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.5.2": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The training was never sport-specific.",
+      "chars": 38,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.5.3": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.5.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It was the foundation every sport sat on.",
+      "chars": 41,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyPara.6": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. Same timing gates, same velocity trackers we use every session. You'll see your athlete's real numbers before you decide anything. Not a tryout. A data set.",
+      "chars": 199,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.6.1": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.6.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.6.2": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.6.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Same timing gates, same velocity trackers we use every session.",
+      "chars": 63,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.6.3": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.6.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "You'll see your athlete's real numbers before you decide anything.",
+      "chars": 66,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.6.4": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.6.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a tryout.",
+      "chars": 13,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.6.5": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.6.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set.",
+      "chars": 11,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyPara.7": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyPara.7",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.",
+      "chars": 78,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.7.1": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.7.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee: +1 mph.",
+      "chars": 27,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.7.2": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.7.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+3 inches.",
+      "chars": 10,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.7.3": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.7.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "90 days.",
+      "chars": 8,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyLine.7.4": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyLine.7.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free.",
+      "chars": 30,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.bodyPara.8": {
+      "id": "ad-2-version-a-consequence-depth-medium.bodyPara.8",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.altHook.1": {
+      "id": "ad-2-version-a-consequence-depth-medium.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Speed and power are the engine. Every sport skill runs on it.",
+      "chars": 61,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    "ad-2-version-a-consequence-depth-medium.altHook.2": {
+      "id": "ad-2-version-a-consequence-depth-medium.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "A great swing still has to be powered by something.",
+      "chars": 51,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium",
+      "archetype": "Paradox",
+      "code": null
+    },
+    "ad-2-version-a-consequence-depth-medium.altHook.3": {
+      "id": "ad-2-version-a-consequence-depth-medium.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "You can't out-skill a slow engine. Here's why.",
+      "chars": 46,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium",
+      "archetype": "Warning",
+      "code": null
+    },
+    "ad-2-version-a-consequence-depth-medium.imageHeadline": {
+      "id": "ad-2-version-a-consequence-depth-medium.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "How Training Transfers to Every Sport",
+      "chars": 37,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-a-consequence-depth-medium.imageSubhead": {
+      "id": "ad-2-version-a-consequence-depth-medium.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(The Part No One Explains)",
+      "chars": 26,
+      "ad": "AD 2 — VERSION A (Consequence depth) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.headline": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "The Engine, Not The Paint",
+      "chars": 25,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.description": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.primaryText": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "Think of your athlete like a car. The sport-specific stuff, the swing work, the footwork drills, the position coaching, is the paint job and the trim. It matters, and it's worth doing. But none of it moves the car.\nThe engine is the athletic part underneath. How much force the kid drives into the ground, how fast, how explosively. That engine is what makes them quicker to the ball and harder to keep up with, and it powers every sport they'll ever play, not just one.\nHere's the catch. Most families pour years and money into the paint and never once touch the engine. Then they wonder why a kid with clean mechanics still gets beat to the spot. The mechanics were never the problem. The engine was.\nThat's the only thing our Multi-Sport Foundation Program builds, and a bigger engine shows up everywhere. It's the first step that beats the defender to the ball, which turns into more plays made, which becomes the tape a coach stops to watch, until your kid is the one arriving first instead of a step late.\nOne mom told us her son built his foundation with us the right way, and it carried all the way to a D2 scholarship. None of that training was sport-specific. It was the engine everything else ran on.\nThe first step in is the Athlete Analysis. Same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a tryout. A data set.\nThen the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.\nTap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 1524,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.1": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Think of your athlete like a car. The sport-specific stuff, the swing work, the footwork drills, the position coaching, is the paint job and the trim. It matters, and it's worth doing. But none of it moves the car.",
+      "chars": 214,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.1.1": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Think of your athlete like a car.",
+      "chars": 33,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.1.2": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The sport-specific stuff, the swing work, the footwork drills, the position coaching, is the paint job and the trim.",
+      "chars": 116,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.1.3": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.1.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It matters, and it's worth doing.",
+      "chars": 33,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.1.4": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.1.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "But none of it moves the car.",
+      "chars": 29,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.2": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The engine is the athletic part underneath. How much force the kid drives into the ground, how fast, how explosively. That engine is what makes them quicker to the ball and harder to keep up with, and it powers every sport they'll ever play, not just one.",
+      "chars": 255,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.2.1": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The engine is the athletic part underneath.",
+      "chars": 43,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.2.2": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "How much force the kid drives into the ground, how fast, how explosively.",
+      "chars": 73,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.2.3": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That engine is what makes them quicker to the ball and harder to keep up with, and it powers every sport they'll ever play, not just one.",
+      "chars": 137,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.3": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the catch. Most families pour years and money into the paint and never once touch the engine. Then they wonder why a kid with clean mechanics still gets beat to the spot. The mechanics were never the problem. The engine was.",
+      "chars": 231,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.3.1": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the catch.",
+      "chars": 17,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.3.2": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Most families pour years and money into the paint and never once touch the engine.",
+      "chars": 82,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.3.3": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.3.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then they wonder why a kid with clean mechanics still gets beat to the spot.",
+      "chars": 76,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.3.4": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.3.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The mechanics were never the problem.",
+      "chars": 37,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.3.5": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.3.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The engine was.",
+      "chars": 15,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.4": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's the only thing our Multi-Sport Foundation Program builds, and a bigger engine shows up everywhere. It's the first step that beats the defender to the ball, which turns into more plays made, which becomes the tape a coach stops to watch, until your kid is the one arriving first instead of a step late.",
+      "chars": 308,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.4.1": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's the only thing our Multi-Sport Foundation Program builds, and a bigger engine shows up everywhere.",
+      "chars": 105,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.4.2": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It's the first step that beats the defender to the ball, which turns into more plays made, which becomes the tape a coach stops to watch, until your kid is the one arriving first instead of a step late.",
+      "chars": 202,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.5": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "One mom told us her son built his foundation with us the right way, and it carried all the way to a D2 scholarship. None of that training was sport-specific. It was the engine everything else ran on.",
+      "chars": 199,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.5.1": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "One mom told us her son built his foundation with us the right way, and it carried all the way to a D2 scholarship.",
+      "chars": 115,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.5.2": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "None of that training was sport-specific.",
+      "chars": 41,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.5.3": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.5.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It was the engine everything else ran on.",
+      "chars": 41,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.6": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. Same timing gates and velocity trackers we use every session, and you walk out with their real numbers. Not a tryout. A data set.",
+      "chars": 172,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.6.1": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.6.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.6.2": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.6.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Same timing gates and velocity trackers we use every session, and you walk out with their real numbers.",
+      "chars": 103,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.6.3": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.6.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a tryout.",
+      "chars": 13,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.6.4": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.6.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set.",
+      "chars": 11,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.7": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.7",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee: +1 mph. +3 inches. 90 days. Or we keep training them free.",
+      "chars": 78,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.7.1": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.7.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee: +1 mph.",
+      "chars": 27,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.7.2": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.7.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+3 inches.",
+      "chars": 10,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.7.3": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.7.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "90 days.",
+      "chars": 8,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.7.4": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.7.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free.",
+      "chars": 30,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.8": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.bodyPara.8",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.altHook.1": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Sport drills are the paint job. Athleticism is the engine.",
+      "chars": 58,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.altHook.2": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Most families spend everything on the paint and never touch the engine.",
+      "chars": 71,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium",
+      "archetype": "Paradox",
+      "code": null
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.altHook.3": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "You can coach the swing all you want. Something still has to power it.",
+      "chars": 70,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium",
+      "archetype": "Oracle",
+      "code": null
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.imageHeadline": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "How Training Transfers to Every Sport",
+      "chars": 37,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-2-version-b-mechanism-curiosity-led-medium.imageSubhead": {
+      "id": "ad-2-version-b-mechanism-curiosity-led-medium.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(The Part No One Explains)",
+      "chars": 26,
+      "ad": "AD 2 — VERSION B (Mechanism Curiosity-led) Medium"
+    },
+    "ad-3-version-a-consequence-depth-long.headline": {
+      "id": "ad-3-version-a-consequence-depth-long.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "The Engine Under Every Sport",
+      "chars": 28,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.description": {
+      "id": "ad-3-version-a-consequence-depth-long.description",
+      "kind": "description",
+      "role": null,
+      "text": "Built, then measured.",
+      "chars": 21,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.primaryText": {
+      "id": "ad-3-version-a-consequence-depth-long.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "A fair question stops a lot of parents before they ever book: how does getting faster and jumping higher in a gym actually make my kid better at baseball, or soccer, or whatever they play?\nHere's the honest answer. Every sport skill rides on top of one engine. How much force a kid puts into the ground, how fast they put it there, how explosively. The swing, the crossover, the first step to a loose ball, all of it is powered by that engine underneath. A beautifully coached skill sitting on top of a weak engine still loses the foot race, still gets bodied off the ball, still arrives a half step late.\nThat's the piece most families never get told. They pour years into sport-specific coaching, sharpen the mechanics, refine the technique, and then can't understand why it doesn't show up in games. The skill got better. The engine never changed. And the engine is what the game actually runs on.\nThis isn't a knock on skill coaching, by the way. Skill work matters, and a kid needs it. It just can't do a job it was never built to do. You can't coach a kid into more force production with a clipboard, the same way you can't paint a car into going faster. Those are two different jobs, and almost nobody is doing the second one.\nThat second job is the only thing our Multi-Sport Foundation Program does. It runs on The Velocity Code™, and every session we build the real, measured speed and power that sits underneath every sport, then prove it's moving with numbers you can see.\nAnd when that engine grows, it doesn't show up in one drill. It shows up everywhere at once. It's the first step that beats the defender to the ball. That turns into more plays made every single game. More plays become the kind of tape a coach actually stops to watch, until one season in, the kid who used to get there a beat late is the one arriving first, in every sport they play.\nOne mom shared what that looked like for her son. He built himself up here the right way, added real strength and speed, and it carried all the way to a D2 college scholarship. None of his training with us was sport-specific. It was the foundation his sport was built on.\nThe first step in is the Athlete Analysis. We run your athlete through the same Dashr timing gates and GymAware velocity trackers the NFL uses, and you leave with their real sprint time, real jump height, and a clear picture of where they stand. Not a tryout. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.\nCoach Graham Wilkerson built this. He's a CSCS, the same credential D1 and NFL strength coaches carry, and he trained NFL athletes Zack Martin, Ted Karras, and Nick Martin before adapting these principles for the developmental window where they matter most.\nHere's the promise no other program in this market will make. +1 mph. +3 inches. 90 days. Or we keep training them free until they get there.\nTap below to book the Athlete Analysis at {{location.name}}.\nTo your athlete's success, Coach {{user.first_name}}",
+      "chars": 3015,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyPara.1": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "A fair question stops a lot of parents before they ever book: how does getting faster and jumping higher in a gym actually make my kid better at baseball, or soccer, or whatever they play?",
+      "chars": 188,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyPara.2": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the honest answer. Every sport skill rides on top of one engine. How much force a kid puts into the ground, how fast they put it there, how explosively. The swing, the crossover, the first step to a loose ball, all of it is powered by that engine underneath. A beautifully coached skill sitting on top of a weak engine still loses the foot race, still gets bodied off the ball, still arrives a half step late.",
+      "chars": 416,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.2.1": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the honest answer.",
+      "chars": 25,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.2.2": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Every sport skill rides on top of one engine.",
+      "chars": 45,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.2.3": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.2.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "How much force a kid puts into the ground, how fast they put it there, how explosively.",
+      "chars": 87,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.2.4": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.2.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The swing, the crossover, the first step to a loose ball, all of it is powered by that engine underneath.",
+      "chars": 105,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.2.5": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.2.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A beautifully coached skill sitting on top of a weak engine still loses the foot race, still gets bodied off the ball, still arrives a half step late.",
+      "chars": 150,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyPara.3": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That's the piece most families never get told. They pour years into sport-specific coaching, sharpen the mechanics, refine the technique, and then can't understand why it doesn't show up in games. The skill got better. The engine never changed. And the engine is what the game actually runs on.",
+      "chars": 294,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.3.1": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That's the piece most families never get told.",
+      "chars": 46,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.3.2": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "They pour years into sport-specific coaching, sharpen the mechanics, refine the technique, and then can't understand why it doesn't show up in games.",
+      "chars": 149,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.3.3": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.3.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The skill got better.",
+      "chars": 21,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.3.4": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.3.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The engine never changed.",
+      "chars": 25,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.3.5": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.3.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And the engine is what the game actually runs on.",
+      "chars": 49,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyPara.4": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "This isn't a knock on skill coaching, by the way. Skill work matters, and a kid needs it. It just can't do a job it was never built to do. You can't coach a kid into more force production with a clipboard, the same way you can't paint a car into going faster. Those are two different jobs, and almost nobody is doing the second one.",
+      "chars": 332,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.4.1": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "This isn't a knock on skill coaching, by the way.",
+      "chars": 49,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.4.2": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Skill work matters, and a kid needs it.",
+      "chars": 39,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.4.3": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.4.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It just can't do a job it was never built to do.",
+      "chars": 48,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.4.4": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.4.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "You can't coach a kid into more force production with a clipboard, the same way you can't paint a car into going faster.",
+      "chars": 120,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.4.5": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.4.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Those are two different jobs, and almost nobody is doing the second one.",
+      "chars": 72,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyPara.5": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.5",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "That second job is the only thing our Multi-Sport Foundation Program does. It runs on The Velocity Code™, and every session we build the real, measured speed and power that sits underneath every sport, then prove it's moving with numbers you can see.",
+      "chars": 250,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.5.1": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.5.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That second job is the only thing our Multi-Sport Foundation Program does.",
+      "chars": 74,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.5.2": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.5.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It runs on The Velocity Code™, and every session we build the real, measured speed and power that sits underneath every sport, then prove it's moving with numbers you can see.",
+      "chars": 175,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyPara.6": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.6",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "And when that engine grows, it doesn't show up in one drill. It shows up everywhere at once. It's the first step that beats the defender to the ball. That turns into more plays made every single game. More plays become the kind of tape a coach actually stops to watch, until one season in, the kid who used to get there a beat late is the one arriving first, in every sport they play.",
+      "chars": 384,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.6.1": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.6.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And when that engine grows, it doesn't show up in one drill.",
+      "chars": 60,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.6.2": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.6.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It shows up everywhere at once.",
+      "chars": 31,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.6.3": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.6.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It's the first step that beats the defender to the ball.",
+      "chars": 56,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.6.4": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.6.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "That turns into more plays made every single game.",
+      "chars": 50,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.6.5": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.6.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "More plays become the kind of tape a coach actually stops to watch, until one season in, the kid who used to get there a beat late is the one arriving first, in every sport they play.",
+      "chars": 183,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyPara.7": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.7",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "One mom shared what that looked like for her son. He built himself up here the right way, added real strength and speed, and it carried all the way to a D2 college scholarship. None of his training with us was sport-specific. It was the foundation his sport was built on.",
+      "chars": 271,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.7.1": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.7.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "One mom shared what that looked like for her son.",
+      "chars": 49,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.7.2": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.7.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "He built himself up here the right way, added real strength and speed, and it carried all the way to a D2 college scholarship.",
+      "chars": 126,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.7.3": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.7.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "None of his training with us was sport-specific.",
+      "chars": 48,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.7.4": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.7.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It was the foundation his sport was built on.",
+      "chars": 45,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyPara.8": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.8",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis. We run your athlete through the same Dashr timing gates and GymAware velocity trackers the NFL uses, and you leave with their real sprint time, real jump height, and a clear picture of where they stand. Not a tryout. A data set you get to keep. From there, the path into the Multi-Sport Foundation Program is simple.",
+      "chars": 359,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.8.1": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.8.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The first step in is the Athlete Analysis.",
+      "chars": 42,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.8.2": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.8.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "We run your athlete through the same Dashr timing gates and GymAware velocity trackers the NFL uses, and you leave with their real sprint time, real jump height, and a clear picture of where they stand.",
+      "chars": 202,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.8.3": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.8.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Not a tryout.",
+      "chars": 13,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.8.4": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.8.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "A data set you get to keep.",
+      "chars": 27,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.8.5": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.8.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "From there, the path into the Multi-Sport Foundation Program is simple.",
+      "chars": 71,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyPara.9": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.9",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Coach Graham Wilkerson built this. He's a CSCS, the same credential D1 and NFL strength coaches carry, and he trained NFL athletes Zack Martin, Ted Karras, and Nick Martin before adapting these principles for the developmental window where they matter most.",
+      "chars": 257,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.9.1": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.9.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Coach Graham Wilkerson built this.",
+      "chars": 34,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.9.2": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.9.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "He's a CSCS, the same credential D1 and NFL strength coaches carry, and he trained NFL athletes Zack Martin, Ted Karras, and Nick Martin before adapting these principles for the developmental window where they matter most.",
+      "chars": 222,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyPara.10": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.10",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Here's the promise no other program in this market will make. +1 mph. +3 inches. 90 days. Or we keep training them free until they get there.",
+      "chars": 141,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.10.1": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.10.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Here's the promise no other program in this market will make.",
+      "chars": 61,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.10.2": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.10.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph.",
+      "chars": 7,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.10.3": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.10.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+3 inches.",
+      "chars": 10,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.10.4": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.10.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "90 days.",
+      "chars": 8,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyLine.10.5": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyLine.10.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or we keep training them free until they get there.",
+      "chars": 51,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyPara.11": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.11",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Tap below to book the Athlete Analysis at {{location.name}}.",
+      "chars": 60,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.bodyPara.12": {
+      "id": "ad-3-version-a-consequence-depth-long.bodyPara.12",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "To your athlete's success, Coach {{user.first_name}}",
+      "chars": 52,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.altHook.1": {
+      "id": "ad-3-version-a-consequence-depth-long.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Speed and power are the engine. Every sport skill runs on it.",
+      "chars": 61,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long",
+      "archetype": "Mechanism",
+      "code": null
+    },
+    "ad-3-version-a-consequence-depth-long.altHook.2": {
+      "id": "ad-3-version-a-consequence-depth-long.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "A great swing still has to be powered by something.",
+      "chars": 51,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long",
+      "archetype": "Paradox",
+      "code": null
+    },
+    "ad-3-version-a-consequence-depth-long.altHook.3": {
+      "id": "ad-3-version-a-consequence-depth-long.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "You can't out-skill a slow engine. Here's why.",
+      "chars": 46,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long",
+      "archetype": "Warning",
+      "code": null
+    },
+    "ad-3-version-a-consequence-depth-long.imageHeadline": {
+      "id": "ad-3-version-a-consequence-depth-long.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "How Training Transfers to Every Sport",
+      "chars": 37,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    },
+    "ad-3-version-a-consequence-depth-long.imageSubhead": {
+      "id": "ad-3-version-a-consequence-depth-long.imageSubhead",
+      "kind": "imageSubhead",
+      "role": "reframe",
+      "text": "(The Part No One Explains)",
+      "chars": 26,
+      "ad": "AD 3 — VERSION A (Consequence depth) Long"
+    }
+  }
+}

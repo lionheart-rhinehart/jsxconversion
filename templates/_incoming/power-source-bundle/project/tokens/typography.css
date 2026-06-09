@@ -1,0 +1,83 @@
+/* ============================================================
+   POWER SOURCE — Typography tokens
+   Display: Saira Condensed (heavy, uppercase, athletic)
+   Text/UI: Saira
+   Data:    Space Mono (stats, timers, labels)
+   ============================================================ */
+
+:root {
+  /* ---------- Families ---------- */
+  --font-display: "Saira Condensed", "Arial Narrow", system-ui, sans-serif;
+  --font-heading: "Saira", system-ui, -apple-system, sans-serif;
+  --font-body: "Saira", system-ui, -apple-system, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  /* ---------- Weights ---------- */
+  --fw-regular: 400;   /* @kind font */
+  --fw-medium: 500;    /* @kind font */
+  --fw-semibold: 600;  /* @kind font */
+  --fw-bold: 700;      /* @kind font */
+  --fw-extrabold: 800; /* @kind font */
+  --fw-black: 900;     /* @kind font */
+
+  /* ---------- Type scale (display sizes are big & loud) ---------- */
+  --fs-display-2xl: 96px;
+  --fs-display-xl: 76px;
+  --fs-display-lg: 60px;
+  --fs-display-md: 46px;
+  --fs-display-sm: 36px;
+
+  --fs-h1: 34px;
+  --fs-h2: 27px;
+  --fs-h3: 22px;
+  --fs-h4: 18px;
+
+  --fs-body-lg: 18px;
+  --fs-body: 16px;
+  --fs-body-sm: 14px;
+  --fs-caption: 13px;
+  --fs-micro: 11px;
+
+  /* ---------- Line heights ---------- */
+  --lh-tight: 0.92;   /* @kind font */
+  --lh-snug: 1.05;    /* @kind font */
+  --lh-heading: 1.12; /* @kind font */
+  --lh-body: 1.55;    /* @kind font */
+  --lh-relaxed: 1.7;  /* @kind font */
+
+  /* ---------- Letter spacing ---------- */
+  --ls-display: -0.01em;   /* @kind font */
+  --ls-tight: -0.02em;     /* @kind font */
+  --ls-normal: 0;          /* @kind font */
+  --ls-wide: 0.04em;       /* @kind font */
+  --ls-eyebrow: 0.16em;    /* @kind font */
+  --ls-mono: 0.02em;       /* @kind font */
+}
+
+/* ---------- Convenience utility classes (optional) ---------- */
+.ps-display {
+  font-family: var(--font-display);
+  font-weight: var(--fw-extrabold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-display);
+  text-transform: uppercase;
+}
+.ps-eyebrow {
+  font-family: var(--font-mono);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+}
+.ps-stat {
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--ls-display);
+}
+.ps-data {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--ls-mono);
+}

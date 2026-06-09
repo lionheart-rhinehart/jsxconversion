@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Power Source — Video Render Harness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@700;800;900&family=Saira:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="videos.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: #05070b; }
+  /* The render viewport is exactly one creative: 1080×1920, top-left. */
+  #root { width: 1080px; height: 1920px; overflow: hidden; }
+  #root .vid { border-radius: 0 !important; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="videos-render.js"></script>
+</body>
+</html>

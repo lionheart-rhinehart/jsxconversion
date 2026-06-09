@@ -1,0 +1,149 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/bg-athletes-acceleration-action-clip-kettlebell-swings-middle-school-male-athletes-ac-13c57d53.mp4",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1
+  },
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
+      "z": 1
+    },
+    {
+      "id": "scrim",
+      "tag": "scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.55) 0%, rgba(10,11,13,0.12) 30%, rgba(10,11,13,0.30) 62%, rgba(10,11,13,0.88) 100%)",
+      "z": 5
+    },
+    {
+      "id": "caption_bar",
+      "tag": "caption_bar",
+      "type": "rect",
+      "x": 0,
+      "y": 1340,
+      "width": 1080,
+      "height": 580,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0) 0%, rgba(10,11,13,0.78) 32%, rgba(10,11,13,0.92) 100%)",
+      "z": 6
+    },
+    {
+      "id": "accent_rule",
+      "tag": "accent_rule",
+      "type": "rect",
+      "x": 96,
+      "y": 1440,
+      "width": 130,
+      "height": 10,
+      "fill": "#c4141d",
+      "z": 7
+    }
+  ],
+  "elements": [
+    {
+      "id": "real_numbers_tag",
+      "tag": "real_numbers_tag",
+      "label": "UGC real-numbers tag",
+      "x": 96,
+      "y": 150,
+      "text": "REAL NUMBERS",
+      "fontSize": 30,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 600,
+      "color": "#0a0b0d",
+      "chipBg": "#ffffff",
+      "chipPad": "12px 24px",
+      "chipRadius": 6,
+      "letterSpacing": "0.22em",
+      "textTransform": "uppercase",
+      "z": 21,
+      "textShadow": "0 2px 12px rgba(0,0,0,0.92)"
+    },
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor (auto-filled)",
+      "x": 96,
+      "y": 1370,
+      "textAlign": "left",
+      "text": "NOBLESVILLE SPORT PARENTS",
+      "fontSize": 28,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 600,
+      "color": "#c4141d",
+      "letterSpacing": "0.2em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 10px rgba(0,0,0,0.7)",
+      "z": 22,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 34
+    },
+    {
+      "id": "hook",
+      "tag": "hook",
+      "label": "Hook / proof line",
+      "x": 96,
+      "y": 1480,
+      "width": 888,
+      "textAlign": "left",
+      "text": "You'll see your athlete's real numbers before you decide anything.",
+      "fontSize": 74,
+      "fontFamily": "Anton",
+      "fontWeight": 400,
+      "color": "#ffffff",
+      "lineHeight": 1,
+      "letterSpacing": "0.005em",
+      "textTransform": "uppercase",
+      "textShadow": "0 3px 14px rgba(0,0,0,0.65)",
+      "z": 23,
+      "role": "hook",
+      "accepts": [
+        "hook",
+        "proof",
+        "claim"
+      ],
+      "maxChars": 90
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark",
+      "x": 96,
+      "y": 1812,
+      "width": 888,
+      "textAlign": "left",
+      "text": "ATHLETES ACCELERATION",
+      "fontSize": 28,
+      "fontFamily": "Geist",
+      "fontWeight": 600,
+      "color": "#ffffff",
+      "letterSpacing": "0.22em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 8px rgba(0,0,0,0.7)",
+      "z": 24,
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 26
+    }
+  ]
+}

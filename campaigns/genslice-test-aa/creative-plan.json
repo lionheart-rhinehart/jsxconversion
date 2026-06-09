@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "campaign": "genslice-test-aa",
+  "brand": "athletes-acceleration",
+  "knobs": {
+    "assetsPerAngle": 4,
+    "motionRatio": 0,
+    "freshnessFloor": 1,
+    "repetitionCap": 1
+  },
+  "angles": [
+    {
+      "id": "angle-1-tired-reps",
+      "name": "The hard-working kid who isn't getting faster",
+      "location": "carmel",
+      "mechanism": "Fatigued reps train slowness into the nervous system",
+      "emotionalJob": "relief — it's not your kid, it was the plan",
+      "voice": "head-coach-to-parent",
+      "assets": [
+        {
+          "id": "F1",
+          "beat": "A — Stop the scroll",
+          "format": "static",
+          "source": "fresh",
+          "template": "fresh-genslice-test-aa-angle-1-tired-reps-F1",
+          "archetype": "action-hero",
+          "exampleId": "ex-029-action-hero",
+          "hookRef": "ad-1.altHook.4",
+          "status": "approved",
+          "notes": "action-hero: full-bleed athlete photo + giant Anton hook"
+        },
+        {
+          "id": "F2",
+          "beat": "C — Reveal the mechanism",
+          "format": "static",
+          "source": "fresh",
+          "template": "fresh-genslice-test-aa-angle-1-tired-reps-F2",
+          "archetype": "training-scene",
+          "exampleId": "ex-031-training-scene",
+          "copyRefs": {
+            "claim": "ad-1.bodyLine.1.3"
+          },
+          "status": "approved",
+          "notes": "training-scene: wide gym photo dominates, small bottom-anchored claim + byline",
+          "output": "out/campaigns/genslice-test-aa/angle-1-tired-reps/F2.png",
+          "thumb": "out/campaigns/genslice-test-aa/angle-1-tired-reps/F2.png"
+        },
+        {
+          "id": "F3",
+          "beat": "E — Prove it",
+          "format": "static",
+          "source": "fresh",
+          "template": "fresh-genslice-test-aa-angle-1-tired-reps-F3",
+          "archetype": "quote-card",
+          "exampleId": "ex-012-quote-card",
+          "copyRefs": {
+            "testimonial": "ad-1.bodyLine.1.1"
+          },
+          "status": "approved",
+          "notes": "quote-card: large pull-quote over a subtle (scrimmed) background + attribution",
+          "output": "out/campaigns/genslice-test-aa/angle-1-tired-reps/F3.png",
+          "thumb": "out/campaigns/genslice-test-aa/angle-1-tired-reps/F3.png"
+        },
+        {
+          "id": "F4",
+          "beat": "F — Offer",
+          "format": "static",
+          "source": "fresh",
+          "template": "fresh-genslice-test-aa-angle-1-tired-reps-F4",
+          "archetype": "offer-card",
+          "exampleId": "ex-027-offer-card",
+          "copyRefs": {
+            "offer": "ad-1.bodyLine.4.1",
+            "cta": "ad-1.bodyLine.4.2"
+          },
+          "status": "approved",
+          "notes": "offer-card: white deal card over darkened action photo + verbatim guarantee + red CTA",
+          "output": "out/campaigns/genslice-test-aa/angle-1-tired-reps/F4.png",
+          "thumb": "out/campaigns/genslice-test-aa/angle-1-tired-reps/F4.png"
+        }
+      ]
+    }
+  ]
+}

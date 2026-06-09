@@ -1,0 +1,21 @@
+{
+  "_what": "Test A fill data for the MOTION template conf-v01-hook-frame. NOTHING in the template .jsx is edited; this file supplies every fill-in value. `brand` → window.__BRAND__ (color tokens + logo + name). `data` → window.__CONFIG__ (the copy the template reads via data.<key>). `bgClip` is the staged background clip.",
+  "template": "conf-v01-hook-frame",
+  "duration": 4,
+  "bgClip": "templates/_incoming/impowered-clip.mp4",
+  "brand": {
+    "brand_red": "#6d164e",
+    "brand_red_deep": "#4a0f35",
+    "ink_950": "#0a0b0d",
+    "ink_900": "#15171a",
+    "white": "#ffffff",
+    "brand_name": "IMPOWERED SPORT PERFORMANCE",
+    "url": "impoweredfitness.com",
+    "logo_motion": "assets/impowered-wordmark.png"
+  },
+  "data": {
+    "eyebrow": "IMPOWERED · TEST",
+    "hook": "BUILT DIFFERENT.",
+    "brand": "IMPOWERED SPORT PERFORMANCE"
+  }
+}

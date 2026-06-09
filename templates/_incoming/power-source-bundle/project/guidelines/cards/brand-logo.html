@@ -1,0 +1,26 @@
+<!-- @dsCard group="Brand" viewport="700x230" name="Logo" subtitle="Primary emblem (light) + reversed wordmark lockup (dark)" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../../styles.css" />
+<style>
+  body { background: var(--ink-900); padding: 22px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .panel { border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; height: 130px; border: 1px solid var(--border-subtle); position: relative; }
+  .white { background: #ffffff; }
+  .dark { background: var(--ink-950); }
+  .white img { width: 180px; height: auto; }
+  .dark img { width: 230px; height: auto; }
+  .tag { position: absolute; left: 12px; top: 10px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); }
+  .dark .tag { color: var(--text-muted); }
+  .white .tag { color: #9aa3b2; }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="panel white"><span class="tag">Primary · on light</span><img src="../../assets/logo/power-source-logo.webp" alt="Power Source" /></div>
+    <div class="panel dark"><span class="tag">Reversed · on dark</span><img src="../../assets/logo/logo-reversed.png" alt="Power Source" /></div>
+  </div>
+</body>
+</html>

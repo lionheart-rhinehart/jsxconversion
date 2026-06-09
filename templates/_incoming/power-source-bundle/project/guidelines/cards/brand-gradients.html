@@ -1,0 +1,24 @@
+<!-- @dsCard group="Brand" viewport="700x200" name="Gradients & Scrim" subtitle="Arena backdrop, steel, electric, bolt + text scrim" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../../styles.css" />
+<style>
+  body { background: var(--ink-900); padding: 22px; }
+  .row { display: flex; gap: 14px; }
+  .item { flex: 1; }
+  .box { height: 96px; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle); }
+  .lab { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); margin-top: 8px; text-align: center; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="item"><div class="box" style="background:var(--grad-arena)"></div><div class="lab">grad-arena</div></div>
+    <div class="item"><div class="box" style="background:var(--grad-steel)"></div><div class="lab">grad-steel</div></div>
+    <div class="item"><div class="box" style="background:var(--grad-electric)"></div><div class="lab">grad-electric</div></div>
+    <div class="item"><div class="box" style="background:var(--grad-bolt)"></div><div class="lab">grad-bolt</div></div>
+    <div class="item"><div class="box" style="background:var(--scrim-bottom),var(--electric-600)"></div><div class="lab">scrim-bottom</div></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+/* ============================================================
+   POWER SOURCE — Webfonts (self-hosted, woff2 in assets/fonts/)
+   - Saira Condensed : athletic display / headlines (uppercase)
+   - Saira           : UI + body text
+   - Space Mono      : stat readouts, timers, data labels
+   Source: Google Fonts via Fontsource (OFL). Paths are relative to this file (tokens/fonts.css).
+   ============================================================ */
+
+/* ---------- Saira Condensed (display) ---------- */
+@font-face {
+  font-family: "Saira Condensed";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../assets/fonts/SairaCondensed-700.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Saira Condensed";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("../assets/fonts/SairaCondensed-800.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Saira Condensed";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("../assets/fonts/SairaCondensed-900.woff2") format("woff2");
+}
+
+/* ---------- Saira (text / UI) ---------- */
+@font-face {
+  font-family: "Saira";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/Saira-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Saira";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../assets/fonts/Saira-500.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Saira";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../assets/fonts/Saira-600.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Saira";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../assets/fonts/Saira-700.woff2") format("woff2");
+}
+
+/* ---------- Space Mono (data / mono) ---------- */
+@font-face {
+  font-family: "Space Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/SpaceMono-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Space Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../assets/fonts/SpaceMono-700.woff2") format("woff2");
+}

@@ -1,0 +1,70 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/genslice-f1-hero.jpg",
+    "type": "image",
+    "tag": "bg_photo",
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1,
+    "z": 0
+  },
+  "fixedDesign": [
+    {
+      "id": "top_gradient",
+      "tag": "photo_scrim",
+      "label": "Top-down gradient so the eyebrow + hook stay legible over the action photo (action-hero device)",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1180,
+      "fill": "linear-gradient(180deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.45) 34%, rgba(0,0,0,0) 72%)",
+      "z": 2
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Audience + locale anchor — white chip (auto-filled from the location tier; leave text empty)",
+      "x": 56,
+      "y": 120,
+      "text": "",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#c4141d",
+      "letterSpacing": "0.08em",
+      "textTransform": "uppercase",
+      "chipBg": "#ffffff",
+      "chipPad": "10px 22px",
+      "chipRadius": 8,
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": ["eyebrow"],
+      "maxChars": 28
+    },
+    {
+      "id": "hook",
+      "tag": "title",
+      "label": "Giant Anton hook over the footage (the action-hero dominant element)",
+      "x": 56,
+      "y": 196,
+      "width": 968,
+      "text": "Working hard, still not faster?",
+      "fontSize": 124,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.9,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 26px rgba(0,0,0,0.7)",
+      "z": 30,
+      "role": "hook",
+      "accepts": ["hook", "claim"],
+      "maxChars": 40
+    }
+  ]
+}

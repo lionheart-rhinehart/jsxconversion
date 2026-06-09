@@ -1,0 +1,444 @@
+{
+  "schemaVersion": 1,
+  "campaign": "genslice-test-aa",
+  "generatedFrom": [
+    "ad-copy.md"
+  ],
+  "count": 26,
+  "units": [
+    {
+      "id": "ad-1.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Getting faster, or just getting more tired?",
+      "chars": 43,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.description",
+      "kind": "description",
+      "role": null,
+      "text": "Name the cause first.",
+      "chars": 21,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "Your athlete shows up, works hard, and never quits. And they haven't gotten faster in six months. The cause is not effort. It is the last few tired reps, the ones where speed drops but they push through anyway. The nervous system memorizes the speed, not just the movement, so every slow rep rehearses slow.\nThe Multi-Sport Foundation Program ends the set the moment speed drops, so every rep is a fast one. It starts with the Athlete Analysis, where you walk out with your athlete's real sprint and jump numbers measured on the same gates we use every session.\nThen the guarantee. +1 mph speed. +3\" vertical. 90 days. Or your training is on us.\nFree Athlete Analysis. Book your spot.",
+      "chars": 684,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Your athlete shows up, works hard, and never quits. And they haven't gotten faster in six months. The cause is not effort. It is the last few tired reps, the ones where speed drops but they push through anyway. The nervous system memorizes the speed, not just the movement, so every slow rep rehearses slow.",
+      "chars": 307,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Your athlete shows up, works hard, and never quits.",
+      "chars": 51,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And they haven't gotten faster in six months.",
+      "chars": 45,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.1.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The cause is not effort.",
+      "chars": 24,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.1.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It is the last few tired reps, the ones where speed drops but they push through anyway.",
+      "chars": 87,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.1.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The nervous system memorizes the speed, not just the movement, so every slow rep rehearses slow.",
+      "chars": 96,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The Multi-Sport Foundation Program ends the set the moment speed drops, so every rep is a fast one. It starts with the Athlete Analysis, where you walk out with your athlete's real sprint and jump numbers measured on the same gates we use every session.",
+      "chars": 253,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The Multi-Sport Foundation Program ends the set the moment speed drops, so every rep is a fast one.",
+      "chars": 99,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It starts with the Athlete Analysis, where you walk out with your athlete's real sprint and jump numbers measured on the same gates we use every session.",
+      "chars": 153,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee. +1 mph speed. +3\" vertical. 90 days. Or your training is on us.",
+      "chars": 83,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee.",
+      "chars": 19,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph speed.",
+      "chars": 13,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.3.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+3\" vertical.",
+      "chars": 13,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.3.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "90 days.",
+      "chars": 8,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.3.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or your training is on us.",
+      "chars": 26,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Free Athlete Analysis. Book your spot.",
+      "chars": 38,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Free Athlete Analysis.",
+      "chars": 22,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Book your spot.",
+      "chars": 15,
+      "ad": "AD 1"
+    },
+    {
+      "id": "ad-1.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid trains hard. Why are they still the same speed?",
+      "chars": 56,
+      "ad": "AD 1",
+      "archetype": "Paradox",
+      "code": null
+    },
+    {
+      "id": "ad-1.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The last rep is the one making your athlete slower.",
+      "chars": 51,
+      "ad": "AD 1",
+      "archetype": "Warning",
+      "code": null
+    },
+    {
+      "id": "ad-1.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Six months of hard work. Same forty time.",
+      "chars": 41,
+      "ad": "AD 1",
+      "archetype": "Verdict",
+      "code": null
+    },
+    {
+      "id": "ad-1.altHook.4",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Working hard, still not faster?",
+      "chars": 31,
+      "ad": "AD 1",
+      "archetype": "Question",
+      "code": null
+    },
+    {
+      "id": "ad-1.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Getting faster, or just getting more tired?",
+      "chars": 43,
+      "ad": "AD 1"
+    }
+  ],
+  "byId": {
+    "ad-1.headline": {
+      "id": "ad-1.headline",
+      "kind": "headline",
+      "role": "claim",
+      "text": "Getting faster, or just getting more tired?",
+      "chars": 43,
+      "ad": "AD 1"
+    },
+    "ad-1.description": {
+      "id": "ad-1.description",
+      "kind": "description",
+      "role": null,
+      "text": "Name the cause first.",
+      "chars": 21,
+      "ad": "AD 1"
+    },
+    "ad-1.primaryText": {
+      "id": "ad-1.primaryText",
+      "kind": "primaryText",
+      "role": null,
+      "text": "Your athlete shows up, works hard, and never quits. And they haven't gotten faster in six months. The cause is not effort. It is the last few tired reps, the ones where speed drops but they push through anyway. The nervous system memorizes the speed, not just the movement, so every slow rep rehearses slow.\nThe Multi-Sport Foundation Program ends the set the moment speed drops, so every rep is a fast one. It starts with the Athlete Analysis, where you walk out with your athlete's real sprint and jump numbers measured on the same gates we use every session.\nThen the guarantee. +1 mph speed. +3\" vertical. 90 days. Or your training is on us.\nFree Athlete Analysis. Book your spot.",
+      "chars": 684,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyPara.1": {
+      "id": "ad-1.bodyPara.1",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Your athlete shows up, works hard, and never quits. And they haven't gotten faster in six months. The cause is not effort. It is the last few tired reps, the ones where speed drops but they push through anyway. The nervous system memorizes the speed, not just the movement, so every slow rep rehearses slow.",
+      "chars": 307,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.1.1": {
+      "id": "ad-1.bodyLine.1.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Your athlete shows up, works hard, and never quits.",
+      "chars": 51,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.1.2": {
+      "id": "ad-1.bodyLine.1.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "And they haven't gotten faster in six months.",
+      "chars": 45,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.1.3": {
+      "id": "ad-1.bodyLine.1.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The cause is not effort.",
+      "chars": 24,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.1.4": {
+      "id": "ad-1.bodyLine.1.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It is the last few tired reps, the ones where speed drops but they push through anyway.",
+      "chars": 87,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.1.5": {
+      "id": "ad-1.bodyLine.1.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The nervous system memorizes the speed, not just the movement, so every slow rep rehearses slow.",
+      "chars": 96,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyPara.2": {
+      "id": "ad-1.bodyPara.2",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "The Multi-Sport Foundation Program ends the set the moment speed drops, so every rep is a fast one. It starts with the Athlete Analysis, where you walk out with your athlete's real sprint and jump numbers measured on the same gates we use every session.",
+      "chars": 253,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.2.1": {
+      "id": "ad-1.bodyLine.2.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "The Multi-Sport Foundation Program ends the set the moment speed drops, so every rep is a fast one.",
+      "chars": 99,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.2.2": {
+      "id": "ad-1.bodyLine.2.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "It starts with the Athlete Analysis, where you walk out with your athlete's real sprint and jump numbers measured on the same gates we use every session.",
+      "chars": 153,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyPara.3": {
+      "id": "ad-1.bodyPara.3",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Then the guarantee. +1 mph speed. +3\" vertical. 90 days. Or your training is on us.",
+      "chars": 83,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.3.1": {
+      "id": "ad-1.bodyLine.3.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Then the guarantee.",
+      "chars": 19,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.3.2": {
+      "id": "ad-1.bodyLine.3.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+1 mph speed.",
+      "chars": 13,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.3.3": {
+      "id": "ad-1.bodyLine.3.3",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "+3\" vertical.",
+      "chars": 13,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.3.4": {
+      "id": "ad-1.bodyLine.3.4",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "90 days.",
+      "chars": 8,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.3.5": {
+      "id": "ad-1.bodyLine.3.5",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Or your training is on us.",
+      "chars": 26,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyPara.4": {
+      "id": "ad-1.bodyPara.4",
+      "kind": "bodyPara",
+      "role": null,
+      "text": "Free Athlete Analysis. Book your spot.",
+      "chars": 38,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.4.1": {
+      "id": "ad-1.bodyLine.4.1",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Free Athlete Analysis.",
+      "chars": 22,
+      "ad": "AD 1"
+    },
+    "ad-1.bodyLine.4.2": {
+      "id": "ad-1.bodyLine.4.2",
+      "kind": "bodyLine",
+      "role": null,
+      "text": "Book your spot.",
+      "chars": 15,
+      "ad": "AD 1"
+    },
+    "ad-1.altHook.1": {
+      "id": "ad-1.altHook.1",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Your kid trains hard. Why are they still the same speed?",
+      "chars": 56,
+      "ad": "AD 1",
+      "archetype": "Paradox",
+      "code": null
+    },
+    "ad-1.altHook.2": {
+      "id": "ad-1.altHook.2",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "The last rep is the one making your athlete slower.",
+      "chars": 51,
+      "ad": "AD 1",
+      "archetype": "Warning",
+      "code": null
+    },
+    "ad-1.altHook.3": {
+      "id": "ad-1.altHook.3",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Six months of hard work. Same forty time.",
+      "chars": 41,
+      "ad": "AD 1",
+      "archetype": "Verdict",
+      "code": null
+    },
+    "ad-1.altHook.4": {
+      "id": "ad-1.altHook.4",
+      "kind": "altHook",
+      "role": "hook",
+      "text": "Working hard, still not faster?",
+      "chars": 31,
+      "ad": "AD 1",
+      "archetype": "Question",
+      "code": null
+    },
+    "ad-1.imageHeadline": {
+      "id": "ad-1.imageHeadline",
+      "kind": "imageHeadline",
+      "role": "hook",
+      "text": "Getting faster, or just getting more tired?",
+      "chars": 43,
+      "ad": "AD 1"
+    }
+  }
+}

@@ -2,11 +2,19 @@
   "width": 1080,
   "height": 1920,
   "media": {
-    "path": "./assets/clip.mp4",
+    "path": "./assets/swap-brand-action-clip-box-jump-high-school-male-batti-performance-az-m-c54e9234.mp4",
     "tag": "bg_media",
     "z": 0,
-    "clipStart": 0,
-    "clipEnd": 4
+    "clipStart": 5.72,
+    "clipEnd": 6.71,
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1,
+    "krakenId": "c54e9234-0184-49b0-9a07-96c4a1a4b07a",
+    "krakenUrl": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/stories/177b3e02-f272-43c1-99fd-2b8ee4535889/1780801392563-18123783376636974.mp4",
+    "audio": true,
+    "loop": true,
+    "loopSeconds": 12
   },
   "fixedDesign": [
     {
@@ -18,6 +26,17 @@
       "height": 1920,
       "fill": "linear-gradient(180deg, rgba(10,11,13,0.45) 0%, rgba(10,11,13,0.25) 45%, rgba(10,11,13,0.88) 100%)",
       "z": 1
+    },
+    {
+      "id": "arrow-avh43",
+      "type": "arrow",
+      "x1": 875,
+      "y1": 1451,
+      "x2": 341,
+      "y2": 952,
+      "stroke": "#ffd400",
+      "strokeWidth": 12,
+      "z": 22
     }
   ],
   "elements": [
@@ -54,5 +73,12 @@
       "textTransform": "uppercase",
       "z": 21
     }
-  ]
+  ],
+  "audio": {
+    "src": "music-library/dark-star.mp3",
+    "startAt": 8.41,
+    "volume": 0.85,
+    "fadeIn": 1,
+    "fadeOut": 1.5
+  }
 }

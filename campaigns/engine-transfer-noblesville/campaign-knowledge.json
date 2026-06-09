@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "campaign": "engine-transfer-noblesville",
+  "brand": "athletes-acceleration",
+  "generatedFrom": ["ad-copy.md"],
+  "notes": "Ad-copy-only campaign (no reverse brief, no microscripts). Single angle: transfer skepticism / 'the engine under every sport' (Topic 32). QA FLAG: the in-body guarantee here ('+1 mph. +3 inches. 90 days. Or we keep training them free.') is a PARAPHRASE of the canonical brand-verbatim guarantee. NEVER place the paraphrase on a creative — any on-creative guarantee comes only from the auto-locked guarantee role (canonical string).",
+  "assertions": {
+    "01-audience": "OK (4)",
+    "02-mechanism": "OK (10)",
+    "03-offer-ip": "OK (7)",
+    "04-hooks": "OK (9)",
+    "05-proof": "OK (5)",
+    "06-image-direction": "OK (7)",
+    "07-voice-guardrails": "OK (6)"
+  },
+  "fragments": {
+    "01-audience": {
+      "key": "01-audience",
+      "sections": ["Audience / target market"],
+      "sourceFile": "campaigns/engine-transfer-noblesville/ad-copy.md",
+      "items": [
+        {"id":"aud-avatar-skeptic","type":"avatar","text":"The logical skeptic, doubts the transfer from general training to sport performance","sourceLines":"L8","notes":"Primary avatar / pain state; repeated across all blocks"},
+        {"id":"aud-avatar-parent","type":"avatar","text":"A fair question stops a lot of parents before they book: how does getting faster in a gym make my kid better at their actual sport?","sourceLines":"L16","notes":"Parent-of-youth-athlete buyer; objection framed as a fair question"},
+        {"id":"aud-temp","type":"temperature","text":"Audience temperature: Mixed (Cold + Warm)","sourceLines":"L8","notes":"Same across all 5 blocks; Campaign type: Conversion"},
+        {"id":"aud-note-objection-handling","type":"note","text":"Ad type: Mechanism (objection-handling)","sourceLines":"L8","notes":"All blocks Mechanism; A versions objection-handling, B versions plain Mechanism"}
+      ]
+    },
+    "02-mechanism": {
+      "key": "02-mechanism",
+      "sections": ["The core argument"],
+      "sourceFile": "campaigns/engine-transfer-noblesville/ad-copy.md",
+      "items": [
+        {"id":"mech-core","type":"note","text":"Sport skill sits on top of athleticism; force, speed, and power are the engine every position runs on","sourceLines":"L8","notes":"Stated mechanism header; echoed across blocks"},
+        {"id":"mech-engine-rides","type":"note","text":"Every sport skill rides on top of one engine, how much force a kid puts into the ground, how fast, how explosively. A great swing or a sharp cut still has to be powered by something.","sourceLines":"L18","notes":"Core mechanism prose"},
+        {"id":"mech-car-paint","type":"note","text":"Think of your athlete like a car. The sport-specific drills... that's the paint job and the trim. It matters. But none of it moves the car.","sourceLines":"L54","notes":"Engine/paint intuition pump (constructed framing device, NOT brand IP)"},
+        {"id":"mech-engine-is-athletic","type":"note","text":"The engine is the athletic part. How much force the kid puts into the ground, how fast, how explosively.","sourceLines":"L56","notes":"Engine = athletic part definition"},
+        {"id":"mech-paint-only","type":"note","text":"Most families spend everything on paint and never touch the engine.","sourceLines":"L58","notes":"Neglected-engine claim; Medium B: 'The mechanics were never the problem. The engine was.'"},
+        {"id":"mech-translation-chain","type":"note","text":"A bigger engine is a first step that beats the defender to the ball, which turns into more plays made, until the kid who used to get there a beat late is the one arriving first.","sourceLines":"L20","notes":"Translation chain (short)"},
+        {"id":"mech-translation-chain-full","type":"note","text":"first step that beats the defender to the ball, which turns into more plays made every game, which becomes the kind of tape a coach stops to watch, until the kid... is the one getting there first.","sourceLines":"L98","notes":"Full translation chain incl. 'tape' link"},
+        {"id":"mech-weak-engine-loses","type":"note","text":"A perfectly coached skill on top of a weak engine still loses the race to the ball... the skill got sharper but the engine never changed.","sourceLines":"L94","notes":"Why sport-specific work doesn't transfer"},
+        {"id":"mech-two-jobs","type":"note","text":"You can't coach a kid into more force production with a clipboard, the same way you can't paint a car into going faster. Those are two different jobs, and almost nobody is doing the second one.","sourceLines":"L182","notes":"Long A — reconciles skill coaching vs engine building"},
+        {"id":"mech-not-knock","type":"note","text":"This isn't a knock on skill coaching, by the way. Skill work matters, and a kid needs it.","sourceLines":"L182","notes":"Tone guard — concession beat"}
+      ]
+    },
+    "03-offer-ip": {
+      "key": "03-offer-ip",
+      "sections": ["Offer + named brand IP"],
+      "sourceFile": "campaigns/engine-transfer-noblesville/ad-copy.md",
+      "items": [
+        {"id":"ip-msfp","type":"note","text":"Multi-Sport Foundation Program","sourceLines":"L20","notes":"Named program / core offer"},
+        {"id":"ip-athlete-analysis","type":"note","text":"The first step in is the Athlete Analysis... you walk out with their real sprint and jump numbers.","sourceLines":"L22","notes":"Named entry offer / front door"},
+        {"id":"ip-velocity-code","type":"note","text":"It runs on The Velocity Code, and every session we build the real, measured speed and power that sits underneath every sport.","sourceLines":"L184","notes":"Named methodology IP (The Velocity Code, Long A only)"},
+        {"id":"ip-dashr-gymaware","type":"note","text":"the same Dashr timing gates and GymAware velocity trackers the NFL uses","sourceLines":"L190","notes":"Named equipment IP: Dashr, GymAware (Long A only)"},
+        {"id":"ip-guarantee-paraphrase","type":"note","text":"+1 mph. +3 inches. 90 days. Or we keep training them free.","sourceLines":"L24","notes":"PARAPHRASE in body copy. Canonical on-creative guarantee = '+1 mph speed. +3\" vertical. 90 days. Or your training is on us.' Do NOT place this paraphrase on a creative."},
+        {"id":"ip-cta","type":"note","text":"Tap below to book the Athlete Analysis at {{location.name}}.","sourceLines":"L26","notes":"CTA, every block; merge token kept verbatim"},
+        {"id":"ip-signoff","type":"note","text":"To your athlete's success, Coach {{user.first_name}}","sourceLines":"L198","notes":"Sign-off (Long A only)"}
+      ]
+    },
+    "04-hooks": {
+      "key": "04-hooks",
+      "sections": ["Hooks + headlines"],
+      "sourceFile": "campaigns/engine-transfer-noblesville/ad-copy.md",
+      "items": [
+        {"id":"hook-A-1","type":"note","text":"Speed and power are the engine. Every sport skill runs on it.","sourceLines":"L32","notes":"Archetype: Mechanism (Consequence family)"},
+        {"id":"hook-A-2","type":"note","text":"A great swing still has to be powered by something.","sourceLines":"L33","notes":"Archetype: Paradox"},
+        {"id":"hook-A-3","type":"note","text":"You can't out-skill a slow engine. Here's why.","sourceLines":"L34","notes":"Archetype: Warning"},
+        {"id":"hook-B-1","type":"note","text":"Sport drills are the paint job. Athleticism is the engine.","sourceLines":"L70","notes":"Archetype: Mechanism (Curiosity/paint family)"},
+        {"id":"hook-B-2","type":"note","text":"Most families spend everything on the paint and never touch the engine.","sourceLines":"L71","notes":"Archetype: Paradox"},
+        {"id":"hook-B-3","type":"note","text":"You can coach the swing all you want. Something still has to power it.","sourceLines":"L72","notes":"Archetype: Oracle"},
+        {"id":"hl-engine-under","type":"note","text":"The Engine Under Every Sport","sourceLines":"L10","notes":"A-version ad headline"},
+        {"id":"hl-engine-not-paint","type":"note","text":"The Engine, Not The Paint","sourceLines":"L48","notes":"B-version ad headline"},
+        {"id":"desc-built-measured","type":"note","text":"Built, then measured.","sourceLines":"L10","notes":"Ad description, every block"}
+      ]
+    },
+    "05-proof": {
+      "key": "05-proof",
+      "sections": ["Proof"],
+      "sourceFile": "campaigns/engine-transfer-noblesville/ad-copy.md",
+      "items": [
+        {"id":"proof-d2-mom","type":"note","text":"One mom shared that her son built himself up with us the right way, and that the strength and speed carried all the way to a D2 college scholarship.","sourceLines":"L100","notes":"'One mom' D2 story; attributed to 'one mom' (no name in copy)"},
+        {"id":"proof-graham","type":"note","text":"Coach Graham Wilkerson built this. He's a CSCS, the same credential D1 and NFL strength coaches carry.","sourceLines":"L192","notes":"Founder credibility (Long A only)"},
+        {"id":"proof-nfl-athletes","type":"note","text":"he trained NFL athletes Zack Martin, Ted Karras, and Nick Martin","sourceLines":"L192","notes":"NFL client proof (Long A only)"},
+        {"id":"proof-baseline-numbers","type":"note","text":"you walk out with their real sprint and jump numbers. Not a tryout. A data set.","sourceLines":"L22","notes":"Athlete Analysis baseline as proof"},
+        {"id":"proof-nfl-equipment","type":"note","text":"the same Dashr timing gates and GymAware velocity trackers the NFL uses","sourceLines":"L190","notes":"Equipment-as-proof (NFL-grade)"}
+      ]
+    },
+    "06-image-direction": {
+      "key": "06-image-direction",
+      "sections": ["Image direction"],
+      "sourceFile": "campaigns/engine-transfer-noblesville/ad-copy.md",
+      "items": [
+        {"id":"img-A-short","type":"note","text":"Split or composite, one athlete shown in three different sports (sprinting, jumping, cutting) with the same timing gate / velocity readout tying them together. Real facility.","sourceLines":"L40","notes":"Short A image concept — one engine, many sports"},
+        {"id":"img-B-short","type":"note","text":"Same multi-sport composite with the velocity readout, or a clean visual metaphor of an engine under a hood. Real facility imagery preferred over literal car art.","sourceLines":"L78","notes":"Short B image concept"},
+        {"id":"img-A-medium","type":"note","text":"Multi-sport composite with the shared velocity readout. Same creative family as Version A short.","sourceLines":"L120","notes":"Medium A image concept"},
+        {"id":"img-B-medium","type":"note","text":"Multi-sport composite with shared velocity readout, or clean engine-under-hood metaphor.","sourceLines":"L162","notes":"Medium B image concept"},
+        {"id":"img-A-long","type":"note","text":"Multi-sport composite with shared velocity readout. Same creative family across the angle.","sourceLines":"L212","notes":"Long A image concept"},
+        {"id":"img-onimage-headline","type":"note","text":"How Training Transfers to Every Sport","sourceLines":"L41","notes":"On-image headline, identical across all 5 blocks"},
+        {"id":"img-onimage-subhead","type":"note","text":"(The Part No One Explains)","sourceLines":"L42","notes":"On-image sub-headline, identical across all 5 blocks"}
+      ]
+    },
+    "07-voice-guardrails": {
+      "key": "07-voice-guardrails",
+      "sections": ["Voice"],
+      "sourceFile": "campaigns/engine-transfer-noblesville/ad-copy.md",
+      "items": [
+        {"id":"voice-signature","type":"note","text":"Not a tryout. A data set.","sourceLines":"L22","notes":"Signature reframe line; every block"},
+        {"id":"voice-declarative","type":"note","text":"Train the engine and you don't make them better at one drill. You make them better at every move the sport asks for.","sourceLines":"L18","notes":"Declarative, short, head-coach-to-parent; no emoji, no exclamation"},
+        {"id":"voice-honest-answer","type":"note","text":"Here's the honest answer.","sourceLines":"L18","notes":"Plain-spoken, level-with-the-parent register"},
+        {"id":"voice-guarantee-verbatim","type":"note","text":"Canonical on-creative guarantee = +1 mph speed. +3\" vertical. 90 days. Or your training is on us.","sourceLines":"L24","notes":"Body copy paraphrases it; on-creative must use canonical via locked guarantee role"},
+        {"id":"voice-metric-driven","type":"note","text":"real sprint time, real jump height, and a clear picture of where they stand","sourceLines":"L190","notes":"Metric-driven; numbers over adjectives"},
+        {"id":"voice-no-hype","type":"note","text":"This isn't a knock on skill coaching, by the way. Skill work matters, and a kid needs it.","sourceLines":"L182","notes":"Non-salesy, fair-minded; concedes rather than oversells"}
+      ]
+    }
+  }
+}

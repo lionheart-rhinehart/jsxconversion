@@ -1,0 +1,122 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "brand/kraken-cache/engine-transfer-noblesville/athletes-acceleration-action-clip-squat-middle-school-male-athletes-acceleration-n-25d6103c.mp4",
+    "tag": "bg_media",
+    "x": 0,
+    "y": 0,
+    "width": 1080,
+    "height": 864,
+    "z": 0,
+    "videoStartTime": 1
+  },
+  "fixedDesign": [
+    {
+      "id": "ink_panel",
+      "tag": "ink_panel",
+      "type": "rect",
+      "x": 0,
+      "y": 864,
+      "width": 1080,
+      "height": 1056,
+      "fill": "#0a0b0d",
+      "z": 5
+    },
+    {
+      "id": "media_scrim",
+      "tag": "media_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 864,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.45) 0%, rgba(10,11,13,0.0) 28%, rgba(10,11,13,0.0) 62%, rgba(10,11,13,0.55) 100%)",
+      "z": 4
+    },
+    {
+      "id": "seam_rule",
+      "tag": "seam_rule",
+      "type": "rect",
+      "x": 0,
+      "y": 858,
+      "width": 1080,
+      "height": 12,
+      "fill": "#c4141d",
+      "z": 6
+    },
+    {
+      "id": "accent_bar",
+      "tag": "accent_bar",
+      "type": "rect",
+      "x": 80,
+      "y": 1140,
+      "width": 140,
+      "height": 12,
+      "fill": "#c4141d",
+      "z": 7
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor (auto-filled)",
+      "x": 80,
+      "y": 980,
+      "textAlign": "left",
+      "text": "NOBLESVILLE SPORT PARENTS",
+      "fontSize": 30,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 600,
+      "color": "#ffffff",
+      "letterSpacing": "0.18em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": ["eyebrow", "proof"],
+      "maxChars": 34
+    },
+    {
+      "id": "hook",
+      "tag": "hook",
+      "label": "Reframe headline (engine vs paint)",
+      "x": 80,
+      "y": 1190,
+      "width": 920,
+      "textAlign": "left",
+      "text": "THE ENGINE, NOT THE PAINT",
+      "fontSize": 132,
+      "fontFamily": "Anton",
+      "fontWeight": 400,
+      "color": "#ffffff",
+      "lineHeight": 0.94,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "z": 21,
+      "role": "hook",
+      "accepts": ["hook", "reframe", "claim"],
+      "maxChars": 40
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark",
+      "x": 80,
+      "y": 1780,
+      "width": 920,
+      "textAlign": "left",
+      "text": "ATHLETES ACCELERATION",
+      "fontSize": 30,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 600,
+      "color": "#ffffff",
+      "letterSpacing": "0.2em",
+      "textTransform": "uppercase",
+      "z": 25,
+      "role": "brand",
+      "accepts": ["brand"],
+      "maxChars": 26
+    }
+  ]
+}

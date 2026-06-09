@@ -1,0 +1,119 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/bg-athletes-acceleration-action-clip-agility-drill-high-school-male-athletes-accelera-253bb2ad.mp4",
+    "tag": "bg_media",
+    "z": 0,
+    "videoStartTime": 1
+  },
+  "fixedDesign": [
+    {
+      "id": "_bg_scrim",
+      "tag": "_bg_scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.66) 0%, rgba(10,11,13,0.54) 45%, rgba(10,11,13,0.90) 100%)",
+      "z": 1
+    },
+    {
+      "id": "scrim",
+      "tag": "scrim",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,11,13,0.55) 0%, rgba(10,11,13,0.05) 30%, rgba(10,11,13,0.15) 55%, rgba(10,11,13,0.85) 100%)",
+      "z": 5
+    },
+    {
+      "id": "accent_bar",
+      "tag": "accent_bar",
+      "type": "rect",
+      "x": 80,
+      "y": 1270,
+      "width": 140,
+      "height": 12,
+      "fill": "#c4141d",
+      "z": 6
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor (auto-filled)",
+      "x": 80,
+      "y": 130,
+      "textAlign": "left",
+      "text": "NOBLESVILLE SPORT PARENTS",
+      "fontSize": 30,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 600,
+      "color": "#ffffff",
+      "letterSpacing": "0.18em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 10px rgba(0,0,0,0.85)",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 34
+    },
+    {
+      "id": "hook",
+      "tag": "hook",
+      "label": "Cold-open hook",
+      "x": 80,
+      "y": 1310,
+      "width": 920,
+      "textAlign": "left",
+      "text": "You can coach the swing all you want. Something still has to power it.",
+      "fontSize": 92,
+      "fontFamily": "Anton",
+      "fontWeight": 400,
+      "color": "#ffffff",
+      "lineHeight": 0.98,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "textShadow": "0 3px 16px rgba(0,0,0,0.9)",
+      "z": 21,
+      "role": "hook",
+      "accepts": [
+        "hook",
+        "claim",
+        "reframe"
+      ],
+      "maxChars": 90
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark",
+      "x": 80,
+      "y": 1760,
+      "width": 920,
+      "textAlign": "left",
+      "text": "ATHLETES ACCELERATION",
+      "fontSize": 30,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 600,
+      "color": "#ffffff",
+      "letterSpacing": "0.2em",
+      "textTransform": "uppercase",
+      "textShadow": "0 2px 10px rgba(0,0,0,0.85)",
+      "z": 25,
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 26
+    }
+  ]
+}

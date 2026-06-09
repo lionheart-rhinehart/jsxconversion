@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "campaign": "isp-ad-series-1",
+  "brand": "ideal-sports-performance",
+  "knobs": {
+    "assetsPerAngle": 6,
+    "motionRatio": {
+      "video": 0.34,
+      "gif": 0.33,
+      "static": 0.33
+    },
+    "freshnessFloor": 1,
+    "repetitionCap": 1
+  },
+  "_planNotes": "ISP Baseball — Ad Copy Series #1 (single review-page angle). 6 creatives built FROM SCRATCH (every asset source:fresh; one unique archetype + one unique template each). 2 video / 2 gif / 2 static, two per ad mechanism (velocity plateau / velo-vs-arm-safety / proof flip). Copy bound verbatim by reference to copy-library.json. 4 assets carry distinct fresh Kraken clips (action-hero / ugc-selfie / split-panel / training-scene); 2 are graphics (quote-card / count-up-stats). Archetypes role-fit to example slot capacities. Eyebrow auto-anchors FORT WORTH SPORT PARENTS from the fort-worth tier. ISP has no guarantee; offer of record is the free first session.",
+  "angles": [
+    {
+      "id": "ad-series-1",
+      "name": "Baseball Performance — Ad Series #1",
+      "location": "fort-worth",
+      "mechanism": "Three rotated arguments for one offer: (1) the velocity plateau is a measurement problem, not an effort problem; (2) velocity and arm safety share one root cause — movement efficiency; (3) 100+ draft picks come from a repeatable process, not a talent collection.",
+      "emotionalJob": "Lift blame, dissolve the false velo-vs-safety choice, and make the proof feel like evidence of an accessible system — then drive to the free first session.",
+      "voice": "Head-coach-to-parent, declarative, metric-driven. No emoji, no exclamation points.",
+      "assets": [
+        {
+          "id": "A1",
+          "beat": "A — Cold hook",
+          "temperature": "cold",
+          "format": "video",
+          "source": "fresh",
+          "archetype": "action-hero",
+          "clip": "brand/kraken-cache/isp-ad-series-1/brand-action-clip-baseball-pitching-high-school-male-isp-zach-deca-0ede5403.mp4",
+          "copyRefs": {
+            "hook": "ad-1-short.imageHeadline"
+          },
+          "template": "fresh-isp-ad-series-1-A1",
+          "flags": [],
+          "status": "rendered",
+          "exampleId": "ex-056-action-hero",
+          "output": "out/campaigns/isp-ad-series-1/ad-series-1/A1.mp4",
+          "thumb": "out/campaigns/isp-ad-series-1/ad-series-1/A1.mp4",
+          "renderedAt": "2026-06-08T17:34:41.424Z"
+        },
+        {
+          "id": "A2",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "static",
+          "source": "fresh",
+          "archetype": "quote-card",
+          "copyRefs": {
+            "testimonial": "ad-1-short.altHook.3"
+          },
+          "template": "fresh-isp-ad-series-1-A2",
+          "flags": [],
+          "status": "rendered",
+          "exampleId": "ex-012-quote-card",
+          "output": "out/campaigns/isp-ad-series-1/ad-series-1/A2.png",
+          "thumb": "out/campaigns/isp-ad-series-1/ad-series-1/A2.png",
+          "renderedAt": "2026-06-08T17:35:00.206Z"
+        },
+        {
+          "id": "B1",
+          "beat": "B — Reframe",
+          "temperature": "cold",
+          "format": "static",
+          "source": "fresh",
+          "archetype": "ugc-selfie",
+          "clip": "brand/kraken-cache/isp-ad-series-1/brand-talking-head-speaking-high-school-male-isp-zach-decant-86a3f8d0.mp4",
+          "copyRefs": {
+            "hook": "ad-2-short.imageHeadline"
+          },
+          "template": "fresh-isp-ad-series-1-B1",
+          "flags": [],
+          "status": "rendered",
+          "exampleId": "ex-035-ugc-selfie",
+          "output": "out/campaigns/isp-ad-series-1/ad-series-1/B1.png",
+          "thumb": "out/campaigns/isp-ad-series-1/ad-series-1/B1.png",
+          "renderedAt": "2026-06-08T17:35:11.924Z"
+        },
+        {
+          "id": "B2",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "gif",
+          "source": "fresh",
+          "archetype": "split-panel",
+          "clip": "brand/kraken-cache/isp-ad-series-1/brand-action-clip-baseball-throwing-high-school-male-isp-zach-deca-65b4398c.mp4",
+          "copyRefs": {
+            "hook": "ad-2-short.altHook.1"
+          },
+          "template": "fresh-isp-ad-series-1-B2",
+          "flags": [],
+          "status": "rendered",
+          "exampleId": "ex-054-coach-portrait",
+          "output": "out/campaigns/isp-ad-series-1/ad-series-1/B2.gif",
+          "thumb": "out/campaigns/isp-ad-series-1/ad-series-1/B2.gif",
+          "renderedAt": "2026-06-08T17:36:20.046Z"
+        },
+        {
+          "id": "C1",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "video",
+          "source": "fresh",
+          "archetype": "count-up-stats",
+          "copyRefs": {
+            "hook": "ad-3-short.imageHeadline"
+          },
+          "template": "fresh-isp-ad-series-1-C1",
+          "flags": [],
+          "status": "rendered",
+          "exampleId": "ex-091-count-up-stats",
+          "output": "out/campaigns/isp-ad-series-1/ad-series-1/C1.mp4",
+          "thumb": "out/campaigns/isp-ad-series-1/ad-series-1/C1.mp4",
+          "renderedAt": "2026-06-08T17:37:09.639Z"
+        },
+        {
+          "id": "C2",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "gif",
+          "source": "fresh",
+          "archetype": "training-scene",
+          "clip": "brand/kraken-cache/isp-ad-series-1/brand-action-clip-multi-sport-training-high-school-male-isp-zach-d-348b50a8.mp4",
+          "copyRefs": {
+            "claim": "ad-3-short.altHook.2"
+          },
+          "template": "fresh-isp-ad-series-1-C2",
+          "flags": [],
+          "status": "rendered",
+          "exampleId": "ex-057-training-scene",
+          "output": "out/campaigns/isp-ad-series-1/ad-series-1/C2.gif",
+          "thumb": "out/campaigns/isp-ad-series-1/ad-series-1/C2.gif",
+          "renderedAt": "2026-06-08T17:38:09.678Z"
+        }
+      ]
+    }
+  ]
+}

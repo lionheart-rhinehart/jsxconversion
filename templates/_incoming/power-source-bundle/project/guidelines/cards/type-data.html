@@ -1,0 +1,36 @@
+<!-- @dsCard group="Type" viewport="700x200" name="Data & Stats" subtitle="Space Mono labels + condensed stat numerals" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../../styles.css" />
+<style>
+  body { background: var(--ink-950); padding: 24px; display: flex; align-items: center; gap: 36px; }
+  .stat { text-align: left; }
+  .num { font-family: var(--font-display); font-weight: 900; font-size: 62px; line-height: 1; color: var(--text-strong); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+  .num .u { color: var(--bolt-400); font-size: 32px; vertical-align: super; }
+  .eyebrow { font-family: var(--font-mono); font-weight: 700; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--electric-300); margin-bottom: 8px; }
+  .cap { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+  .divider { width: 1px; align-self: stretch; background: var(--border-subtle); }
+</style>
+</head>
+<body>
+  <div class="stat">
+    <div class="eyebrow">40-yd dash</div>
+    <div class="num">−0.34<span class="u">s</span></div>
+    <div class="cap">avg improvement / 12 wks</div>
+  </div>
+  <div class="divider"></div>
+  <div class="stat">
+    <div class="eyebrow">Vertical</div>
+    <div class="num">+4.2<span class="u">in</span></div>
+    <div class="cap">measured · tracked · proven</div>
+  </div>
+  <div class="divider"></div>
+  <div class="stat">
+    <div class="eyebrow">Since</div>
+    <div class="num">1998</div>
+    <div class="cap">est. Leominster, MA</div>
+  </div>
+</body>
+</html>

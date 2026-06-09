@@ -1,0 +1,133 @@
+/* ============================================================
+   POWER SOURCE — Color tokens
+   Brand palette (from the official swatch set):
+     #ffffff  white      #e1cc42  bolt yellow
+     #2c97c9  electric    #31456e  steel navy
+     #010101  black
+   ============================================================ */
+
+:root {
+  /* ---------- Brand anchors ---------- */
+  --white: #ffffff;
+  --bolt: #e1cc42;   /* lightning-bolt yellow */
+  --electric: #2c97c9; /* signal blue */
+  --steel: #31456e;  /* navy */
+  --black: #010101;
+
+  /* ---------- Bolt (yellow) scale ---------- */
+  --bolt-50:  #fbf7e3;
+  --bolt-100: #f5ecbf;
+  --bolt-200: #efe199;
+  --bolt-300: #e9d76e;
+  --bolt-400: #e1cc42; /* base */
+  --bolt-500: #cbb432;
+  --bolt-600: #a8942a;
+  --bolt-700: #7e6f20;
+  --bolt-800: #554a16;
+  --bolt-900: #2e280c;
+
+  /* ---------- Electric (blue) scale ---------- */
+  --electric-50:  #e7f3fa;
+  --electric-100: #c2e0f2;
+  --electric-200: #98cbe9;
+  --electric-300: #66b3de;
+  --electric-400: #2c97c9; /* base */
+  --electric-500: #2484b2;
+  --electric-600: #1d6c92;
+  --electric-700: #16526f;
+  --electric-800: #0f394d;
+  --electric-900: #082029;
+
+  /* ---------- Steel (navy) scale ---------- */
+  --steel-50:  #eceff4;
+  --steel-100: #cdd4e1;
+  --steel-200: #a9b4ca;
+  --steel-300: #7e8db0;
+  --steel-400: #556894;
+  --steel-500: #31456e; /* base */
+  --steel-600: #293a5d;
+  --steel-700: #1f2c47;
+  --steel-800: #161f33;
+  --steel-900: #0c1220;
+
+  /* ---------- Ink (near-black neutrals, navy-tinted) ---------- */
+  --ink-950: #050608;
+  --ink-900: #0a0d12;
+  --ink-850: #11151c;
+  --ink-800: #181d26;
+  --ink-700: #232a36;
+  --ink-600: #323a49;
+  --ink-500: #4b5566;
+}
+
+:root {
+  /* ---------- Cool gray neutrals (light UI) ---------- */
+  --gray-50:  #f6f7f9;
+  --gray-100: #eceef2;
+  --gray-200: #dde1e8;
+  --gray-300: #c4cad6;
+  --gray-400: #99a2b3;
+  --gray-500: #6b7589;
+  --gray-600: #4d5668;
+  --gray-700: #39414f;
+  --gray-800: #262c37;
+  --gray-900: #161a21;
+
+  /* ---------- Semantic status ---------- */
+  --success: #3fae6b;
+  --success-soft: #e3f4ea;
+  --warning: #e1cc42;
+  --warning-soft: #fbf3cf;
+  --danger:  #d9483f;
+  --danger-soft: #fbe5e3;
+  --info:    #2c97c9;
+  --info-soft: #e1f0f9;
+
+  /* ============================================================
+     SEMANTIC ALIASES  (use these in components)
+     ============================================================ */
+
+  /* Surfaces — DARK is the brand's home turf */
+  --surface-base: var(--ink-950);      /* page background (dark) */
+  --surface-raised: var(--ink-850);    /* cards on dark */
+  --surface-overlay: var(--ink-800);   /* popovers, menus */
+  --surface-steel: var(--steel-700);   /* navy panels */
+  --surface-invert: var(--white);      /* light sections */
+  --surface-muted: var(--gray-50);     /* light section bg */
+
+  /* Text */
+  --text-strong: var(--white);         /* on dark */
+  --text-body: #c9d0db;                /* on dark, softened */
+  --text-muted: #8a93a3;               /* on dark, secondary */
+  --text-on-light: var(--ink-900);     /* on light surfaces */
+  --text-on-light-muted: var(--gray-600);
+  --text-accent: var(--bolt-400);
+  --text-link: var(--electric-300);
+
+  /* Brand actions */
+  --action-primary: var(--electric-400);
+  --action-primary-hover: var(--electric-300);
+  --action-primary-press: var(--electric-500);
+  --action-primary-text: var(--white);
+
+  --action-bolt: var(--bolt-400);
+  --action-bolt-hover: var(--bolt-300);
+  --action-bolt-press: var(--bolt-500);
+  --action-bolt-text: var(--ink-950);  /* dark text on yellow */
+
+  --action-ghost-text: var(--white);
+  --action-ghost-border: rgba(255, 255, 255, 0.18);
+  --action-ghost-hover: rgba(255, 255, 255, 0.08);
+
+  /* Borders & lines */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-default: rgba(255, 255, 255, 0.14);
+  --border-strong: rgba(255, 255, 255, 0.28);
+  --border-on-light: var(--gray-200);
+  --border-focus: var(--electric-400);
+
+  /* Accent / highlight */
+  --accent: var(--bolt-400);
+  --accent-ring: rgba(225, 204, 66, 0.45);
+  --focus-ring: rgba(44, 151, 201, 0.55);
+}

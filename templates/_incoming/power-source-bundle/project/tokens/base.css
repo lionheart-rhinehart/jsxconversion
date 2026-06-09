@@ -1,0 +1,70 @@
+/* ============================================================
+   POWER SOURCE — Base layer
+   Light reset + element defaults wired to tokens.
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text-body);
+  background: var(--surface-base);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: var(--font-heading);
+  line-height: var(--lh-heading);
+  color: var(--text-strong);
+  font-weight: var(--fw-bold);
+}
+
+p { margin: 0; }
+
+a {
+  color: var(--text-link);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+img, svg, video { display: block; max-width: 100%; }
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+  border-radius: var(--radius-sm);
+}
+
+::selection {
+  background: var(--bolt-400);
+  color: var(--ink-950);
+}
+
+/* Headline helper: the Power Source house headline */
+.ps-headline {
+  font-family: var(--font-display);
+  font-weight: var(--fw-extrabold);
+  text-transform: uppercase;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-display);
+  color: var(--text-strong);
+}

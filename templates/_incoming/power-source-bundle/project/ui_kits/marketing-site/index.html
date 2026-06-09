@@ -1,0 +1,187 @@
+<!-- @dsCard group="Marketing Site" viewport="1280x880" name="Homepage" subtitle="Power Source marketing homepage — hero, programs, proof, reviews, CTA" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Power Source — Athlete Training, Leominster MA</title>
+<link rel="stylesheet" href="../../styles.css" />
+<style>
+  body { background: var(--surface-base); }
+  .mk-container { max-width: var(--container-max); margin: 0 auto; padding-inline: var(--container-pad); }
+
+  /* Header */
+  .mk-header { position: sticky; top: 0; z-index: var(--z-sticky); background: rgba(5,6,8,.72); backdrop-filter: blur(14px); border-bottom: 1px solid transparent; transition: border-color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out); }
+  .mk-header.is-scrolled { border-bottom-color: var(--border-subtle); background: rgba(5,6,8,.92); }
+  .mk-header__row { display: flex; align-items: center; gap: 28px; height: 76px; }
+  .mk-logo img { height: 34px; width: auto; }
+  .mk-nav { display: flex; gap: 26px; margin-left: 8px; }
+  .mk-nav a { font-family: var(--font-heading); font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: .04em; color: var(--text-body); }
+  .mk-nav a:hover { color: var(--text-strong); text-decoration: none; }
+  .mk-header__right { margin-left: auto; display: flex; align-items: center; gap: 18px; }
+  .mk-phone { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 13px; color: var(--text-body); white-space: nowrap; }
+  .mk-phone svg { width: 15px; height: 15px; }
+
+  /* Hero */
+  .mk-hero { position: relative; overflow: hidden; padding: clamp(48px,7vw,96px) 0 clamp(56px,7vw,104px); }
+  .mk-hero__bg { position: absolute; inset: 0; background: var(--grad-arena); }
+  .mk-hero__bg::after { content:""; position:absolute; inset:0; background-image: linear-gradient(var(--hairline-grid) 1px, transparent 1px), linear-gradient(90deg, var(--hairline-grid) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(80% 60% at 50% 0, #000 30%, transparent 100%); }
+  .mk-hero__grid { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+  .mk-hero__copy { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
+  .mk-hero__title { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: clamp(48px,7vw,92px); line-height: .88; letter-spacing: -.015em; color: var(--text-strong); }
+  .mk-hero__title .hl { color: var(--bolt-400); }
+  .mk-hero__sub { font-size: clamp(16px,1.4vw,19px); line-height: 1.55; color: var(--text-body); max-width: 46ch; }
+  .mk-hero__cta { display: flex; gap: 14px; flex-wrap: wrap; }
+  .mk-hero__cta svg { width: 18px; height: 18px; }
+  .mk-hero__trust { display: flex; gap: 32px; margin-top: 8px; }
+  .mk-hero__trust div { display: flex; flex-direction: column; }
+  .mk-hero__trust b { font-family: var(--font-display); font-weight: 900; font-size: 34px; line-height: 1; color: var(--text-strong); }
+  .mk-hero__trust span { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
+  .mk-hero__media { position: relative; }
+  .mk-hero__slot { display: block; width: 100%; aspect-ratio: 4/5; box-shadow: var(--shadow-xl); border: 1px solid var(--border-default); }
+  .mk-hero__chip { position: absolute; left: -18px; bottom: 26px; background: var(--surface-steel); border: 1px solid var(--border-default); border-left: var(--bw-3) solid var(--bolt-400); border-radius: var(--radius-md); padding: 14px 18px; max-width: 260px; box-shadow: var(--shadow-lg); }
+  .mk-hero__chip-k { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--bolt-300); margin-bottom: 5px; }
+  .mk-hero__chip-v { font-family: var(--font-heading); font-weight: 600; font-size: 14px; color: #fff; line-height: 1.35; }
+
+  /* Generic section */
+  .mk-section { padding: var(--section-pad-y) 0; }
+  .mk-section .ps-head { margin-bottom: 44px; }
+
+  .mk-programs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .mk-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .mk-reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; }
+
+  .mk-proof { background: linear-gradient(180deg, var(--ink-900), var(--ink-950)); border-block: 1px solid var(--border-subtle); }
+
+  /* Steps */
+  .mk-steps-sec { background: var(--surface-muted); }
+  .mk-steps-sec .ps-head__title { color: var(--ink-900); }
+  .mk-steps-sec .ps-head__title .hl { color: var(--electric-500); }
+  .mk-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .mk-step { position: relative; background: #fff; border: 1px solid var(--border-on-light); border-radius: var(--radius-lg); padding: 28px; box-shadow: var(--shadow-light-md); }
+  .mk-step__n { font-family: var(--font-display); font-weight: 900; font-size: 46px; color: var(--electric-100); line-height: 1; }
+  .mk-step__icon { width: 48px; height: 48px; border-radius: var(--radius-md); background: var(--electric-500); color: #fff; display: flex; align-items: center; justify-content: center; margin: 14px 0 16px; }
+  .mk-step__icon svg { width: 24px; height: 24px; }
+  .mk-step__title { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 22px; color: var(--ink-900); margin-bottom: 8px; }
+  .mk-step__desc { font-size: 14px; color: var(--text-on-light-muted); line-height: 1.55; }
+  .mk-steps__cta { display: flex; justify-content: center; margin-top: 40px; }
+
+  /* Footer */
+  .mk-footer { background: var(--ink-950); border-top: 1px solid var(--border-subtle); padding-top: 56px; }
+  .mk-footer__grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; padding-bottom: 40px; }
+  .mk-footer__logo { height: 46px; }
+  .mk-footer__tag { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; letter-spacing: .01em; color: var(--text-body); margin: 16px 0 18px; font-size: 15px; }
+  .mk-social { display: flex; gap: 12px; }
+  .mk-social a { width: 38px; height: 38px; border-radius: var(--radius-md); border: 1px solid var(--border-default); display: flex; align-items: center; justify-content: center; color: var(--text-body); font-family: var(--font-mono); font-weight: 700; font-size: 12px; letter-spacing: .04em; }
+  .mk-social a:hover { color: var(--bolt-400); border-color: var(--bolt-700); text-decoration: none; }
+  .mk-social svg { width: 18px; height: 18px; }
+  .mk-footer__col { display: flex; flex-direction: column; gap: 10px; }
+  .mk-footer__col h4 { font-family: var(--font-mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+  .mk-footer__col a { font-size: 14px; color: var(--text-body); line-height: 1.5; }
+  .mk-footer__col a:hover { color: var(--text-strong); text-decoration: none; }
+  .mk-footer__bottom { display: flex; justify-content: space-between; padding: 22px 0; margin-top: 8px; border-top: 1px solid var(--border-subtle); font-family: var(--font-mono); font-size: 11px; letter-spacing: .04em; color: var(--text-muted); }
+
+  /* Lead modal */
+  .mk-overlay { position: fixed; inset: 0; z-index: var(--z-modal); background: rgba(5,6,8,.72); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 24px; animation: mk-fade var(--dur-base) var(--ease-out); }
+  @keyframes mk-fade { from { opacity: 0; } }
+  .mk-modal { width: 460px; max-width: 100%; background: var(--ink-850); border: 1px solid var(--border-default); border-top: var(--bw-3) solid var(--bolt-400); border-radius: var(--radius-xl); box-shadow: var(--shadow-xl); padding: 30px; animation: mk-pop var(--dur-slow) var(--ease-snap); }
+  @keyframes mk-pop { from { transform: translateY(14px) scale(.97); opacity: 0; } }
+  .mk-modal__eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--bolt-300); }
+  .mk-modal__title { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 30px; line-height: .95; color: #fff; margin: 8px 0 6px; }
+  .mk-modal__sub { font-size: 14px; color: var(--text-body); margin-bottom: 20px; }
+  .mk-form { display: flex; flex-direction: column; gap: 14px; }
+  .mk-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .mk-modal__close { position: absolute; top: 16px; right: 18px; background: none; border: 0; color: var(--text-muted); font-size: 22px; cursor: pointer; line-height: 1; }
+  .mk-modal__close:hover { color: #fff; }
+  .mk-success { text-align: center; padding: 16px 0 6px; }
+  .mk-success__icon { width: 64px; height: 64px; border-radius: 50%; background: var(--success); color: #fff; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+  .mk-success__icon svg { width: 32px; height: 32px; }
+  .mk-success h3 { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 26px; color: #fff; margin-bottom: 8px; }
+  .mk-success p { font-size: 14px; color: var(--text-body); margin-bottom: 20px; }
+
+  @media (max-width: 920px) {
+    .mk-nav, .mk-phone { display: none; }
+    .mk-hero__grid { grid-template-columns: 1fr; }
+    .mk-hero__media { display: none; }
+    .mk-programs, .mk-stats { grid-template-columns: repeat(2, 1fr); }
+    .mk-reviews, .mk-steps, .mk-footer__grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="image-slot.js"></script>
+<script type="text/babel" src="ui.jsx"></script>
+<script type="text/babel" src="sections.jsx"></script>
+<script type="text/babel">
+  const { useState, useEffect } = React;
+
+  function LeadModal({ onClose }) {
+    const [done, setDone] = useState(false);
+    useEffect(() => { if (window.lucide) window.lucide.createIcons(); }, [done]);
+    return (
+      <div className="mk-overlay" onClick={onClose}>
+        <div className="mk-modal" onClick={(e) => e.stopPropagation()}>
+          <button className="mk-modal__close" onClick={onClose} aria-label="Close">×</button>
+          {done ? (
+            <div className="mk-success">
+              <div className="mk-success__icon"><Icon name="check" /></div>
+              <h3>You're In!</h3>
+              <p>We'll reach out within one business day to schedule your 2 free training sessions. Time to get to work.</p>
+              <Button variant="bolt" fullWidth onClick={onClose}>Done</Button>
+            </div>
+          ) : (
+            <React.Fragment>
+              <span className="mk-modal__eyebrow">2 Free Sessions</span>
+              <h2 className="mk-modal__title">Start Your Training</h2>
+              <p className="mk-modal__sub">Tell us about your athlete and we'll build the right plan. No commitment.</p>
+              <form className="mk-form" onSubmit={(e) => { e.preventDefault(); setDone(true); }}>
+                <div className="mk-form__row">
+                  <Input label="Athlete name" required placeholder="First & last" />
+                  <Input label="Your name" placeholder="Parent / self" />
+                </div>
+                <Input label="Email" required type="email" placeholder="you@email.com" />
+                <Input label="Phone" placeholder="(978) 000-0000" />
+                <Button variant="bolt" fullWidth type="submit" style={{ marginTop: 6 }}>Claim My 2 Free Sessions</Button>
+              </form>
+            </React.Fragment>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  function App() {
+    const [scrolled, setScrolled] = useState(false);
+    const [modal, setModal] = useState(false);
+    useEffect(() => {
+      const onScroll = () => setScrolled(window.scrollY > 12);
+      window.addEventListener("scroll", onScroll); onScroll();
+      return () => window.removeEventListener("scroll", onScroll);
+    }, []);
+    useEffect(() => { if (window.lucide) window.lucide.createIcons(); });
+    const open = () => setModal(true);
+    return (
+      <React.Fragment>
+        <Header onStart={open} scrolled={scrolled} />
+        <main>
+          <Hero onStart={open} />
+          <Programs />
+          <Proof />
+          <Testimonials />
+          <GetStarted onStart={open} />
+        </main>
+        <Footer />
+        {modal && <LeadModal onClose={() => setModal(false)} />}
+      </React.Fragment>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

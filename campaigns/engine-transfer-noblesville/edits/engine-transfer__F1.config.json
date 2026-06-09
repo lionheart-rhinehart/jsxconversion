@@ -1,0 +1,208 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    {
+      "id": "bg",
+      "tag": "bg",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "#0a0b0d",
+      "z": 0
+    },
+    {
+      "id": "panel",
+      "tag": "panel",
+      "type": "rect",
+      "x": 80,
+      "y": 470,
+      "width": 920,
+      "height": 980,
+      "fill": "#15171a",
+      "borderRadius": 16,
+      "z": 4
+    },
+    {
+      "id": "kicker_rule",
+      "tag": "kicker_rule",
+      "type": "rect",
+      "x": 80,
+      "y": 410,
+      "width": 140,
+      "height": 8,
+      "fill": "#c4141d",
+      "z": 6
+    },
+    {
+      "id": "guarantee_band",
+      "tag": "guarantee_band",
+      "type": "rect",
+      "x": 80,
+      "y": 940,
+      "width": 920,
+      "height": 300,
+      "fill": "#c4141d",
+      "borderRadius": 14,
+      "z": 12
+    },
+    {
+      "id": "brand_rule",
+      "tag": "brand_rule",
+      "type": "rect",
+      "x": 80,
+      "y": 1690,
+      "width": 140,
+      "height": 6,
+      "fill": "#c4141d",
+      "z": 16
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor chip (auto-filled)",
+      "x": 80,
+      "y": 150,
+      "textAlign": "left",
+      "text": "NOBLESVILLE SPORT PARENTS",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#c4141d",
+      "chipBg": "#ffffff",
+      "chipPad": "13px 26px",
+      "chipRadius": 8,
+      "letterSpacing": "0.12em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": [
+        "eyebrow",
+        "proof"
+      ],
+      "maxChars": 34
+    },
+    {
+      "id": "kicker",
+      "tag": "kicker",
+      "label": "Kicker line (mono)",
+      "x": 80,
+      "y": 540,
+      "width": 880,
+      "textAlign": "left",
+      "text": "Built, then measured.",
+      "fontSize": 34,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 600,
+      "color": "#c4141d",
+      "letterSpacing": "0.1em",
+      "textTransform": "uppercase",
+      "z": 21,
+      "role": "kicker",
+      "accepts": [
+        "kicker",
+        "proof",
+        "eyebrow"
+      ],
+      "maxChars": 28
+    },
+    {
+      "id": "offer",
+      "tag": "offer",
+      "label": "Offer headline (display, dominant)",
+      "x": 80,
+      "y": 600,
+      "width": 920,
+      "textAlign": "left",
+      "text": "The Engine Under Every Sport",
+      "fontSize": 124,
+      "fontFamily": "Anton",
+      "fontWeight": 400,
+      "color": "#ffffff",
+      "lineHeight": 0.92,
+      "letterSpacing": "0.002em",
+      "textTransform": "uppercase",
+      "z": 22,
+      "role": "offer",
+      "accepts": [
+        "offer",
+        "claim",
+        "hook"
+      ],
+      "maxChars": 36
+    },
+    {
+      "id": "guarantee_text",
+      "tag": "guarantee",
+      "label": "Guarantee (verbatim, locked)",
+      "x": 120,
+      "y": 982,
+      "width": 840,
+      "textAlign": "left",
+      "text": "+1 mph speed. +3\" vertical. 90 days. Or your training is on us.",
+      "fontSize": 48,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 600,
+      "color": "#ffffff",
+      "lineHeight": 1.26,
+      "letterSpacing": "0.01em",
+      "z": 23,
+      "role": "guarantee",
+      "accepts": [
+        "guarantee"
+      ],
+      "maxChars": 64
+    },
+    {
+      "id": "cta",
+      "tag": "cta",
+      "label": "CTA pill",
+      "x": 80,
+      "y": 1320,
+      "textAlign": "left",
+      "text": "Not a tryout.",
+      "fontSize": 50,
+      "fontFamily": "Anton",
+      "fontWeight": 400,
+      "color": "#ffffff",
+      "chipBg": "#c4141d",
+      "chipPad": "22px 48px",
+      "chipRadius": 10,
+      "letterSpacing": "0.02em",
+      "textTransform": "uppercase",
+      "z": 24,
+      "role": "cta",
+      "accepts": [
+        "cta",
+        "offer"
+      ],
+      "maxChars": 20
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark",
+      "x": 80,
+      "y": 1724,
+      "width": 920,
+      "textAlign": "left",
+      "text": "ATHLETES ACCELERATION",
+      "fontSize": 32,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 500,
+      "color": "#ffffff",
+      "letterSpacing": "0.2em",
+      "textTransform": "uppercase",
+      "z": 25,
+      "role": "brand",
+      "accepts": [
+        "brand"
+      ],
+      "maxChars": 26
+    }
+  ]
+}

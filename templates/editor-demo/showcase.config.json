@@ -1,0 +1,54 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/photo.jpg",
+    "tag": "bg_media",
+    "z": 0,
+    "offsetX": 0,
+    "offsetY": 0
+  },
+  "elements": [
+    {
+      "id": "headline",
+      "type": "text",
+      "tag": "headline",
+      "text": "test",
+      "x": 598,
+      "y": 263,
+      "fontSize": 130,
+      "fontWeight": 800,
+      "color": "#ffffff",
+      "lineHeight": 1,
+      "rotate": 18
+    },
+    {
+      "id": "sub",
+      "type": "text",
+      "tag": "microscript",
+      "text": "does this work?",
+      "x": 121,
+      "y": 77,
+      "fontSize": 46,
+      "fontWeight": 600,
+      "color": "#c4141d",
+      "whiteSpace": "pre-wrap",
+      "width": 401
+    },
+    {
+      "id": "text_1",
+      "label": "New text",
+      "tag": "new_text",
+      "x": 406,
+      "y": 955,
+      "text": "NEW TEXT",
+      "fontSize": 88,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "z": 31,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "rotate": -29
+    }
+  ]
+}

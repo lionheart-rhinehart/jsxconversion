@@ -1,0 +1,70 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": { "path": "../../brand/kraken-cache/isp-ad-series-1/brand-talking-head-speaking-high-school-male-isp-zach-decant-86a3f8d0.mp4", "tag": "bg_media", "z": 0, "videoStartTime": 1 },
+  "fixedDesign": [
+    { "id": "top_scrim", "tag": "top_scrim", "type": "rect", "x": 0, "y": 0, "width": 1080, "height": 360, "fill": "linear-gradient(180deg, rgba(28,28,29,0.82) 0%, rgba(28,28,29,0.0) 100%)", "z": 2 },
+    { "id": "bottom_scrim", "tag": "bottom_scrim", "type": "rect", "x": 0, "y": 1160, "width": 1080, "height": 760, "fill": "linear-gradient(180deg, rgba(28,28,29,0.0) 0%, rgba(28,28,29,0.78) 38%, rgba(28,28,29,0.97) 100%)", "z": 2 },
+    { "id": "accent_bar", "tag": "accent_bar", "type": "rect", "x": 96, "y": 1420, "width": 130, "height": 12, "fill": "#2573b7", "z": 6 }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor chip (auto-filled)",
+      "x": 96, "y": 132,
+      "textAlign": "left",
+      "text": "FORT WORTH SPORT PARENTS",
+      "fontSize": 33,
+      "fontFamily": "Barlow",
+      "fontWeight": 700,
+      "color": "#2573b7",
+      "chipBg": "#ffffff",
+      "chipPad": "13px 28px",
+      "chipRadius": 999,
+      "letterSpacing": "0.16em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": ["eyebrow", "proof"],
+      "maxChars": 34
+    },
+    {
+      "id": "hook",
+      "tag": "hook",
+      "label": "Caption hook",
+      "x": 96, "y": 1470, "width": 888,
+      "textAlign": "left",
+      "text": "Velocity Or A Healthy Arm? Most Parents Think They Have To Choose",
+      "fontSize": 76,
+      "fontFamily": "Barlow Condensed",
+      "fontWeight": 800,
+      "color": "#ffffff",
+      "lineHeight": 0.94,
+      "letterSpacing": "0.004em",
+      "textTransform": "uppercase",
+      "z": 21,
+      "role": "hook",
+      "accepts": ["hook", "claim", "reframe", "mechanism"],
+      "maxChars": 92
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark",
+      "x": 96, "y": 1810, "width": 888,
+      "textAlign": "left",
+      "text": "IDEAL SPORTS PERFORMANCE",
+      "fontSize": 30,
+      "fontFamily": "Barlow",
+      "fontWeight": 600,
+      "color": "#ffffff",
+      "letterSpacing": "0.2em",
+      "textTransform": "uppercase",
+      "z": 25,
+      "role": "brand",
+      "accepts": ["brand"],
+      "maxChars": 26
+    }
+  ]
+}

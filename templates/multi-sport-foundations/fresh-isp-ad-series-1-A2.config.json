@@ -1,0 +1,69 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fixedDesign": [
+    { "id": "bg", "tag": "bg", "type": "rect", "x": 0, "y": 0, "width": 1080, "height": 1920, "fill": "#1c1c1d", "z": 0 },
+    { "id": "panel", "tag": "panel", "type": "rect", "x": 64, "y": 360, "width": 952, "height": 1200, "fill": "#232325", "z": 2 },
+    { "id": "quote_glyph", "tag": "quote_glyph", "type": "text", "x": 110, "y": 360, "width": 400, "text": "“", "fontSize": 360, "fontFamily": "Barlow Condensed", "fontWeight": 800, "color": "#2573b7", "lineHeight": 0.8, "z": 3 },
+    { "id": "accent_bar", "tag": "accent_bar", "type": "rect", "x": 110, "y": 1360, "width": 150, "height": 12, "fill": "#2573b7", "z": 6 }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Context anchor chip (auto-filled)",
+      "x": 110, "y": 200,
+      "textAlign": "left",
+      "text": "FORT WORTH SPORT PARENTS",
+      "fontSize": 33,
+      "fontFamily": "Barlow",
+      "fontWeight": 700,
+      "color": "#2573b7",
+      "chipBg": "#ffffff",
+      "chipPad": "13px 28px",
+      "chipRadius": 999,
+      "letterSpacing": "0.16em",
+      "textTransform": "uppercase",
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": ["eyebrow", "proof"],
+      "maxChars": 34
+    },
+    {
+      "id": "testimonial",
+      "tag": "testimonial",
+      "label": "Pull quote",
+      "x": 110, "y": 620, "width": 850,
+      "textAlign": "left",
+      "text": "There's a number most throwing programs never measure. It's the one capping your athlete's velo.",
+      "fontSize": 78,
+      "fontFamily": "Barlow Condensed",
+      "fontWeight": 700,
+      "color": "#ffffff",
+      "lineHeight": 1.02,
+      "letterSpacing": "0.005em",
+      "z": 21,
+      "role": "testimonial",
+      "accepts": ["testimonial", "claim", "hook", "reframe"],
+      "maxChars": 120
+    },
+    {
+      "id": "brand_wordmark",
+      "tag": "brand",
+      "label": "Brand wordmark",
+      "x": 110, "y": 1430, "width": 850,
+      "textAlign": "left",
+      "text": "IDEAL SPORTS PERFORMANCE",
+      "fontSize": 30,
+      "fontFamily": "Barlow",
+      "fontWeight": 600,
+      "color": "#ffffff",
+      "letterSpacing": "0.2em",
+      "textTransform": "uppercase",
+      "z": 25,
+      "role": "brand",
+      "accepts": ["brand"],
+      "maxChars": 26
+    }
+  ]
+}

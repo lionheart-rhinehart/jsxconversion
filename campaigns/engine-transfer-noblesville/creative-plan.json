@@ -1,0 +1,390 @@
+{
+  "schemaVersion": 1,
+  "campaign": "engine-transfer-noblesville",
+  "brand": "athletes-acceleration",
+  "knobs": {
+    "assetsPerAngle": 20,
+    "motionRatio": {
+      "video": 0.6,
+      "gif": 0.15,
+      "static": 0.25
+    },
+    "freshnessFloor": 0.45,
+    "repetitionCap": 3
+  },
+  "_planNotes": "Single angle: transfer skepticism / 'the engine under every sport' (Topic 32), Noblesville. Ad-copy-only campaign. MECHANISM angle -> warm-heavy (C mechanism / D engine-vs-paint reframe / E proof), light cold hooks, small hot offer, one brand bumper. MEDIA SPLIT: photo-led archetypes (action-hero/training-scene/split-panel/before-after-split/ugc-selfie) carry a DISTINCT clean AA-Noblesville training clip (the engine = the training made visual); graphic/data-viz archetypes (anatomy-diagram/versus/kinetic-text/sprint-trace/velocity-gauge/macro-ring/quote-card/star-testimonial/offer-card) stay photo-free (sanctioned via fresh+media-free example). logo-sting is the only bank template (mediaExempt brand bumper). GUARANTEE GUARD: the in-body guarantee in ad-copy is a paraphrase; on-creative guarantee comes ONLY from the locked guarantee role (canonical). NO stat-forced templates (copy is explicitly 'no forced stat'). Clips frame-checked clean (no baked text); 3 GameChanger game clips in the source folder were excluded.",
+  "angles": [
+    {
+      "id": "engine-transfer",
+      "location": "noblesville",
+      "assets": [
+        {
+          "id": "A1",
+          "beat": "A — Cold hook",
+          "temperature": "cold",
+          "format": "video",
+          "source": "fresh",
+          "archetype": "action-hero",
+          "clip": "brand/kraken-cache/engine-transfer-noblesville/athletes-acceleration-action-clip-sprinting-middle-school-female-athletes-accelera-e2d654e3.mp4",
+          "copyRefs": {
+            "hook": "ad-1-version-a-consequence-depth-short.imageHeadline"
+          },
+          "template": "fresh-engine-transfer-noblesville-A1",
+          "flags": [],
+          "exampleId": "ex-056-action-hero",
+          "status": "planned",
+          "output": "out/campaigns/engine-transfer-noblesville/engine-transfer/A1.mp4",
+          "thumb": "out/campaigns/engine-transfer-noblesville/engine-transfer/A1.mp4",
+          "renderedAt": "2026-06-08T21:09:26.528Z"
+        },
+        {
+          "id": "A2",
+          "beat": "A — Cold hook",
+          "temperature": "cold",
+          "format": "gif",
+          "source": "fresh",
+          "archetype": "comic-strip",
+          "copyRefs": {
+            "hook": "ad-1-version-a-consequence-depth-short.altHook.1"
+          },
+          "flags": [],
+          "exampleId": "ex-098-comic-strip",
+          "template": "fresh-engine-transfer-noblesville-A2",
+          "status": "rendered",
+          "output": "out/campaigns/engine-transfer-noblesville/engine-transfer/A2.gif",
+          "thumb": "out/campaigns/engine-transfer-noblesville/engine-transfer/A2.gif",
+          "renderedAt": "2026-06-08T21:09:45.714Z"
+        },
+        {
+          "id": "A3",
+          "beat": "A — Cold hook",
+          "temperature": "cold",
+          "format": "static",
+          "source": "fresh",
+          "archetype": "ugc-selfie",
+          "clip": "brand/kraken-cache/engine-transfer-noblesville/athletes-acceleration-action-clip-agility-drill-high-school-male-athletes-accelera-253bb2ad.mp4",
+          "copyRefs": {
+            "hook": "ad-1-version-b-mechanism-curiosity-led-short.altHook.3"
+          },
+          "flags": [],
+          "exampleId": "ex-035-ugc-selfie",
+          "template": "fresh-engine-transfer-noblesville-A3",
+          "status": "rendered",
+          "output": "out/campaigns/engine-transfer-noblesville/engine-transfer/A3.png",
+          "thumb": "out/campaigns/engine-transfer-noblesville/engine-transfer/A3.png",
+          "renderedAt": "2026-06-08T21:09:57.198Z"
+        },
+        {
+          "id": "C1",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "fresh",
+          "archetype": "anatomy-diagram",
+          "copyRefs": {
+            "claim": "ad-1-version-a-consequence-depth-short.altHook.1"
+          },
+          "flags": [],
+          "exampleId": "ex-121-anatomy-diagram",
+          "template": "fresh-engine-transfer-noblesville-C1",
+          "status": "rendered",
+          "output": "out/campaigns/engine-transfer-noblesville/engine-transfer/C1.mp4",
+          "thumb": "out/campaigns/engine-transfer-noblesville/engine-transfer/C1.mp4",
+          "renderedAt": "2026-06-08T21:10:18.412Z"
+        },
+        {
+          "id": "C2",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "fresh",
+          "archetype": "training-scene",
+          "clip": "brand/kraken-cache/engine-transfer-noblesville/athletes-acceleration-action-clip-med-ball-slam-middle-school-male-athletes-accele-274a0262.mp4",
+          "copyRefs": {
+            "claim": "ad-1-version-a-consequence-depth-short.bodyLine.2.4"
+          },
+          "flags": [],
+          "exampleId": "ex-057-training-scene",
+          "template": "fresh-engine-transfer-noblesville-C2",
+          "status": "rendered",
+          "output": "out/campaigns/engine-transfer-noblesville/engine-transfer/C2.mp4",
+          "thumb": "out/campaigns/engine-transfer-noblesville/engine-transfer/C2.mp4",
+          "renderedAt": "2026-06-08T21:11:57.093Z"
+        },
+        {
+          "id": "C3",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "fresh",
+          "archetype": "sprint-trace",
+          "copyRefs": {
+            "claim": "ad-1-version-a-consequence-depth-short.altHook.2"
+          },
+          "flags": [],
+          "exampleId": "ex-083-sprint-trace",
+          "template": "fresh-engine-transfer-noblesville-C3",
+          "status": "rendered",
+          "output": "out/campaigns/engine-transfer-noblesville/engine-transfer/C3.mp4",
+          "thumb": "out/campaigns/engine-transfer-noblesville/engine-transfer/C3.mp4",
+          "renderedAt": "2026-06-08T21:12:18.639Z"
+        },
+        {
+          "id": "C4",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "gif",
+          "source": "fresh",
+          "archetype": "velocity-gauge",
+          "copyRefs": {
+            "claim": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.2.1"
+          },
+          "flags": [],
+          "exampleId": "ex-087-velocity-gauge",
+          "template": "fresh-engine-transfer-noblesville-C4",
+          "status": "rendered",
+          "output": "out/campaigns/engine-transfer-noblesville/engine-transfer/C4.gif",
+          "thumb": "out/campaigns/engine-transfer-noblesville/engine-transfer/C4.gif",
+          "renderedAt": "2026-06-08T21:12:36.735Z"
+        },
+        {
+          "id": "C5",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "fresh",
+          "archetype": "kinetic-text",
+          "copyRefs": {
+            "claim": "ad-1-version-a-consequence-depth-short.bodyLine.2.5"
+          },
+          "flags": [],
+          "exampleId": "ex-051-kinetic-text",
+          "template": "fresh-engine-transfer-noblesville-C5",
+          "status": "rendered",
+          "output": "out/campaigns/engine-transfer-noblesville/engine-transfer/C5.mp4",
+          "thumb": "out/campaigns/engine-transfer-noblesville/engine-transfer/C5.mp4",
+          "renderedAt": "2026-06-08T21:12:54.895Z"
+        },
+        {
+          "id": "C6",
+          "beat": "C — Mechanism",
+          "temperature": "warm",
+          "format": "video",
+          "source": "fresh",
+          "archetype": "radar-stats",
+          "copyRefs": {
+            "claim": "ad-2-version-a-consequence-depth-medium.bodyLine.4.1"
+          },
+          "flags": [],
+          "exampleId": "ex-072-radar-stats",
+          "template": "fresh-engine-transfer-noblesville-C6",
+          "status": "rendered",
+          "output": "out/campaigns/engine-transfer-noblesville/engine-transfer/C6.mp4",
+          "thumb": "out/campaigns/engine-transfer-noblesville/engine-transfer/C6.mp4",
+          "renderedAt": "2026-06-08T21:13:38.813Z"
+        },
+        {
+          "id": "D1",
+          "beat": "D — Reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "fresh",
+          "archetype": "tier-list",
+          "copyRefs": {
+            "reframe": "ad-1-version-b-mechanism-curiosity-led-short.altHook.1"
+          },
+          "flags": [],
+          "exampleId": "ex-082-tier-list",
+          "template": "fresh-engine-transfer-noblesville-D1",
+          "status": "rendered",
+          "output": "out/campaigns/engine-transfer-noblesville/engine-transfer/D1.mp4",
+          "thumb": "out/campaigns/engine-transfer-noblesville/engine-transfer/D1.mp4",
+          "renderedAt": "2026-06-08T21:13:59.978Z"
+        },
+        {
+          "id": "D2",
+          "beat": "D — Reframe",
+          "temperature": "warm",
+          "format": "video",
+          "source": "fresh",
+          "archetype": "velocity-gauge",
+          "copyRefs": {
+            "reframe": "ad-1-version-b-mechanism-curiosity-led-short.altHook.2"
+          },
+          "flags": [],
+          "exampleId": "ex-087-velocity-gauge",
+          "template": "fresh-engine-transfer-noblesville-D2",
+          "status": "rendered",
+          "output": "out/campaigns/engine-transfer-noblesville/engine-transfer/D2.mp4",
+          "thumb": "out/campaigns/engine-transfer-noblesville/engine-transfer/D2.mp4",
+          "renderedAt": "2026-06-08T21:14:21.521Z"
+        },
+        {
+          "id": "D3",
+          "beat": "D — Reframe",
+          "temperature": "warm",
+          "format": "gif",
+          "source": "fresh",
+          "archetype": "kinetic-text",
+          "copyRefs": {
+            "claim": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.3.4"
+          },
+          "flags": [],
+          "exampleId": "ex-050-kinetic-text",
+          "template": "fresh-engine-transfer-noblesville-D3",
+          "status": "rendered",
+          "output": "out/campaigns/engine-transfer-noblesville/engine-transfer/D3.gif",
+          "thumb": "out/campaigns/engine-transfer-noblesville/engine-transfer/D3.gif",
+          "renderedAt": "2026-06-08T21:14:56.336Z"
+        },
+        {
+          "id": "D4",
+          "beat": "D — Reframe",
+          "temperature": "warm",
+          "format": "static",
+          "source": "fresh",
+          "archetype": "split-panel",
+          "clip": "brand/kraken-cache/engine-transfer-noblesville/athletes-acceleration-action-clip-squat-middle-school-male-athletes-acceleration-n-25d6103c.mp4",
+          "copyRefs": {
+            "hook": "ad-1-version-b-mechanism-curiosity-led-short.headline"
+          },
+          "flags": [],
+          "exampleId": "ex-037-coach-portrait",
+          "template": "fresh-engine-transfer-noblesville-D4",
+          "status": "rendered",
+          "output": "out/campaigns/engine-transfer-noblesville/engine-transfer/D4.png",
+          "thumb": "out/campaigns/engine-transfer-noblesville/engine-transfer/D4.png",
+          "renderedAt": "2026-06-08T21:15:07.781Z"
+        },
+        {
+          "id": "E1",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "video",
+          "source": "fresh",
+          "archetype": "star-testimonial",
+          "copyRefs": {
+            "testimonial": "ad-2-version-b-mechanism-curiosity-led-medium.bodyLine.5.1"
+          },
+          "flags": [],
+          "exampleId": "ex-076-star-testimonial",
+          "template": "fresh-engine-transfer-noblesville-E1",
+          "status": "rendered",
+          "output": "out/campaigns/engine-transfer-noblesville/engine-transfer/E1.mp4",
+          "thumb": "out/campaigns/engine-transfer-noblesville/engine-transfer/E1.mp4",
+          "renderedAt": "2026-06-08T21:15:52.379Z"
+        },
+        {
+          "id": "E2",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "video",
+          "source": "fresh",
+          "archetype": "training-scene",
+          "clip": "brand/kraken-cache/engine-transfer-noblesville/athletes-acceleration-action-clip-deadlift-high-school-male-athletes-acceleration--4e72a87d.mp4",
+          "copyRefs": {
+            "claim": "ad-1-version-b-mechanism-curiosity-led-short.bodyLine.4.2"
+          },
+          "flags": [],
+          "exampleId": "ex-058-training-scene",
+          "template": "fresh-engine-transfer-noblesville-E2",
+          "status": "rendered",
+          "output": "out/campaigns/engine-transfer-noblesville/engine-transfer/E2.mp4",
+          "thumb": "out/campaigns/engine-transfer-noblesville/engine-transfer/E2.mp4",
+          "renderedAt": "2026-06-08T21:17:47.004Z"
+        },
+        {
+          "id": "E3",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "static",
+          "source": "fresh",
+          "archetype": "quote-card",
+          "copyRefs": {
+            "testimonial": "ad-3-version-a-consequence-depth-long.bodyLine.7.1"
+          },
+          "flags": [],
+          "exampleId": "ex-012-quote-card",
+          "template": "fresh-engine-transfer-noblesville-E3",
+          "status": "rendered",
+          "output": "out/campaigns/engine-transfer-noblesville/engine-transfer/E3.png",
+          "thumb": "out/campaigns/engine-transfer-noblesville/engine-transfer/E3.png",
+          "renderedAt": "2026-06-08T21:17:58.308Z"
+        },
+        {
+          "id": "E4",
+          "beat": "E — Proof",
+          "temperature": "warm",
+          "format": "static",
+          "source": "fresh",
+          "archetype": "ugc-selfie",
+          "clip": "brand/kraken-cache/engine-transfer-noblesville/athletes-acceleration-action-clip-kettlebell-swings-middle-school-male-athletes-ac-13c57d53.mp4",
+          "copyRefs": {
+            "hook": "ad-2-version-a-consequence-depth-medium.bodyLine.6.3"
+          },
+          "flags": [],
+          "exampleId": "ex-036-ugc-selfie",
+          "template": "fresh-engine-transfer-noblesville-E4",
+          "status": "rendered",
+          "output": "out/campaigns/engine-transfer-noblesville/engine-transfer/E4.png",
+          "thumb": "out/campaigns/engine-transfer-noblesville/engine-transfer/E4.png",
+          "renderedAt": "2026-06-08T21:18:10.380Z"
+        },
+        {
+          "id": "F1",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "static",
+          "source": "fresh",
+          "archetype": "offer-card",
+          "copyRefs": {
+            "kicker": "ad-1-version-a-consequence-depth-short.description",
+            "offer": "ad-1-version-a-consequence-depth-short.headline",
+            "cta": "ad-1-version-a-consequence-depth-short.bodyLine.4.3"
+          },
+          "flags": [],
+          "exampleId": "ex-027-offer-card",
+          "template": "fresh-engine-transfer-noblesville-F1",
+          "status": "rendered",
+          "output": "out/campaigns/engine-transfer-noblesville/engine-transfer/F1.png",
+          "thumb": "out/campaigns/engine-transfer-noblesville/engine-transfer/F1.png",
+          "renderedAt": "2026-06-08T21:18:22.362Z"
+        },
+        {
+          "id": "F2",
+          "beat": "F — Offer",
+          "temperature": "hot",
+          "format": "video",
+          "source": "fresh",
+          "archetype": "calendar-fill",
+          "copyRefs": {
+            "hook": "ad-1-version-a-consequence-depth-short.bodyLine.4.1"
+          },
+          "flags": [],
+          "exampleId": "ex-114-calendar-fill",
+          "template": "fresh-engine-transfer-noblesville-F2",
+          "status": "rendered",
+          "output": "out/campaigns/engine-transfer-noblesville/engine-transfer/F2.mp4",
+          "thumb": "out/campaigns/engine-transfer-noblesville/engine-transfer/F2.mp4",
+          "renderedAt": "2026-06-08T21:18:44.026Z"
+        },
+        {
+          "id": "Z1",
+          "beat": null,
+          "temperature": "warm",
+          "format": "video",
+          "source": "template",
+          "template": "logo-sting",
+          "copyRefs": {
+            "claim": "ad-1-version-a-consequence-depth-short.headline"
+          },
+          "flags": [],
+          "status": "rendered",
+          "output": "out/campaigns/engine-transfer-noblesville/engine-transfer/Z1.mp4",
+          "thumb": "out/campaigns/engine-transfer-noblesville/engine-transfer/Z1.mp4",
+          "renderedAt": "2026-06-08T21:18:55.788Z"
+        }
+      ]
+    }
+  ]
+}

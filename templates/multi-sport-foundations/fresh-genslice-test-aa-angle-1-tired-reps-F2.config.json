@@ -1,0 +1,88 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/genslice-f2-gym.jpg",
+    "type": "image",
+    "tag": "bg_photo",
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1,
+    "z": 0
+  },
+  "fixedDesign": [
+    {
+      "id": "bottom_scrim",
+      "tag": "photo_scrim",
+      "label": "Bottom-up gradient so the small anchored text stays legible (training-scene: place dominates, text small)",
+      "type": "rect",
+      "x": 0,
+      "y": 920,
+      "width": 1080,
+      "height": 1000,
+      "fill": "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.85) 100%)",
+      "z": 2
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Audience + locale anchor — white chip (auto-filled from the location tier)",
+      "x": 56,
+      "y": 90,
+      "text": "",
+      "fontSize": 30,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#c4141d",
+      "letterSpacing": "0.08em",
+      "textTransform": "uppercase",
+      "chipBg": "#ffffff",
+      "chipPad": "10px 20px",
+      "chipRadius": 8,
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": ["eyebrow"],
+      "maxChars": 28
+    },
+    {
+      "id": "claim",
+      "tag": "title",
+      "label": "Small anchored claim, bottom-left (the place dominates)",
+      "x": 56,
+      "y": 1560,
+      "width": 968,
+      "text": "The cause is not effort.",
+      "fontSize": 72,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 0.95,
+      "letterSpacing": "-0.01em",
+      "textTransform": "uppercase",
+      "z": 30,
+      "role": "claim",
+      "accepts": ["claim", "reframe"],
+      "maxChars": 40
+    },
+    {
+      "id": "byline",
+      "tag": "byline",
+      "label": "Attribution / lockup (identity role, exempt from verbatim)",
+      "x": 58,
+      "y": 1690,
+      "width": 968,
+      "text": "ATHLETES ACCELERATION · CARMEL",
+      "fontSize": 28,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#d8d8d8",
+      "letterSpacing": "0.06em",
+      "textTransform": "uppercase",
+      "z": 30,
+      "role": "byline",
+      "accepts": ["byline", "brand"],
+      "maxChars": 40
+    }
+  ]
+}

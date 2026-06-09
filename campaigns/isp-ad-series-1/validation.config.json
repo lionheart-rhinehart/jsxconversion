@@ -1,0 +1,4 @@
+{
+  "_note": "One-time, campaign-scoped override authorized by Cody on 2026-06-08: this ad set is a deliberately balanced 2 video / 2 gif / 2 static mix (Meta variety), not a video-heavy Reels batch. Downgrade ONLY the formatMix video-floor gate to a warning for THIS campaign. No engine code changed; every other campaign still enforces the 60% video floor. Honored only with the out-of-band AA_HUMAN_OVERRIDE=isp-ad-series-1 marker.",
+  "formatMix": "warn"
+}

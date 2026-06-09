@@ -1,0 +1,24 @@
+<!-- @dsCard group="Spacing" viewport="700x200" name="Elevation & Glow" subtitle="Deep shadows on dark + signature bolt/electric glows" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../../styles.css" />
+<style>
+  body { background: var(--ink-950); padding: 30px 22px; }
+  .row { display: flex; gap: 26px; }
+  .item { text-align: center; }
+  .box { width: 92px; height: 60px; border-radius: var(--radius-lg); background: var(--ink-800); border: 1px solid var(--border-subtle); }
+  .lab { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); margin-top: 12px; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-sm)"></div><div class="lab">shadow-sm</div></div>
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-md)"></div><div class="lab">shadow-md</div></div>
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-lg)"></div><div class="lab">shadow-lg</div></div>
+    <div class="item"><div class="box" style="box-shadow:var(--glow-electric)"></div><div class="lab">glow-electric</div></div>
+    <div class="item"><div class="box" style="box-shadow:var(--glow-bolt)"></div><div class="lab">glow-bolt</div></div>
+  </div>
+</body>
+</html>

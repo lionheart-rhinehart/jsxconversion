@@ -1,0 +1,95 @@
+<!-- @dsCard group="Athlete Portal" viewport="1280x840" name="Athlete Dashboard" subtitle="Member portal — login, dashboard, program, progress" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Power Source — Athlete Portal</title>
+<link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script type="text/babel" src="../marketing-site/ui.jsx"></script>
+<script type="text/babel" src="portal.jsx"></script>
+<script type="text/babel" src="screens.jsx"></script>
+<script type="text/babel">
+  const { useState, useEffect } = React;
+
+  function ProfileView() {
+    return (
+      <div className="ap-content">
+        <div className="ap-card" style={{ maxWidth: 560 }}>
+          <div className="ap-card__head"><span className="ap-card__title">Athlete profile</span></div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            <Input label="Athlete name" defaultValue="Jordan Vega" />
+            <Input label="Primary sport" defaultValue="Ice Hockey" />
+            <Input label="Email" type="email" defaultValue="jordan@email.com" />
+            <div style={{ display: "flex", gap: 12, marginTop: 4 }}>
+              <Button variant="bolt">Save Changes</Button>
+              <Button variant="ghost">Cancel</Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  function ScheduleView() {
+    const days = [
+      { d: "MON", n: "8", t: "Rest / Mobility", s: "Optional", b: "steel" },
+      { d: "TUE", n: "9", t: "Speed & Explosiveness", s: "4:30 PM · Coach Jim", b: "bolt" },
+      { d: "WED", n: "10", t: "Rest", s: "—", b: "steel" },
+      { d: "THU", n: "11", t: "Upper Strength", s: "4:30 PM · Coach Mia", b: "electric" },
+      { d: "FRI", n: "12", t: "Speed School", s: "5:00 PM · Group", b: "electric" },
+      { d: "SAT", n: "13", t: "Team Conditioning", s: "9:00 AM · Group", b: "electric" },
+    ];
+    return (
+      <div className="ap-content">
+        <div className="ap-card">
+          <div className="ap-card__head"><span className="ap-card__title">Week of June 8</span><span className="ap-card__link">Book a session</span></div>
+          <div className="ap-sched">
+            {days.map((r) => (
+              <div className="ap-sched__row" key={r.n}>
+                <div className="ap-sched__day"><b>{r.n}</b><span>{r.d}</span></div>
+                <div className="ap-sched__info"><b>{r.t}</b><span>{r.s}</span></div>
+                <Badge variant={r.b === "bolt" ? "bolt" : r.b === "steel" ? "steel" : "electric"}>{r.b === "bolt" ? "Today" : r.b === "steel" ? "Rest" : "Booked"}</Badge>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const TITLES = { dashboard: "Dashboard", program: "My Program", progress: "Progress", schedule: "Schedule", profile: "Profile" };
+
+  function App() {
+    const [authed, setAuthed] = useState(false);
+    const [view, setView] = useState("dashboard");
+    useEffect(() => { if (window.lucide) window.lucide.createIcons(); });
+
+    if (!authed) return <Login onAuth={() => setAuthed(true)} />;
+
+    const views = {
+      dashboard: <DashboardView />, program: <ProgramView />, progress: <ProgressView />,
+      schedule: <ScheduleView />, profile: <ProfileView />,
+    };
+    return (
+      <div className="ap">
+        <Sidebar view={view} setView={setView} />
+        <div className="ap-main">
+          <Topbar title={TITLES[view]} onLogout={() => setAuthed(false)} />
+          {views[view]}
+        </div>
+      </div>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

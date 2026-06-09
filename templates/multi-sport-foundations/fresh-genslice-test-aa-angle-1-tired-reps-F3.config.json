@@ -1,0 +1,99 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "media": {
+    "path": "./assets/genslice-f3-group.jpg",
+    "type": "image",
+    "tag": "bg_photo",
+    "offsetX": 0,
+    "offsetY": 0,
+    "scale": 1,
+    "z": 0
+  },
+  "fixedDesign": [
+    {
+      "id": "quote_scrim",
+      "tag": "photo_scrim",
+      "label": "Heavy dark scrim so the photo reads as a SUBTLE background behind the pull-quote (quote-card device)",
+      "type": "rect",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "fill": "linear-gradient(180deg, rgba(10,10,12,0.82) 0%, rgba(10,10,12,0.74) 50%, rgba(10,10,12,0.9) 100%)",
+      "z": 2
+    },
+    {
+      "id": "quote_mark",
+      "tag": "accent_rule",
+      "label": "Red quote rule",
+      "type": "rect",
+      "x": 64,
+      "y": 560,
+      "width": 120,
+      "height": 12,
+      "fill": "#c4141d",
+      "z": 10
+    }
+  ],
+  "elements": [
+    {
+      "id": "eyebrow",
+      "tag": "eyebrow",
+      "label": "Audience + locale anchor — white chip (auto-filled from the location tier)",
+      "x": 64,
+      "y": 110,
+      "text": "",
+      "fontSize": 30,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#c4141d",
+      "letterSpacing": "0.08em",
+      "textTransform": "uppercase",
+      "chipBg": "#ffffff",
+      "chipPad": "10px 20px",
+      "chipRadius": 8,
+      "z": 20,
+      "role": "eyebrow",
+      "accepts": ["eyebrow"],
+      "maxChars": 28
+    },
+    {
+      "id": "testimonial",
+      "tag": "title",
+      "label": "Large pull-quote (the dominant element of a quote-card)",
+      "x": 64,
+      "y": 620,
+      "width": 952,
+      "text": "Your athlete shows up, works hard, and never quits.",
+      "fontSize": 86,
+      "fontFamily": "Anton",
+      "color": "#ffffff",
+      "lineHeight": 1.0,
+      "letterSpacing": "-0.01em",
+      "z": 30,
+      "role": "testimonial",
+      "accepts": ["testimonial", "claim"],
+      "maxChars": 120
+    },
+    {
+      "id": "byline",
+      "tag": "byline",
+      "label": "Attribution (identity role, exempt from verbatim)",
+      "x": 66,
+      "y": 1180,
+      "width": 952,
+      "text": "— A CARMEL SPORTS PARENT",
+      "fontSize": 30,
+      "fontFamily": "JetBrains Mono",
+      "fontWeight": 700,
+      "color": "#d8d8d8",
+      "letterSpacing": "0.06em",
+      "textTransform": "uppercase",
+      "z": 30,
+      "role": "byline",
+      "accepts": ["byline"],
+      "maxChars": 36
+    }
+  ]
+}

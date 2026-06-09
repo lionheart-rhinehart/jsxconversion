@@ -1,0 +1,47 @@
+<!-- @dsCard group="Colors" viewport="700x200" name="Surfaces & Text" subtitle="Semantic surface + text roles, dark and light" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../../styles.css" />
+<style>
+  body { background: var(--surface-base); padding: 22px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .panel { border-radius: var(--radius-lg); padding: 18px; border: 1px solid var(--border-subtle); }
+  .dark { background: var(--surface-raised); }
+  .steel { background: var(--surface-steel); border-color: var(--border-default); }
+  .light { background: var(--surface-invert); border-color: var(--border-on-light); }
+  .muted { background: var(--surface-muted); border-color: var(--border-on-light); }
+  .h { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 19px; letter-spacing: -.01em; line-height: 1; }
+  .b { font-size: 13px; margin-top: 8px; }
+  .m { font-size: 12px; margin-top: 3px; }
+  .pill { font-family: var(--font-mono); font-size: 10px; padding: 3px 7px; border-radius: var(--radius-pill); display: inline-block; margin-top: 10px; }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="panel dark">
+      <div class="h" style="color:var(--text-strong)">Raised / dark</div>
+      <div class="b" style="color:var(--text-body)">Body text on a raised card.</div>
+      <div class="m" style="color:var(--text-muted)">Muted secondary line.</div>
+      <span class="pill" style="background:var(--bolt-400);color:var(--ink-950)">--surface-raised</span>
+    </div>
+    <div class="panel steel">
+      <div class="h" style="color:var(--white)">Steel panel</div>
+      <div class="b" style="color:#d6deeb">Navy block — headers & feature panels.</div>
+      <span class="pill" style="background:var(--electric-400);color:#fff">--surface-steel</span>
+    </div>
+    <div class="panel light">
+      <div class="h" style="color:var(--text-on-light)">Light section</div>
+      <div class="b" style="color:var(--text-on-light)">Content on white.</div>
+      <div class="m" style="color:var(--text-on-light-muted)">Muted on light.</div>
+      <span class="pill" style="background:var(--steel-500);color:#fff">--surface-invert</span>
+    </div>
+    <div class="panel muted">
+      <div class="h" style="color:var(--text-on-light)">Muted light</div>
+      <div class="b" style="color:var(--text-on-light-muted)">Subtle gray section background.</div>
+      <span class="pill" style="background:var(--gray-200);color:var(--ink-900)">--surface-muted</span>
+    </div>
+  </div>
+</body>
+</html>
