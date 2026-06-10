@@ -224,6 +224,19 @@ async function restPatch(restPath, payload) {
   return body ? JSON.parse(body) : [];
 }
 
+// Insert a row and return it (PostgREST POST, service role). Mirrors restPatch.
+async function restPost(restPath, payload) {
+  const { host } = loadCreds();
+  const r = await fetch(`https://${host}/rest/v1/${restPath}`, {
+    method: "POST",
+    headers: { ...restHeaders(), Prefer: "return=representation" },
+    body: JSON.stringify(payload),
+  });
+  const body = await r.text();
+  if (!r.ok) throw new Error(`PostgREST POST ${r.status}: ${body.slice(0, 300)}`);
+  return body ? JSON.parse(body) : [];
+}
+
 // ── folders ───────────────────────────────────────────────────────────────────
 // List the named folders in a workspace's Content Library.
 export async function listFolders(workspaceId) {
@@ -244,6 +257,18 @@ export async function resolveFolder(workspaceId, name) {
   const folders = await listFolders(workspaceId);
   const norm = (s) => String(s).toLowerCase().trim();
   return folders.find((f) => norm(f.name) === norm(name)) || null;
+}
+
+// Create a named folder in a workspace, returning its row. BEST-EFFORT: callers
+// (design-to-approval) must tolerate a thrown error and fall back to folder_id=null
+// — the content_folders schema may require columns this minimal insert omits.
+// Resolves first (case-insensitive) so a repeat call is idempotent, never a dupe.
+export async function createFolder(workspaceId, name, parentId = null) {
+  const existing = await resolveFolder(workspaceId, name);
+  if (existing) return existing;
+  const payload = { workspace_id: workspaceId, name: String(name), parent_id: parentId };
+  const rows = await restPost("content_folders?select=id,name,parent_id", payload);
+  return rows[0] || null;
 }
 
 // ── media: list + download (PULL) ─────────────────────────────────────────────
@@ -366,6 +391,20 @@ export async function findExistingByMeta(workspaceId, campaign, angleId, assetId
     `&metadata->>campaign=eq.${encodeURIComponent(campaign)}` +
     `&metadata->>angleId=eq.${encodeURIComponent(angleId)}` +
     `&metadata->>assetId=eq.${encodeURIComponent(assetId)}` +
+    `&deleted_at=is.null&select=id,content,folder_id,title&limit=1`;
+  const rows = await restGet(q);
+  return rows[0] || null;
+}
+
+// Idempotency for design-to-approval: a design row is keyed on the
+// (campaign, theme, designNumber) TRIPLE scoped to the workspace. designNumber
+// like "1A" repeats across themes/campaigns, so all three are required.
+export async function findExistingByDesign(workspaceId, campaign, theme, designNumber) {
+  const q =
+    `content_outputs?workspace_id=eq.${workspaceId}` +
+    `&metadata->>campaign=eq.${encodeURIComponent(campaign)}` +
+    `&metadata->>theme=eq.${encodeURIComponent(theme)}` +
+    `&metadata->>designNumber=eq.${encodeURIComponent(designNumber)}` +
     `&deleted_at=is.null&select=id,content,folder_id,title&limit=1`;
   const rows = await restGet(q);
   return rows[0] || null;
