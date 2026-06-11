@@ -340,7 +340,10 @@ export async function renderLayerConfigVideo(opts) {
   // separately as TrimmedMedia; leaving media in would make LayerStack <img>-
   // render the frames directory and show a broken/black box).
   const overlayConfig = { ...config };
-  delete overlayConfig.media;
+  // FOOTAGE cells render the bg clip separately (as bg frames), so drop it from the
+  // overlay. A NO-FOOTAGE cell with a bounded PHOTO (Route-B) keeps its media so
+  // LayerStack draws the bounded photo over the solid bg; Route-C has no media anyway.
+  if (!noFootage) delete overlayConfig.media;
 
   const wrapGlobal = "LayerVideoWrapper";
   // NOTE: audio is NOT rendered in the wrapper. <MusicSync> only plays during a

@@ -2,8 +2,10 @@
   "width": 1080,
   "height": 1920,
   "background": "rgb(10, 11, 13)",
+  "masterLoop": 7,
+  "keyframes": "@keyframes cWave { \n  0%, 9%, 100% { transform: translateY(0px); }\n  4% { transform: translateY(-10px); }\n}\n@keyframes cSweep { \n  0% { transform: translateX(-160%) skewX(-16deg); }\n  60%, 100% { transform: translateX(360%) skewX(-16deg); }\n}\n@keyframes cScan { \n  0%, 100% { transform: translateY(0px); opacity: 0; }\n  12% { opacity: 0.85; }\n  50% { transform: translateY(560px); opacity: 0.85; }\n  70% { opacity: 0; }\n}\n@keyframes cDraw { \n  0%, 100% { stroke-dashoffset: 0; }\n  46% { stroke-dashoffset: var(--len, 1400); }\n}\n@keyframes cReel { \n  0%, 100% { transform: translateY(var(--end, -80%)); }\n  42% { transform: translateY(0px); }\n}\n@keyframes cNeedle { \n  0%, 100% { transform: rotate(var(--rest, 42deg)); }\n  50% { transform: rotate(-42deg); }\n}\n@keyframes cBar { \n  0%, 100% { transform: scaleY(1); }\n  50% { transform: scaleY(var(--low, 0.2)); }\n}\n@keyframes cGrowX { \n  0%, 100% { transform: scaleX(1); }\n  50% { transform: scaleX(var(--low, 0.18)); }\n}\n@keyframes cPop { \n  0%, 100% { transform: scale(1); }\n  50% { transform: scale(1.12); }\n}\n@keyframes cFloat { \n  0%, 100% { transform: translateY(0px); }\n  50% { transform: translateY(-16px); }\n}\n@keyframes cWipe { \n  0%, 100% { clip-path: inset(0px); }\n  50% { clip-path: inset(0px 100% 0px 0px); }\n}\n@keyframes cWipeU { \n  0%, 100% { clip-path: inset(0px); }\n  50% { clip-path: inset(100% 0px 0px); }\n}\n@keyframes cType { \n  0%, 22%, 100% { clip-path: inset(0px); }\n  46% { clip-path: inset(0px 100% 0px 0px); }\n}\n@keyframes cCaret { \n  0%, 49% { opacity: 1; }\n  50%, 100% { opacity: 0; }\n}\n@keyframes cKen { \n  0% { transform: scale(1.04); }\n  100% { transform: scale(1.13); }\n}\n@keyframes cFlick { \n  0%, 100% { opacity: 1; }\n  48% { opacity: 0.5; }\n}\n@keyframes cSpin { \n  0% { transform: rotate(0deg); }\n  100% { transform: rotate(360deg); }\n}\n@keyframes cMarq { \n  0% { transform: translateX(0px); }\n  100% { transform: translateX(-50%); }\n}\n@keyframes cFlipA { \n  0%, 38%, 100% { opacity: 1; }\n  50%, 88% { opacity: 0; }\n}\n@keyframes cFlipB { \n  0%, 38%, 100% { opacity: 0; }\n  50%, 88% { opacity: 1; }\n}\n@keyframes cRing { \n  0%, 100% { stroke-dashoffset: 0; }\n  48% { stroke-dashoffset: var(--clen, 1583); }\n}\n@keyframes cKnob { \n  0%, 100% { transform: translateX(var(--kx, 74px)); }\n  50% { transform: translateX(0px); }\n}\n@keyframes cRipple { \n  0% { transform: scale(0.4); opacity: 0.5; }\n  70%, 100% { transform: scale(3.2); opacity: 0; }\n}\n@keyframes cStamp { \n  0%, 100% { transform: scale(1) rotate(-9deg); opacity: 1; }\n  44% { transform: scale(1.7) rotate(-9deg); opacity: 0; }\n  56% { opacity: 0; }\n}\n@keyframes cRise { \n  0%, 12%, 100% { transform: translateY(0px); opacity: 1; }\n  50% { transform: translateY(40px); opacity: 0; }\n}\n",
   "media": {
-    "path": "./assets/swap-brand-action-clip-agility-drill-unknown-male-athletes-acceleration-e99c19a2.mp4",
+    "path": "./assets/img/ad1.jpg",
     "tag": "bg_media",
     "z": 6,
     "offsetX": 0,
@@ -14,12 +16,7 @@
       "width": 1080,
       "height": 470
     },
-    "objectPosition": "50% 32%",
-    "scale": 1,
-    "krakenId": "e99c19a2-e3fc-440c-97cd-a18a6a7a1de9",
-    "krakenUrl": "https://xdszlcvmfjdjvqxhyxly.supabase.co/storage/v1/object/public/content-images/stories/d99a09e2-2810-4d39-ad24-d546b896b603/1777988790373-18082163525428773.mp4",
-    "clipStart": 0,
-    "clipEnd": 8.936825
+    "objectPosition": "50% 32%"
   },
   "fixedDesign": [
     {
@@ -36,8 +33,8 @@
     {
       "id": "s_7",
       "type": "rect",
-      "x": -7,
-      "y": 759,
+      "x": 0,
+      "y": 760,
       "width": 1080,
       "height": 470,
       "z": 7,
@@ -93,7 +90,8 @@
       "textTransform": "uppercase",
       "chipBg": "rgb(255, 255, 255)",
       "chipPad": "9px 15px 9px 15px",
-      "chipRadius": 4
+      "chipRadius": 4,
+      "animation": "7s ease-in-out 0s infinite normal none running cWave"
     },
     {
       "id": "t_4",
@@ -109,7 +107,8 @@
       "fontWeight": "400",
       "lineHeight": 0.8,
       "letterSpacing": "-3px",
-      "textTransform": "uppercase"
+      "textTransform": "uppercase",
+      "animation": "7s ease-in-out 0s infinite normal none running cWave"
     },
     {
       "id": "t_5",
@@ -125,7 +124,8 @@
       "fontWeight": "400",
       "lineHeight": 0.8,
       "letterSpacing": "-3px",
-      "textTransform": "uppercase"
+      "textTransform": "uppercase",
+      "animation": "7s ease-in-out -0.18s infinite normal none running cWave"
     },
     {
       "id": "t_9",
@@ -157,7 +157,8 @@
       "fontWeight": "400",
       "lineHeight": 0.8,
       "letterSpacing": "-3px",
-      "textTransform": "uppercase"
+      "textTransform": "uppercase",
+      "animation": "7s ease-in-out -0.3s infinite normal none running cWave"
     },
     {
       "id": "t_11",
@@ -202,7 +203,8 @@
       "fontFamily": "Geist",
       "color": "rgb(255, 255, 255)",
       "fontWeight": "700",
-      "lineHeight": 1.55
+      "lineHeight": 1.55,
+      "animation": "2.4s ease-in-out 0s infinite normal none running cFloat"
     },
     {
       "id": "t_14",
