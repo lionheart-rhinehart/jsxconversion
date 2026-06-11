@@ -814,6 +814,11 @@ async function renderFresh(asset, angleId) {
     return { ok: false, pending: true,
       error: `fresh template "${asset.template}" not authored yet — run compose-creative first` };
   }
+  // An `animated` layer-config asset (Claude Design flatten: keyframes + count-ups)
+  // ALWAYS renders through the motion config path so the export keeps its motion —
+  // even though its `format` is "static" (which only routes EDITING to the position
+  // editor). Without this, format:"static" would render a still PNG and drop the motion.
+  if (asset.animated && layerCfg) return renderTemplateVideoConfig(asset, angleId, asset.format === "gif");
   if (asset.format === "static") return renderTemplateStatic(asset, angleId);
   // video/gif: a motion JSX → the choreographed motion path; a layer config (no
   // motion JSX) → the Phase-C text-on-video path.
@@ -913,6 +918,10 @@ async function main() {
       let res;
       try {
         if (asset.source === "fresh") res = await renderFresh(asset, angle.id);
+        // `animated` (Claude Design flatten) → motion config path even when format:"static"
+        // (format only routes editing; the export must keep the keyframe motion).
+        // renderTemplateVideoConfig resolves the template via the module `campaign`.
+        else if (asset.animated) res = await renderTemplateVideoConfig(asset, angle.id, asset.format === "gif");
         else if (asset.format === "static") res = await renderTemplateStatic(asset, angle.id);
         else if (isVideoLayerConfig(asset)) res = await renderTemplateVideoConfig(asset, angle.id, asset.format === "gif");
         else res = await renderTemplateMotion(asset, angle.id, asset.format === "gif");

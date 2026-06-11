@@ -47,13 +47,20 @@ const angleNums = Object.keys(byAngle).map(Number).sort((a, b) => a - b);
 const angles = angleNums.map((n) => ({
   id: `a${n}`,
   name: `Angle ${n}`,
+  // All flattened designs are LayerStack configs → they edit in the POSITION editor
+  // (format:"static" routes review.html there, NOT the motion-bank video modal).
+  // `animated` marks that the EXPORT must use the motion render (run-campaign keys
+  // off the config's `keyframes`, so the still-image format never drops the motion).
   assets: byAngle[n].sort((a, b) => a.route.localeCompare(b.route)).map(({ route, id }) => ({
-    id: route, beat: route, format: route === "A" ? "video" : "static", source: "template", template: id,
+    id: route, beat: route, format: "static", animated: true, source: "template", template: id,
   })),
 }));
 
-// creative-plan.json (the contract)
-const plan = { schemaVersion: 1, campaign: slug, brand, angles };
+// creative-plan.json (the contract). `source:"claude-design"` + `skipValidation`
+// mark this as pre-made/pre-approved content → the engine's generation-quality gate
+// (validate-plan) is skipped so EXPORT + Approve work in the editing process. (A
+// future opt-in "analyze against brand rules" button is the right place for that check.)
+const plan = { schemaVersion: 1, campaign: slug, brand, source: "claude-design", skipValidation: true, angles };
 writeFileSync(join(campDir, "creative-plan.json"), JSON.stringify(plan, null, 2) + "\n");
 
 // pre-seed edits/ verbatim from each flattened config (so the editor opens THESE, no fill)

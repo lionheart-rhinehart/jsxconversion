@@ -2,6 +2,8 @@
   "schemaVersion": 1,
   "campaign": "westfield-100-off",
   "brand": "athletes-acceleration",
+  "source": "claude-design",
+  "skipValidation": true,
   "angles": [
     {
       "id": "a1",
@@ -10,14 +12,20 @@
         {
           "id": "A",
           "beat": "A",
-          "format": "video",
+          "format": "static",
+          "animated": true,
           "source": "template",
-          "template": "wf-1A"
+          "template": "wf-1A",
+          "status": "rendered",
+          "output": "out/campaigns/westfield-100-off/a1/A.mp4",
+          "thumb": "out/campaigns/westfield-100-off/a1/A.mp4",
+          "renderedAt": "2026-06-11T19:45:06.334Z"
         },
         {
           "id": "B",
           "beat": "B",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-1B"
         },
@@ -25,6 +33,7 @@
           "id": "C",
           "beat": "C",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-1C"
         }
@@ -37,7 +46,8 @@
         {
           "id": "A",
           "beat": "A",
-          "format": "video",
+          "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-2A"
         },
@@ -45,6 +55,7 @@
           "id": "B",
           "beat": "B",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-2B"
         },
@@ -52,6 +63,7 @@
           "id": "C",
           "beat": "C",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-2C"
         }
@@ -64,7 +76,8 @@
         {
           "id": "A",
           "beat": "A",
-          "format": "video",
+          "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-3A"
         },
@@ -72,6 +85,7 @@
           "id": "B",
           "beat": "B",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-3B"
         },
@@ -79,6 +93,7 @@
           "id": "C",
           "beat": "C",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-3C"
         }
@@ -91,7 +106,8 @@
         {
           "id": "A",
           "beat": "A",
-          "format": "video",
+          "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-4A"
         },
@@ -99,6 +115,7 @@
           "id": "B",
           "beat": "B",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-4B"
         },
@@ -106,6 +123,7 @@
           "id": "C",
           "beat": "C",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-4C"
         }
@@ -118,7 +136,8 @@
         {
           "id": "A",
           "beat": "A",
-          "format": "video",
+          "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-5A"
         },
@@ -126,6 +145,7 @@
           "id": "B",
           "beat": "B",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-5B"
         },
@@ -133,6 +153,7 @@
           "id": "C",
           "beat": "C",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-5C"
         }
@@ -145,7 +166,8 @@
         {
           "id": "A",
           "beat": "A",
-          "format": "video",
+          "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-6A"
         },
@@ -153,6 +175,7 @@
           "id": "B",
           "beat": "B",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-6B"
         },
@@ -160,6 +183,7 @@
           "id": "C",
           "beat": "C",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-6C"
         }
@@ -172,7 +196,8 @@
         {
           "id": "A",
           "beat": "A",
-          "format": "video",
+          "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-7A"
         },
@@ -180,6 +205,7 @@
           "id": "B",
           "beat": "B",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-7B"
         },
@@ -187,6 +213,7 @@
           "id": "C",
           "beat": "C",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-7C"
         }
@@ -199,7 +226,8 @@
         {
           "id": "A",
           "beat": "A",
-          "format": "video",
+          "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-8A"
         },
@@ -207,6 +235,7 @@
           "id": "B",
           "beat": "B",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-8B"
         },
@@ -214,6 +243,7 @@
           "id": "C",
           "beat": "C",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-8C"
         }
@@ -226,7 +256,8 @@
         {
           "id": "A",
           "beat": "A",
-          "format": "video",
+          "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-9A"
         },
@@ -234,6 +265,7 @@
           "id": "B",
           "beat": "B",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-9B"
         },
@@ -241,6 +273,7 @@
           "id": "C",
           "beat": "C",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-9C"
         }
@@ -253,7 +286,8 @@
         {
           "id": "A",
           "beat": "A",
-          "format": "video",
+          "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-10A"
         },
@@ -261,6 +295,7 @@
           "id": "B",
           "beat": "B",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-10B"
         },
@@ -268,6 +303,7 @@
           "id": "C",
           "beat": "C",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-10C"
         }
@@ -280,7 +316,8 @@
         {
           "id": "A",
           "beat": "A",
-          "format": "video",
+          "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-11A"
         },
@@ -288,6 +325,7 @@
           "id": "B",
           "beat": "B",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-11B"
         },
@@ -295,6 +333,7 @@
           "id": "C",
           "beat": "C",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-11C"
         }
@@ -307,7 +346,8 @@
         {
           "id": "A",
           "beat": "A",
-          "format": "video",
+          "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-12A"
         },
@@ -315,6 +355,7 @@
           "id": "B",
           "beat": "B",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-12B"
         },
@@ -322,6 +363,7 @@
           "id": "C",
           "beat": "C",
           "format": "static",
+          "animated": true,
           "source": "template",
           "template": "wf-12C"
         }

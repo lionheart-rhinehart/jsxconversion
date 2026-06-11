@@ -17,8 +17,17 @@ import { resolve, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const DIR = join(ROOT, "campaigns", "westfield-100-off");
-const SRC = join(DIR, "Westfield Campaign C.dc.html");
+// Reusable for ANY handoff:
+//   --campaign <slug>   campaign folder under campaigns/ (default: westfield-100-off)
+//   --src "<.dc.html>"  the chosen Claude Design file inside that folder (default:
+//                       "Westfield Campaign C.dc.html"). `--src` may be a bare
+//                       filename (resolved inside the campaign dir) or a full path.
+const argv = process.argv.slice(2);
+const arg = (k, d) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : d; };
+const CAMPAIGN = arg("--campaign", "westfield-100-off");
+const DIR = join(ROOT, "campaigns", CAMPAIGN);
+const srcArg = arg("--src", "Westfield Campaign C.dc.html");
+const SRC = srcArg.includes("/") || srcArg.includes("\\") ? resolve(srcArg) : join(DIR, srcArg);
 const OUT = join(DIR, "index.html");
 const s = readFileSync(SRC, "utf8");
 

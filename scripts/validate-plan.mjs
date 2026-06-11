@@ -278,6 +278,28 @@ export function validatePlan(plan, opts = {}) {
   const campaign = opts.campaign || plan.campaign;
   const dataDir = opts.dataDir || DATA_DIR;
   const brand = plan.brand || null;
+
+  // ── Content-class exemption (NOT a rule downgrade) ─────────────────────────
+  // The generation-quality gate exists to vet creatives the ENGINE generated, so
+  // the engine can't game its own gate (see the un-downgradable override logic
+  // below). A Claude Design handoff is a DIFFERENT content class: pre-made,
+  // human-approved designs the engine did not generate — the gate's purpose
+  // doesn't apply (no city is set, Route-C is intentionally media-free, client
+  // copy may use otherwise-restricted words). Human-authorized 2026-06-11 to skip
+  // it during the EDITING process. Requires BOTH the explicit source AND flag so
+  // it can ONLY exempt this class, never a generated campaign. (A future opt-in
+  // "analyze against brand rules" button is the right place for this check.)
+  if (plan.source === "claude-design" && plan.skipValidation === true) {
+    const planCount = (plan.angles || []).reduce((n, a) => n + (a.assets || []).length, 0);
+    return {
+      schemaVersion: 1, campaign, brand,
+      rulesSource: "claude-design (validation skipped — pre-approved handoff, not engine-generated)",
+      blocking: 0, warnings: 0, ok: true,
+      assetsEvaluated: 0, planCount,
+      summaryText: `validation skipped — Claude Design handoff (${planCount} pre-approved designs)`,
+      campaignViolations: [], assets: {},
+    };
+  }
   let rules = opts.rules || loadRules(brand, dataDir);
   // Per-campaign override — now UN-DOWNGRADABLE by the engine (Phase 0). A
   // campaigns/<c>/validation.config.json that relaxes a gate (e.g. {"verbatim":

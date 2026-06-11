@@ -96,6 +96,15 @@
       align-items: center;
       justify-content: center;
     }
+    /* VIEW MODE — embedded LIVE preview for review-page cards (?view=1): show only
+       the scaled, animated stage; hide all chrome; non-interactive (read-only). */
+    body.view-mode { display: block; }
+    body.view-mode > header, body.view-mode > aside,
+    body.view-mode .clip-modal, body.view-mode #lightbox,
+    body.view-mode #transportBar { display: none !important; }
+    body.view-mode .stage { position: fixed; inset: 0; width: 100vw; height: 100vh; background: #08090b; z-index: 2147483647; }
+    body.view-mode .stage * { pointer-events: none !important; }
+    body.view-mode { overflow: hidden; }
     .stage-inner {
       position: relative;
       /* Clip to the frame so the preview shows EXACTLY what renders — same
@@ -4903,6 +4912,11 @@
         opt.textContent = c;
         select.appendChild(opt);
       }
+      // VIEW MODE (?view=1): embedded LIVE preview for review-page cards — render
+      // only the scaled, animated stage, no chrome, read-only. Skip the chrome inits.
+      const VIEW_MODE = new URLSearchParams(window.location.search).get('view') === '1';
+      if (VIEW_MODE) document.body.classList.add('view-mode');
+
       const initial = window.location.hash.slice(1);
       if (initial && parseCampId(initial)) {
         // Campaign asset — not present in the cluster <select>; load directly
@@ -4912,6 +4926,7 @@
         select.value = initial;
         await loadCluster(initial);
       }
+      if (VIEW_MODE) return; // read-only preview — no editor chrome/handlers
       // Wire the Kraken bar AFTER state.cluster (and its campaign) is set — await
       // above is required: loadCluster sets state.cluster past an internal await.
       initKrakenBar();

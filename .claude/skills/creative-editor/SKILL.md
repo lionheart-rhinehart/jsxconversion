@@ -1,86 +1,84 @@
 ---
 name: creative-editor
 description: >-
-  Take a Claude Design handoff and make it live-editable in the position editor —
-  connected to the campaign with the right Kraken workspace auto-pinned, motion
-  preserved, no rendering. Flattens the raw designs into editable layers (footage =
-  live clip, overlays = editable layers that still animate), scaffolds the minimal
-  campaign, and prints the per-design editor URLs. Trigger when the user runs
-  /creative-editor, hands you a Claude Design "Fetch this design file…" link/bundle
-  and wants to edit it, or asks to connect designs to the editor.
+  Take a Claude Design handoff and present every design LIVE on the engine review
+  page, each fully editable in the position editor (media + Kraken auto-pinned),
+  motion preserved, no rendering to view or edit. Asks which campaign + zip-or-link,
+  ingests, flattens to editable animated layers, scaffolds the campaign, and opens
+  the review page. Trigger when the user runs /creative-editor, hands you a Claude
+  Design "Fetch this design file…" link/bundle and wants to edit it, or asks to
+  connect designs to the editor / review page.
 ---
 
 # Creative Editor
 
-**One job: turn a Claude Design handoff into designs you can edit in the position editor,
-connected to the campaign. Nothing else.** If a step needs you to *patch the editor* to work,
-that's an editor bug to fix at the source — never paper over it here.
+**One job: turn a Claude Design handoff into a review page where every design shows LIVE and is
+fully editable — connected to the campaign with the right Kraken workspace. Nothing else.** If a
+step needs you to *patch the editor* to work, that's an editor bug to fix at the source.
 
 The pipeline is proven (Westfield was the first run). Each step has a deterministic script; you
-orchestrate.
+orchestrate. **No rendering is needed to view or edit** — render only on explicit export.
 
-## What you produce
-- `templates/<slug>/wf-<N><A|B|C>.{config.json,jsx}` — the raw designs flattened to **editable
-  layers WITH motion** (`@keyframes` + per-layer `animation` + count-ups captured).
-- `campaigns/<slug>/{creative-plan.json, kraken.json, edits/<angle>__<asset>.config.json}` +
-  a `.editor-config.json` root registration — the minimal campaign wrapper.
-- The `#camp:<slug>:<angle>:<asset>` editor URLs (Kraken auto-pinned, motion playing, editable).
+## Intake — ASK FIRST (use AskUserQuestion)
 
-## Steps
+1. **Q1 — "Which campaign are we working on?"** Free-text (e.g. "Westfield Campaign C"). This both
+   names the campaign **and disambiguates** which design to use when the handoff holds multiple cuts
+   (A/B/C `.dc.html` files). Derive the slug (`westfield-100-off`) + the location ("Westfield").
+2. **Q2 — "Is this a zip or a direct link?"** Then collect:
+   - **Zip** → the local path; unpack it (`gunzip`/`tar -xf`).
+   - **Direct link** → the Claude Design "Fetch this design file…" URL; `curl` it (it's a gzip'd
+     tar) → unpack.
+3. **Ingest + disambiguate.** Read the bundle `README.md`/`CLAUDE.md`/chats. **List the `.dc.html`
+   files**; pick the one matching Q1. If still ambiguous, show the list and ask.
+4. **Q3 — Confirm the Kraken workspace.** `curl -s http://localhost:<editorPort>/kraken/workspaces`,
+   match the location → e.g. `AA - Westfield` (`aa-westfield`). **Show the match + confirm** before
+   writing. No clean match → list options and ask.
 
-1. **Ingest the handoff.** If given a "Fetch this design file…" URL, download + unpack it
-   (`curl` the bundle → it's a gzip'd tar → `gunzip` + `tar -xf`). Read the bundle README +
-   `CLAUDE.md` + chat transcripts to learn the project (location, the approved copy, which file is
-   the latest cut). Identify the **campaign slug** (e.g. `westfield-100-off`) and the **location**
-   (e.g. "Westfield").
+## Build (run these — all parameterized)
 
-2. **Make the runnable gallery** (the flatten source). Copy the design's assets + DS tokens into
-   `campaigns/<slug>/`, then build `campaigns/<slug>/index.html` from the chosen `.dc.html` by
-   dropping the Claude Design `support.js` runtime (hoist `<helmet>`→`<head>`, `<x-dc>` body→`<body>`,
-   the `dc-script` componentDidMount → a plain `DOMContentLoaded` script — **strip its trailing `}`**).
-   For Westfield this is `scripts/westfield-flatten-gallery.mjs`; generalize/copy it per handoff.
-   (See the `reference-dc-html-to-standalone` memory.)
-
-3. **Flatten to editable, animated layers — NO render.**
-   `node scripts/westfield-flatten.mjs --all` (reads `campaigns/<slug>/index.html`, writes
-   `templates/<slug>/wf-*.{config.json,jsx}` + copies media into `templates/<slug>/assets/`). It
-   freezes each design to its first frame for geometry **and** captures its motion (the `@keyframes`
-   library, each layer's inline `animation` + `transform-origin` + custom props, `data-countup`
-   metadata, `masterLoop`). Geometry stays byte-identical; motion is additive.
-   *(If the flattener is still hard-pinned to `westfield-100-off`, parameterize its `GALLERY`/`OUT_DIR`
-   by a `--campaign <slug>` arg first — do NOT copy a new design over Westfield's.)*
-
-4. **Auto-detect + CONFIRM the Kraken workspace.** Fetch the live list
-   (`curl -s http://localhost:<editorPort>/kraken/workspaces`) and match the location name to a
-   workspace (e.g. "Westfield" → `AA - Westfield`, name `aa-westfield`, with its `id`). **Show the
-   match and ask the user to confirm** before writing it. If no clean match, list the options and ask.
-
-5. **Connect (scaffold the campaign).**
+5. **Copy assets + build the runnable gallery** (the flatten source). Copy the design's `assets/` +
+   `_ds/` into `campaigns/<slug>/`, then:
+   `node scripts/westfield-flatten-gallery.mjs --campaign <slug> --src "<chosen .dc.html>"`
+   (drops the Claude Design `support.js` runtime → `campaigns/<slug>/index.html`).
+6. **Flatten to editable, ANIMATED layers — NO render.**
+   `node scripts/westfield-flatten.mjs --campaign <slug> --all`
+   → `templates/<slug>/wf-*.{config.json,jsx}` (each layer's `animation` + `@keyframes` + count-ups
+   captured; geometry byte-identical) + media copied into `templates/<slug>/assets/`.
+7. **Connect (scaffold the campaign).**
    `node scripts/creative-editor-connect.mjs <slug> --workspace <name> --workspace-id <uuid>`
-   writes `creative-plan.json` (angles N × assets A/B/C → template), pre-seeds
-   `edits/<angle>__<asset>.config.json` from each flattened config (the editor returns these
-   verbatim — `aa-campaign-plugin.mjs:207`), writes `kraken.json` (editor auto-pins it via
-   `/kraken/state`), and registers `templates/<slug>` in `.editor-config.json`. It prints the
-   `#camp:<slug>:<angle>:<asset>` URLs.
+   → `creative-plan.json` (all assets `format:"static"`+`animated:true` so they open in the POSITION
+   editor and export as MOTION; stamps `source:"claude-design"`+`skipValidation:true`), pre-seeds
+   `edits/<angle>__<asset>.config.json` from each flattened config (returned verbatim —
+   `aa-campaign-plugin.mjs:207`), writes `kraken.json` (editor auto-pins it), registers
+   `templates/<slug>` in `.editor-config.json`.
 
-6. **Ensure the dev servers — NON-DESTRUCTIVELY.** NEVER port-kill (it kills the user's other
-   servers/chats). If `.dev-ports.json` shows live ports, reuse them; otherwise start a fresh
-   `node scripts/dev.mjs` detached. (Do NOT run `restart-dev.mjs`.)
+## Deliver — open the REVIEW PAGE (not raw URLs)
 
-7. **Hand off the URLs.** Give the user the `#camp:<slug>:<angle>:<asset>` links (Kraken auto-pinned
-   to their location, the 7-second motion playing, every layer editable). A render to PNG/MP4 happens
-   ONLY when they explicitly export — editing is fully live, zero renders, zero tokens.
+8. **Ensure dev servers — NON-DESTRUCTIVELY.** NEVER port-kill (kills the user's other servers).
+   If `.dev-ports.json` shows live ports, reuse; else start `node scripts/dev.mjs` detached
+   (editor:5173 + review:5599). Do NOT run `restart-dev.mjs`.
+9. **Hand over ONE URL — the review page:**
+   `http://localhost:<review>/review.html?campaign=<slug>&api=<editor>&editor=<editor>`
+   Every design is a **LIVE animated card** (no render). **Click any card → the full position
+   editor** — text, layers, MEDIA tab with the **Kraken browser auto-pinned**, clip swap/trim, reel,
+   audio, draw, copy-swap, Save/Save+Render. Editing is 100% live; a motion MP4 is produced only when
+   the user clicks Save+Render / exports.
 
 ## Contract / guardrails
-- **No render to edit.** The flatten produces the editable layer model; the editor composes it live.
-- **Don't patch the editor.** It must already be correct standalone — if it isn't, fix the editor.
-- **Motion survives editing.** Edited exports keep the 7s overlay motion (the render bakes it via the
-  `MOTION_SYNC_PATCH` in `layer-config-video.mjs` — Route-A/B footage path proven; Route-C no-footage
-  cells use `renderLayerConfigMotion`).
-- **Verify in a VISIBLE browser.** The headless preview tool freezes animation (hidden tab); confirm
-  motion playback with the user, or via a rendered MP4 (`/render-template/<id>` → inspect frames).
+- **No render to view or edit.** Flatten → editable layer model; the review cards + editor compose it
+  live.
+- **Don't patch the editor.** It must already be correct standalone.
+- **Motion survives editing.** Edited exports keep the 7s motion (run-campaign routes `animated`
+  configs through the motion path even though `format:"static"`; Route-A/B over footage, Route-C over
+  a synthesized solid bg).
+- **Validation is SKIPPED for these** (`source:"claude-design"`+`skipValidation`) — they're pre-made,
+  human-approved content, not engine-generated, so the generation-quality gate doesn't apply. (A
+  future opt-in "analyze against brand rules" button is the right place for that check — deferred.)
+- **Verify in a VISIBLE browser.** The headless preview tool freezes animation (hidden tab) and is
+  slow with many live-card iframes; confirm playback with the user, or via a rendered MP4
+  (`/render-asset/<c>/<a>/<as>` → inspect frames).
 
 ## Proven reference
 Westfield (`westfield-100-off`): 36 designs flattened with motion, connected, Kraken pinned to
-AA - Westfield; `#camp:westfield-100-off:a1:A` opens campaign-bound with 8 animations attached, footage
-loading, 0 broken media. See the `project-westfield-editor-templates` memory.
+AA - Westfield; review page shows 36 live cards (validation clean), click → full editor; campaign
+render bakes motion (count-up 39%→27%). See the `project-westfield-editor-templates` memory.
