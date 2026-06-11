@@ -516,7 +516,7 @@ function cardHTML(a) {
   <div class="card s-${a.status} as-${st}" data-angle="${a._angle.id}" data-asset="${a.id}">
     <div class="prev">
       ${previewHTML(a)}
-      <div class="badges"><span class="b fmt">${fmtLabel(a.format)}</span>${srcBadge}<span class="b id">${a.id}</span></div>
+      <div class="badges"><span class="b fmt">${fmtLabel(a.format)}</span>${srcBadge}<span class="b id">${(a._angle && /^a\d+$/.test(a._angle.id) ? a._angle.id.slice(1) : "")}${a.id}</span></div>
       <span class="b status ${a.status}">${a.status}</span>
       ${editTag}${compBadge}
     </div>
@@ -557,7 +557,19 @@ function render() {
     (PLAN.angles && PLAN.angles[0] ? PLAN.angles[0].name : "Campaign") +
     ` <span class="accent">·</span>`;
   let html = valBannerHTML();
+  // Claude Design campaigns: one section PER ANGLE with the angle name as the header
+  // and its routes (A/B/C) together in a row — NOT split into per-beat sub-sections
+  // (beat here is the route, not a funnel stage). Engine campaigns keep beat grouping.
+  const byAngle = PLAN.source === "claude-design";
   for (const ang of PLAN.angles || []) {
+    if (byAngle) {
+      const cards = (ang.assets || []).filter(pass).map((a) => ({ ...a, _angle: ang }));
+      if (!cards.length) continue;
+      html += `<div class="beat"><h2>${(ang.name || ang.id).replace(/</g, "&lt;")}<span class="ct">${cards.length}</span></h2><div class="grid">`;
+      html += cards.map(cardHTML).join("");
+      html += `</div></div>`;
+      continue;
+    }
     const beats = {};
     for (const a of ang.assets || []) {
       if (!pass(a)) continue;
