@@ -99,6 +99,58 @@ const BG_SYNC_PATCH = String.raw`
 })();
 `;
 
+// ─── deterministic OVERLAY MOTION sync (Part 3) ────────────────────────────
+// CSS @keyframes + the count-up driver run on WALL-CLOCK, but the renderer steps
+// a virtual clock via __setRenderTime(t) (seconds) far faster than real time — so
+// without this the overlay animation would be frozen in the MP4. This wraps the
+// (already bg-patched) __setRenderTime to SEEK every CSS animation's currentTime
+// to the phase for t, and compute each count-up's value from t — binding the
+// overlay motion to the same virtual clock the bg uses → deterministic, animated.
+const MOTION_SYNC_PATCH = String.raw`
+(function () {
+  if (typeof window === "undefined" || window.__motionSyncPatched) return;
+  function fmt(v, dec) { return dec > 0 ? v.toFixed(dec) : Math.round(v).toLocaleString("en-US"); }
+  function tickCountups(t) {
+    var MASTER = window.__WF_MASTER || 7;
+    var t01 = (t % MASTER) / MASTER;
+    var els = document.querySelectorAll("[data-countup]");
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i], tgt = parseFloat(el.dataset.countup); if (isNaN(tgt)) continue;
+      var dec = +(el.dataset.decimals || 0), pre = el.dataset.prefix || "", suf = el.dataset.suffix || "";
+      var v = tgt, op = 1;
+      if (t01 < 0.60) { v = tgt; op = 1; }
+      else if (t01 < 0.66) { v = tgt; op = 1 - (t01 - 0.60) / 0.06; }
+      else if (t01 < 0.72) { v = 0; op = (t01 - 0.66) / 0.06; }
+      else { var p = Math.min((t01 - 0.72) / 0.25, 1); v = tgt * (1 - Math.pow(1 - p, 3)); op = 1; }
+      el.textContent = pre + fmt(v, dec) + suf; el.style.opacity = op.toFixed(3);
+    }
+  }
+  function install() {
+    if (typeof window.__setRenderTime !== "function") { setTimeout(install, 0); return; }
+    if (window.__motionSyncPatched) return;
+    window.__motionSyncPatched = true;
+    var orig = window.__setRenderTime;
+    var paused = false;
+    window.__setRenderTime = function (t) {
+      var r = orig.apply(this, arguments);   // bg-sync (returns a decode promise)
+      try {
+        var anims = (document.getAnimations ? document.getAnimations() : []);
+        if (!paused) { for (var j = 0; j < anims.length; j++) try { anims[j].pause(); } catch (e) {} paused = true; }
+        for (var i = 0; i < anims.length; i++) {
+          var a = anims[i];
+          var dur = (a.effect && a.effect.getTiming && a.effect.getTiming().duration) || 0;
+          if (!dur || dur === Infinity) dur = (window.__WF_MASTER || 7) * 1000;
+          try { a.currentTime = (t * 1000) % dur; } catch (e) {}
+        }
+      } catch (e) {}
+      tickCountups(t);
+      return r;
+    };
+  }
+  install();
+})();
+`;
+
 // Strip ES `export` so _helpers.jsx loads as a PLAIN script (sourceType:script),
 // which lets babel-standalone hoist its top-level decls to window — exactly how
 // animations.jsx/editing.jsx expose their globals. We also append explicit window
@@ -191,13 +243,18 @@ export async function renderLayerConfigVideo(opts) {
   const W = Number(config.width) || 1080;
   const H = Number(config.height) || 1920;
 
-  // ── 1) resolve the background video ──────────────────────────────────────
+  // ── 1) resolve the background video (or, Route-C, a solid bg for a motion-only cell) ──
   const media = config.media || {};
-  if (!configHasVideoBackground(config)) {
-    return { ok: false, reason: "config has no video background (config.media.path is not a video)", stagingDir: null };
+  const isAnimated = !!(config.keyframes && (
+    (config.elements || []).some((e) => e.animation || e.countup) ||
+    (config.fixedDesign || []).some((s) => s.animation)
+  ));
+  const noFootage = !configHasVideoBackground(config);
+  if (noFootage && !isAnimated) {
+    return { ok: false, reason: "config has no video background and no motion (renders as a static PNG)", stagingDir: null };
   }
-  const absBg = resolveMediaAbs({ path: media.path, templateDir, projectRoot });
-  if (!absBg) {
+  const absBg = noFootage ? null : resolveMediaAbs({ path: media.path, templateDir, projectRoot });
+  if (!noFootage && !absBg) {
     return { ok: false, reason: `background video not found on disk: ${media.path}`, stagingDir: null };
   }
 
@@ -209,7 +266,10 @@ export async function renderLayerConfigVideo(opts) {
   // they're equal. When media.loop is on, D = media.loopSeconds can EXCEED winLen and
   // the frame-sync driver wraps (loops) the winLen frames to fill D — so a short clip
   // becomes a longer looped video with no extra frames captured.
-  let winLen = Number(duration) || (ce != null ? (ce - cs) : null) || Number(config.durationSeconds) || 6;
+  // Route-C (no footage) loops exactly one masterLoop of the overlay motion.
+  let winLen = noFootage
+    ? (Number(config.masterLoop) || 7)
+    : (Number(duration) || (ce != null ? (ce - cs) : null) || Number(config.durationSeconds) || 6);
   winLen = Math.max(1, Math.min(30, winLen)); // floor 1s, cap 30s so a long source can't OOM the capture
   const looping = !!(media.loop && Number(media.loopSeconds) > 0);
   let D = looping ? Math.max(1, Math.min(30, Number(media.loopSeconds))) : winLen;
@@ -233,10 +293,15 @@ export async function renderLayerConfigVideo(opts) {
   //     when there's audio, MusicSync — both auto-loaded by the renderer.
   const elementsDir = join(stagingDir, "elements");
   mkdirSync(elementsDir, { recursive: true });
-  if (!existsSync(HELPERS_PATH)) {
-    return { ok: false, reason: `missing ${HELPERS_PATH}`, stagingDir };
+  // Prefer the TEMPLATE's own _helpers.jsx when present (e.g. Westfield's carries
+  // the Part-3 motion: @keyframes <style> + animated layers + data-countup spans);
+  // otherwise fall back to the shared multisport renderers.
+  const templateHelpers = join(templateDir, "_helpers.jsx");
+  const helpersSrc = existsSync(templateHelpers) ? templateHelpers : HELPERS_PATH;
+  if (!existsSync(helpersSrc)) {
+    return { ok: false, reason: `missing ${helpersSrc}`, stagingDir };
   }
-  writeFileSync(join(elementsDir, "_helpers.jsx"), transformHelpersForScript(readFileSync(HELPERS_PATH, "utf8")));
+  writeFileSync(join(elementsDir, "_helpers.jsx"), transformHelpersForScript(readFileSync(helpersSrc, "utf8")));
 
   // 3c) the template's assets/ so overlay ./assets/.. (cutouts, imageFill) resolve.
   const srcAssets = join(templateDir, "assets");
@@ -244,19 +309,29 @@ export async function renderLayerConfigVideo(opts) {
     try { cpSync(srcAssets, join(stagingDir, "assets"), { recursive: true }); } catch { /* best-effort */ }
   }
 
-  // ── 4) extract the bg video → PNG frames (trimmed + capped to D) ─────────
+  // ── 4) the background → PNG frames ───────────────────────────────────────
   const bgFramesDir = join(stagingDir, `${id}.bgframes`);
   mkdirSync(bgFramesDir, { recursive: true });
-  const ffArgs = ["-y", "-loglevel", "error"];
-  if (cs > 0) ffArgs.push("-ss", String(cs));
-  ffArgs.push("-i", absBg, "-t", String(winLen), "-vf", `fps=${fps}`, join(bgFramesDir, "%05d.png"));
-  const ff = spawnSync("ffmpeg", ffArgs, { encoding: "utf8" });
-  const frameCount = ff.status === 0
-    ? readdirSync(bgFramesDir).filter((f) => f.endsWith(".png")).length
-    : 0;
-  if (frameCount === 0) {
-    const tail = String(ff.stderr || ff.error?.message || "").trim().split(/\r?\n/).filter(Boolean).slice(-3).join(" | ");
-    return { ok: false, reason: `bg frame extraction failed: ${tail || "no frames produced"}`, stagingDir };
+  let frameCount = 0;
+  if (noFootage) {
+    // Route-C: ONE solid frame in the design's background color; the overlays
+    // animate on top of it (the bg-sync just holds this single frame for every t).
+    let bg = String(config.background || "#0a0b0d").trim();
+    const m = /^#([0-9a-f]{6})$/i.exec(bg);
+    const mr = /^rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i.exec(bg);
+    const hex = m ? "0x" + m[1] : mr ? "0x" + [mr[1], mr[2], mr[3]].map((n) => (+n).toString(16).padStart(2, "0")).join("") : "0x0a0b0d";
+    const ff0 = spawnSync("ffmpeg", ["-y", "-loglevel", "error", "-f", "lavfi", "-i", `color=c=${hex}:s=${W}x${H}`, "-frames:v", "1", join(bgFramesDir, "00001.png")], { encoding: "utf8" });
+    frameCount = ff0.status === 0 ? 1 : 0;
+  } else {
+    const ffArgs = ["-y", "-loglevel", "error"];
+    if (cs > 0) ffArgs.push("-ss", String(cs));
+    ffArgs.push("-i", absBg, "-t", String(winLen), "-vf", `fps=${fps}`, join(bgFramesDir, "%05d.png"));
+    const ff = spawnSync("ffmpeg", ffArgs, { encoding: "utf8" });
+    frameCount = ff.status === 0 ? readdirSync(bgFramesDir).filter((f) => f.endsWith(".png")).length : 0;
+    if (frameCount === 0) {
+      const tail = String(ff.stderr || ff.error?.message || "").trim().split(/\r?\n/).filter(Boolean).slice(-3).join(" | ");
+      return { ok: false, reason: `bg frame extraction failed: ${tail || "no frames produced"}`, stagingDir };
+    }
   }
   const bgFramesInfo = { base: `./${id}.bgframes/`, count: frameCount, fps, key: "bg" };
 
@@ -305,7 +380,9 @@ window.${wrapGlobal} = ${wrapGlobal};
 
 // Pre-extracted background frames + the deterministic frame-sync driver.
 window.__bgFrames = ${JSON.stringify(bgFramesInfo)};
+window.__WF_MASTER = ${JSON.stringify(config.masterLoop || 7)};
 ${BG_SYNC_PATCH}
+${MOTION_SYNC_PATCH}
 `;
   const wrapperPath = join(stagingDir, `${id}.jsx`);
   writeFileSync(wrapperPath, wrapper);

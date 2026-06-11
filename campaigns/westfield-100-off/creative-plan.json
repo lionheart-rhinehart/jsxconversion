@@ -1,0 +1,331 @@
+{
+  "schemaVersion": 1,
+  "campaign": "westfield-100-off",
+  "brand": "athletes-acceleration",
+  "angles": [
+    {
+      "id": "a1",
+      "name": "Angle 1",
+      "assets": [
+        {
+          "id": "A",
+          "beat": "A",
+          "format": "video",
+          "source": "template",
+          "template": "wf-1A"
+        },
+        {
+          "id": "B",
+          "beat": "B",
+          "format": "static",
+          "source": "template",
+          "template": "wf-1B"
+        },
+        {
+          "id": "C",
+          "beat": "C",
+          "format": "static",
+          "source": "template",
+          "template": "wf-1C"
+        }
+      ]
+    },
+    {
+      "id": "a2",
+      "name": "Angle 2",
+      "assets": [
+        {
+          "id": "A",
+          "beat": "A",
+          "format": "video",
+          "source": "template",
+          "template": "wf-2A"
+        },
+        {
+          "id": "B",
+          "beat": "B",
+          "format": "static",
+          "source": "template",
+          "template": "wf-2B"
+        },
+        {
+          "id": "C",
+          "beat": "C",
+          "format": "static",
+          "source": "template",
+          "template": "wf-2C"
+        }
+      ]
+    },
+    {
+      "id": "a3",
+      "name": "Angle 3",
+      "assets": [
+        {
+          "id": "A",
+          "beat": "A",
+          "format": "video",
+          "source": "template",
+          "template": "wf-3A"
+        },
+        {
+          "id": "B",
+          "beat": "B",
+          "format": "static",
+          "source": "template",
+          "template": "wf-3B"
+        },
+        {
+          "id": "C",
+          "beat": "C",
+          "format": "static",
+          "source": "template",
+          "template": "wf-3C"
+        }
+      ]
+    },
+    {
+      "id": "a4",
+      "name": "Angle 4",
+      "assets": [
+        {
+          "id": "A",
+          "beat": "A",
+          "format": "video",
+          "source": "template",
+          "template": "wf-4A"
+        },
+        {
+          "id": "B",
+          "beat": "B",
+          "format": "static",
+          "source": "template",
+          "template": "wf-4B"
+        },
+        {
+          "id": "C",
+          "beat": "C",
+          "format": "static",
+          "source": "template",
+          "template": "wf-4C"
+        }
+      ]
+    },
+    {
+      "id": "a5",
+      "name": "Angle 5",
+      "assets": [
+        {
+          "id": "A",
+          "beat": "A",
+          "format": "video",
+          "source": "template",
+          "template": "wf-5A"
+        },
+        {
+          "id": "B",
+          "beat": "B",
+          "format": "static",
+          "source": "template",
+          "template": "wf-5B"
+        },
+        {
+          "id": "C",
+          "beat": "C",
+          "format": "static",
+          "source": "template",
+          "template": "wf-5C"
+        }
+      ]
+    },
+    {
+      "id": "a6",
+      "name": "Angle 6",
+      "assets": [
+        {
+          "id": "A",
+          "beat": "A",
+          "format": "video",
+          "source": "template",
+          "template": "wf-6A"
+        },
+        {
+          "id": "B",
+          "beat": "B",
+          "format": "static",
+          "source": "template",
+          "template": "wf-6B"
+        },
+        {
+          "id": "C",
+          "beat": "C",
+          "format": "static",
+          "source": "template",
+          "template": "wf-6C"
+        }
+      ]
+    },
+    {
+      "id": "a7",
+      "name": "Angle 7",
+      "assets": [
+        {
+          "id": "A",
+          "beat": "A",
+          "format": "video",
+          "source": "template",
+          "template": "wf-7A"
+        },
+        {
+          "id": "B",
+          "beat": "B",
+          "format": "static",
+          "source": "template",
+          "template": "wf-7B"
+        },
+        {
+          "id": "C",
+          "beat": "C",
+          "format": "static",
+          "source": "template",
+          "template": "wf-7C"
+        }
+      ]
+    },
+    {
+      "id": "a8",
+      "name": "Angle 8",
+      "assets": [
+        {
+          "id": "A",
+          "beat": "A",
+          "format": "video",
+          "source": "template",
+          "template": "wf-8A"
+        },
+        {
+          "id": "B",
+          "beat": "B",
+          "format": "static",
+          "source": "template",
+          "template": "wf-8B"
+        },
+        {
+          "id": "C",
+          "beat": "C",
+          "format": "static",
+          "source": "template",
+          "template": "wf-8C"
+        }
+      ]
+    },
+    {
+      "id": "a9",
+      "name": "Angle 9",
+      "assets": [
+        {
+          "id": "A",
+          "beat": "A",
+          "format": "video",
+          "source": "template",
+          "template": "wf-9A"
+        },
+        {
+          "id": "B",
+          "beat": "B",
+          "format": "static",
+          "source": "template",
+          "template": "wf-9B"
+        },
+        {
+          "id": "C",
+          "beat": "C",
+          "format": "static",
+          "source": "template",
+          "template": "wf-9C"
+        }
+      ]
+    },
+    {
+      "id": "a10",
+      "name": "Angle 10",
+      "assets": [
+        {
+          "id": "A",
+          "beat": "A",
+          "format": "video",
+          "source": "template",
+          "template": "wf-10A"
+        },
+        {
+          "id": "B",
+          "beat": "B",
+          "format": "static",
+          "source": "template",
+          "template": "wf-10B"
+        },
+        {
+          "id": "C",
+          "beat": "C",
+          "format": "static",
+          "source": "template",
+          "template": "wf-10C"
+        }
+      ]
+    },
+    {
+      "id": "a11",
+      "name": "Angle 11",
+      "assets": [
+        {
+          "id": "A",
+          "beat": "A",
+          "format": "video",
+          "source": "template",
+          "template": "wf-11A"
+        },
+        {
+          "id": "B",
+          "beat": "B",
+          "format": "static",
+          "source": "template",
+          "template": "wf-11B"
+        },
+        {
+          "id": "C",
+          "beat": "C",
+          "format": "static",
+          "source": "template",
+          "template": "wf-11C"
+        }
+      ]
+    },
+    {
+      "id": "a12",
+      "name": "Angle 12",
+      "assets": [
+        {
+          "id": "A",
+          "beat": "A",
+          "format": "video",
+          "source": "template",
+          "template": "wf-12A"
+        },
+        {
+          "id": "B",
+          "beat": "B",
+          "format": "static",
+          "source": "template",
+          "template": "wf-12B"
+        },
+        {
+          "id": "C",
+          "beat": "C",
+          "format": "static",
+          "source": "template",
+          "template": "wf-12C"
+        }
+      ]
+    }
+  ]
+}

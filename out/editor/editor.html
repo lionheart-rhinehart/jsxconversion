@@ -694,7 +694,9 @@
                panels sit in the Media tab; the Edit-clip modal relocates them out → visible there.) */
             .ed-pane[data-pane="media"] #photoSwapPanel,
             .ed-pane[data-pane="media"] #trimPanel { display:none !important; }
-            #openClipModalBtn, #fsAddBtn { display:none !important; }   /* replaced by click-a-clip + the "+" tile */
+            #fsAddBtn { display:none !important; }   /* the in-strip "+" tile replaces it */
+            /* "Edit clip / media" stays as the entry to the media+Kraken modal — it is the ONLY
+               way in for photo / single-media templates that have no filmstrip to click. */
             .fs-add{display:flex;align-items:center;justify-content:center;font-size:30px;line-height:1;color:#fff;background:#1a1a22;border:2px dashed #555;width:84px;height:148px;border-radius:6px;cursor:pointer;flex:0 0 auto}
             .fs-add:hover{border-color:var(--red,#c4141d);color:var(--red,#c4141d)}
             .clip-switcher{display:flex;align-items:center;gap:8px;font:600 12px ui-monospace,monospace;color:var(--fg,#fff)}
@@ -1475,6 +1477,16 @@
         return;
       }
 
+      // Motion (Part 3): inject this design's @keyframes library once, at head
+      // level so it survives the per-interaction #stage rebuild. Guarded per cluster.
+      if (state.config.keyframes) {
+        const kfId = 'wf-keyframes-' + (state.cluster || '_');
+        if (!document.getElementById(kfId)) {
+          const s = document.createElement('style'); s.id = kfId; s.textContent = state.config.keyframes;
+          document.head.appendChild(s);
+        }
+      }
+
       if (state.mode === 'crop') {
         renderCropStage(stage);
         return;
@@ -1534,6 +1546,30 @@
       if (typeof renderTransport === 'function') renderTransport();
     }
 
+    // Count-up driver (Part 3): updates #stage [data-countup] spans on the master
+    // loop with the gallery's first-frame-safe phased curve (hold→fade→reset→ease-up).
+    // Continuous + inert when no count-ups present. Skips a span being edited (selected).
+    let _cuT0 = null;
+    function tickCountups(now) {
+      const MASTER = (((state.config && state.config.masterLoop) || 7)) * 1000;
+      if (_cuT0 == null) _cuT0 = now;
+      const t = ((now - _cuT0) % MASTER) / MASTER;
+      const fmt = (v, dec) => dec > 0 ? v.toFixed(dec) : Math.round(v).toLocaleString('en-US');
+      document.querySelectorAll('#stage [data-countup]').forEach((el) => {
+        const tgt = parseFloat(el.dataset.countup); if (isNaN(tgt)) return;
+        const dec = +(el.dataset.decimals || 0), pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
+        let v = tgt, op = 1;
+        if (t < 0.60) { v = tgt; op = 1; }
+        else if (t < 0.66) { v = tgt; op = 1 - (t - 0.60) / 0.06; }
+        else if (t < 0.72) { v = 0; op = (t - 0.66) / 0.06; }
+        else { const p = Math.min((t - 0.72) / 0.25, 1); v = tgt * (1 - Math.pow(1 - p, 3)); op = 1; }
+        el.textContent = pre + fmt(v, dec) + suf;
+        el.style.opacity = op.toFixed(3);
+      });
+      requestAnimationFrame(tickCountups);
+    }
+    requestAnimationFrame(tickCountups);
+
     // Is a media path a video clip? (Phase C — a video background renders to MP4.)
     function isVideoPath(p) { return /\.(mp4|mov|webm|m4v|mkv)(\?|$)/i.test(String(p || '')); }
 
@@ -1541,6 +1577,39 @@
     function renderMediaNode(media) {
       const W = state.config.width || 1080;
       const H = state.config.height || 1920;
+      // Bounded media (Route B partial photo/clip): render inside its frame box,
+      // clipped, cover-fit — instead of full-bleed. Swapping media.path re-renders
+      // this box with the new asset (the swap/browse/upload UI is unchanged).
+      // Inert when media.frame is absent → full-frame path below.
+      if (media.frame) {
+        const f = media.frame;
+        const wrap = document.createElement('div');
+        wrap.className = 'media-layer';
+        wrap.dataset.id = '_media';
+        if (state.selectedId === '_media') wrap.classList.add('selected');
+        wrap.style.cssText = 'position:absolute;left:' + f.x + 'px;top:' + f.y + 'px;width:' + f.width + 'px;height:' + f.height + 'px;overflow:hidden;';
+        let el;
+        if (media.path && isVideoPath(media.path)) {
+          el = document.createElement('video');
+          el.muted = true; el.loop = true; el.autoplay = true; el.playsInline = true; el.preload = 'auto';
+          if (media.path) el.src = state.mediaBase + media.path.replace(/^\.\//, '');
+          if (el.play) el.play().catch(() => {});
+        } else {
+          el = document.createElement('img');
+          if (media.path) el.src = state.mediaBase + media.path.replace(/^\.\//, '');
+        }
+        el.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;pointer-events:none;object-fit:' + (media.objectFit || 'cover') + ';object-position:' + (media.objectPosition || '50% 50%') + ';';
+        el.onerror = () => { el.style.background = '#222'; };
+        wrap.appendChild(el);
+        // Make the bounded media selectable so the MEDIA tab's swap/trim panel
+        // engages (selectedId '_media'), mirroring attachMediaImgHandlers.
+        wrap.style.cursor = 'pointer';
+        wrap.addEventListener('mousedown', (e) => {
+          if (typeof selectElement === 'function') selectElement('_media');
+          e.stopPropagation();
+        });
+        return wrap;
+      }
       // Phase C: a VIDEO background previews as a muted, looping, cover-fit <video>
       // (the same clip the MP4 render extracts to frames). Pan/zoom/crop stay
       // photo-only — for a clip the full-frame cover-fit is the placement.
@@ -1886,6 +1955,12 @@
         el.style.boxSizing = 'border-box';
         if (it.fill && it.fill !== 'none') el.style.background = it.fill;
         if (it.strokeWidth) el.style.border = it.strokeWidth + 'px solid ' + (it.stroke || '#c4141d');
+      } else if (it.type === 'svg') {
+        // Raw inline-SVG device passthrough (Westfield EKG/ring) — mirrors the
+        // _helpers.jsx svg branch so preview == render.
+        el.style.width = it.width + 'px';
+        el.style.height = it.height + 'px';
+        el.innerHTML = it.svg || '';
       } else {
         return null;
       }
@@ -1897,6 +1972,15 @@
       // composes after an explicit transform and zooms about the center so a
       // cutout grows in place to pair with the background. Inert when absent.
       applyDesignTransform(el, it);
+
+      // Motion (Part 3): keyframe animation on the shape box (gauges/scanlines —
+      // no static transform, so the animation owns the transform channel;
+      // pause-on-select lets the user drag it). transform-origin + custom-props ride along.
+      if (it.animation && it.id !== state.selectedId) {
+        el.style.animation = it.animation;
+        if (it.animTransformOrigin) el.style.transformOrigin = it.animTransformOrigin;
+        if (it.animVars) for (const k in it.animVars) el.style.setProperty(k, it.animVars[k]);
+      }
 
       // Scroll-wheel zoom for image layers (mirrors the foreground/background
       // wheel zoom) — lets the user fit a cutout to the photo behind it so the
@@ -2302,6 +2386,23 @@
         text.style.padding = el.chipPad || '10px 22px';
         const r = el.chipRadius != null ? el.chipRadius : 8;
         text.style.borderRadius = (typeof r === 'number' ? r + 'px' : r);
+      }
+      // Motion (Part 3): the keyframe animation rides the INNER text span so the
+      // OUTER box keeps moveable's drag transform — no conflict. transform-origin
+      // + keyframe custom-props (--low…) ride the span too. Count-up spans get the
+      // data-* the tickCountups driver reads.
+      // Skip on the SELECTED layer → it sits at its first-frame-safe base
+      // (finished) position for precise placement; resumes on deselect (rebuild).
+      if (el.animation && el.id !== state.selectedId) {
+        text.style.animation = el.animation;
+        if (el.animTransformOrigin) text.style.transformOrigin = el.animTransformOrigin;
+        if (el.animVars) for (const k in el.animVars) text.style.setProperty(k, el.animVars[k]);
+      }
+      if (el.countup) {
+        text.dataset.countup = el.countup.target;
+        if (el.countup.decimals) text.dataset.decimals = el.countup.decimals;
+        if (el.countup.prefix) text.dataset.prefix = el.countup.prefix;
+        if (el.countup.suffix) text.dataset.suffix = el.countup.suffix;
       }
       // Optional tiled/repeated watermark: mirror renderTextLayer — repeat the
       // text on `repeat` stacked lines so a tagged microscript fills the
@@ -3513,7 +3614,14 @@
       mdl.classList.toggle('add-mode', mode === 'add');
       const h = mdl.querySelector('.clip-modal-head h2'); if (h) h.textContent = mode === 'add' ? 'Add a clip' : 'Edit clip';
       if (mode === 'add') { setClipSwapCollapsed(false); restoreLastKrakenFolder(); }   // browser open, last folder
-      else { setClipSwapCollapsed(true); }                                              // preview big, browser collapsed
+      else {
+        // VIDEO clip → collapse the browser so the big preview is free to trim.
+        // PHOTO / single-media → keep the Kraken browser OPEN (swapping the photo IS the job;
+        // there's nothing to trim), and restore the last folder so it lands on the location.
+        const isVid = isVideoPath(state.config && state.config.media && state.config.media.path);
+        setClipSwapCollapsed(isVid);
+        if (!isVid) restoreLastKrakenFolder();
+      }
     }
     function clipModalOpen() {
       if (!state.config) return;
@@ -3676,6 +3784,11 @@
       const isVid = typeof isVideoCreative === 'function' && isVideoCreative();
       panel.hidden = !(state.config && (isReel() || isVid));   // the reel strip is the whole Media tab for a video creative
       const reelBar = $('reelPreviewBar'); if (reelBar) reelBar.hidden = !isReel();   // "Preview reel" shows only for 2+ clips
+      // Scope the "✂ Edit clip / media" entry to single-media designs (no filmstrip): it's the ONLY
+      // door to the media/Kraken browser for a photo/single-media creative. When a filmstrip is shown
+      // (reel or a video clip) the user reaches media by clicking a clip, so hide the redundant button
+      // (keeps the decluttered reel Media tab from commit 71214dad).
+      const ecBtn = $('openClipModalBtn'); if (ecBtn) ecBtn.style.display = panel.hidden ? '' : 'none';
       const rpb = $('reelPlayBtn'); if (rpb && !rpb._wired) { rpb._wired = true; rpb.onclick = playReel; }
       strip.innerHTML = '';
       if (!state.config) return;

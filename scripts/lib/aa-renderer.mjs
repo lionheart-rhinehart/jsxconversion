@@ -20,12 +20,18 @@ import { configHasVideoBackground, configHasSequence } from "./layer-config-vide
 // A video background OR a multi-clip sequence both route to layer-config-video.mjs
 // (its CLI then dispatches single-clip vs. renderMultiClipSequence).
 export function chooseRender({ id, jsxPath, configPath }) {
-  let videoBg = false;
+  let videoBg = false, motionOnly = false;
   try {
     const cfg = configPath && existsSync(configPath) ? JSON.parse(readFileSync(configPath, "utf8")) : null;
     videoBg = !!(cfg && (configHasVideoBackground(cfg) || configHasSequence(cfg)));
-  } catch { videoBg = false; }
-  return videoBg
+    // Route-C: no footage but the overlays animate (keyframes) → still an MP4 so the
+    // motion survives (layer-config-video synthesizes a solid bg + bakes the motion).
+    motionOnly = !!(cfg && !videoBg && cfg.keyframes && (
+      (cfg.elements || []).some((e) => e.animation || e.countup) ||
+      (cfg.fixedDesign || []).some((s) => s.animation)
+    ));
+  } catch { videoBg = false; motionOnly = false; }
+  return (videoBg || motionOnly)
     ? { videoBg: true, format: "video", outPath: `out/${id}.mp4`, args: ["scripts/lib/layer-config-video.mjs", configPath, `--id=${id}`] }
     : { videoBg: false, format: "image", outPath: `out/${id}.png`, args: [".claude/skills/jsx-to-mp4/scripts/render.mjs", jsxPath] };
 }
