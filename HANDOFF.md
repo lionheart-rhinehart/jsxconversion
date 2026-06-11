@@ -1,4 +1,36 @@
-# HANDOFF — review-page creative editor
+# ⛔ HANDOFF (2026-06-11) — Claude Design handoffs: edit DIRECTLY, do NOT rebuild
+
+> **READ THIS FIRST. This is the active, top-priority decision.** Full detail + build steps:
+> `C:\Users\lionh\.claude\plans\that-s-fine-i-don-t-dazzling-waterfall.md` (the HANDOFF/PLAN at the
+> top of that file). Also read memory `project-westfield-editor-templates` +
+> `project-claude-design-edit-directly` + `reference-dc-html-to-standalone`.
+
+**What happened (≈6h of churn, Cody very frustrated):** `/creative-editor` was built to take a Claude
+Design `.dc.html` handoff and make it editable by **FLATTENING it into the editor's layer model**
+(`templates/<slug>/wf-*.config.json` → re-rendered via LayerStack). That flatten is a **lossy REBUILD**
+— it re-creates the design and is NOT pixel-perfect (headline overlaps, shifted layout, lost angle
+names). Cody handed over finished designs to *review*, and the review page showed the rebuilds. He was
+never told a rebuild was happening. **Decision: STOP rebuilding.**
+
+**The locked architecture (Cody's explicit call):** ONE editor (`out/editor/editor.html`), taught to
+edit the Claude Design design **directly** — the **real `.cr-frame` HTML is the editor canvas**; edits
+are **surgical overrides** on the untouched original (click text → retype; click media → swap via the
+existing Kraken bar). No flatten, no second editor, no layer-model reconstruction → pixel-perfect
+because the design is never re-made. Export = render the (override-applied) HTML → MP4 directly (it
+already animates). See the plan file for the step-by-step + KEEP/DROP list.
+
+**KEEP:** the faithful gallery `campaigns/<slug>/index.html` (`.dc.html` minus `support.js` runtime —
+the editable source), the Kraken backend, the review page, HTML→MP4 render.
+**DROP for these handoffs:** `scripts/westfield-flatten.mjs` config rebuild + `templates/<slug>/wf-*`
+LayerStack re-render + the layer-config-video motion-baking.
+
+**Shipped this session (working, but on the now-abandoned rebuild path — revisit under the new arch):**
+`/creative-editor` intake (Q1 campaign / Q2 zip-link), Kraken auto-pin, review page with live cards +
+angle grouping, validation-skip for `source:"claude-design"`. Commits through `978c8f2` on `main`.
+
+---
+
+# HANDOFF — review-page creative editor (earlier effort — background)
 
 Last session shipped a large in-place editing feature: **12 commits, all on `origin/main`
 (latest `6b36595`)**. Two open items are below.
