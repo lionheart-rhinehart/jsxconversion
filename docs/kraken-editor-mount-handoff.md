@@ -1,0 +1,138 @@
+# Handoff — mount the live CreativeEngine editor inside the Kraken approval portal
+
+> **For the Kraken chat / repo (`D:\Claude CODE\The Kraken`, Next.js + Supabase).**
+> This **supersedes** the still-thumbnail bridge described in `docs/kraken-embed-approval-handoff.md`.
+> That earlier doc shipped a frozen poster PNG so approvals worked at all. This doc is the real target:
+> **mount the one portable CreativeEngine editor live in the portal**, with a permission toggle
+> (view+comment ⟷ full edit), and define the **Supabase status-field contract** that triggers a render
+> back on Cody's machine — with no web-app-reaching-into-a-laptop magic.
+
+---
+
+## Plain-language model (read this first)
+
+Today a "creative" in the portal is a **file the client looks at** — an image or a video. We are adding
+a third kind: the **live design itself**. A finished Claude Design export is a self-contained `.html`
+that *is* the animated creative (it carries its own runtime + code + images). The portal drops that one
+URL into an `<iframe>` and the design plays. The **same** `<iframe>` can run in two modes:
+
+- **View + comment** (Google-Docs style): the client watches it play and highlights-to-comment. Nothing
+  about the design changes. This reuses Kraken's existing W3C comment/highlight system.
+- **Full edit**: the agency (Cody) — or, if allowed, the client — clicks text to retype, clicks media to
+  swap (Kraken media bar), drags to reposition. Every change is a **surgical override** on the untouched
+  original HTML — the design is *never re-drawn*. (This is the whole point of the v2 rebuild: no lossy
+  rebuilds.)
+
+A single boolean prop flips the mode. Same bundle, same code, in both lanes.
+
+---
+
+## What THIS repo delivers vs. what the Kraken repo builds
+
+| Piece | Lives in | Status |
+|---|---|---|
+| Deterministic intake/TAG (stable `data-edit-*` ids on the real HTML) | this repo — `creative-engine/intake/tag-design.mjs` | **built (Phase 1)** |
+| The one portable editor bundle (consumes tagged HTML → emits overrides) | this repo — `creative-engine/editor/` | Phase 2 |
+| Embeddable editor + `permission` flag | this repo (bundle) | Phase 4 |
+| Local render poller (watches Supabase, renders approved rows) | this repo | Phase 5 |
+| **The Next.js mount** (`<iframe>` the bundle, wire the permission toggle, persist overrides) | **Kraken repo** | **your task** |
+
+The editor is **the only thing that travels into Kraken.** The render engine stays here.
+
+---
+
+## The tagged-HTML contract (what the editor mounts)
+
+Phase-1 intake stamps the real design HTML deterministically. Every editable element inside each
+`.cr-frame` carries:
+
+- `data-edit-frame="fN"` on the frame, `data-edit-id="eN"` on each element (stable, document-order).
+- role flags: `data-edit-text="1"`, `data-edit-media="1"` (`data-edit-media-kind="video|image|css-bg"`),
+  `data-edit-logo="1"`, `data-edit-pos="1"` (everything is positionable).
+- `data-edit-mode="plain|svg"` for text; `data-edit-split="eP"` ties split-headline line-spans to their
+  logical parent.
+- `data-edit-brandkit="1"` on brand-kit assets (logo/wordmark) — **kept in the render, hidden from the
+  swap picker.**
+
+The editor reads these ids; overrides are keyed to them: `{ "f3:e12": { text? , src? , pos? } }`. Because
+ids are stamped by a script (not an AI), the same design tags the same way every time — so an override set
+stays valid across re-intake.
+
+---
+
+## The render trigger — Supabase status-field contract (the gap `/ultrathink` caught)
+
+A web app **cannot reach into a local CLI.** So the transport is **Supabase-mediated and one-directional**:
+Kraken only ever writes status to a row; **this repo's local poller** watches for it and renders. Kraken
+never calls the laptop.
+
+### Verified `approvals` table fields (from `lib/database.types.ts`, table `approvals`)
+
+The render contract uses fields that **already exist** — no new columns required on the Kraken side:
+
+| Field | Type | Role in the contract |
+|---|---|---|
+| `id` | uuid | the approval row identity the poller keys on |
+| `status` | text | `'draft' \| 'pending' \| 'approved' \| 'revisions_needed'` — **`'approved'` is the render trigger** |
+| `content_output_id` | uuid \| null | links the approval to the content/output row to render |
+| `responded_at` | timestamptz \| null | when the client/agency acted (poller orders by this) |
+| `approved_by_type` | text \| null | `client` vs `agency` lane — both lanes trigger render |
+| `client_edited`, `client_edited_at` | bool / ts | client made edits in the mounted editor |
+| `client_media_replaced`, `client_media_replaced_at` | bool / ts | client swapped media |
+| `updated_at` | timestamptz | poller's change-detection key (see "no rendered flag" below) |
+| `workspace_id`, `batch_id` | uuid | routing / brand-fan-out grouping |
+
+### Where the editor's overrides are stored
+
+`approvals` has **no structured-override column today.** The mounted editor must persist its override bag
+(`{ "fN:eM": {text?,src?,pos?} }`) somewhere the poller can read. Recommended (Kraken-side, one small
+migration): add `overrides jsonb` to `approvals` (or to the linked `content_outputs` row). The poller
+applies that bag to the tagged HTML before rendering. `client_edited=true` flips when it's non-empty.
+
+### "Approved-and-**un**rendered" — the one missing piece
+
+There is **no `rendered_at` column** on `approvals`. Two ways to avoid re-rendering the same row, contract
+states **option B** (keeps Kraken write-only, no migration):
+
+- **A (Kraken-side):** add `rendered_at timestamptz null`; poller sets it after a successful render.
+- **B (this-repo-side, chosen):** the local poller keeps its own ledger of rendered `(id, updated_at)`
+  pairs. A row counts as "needs render" when `status='approved'` **and** `(id, updated_at)` isn't in the
+  ledger. Re-approval after an edit bumps `updated_at` → re-renders automatically. **Kraken only ever sets
+  `status`; render bookkeeping is wholly owned here.** This is the Phase-5 poller's job.
+
+### Sequence
+
+```
+1. Engine (this repo) tags the design → uploads live .html + poster → registers content row (+approval, status='pending').
+2. Kraken portal mounts the editor in an <iframe>:
+     permission="view"  → comment/highlight only   (client lane, or agency preview)
+     permission="edit"  → full edit; writes overrides jsonb back to the approval row
+3. Reviewer approves → Kraken sets approvals.status='approved' (sets responded_at, approved_by_type).
+4. Local render poller here sees status='approved' AND (id,updated_at) not in its rendered-ledger
+     → applies overrides to tagged HTML → pooled render → MP4/PNG → dispatch (Phase 6).
+5. Poller records (id,updated_at) in the ledger. Re-approval after edits bumps updated_at → re-render.
+```
+
+Nothing renders until a human approves — the safety net that makes hands-off media pull safe.
+
+---
+
+## The three things to build in the Kraken repo
+
+1. **Embed render path** — given a content row of kind `embed`, `<iframe src={liveHtmlUrl}>` instead of an
+   `<img>`. Poster PNG stays as the fallback/thumbnail.
+2. **Permission toggle** — pass `permission: 'view' | 'edit'` into the mounted editor bundle (a window
+   global or `postMessage` handshake — Phase-4 bundle will document the exact prop). View reuses the
+   existing W3C comment/highlight UI; edit unlocks click-to-retype / swap / drag.
+3. **Persist overrides + set status** — on save, write the override bag (`overrides jsonb`, per above) and
+   set `client_edited`/`client_media_replaced`; on approve, set `status='approved'`. That's the entire
+   render trigger — the poller in this repo does the rest.
+
+---
+
+## Cross-references
+
+- Master plan: `C:\Users\lionh\.claude\plans\so-i-see-that-memoized-parnas.md` (Phases 4–5).
+- Tagger + coverage proof: `creative-engine/intake/tag-design.mjs`, `creative-engine/intake/_out/`.
+- Superseded bridge doc: `docs/kraken-embed-approval-handoff.md` (poster-PNG fallback still valid).
+- Kraken approvals schema: `D:\Claude CODE\The Kraken\lib\database.types.ts` (table `approvals`).

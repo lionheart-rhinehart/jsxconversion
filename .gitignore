@@ -64,3 +64,7 @@ campaigns/**/_export_v2.tar.gz
 # Combined Claude Design handoff galleries (.dc.html with media base64-embedded — can be
 # 100MB+). The usable per-design exports live in campaigns/<c>/designs/*.html (kept).
 campaigns/**/*.dc.html
+
+# creative-engine generated intake artifacts
+*.tagged.html
+creative-engine/intake/_out/

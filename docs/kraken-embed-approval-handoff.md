@@ -1,5 +1,9 @@
 # Handoff — render a live-HTML "embed" creative in the Kraken approval portal
 
+> ⛔ **SUPERSEDED (2026-06-11) by `docs/kraken-editor-mount-handoff.md`** — the v2 plan mounts the
+> *live editor* (view/comment ⟷ edit) and defines the Supabase `approvals` status-field render contract.
+> The poster-PNG bridge below remains valid as the thumbnail/fallback. Read the new doc first.
+
 > **For the Kraken chat.** The creative-engine's new `/design-to-approval` command pushes finished Claude
 > Designs into the Content Library as **live, self-contained HTML** (the animated design, not a render) so a
 > client can review and comment on it in the approval portal **without anyone rendering an MP4/PNG first**.
