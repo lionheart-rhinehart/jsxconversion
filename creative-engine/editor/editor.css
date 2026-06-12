@@ -1,0 +1,54 @@
+/* creative-engine/editor/editor.css — chrome for the one portable editor.
+   Deliberately namespaced under .ce-editor so it makes ZERO assumptions about the
+   host page (portability check 2.2). The design itself lives inside an <iframe>, so
+   the design's own CSS never collides with this chrome. */
+
+.ce-editor { --ce-accent:#c4141d; --ce-ink:#0c0d10; --ce-panel:#15171a; --ce-line:#2c3038;
+  --ce-text:#e8eaed; --ce-dim:#969ca7;
+  position:fixed; inset:0; display:grid; grid-template-rows:auto 1fr auto;
+  background:#08090b; color:var(--ce-text); font-family:'Geist',system-ui,sans-serif; z-index:2147483000; }
+
+.ce-toolbar { display:flex; align-items:center; gap:14px; padding:10px 16px;
+  background:var(--ce-panel); border-bottom:1px solid var(--ce-line); }
+.ce-toolbar .ce-title { font-family:'Anton',sans-serif; text-transform:uppercase; letter-spacing:.02em;
+  font-size:18px; color:#fff; }
+.ce-toolbar .ce-tag { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ce-accent);
+  letter-spacing:.1em; text-transform:uppercase; }
+.ce-spacer { flex:1; }
+.ce-btn { font:inherit; font-size:13px; background:#1f2227; color:var(--ce-text); border:1px solid var(--ce-line);
+  padding:7px 12px; border-radius:6px; cursor:pointer; }
+.ce-btn:hover { background:#262a30; }
+.ce-btn:disabled { opacity:.4; cursor:default; }
+.ce-btn.ce-primary { background:var(--ce-accent); border-color:var(--ce-accent); color:#fff; }
+.ce-select { font:inherit; font-size:13px; background:#1f2227; color:var(--ce-text); border:1px solid var(--ce-line);
+  padding:6px 10px; border-radius:6px; }
+
+.ce-stage { position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center;
+  background:#0a0b0d; }
+.ce-stage iframe { border:0; background:#0a0b0d; }
+
+/* selection overlay drawn in the PARENT, positioned over the iframe */
+.ce-overlay { position:absolute; pointer-events:none; border:2px solid var(--ce-accent);
+  box-shadow:0 0 0 1px rgba(255,255,255,.25); border-radius:2px; display:none; }
+.ce-overlay.ce-on { display:block; }
+.ce-overlay .ce-handle { position:absolute; width:12px; height:12px; background:#fff; border:2px solid var(--ce-accent);
+  border-radius:2px; pointer-events:auto; }
+.ce-overlay .ce-se { right:-7px; bottom:-7px; cursor:nwse-resize; }
+.ce-overlay .ce-badge { position:absolute; left:0; top:-22px; background:var(--ce-accent); color:#fff;
+  font-family:'JetBrains Mono',monospace; font-size:11px; padding:2px 6px; border-radius:3px; white-space:nowrap; }
+
+.ce-footer { padding:10px 16px; background:var(--ce-panel); border-top:1px solid var(--ce-line);
+  display:flex; align-items:center; gap:12px; min-height:44px; }
+.ce-hint { font-size:12px; color:var(--ce-dim); }
+
+/* media swap bar (Kraken) — slides up from the footer */
+.ce-swapbar { display:none; gap:10px; align-items:center; flex:1; }
+.ce-swapbar.ce-on { display:flex; }
+.ce-swapbar input[type=text] { flex:1; font:inherit; font-size:13px; background:#0c0d10; color:var(--ce-text);
+  border:1px solid var(--ce-line); padding:7px 10px; border-radius:6px; }
+.ce-thumbs { display:flex; gap:8px; overflow-x:auto; }
+.ce-thumbs img, .ce-thumbs video { height:54px; width:auto; border-radius:4px; border:1px solid var(--ce-line);
+  cursor:pointer; object-fit:cover; }
+.ce-thumbs img:hover, .ce-thumbs video:hover { border-color:var(--ce-accent); }
+
+/* inside-iframe affordances are injected separately (ce-iframe.css string in editor.js) */

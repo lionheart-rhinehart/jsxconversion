@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CreativeEngine — Editor (portable host)</title>
+<!-- PORTABILITY PROOF (Phase-2 check 2.2): this is a *bare* host. It pulls in only
+     the three editor files by relative path + a tagged design over fetch. No build
+     step, no framework, no project-internal import. The same three files mount
+     unchanged inside the Kraken portal — only this host page differs. -->
+<link rel="stylesheet" href="editor.css">
+<style>html,body{margin:0;height:100%;background:#08090b;}</style>
+</head>
+<body>
+<div id="host" style="position:fixed;inset:0;"></div>
+<script type="module">
+  import { mountEditor } from './editor.js';
+
+  // the design to edit + the media library for the swap bar are passed by the host.
+  // ?html= overrides the default tagged design path.
+  const params = new URLSearchParams(location.search);
+  const htmlPath = params.get('html') || '../../campaigns/westfield-100-off/index.tagged.html';
+
+  // apply-overrides.js is the SHARED replay function. The host loads its source once
+  // and hands it to the editor, which injects the very same source into the design
+  // iframe (and the renderer injects the very same file headless) → preview == MP4.
+  const applySrc = await (await fetch('./apply-overrides.js')).text();
+  window.__CE_APPLY_SRC__ = applySrc;
+  // also evaluate it here so window.CEApply exists in the host (not strictly needed)
+  new Function(applySrc)();
+
+  const html = await (await fetch(htmlPath)).text();
+  // the design's own folder — so its relative asset paths resolve inside the iframe
+  const baseHref = new URL(htmlPath, location.href).href.replace(/[^/]*$/, '');
+
+  // demo media library (Phase-3 manifest will feed this for real)
+  const mediaLibrary = [
+    { src: '../../campaigns/westfield-100-off/assets/vid/ad1.mp4', type: 'video', label: 'ad1 footage' },
+    { src: '../../campaigns/westfield-100-off/assets/vid/ad2.mp4', type: 'video', label: 'ad2 footage' },
+    { src: '../../campaigns/westfield-100-off/assets/vid/ad3.mp4', type: 'video', label: 'ad3 footage' },
+  ];
+
+  const ed = mountEditor({
+    container: document.getElementById('host'),
+    html,
+    baseHref,
+    permissions: params.get('view') ? 'view' : 'edit',
+    mediaLibrary,
+    onChange(overrides, meta) {
+      window.__CE_OVERRIDES__ = overrides;            // exposed for the evidence harness
+      if (meta && meta.save) {
+        const blob = new Blob([JSON.stringify(overrides, null, 2)], { type: 'application/json' });
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+        a.download = 'overrides.json'; a.click();
+      }
+    },
+  });
+  window.__CE_EDITOR__ = ed;
+</script>
+</body>
+</html>

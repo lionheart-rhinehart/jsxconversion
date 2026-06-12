@@ -68,3 +68,5 @@ campaigns/**/*.dc.html
 # creative-engine generated intake artifacts
 *.tagged.html
 creative-engine/intake/_out/
+# Phase-2 editor evidence artifacts (reproducible via creative-engine/editor/evidence.mjs)
+creative-engine/editor/_out/
