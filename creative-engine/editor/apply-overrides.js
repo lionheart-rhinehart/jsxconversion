@@ -52,10 +52,26 @@
   // child elements (icons, carets). If the element has child elements but also its
   // own text, we replace only the first text node and clear the rest.
   function setText(el, text) {
+    var isSvg = (el.getAttribute && el.getAttribute('data-edit-mode') === 'svg');
+    // Multi-line: for plain (non-SVG) text the new value may contain "\n" — render as
+    // <br>. SVG <text>/<tspan> can't take <br>, so it stays single-line (deferred).
+    if (!isSvg && text.indexOf('\n') >= 0) {
+      var parts = String(text).split('\n');
+      // wipe existing text nodes, then rebuild first text-owner with <br>-joined lines,
+      // preserving any non-text child elements (icons/carets) after it.
+      var kids0 = Array.prototype.slice.call(el.childNodes);
+      kids0.forEach(function (n) { if (n.nodeType === 3) el.removeChild(n); });
+      var doc = el.ownerDocument, frag = doc.createDocumentFragment();
+      parts.forEach(function (line, i) {
+        if (i) frag.appendChild(doc.createElement('br'));
+        frag.appendChild(doc.createTextNode(line));
+      });
+      el.insertBefore(frag, el.firstChild);
+      return;
+    }
     var kids = Array.prototype.slice.call(el.childNodes);
     var textNodes = kids.filter(function (n) { return n.nodeType === 3 && n.textContent.trim().length; });
     if (textNodes.length === 0) {
-      // no existing visible text node (rare) — prepend one
       el.insertBefore(el.ownerDocument.createTextNode(text), el.firstChild);
       return;
     }

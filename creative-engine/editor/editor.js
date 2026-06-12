@@ -124,10 +124,17 @@ export function mountEditor(opts) {
 
   function injectIframeRuntime() {
     const d = idoc();
-    frameIds = Array.from(d.querySelectorAll('.cr-frame[data-edit-frame]'))
-      .map((f) => f.getAttribute('data-edit-frame'));
-    els.frames.innerHTML = frameIds.map((f, i) =>
-      `<option value="${f}">Frame ${i + 1} (${f})</option>`).join('');
+    const frames = Array.from(d.querySelectorAll('.cr-frame[data-edit-frame]'));
+    frameIds = frames.map((f) => f.getAttribute('data-edit-frame'));
+    const total = frames.length;
+    // label each creative by its human name (the design tags figures with data-label,
+    // e.g. "1A · Live Gap HUD") rather than the internal frame id.
+    els.frames.innerHTML = frames.map((f, i) => {
+      const fig = f.closest('[data-label]');
+      const label = fig ? fig.getAttribute('data-label').split('·')[0].trim() : '';
+      const name = label ? `${label} — creative ${i + 1} of ${total}` : `Creative ${i + 1} of ${total}`;
+      return `<option value="${f.getAttribute('data-edit-frame')}">${name}</option>`;
+    }).join('');
     if (!curFrame || frameIds.indexOf(curFrame) < 0) curFrame = frameIds[0];
     els.frames.value = curFrame;
   }
@@ -248,19 +255,32 @@ export function mountEditor(opts) {
     const d = idoc();
     d.addEventListener('mousedown', onDown, true);
     d.addEventListener('click', onClick, true);
+    d.addEventListener('dblclick', onDblClick, true);
   }
 
+  // Canva model: a single click only SELECTS (and, for media, opens the swap bar);
+  // editing text requires a DOUBLE-click. A drag (>3px) suppresses the click entirely.
   let suppressClick = false;
   function onClick(e) {
     if (!editable) return;
     if (suppressClick) { suppressClick = false; return; } // this click ended a drag
+    if (editingEl) return; // a click inside an active editor stays in the editor
     const el = e.target.closest && e.target.closest('[data-edit-id]');
     if (!el) { commitTextEdit(); clearSelection(); return; }
     e.preventDefault(); e.stopPropagation();
+    commitTextEdit();            // clicking elsewhere commits any open edit
     select(el);
-    if (el.hasAttribute('data-edit-text')) startTextEdit(el);
-    else if (el.hasAttribute('data-edit-media')) openSwap(el);
+    if (el.hasAttribute('data-edit-media')) openSwap(el);
     else closeSwap();
+  }
+
+  function onDblClick(e) {
+    if (!editable) return;
+    const el = e.target.closest && e.target.closest('[data-edit-text]');
+    if (!el) return;
+    e.preventDefault(); e.stopPropagation();
+    select(el);
+    startTextEdit(el);
   }
 
   // dragging (move) — mousedown begins a *potential* drag on ANY element; a click
@@ -347,19 +367,24 @@ export function mountEditor(opts) {
     const range = idoc().createRange(); range.selectNodeContents(el);
     const sel = iwin().getSelection(); sel.removeAllRanges(); sel.addRange(range);
     el.addEventListener('keydown', textKeydown);
+    el.addEventListener('blur', commitTextEdit);
   }
   function textKeydown(e) {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); commitTextEdit(); }
-    if (e.key === 'Escape') { e.preventDefault(); commitTextEdit(); }
+    // Enter = NEW LINE (let contenteditable insert it); Esc / Ctrl+Enter = commit.
+    if (e.key === 'Escape' || (e.key === 'Enter' && (e.ctrlKey || e.metaKey))) {
+      e.preventDefault(); commitTextEdit();
+    }
   }
   function commitTextEdit() {
     if (!editingEl) return;
     const el = editingEl; editingEl = null;
     el.removeEventListener('keydown', textKeydown);
+    el.removeEventListener('blur', commitTextEdit);
     el.classList.remove('ce-editing');
     el.removeAttribute('contenteditable');
     const key = keyForEl(el);
-    const text = el.textContent.replace(/ /g, ' ');
+    // innerText preserves the line breaks the user typed (portable newlines)
+    const text = (el.innerText || el.textContent || '').replace(/\s+$/, '');
     const prev = (overrides[key] || {}).text;
     if (text !== prev && text !== el.getAttribute('data-ce-orig')) setOverride(key, { text });
     syncOverlay();
