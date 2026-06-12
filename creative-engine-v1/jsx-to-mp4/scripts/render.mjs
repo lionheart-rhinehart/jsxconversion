@@ -25,6 +25,7 @@ import {
   readStageProps,
 } from "./claude-design.mjs";
 import { renderStaticReact } from "./static-react.mjs";
+import { isAnimatedHtml, renderAnimatedHtml } from "./animated-html.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const SKILL_ROOT = resolve(__dirname, "..");
@@ -37,7 +38,7 @@ function resolveParams(inputPath, kind) {
   const stageProps = kind === "claude-design" ? extractStageProps(inputPath) : {};
   const compositionProps = extractCompositionProps(inputPath);
   const constants = extractConstants(inputPath);
-  const configPath = inputPath.replace(/\.(jsx|tsx)$/, ".config.json");
+  const configPath = inputPath.replace(/\.(jsx|tsx|html?|htm)$/i, ".config.json");
   const config = existsSync(configPath)
     ? JSON.parse(readFileSync(configPath, "utf8"))
     : {};
@@ -47,6 +48,9 @@ function resolveParams(inputPath, kind) {
     ...constants,
     ...compositionProps,
     ...stageProps,
+    // raw sibling config kept so the animated-html renderer can tell an explicit
+    // WIDTH/HEIGHT/FPS/DURATION override from a value it auto-detected.
+    __config: config,
   };
 }
 
@@ -281,6 +285,29 @@ async function main() {
   const outExt = kind === "static" ? ".png" : ".mp4";
   const outPath = join(outDir, basename(inputPath, extname(inputPath)) + outExt);
 
+  // ── Animated standalone HTML (e.g. a Claude Design export/ creative) ────────
+  // Not JSX: the HTML carries its own fonts/assets, so it bypasses the JSX font
+  // preflight below. Size + loop length are auto-detected in-browser.
+  if (isAnimatedHtml(inputPath, kind)) {
+    console.error("─── render manifest ───");
+    console.error(`  input:           ${inputPath}`);
+    console.error(`  classification:  animated (standalone HTML)`);
+    console.error(`  output:          ${outPath}`);
+    console.error("───────────────────────");
+    const usedParams = await renderAnimatedHtml({ inputPath, outPath, params, encodeFrames, PROJECT_ROOT });
+    console.log(JSON.stringify({
+      output: outPath,
+      kind: "animated-html",
+      runtime: "in-skill",
+      width: usedParams.WIDTH,
+      height: usedParams.HEIGHT,
+      fps: usedParams.FPS,
+      duration_seconds: usedParams.DURATION_SECONDS,
+      fonts: [],
+    }));
+    return;
+  }
+
   // Manifest BEFORE any frame work — visible decision log.
   console.error("─── render manifest ───");
   console.error(`  input:           ${inputPath}`);
@@ -344,8 +371,12 @@ async function main() {
       PROJECT_ROOT,
     });
   } else if (kind === "animated") {
+    // Standalone animated HTML is handled earlier (isAnimatedHtml). Reaching here
+    // means an animated *JSX* input (framer-motion / @keyframes in JSX), which is
+    // still unimplemented — author as claude-design (<Stage>) or static, or ship
+    // it as a standalone .html with CSS @keyframes.
     throw new Error(
-      `Renderer for kind=animated not implemented yet. For now, author as claude-design (with <Stage>) or static (no animation hints).`,
+      `Renderer for animated JSX not implemented. Author as claude-design (with <Stage>) or static (no animation hints), or export a standalone .html with CSS @keyframes.`,
     );
   } else {
     throw new Error(

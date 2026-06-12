@@ -14,7 +14,7 @@
       "Bash(npm install*)",
       "Bash(npm run render*)",
       "Bash(npx remotion render*)",
-      "Bash(node .claude/skills/jsx-to-mp4/scripts/render.mjs*)",
+      "Bash(node creative-engine-v1/jsx-to-mp4/scripts/render.mjs*)",
       "Bash(ffmpeg -version)",
       "Bash(ffmpeg *)"
     ]

@@ -1021,6 +1021,10 @@
       // autoplay loop, the audio "▶ With clip" preview, and the markup transport
       // all honor — so the preview <video> has ONE master, not three.
       previewTime: 0, previewPlaying: true, _previewVideo: null,
+      // DIRECT MODE (Claude Design files): null = OFF (normal config-model editor,
+      // untouched). When set ({campaign,label,selId,overrides}) the stage is the real
+      // design (iframe) and edits write through to the real DOM + surgical overrides.
+      direct: null,
     };
 
     const $ = (id) => document.getElementById(id);
@@ -1475,6 +1479,9 @@
 
     // ===== Stage rendering =====
     function renderStage() {
+      // DIRECT MODE owns the stage (the real-design iframe + overlay). Never wipe it
+      // here — sync state.config onto the real nodes in place; nothing rebuilds.
+      if (state.direct) { syncDesign(); return; }
       const stage = $('stage');
       stage.innerHTML = '';
 
@@ -2887,6 +2894,8 @@
       applySelectionClasses();
       renderProps();
       syncMoveable();
+      // Direct mode: also draw the selection outline over the real design node.
+      if (state.direct && typeof drawDesignSelection === 'function') drawDesignSelection();
     }
 
     // ===== Phase B: moveable — drag/resize/rotate handles + Canva alignment guides =====
@@ -3550,6 +3559,25 @@
       populateWorkspaces({ restore: true });
     }
     async function swapBackgroundPhoto(item, tile) {
+      if (state.direct) {
+        // Direct mode: copy the picked file into the CAMPAIGN's assets (not a template
+        // dir), then point config.media at it — the REAL setMediaPhoto + sync writes the
+        // real design node's src. Same Kraken/upload entry points; just the copy dest differs.
+        setStatus('Copying media…');
+        try {
+          const r = await fetch(apiUrl('/design-media-into/' + state.direct.campaign), {
+            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ src: item.path }),
+          });
+          const j = await r.json(); if (!r.ok || !j.path) throw new Error(j.error || 'copy failed');
+          if (!state.config.media) state.config.media = {};
+          setMediaPhoto(j.path);
+          if (item.krakenId) state.config.media.krakenId = item.krakenId;
+          if (item.krakenUrl) state.config.media.krakenUrl = item.krakenUrl;
+          if (tile) document.querySelectorAll('.ed-photo-tile').forEach((el) => el.classList.toggle('on', el === tile));
+          setStatus('Background swapped. Save to persist.');
+        } catch (e) { setStatus('Swap failed: ' + e.message); }
+        return;
+      }
       if (!state.config) return;
       setStatus('Copying photo…');
       let newPath;
@@ -4082,6 +4110,7 @@
 
     // ===== Save / Render =====
     async function doSave() {
+      if (state.direct) return saveDirect();
       if (!state.cluster || !state.config) return;
       setStatus('Saving…');
       const r = await saveConfig(state.cluster, state.config);
@@ -4901,6 +4930,287 @@
     }
     $('clusterSelect').addEventListener('change', (e) => loadCluster(e.target.value));
 
+    // ============================================================================
+    //  DIRECT MODE — edit a Claude Design file IN PLACE (no rebuild).
+    //  The real `.cr-frame` is loaded as the stage (an <iframe> served by /design,
+    //  pixel-faithful). Edits write straight to the real DOM node + a surgical
+    //  OVERRIDE keyed to data-edit-id. The design is never re-created.
+    //  Gated behind state.direct (default null) — every existing flow is untouched.
+    // ============================================================================
+    const _api = (new URLSearchParams(location.search).get('api') || '').replace(/\/$/, '');
+    const apiUrl = (p) => (_api || '') + p;
+    function parseDesignId(id) {
+      if (typeof id !== 'string' || !id.startsWith('design:')) return null;
+      const p = id.split(':'); if (p.length !== 3) return null;
+      return { campaign: p[1], label: p[2] };
+    }
+    const dDoc = () => { const f = $('designFrame'); return f && f.contentDocument; };
+    const dFrame = () => { const d = dDoc(); return d && d.querySelector('.cr-frame'); };
+    const dNode = (id) => { const d = dDoc(); return d && d.querySelector('[data-edit-id="' + id + '"]'); };
+    function nodeBox(node) {
+      const fr = dFrame().getBoundingClientRect(), r = node.getBoundingClientRect();
+      return { x: Math.round(r.left - fr.left), y: Math.round(r.top - fr.top), w: Math.round(r.width), h: Math.round(r.height) };
+    }
+    function recordEdit(id, patch) {
+      const ov = state.direct.overrides; ov.edits = ov.edits || {};
+      const cur = ov.edits[id] || {};
+      if (patch.style) { cur.style = Object.assign(cur.style || {}, patch.style); delete patch.style; }
+      if (patch.pos) { cur.pos = Object.assign(cur.pos || {}, patch.pos); delete patch.pos; }
+      Object.assign(cur, patch);
+      ov.edits[id] = cur;
+    }
+    async function loadDesign(campaign, label) {
+      state.direct = { campaign, label, selId: null, overrides: { edits: {}, added: [] } };
+      state.cluster = 'design:' + campaign + ':' + label;
+      state.config = null; state.selectedId = null;
+      try { const r = await fetch(apiUrl('/design-overrides/' + campaign + '/' + label)); if (r.ok) state.direct.overrides = await r.json(); } catch (e) {}
+      state.direct.overrides.edits = state.direct.overrides.edits || {};
+      state.direct.overrides.added = state.direct.overrides.added || [];
+      buildDesignStage();
+      setStatus('Loaded design ' + label + ' — click an element to edit it');
+      window.location.hash = '#design:' + campaign + ':' + label;
+    }
+    function buildDesignStage() {
+      const stage = $('stage'); stage.innerHTML = '';
+      const W = 1080, H = 1920;
+      const rect = stage.getBoundingClientRect();
+      const scale = Math.min(rect.width / W, rect.height / H) * 0.92;
+      state.scale = scale;
+      const inner = document.createElement('div'); inner.className = 'stage-inner';
+      inner.style.width = W + 'px'; inner.style.height = H + 'px';
+      inner.style.transform = 'scale(' + scale + ')'; inner.style.transformOrigin = 'center center';
+      inner.style.position = 'relative';
+      const frame = document.createElement('iframe'); frame.id = 'designFrame';
+      frame.src = apiUrl('/design/' + state.direct.campaign + '/' + state.direct.label);
+      frame.style.cssText = 'width:' + W + 'px;height:' + H + 'px;border:0;display:block;background:#0a0b0d;';
+      frame.addEventListener('load', onDesignFrameLoad);
+      inner.appendChild(frame);
+      const ov = document.createElement('div'); ov.id = 'designOverlay';
+      ov.style.cssText = 'position:absolute;left:0;top:0;width:' + W + 'px;height:' + H + 'px;pointer-events:none;';
+      inner.appendChild(ov);
+      const fo = document.createElement('div'); fo.className = 'frame-outline'; fo.style.width = W + 'px'; fo.style.height = H + 'px'; inner.appendChild(fo);
+      stage.appendChild(inner);
+    }
+    // BINDING: build a REAL state.config from the design's real nodes (each entry carries
+    // domId = data-edit-id; fields read from the live node). The editor's REAL tools then
+    // operate through state.config + renderStage() — no stand-ins.
+    function indexDesign() {
+      const d = dDoc(); const frame = dFrame(); if (!d || !frame) return;
+      const win = d.defaultView; const frameRect = frame.getBoundingClientRect();
+      const els = []; let media = null;
+      state.direct.box = {}; state.direct.baseline = {};
+      Array.from(d.querySelectorAll('[data-edit-id]')).forEach((node) => {
+        const id = node.getAttribute('data-edit-id');
+        const cs = win.getComputedStyle(node); const r = node.getBoundingClientRect();
+        const box = { x: Math.round(r.left - frameRect.left), y: Math.round(r.top - frameRect.top), w: Math.round(r.width), h: Math.round(r.height) };
+        state.direct.box[id] = box;
+        state.direct.baseline[id] = { cssText: node.style.cssText, html: node.innerHTML, src: node.getAttribute('src') || null };
+        if (node.hasAttribute('data-edit-media') && node.tagName === 'VIDEO' && !media) {
+          media = { path: node.getAttribute('src'), domId: id, z: 0 };
+        } else if (node.hasAttribute('data-edit-text')) {
+          const el = { id: id, domId: id, kind: 'text', text: node.textContent, x: box.x, y: box.y, width: box.w,
+            fontSize: parseInt(cs.fontSize, 10) || 40,
+            fontFamily: (cs.fontFamily.split(',')[0] || '').replace(/["']/g, '').trim(),
+            color: rgbToHex(cs.color),
+            fontWeight: parseInt(cs.fontWeight, 10) || null, lineHeight: null,
+            letterSpacing: cs.letterSpacing === 'normal' ? null : cs.letterSpacing,
+            textTransform: cs.textTransform === 'none' ? null : cs.textTransform };
+          // snapshot the indexed values so syncDesign writes a prop ONLY when the user
+          // actually changed it (otherwise unedited nodes stay byte-identical = faithful).
+          el._orig = { color: el.color, fontSize: el.fontSize, fontFamily: el.fontFamily, fontWeight: el.fontWeight, lineHeight: el.lineHeight, letterSpacing: el.letterSpacing, textTransform: el.textTransform, text: el.text };
+          els.push(el);
+        }
+      });
+      state.config = { width: 1080, height: 1920, elements: els, fixedDesign: [], media: media, direct: true };
+    }
+    function rgbToHex(c) {
+      if (!c) return '';
+      const m = c.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/i); if (!m) return c;
+      const h = (n) => ('0' + parseInt(n, 10).toString(16)).slice(-2);
+      return '#' + h(m[1]) + h(m[2]) + h(m[3]);
+    }
+    // SYNC: apply state.config onto the real design nodes IN PLACE. This is the direct-mode
+    // renderStage() — never wipes/rebuilds. Position moves via the independent `translate`
+    // property (composes with the design's own transform animations; no reflow).
+    function syncDesign() {
+      const d = dDoc(); if (!d || !state.config) return;
+      const applyText = (el) => {
+        const node = el.domId && d.querySelector('[data-edit-id="' + el.domId + '"]'); if (!node) return;
+        const o = el._orig || {};
+        // Only write a property the user actually CHANGED (else leave the node untouched).
+        if (el.color && el.color !== o.color) node.style.color = el.color;
+        if (el.fontSize && el.fontSize !== o.fontSize) node.style.fontSize = el.fontSize + 'px';
+        if (el.fontFamily && el.fontFamily !== o.fontFamily) node.style.fontFamily = "'" + el.fontFamily + "', sans-serif";
+        if (el.fontWeight != null && el.fontWeight !== '' && el.fontWeight !== o.fontWeight) node.style.fontWeight = el.fontWeight;
+        if (el.lineHeight != null && el.lineHeight !== '' && el.lineHeight !== o.lineHeight) node.style.lineHeight = el.lineHeight;
+        if (el.letterSpacing != null && el.letterSpacing !== '' && el.letterSpacing !== o.letterSpacing) node.style.letterSpacing = el.letterSpacing;
+        if (el.textTransform != null && el.textTransform !== '' && el.textTransform !== o.textTransform) node.style.textTransform = el.textTransform;
+        if (typeof el.rotate === 'number' && el.rotate) node.style.rotate = el.rotate + 'deg';
+        if (el.text != null && el.text !== o.text && node.hasAttribute('data-edit-text') && node.textContent !== el.text) node.textContent = el.text;
+        const base = (state.direct.box && state.direct.box[el.domId]) || { x: el.x, y: el.y };
+        const tx = (el.x != null ? el.x - base.x : 0), ty = (el.y != null ? el.y - base.y : 0);
+        if (tx || ty) node.style.translate = Math.round(tx) + 'px ' + Math.round(ty) + 'px';
+        else if (node.style.translate) node.style.translate = '';
+      };
+      (state.config.elements || []).forEach(applyText);
+      if (state.config.media && state.config.media.domId) {
+        const node = d.querySelector('[data-edit-id="' + state.config.media.domId + '"]');
+        if (node && state.config.media.path && node.getAttribute('src') !== state.config.media.path) {
+          node.setAttribute('src', state.config.media.path);
+          if (node.tagName === 'VIDEO') { node.muted = true; node.loop = true; try { node.load(); node.play(); } catch (x) {} }
+        }
+      }
+      drawDesignSelection();
+    }
+    function designEntry(id) {
+      if (!state.config) return null;
+      if (id === '_media') return state.config.media || null;
+      return (state.config.elements || []).find((e) => e.id === id) || (state.config.fixedDesign || []).find((s) => s.id === id) || null;
+    }
+    // On-canvas direct manipulation (NOT a stand-in — the right way to edit on the canvas).
+    // A selection box with corner resize handles + a label; drag the body to MOVE, drag a
+    // handle to RESIZE (font size for text); double-click to TYPE in place. All drives the
+    // real state.config so the real side panels stay in sync.
+    function drawDesignSelection() {
+      const ov = $('designOverlay'); if (!ov || !state.direct) return;
+      ov.innerHTML = '';
+      let id = state.selectedId; if (!id) return;
+      if (id === '_media') id = state.config && state.config.media && state.config.media.domId;
+      const node = id && dNode(id); if (!node) return;
+      const isText = node.hasAttribute('data-edit-text');
+      const b = nodeBox(node);
+      const box = document.createElement('div');
+      box.style.cssText = 'position:absolute;left:' + b.x + 'px;top:' + b.y + 'px;width:' + b.w + 'px;height:' + b.h + 'px;border:2px solid #4ea1ff;box-sizing:border-box;pointer-events:auto;cursor:move;z-index:5;';
+      box.addEventListener('mousedown', (e) => { if (e.target === box) startDesignDrag(e, state.selectedId, box); });
+      box.addEventListener('dblclick', (e) => { e.preventDefault(); if (isText) editDirectText(node.getAttribute('data-edit-id')); });
+      // label
+      const tag = document.createElement('div');
+      tag.textContent = (isText ? 'TEXT' : node.hasAttribute('data-edit-media') ? 'MEDIA' : 'ELEMENT') + ' · ' + id + (isText ? ' · double-click to type' : '');
+      tag.style.cssText = 'position:absolute;left:-2px;top:-23px;font:11px ui-monospace,monospace;color:#fff;background:#4ea1ff;padding:2px 7px;border-radius:3px;white-space:nowrap;pointer-events:none;';
+      box.appendChild(tag);
+      // corner resize handles
+      [['nw', 'left:-7px;top:-7px;', 'nwse'], ['ne', 'right:-7px;top:-7px;', 'nesw'], ['sw', 'left:-7px;bottom:-7px;', 'nesw'], ['se', 'right:-7px;bottom:-7px;', 'nwse']].forEach(function (h) {
+        const dot = document.createElement('div');
+        dot.style.cssText = 'position:absolute;width:13px;height:13px;background:#fff;border:2px solid #4ea1ff;border-radius:2px;pointer-events:auto;cursor:' + h[2] + '-resize;' + h[1];
+        dot.addEventListener('mousedown', (e) => { e.stopPropagation(); startDesignResize(e, state.selectedId, box); });
+        box.appendChild(dot);
+      });
+      ov.appendChild(box);
+    }
+    // guarded scale — never divide by 0 (a 0-width/hidden stage would otherwise corrupt drag)
+    function dscale() { return (state.scale && state.scale > 0.0001) ? state.scale : 1; }
+    function startDesignDrag(e, selId, box) {
+      const el = designEntry(selId); if (!el || el.domId == null || el === state.config.media) return; // media pans via its panel
+      e.preventDefault();
+      const node = dNode(el.domId); const sc = dscale();
+      const sx = e.clientX, sy = e.clientY, ox = el.x || 0, oy = el.y || 0;
+      const baseBox = (state.direct.box && state.direct.box[el.domId]) || { x: ox, y: oy };
+      const boxL = parseFloat(box.style.left), boxT = parseFloat(box.style.top);
+      const move = (ev) => {
+        const dx = (ev.clientX - sx) / sc, dy = (ev.clientY - sy) / sc;
+        // move the real node live via translate; reposition the box (no full re-render → no flicker)
+        node.style.translate = Math.round((ox - baseBox.x) + dx) + 'px ' + Math.round((oy - baseBox.y) + dy) + 'px';
+        box.style.left = Math.round(boxL + dx) + 'px'; box.style.top = Math.round(boxT + dy) + 'px';
+      };
+      const up = (ev) => {
+        document.removeEventListener('mousemove', move); document.removeEventListener('mouseup', up);
+        el.x = Math.round(ox + (ev.clientX - sx) / sc); el.y = Math.round(oy + (ev.clientY - sy) / sc);
+        renderStage(); setStatus('Moved ' + selId + '. Save to persist.');
+      };
+      document.addEventListener('mousemove', move); document.addEventListener('mouseup', up);
+    }
+    function startDesignResize(e, selId, box) {
+      const el = designEntry(selId); if (!el || el.domId == null) return;
+      e.preventDefault();
+      const node = dNode(el.domId); const isText = node.hasAttribute('data-edit-text'); const sc = dscale();
+      const sx = e.clientX; const startW = parseFloat(box.style.width) || nodeBox(node).w;
+      const startFont = el.fontSize || parseInt(dDoc().defaultView.getComputedStyle(node).fontSize, 10) || 40;
+      let newFont = startFont;
+      const move = (ev) => {
+        const dx = (ev.clientX - sx) / sc;
+        if (isText) { newFont = Math.max(8, Math.round(startFont * (1 + dx / Math.max(120, startW)))); node.style.fontSize = newFont + 'px'; }
+      };
+      const up = () => {
+        document.removeEventListener('mousemove', move); document.removeEventListener('mouseup', up);
+        if (isText) el.fontSize = newFont;
+        renderStage(); renderProps(); setStatus('Resized ' + selId + '. Save to persist.');
+      };
+      document.addEventListener('mousemove', move); document.addEventListener('mouseup', up);
+    }
+    // Click a design node → select it through the REAL selection + REAL property panel.
+    function selectDesignNode(id) {
+      const sel = (state.config && state.config.media && state.config.media.domId === id) ? '_media' : id;
+      selectElement(sel);   // the REAL selection: sets selectedId, renders the REAL props panel
+    }
+    function onDesignFrameLoad() {
+      const d = dDoc(); if (!d) return;
+      indexDesign();
+      d.addEventListener('click', (e) => {
+        const node = e.target.closest && e.target.closest('[data-edit-id]');
+        if (node) { e.preventDefault(); e.stopPropagation(); selectDesignNode(node.getAttribute('data-edit-id')); }
+      }, true);
+      d.addEventListener('dblclick', (e) => {
+        const node = e.target.closest && e.target.closest('[data-edit-text]');
+        if (node) { e.preventDefault(); e.stopPropagation(); selectDesignNode(node.getAttribute('data-edit-id')); editDirectText(node.getAttribute('data-edit-id')); }
+      }, true);
+      renderStage();
+      if (typeof renderElementList === 'function') renderElementList();
+      renderProps();
+      setStatus('Loaded ' + state.direct.label + ' — click any element to edit it with the real tools');
+    }
+    // Movement uses the independent CSS `translate` property — it nudges the element
+    // from wherever it naturally sits (no position/offsetParent math, no reflow) and
+    // COMPOSES with any `transform:` animation the design already runs (so a moving
+    // element isn't flung off-screen and its motion still plays).
+    function editDirectText(id) {
+      const node = dNode(id); if (!node || !node.hasAttribute('data-edit-text')) return;
+      const ov = $('designOverlay'); if (ov) ov.innerHTML = ''; // hide the box so the caret can land
+      node.setAttribute('contenteditable', 'true');
+      node.style.outline = '2px dashed #4ea1ff';
+      node.focus();
+      try { const d = dDoc(); const rng = d.createRange(); rng.selectNodeContents(node); const sel = d.defaultView.getSelection(); sel.removeAllRanges(); sel.addRange(rng); } catch (x) {}
+      const finish = () => {
+        node.removeEventListener('blur', finish);
+        node.removeAttribute('contenteditable'); node.style.outline = '';
+        // keep state.config in sync so the COPY/POSITION panels reflect the new text
+        const el = (state.config.elements || []).find((e) => e.domId === id); if (el) el.text = node.textContent;
+        selectDesignNode(id);
+        setStatus('Text edited. Save to persist.');
+      };
+      node.addEventListener('blur', finish);
+    }
+    // SAVE: capture the live state of every node that differs from its pristine baseline
+    // (or already had a saved override) into edits/<label>.json. cssText carries the full
+    // visual state (original inline styles + edits); html for text; src for media.
+    async function saveDirect() {
+      setStatus('Saving…');
+      const d = dDoc(); if (!d) { setStatus('Nothing to save'); return; }
+      const ov = state.direct.overrides || { edits: {}, added: [] }; ov.edits = ov.edits || {}; ov.added = ov.added || [];
+      Array.from(d.querySelectorAll('[data-edit-id]')).forEach((node) => {
+        const id = node.getAttribute('data-edit-id');
+        const base = (state.direct.baseline && state.direct.baseline[id]) || {};
+        const css = node.style.cssText, html = node.innerHTML, src = node.getAttribute('src');
+        const cssDiff = css !== (base.cssText || '');
+        const htmlDiff = node.hasAttribute('data-edit-text') && html !== base.html;
+        const srcDiff = (src || null) !== (base.src || null);
+        const prior = ov.edits[id];
+        if (!cssDiff && !htmlDiff && !srcDiff && !prior) return; // untouched → not saved
+        const e = Object.assign({}, prior || {});   // preserve any previously-saved parts
+        if (cssDiff) e.cssText = css;
+        if (htmlDiff) e.html = html;
+        if (srcDiff) e.src = src;
+        ov.edits[id] = e;
+      });
+      state.direct.overrides = ov;
+      try {
+        const r = await fetch(apiUrl('/design-overrides/' + state.direct.campaign + '/' + state.direct.label), {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(ov),
+        });
+        const j = await r.json();
+        setStatus(j.saved ? ('Saved ' + state.direct.label + ' ✓ — reload to confirm it sticks') : ('Save error: ' + (j.error || 'unknown')));
+      } catch (e) { setStatus('Save error: ' + e.message); }
+    }
+
     // ===== Init =====
     (async () => {
       const r = await fetchClusters();
@@ -4918,7 +5228,11 @@
       if (VIEW_MODE) document.body.classList.add('view-mode');
 
       const initial = window.location.hash.slice(1);
-      if (initial && parseCampId(initial)) {
+      const designId = parseDesignId(initial);
+      if (designId) {
+        // Claude Design file — DIRECT MODE: load the real design as the stage.
+        await loadDesign(designId.campaign, designId.label);
+      } else if (initial && parseCampId(initial)) {
         // Campaign asset — not present in the cluster <select>; load directly
         // (B5: the cluster-membership gate would otherwise drop a camp: hash).
         await loadCluster(initial);

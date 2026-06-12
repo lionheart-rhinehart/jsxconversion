@@ -1,0 +1,366 @@
+{
+  "campaign": "westfield-100-off",
+  "dsHref": "_ds/athletes-acceleration-design-system-019e2d4d-351e-7568-9022-254263b133e3/colors_and_type.css",
+  "designs": [
+    {
+      "label": "1A",
+      "file": "1A.html",
+      "angleNo": 1,
+      "route": "A",
+      "angleName": "Falling Behind Peers",
+      "hook": "They run the drills and show up, and still watch others pull ahead. It isn't effort — it's a plan.",
+      "eyebrow": "01",
+      "technique": "Live Gap HUD · count-up + scanline"
+    },
+    {
+      "label": "1B",
+      "file": "1B.html",
+      "angleNo": 1,
+      "route": "B",
+      "angleName": "Falling Behind Peers",
+      "hook": "They run the drills and show up, and still watch others pull ahead. It isn't effort — it's a plan.",
+      "eyebrow": "01",
+      "technique": "Reveal Band · clip-wipe + word-wave"
+    },
+    {
+      "label": "1C",
+      "file": "1C.html",
+      "angleNo": 1,
+      "route": "C",
+      "angleName": "Falling Behind Peers",
+      "hook": "They run the drills and show up, and still watch others pull ahead. It isn't effort — it's a plan.",
+      "eyebrow": "01",
+      "technique": "Gap Meters · count-up + draining bars"
+    },
+    {
+      "label": "2A",
+      "file": "2A.html",
+      "angleNo": 2,
+      "route": "A",
+      "angleName": "Post-Tryout Gut-Punch",
+      "hook": "The brutal ride home after they don't make it. They don't need to work harder — they need a plan.",
+      "eyebrow": "02",
+      "technique": "Headline Flip · word-flip over clip"
+    },
+    {
+      "label": "2B",
+      "file": "2B.html",
+      "angleNo": 2,
+      "route": "B",
+      "angleName": "Post-Tryout Gut-Punch",
+      "hook": "The brutal ride home after they don't make it. They don't need to work harder — they need a plan.",
+      "eyebrow": "02",
+      "technique": "Iris Letterbox · vertical film-bars"
+    },
+    {
+      "label": "2C",
+      "file": "2C.html",
+      "angleNo": 2,
+      "route": "C",
+      "angleName": "Post-Tryout Gut-Punch",
+      "hook": "The brutal ride home after they don't make it. They don't need to work harder — they need a plan.",
+      "eyebrow": "02",
+      "technique": "Baseline Readout · count-ups + typewriter"
+    },
+    {
+      "label": "3A",
+      "file": "3A.html",
+      "angleNo": 3,
+      "route": "A",
+      "angleName": "Founding 40 · $100 Off For Life",
+      "hook": "The first 40 lock in $100 off for life. Not a trial discount. Once 40 are gone, they're gone.",
+      "eyebrow": "03",
+      "technique": "Founding Seal · stamp + spot count-up"
+    },
+    {
+      "label": "3B",
+      "file": "3B.html",
+      "angleNo": 3,
+      "route": "B",
+      "angleName": "Founding 40 · $100 Off For Life",
+      "hook": "The first 40 lock in $100 off for life. Not a trial discount. Once 40 are gone, they're gone.",
+      "eyebrow": "03",
+      "technique": "Boarding Pass · floating ticket"
+    },
+    {
+      "label": "3C",
+      "file": "3C.html",
+      "angleNo": 3,
+      "route": "C",
+      "angleName": "Founding 40 · $100 Off For Life",
+      "hook": "The first 40 lock in $100 off for life. Not a trial discount. Once 40 are gone, they're gone.",
+      "eyebrow": "03",
+      "technique": "Savings Reel · odometer roll to $1,200"
+    },
+    {
+      "label": "4A",
+      "file": "4A.html",
+      "angleNo": 4,
+      "route": "A",
+      "angleName": "The Intimidated Athlete",
+      "hook": "Nervous about the gym, burned by a harsh coach. Nobody starts behind — everyone starts here.",
+      "eyebrow": "04",
+      "technique": "Before/After Flip · word-flip over clip"
+    },
+    {
+      "label": "4B",
+      "file": "4B.html",
+      "angleNo": 4,
+      "route": "B",
+      "angleName": "The Intimidated Athlete",
+      "hook": "Nervous about the gym, burned by a harsh coach. Nobody starts behind — everyone starts here.",
+      "eyebrow": "04",
+      "technique": "Doorway Sweep · masked photo + light sweep"
+    },
+    {
+      "label": "4C",
+      "file": "4C.html",
+      "angleNo": 4,
+      "route": "C",
+      "angleName": "The Intimidated Athlete",
+      "hook": "Nervous about the gym, burned by a harsh coach. Nobody starts behind — everyone starts here.",
+      "eyebrow": "04",
+      "technique": "Typed Quote · typewriter + caret"
+    },
+    {
+      "label": "5A",
+      "file": "5A.html",
+      "angleNo": 5,
+      "route": "A",
+      "angleName": "“My Kid Is Just Slow”",
+      "hook": "They're not slow — they're untrained. Speed is mechanics and power, and both get coached.",
+      "eyebrow": "05",
+      "technique": "Word Swap · SLOW → UNTRAINED"
+    },
+    {
+      "label": "5B",
+      "file": "5B.html",
+      "angleNo": 5,
+      "route": "B",
+      "angleName": "“My Kid Is Just Slow”",
+      "hook": "They're not slow — they're untrained. Speed is mechanics and power, and both get coached.",
+      "eyebrow": "05",
+      "technique": "Split Slide · panel reveal"
+    },
+    {
+      "label": "5C",
+      "file": "5C.html",
+      "angleNo": 5,
+      "route": "C",
+      "angleName": "“My Kid Is Just Slow”",
+      "hook": "They're not slow — they're untrained. Speed is mechanics and power, and both get coached.",
+      "eyebrow": "05",
+      "technique": "Equation Build · terms assemble"
+    },
+    {
+      "label": "6A",
+      "file": "6A.html",
+      "angleNo": 6,
+      "route": "A",
+      "angleName": "Sore But Not Improving",
+      "hook": "Wrecked from training but never faster? You're paying for sweat, not results. Numbers are progress.",
+      "eyebrow": "06",
+      "technique": "EKG Draw · pulse line over clip"
+    },
+    {
+      "label": "6B",
+      "file": "6B.html",
+      "angleNo": 6,
+      "route": "B",
+      "angleName": "Sore But Not Improving",
+      "hook": "Wrecked from training but never faster? You're paying for sweat, not results. Numbers are progress.",
+      "eyebrow": "06",
+      "technique": "Retest Stack · counting split times"
+    },
+    {
+      "label": "6C",
+      "file": "6C.html",
+      "angleNo": 6,
+      "route": "C",
+      "angleName": "Sore But Not Improving",
+      "hook": "Wrecked from training but never faster? You're paying for sweat, not results. Numbers are progress.",
+      "eyebrow": "06",
+      "technique": "Toggle · knob slides to Results"
+    },
+    {
+      "label": "7A",
+      "file": "7A.html",
+      "angleNo": 7,
+      "route": "A",
+      "angleName": "After Spot 40, The Price Goes Up",
+      "hook": "First 40 lock in $100 off the membership for life. After spot 40, the price goes up and stays up.",
+      "eyebrow": "07",
+      "technique": "Price Tag · pendulum + count-up"
+    },
+    {
+      "label": "7B",
+      "file": "7B.html",
+      "angleNo": 7,
+      "route": "B",
+      "angleName": "After Spot 40, The Price Goes Up",
+      "hook": "First 40 lock in $100 off the membership for life. After spot 40, the price goes up and stays up.",
+      "eyebrow": "07",
+      "technique": "Mega Figure · count-up over photo"
+    },
+    {
+      "label": "7C",
+      "file": "7C.html",
+      "angleNo": 7,
+      "route": "C",
+      "angleName": "After Spot 40, The Price Goes Up",
+      "hook": "First 40 lock in $100 off the membership for life. After spot 40, the price goes up and stays up.",
+      "eyebrow": "07",
+      "technique": "Depleting Spots · bar drains"
+    },
+    {
+      "label": "8A",
+      "file": "8A.html",
+      "angleNo": 8,
+      "route": "A",
+      "angleName": "“Is It Worth The Money?”",
+      "hook": "Youth sports already cost a fortune. We removed the gamble — you only pay for results that show up.",
+      "eyebrow": "08",
+      "technique": "Receipt Print · slip prints down"
+    },
+    {
+      "label": "8B",
+      "file": "8B.html",
+      "angleNo": 8,
+      "route": "B",
+      "angleName": "“Is It Worth The Money?”",
+      "hook": "Youth sports already cost a fortune. We removed the gamble — you only pay for results that show up.",
+      "eyebrow": "08",
+      "technique": "Guarantee Ring · stroke draws round photo"
+    },
+    {
+      "label": "8C",
+      "file": "8C.html",
+      "angleNo": 8,
+      "route": "C",
+      "angleName": "“Is It Worth The Money?”",
+      "hook": "Youth sports already cost a fortune. We removed the gamble — you only pay for results that show up.",
+      "eyebrow": "08",
+      "technique": "Risk Gauge · needle swings"
+    },
+    {
+      "label": "9A",
+      "file": "9A.html",
+      "angleNo": 9,
+      "route": "A",
+      "angleName": "Over-Specialized Too Early",
+      "hook": "More specialized but not more athletic. Skill sits on top of athleticism — we build the base.",
+      "eyebrow": "09",
+      "technique": "Pyramid Build · layers stack up"
+    },
+    {
+      "label": "9B",
+      "file": "9B.html",
+      "angleNo": 9,
+      "route": "B",
+      "angleName": "Over-Specialized Too Early",
+      "hook": "More specialized but not more athletic. Skill sits on top of athleticism — we build the base.",
+      "eyebrow": "09",
+      "technique": "Foundation Blocks · stack settles"
+    },
+    {
+      "label": "9C",
+      "file": "9C.html",
+      "angleNo": 9,
+      "route": "C",
+      "angleName": "Over-Specialized Too Early",
+      "hook": "More specialized but not more athletic. Skill sits on top of athleticism — we build the base.",
+      "eyebrow": "09",
+      "technique": "Waterline · base rises"
+    },
+    {
+      "label": "10A",
+      "file": "10A.html",
+      "angleNo": 10,
+      "route": "A",
+      "angleName": "The Self-Critical Kid",
+      "hook": "Talent's there, they don't see it. Confidence comes from proof — they watch the numbers climb.",
+      "eyebrow": "10",
+      "technique": "Confidence Bars · climb monthly"
+    },
+    {
+      "label": "10B",
+      "file": "10B.html",
+      "angleNo": 10,
+      "route": "B",
+      "angleName": "The Self-Critical Kid",
+      "hook": "Talent's there, they don't see it. Confidence comes from proof — they watch the numbers climb.",
+      "eyebrow": "10",
+      "technique": "Progress Chips · counting mph gains"
+    },
+    {
+      "label": "10C",
+      "file": "10C.html",
+      "angleNo": 10,
+      "route": "C",
+      "angleName": "The Self-Critical Kid",
+      "hook": "Talent's there, they don't see it. Confidence comes from proof — they watch the numbers climb.",
+      "eyebrow": "10",
+      "technique": "Body / Head · underline draws"
+    },
+    {
+      "label": "11A",
+      "file": "11A.html",
+      "angleNo": 11,
+      "route": "A",
+      "angleName": "Made For You · Near Westfield",
+      "hook": "If your kid plays a sport near Westfield, this was made for you. Once 40 are gone, the price disappears.",
+      "eyebrow": "11",
+      "technique": "Map Pin · drop + ripple"
+    },
+    {
+      "label": "11B",
+      "file": "11B.html",
+      "angleNo": 11,
+      "route": "B",
+      "angleName": "Made For You · Near Westfield",
+      "hook": "If your kid plays a sport near Westfield, this was made for you. Once 40 are gone, the price disappears.",
+      "eyebrow": "11",
+      "technique": "Now Open · stamp over photo"
+    },
+    {
+      "label": "11C",
+      "file": "11C.html",
+      "angleNo": 11,
+      "route": "C",
+      "angleName": "Made For You · Near Westfield",
+      "hook": "If your kid plays a sport near Westfield, this was made for you. Once 40 are gone, the price disappears.",
+      "eyebrow": "11",
+      "technique": "Vanishing Price · sign flicker + count-up"
+    },
+    {
+      "label": "12A",
+      "file": "12A.html",
+      "angleNo": 12,
+      "route": "A",
+      "angleName": "“Will It Transfer To The Game?”",
+      "hook": "Stronger in training but the same on game day? We build power that transfers. Quicker, higher, explosive.",
+      "eyebrow": "12",
+      "technique": "Transfer Arrow · gym to game marquee"
+    },
+    {
+      "label": "12B",
+      "file": "12B.html",
+      "angleNo": 12,
+      "route": "B",
+      "angleName": "“Will It Transfer To The Game?”",
+      "hook": "Stronger in training but the same on game day? We build power that transfers. Quicker, higher, explosive.",
+      "eyebrow": "12",
+      "technique": "Two Tiles · gym drops into game"
+    },
+    {
+      "label": "12C",
+      "file": "12C.html",
+      "angleNo": 12,
+      "route": "C",
+      "angleName": "“Will It Transfer To The Game?”",
+      "hook": "Stronger in training but the same on game day? We build power that transfers. Quicker, higher, explosive.",
+      "eyebrow": "12",
+      "technique": "Check Compare · check stamps in"
+    }
+  ]
+}

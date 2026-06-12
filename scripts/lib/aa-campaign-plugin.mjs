@@ -29,6 +29,7 @@ import { loadCopyLibrary } from "./copy-library.mjs";
 import { validatePlan } from "../validate-plan.mjs";
 import { listingRoots, isAABrand } from "./media-scope.mjs";
 import { findTemplate, listTemplates, assetsDirFor } from "./template-roots.mjs";
+import { wrapStandalone } from "./design-edit.mjs";
 
 const MIME = {
   ".html": "text/html", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
@@ -130,6 +131,90 @@ export function createCampaignPlugin({ cwd = process.cwd() } = {}) {
     if (path === "/campaigns" && req.method === "GET") {
       let list = []; try { list = readdirSync(CAMPAIGNS_DIR).filter((d) => existsSync(join(CAMPAIGNS_DIR, d, "creative-plan.json"))); } catch {}
       sendJson(res, 200, { campaigns: list }); return true;
+    }
+
+    // ===== Claude Design DIRECT-EDIT routes (edit the real design, never rebuild) =====
+    // The real `.cr-frame` slice IS the render surface; edits are surgical overrides
+    // keyed to data-edit-id. Used by the editor stage, review cards, and export.
+    const designsDir = (c) => join(CAMPAIGNS_DIR, c, "designs");
+    const overridesPath = (c, label) => join(CAMPAIGNS_DIR, c, "edits", label + ".json");
+
+    const designsList = path.match(/^\/designs\/([\w-]+)$/);
+    if (designsList && req.method === "GET") {
+      const mf = join(designsDir(designsList[1]), "manifest.json");
+      if (!existsSync(mf)) { sendJson(res, 404, { error: "no extracted designs (run scripts/design-extract.mjs)" }); return true; }
+      send(res, 200, readFileSync(mf, "utf8")); return true;
+    }
+
+    const designOne = path.match(/^\/design\/([\w-]+)\/(\w+)$/);
+    if (designOne && req.method === "GET") {
+      const [, c, label] = designOne;
+      const frag = join(designsDir(c), label + ".html");
+      if (!existsSync(frag)) { sendJson(res, 404, { error: `no design "${label}" in "${c}" (run design-extract)` }); return true; }
+      let dsHref = "", keyframes = "";
+      try { dsHref = JSON.parse(readFileSync(join(designsDir(c), "manifest.json"), "utf8")).dsHref || ""; } catch {}
+      try { keyframes = readFileSync(join(designsDir(c), "_keyframes.css"), "utf8"); } catch {}
+      let overrides = {};
+      try { if (existsSync(overridesPath(c, label))) overrides = JSON.parse(readFileSync(overridesPath(c, label), "utf8")); } catch {}
+      const html = wrapStandalone({
+        fragmentHtml: readFileSync(frag, "utf8"),
+        keyframesCss: keyframes,
+        dsHref,
+        overrides,
+        assetBase: `/design-asset/${encodeURIComponent(c)}/`,
+      });
+      send(res, 200, html, "text/html"); return true;
+    }
+
+    const designAsset = path.match(/^\/design-asset\/([\w-]+)\/(.+)$/);
+    if (designAsset && req.method === "GET") {
+      const c = designAsset[1];
+      const rel = decodeURIComponent(designAsset[2]).replace(/\\/g, "/");
+      if (rel.includes("..")) { sendJson(res, 400, { error: "bad path" }); return true; }
+      const baseDir = join(CAMPAIGNS_DIR, c);
+      const resolved = resolve(join(baseDir, rel));
+      if (resolved.startsWith(resolve(baseDir)) && existsSync(resolved)) {
+        sendFile(req, res, resolved, MIME[extname(resolved).toLowerCase()] || "application/octet-stream"); return true;
+      }
+      sendJson(res, 404, { error: "asset not found" }); return true;
+    }
+
+    // Copy a pulled media file into the campaign's own assets/ (so a swap on a direct
+    // design resolves via /design-asset). Mirrors /media-into-template for campaigns.
+    const designMediaInto = path.match(/^\/design-media-into\/([\w-]+)$/);
+    if (designMediaInto && req.method === "POST") {
+      const c = designMediaInto[1];
+      try {
+        const { src } = JSON.parse((await readBody(req)) || "{}");
+        if (!src) { sendJson(res, 400, { error: "missing src" }); return true; }
+        const from = resolve(src.startsWith("/") || /^[A-Za-z]:/.test(src) ? src : join(PROJECT_ROOT, src));
+        if (!existsSync(from)) { sendJson(res, 404, { error: "source media not found: " + src }); return true; }
+        const ext = extname(from).toLowerCase();
+        const sub = CLIP_EXT.has(ext) ? "vid" : "img";
+        const name = basename(from);
+        const destDir = join(CAMPAIGNS_DIR, c, "assets", sub);
+        mkdirSync(destDir, { recursive: true });
+        copyFileSync(from, join(destDir, name));
+        sendJson(res, 200, { path: `assets/${sub}/${name}` }); return true;
+      } catch (e) { sendJson(res, 500, { error: String((e && e.message) || e) }); return true; }
+    }
+
+    const designOv = path.match(/^\/design-overrides\/([\w-]+)\/(\w+)$/);
+    if (designOv) {
+      const [, c, label] = designOv;
+      const p = overridesPath(c, label);
+      if (req.method === "GET") {
+        let ov = { edits: {}, added: [] };
+        try { if (existsSync(p)) ov = JSON.parse(readFileSync(p, "utf8")); } catch {}
+        sendJson(res, 200, ov); return true;
+      }
+      if (req.method === "POST") {
+        try {
+          const body = JSON.parse((await readBody(req)) || "{}");
+          writeAtomic(p, JSON.stringify(body, null, 2));
+          sendJson(res, 200, { saved: true, campaign: c, label }); return true;
+        } catch (e) { sendJson(res, 400, { error: String((e && e.message) || e) }); return true; }
+      }
     }
     if (path === "/plan" && req.method === "GET") {
       const campaign = Q("campaign") || firstCampaign();

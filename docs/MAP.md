@@ -24,7 +24,9 @@ to it rather than repeating it.
 | `fonts/` | 🟢 | Font binaries (Anton, Geist, JetBrains Mono…) for the renderer's font preflight. Mirrors `brand/aa-design-system/project/fonts/` on purpose. |
 | `examples/` | 🟢 | Sample input JSX. |
 | `planning/` | 🟢 | Strategic design docs (e.g. `2026-05-21__template-library-vision.md`) — note it references the `Andromeda` test folder as a known-good example. |
-| `.claude/skills/` | 🟢🔒 | The 6 skills (jsx-to-mp4, creative-engine, compose-creative, repurpose-campaign, restart-dev, skill-creator). **LOCKED zone** — `/unlock-skills` to edit. |
+| `.claude/skills/` | 🟢🔒 | ACTIVE skills: `creative-engine` (v2 editing pipeline — being rebuilt), `restart-dev`, `skill-creator`. **LOCKED zone** — `/unlock-skills` to edit. |
+| `creative-engine-v1/` | ⛔🔒 | **ARCHIVED** old creative skills (jsx-to-mp4, creative-engine, compose-creative, repurpose-campaign, creative-editor, design-to-approval). Read-only zone `creative-v1` — `/unlock-creative-v1`. Reference only, never import. Retired 2026-06-11 (plan `~/.claude/plans/so-i-see-that-memoized-parnas.md`). |
+| `creative-engine/` | 🟢 | Clean implementation home for the new `/creative-engine` pipeline (code; skill def lives in `.claude/skills/creative-engine/`). |
 | `out/` | ⚙️ | Rendered MP4/PNG output + logs. Gitignored, **except** `out/editor/` (tracked — it's editor source, not a render). |
 | `node_modules/`, `.tmp/`, `.backups/`, `.dev-ports.json`, `*.log` | ⚙️ | Machine-local, gitignored. `.backups/` is the zone-protection auto-backup; `.dev-ports.json` is per-checkout dev ports. |
 

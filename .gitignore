@@ -55,3 +55,12 @@ automation/.render-*
 
 # Review-markup sidecar store (Feature 2 — machine-local)
 .annotations-store/
+
+# Heavy regeneratable export/review bundles (duplicate copies a script packages for
+# handoff; >100MB each so they'd break a GitHub push). Kept on disk, not in git.
+campaigns/**/_export_bundle/
+campaigns/**/_review_bundle/
+campaigns/**/_export_v2.tar.gz
+# Combined Claude Design handoff galleries (.dc.html with media base64-embedded — can be
+# 100MB+). The usable per-design exports live in campaigns/<c>/designs/*.html (kept).
+campaigns/**/*.dc.html

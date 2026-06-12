@@ -72,8 +72,15 @@ docs/          PROCESS.md (canonical), MAP.md (this map), creative-engine-status
 lessons-learned/  Dated gotchas (YYYY-MM-DD__slug.md) — new ones land here on every deploy
 fonts/         Font binaries for the renderer's preflight
 out/           Rendered creatives — gitignored (machine-local)
-.claude/skills/   The 6 skills (jsx-to-mp4, creative-engine, compose-creative, repurpose-campaign, restart-dev, skill-creator) — LOCKED zone
+.claude/skills/   ACTIVE skills: creative-engine (v2 editing pipeline — being rebuilt), restart-dev, skill-creator — LOCKED zone
+creative-engine-v1/  ⛔ ARCHIVED old creative skills (jsx-to-mp4, creative-engine, compose-creative, repurpose-campaign, creative-editor, design-to-approval) — read-only zone `creative-v1`, reference only
+creative-engine/  Clean implementation home for the new /creative-engine pipeline (code; skill def lives in .claude/skills/creative-engine/)
 ```
+
+> **⚠️ 2026-06-11 rebuild in progress:** the old creative system was retired and archived to
+> `creative-engine-v1/` (locked). The new editing pipeline is `/creative-engine` — see plan
+> `~/.claude/plans/so-i-see-that-memoized-parnas.md`. Old `docs/` (PROCESS.md, creative-playbook,
+> creative-engine-status.md) describe the **retired** system — reference only, not the active design.
 
 ---
 

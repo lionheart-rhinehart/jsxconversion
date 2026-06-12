@@ -25,7 +25,23 @@ The renderer decides MP4 vs PNG based on the JSX:
 | `claude-design` | `<Stage>` / `<Sprite>` / `useTime` | MP4 (video, frame loop) |
 | `remotion` | `<Composition>` / `useCurrentFrame` | MP4 (via npx remotion render) |
 | `static` | none of the above, no animation hints | **PNG** (one screenshot) |
-| `animated` | `framer-motion`, `@keyframes`, `requestAnimationFrame`, etc. | Not implemented — author as claude-design instead |
+| `animated` (standalone `.html`) | a `.html` file with CSS `@keyframes` / inline `animation:` — e.g. a Claude Design `export/` creative | MP4 (CSS-timeline frame loop) |
+| `animated` (JSX) | `framer-motion`, `requestAnimationFrame`, `@keyframes` inside a `.jsx`/`.tsx` | Not implemented — author as claude-design instead |
+
+**Animated standalone HTML** (a Claude Design `export/<name>.html` creative: one
+1080×1920 root on a master loop, brand CSS + fonts via its own `<link>`s,
+animations applied via inline `animation:` referencing `@keyframes`, sometimes
+over a real `<video>`) renders directly — pass the `.html` path to the same
+command. The renderer steps the Web Animations timeline frame-by-frame (CSS
+`@keyframes` are seekable), syncs each `<video>` to `t mod duration`, and encodes
+through the shared BT.709 pipeline. Size and loop length **auto-detect** from the
+document (root box size; loop = the most common infinite-animation duration — 7s
+for the AA master loop), each overridable via a sibling `<name>.config.json`
+(`WIDTH`/`HEIGHT`/`FPS`/`DURATION_SECONDS`) or a `data-loop-seconds` attribute on
+the root. Render a whole `export/` folder by looping the command over its files.
+This is the correct path for Claude Design handoffs — render the `export/`
+standalone files (edits baked in), **not** the `.dc.html` gallery (which can carry
+pre-edit copy + old media filenames).
 
 For ad statics (single-frame creatives), write a plain React component
 with `export default function MyAd() { return <div>...</div>; }`. No
@@ -112,7 +128,8 @@ In priority order:
 | `Variation file does not register a global` | Missing `window.X = X` at file bottom | Add the line |
 | `ffmpeg not found` | Missing system dep (video output only) | `apt install ffmpeg` (or run `.claude/hooks/session-start.sh`). Not required for `kind=static` PNG output. |
 | `Template must "export default" a component.` | Static React file has no default export | Add `export default MyComponent` at the bottom |
-| `Renderer for kind=animated not implemented yet` | JSX has animation hints but no Stage/Composition | Either remove the animation hints (becomes `static`) or wrap in `<Stage>` (becomes `claude-design`) |
+| `Renderer for animated JSX not implemented` | A `.jsx`/`.tsx` has animation hints but no Stage/Composition | Remove the hints (becomes `static`), wrap in `<Stage>` (becomes `claude-design`), or export it as a standalone `.html` with CSS `@keyframes` (becomes `animated` HTML, which renders) |
+| Animated `.html` loops at the wrong length / wrong size | Auto-detect guessed (mode of infinite-animation durations; root box size) | Drop a sibling `<name>.config.json` with `DURATION_SECONDS`/`FPS`/`WIDTH`/`HEIGHT`, or set `data-loop-seconds` on the root |
 
 ## Hand-off
 

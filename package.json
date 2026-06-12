@@ -10,7 +10,7 @@
     "restart": "node scripts/restart-dev.mjs",
     "dev:editor": "node --watch scripts/editor-server.mjs",
     "dev:review": "node --watch brand/video-templates/serve.mjs",
-    "render": "node .claude/skills/jsx-to-mp4/scripts/render.mjs",
+    "render": "node creative-engine-v1/jsx-to-mp4/scripts/render.mjs",
     "validate-templates": "node scripts/validate-templates.mjs",
     "test": "node --test \"test/**/*.test.mjs\"",
     "prepare": "git config core.hooksPath scripts/githooks"
