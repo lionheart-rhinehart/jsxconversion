@@ -11,6 +11,7 @@
     "dev:editor": "node --watch scripts/editor-server.mjs",
     "dev:review": "node --watch brand/video-templates/serve.mjs",
     "render": "node creative-engine-v1/jsx-to-mp4/scripts/render.mjs",
+    "jsx-to-mp4-conversion": "node scripts/jsx-to-mp4-conversion.mjs",
     "validate-templates": "node scripts/validate-templates.mjs",
     "test": "node --test \"test/**/*.test.mjs\"",
     "prepare": "git config core.hooksPath scripts/githooks"
