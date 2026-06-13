@@ -101,25 +101,50 @@
 
   function setPos(el, pos) {
     if (!pos) return;
-    // MOVE via margins, RESIZE via width/height — all LAYOUT props, deliberately
-    // never `transform` (keyframes own transform). Margins are the universal mover:
-    // they offset an element whether it's in flow OR absolutely positioned, and even
-    // when it's anchored by BOTH left & right (full-width bars) — unlike left/top,
-    // which collides with right/bottom anchoring. No keyframe animates margin, so a
-    // dragged element that is also transform-animated keeps animating (Phase-2 2.4).
-    if (pos.dx != null) el.style.marginLeft = px(pos.dx);
-    if (pos.dy != null) el.style.marginTop = px(pos.dy);
+    // All LAYOUT props, never `transform` (keyframes own transform). Two move modes:
+    //  - mode:"absolute" → position:absolute + left/top: free-float anywhere, lets an
+    //    in-flow element lift above its siblings (Phase-A A1).
+    //  - default (margins dx/dy) → the universal in-flow nudge that never collides with
+    //    left/right anchoring. RESIZE is width/height. None of these fight the animation.
+    if (pos.mode === 'absolute') {
+      el.style.position = 'absolute';
+      if (pos.left != null) el.style.left = px(pos.left);
+      if (pos.top != null) el.style.top = px(pos.top);
+      el.style.right = 'auto'; el.style.bottom = 'auto';
+    } else {
+      if (pos.dx != null) el.style.marginLeft = px(pos.dx);
+      if (pos.dy != null) el.style.marginTop = px(pos.dy);
+    }
     if (pos.w != null) el.style.width = px(pos.w);
     if (pos.h != null) el.style.height = px(pos.h);
   }
 
   function px(v) { return (typeof v === 'number') ? v + 'px' : String(v); }
 
+  // Rotate via a WRAPPER the keyframes never target — putting transform on the animated
+  // node itself would be overwritten at render. Idempotent: reuse an existing wrapper.
+  function setRotate(el, deg) {
+    var wrap = el.parentNode && el.parentNode.getAttribute &&
+      el.parentNode.getAttribute('data-ce-rot') != null ? el.parentNode : null;
+    if (!wrap) {
+      wrap = el.ownerDocument.createElement('span');
+      wrap.setAttribute('data-ce-rot', '1');
+      wrap.style.display = 'inline-block';
+      wrap.style.transformOrigin = 'center';
+      el.parentNode.insertBefore(wrap, el);
+      wrap.appendChild(el);
+    }
+    wrap.style.transform = 'rotate(' + (Number(deg) || 0) + 'deg)';
+  }
+
   function applyOne(el, ov) {
     if (!el || !ov) return;
     if (ov.text != null) setText(el, ov.text);
     if (ov.src != null) setSrc(el, ov.src);
     if (ov.pos != null) setPos(el, ov.pos);
+    if (ov.color != null) el.style.color = ov.color;
+    if (ov.fontSize != null) el.style.fontSize = px(ov.fontSize);
+    if (ov.rotate != null) setRotate(el, ov.rotate);
   }
 
   // doc = a Document (browser live edit, or puppeteer page document)
@@ -128,8 +153,16 @@
   function applyOverrides(doc, overrides) {
     var applied = 0, missing = [];
     overrides = overrides || {};
+    // freeze parent heights first (so a child promoted out of flow can't collapse a
+    // bottom-anchored container). __frozen__ = { "fN:eM": heightPx }.
+    var frozen = overrides.__frozen__ || {};
+    for (var fk in frozen) {
+      if (!Object.prototype.hasOwnProperty.call(frozen, fk)) continue;
+      var fel = targetEl(doc, fk); if (fel) fel.style.height = frozen[fk] + 'px';
+    }
     for (var key in overrides) {
       if (!Object.prototype.hasOwnProperty.call(overrides, key)) continue;
+      if (key.indexOf('__') === 0) continue; // editor metadata (e.g. "__groups__", "__frozen__"), not an element
       var el = targetEl(doc, key);
       if (!el) { missing.push(key); continue; }
       applyOne(el, overrides[key]);

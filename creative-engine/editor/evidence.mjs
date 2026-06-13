@@ -37,9 +37,10 @@ const TIMES = { mid: Math.round(LOOP_MS / 2), end: LOOP_MS - 1 };
 
 // the edit under test — one of each kind, all on transform-animated targets where it matters
 const OVERRIDES = {
-  'f0:e22': { text: 'Pull Away.' },                 // split-headline span (cWave anim) — text survives anim
-  'f0:e2':  { pos: { dy: 240 } },                   // scanline (cScan transform anim) — drag must not fight anim
-  'f0:e0':  { src: 'assets/vid/ad2.mp4' },          // bg video swap
+  'f0:e22': { text: 'Pull\nAway.' },                          // multi-line on a cWave-animated span (A4)
+  'f0:e20': { color: '#ffd400', fontSize: 132, rotate: -5 },  // color+size+rotate on an animated span (A2/A4)
+  'f0:e2':  { pos: { dy: 200 } },                             // margin move on a cScan transform-animated bar
+  'f0:e0':  { src: 'assets/vid/ad2.mp4' },                    // bg video swap
 };
 
 // ── tiny static server rooted at the repo so file fetch() works over http ──

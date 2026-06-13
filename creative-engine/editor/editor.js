@@ -61,6 +61,13 @@ export function mountEditor(opts) {
       <span class="ce-tag">// CreativeEngine</span>
       <span class="ce-title">Editor</span>
       <select class="ce-select ce-frames"></select>
+      <span class="ce-props" style="display:none;align-items:center;gap:8px;">
+        <input type="color" class="ce-prop-color" title="Text color" style="width:30px;height:28px;padding:0;border:1px solid #2c3038;background:#1f2227;border-radius:6px;">
+        <button class="ce-btn ce-fs-dn" title="Smaller">A−</button>
+        <input type="number" class="ce-prop-fs" title="Font size (px)" style="width:64px;" min="4" max="400">
+        <button class="ce-btn ce-fs-up" title="Bigger">A+</button>
+        <input type="number" class="ce-prop-rot" title="Rotate (°)" style="width:60px;" step="1" placeholder="0°">
+      </span>
       <span class="ce-spacer"></span>
       <button class="ce-btn ce-undo" disabled>↶ Undo</button>
       <button class="ce-btn ce-redo" disabled>↷ Redo</button>
@@ -96,6 +103,12 @@ export function mountEditor(opts) {
     swapApply: rootEl.querySelector('.ce-swap-apply'),
     swapClose: rootEl.querySelector('.ce-swap-close'),
     thumbs: rootEl.querySelector('.ce-thumbs'),
+    props: rootEl.querySelector('.ce-props'),
+    propColor: rootEl.querySelector('.ce-prop-color'),
+    propFs: rootEl.querySelector('.ce-prop-fs'),
+    fsDn: rootEl.querySelector('.ce-fs-dn'),
+    fsUp: rootEl.querySelector('.ce-fs-up'),
+    propRot: rootEl.querySelector('.ce-prop-rot'),
   };
 
   function idoc() { return els.iframe.contentDocument; }
@@ -204,11 +217,30 @@ export function mountEditor(opts) {
     if (!frame) return null;
     return frame.getAttribute('data-edit-frame') + ':' + el.getAttribute('data-edit-id');
   }
-  function clearSelection() { selectedKey = null; els.overlay.classList.remove('ce-on'); closeSwap(); }
+  function clearSelection() { selectedKey = null; els.overlay.classList.remove('ce-on'); els.props.style.display = 'none'; closeSwap(); }
 
   function select(el) {
     selectedKey = keyForEl(el);
+    syncProps(el);
     syncOverlay();
+  }
+
+  // show the text-property bar (color / size / rotate) for a selected text element,
+  // seeded from its current computed values + any existing override.
+  function syncProps(el) {
+    const isText = el.hasAttribute('data-edit-text');
+    els.props.style.display = (editable && isText) ? 'inline-flex' : 'none';
+    if (!isText) return;
+    const cs = iwin().getComputedStyle(el);
+    const ov = overrides[selectedKey] || {};
+    els.propColor.value = rgbToHex(ov.color || cs.color);
+    els.propFs.value = Math.round(parseFloat(ov.fontSize != null ? ov.fontSize : cs.fontSize)) || '';
+    els.propRot.value = ov.rotate != null ? ov.rotate : '';
+  }
+  function rgbToHex(c) {
+    const m = /rgba?\((\d+),\s*(\d+),\s*(\d+)/.exec(c || '');
+    if (!m) return /^#/.test(c) ? c : '#ffffff';
+    return '#' + [1, 2, 3].map((i) => (+m[i]).toString(16).padStart(2, '0')).join('');
   }
 
   function syncOverlay() {
@@ -293,10 +325,41 @@ export function mountEditor(opts) {
     if (!el) return;
     select(el);
     const key = keyForEl(el);
-    const basePos = (overrides[key] || {}).pos || {};
-    drag = { el, key, startX: e.clientX, startY: e.clientY,
-      baseDx: basePos.dx || 0, baseDy: basePos.dy || 0, moved: false };
+    drag = { el, key, startX: e.clientX, startY: e.clientY, moved: false, promoted: false, baseLeft: 0, baseTop: 0 };
     // don't preventDefault yet — a stationary click must still reach onClick
+  }
+
+  // Free-floating move (A1): promote to position:absolute. To stop siblings from
+  // reflowing when an in-flow element leaves the flow, promote ALL of its in-flow
+  // siblings to absolute at their CURRENT positions first — each gets its own bag entry
+  // so it's reconstructable on undo.
+  function pinAbsolute(c, left, top) {
+    c.style.position = 'absolute'; c.style.left = left + 'px'; c.style.top = top + 'px';
+    c.style.right = 'auto'; c.style.bottom = 'auto'; c.style.marginLeft = '0'; c.style.marginTop = '0';
+    const k = keyForEl(c);
+    overrides[k] = Object.assign({}, overrides[k], { pos: Object.assign({}, (overrides[k] || {}).pos,
+      { mode: 'absolute', left: Math.round(left), top: Math.round(top) }) });
+  }
+  function promoteForDrag(el) {
+    const parent = el.parentNode;
+    // 1) Freeze the (positioned, auto-height) container so pulling children out of flow
+    //    can't collapse it. Stored in __frozen__ so the renderer reproduces it.
+    if (parent && parent.getAttribute && parent.getAttribute('data-edit-id') != null
+        && iwin().getComputedStyle(parent).position !== 'static') {
+      const pk = keyForEl(parent);
+      if (pk && !(overrides['__frozen__'] || {})[pk]) {
+        const h = parent.offsetHeight;
+        parent.style.height = h + 'px';
+        overrides['__frozen__'] = Object.assign({}, overrides['__frozen__'], { [pk]: h });
+      }
+    }
+    // 2) Snapshot ALL tagged in-flow siblings BEFORE mutating, then pin every one at its
+    //    current spot → only the dragged element will visibly move (zero reflow, F3).
+    const sibs = Array.prototype.slice.call(parent.children)
+      .filter((c) => c.getAttribute && c.getAttribute('data-edit-id') != null);
+    const snap = sibs.map((c) => ({ c, left: c.offsetLeft, top: c.offsetTop,
+      already: iwin().getComputedStyle(c).position === 'absolute' }));
+    snap.forEach(({ c, left, top, already }) => { if (!already || c === el) pinAbsolute(c, left, top); });
   }
 
   function onMove(e) {
@@ -305,17 +368,25 @@ export function mountEditor(opts) {
     const dy = (e.clientY - drag.startY) / scale;
     if (Math.abs(e.clientX - drag.startX) + Math.abs(e.clientY - drag.startY) > 3) drag.moved = true;
     if (!drag.moved) return;
-    drag.el.style.marginLeft = (drag.baseDx + dx) + 'px';
-    drag.el.style.marginTop = (drag.baseDy + dy) + 'px';
+    if (!drag.promoted) {
+      pushHistory();                 // one history entry for the whole drag (incl. sibling promotion)
+      promoteForDrag(drag.el);
+      drag.baseLeft = drag.el.offsetLeft; drag.baseTop = drag.el.offsetTop;
+      drag.promoted = true;
+    }
+    drag.el.style.left = (drag.baseLeft + dx) + 'px';
+    drag.el.style.top = (drag.baseTop + dy) + 'px';
     syncOverlay();
   }
   function onUp() {
     if (drag && drag.moved) {
       suppressClick = true;
-      const dx = parseFloat(drag.el.style.marginLeft) || 0;
-      const dy = parseFloat(drag.el.style.marginTop) || 0;
-      setOverride(drag.key, { pos: Object.assign({}, (overrides[drag.key] || {}).pos,
-        { dx: Math.round(dx), dy: Math.round(dy) }) });
+      const left = Math.round(parseFloat(drag.el.style.left) || drag.el.offsetLeft);
+      const top = Math.round(parseFloat(drag.el.style.top) || drag.el.offsetTop);
+      // write WITHOUT a new history push (promoteForDrag already pushed once)
+      overrides[drag.key] = Object.assign({}, overrides[drag.key], { pos: Object.assign({},
+        (overrides[drag.key] || {}).pos, { mode: 'absolute', left, top }) });
+      commit();
     }
     drag = null;
     if (resize) {
@@ -422,6 +493,19 @@ export function mountEditor(opts) {
   els.save.addEventListener('click', () => onChange(clone(overrides), { save: true }));
   els.swapApply.addEventListener('click', () => applySwap(els.swapUrl.value.trim()));
   els.swapClose.addEventListener('click', closeSwap);
+
+  // text property controls (color / font-size / rotate) — set the override + live-apply
+  function applyProp(patch) {
+    if (!selectedKey) return;
+    setOverride(selectedKey, patch);
+    iwin().CEApply.applyOverrides(idoc(), { [selectedKey]: overrides[selectedKey] });
+    syncOverlay();
+  }
+  els.propColor.addEventListener('input', () => applyProp({ color: els.propColor.value }));
+  els.propFs.addEventListener('change', () => applyProp({ fontSize: Number(els.propFs.value) }));
+  els.fsUp.addEventListener('click', () => { els.propFs.value = (Number(els.propFs.value) || 0) + 4; applyProp({ fontSize: Number(els.propFs.value) }); });
+  els.fsDn.addEventListener('click', () => { els.propFs.value = Math.max(4, (Number(els.propFs.value) || 0) - 4); applyProp({ fontSize: Number(els.propFs.value) }); });
+  els.propRot.addEventListener('change', () => applyProp({ rotate: Number(els.propRot.value) || 0 }));
   window.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'z') { e.preventDefault(); e.shiftKey ? redo() : undo(); }
     if ((e.ctrlKey || e.metaKey) && e.key === 'y') { e.preventDefault(); redo(); }
