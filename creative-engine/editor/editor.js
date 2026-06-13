@@ -315,51 +315,23 @@ export function mountEditor(opts) {
     startTextEdit(el);
   }
 
-  // dragging (move) — mousedown begins a *potential* drag on ANY element; a click
-  // with no movement falls through to text-edit / media-swap (see suppressClick).
+  // dragging (move) — SAFE nudge via margins (never re-architects the layout). For
+  // already-absolutely-positioned elements (most design boxes) this moves them cleanly
+  // with no effect on neighbors; for in-flow text it nudges predictably. preventDefault
+  // on mousedown stops the browser's native text-selection from hijacking the drag.
+  // NOTE: true free-float (lift an in-flow element clear of its siblings) needs the
+  // "flatten layout to absolute" foundation — a dedicated rebuild, not this interim.
   let drag = null;
   function onDown(e) {
     if (!editable) return;
     if (editingEl) return; // let contenteditable handle its own pointer
     const el = e.target.closest && e.target.closest('[data-edit-id]');
     if (!el) return;
+    e.preventDefault();    // suppress native selection so a drag moves instead of highlights
     select(el);
     const key = keyForEl(el);
-    drag = { el, key, startX: e.clientX, startY: e.clientY, moved: false, promoted: false, baseLeft: 0, baseTop: 0 };
-    // don't preventDefault yet — a stationary click must still reach onClick
-  }
-
-  // Free-floating move (A1): promote to position:absolute. To stop siblings from
-  // reflowing when an in-flow element leaves the flow, promote ALL of its in-flow
-  // siblings to absolute at their CURRENT positions first — each gets its own bag entry
-  // so it's reconstructable on undo.
-  function pinAbsolute(c, left, top) {
-    c.style.position = 'absolute'; c.style.left = left + 'px'; c.style.top = top + 'px';
-    c.style.right = 'auto'; c.style.bottom = 'auto'; c.style.marginLeft = '0'; c.style.marginTop = '0';
-    const k = keyForEl(c);
-    overrides[k] = Object.assign({}, overrides[k], { pos: Object.assign({}, (overrides[k] || {}).pos,
-      { mode: 'absolute', left: Math.round(left), top: Math.round(top) }) });
-  }
-  function promoteForDrag(el) {
-    const parent = el.parentNode;
-    // 1) Freeze the (positioned, auto-height) container so pulling children out of flow
-    //    can't collapse it. Stored in __frozen__ so the renderer reproduces it.
-    if (parent && parent.getAttribute && parent.getAttribute('data-edit-id') != null
-        && iwin().getComputedStyle(parent).position !== 'static') {
-      const pk = keyForEl(parent);
-      if (pk && !(overrides['__frozen__'] || {})[pk]) {
-        const h = parent.offsetHeight;
-        parent.style.height = h + 'px';
-        overrides['__frozen__'] = Object.assign({}, overrides['__frozen__'], { [pk]: h });
-      }
-    }
-    // 2) Snapshot ALL tagged in-flow siblings BEFORE mutating, then pin every one at its
-    //    current spot → only the dragged element will visibly move (zero reflow, F3).
-    const sibs = Array.prototype.slice.call(parent.children)
-      .filter((c) => c.getAttribute && c.getAttribute('data-edit-id') != null);
-    const snap = sibs.map((c) => ({ c, left: c.offsetLeft, top: c.offsetTop,
-      already: iwin().getComputedStyle(c).position === 'absolute' }));
-    snap.forEach(({ c, left, top, already }) => { if (!already || c === el) pinAbsolute(c, left, top); });
+    const basePos = (overrides[key] || {}).pos || {};
+    drag = { el, key, startX: e.clientX, startY: e.clientY, baseDx: basePos.dx || 0, baseDy: basePos.dy || 0, moved: false };
   }
 
   function onMove(e) {
@@ -368,25 +340,16 @@ export function mountEditor(opts) {
     const dy = (e.clientY - drag.startY) / scale;
     if (Math.abs(e.clientX - drag.startX) + Math.abs(e.clientY - drag.startY) > 3) drag.moved = true;
     if (!drag.moved) return;
-    if (!drag.promoted) {
-      pushHistory();                 // one history entry for the whole drag (incl. sibling promotion)
-      promoteForDrag(drag.el);
-      drag.baseLeft = drag.el.offsetLeft; drag.baseTop = drag.el.offsetTop;
-      drag.promoted = true;
-    }
-    drag.el.style.left = (drag.baseLeft + dx) + 'px';
-    drag.el.style.top = (drag.baseTop + dy) + 'px';
+    drag.el.style.marginLeft = (drag.baseDx + dx) + 'px';
+    drag.el.style.marginTop = (drag.baseDy + dy) + 'px';
     syncOverlay();
   }
   function onUp() {
     if (drag && drag.moved) {
       suppressClick = true;
-      const left = Math.round(parseFloat(drag.el.style.left) || drag.el.offsetLeft);
-      const top = Math.round(parseFloat(drag.el.style.top) || drag.el.offsetTop);
-      // write WITHOUT a new history push (promoteForDrag already pushed once)
-      overrides[drag.key] = Object.assign({}, overrides[drag.key], { pos: Object.assign({},
-        (overrides[drag.key] || {}).pos, { mode: 'absolute', left, top }) });
-      commit();
+      const dx = Math.round(parseFloat(drag.el.style.marginLeft) || 0);
+      const dy = Math.round(parseFloat(drag.el.style.marginTop) || 0);
+      setOverride(drag.key, { pos: Object.assign({}, (overrides[drag.key] || {}).pos, { dx, dy }) });
     }
     drag = null;
     if (resize) {
