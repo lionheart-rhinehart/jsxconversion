@@ -1,0 +1,755 @@
+{
+  "report": {
+    "input": "campaigns/westfield-100-off/index.html",
+    "frames": 36,
+    "tagged": 791,
+    "text": 438,
+    "media": 61,
+    "flagged": [],
+    "perFrame": [
+      {
+        "frame": 0,
+        "tagged": 29,
+        "text": 14,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 1,
+        "tagged": 21,
+        "text": 11,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 2,
+        "tagged": 32,
+        "text": 16,
+        "media": 1,
+        "flagged": 0
+      },
+      {
+        "frame": 3,
+        "tagged": 20,
+        "text": 11,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 4,
+        "tagged": 22,
+        "text": 12,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 5,
+        "tagged": 28,
+        "text": 16,
+        "media": 1,
+        "flagged": 0
+      },
+      {
+        "frame": 6,
+        "tagged": 21,
+        "text": 12,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 7,
+        "tagged": 28,
+        "text": 13,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 8,
+        "tagged": 20,
+        "text": 13,
+        "media": 1,
+        "flagged": 0
+      },
+      {
+        "frame": 9,
+        "tagged": 19,
+        "text": 10,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 10,
+        "tagged": 17,
+        "text": 10,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 11,
+        "tagged": 19,
+        "text": 10,
+        "media": 1,
+        "flagged": 0
+      },
+      {
+        "frame": 12,
+        "tagged": 18,
+        "text": 10,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 13,
+        "tagged": 18,
+        "text": 10,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 14,
+        "tagged": 21,
+        "text": 15,
+        "media": 1,
+        "flagged": 0
+      },
+      {
+        "frame": 15,
+        "tagged": 18,
+        "text": 9,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 16,
+        "tagged": 26,
+        "text": 16,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 17,
+        "tagged": 21,
+        "text": 12,
+        "media": 1,
+        "flagged": 0
+      },
+      {
+        "frame": 18,
+        "tagged": 24,
+        "text": 12,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 19,
+        "tagged": 18,
+        "text": 10,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 20,
+        "tagged": 22,
+        "text": 12,
+        "media": 1,
+        "flagged": 0
+      },
+      {
+        "frame": 21,
+        "tagged": 30,
+        "text": 18,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 22,
+        "tagged": 20,
+        "text": 10,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 23,
+        "tagged": 23,
+        "text": 12,
+        "media": 1,
+        "flagged": 0
+      },
+      {
+        "frame": 24,
+        "tagged": 20,
+        "text": 12,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 25,
+        "tagged": 19,
+        "text": 10,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 26,
+        "tagged": 24,
+        "text": 15,
+        "media": 1,
+        "flagged": 0
+      },
+      {
+        "frame": 27,
+        "tagged": 26,
+        "text": 13,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 28,
+        "tagged": 27,
+        "text": 16,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 29,
+        "tagged": 15,
+        "text": 9,
+        "media": 1,
+        "flagged": 0
+      },
+      {
+        "frame": 30,
+        "tagged": 22,
+        "text": 10,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 31,
+        "tagged": 17,
+        "text": 9,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 32,
+        "tagged": 20,
+        "text": 12,
+        "media": 1,
+        "flagged": 0
+      },
+      {
+        "frame": 33,
+        "tagged": 23,
+        "text": 13,
+        "media": 2,
+        "flagged": 0
+      },
+      {
+        "frame": 34,
+        "tagged": 23,
+        "text": 12,
+        "media": 3,
+        "flagged": 0
+      },
+      {
+        "frame": 35,
+        "tagged": 20,
+        "text": 13,
+        "media": 1,
+        "flagged": 0
+      }
+    ],
+    "skipped": 0
+  },
+  "manifest": [
+    {
+      "frame": 0,
+      "id": "e0",
+      "tag": "video",
+      "kind": "video",
+      "src": "assets/vid/ad1.mp4",
+      "brandKit": false
+    },
+    {
+      "frame": 0,
+      "id": "e3",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 1,
+      "id": "e0",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 1,
+      "id": "e8",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/img/ad1.jpg",
+      "brandKit": false
+    },
+    {
+      "frame": 2,
+      "id": "e2",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 3,
+      "id": "e0",
+      "tag": "video",
+      "kind": "video",
+      "src": "assets/vid/ad2.mp4",
+      "brandKit": false
+    },
+    {
+      "frame": 3,
+      "id": "e2",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 4,
+      "id": "e0",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 4,
+      "id": "e8",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/img/ad2.jpg",
+      "brandKit": false
+    },
+    {
+      "frame": 5,
+      "id": "e0",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 6,
+      "id": "e0",
+      "tag": "video",
+      "kind": "video",
+      "src": "assets/vid/ad3.mp4",
+      "brandKit": false
+    },
+    {
+      "frame": 6,
+      "id": "e2",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 7,
+      "id": "e0",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 7,
+      "id": "e9",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/img/ad3.jpg",
+      "brandKit": false
+    },
+    {
+      "frame": 8,
+      "id": "e1",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 9,
+      "id": "e0",
+      "tag": "video",
+      "kind": "video",
+      "src": "assets/vid/ad4.mp4",
+      "brandKit": false
+    },
+    {
+      "frame": 9,
+      "id": "e2",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 10,
+      "id": "e0",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 10,
+      "id": "e10",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/img/ad4.jpg",
+      "brandKit": false
+    },
+    {
+      "frame": 11,
+      "id": "e1",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 12,
+      "id": "e0",
+      "tag": "video",
+      "kind": "video",
+      "src": "assets/vid/ad6.mp4",
+      "brandKit": false
+    },
+    {
+      "frame": 12,
+      "id": "e2",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 13,
+      "id": "e1",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/img/ad6.jpg",
+      "brandKit": false
+    },
+    {
+      "frame": 13,
+      "id": "e4",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 14,
+      "id": "e0",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 15,
+      "id": "e0",
+      "tag": "video",
+      "kind": "video",
+      "src": "assets/vid/ad7.mp4",
+      "brandKit": false
+    },
+    {
+      "frame": 15,
+      "id": "e4",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 16,
+      "id": "e0",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 16,
+      "id": "e9",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/img/ad7.jpg",
+      "brandKit": false
+    },
+    {
+      "frame": 17,
+      "id": "e1",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 18,
+      "id": "e0",
+      "tag": "video",
+      "kind": "video",
+      "src": "assets/vid/ad8.mp4",
+      "brandKit": false
+    },
+    {
+      "frame": 18,
+      "id": "e2",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 19,
+      "id": "e1",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/img/ad8.jpg",
+      "brandKit": false
+    },
+    {
+      "frame": 19,
+      "id": "e3",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 20,
+      "id": "e1",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 21,
+      "id": "e0",
+      "tag": "video",
+      "kind": "video",
+      "src": "assets/vid/ad10.mp4",
+      "brandKit": false
+    },
+    {
+      "frame": 21,
+      "id": "e2",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 22,
+      "id": "e1",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 22,
+      "id": "e11",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/img/ad10.jpg",
+      "brandKit": false
+    },
+    {
+      "frame": 23,
+      "id": "e0",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 24,
+      "id": "e0",
+      "tag": "video",
+      "kind": "video",
+      "src": "assets/vid/ad11.mp4",
+      "brandKit": false
+    },
+    {
+      "frame": 24,
+      "id": "e2",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 25,
+      "id": "e1",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 25,
+      "id": "e11",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/img/ad11.jpg",
+      "brandKit": false
+    },
+    {
+      "frame": 26,
+      "id": "e1",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 27,
+      "id": "e0",
+      "tag": "video",
+      "kind": "video",
+      "src": "assets/vid/ad12.mp4",
+      "brandKit": false
+    },
+    {
+      "frame": 27,
+      "id": "e2",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 28,
+      "id": "e1",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 28,
+      "id": "e10",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/img/ad12.jpg",
+      "brandKit": false
+    },
+    {
+      "frame": 29,
+      "id": "e0",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 30,
+      "id": "e0",
+      "tag": "video",
+      "kind": "video",
+      "src": "assets/vid/ad13.mp4",
+      "brandKit": false
+    },
+    {
+      "frame": 30,
+      "id": "e2",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 31,
+      "id": "e0",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 31,
+      "id": "e8",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/img/ad13.jpg",
+      "brandKit": false
+    },
+    {
+      "frame": 32,
+      "id": "e1",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 33,
+      "id": "e0",
+      "tag": "video",
+      "kind": "video",
+      "src": "assets/vid/ad14.mp4",
+      "brandKit": false
+    },
+    {
+      "frame": 33,
+      "id": "e2",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 34,
+      "id": "e1",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    },
+    {
+      "frame": 34,
+      "id": "e11",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/img/ad14.jpg",
+      "brandKit": false
+    },
+    {
+      "frame": 34,
+      "id": "e16",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/img/ad14.jpg",
+      "brandKit": false
+    },
+    {
+      "frame": 35,
+      "id": "e0",
+      "tag": "img",
+      "kind": "image",
+      "src": "assets/logo.png",
+      "brandKit": true
+    }
+  ]
+}

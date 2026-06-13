@@ -39,7 +39,7 @@ const TIMES = { mid: Math.round(LOOP_MS / 2), end: LOOP_MS - 1 };
 const OVERRIDES = {
   'f0:e22': { text: 'Pull\nAway.' },                          // multi-line on a cWave-animated span (A4)
   'f0:e20': { color: '#ffd400', fontSize: 132, rotate: -5 },  // color+size+rotate on an animated span (A2/A4)
-  'f0:e2':  { pos: { dy: 200 } },                             // margin move on a cScan transform-animated bar
+  'f0:e2':  { pos: { ty: 200, tx: 30 } },                     // translate move on a cScan transform-animated bar
   'f0:e0':  { src: 'assets/vid/ad2.mp4' },                    // bg video swap
 };
 

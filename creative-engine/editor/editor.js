@@ -328,12 +328,10 @@ export function mountEditor(opts) {
     startTextEdit(el);
   }
 
-  // dragging (move) — SAFE nudge via margins (never re-architects the layout). For
-  // already-absolutely-positioned elements (most design boxes) this moves them cleanly
-  // with no effect on neighbors; for in-flow text it nudges predictably. preventDefault
-  // on mousedown stops the browser's native text-selection from hijacking the drag.
-  // NOTE: true free-float (lift an in-flow element clear of its siblings) needs the
-  // "flatten layout to absolute" foundation — a dedicated rebuild, not this interim.
+  // dragging (move) — TRUE free 2D float via the individual `translate` property. It
+  // composes with the keyframe `transform` (never overwrites it), causes no reflow, and
+  // has no axis lock. preventDefault on mousedown stops native text-selection hijacking
+  // the drag. See onMove. (Replaces the old margins/absolute-promotion approaches.)
   let drag = null;
   function onDown(e) {
     if (!editable) return;
@@ -344,25 +342,26 @@ export function mountEditor(opts) {
     select(el);
     const key = keyForEl(el);
     const basePos = (overrides[key] || {}).pos || {};
-    drag = { el, key, startX: e.clientX, startY: e.clientY, baseDx: basePos.dx || 0, baseDy: basePos.dy || 0, moved: false };
+    drag = { el, key, startX: e.clientX, startY: e.clientY, baseTx: basePos.tx || 0, baseTy: basePos.ty || 0, moved: false };
   }
 
+  // MOVE via the individual `translate` property — free 2D, no reflow, composes with the
+  // keyframe transform (proven by the 2026-06-12 spike). Delta is in design px (÷ scale).
   function onMove(e) {
     if (!drag) return;
     const dx = (e.clientX - drag.startX) / scale;
     const dy = (e.clientY - drag.startY) / scale;
     if (Math.abs(e.clientX - drag.startX) + Math.abs(e.clientY - drag.startY) > 3) drag.moved = true;
     if (!drag.moved) return;
-    drag.el.style.marginLeft = (drag.baseDx + dx) + 'px';
-    drag.el.style.marginTop = (drag.baseDy + dy) + 'px';
+    drag.tx = drag.baseTx + dx; drag.ty = drag.baseTy + dy;
+    drag.el.style.translate = drag.tx + 'px ' + drag.ty + 'px';
     syncOverlay();
   }
   function onUp() {
     if (drag && drag.moved) {
       suppressClick = true;
-      const dx = Math.round(parseFloat(drag.el.style.marginLeft) || 0);
-      const dy = Math.round(parseFloat(drag.el.style.marginTop) || 0);
-      setOverride(drag.key, { pos: Object.assign({}, (overrides[drag.key] || {}).pos, { dx, dy }) });
+      setOverride(drag.key, { pos: Object.assign({}, (overrides[drag.key] || {}).pos,
+        { tx: Math.round(drag.tx || 0), ty: Math.round(drag.ty || 0) }) });
     }
     drag = null;
     if (resize) {
