@@ -78,7 +78,7 @@ export function mountEditor(opts) {
       <div class="ce-overlay"><div class="ce-badge"></div><div class="ce-handle ce-se"></div></div>
     </div>
     <div class="ce-footer">
-      <span class="ce-hint">${editable ? 'Click text to retype · click a photo/clip to swap · drag to move · corner to resize' : 'View only'}</span>
+      <span class="ce-hint">${editable ? 'Click to select · drag to move · double-click to edit text / swap a photo or clip · corner to resize' : 'View only'}</span>
       <div class="ce-swapbar">
         <input type="text" class="ce-swap-url" placeholder="Paste a Kraken media URL / path…">
         <button class="ce-btn ce-swap-apply">Swap</button>
@@ -315,17 +315,19 @@ export function mountEditor(opts) {
     e.preventDefault(); e.stopPropagation();
     commitTextEdit();            // clicking elsewhere commits any open edit
     select(el);
-    if (el.hasAttribute('data-edit-media')) openSwap(el);
-    else closeSwap();
+    closeSwap();                 // single click only selects (so you can drag to move)
   }
 
+  // Double-click = change content: text → edit it; media → open the swap bar. Consistent
+  // and drag-proof (a single click + tiny movement no longer accidentally opens the bar).
   function onDblClick(e) {
     if (!editable) return;
     const el = resolveTarget(e);
-    if (!el || !el.hasAttribute('data-edit-text')) return;
+    if (!el) return;
     e.preventDefault(); e.stopPropagation();
     select(el);
-    startTextEdit(el);
+    if (el.hasAttribute('data-edit-text')) startTextEdit(el);
+    else if (el.hasAttribute('data-edit-media')) openSwap(el);
   }
 
   // dragging (move) — TRUE free 2D float via the individual `translate` property. It
