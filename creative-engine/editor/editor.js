@@ -217,6 +217,19 @@ export function mountEditor(opts) {
     if (!frame) return null;
     return frame.getAttribute('data-edit-frame') + ':' + el.getAttribute('data-edit-id');
   }
+
+  // Resolve the element the user MEANT to click. Designs stack full-bleed gradient
+  // overlays on top of the text/media, so the topmost element at the cursor is often a
+  // non-editable cover. Walk the stack (front→back) and prefer the most specific editable
+  // (text or media) beneath the cursor; fall back to the topmost tagged element.
+  function resolveTarget(e) {
+    const d = idoc();
+    let stack = [];
+    if (d.elementsFromPoint) stack = d.elementsFromPoint(e.clientX, e.clientY) || [];
+    const tagged = stack.map((n) => n.closest && n.closest('[data-edit-id]')).filter(Boolean);
+    const textOrMedia = tagged.find((n) => n.hasAttribute('data-edit-text') || n.hasAttribute('data-edit-media'));
+    return textOrMedia || tagged[0] || (e.target.closest && e.target.closest('[data-edit-id]')) || null;
+  }
   function clearSelection() { selectedKey = null; els.overlay.classList.remove('ce-on'); els.props.style.display = 'none'; closeSwap(); }
 
   function select(el) {
@@ -297,7 +310,7 @@ export function mountEditor(opts) {
     if (!editable) return;
     if (suppressClick) { suppressClick = false; return; } // this click ended a drag
     if (editingEl) return; // a click inside an active editor stays in the editor
-    const el = e.target.closest && e.target.closest('[data-edit-id]');
+    const el = resolveTarget(e);
     if (!el) { commitTextEdit(); clearSelection(); return; }
     e.preventDefault(); e.stopPropagation();
     commitTextEdit();            // clicking elsewhere commits any open edit
@@ -308,8 +321,8 @@ export function mountEditor(opts) {
 
   function onDblClick(e) {
     if (!editable) return;
-    const el = e.target.closest && e.target.closest('[data-edit-text]');
-    if (!el) return;
+    const el = resolveTarget(e);
+    if (!el || !el.hasAttribute('data-edit-text')) return;
     e.preventDefault(); e.stopPropagation();
     select(el);
     startTextEdit(el);
@@ -325,7 +338,7 @@ export function mountEditor(opts) {
   function onDown(e) {
     if (!editable) return;
     if (editingEl) return; // let contenteditable handle its own pointer
-    const el = e.target.closest && e.target.closest('[data-edit-id]');
+    const el = resolveTarget(e);
     if (!el) return;
     e.preventDefault();    // suppress native selection so a drag moves instead of highlights
     select(el);
