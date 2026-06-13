@@ -39,8 +39,27 @@
 .ce-overlay .ce-badge { position:absolute; left:0; top:-22px; background:var(--ce-accent); color:#fff;
   font-family:'JetBrains Mono',monospace; font-size:11px; padding:2px 6px; border-radius:3px; white-space:nowrap; }
 
+/* secondary multi-select boxes (the primary uses .ce-overlay) */
+.ce-multi { position:absolute; inset:0; pointer-events:none; }
+.ce-multi .ce-selbox { position:absolute; border:1.5px solid var(--ce-accent);
+  box-shadow:0 0 0 1px rgba(255,255,255,.2); border-radius:2px; }
+
+/* alignment guides + live distance badge (chrome only — never touches the iframe DOM) */
+.ce-guides { position:absolute; inset:0; pointer-events:none; display:none; }
+.ce-guides.ce-on { display:block; }
+.ce-guide { position:absolute; background:#19c3ff; box-shadow:0 0 2px rgba(25,195,255,.9); }
+.ce-guide-v { top:0; bottom:0; width:1px; }
+.ce-guide-h { left:0; right:0; height:1px; }
+.ce-dist { position:absolute; background:#19c3ff; color:#022; font-family:'JetBrains Mono',monospace;
+  font-size:11px; font-weight:600; padding:1px 6px; border-radius:3px; white-space:nowrap; }
+
+/* marquee (rubber-band) selection rectangle */
+.ce-marquee { position:absolute; pointer-events:none; display:none;
+  border:1px solid var(--ce-accent); background:rgba(196,20,29,.12); border-radius:1px; }
+.ce-marquee.ce-on { display:block; }
+
 .ce-footer { padding:10px 16px; background:var(--ce-panel); border-top:1px solid var(--ce-line);
-  display:flex; align-items:center; gap:12px; min-height:44px; }
+  display:flex; align-items:center; gap:12px; min-height:44px; position:relative; }
 .ce-hint { font-size:12px; color:var(--ce-dim); }
 
 /* media swap bar (Kraken) — slides up from the footer */
@@ -52,5 +71,53 @@
 .ce-thumbs img, .ce-thumbs video { height:54px; width:auto; border-radius:4px; border:1px solid var(--ce-line);
   cursor:pointer; object-fit:cover; }
 .ce-thumbs img:hover, .ce-thumbs video:hover { border-color:var(--ce-accent); }
+
+/* live Kraken browser (Phase C3) — workspace/folder pickers in the swap bar, a
+   thumbnail grid above it. Hidden whenever the live bridge is unavailable. */
+.ce-kraken { display:none; }
+/* the thumbnail browser floats as a LARGE panel above the footer (the footer itself is
+   a thin strip). Structured: a filter/lock bar, a scrollable tile grid, and a footer
+   with the live selection + the explicit "Use this media" button. Toggled by .ce-on —
+   never by clearing inline display (which would revert to display:none and hide it). */
+.ce-kraken-grid { position:absolute; left:16px; right:16px; bottom:calc(100% + 8px);
+  display:none; flex-direction:column; max-height:64vh;
+  background:var(--ce-panel); border:1px solid var(--ce-line); border-radius:10px;
+  box-shadow:0 -14px 40px rgba(0,0,0,.5); z-index:30; overflow:hidden; }
+.ce-kraken-grid.ce-on { display:flex; }
+.ce-kgrid-bar { display:flex; align-items:center; gap:10px; padding:9px 12px;
+  border-bottom:1px solid var(--ce-line); }
+.ce-kgrid-title { font-size:12px; color:var(--ce-dim); white-space:nowrap; }
+.ce-kgrid-filter { display:inline-flex; gap:4px; }
+.ce-ksearch { font:inherit; font-size:12px; background:#0c0d10; color:var(--ce-text);
+  border:1px solid var(--ce-line); padding:5px 9px; border-radius:6px; width:150px; }
+.ce-ksort { font-size:12px; }
+.ce-kgrid-spacer { flex:1; }
+.ce-kf.ce-on, .ce-kraken-lock.ce-on { background:var(--ce-accent); border-color:var(--ce-accent); color:#fff; }
+/* CSS grid with N equal stretch columns (--ce-cols, set by the size slider). 1fr columns
+   ALWAYS span the full width — no leftover gap on the right at any size (the flex-wrap
+   approach left fixed tiles left-packed with a ragged right edge). */
+.ce-kgrid-tiles { --ce-cols:5; display:grid; grid-template-columns:repeat(var(--ce-cols), 1fr);
+  gap:10px; padding:12px; overflow-y:auto; align-content:start; }
+.ce-kgrid-msg { font-size:13px; color:var(--ce-dim); padding:6px 2px; grid-column:1/-1; }
+.ce-kgrid-zoom { display:inline-flex; align-items:center; gap:6px; }
+.ce-kz-range { width:120px; accent-color:var(--ce-accent); cursor:pointer; }
+.ce-kz-ic { font-size:12px; color:var(--ce-dim); }
+.ce-kz-big { font-size:16px; }
+/* tile is a square box via the padding-ratio technique (height:0 + padding-bottom:100%) —
+   bulletproof in a grid where align-self:stretch would otherwise override aspect-ratio and
+   collapse a not-yet-loaded <video> to ~0 height. Media is absolutely positioned to fill,
+   so it can never drive the tile's height. object-fit:cover handles mixed clips + photos. */
+.ce-ktile { position:relative; height:0; padding-bottom:100%; box-sizing:border-box;
+  border-radius:7px; overflow:hidden; border:2px solid transparent; cursor:pointer; background:#0c0d10; }
+.ce-ktile img, .ce-ktile video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+.ce-ktile:hover { border-color:var(--ce-line); }
+.ce-ktile.ce-sel { border-color:var(--ce-accent); box-shadow:0 0 0 2px rgba(196,20,29,.35); }
+.ce-ktile-badge { position:absolute; top:5px; left:5px; font:600 10px/1 'JetBrains Mono',monospace;
+  letter-spacing:.04em; background:rgba(0,0,0,.72); color:#fff; padding:3px 5px; border-radius:3px; }
+.ce-ktile-busy { opacity:.5; pointer-events:none; }
+.ce-kgrid-foot { display:flex; align-items:center; gap:10px; padding:10px 12px;
+  border-top:1px solid var(--ce-line); }
+.ce-kgrid-sel { flex:1; font-size:12px; color:var(--ce-dim);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
 /* inside-iframe affordances are injected separately (ce-iframe.css string in editor.js) */

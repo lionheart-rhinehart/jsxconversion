@@ -280,7 +280,7 @@ export async function listFolderMedia(workspaceId, folderId, { types = ["image",
     folderId == null ? "folder_id=is.null" : `folder_id=eq.${folderId}`;
   const rows = await restGet(
     `content_outputs?workspace_id=eq.${workspaceId}&${folderFilter}&${typeFilter}` +
-      `&deleted_at=is.null&content=not.is.null&select=id,type,title,content,metadata` +
+      `&deleted_at=is.null&content=not.is.null&select=id,type,title,content,metadata,created_at` +
       `&order=created_at.desc`,
   );
   return rows.filter((r) => typeof r.content === "string" && r.content.trim());

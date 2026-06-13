@@ -40,12 +40,30 @@
     { src: '../../campaigns/westfield-100-off/assets/vid/ad3.mp4', type: 'video', label: 'ad3 footage' },
   ];
 
+  // LIVE Kraken bridge (Phase C). These hit the serve.mjs /kraken/* routes on the same
+  // origin. When this page is opened WITHOUT serve.mjs (file://, or a static host with
+  // no /kraken routes), the fetch fails / returns available:false → the editor hides the
+  // Kraken UI and the static library still works. Same degradation as missing creds (F6).
+  async function kfetch(p, opts) {
+    const r = await fetch(p, opts);
+    return r.json();   // routes always answer 200 JSON; a network error throws → caught by editor
+  }
+  const remoteBrowse = {
+    workspaces: () => kfetch('/kraken/workspaces'),
+    folders: (ws) => kfetch('/kraken/folders?ws=' + encodeURIComponent(ws)),
+    files: (ws, folder) => kfetch('/kraken/files?ws=' + encodeURIComponent(ws) + '&folder=' + encodeURIComponent(folder || '')),
+    pull: (payload) => kfetch('/kraken/pull', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) }),
+    // 🔒 Lock: remember a workspace/folder as this design's default (keyed by htmlPath).
+    getPin: () => kfetch('/kraken/pin?design=' + encodeURIComponent(htmlPath)),
+    setPin: (pin) => kfetch('/kraken/pin', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ design: htmlPath, pin }) }),
+  };
+
   const ed = mountEditor({
     container: document.getElementById('host'),
     html,
     baseHref,
     permissions: params.get('view') ? 'view' : 'edit',
-    mediaLibrary,
+    mediaProvider: { staticLibrary: mediaLibrary, remoteBrowse },
     onChange(overrides, meta) {
       window.__CE_OVERRIDES__ = overrides;            // exposed for the evidence harness
       if (meta && meta.save) {

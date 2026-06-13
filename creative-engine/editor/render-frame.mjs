@@ -19,10 +19,33 @@ import { spawnSync } from 'node:child_process';
 import puppeteer from 'puppeteer';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const PROJECT_ROOT = path.resolve(__dirname, '..', '..');
 const APPLY_SRC = fs.readFileSync(path.join(__dirname, 'apply-overrides.js'), 'utf8');
 export const SEEK_SRC = fs.readFileSync(path.join(__dirname, 'seek.js'), 'utf8');
 
 const STAGE_W = 1080, STAGE_H = 1920, FPS = 30, LOOP = 7;
+
+// C3b (F1) — a Kraken-pulled clip lives at "/brand/kraken-cache/…" (PROJECT_ROOT-rooted),
+// OUTSIDE the campaign folder whose <base> the renderer loads. Under a file:// load a
+// leading-slash URL points at the FILESYSTEM ROOT (→ 404 → black video), so we rewrite
+// any swap `src` that begins with a single "/" to an absolute file:// under PROJECT_ROOT.
+// Campaign-local "assets/…" paths (no leading slash) and absolute URLs are left untouched.
+// Only when loading via file://; an http(s) load already resolves "/brand/…" against the
+// dev server's repo root.
+export function resolveSwapSrcs(overrides, url) {
+  if (!/^file:/i.test(url || '')) return overrides || {};
+  const out = {};
+  for (const key of Object.keys(overrides || {})) {
+    const ov = overrides[key];
+    if (ov && typeof ov === 'object' && typeof ov.src === 'string' && /^\/(?!\/)/.test(ov.src)) {
+      const abs = path.join(PROJECT_ROOT, ov.src.replace(/^\/+/, ''));
+      out[key] = Object.assign({}, ov, { src: pathToFileURL(abs).href });
+    } else {
+      out[key] = ov;
+    }
+  }
+  return out;
+}
 
 // Resolve relative asset URLs (assets/vid/…) against the tagged file's own folder so
 // headless puppeteer finds them whether we load by srcdoc or by file.
@@ -34,7 +57,8 @@ export async function openTagged(browser, taggedPath, overrides) {
   await page.evaluate(async () => { await document.fonts.ready; });
   await page.addScriptTag({ content: APPLY_SRC });
   await page.addScriptTag({ content: SEEK_SRC });
-  const res = await page.evaluate((ov) => window.CEApply.applyOverrides(document, ov), overrides || {});
+  const resolved = resolveSwapSrcs(overrides || {}, url);   // C3b: PROJECT_ROOT-rooted srcs → file://
+  const res = await page.evaluate((ov) => window.CEApply.applyOverrides(document, ov), resolved);
   if (res.missing.length) console.error('[render-frame] WARNING missing override keys (surfaced, not silent):', res.missing);
   return page;
 }
