@@ -25,7 +25,7 @@
 //       FILTER (re-encode, hard cuts) — never `-c copy`.
 
 const STAGE_W = 1080, STAGE_H = 1920;
-const MIN_TOTAL = 1, MAX_TOTAL = 30;   // totalDuration clamp (seconds)
+const MIN_TOTAL = 1, MAX_TOTAL = 90;   // totalDuration clamp (seconds)
 
 // frames per clip = round((out-in) * fps), at least 1. `clips` = [{src,in,out}, …]
 export function clipFrames(clips, fps) {
@@ -81,6 +81,21 @@ export function normalizeTransition(t, clips) {
   return { type, duration: Math.round(dur * 100) / 100 };
 }
 
+// clamp/normalize an audio override (per-clip or montage-wide). Portable + tiny.
+//   mode: 'native' (the video's own sound) | 'music' (a picked track) | 'both' | 'mute'
+//   src/startAt only matter when mode includes music; volume 0–1.5; fades montage-wide only.
+export function normalizeAudio(a) {
+  if (!a || typeof a !== 'object') return null;
+  const mode = ['native', 'music', 'both', 'mute'].includes(a.mode) ? a.mode : 'native';
+  let vol = Number(a.volume); if (!isFinite(vol)) vol = 0.85; vol = Math.max(0, Math.min(1.5, vol));
+  let st = Number(a.startAt); if (!isFinite(st) || st < 0) st = 0;
+  const out = { mode, volume: Math.round(vol * 100) / 100, startAt: Math.round(st * 100) / 100 };
+  if (a.src) out.src = String(a.src);
+  if (isFinite(Number(a.fadeIn)) && Number(a.fadeIn) > 0) out.fadeIn = Math.max(0, Number(a.fadeIn));
+  if (isFinite(Number(a.fadeOut)) && Number(a.fadeOut) > 0) out.fadeOut = Math.max(0, Number(a.fadeOut));
+  return out;
+}
+
 // clamp/normalize a montage override bag value to a safe, portable shape
 export function normalizeMontage(m, fps) {
   const f = Number(fps) || 30;
@@ -90,12 +105,20 @@ export function normalizeMontage(m, fps) {
       const inS = Math.max(0, Number(c.in) || 0);
       let outS = Number(c.out);
       if (!isFinite(outS) || outS <= inS) outS = inS + 1;   // default 1s if unset/bad
-      return { src: String(c.src), in: inS, out: outS };
+      const out = { src: String(c.src), in: inS, out: outS };
+      const ca = normalizeAudio(c.audio); if (ca) out.audio = ca;   // per-clip audio override
+      return out;
     });
+  // total never falls BELOW the clip cycle — a montage can't be shorter than its clips played once
+  // (else later clips truncate, the "only clip 1 plays" bug). It can extend (loop-to-fill) up to 90s.
+  const cycleSec = cycleDurationMs(clips, f) / 1000;
+  const floor = Math.max(MIN_TOTAL, cycleSec);
   let total = Number(m && m.totalDuration);
-  if (!isFinite(total) || total <= 0) total = Math.min(MAX_TOTAL, Math.max(MIN_TOTAL, cycleDurationMs(clips, f) / 1000));
-  total = Math.min(MAX_TOTAL, Math.max(MIN_TOTAL, total));
-  return { clips, totalDuration: total, fps: f, transition: normalizeTransition(m && m.transition, clips) };
+  if (!isFinite(total) || total <= 0) total = floor;
+  total = Math.min(MAX_TOTAL, Math.max(floor, total));
+  const norm = { clips, totalDuration: total, fps: f, transition: normalizeTransition(m && m.transition, clips) };
+  const ma = normalizeAudio(m && m.audio); if (ma) norm.audio = ma;  // montage-wide audio bed
+  return norm;
 }
 
 // ── RENDER (Node only — dynamic imports keep the top level browser-safe) ──────
@@ -178,8 +201,90 @@ export async function buildMontageSource(clips, fps, outPath, opts = {}) {
   return { ok: true, path: outPath, frames: totalFrames, crossfaded: fadeOk };
 }
 
+// ── RENDER AUDIO (Node only) ──────────────────────────────────────────────────
+// Build ONE audio track (length totalDuration) for a montage, mixed from:
+//   • a continuous MUSIC BED (montage.audio mode music/both): the picked track from
+//     startAt, volume, optional fades, stream-looped to fill totalDuration.
+//   • PER-CLIP windows that repeat each video cycle — for clips whose effective mode
+//     (clip.audio ?? montage.audio) includes `native`, the clip's own source audio; and
+//     for clips with their own `audio.src` (music/both), that clip-specific track.
+// Positions use adelay at each window's timeline offset (offsets match the video cycle,
+// crossfade overlaps included). Returns { ok, path } or { ok:false } when there's no audio
+// at all (caller leaves the render silent). The VIDEO path is untouched — this is a
+// separate pass the renderer muxes in.
+export async function buildMontageAudio(montage, fps, outPath, opts = {}) {
+  const { spawnSync } = await import('node:child_process');
+  const fs = await import('node:fs');
+  const resolveSrc = opts.resolveSrc || ((s) => s);
+  const f = Number(fps) || 30;
+  const norm = normalizeMontage(montage, f);
+  const clips = norm.clips, total = norm.totalDuration;
+  if (!clips.length) return { ok: false, reason: 'no clips' };
+  const mAudio = norm.audio || null;                              // montage-wide default
+  const eff = clips.map((c) => c.audio || mAudio || { mode: 'native', volume: 0.85, startAt: 0 });
+
+  const ffTail = (r) => String(r.stderr || r.error?.message || '').trim().split(/\r?\n/).filter(Boolean).slice(-2).join(' | ');
+  const hasAudioStream = (src) => {
+    const r = spawnSync('ffprobe', ['-v', 'error', '-select_streams', 'a', '-show_entries', 'stream=index', '-of', 'csv=p=0', src], { encoding: 'utf8' });
+    return r.status === 0 && String(r.stdout || '').trim().length > 0;
+  };
+
+  const bedHasMusic = !!(mAudio && (mAudio.mode === 'music' || mAudio.mode === 'both') && mAudio.src);
+  // timeline: one-cycle offsets (match the video: crossfade overlaps shorten the cycle)
+  const frames = clipFrames(clips, f); const segDur = frames.map((n) => n / f);
+  const fadeOk = norm.transition.type === 'crossfade' && clips.length >= 2 && segDur.every((d) => d > norm.transition.duration + 1e-3);
+  const D = fadeOk ? norm.transition.duration : 0;
+  const offsets = []; let acc = 0;
+  for (let i = 0; i < clips.length; i++) { offsets.push(acc); acc += segDur[i] - (i < clips.length - 1 ? D : 0); }
+  const cycleDur = Math.max(1 / f, acc);
+
+  const inputs = []; const filters = []; const mix = [];
+  let idx = 0;
+  // silent base — guarantees the output is exactly `total` long even if every window is short
+  inputs.push('-f', 'lavfi', '-t', String(total), '-i', 'anullsrc=channel_layout=stereo:sample_rate=44100');
+  mix.push(`[${idx++}:a]`);
+
+  if (bedHasMusic) {
+    inputs.push('-stream_loop', '-1', '-ss', String(mAudio.startAt || 0), '-i', resolveSrc(mAudio.src));
+    const bi = idx++;
+    let af = `atrim=0:${total},asetpts=PTS-STARTPTS`;
+    if (mAudio.fadeIn > 0) af += `,afade=t=in:st=0:d=${mAudio.fadeIn}`;
+    if (mAudio.fadeOut > 0) af += `,afade=t=out:st=${Math.max(0, total - mAudio.fadeOut).toFixed(3)}:d=${mAudio.fadeOut}`;
+    af += `,volume=${mAudio.volume}`;
+    filters.push(`[${bi}:a]${af}[bed]`); mix.push('[bed]');
+  }
+
+  // per-clip windows across every cycle that fits in [0,total]
+  for (let cs = 0; cs < total - 1e-3; cs += cycleDur) {
+    for (let i = 0; i < clips.length; i++) {
+      const ws = cs + offsets[i]; if (ws >= total - 1e-3) continue;
+      const wdur = Math.min(segDur[i], total - ws); if (wdur <= 1e-3) continue;
+      const a = eff[i]; const dly = Math.round(ws * 1000);
+      // native: the clip's own source audio [in, in+wdur]
+      if ((a.mode === 'native' || a.mode === 'both') && hasAudioStream(resolveSrc(clips[i].src))) {
+        inputs.push('-ss', String(clips[i].in || 0), '-i', resolveSrc(clips[i].src)); const ii = idx++;
+        filters.push(`[${ii}:a]atrim=0:${wdur.toFixed(3)},asetpts=PTS-STARTPTS,volume=${a.volume},adelay=${dly}:all=1[w${ii}]`); mix.push(`[w${ii}]`);
+      }
+      // per-clip MUSIC: a clip-specific track (only when the clip has its own audio.src)
+      const clipSrc = clips[i].audio && clips[i].audio.src;
+      if ((a.mode === 'music' || a.mode === 'both') && clipSrc) {
+        inputs.push('-ss', String(a.startAt || 0), '-i', resolveSrc(clipSrc)); const ii = idx++;
+        filters.push(`[${ii}:a]atrim=0:${wdur.toFixed(3)},asetpts=PTS-STARTPTS,volume=${a.volume},adelay=${dly}:all=1[w${ii}]`); mix.push(`[w${ii}]`);
+      }
+    }
+  }
+
+  if (mix.length <= 1) return { ok: false, reason: 'no audio' };   // only the silent base
+  filters.push(`${mix.join('')}amix=inputs=${mix.length}:duration=longest:normalize=0,atrim=0:${total}[aout]`);
+  const args = ['-y', '-loglevel', 'error', ...inputs, '-filter_complex', filters.join(';'),
+    '-map', '[aout]', '-c:a', 'aac', '-b:a', '192k', outPath];
+  const r = spawnSync('ffmpeg', args, { encoding: 'utf8' });
+  if (r.status !== 0 || !fs.existsSync(outPath)) return { ok: false, reason: 'audio mix failed: ' + (ffTail(r) || 'ffmpeg') };
+  return { ok: true, path: outPath };
+}
+
 // Expose the PURE math to classic-script consumers (seek.js is injected as a plain
 // <script>, not a module, so it can't `import` — it reads window.CEMontage instead).
 if (typeof window !== 'undefined') {
-  window.CEMontage = { clipFrames, cycleFrames, cycleDurationMs, montageAt, normalizeMontage, normalizeTransition };
+  window.CEMontage = { clipFrames, cycleFrames, cycleDurationMs, montageAt, normalizeMontage, normalizeTransition, normalizeAudio };
 }

@@ -18,6 +18,8 @@ templates/_examples/_staging/
 templates/_examples/**/*.bgframes/
 # Raw media pulled from The Kraken Content Library (local cache, not source)
 brand/kraken-cache/
+# Audio uploaded via the editor's audio picker (local cache, not source)
+brand/audio-cache/
 # Kraken photos swapped into static templates via /media-into-template (client media)
 templates/**/assets/swap-*
 # Per-checkout dev server ports (written by scripts/dev.mjs; machine-local)

@@ -61,12 +61,23 @@
     setPin: (pin) => kfetch('/kraken/pin', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ design: htmlPath, pin }) }),
   };
 
+  // LIVE audio bridge — /audio/* on the same origin (serve.mjs). Degrades to an empty list
+  // when there's no server (the paste-path box still works).
+  const audioProvider = {
+    list: () => kfetch('/audio/list'),
+    upload: async (file) => {
+      const r = await fetch('/audio/upload?name=' + encodeURIComponent(file.name), { method: 'POST', headers: { 'content-type': file.type || 'application/octet-stream' }, body: file });
+      return r.json();
+    },
+  };
+
   const ed = mountEditor({
     container: document.getElementById('host'),
     html,
     baseHref,
     permissions: params.get('view') ? 'view' : 'edit',
     mediaProvider: { staticLibrary: mediaLibrary, remoteBrowse },
+    audioProvider,
     onChange(overrides, meta) {
       window.__CE_OVERRIDES__ = overrides;            // exposed for the evidence harness
       if (meta && meta.save) {

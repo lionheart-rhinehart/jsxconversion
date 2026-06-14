@@ -24,7 +24,7 @@
 // Phase D — shared FRAME-EXACT montage math. The SAME functions drive the live preview
 // (the rAF driver below) and the renderer (render-frame.mjs imports them), so a clip
 // boundary cuts at the identical instant in both (F2). Pure math: browser-safe import.
-import { clipFrames, montageAt, cycleDurationMs, normalizeMontage } from './montage.mjs';
+import { clipFrames, montageAt, cycleDurationMs, normalizeMontage, normalizeAudio } from './montage.mjs';
 
 const IFRAME_CSS = `
   html,body{margin:0!important;background:#0a0b0d!important;}
@@ -51,6 +51,7 @@ export function mountEditor(opts) {
   const mediaProvider = opts.mediaProvider || {};
   const mediaLibrary = mediaProvider.staticLibrary || opts.mediaLibrary || [];
   const remoteBrowse = mediaProvider.remoteBrowse || null;
+  const audioProvider = opts.audioProvider || null;   // { list(), upload(file) } | null
   const baseHref = opts.baseHref || '';
   const onChange = opts.onChange || function () {};
 
@@ -164,13 +165,48 @@ export function mountEditor(opts) {
             </select>
           </label>
           <label class="ce-mont-fade" style="display:none;">Fade <input type="number" class="ce-mont-fade-dur" min="0.1" max="2" step="0.1" style="width:54px;"> s</label>
-          <label class="ce-mont-dur">Total <input type="number" class="ce-mont-total" min="1" max="30" step="0.5" style="width:62px;"> s</label>
+          <label class="ce-mont-dur" title="Total length of the finished video — clips loop to fill it (min = your clips played once)">Length
+            <input type="range" class="ce-mont-total-range" min="1" max="90" step="0.5">
+            <input type="number" class="ce-mont-total" min="1" max="90" step="0.5" style="width:54px;"> s</label>
+          <button class="ce-btn ce-mont-music" title="Play all clips back-to-back — add music if you want">▸ Preview ♪</button>
           <button class="ce-btn ce-primary ce-mont-add" title="Browse the library to add more clips">＋ Add clips</button>
           <button class="ce-btn ce-mont-clear" title="Clear the montage (revert to a single clip)">Clear</button>
         </div>
         <div class="ce-mont-strip"></div>
         <div class="ce-mont-trimmer"></div>
         <div class="ce-mont-foot"><span class="ce-mont-info"></span></div>
+      </div>
+
+      <div class="ce-audio-panel">
+        <div class="ce-aud-head">
+          <span class="ce-aud-title">Audio</span>
+          <span class="ce-aud-modes">
+            <button class="ce-btn ce-aud-mode" data-m="native" title="The clip's own sound">Native</button>
+            <button class="ce-btn ce-aud-mode" data-m="music" title="A music track">My audio</button>
+            <button class="ce-btn ce-aud-mode" data-m="both" title="Both, mixed">Both</button>
+            <button class="ce-btn ce-aud-mode" data-m="mute" title="Silent">Mute</button>
+          </span>
+          <span class="ce-spacer"></span>
+          <button class="ce-btn ce-primary ce-aud-done">✓ Done</button>
+        </div>
+        <div class="ce-aud-pick">
+          <select class="ce-select ce-aud-list" title="Music library"></select>
+          <label class="ce-btn ce-aud-upload-btn" title="Upload a track from your computer">⤴ Upload<input type="file" class="ce-aud-upload" accept="audio/*" style="display:none;"></label>
+          <input type="text" class="ce-aud-url" placeholder="…or paste an audio URL / path">
+          <button class="ce-btn ce-aud-url-go">Use</button>
+        </div>
+        <div class="ce-aud-wavewrap">
+          <canvas class="ce-aud-wave"></canvas>
+          <div class="ce-aud-mark" title="Start point"></div>
+          <div class="ce-aud-head-line"></div>
+        </div>
+        <div class="ce-aud-controls">
+          <button class="ce-btn ce-aud-play" title="Play (synced with the clip)">▶ Play</button>
+          <span class="ce-aud-time">start 0.0s</span>
+          <span class="ce-spacer"></span>
+          <label class="ce-aud-vol">Vol <input type="range" class="ce-aud-vol-range" min="0" max="1.5" step="0.05"></label>
+          <span class="ce-aud-status"></span>
+        </div>
       </div>
     </div>`;
   container.appendChild(rootEl);
@@ -206,12 +242,31 @@ export function mountEditor(opts) {
     montStrip: rootEl.querySelector('.ce-mont-strip'),
     montTrimmer: rootEl.querySelector('.ce-mont-trimmer'),
     montTotal: rootEl.querySelector('.ce-mont-total'),
+    montTotalRange: rootEl.querySelector('.ce-mont-total-range'),
     montTransType: rootEl.querySelector('.ce-mont-trans-type'),
     montFade: rootEl.querySelector('.ce-mont-fade'),
     montFadeDur: rootEl.querySelector('.ce-mont-fade-dur'),
     montAdd: rootEl.querySelector('.ce-mont-add'),
     montClear: rootEl.querySelector('.ce-mont-clear'),
+    montMusic: rootEl.querySelector('.ce-mont-music'),
     montInfo: rootEl.querySelector('.ce-mont-info'),
+    audPanel: rootEl.querySelector('.ce-audio-panel'),
+    audTitle: rootEl.querySelector('.ce-aud-title'),
+    audModes: Array.from(rootEl.querySelectorAll('.ce-aud-mode')),
+    audDone: rootEl.querySelector('.ce-aud-done'),
+    audPick: rootEl.querySelector('.ce-aud-pick'),
+    audList: rootEl.querySelector('.ce-aud-list'),
+    audUpload: rootEl.querySelector('.ce-aud-upload'),
+    audUrl: rootEl.querySelector('.ce-aud-url'),
+    audUrlGo: rootEl.querySelector('.ce-aud-url-go'),
+    audWaveWrap: rootEl.querySelector('.ce-aud-wavewrap'),
+    audWave: rootEl.querySelector('.ce-aud-wave'),
+    audMark: rootEl.querySelector('.ce-aud-mark'),
+    audHeadLine: rootEl.querySelector('.ce-aud-head-line'),
+    audPlay: rootEl.querySelector('.ce-aud-play'),
+    audTime: rootEl.querySelector('.ce-aud-time'),
+    audVol: rootEl.querySelector('.ce-aud-vol-range'),
+    audStatus: rootEl.querySelector('.ce-aud-status'),
     kraken: rootEl.querySelector('.ce-kraken'),
     krakenOpen: rootEl.querySelector('.ce-kraken-open'),
     krakenWs: rootEl.querySelector('.ce-kraken-ws'),
@@ -974,6 +1029,9 @@ export function mountEditor(opts) {
   }
   function closeMediaModal() {
     stopTrimPlay();
+    montMode = false;
+    if (els.audPanel) els.audPanel.classList.remove('ce-on');
+    audioPlaying = false; try { cancelAnimationFrame(audioRaf); } catch (e) {} if (audioEl) { try { audioEl.pause(); } catch (e) {} }
     els.mediaModal.classList.remove('ce-on');
     els.mediaBackdrop.classList.remove('ce-on');
     els.krakenGrid.classList.remove('ce-on'); els.montPanel.classList.remove('ce-on');
@@ -1000,11 +1058,13 @@ export function mountEditor(opts) {
   // trim-panel playback (the active clip's preview). Lives at module scope so a trimmer
   // rebuild / clip switch / modal close can stop any in-flight loop.
   let trimPlay = null;            // { video, raf } | null
+  let montMode = false;          // trim window open in montage-wide music scope (♪ Music)
   function stopTrimPlay() {
     if (!trimPlay) return;
     try { cancelAnimationFrame(trimPlay.raf); } catch (e) {}
     try { trimPlay.video.pause(); } catch (e) {}
     trimPlay = null;
+    audioStop();                 // the single Play drives the <audio> too — stop it together
   }
   function currentMediaSrc(el) {
     const ov = overrides[keyForEl(el)] || {};
@@ -1018,10 +1078,18 @@ export function mountEditor(opts) {
     if (montageState && montageKey === key) return;   // already building this slot
     montageTarget = el; montageKey = key;
     const existing = (overrides[key] || {}).montage;
-    montageUserTotal = !!(existing && existing.clips && existing.clips.length);
+    montageUserTotal = pinnedFromExisting(existing);
     montageState = (existing && Array.isArray(existing.clips) && existing.clips.length)
       ? clone(existing) : { clips: [], totalDuration: 3 };
     ensureTransition();
+  }
+  // The total is "user-pinned" ONLY when the saved total clearly EXCEEDS the clip cycle (the user
+  // deliberately extended it to loop-to-fill). Just having clips must NOT pin it — that was the bug
+  // that disabled auto-extend and truncated added clips to "only clip 1".
+  function pinnedFromExisting(existing) {
+    if (!existing || !Array.isArray(existing.clips) || !existing.clips.length) return false;
+    const cycleSec = cycleDurationMs(existing.clips, 30) / 1000;
+    return Number(existing.totalDuration) > cycleSec + 0.05;
   }
   // open the Arrange filmstrip for `el`. If the slot has no montage yet, seed it with the
   // slot's current media as clip 1 (a sensible starting point for hand-building).
@@ -1033,7 +1101,7 @@ export function mountEditor(opts) {
     if (!sameSlot) {
       montageTarget = el; montageKey = key;
       const existing = (overrides[key] || {}).montage;
-      montageUserTotal = !!(existing && existing.clips && existing.clips.length);
+      montageUserTotal = pinnedFromExisting(existing);
       montageState = (existing && Array.isArray(existing.clips) && existing.clips.length)
         ? clone(existing)
         : { clips: (currentMediaSrc(el) ? [{ src: currentMediaSrc(el), in: 0, out: 3 }] : []), totalDuration: 3 };
@@ -1053,15 +1121,34 @@ export function mountEditor(opts) {
     renderTrimmer();
     syncTransUI();
   }
+  // the natural length of ONE pass through all clips (the floor for totalDuration)
+  function montCycleSec() { return (montageState && montageState.clips.length) ? cycleDurationMs(montageState.clips, 30) / 1000 : 1; }
+  // reflect totalDuration onto every total control (bar slider+number, and the in-preview slider);
+  // the slider min = the cycle, so the user can extend (loop-to-fill) but never shrink below clips.
+  function syncTotalUI() {
+    if (!montageState) return;
+    const total = Math.round((Number(montageState.totalDuration) || 1) * 10) / 10;
+    const cyc = Math.max(1, Math.round(montCycleSec() * 10) / 10);
+    if (els.montTotal) els.montTotal.value = total;
+    if (els.montTotalRange) { els.montTotalRange.min = cyc; els.montTotalRange.value = total; }
+    const pr = els.montTrimmer && els.montTrimmer.querySelector('.ce-tr-total-range');
+    const pn = els.montTrimmer && els.montTrimmer.querySelector('.ce-tr-total-read');
+    if (pr) { pr.min = cyc; pr.value = total; }
+    if (pn) pn.textContent = total + 's';
+  }
   // commit the working montage → bag + live DOM (so the driver picks it up)
   function commitMontage() {
     if (!montageKey || !montageState) return;
     const trans = montageState.transition;     // preserve the working transition across normalize
-    // until the user types a total, it tracks the natural cycle length (so every added
-    // clip actually plays once; the cap still applies inside normalizeMontage).
-    if (!montageUserTotal && montageState.clips.length) {
-      montageState.totalDuration = Math.max(1, cycleDurationMs(montageState.clips, 30) / 1000);
-      els.montTotal.value = Math.round(montageState.totalDuration * 10) / 10;
+    // Total length rules (so all clips ALWAYS play — the "only clip 1" bug was total < cycle):
+    //  • unpinned → track the natural cycle (every clip plays once);
+    //  • FLOOR at the cycle even when pinned — a montage can never be shorter than its clips
+    //    (trim a clip to shorten it); the user can only extend it (loop-to-fill) up to 90s.
+    if (montageState.clips.length) {
+      const cycleSec = Math.max(1, cycleDurationMs(montageState.clips, 30) / 1000);
+      if (!montageUserTotal) montageState.totalDuration = cycleSec;
+      montageState.totalDuration = Math.min(90, Math.max(cycleSec, Number(montageState.totalDuration) || cycleSec));
+      syncTotalUI();
     }
     const norm = normalizeMontage(Object.assign({}, montageState, { transition: trans }), 30);
     montageState = clone(norm);
@@ -1146,27 +1233,40 @@ export function mountEditor(opts) {
   function renderTrimmer() {
     const host = els.montTrimmer; if (!host) return;
     stopTrimPlay();                 // kill any playback from the previous render before rebuilding
+    // detach the persistent audio panel before we blow away the trim host (it's re-homed INTO
+    // .ce-tr-controls each render so the trimmer + audio live in ONE window; moving the node
+    // keeps every els.aud* ref + listener intact). Park it on montPanel while we rebuild.
+    if (els.audPanel && host.contains(els.audPanel)) els.montPanel.appendChild(els.audPanel);
     host.innerHTML = '';
-    if (!montageState || activeClip < 0 || !montageState.clips[activeClip]) {
+    if (!montageState || (!montMode && (activeClip < 0 || !montageState.clips[activeClip]))) {
       host.classList.remove('ce-on');
       els.montPanel.classList.remove('ce-trimming');   // show the strip again
+      els.audPanel.classList.remove('ce-on');
       return;
     }
     host.classList.add('ce-on');
     els.montPanel.classList.add('ce-trimming');         // focused trim view (strip hidden)
-    const clip = montageState.clips[activeClip];
+    const clip = montMode ? null : montageState.clips[activeClip];
+    const headTxt = montMode
+      ? 'Preview — all clips play back-to-back; set the total length and add music (optional) below'
+      : `Clip ${activeClip + 1} — drag the ends to trim · drag the middle to slide · click the bar to scrub`;
     host.innerHTML =
-      `<div class="ce-tr-head"><span class="ce-tr-hint">Clip ${activeClip + 1} — drag the ends to trim · drag the middle to slide · click the bar to scrub</span></div>
+      `<div class="ce-tr-head"><span class="ce-tr-hint">${headTxt}</span></div>
        <video class="ce-tr-video" muted playsinline preload="auto"></video>
        <div class="ce-tr-controls">
          <div class="ce-tr-transport">
            <button class="ce-btn ce-tr-play" title="Play">▶ Play</button>
-           <label class="ce-tr-fullmode"><input type="checkbox"> Play full clip</label>
+           ${montMode ? '' : '<label class="ce-tr-fullmode"><input type="checkbox"> Play full clip</label>'}
            <span class="ce-tr-time">0.0s</span>
+           ${montMode ? '<label class="ce-tr-total" title="Total length — clips loop to fill it (up to 90s)">Length <input type="range" class="ce-tr-total-range" min="1" max="90" step="0.5"><span class="ce-tr-total-read">0s</span></label>' : ''}
+           <span class="ce-spacer"></span>
          </div>
-         <div class="ce-tr-bar"><div class="ce-tr-fill"><span class="ce-tr-h ce-tr-in" title="Start"></span><span class="ce-tr-h ce-tr-out" title="End"></span></div><div class="ce-tr-playhead"></div></div>
-         <div class="ce-tr-foot"><span class="ce-tr-read">loading…</span><button class="ce-btn ce-primary ce-tr-done" title="Close the trimmer — your trim is already saved">✓ Done</button></div>
+         ${montMode ? '' : '<div class="ce-tr-bar"><div class="ce-tr-fill"><span class="ce-tr-h ce-tr-in" title="Start"></span><span class="ce-tr-h ce-tr-out" title="End"></span></div><div class="ce-tr-playhead"></div></div>'}
+         <div class="ce-tr-foot"><span class="ce-tr-read">${montMode ? 'whole video' : 'loading…'}</span><button class="ce-btn ce-primary ce-tr-done" title="Close — your changes are already saved">✓ Done</button></div>
        </div>`;
+    // re-home the audio panel INTO the trim controls (inline, under the bar) + open it
+    const controls = host.querySelector('.ce-tr-controls');
+    if (els.audPanel && controls) { controls.appendChild(els.audPanel); openAudioPanel(montMode ? 'montage' : 'clip'); }
     const video = host.querySelector('.ce-tr-video');
     const bar = host.querySelector('.ce-tr-bar');
     const fill = host.querySelector('.ce-tr-fill');
@@ -1176,7 +1276,66 @@ export function mountEditor(opts) {
     const timeEl = host.querySelector('.ce-tr-time');
     const playhead = host.querySelector('.ce-tr-playhead');
     let dur = 0;
-    const setPlayhead = (t) => { if (dur) playhead.style.left = Math.max(0, Math.min(100, (t / dur) * 100)) + '%'; };
+    // the single Play drives the <audio> too; video mute follows the chosen mode
+    const wantNative = () => { const m = (audioWork || {}).mode; return m === 'native' || m === 'both'; };
+    const setVideoMute = () => { video.muted = !wantNative(); };
+    const setHeadLine = () => { if (audioEl && waveDur && els.audHeadLine) els.audHeadLine.style.left = Math.max(0, Math.min(100, (audioEl.currentTime / waveDur) * 100)) + '%'; };
+    function resetPlayBtn() { if (playBtn) playBtn.textContent = '▶ Play'; }
+    function pausePlay() { stopTrimPlay(); resetPlayBtn(); }
+    const isPlaying = () => !!(trimPlay && trimPlay.video === video && !video.paused);
+
+    if (montMode) {
+      // ── montage-wide music: the preview plays the WHOLE montage (rAF driver modeled on
+      // startMontageDriver, using the shared montageAt math), the <audio> plays the picked
+      // track — both started by the one Play button. No per-clip trim bar. ──────────────
+      const clips = (montageState && montageState.clips) || [], fps = 30;
+      // read total live each frame so the length slider takes effect mid-preview
+      const totalMsNow = () => Math.max(1, (Number(montageState && montageState.totalDuration) || 1) * 1000);
+      if (clips[0]) video.src = clips[0].src;
+      let curSrc = null, t0 = null, lastTMs = 0;
+      function montStep(now) {
+        if (!trimPlay || trimPlay.video !== video || !video.isConnected) { stopTrimPlay(); resetPlayBtn(); return; }
+        if (t0 == null) t0 = now;
+        const totalMs = totalMsNow();
+        const tMs = (now - t0) % totalMs;
+        if (tMs < lastTMs) audioRewind();   // wrapped past the total → loop the music back to its start
+        lastTMs = tMs;
+        const at = montageAt(clips, fps, tMs);
+        if (at && at.clip) {
+          const want = at.clip.src, localT = (Number(at.clip.in) || 0) + at.localOffsetMs / 1000;
+          if (want !== curSrc) {
+            curSrc = want; video.setAttribute('src', want);
+            try { video.load && video.load(); } catch (e) {}
+            video.addEventListener('loadeddata', function once() { try { video.currentTime = localT; video.play(); } catch (e) {} }, { once: true });
+          } else if (video.readyState >= 2 && Math.abs(video.currentTime - localT) > 0.3) { try { video.currentTime = localT; } catch (e) {} }
+          else { try { if (video.paused) video.play(); } catch (e) {} }
+        }
+        if (timeEl) timeEl.textContent = (tMs / 1000).toFixed(1) + 's';
+        setHeadLine();
+        trimPlay.raf = requestAnimationFrame(montStep);
+      }
+      function startPlay() {
+        stopTrimPlay();
+        curSrc = null; t0 = null; lastTMs = 0; setVideoMute();
+        trimPlay = { video, raf: requestAnimationFrame(montStep) };
+        audioStart();
+        playBtn.textContent = '⏸ Pause';
+      }
+      playBtn.addEventListener('click', () => { isPlaying() ? pausePlay() : startPlay(); });
+      // in-preview length slider (bound to the same total; commitMontage floors at the cycle)
+      const trRange = host.querySelector('.ce-tr-total-range');
+      const trRead = host.querySelector('.ce-tr-total-read');
+      if (trRange) {
+        trRange.addEventListener('input', () => { if (trRead) trRead.textContent = trRange.value + 's'; });
+        trRange.addEventListener('change', () => setTotal(trRange.value));
+      }
+      syncTotalUI();   // seed the slider/readout from the current total
+      host.querySelector('.ce-tr-done').addEventListener('click', () => { stopTrimPlay(); montMode = false; activeClip = -1; refreshArrange(); });
+      return;
+    }
+
+    // ── per-clip trim + audio (the default) ──────────────────────────────────────
+    const setPlayhead = (t) => { if (playhead && dur) playhead.style.left = Math.max(0, Math.min(100, (t / dur) * 100)) + '%'; };
     const layout = () => {
       if (!dur) return;
       const L = Math.max(0, Math.min(100, (clip.in / dur) * 100));
@@ -1205,22 +1364,22 @@ export function mountEditor(opts) {
     function tick() {
       if (!trimPlay || trimPlay.video !== video || !video.isConnected) { stopTrimPlay(); resetPlayBtn(); return; }
       const t = video.currentTime;
-      if (t >= rangeEnd() - 0.02 || t < rangeStart() - 0.05) { try { video.currentTime = rangeStart(); } catch (e) {} }
+      if (t >= rangeEnd() - 0.02 || t < rangeStart() - 0.05) { try { video.currentTime = rangeStart(); } catch (e) {} audioRewind(); }
       setPlayhead(video.currentTime);
       if (timeEl) timeEl.textContent = video.currentTime.toFixed(1) + 's';
+      setHeadLine();
       trimPlay.raf = requestAnimationFrame(tick);
     }
-    function resetPlayBtn() { if (playBtn) playBtn.textContent = '▶ Play'; }
     function startPlay() {
       if (!dur) return;
       stopTrimPlay();
+      setVideoMute();
       try { if (video.currentTime < rangeStart() || video.currentTime >= rangeEnd() - 0.02) video.currentTime = rangeStart(); } catch (e) {}
       const p = video.play(); if (p && p.catch) p.catch(() => {});
       trimPlay = { video, raf: requestAnimationFrame(tick) };
+      audioStart();                // start the picked track from its start point, synced
       playBtn.textContent = '⏸ Pause';
     }
-    function pausePlay() { stopTrimPlay(); resetPlayBtn(); }
-    const isPlaying = () => !!(trimPlay && trimPlay.video === video && !video.paused);
     playBtn.addEventListener('click', () => { isPlaying() ? pausePlay() : startPlay(); });
     fullChk.addEventListener('change', () => { if (isPlaying()) startPlay(); });   // restart in the new mode
 
@@ -1262,8 +1421,8 @@ export function mountEditor(opts) {
     host.querySelector('.ce-tr-in').addEventListener('mousedown', (e) => startDrag('in', e));
     host.querySelector('.ce-tr-out').addEventListener('mousedown', (e) => startDrag('out', e));
     fill.addEventListener('mousedown', (e) => { if (e.target.classList.contains('ce-tr-h')) return; startDrag('move', e); });
-    // ✓ Done — trim already auto-saved on each drag; this just closes the trimmer and
-    // returns to the full strip (activeClip < 0 makes renderTrimmer hide the panel).
+    // ✓ Done — trim + audio already auto-saved; this just closes the trimmer and returns to
+    // the full strip (activeClip < 0 makes renderTrimmer hide the panel).
     host.querySelector('.ce-tr-done').addEventListener('click', () => { stopTrimPlay(); activeClip = -1; refreshArrange(); });
   }
 
@@ -1274,6 +1433,157 @@ export function mountEditor(opts) {
     els.montFade.style.display = (t.type === 'crossfade') ? 'inline-flex' : 'none';
     els.montFadeDur.value = t.duration;
   }
+
+  // ── audio picker (per-clip + montage-wide) ──────────────────────────────────
+  // One panel, two scopes: 'clip' writes montageState.clips[activeClip].audio (via updateClip);
+  // 'montage' writes montageState.audio. mode = native | music | both | mute. Waveform (Web
+  // Audio decode) lets you drag the start point; preview plays the clip video + the picked
+  // track synced. Bag is portable; only the renderer mixes it (montage.mjs buildMontageAudio).
+  let audioScope = null, audioWork = null, audioEl = null, audioRaf = 0, audioPlaying = false;
+  let waveDur = 0, wavePeaks = null, audioListCache = null;
+  const defaultAudio = () => ({ mode: 'native', volume: 0.85, startAt: 0 });
+  function curAudioTarget() { return audioScope === 'clip' ? (montageState && montageState.clips[activeClip]) : montageState; }
+  function openAudioPanel(scope) {
+    if (!montageState) return;
+    if (scope === 'clip' && (activeClip < 0 || !montageState.clips[activeClip])) return;
+    audioScope = scope; audioStop();
+    audioWork = clone((scope === 'clip' ? montageState.clips[activeClip].audio : montageState.audio) || defaultAudio());
+    els.audTitle.textContent = scope === 'clip' ? 'Audio for this clip' : 'Music for the whole video';
+    els.audPanel.classList.add('ce-on');
+    els.audStatus.textContent = '';
+    loadAudioList();
+    renderAudioPanel();
+  }
+  function closeAudioPanel() {
+    audioStop();
+    els.audPanel.classList.remove('ce-on');
+    audioScope = null; audioWork = null; wavePeaks = null; waveDur = 0;
+  }
+  // re-sync the live A/V when the audio choice changes mid-playback (mode/track/volume):
+  // flip the preview video's mute and (re)start or stop the <audio> to match the new mode.
+  function reSyncIfPlaying() {
+    if (!trimPlay) return;
+    const v = els.montTrimmer.querySelector('.ce-tr-video');
+    const m = (audioWork || {}).mode;
+    if (v) v.muted = !(m === 'native' || m === 'both');
+    audioStart();
+  }
+  async function loadAudioList() {
+    if (!audioProvider) { els.audList.innerHTML = '<option value="">(no library — paste a path)</option>'; return; }
+    try {
+      const r = audioListCache || (audioListCache = await audioProvider.list());
+      const items = (r && r.items) || [];
+      els.audList.innerHTML = '<option value="">— pick a track —</option>' + items.map((it) => `<option value="${it.url}">${it.name}</option>`).join('');
+      if (audioWork && audioWork.src) els.audList.value = audioWork.src;
+    } catch (e) { els.audList.innerHTML = '<option value="">(library unavailable)</option>'; }
+  }
+  function renderAudioPanel() {
+    const a = audioWork || defaultAudio();
+    els.audModes.forEach((b) => b.classList.toggle('ce-on', b.getAttribute('data-m') === a.mode));
+    const needsMusic = a.mode === 'music' || a.mode === 'both';
+    els.audPick.style.display = needsMusic ? 'flex' : 'none';
+    els.audWaveWrap.style.display = needsMusic ? 'block' : 'none';
+    els.audVol.parentElement.style.display = needsMusic ? 'inline-flex' : 'none';
+    els.audVol.value = a.volume != null ? a.volume : 0.85;
+    els.audTime.textContent = 'start ' + (a.startAt || 0).toFixed(1) + 's';
+    if (needsMusic && a.src) ensureWaveform(a.src); else { wavePeaks = null; clearWave(); }
+  }
+  // persist the audio choice to the bag WITHOUT a full Arrange rebuild — refreshArrange would
+  // tear down + re-decode the waveform and interrupt playback on every tweak. Audio is
+  // render-only (not in the live montage driver), so no iframe re-apply is needed either.
+  function commitAudio() {
+    if (!audioScope || !audioWork || !montageKey || !montageState) return;
+    const norm = normalizeAudio(audioWork) || defaultAudio();
+    if (audioScope === 'clip') { if (montageState.clips[activeClip]) montageState.clips[activeClip].audio = norm; }
+    else montageState.audio = norm;
+    const out = normalizeMontage(Object.assign({}, montageState, { transition: montageState.transition }), 30);
+    montageState = clone(out);
+    setOverride(montageKey, { montage: out });
+  }
+
+  // ── waveform (Web Audio decode → peaks → canvas) ──
+  async function ensureWaveform(src) {
+    els.audStatus.textContent = 'Loading waveform…';
+    try {
+      const buf = await (await fetch(src)).arrayBuffer();
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      const ac = new Ctx();
+      const ab = await ac.decodeAudioData(buf);
+      waveDur = ab.duration; wavePeaks = computePeaks(ab, 1000);
+      try { ac.close(); } catch (e) {}
+      drawWave(); placeMark(); els.audStatus.textContent = '';
+    } catch (e) { wavePeaks = null; waveDur = 0; clearWave(); els.audStatus.textContent = 'waveform n/a'; }
+  }
+  function computePeaks(ab, n) {
+    const ch = ab.getChannelData(0); const block = Math.max(1, Math.floor(ch.length / n));
+    const peaks = new Float32Array(n);
+    for (let i = 0; i < n; i++) { let m = 0; const s = i * block; for (let j = 0; j < block; j++) { const v = Math.abs(ch[s + j] || 0); if (v > m) m = v; } peaks[i] = m; }
+    return peaks;
+  }
+  function clearWave() { const c = els.audWave, ctx = c.getContext('2d'); if (ctx) ctx.clearRect(0, 0, c.width, c.height); }
+  function drawWave() {
+    if (!wavePeaks) return;
+    const c = els.audWave, W = els.audWaveWrap.clientWidth || 600, H = 96, dpr = window.devicePixelRatio || 1;
+    c.width = W * dpr; c.height = H * dpr; c.style.width = W + 'px'; c.style.height = H + 'px';
+    const ctx = c.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = 'rgba(196,20,29,.85)'; const mid = H / 2, n = wavePeaks.length, bw = Math.max(1, W / n);
+    for (let i = 0; i < n; i++) { const x = (i / n) * W, h = wavePeaks[i] * (H * 0.92); ctx.fillRect(x, mid - h / 2, bw, h); }
+  }
+  function placeMark() { if (waveDur && audioWork) els.audMark.style.left = Math.max(0, Math.min(100, ((audioWork.startAt || 0) / waveDur) * 100)) + '%'; }
+  function waveXToTime(clientX) { const r = els.audWaveWrap.getBoundingClientRect(); return Math.max(0, Math.min(waveDur, ((clientX - r.left) / r.width) * waveDur)); }
+  els.audWaveWrap.addEventListener('mousedown', (e) => {
+    if (!waveDur || !audioWork) return;
+    const move = (ev) => {
+      audioWork.startAt = Math.round(waveXToTime(ev.clientX) * 10) / 10;
+      placeMark(); els.audTime.textContent = 'start ' + audioWork.startAt.toFixed(1) + 's';
+      if (audioEl) { try { audioEl.currentTime = audioWork.startAt; } catch (er) {} }
+    };
+    const up = () => { document.removeEventListener('mousemove', move, true); document.removeEventListener('mouseup', up, true); commitAudio(); };
+    document.addEventListener('mousemove', move, true); document.addEventListener('mouseup', up, true);
+    move(e);
+  });
+
+  // ── audio playback driven by the trim window's single Play (audioStart/audioStop) ──
+  // The trim/montage rAF loop owns the video + the waveform playhead (setHeadLine); these
+  // only own the <audio> element. mode/native handling lives in the trim startPlay (mute).
+  function audioStop() {
+    if (audioEl) { try { audioEl.pause(); } catch (e) {} }
+  }
+  // loop the music back to its chosen start (called when the montage wraps past the total, or a
+  // clip loops) so the audio stays bounded to the length instead of running on forever.
+  function audioRewind() {
+    if (audioEl && !audioEl.paused) { try { audioEl.currentTime = (audioWork && audioWork.startAt) || 0; } catch (e) {} }
+  }
+  function audioStart() {
+    const a = audioWork; if (!a) return;
+    const usesMusic = (a.mode === 'music' || a.mode === 'both') && a.src;
+    if (!usesMusic) { audioStop(); return; }
+    if (!audioEl) { audioEl = document.createElement('audio'); audioEl.className = 'ce-aud-el'; }
+    if (!audioEl.isConnected) els.audPanel.appendChild(audioEl);
+    if (audioEl.getAttribute('src') !== a.src) { audioEl.setAttribute('src', a.src); audioEl.load(); }
+    audioEl.volume = Math.min(1, a.volume || 0.85);
+    try { audioEl.currentTime = a.startAt || 0; } catch (e) {}
+    audioEl.play().catch(() => {});
+  }
+
+  // wiring (the standalone ✓ Done / ▶ Play in the panel are hidden — the trim window owns them)
+  els.audDone.addEventListener('click', closeAudioPanel);
+  els.audModes.forEach((b) => b.addEventListener('click', () => { if (!audioWork) return; audioWork.mode = b.getAttribute('data-m'); renderAudioPanel(); commitAudio(); reSyncIfPlaying(); }));
+  els.audVol.addEventListener('input', () => { if (!audioWork) return; audioWork.volume = Number(els.audVol.value); if (audioEl) audioEl.volume = Math.min(1, audioWork.volume); });
+  els.audVol.addEventListener('change', () => { if (audioWork) commitAudio(); });
+  els.audList.addEventListener('change', () => { if (audioWork && els.audList.value) { audioWork.src = els.audList.value; audioWork.startAt = 0; renderAudioPanel(); commitAudio(); reSyncIfPlaying(); } });
+  els.audUrlGo.addEventListener('click', () => { const v = els.audUrl.value.trim(); if (audioWork && v) { audioWork.src = v; audioWork.startAt = 0; renderAudioPanel(); commitAudio(); reSyncIfPlaying(); } });
+  els.audUpload.addEventListener('change', async (e) => {
+    const file = e.target.files && e.target.files[0]; if (!file || !audioProvider) return;
+    els.audStatus.textContent = 'Uploading…';
+    try {
+      const r = await audioProvider.upload(file);
+      if (r && r.url) { audioListCache = null; await loadAudioList(); audioWork.src = r.url; audioWork.startAt = 0; els.audList.value = r.url; renderAudioPanel(); commitAudio(); reSyncIfPlaying(); els.audStatus.textContent = 'Uploaded ✓'; }
+      else els.audStatus.textContent = 'Upload failed';
+    } catch (err) { els.audStatus.textContent = 'Upload error'; }
+  });
+  // ♪ Music — open the same unified window in montage scope (whole-video music)
+  els.montMusic.addEventListener('click', () => { if (!montageState) return; montMode = true; renderTrimmer(); });
 
   // ── live Kraken browser (Phase C3) ────────────────────────────────────────
   // Drives the injected `remoteBrowse` bridge (served host → /kraken/* → kraken.mjs).
@@ -1591,12 +1901,18 @@ export function mountEditor(opts) {
     montageAddMode = true;
     showSection('browse', montageTarget || swapTarget);
   });
-  els.montTotal.addEventListener('change', () => {
+  // Total-length controls (slider + number, both bound). setTotal pins + commits; commitMontage
+  // floors at the cycle (≥ all clips once) and clamps ≤ 90, then syncTotalUI reflects it back.
+  function setTotal(v) {
     if (!montageState) return;
-    montageUserTotal = true;          // explicit override; stop auto-tracking the cycle
-    montageState.totalDuration = Number(els.montTotal.value) || montageState.totalDuration;
+    montageUserTotal = true;
+    montageState.totalDuration = Number(v) || montageState.totalDuration;
     commitMontage();
-  });
+  }
+  els.montTotal.addEventListener('change', () => setTotal(els.montTotal.value));
+  // slider: live-preview the number while dragging; commit on release
+  els.montTotalRange.addEventListener('input', () => { if (els.montTotal) els.montTotal.value = els.montTotalRange.value; });
+  els.montTotalRange.addEventListener('change', () => setTotal(els.montTotalRange.value));
   // transition controls (Phase D v2)
   els.montTransType.addEventListener('change', () => {
     if (!montageState) return;

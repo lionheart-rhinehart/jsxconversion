@@ -9,7 +9,7 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { clipFrames, cycleFrames, cycleDurationMs, montageAt } from './montage.mjs';
+import { clipFrames, cycleFrames, cycleDurationMs, montageAt, normalizeMontage } from './montage.mjs';
 
 const FPS = 30;
 // three clips of different lengths (note 1.5s → 45 frames is exact; 2.0 → 60; 0.7 → 21)
@@ -73,4 +73,18 @@ test('localOffsetMs maps to a real currentTime inside the clip [in,out)', () => 
 
 test('empty montage is inert (clipIndex -1)', () => {
   assert.equal(montageAt([], FPS, 1234).clipIndex, -1);
+});
+
+test('normalizeMontage: total never falls below the clip cycle (no truncation)', () => {
+  // 3 clips × 6s = 18s cycle. A bag asking for total=6 must be floored to 18 (all clips play).
+  const c3 = [{ src: 'a', in: 0, out: 6 }, { src: 'b', in: 0, out: 6 }, { src: 'c', in: 0, out: 6 }];
+  assert.equal(normalizeMontage({ clips: c3, totalDuration: 6 }, FPS).totalDuration, 18, 'floored to the cycle');
+  assert.equal(normalizeMontage({ clips: c3, totalDuration: 30 }, FPS).totalDuration, 30, 'longer total preserved (loop-to-fill)');
+  assert.equal(normalizeMontage({ clips: c3 }, FPS).totalDuration, 18, 'unset total = cycle');
+});
+
+test('normalizeMontage: total clamps up to 90 (raised from 30)', () => {
+  const one = [{ src: 'a', in: 0, out: 2 }];
+  assert.equal(normalizeMontage({ clips: one, totalDuration: 90 }, FPS).totalDuration, 90, '90 allowed');
+  assert.equal(normalizeMontage({ clips: one, totalDuration: 200 }, FPS).totalDuration, 90, 'clamped to 90');
 });

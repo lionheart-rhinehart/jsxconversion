@@ -133,8 +133,13 @@
 .ce-mont-dur input { font:inherit; font-size:12px; background:#0c0d10; color:var(--ce-text);
   border:1px solid var(--ce-line); padding:5px 7px; border-radius:6px; }
 .ce-mont-trans, .ce-mont-fade { font-size:12px; color:var(--ce-dim); display:inline-flex; align-items:center; gap:5px; }
-.ce-mont-fade input, .ce-mont-dur input { font:inherit; font-size:12px; background:#0c0d10; color:var(--ce-text);
+.ce-mont-fade input, .ce-mont-dur input[type=number] { font:inherit; font-size:12px; background:#0c0d10; color:var(--ce-text);
   border:1px solid var(--ce-line); padding:5px 7px; border-radius:6px; }
+.ce-mont-total-range { width:120px; accent-color:var(--ce-accent); vertical-align:middle; }
+/* in-preview length slider (▸ Preview window) */
+.ce-tr-total { display:inline-flex; align-items:center; gap:6px; font-size:12px; color:var(--ce-dim); }
+.ce-tr-total-range { width:160px; accent-color:var(--ce-accent); }
+.ce-tr-total-read { font:600 12px/1 'JetBrains Mono',monospace; color:var(--ce-text); min-width:36px; }
 .ce-mont-strip { display:flex; gap:12px; padding:12px; overflow-x:auto; align-items:flex-start; flex:0 0 auto; }
 .ce-mont-empty { font-size:13px; color:var(--ce-dim); padding:8px 2px; }
 /* clip cards ~2× larger + clickable; the active one gets an accent ring */
@@ -158,7 +163,7 @@
 /* big preview, capped to the viewport so the head + transport/Done controls below it ALWAYS
    fit inside the modal (no overflow, controls never pushed off-screen). During trimming the
    strip is hidden (rule below), so the trimmer has the whole panel — preview can be large. */
-.ce-tr-video { width:auto; max-height:min(calc(86vh - 250px),620px); object-fit:contain;
+.ce-tr-video { width:auto; max-height:min(calc(86vh - 430px),460px); object-fit:contain;
   background:#000; border-radius:8px; align-self:center; }
 .ce-tr-controls { flex:0 0 auto; display:flex; flex-direction:column; gap:8px; padding-top:8px;
   background:var(--ce-panel); }
@@ -174,6 +179,38 @@
 /* footer: readout on the left, ✓ Done on the bottom-right (closes the trimmer) */
 .ce-tr-foot { display:flex; align-items:center; justify-content:space-between; gap:12px; }
 .ce-tr-done { font-size:13px; }
+
+/* audio controls — embedded INLINE inside the trim window (no overlay): the video preview
+   stays on top, the audio (mode/track/waveform/volume) flows right below the trim bar, so
+   you see the clip AND pick the audio in one place. The trim window's own Play + ✓ Done
+   drive playback + close, so the panel's standalone Play/time/Done are hidden. */
+.ce-audio-panel { display:none; flex-direction:column; gap:10px; margin-top:2px;
+  padding-top:10px; border-top:1px solid var(--ce-line); }
+.ce-audio-panel.ce-on { display:flex; }
+.ce-aud-done, .ce-aud-play { display:none; }
+.ce-aud-head { display:flex; align-items:center; gap:12px; }
+.ce-aud-title { font:600 12px/1 'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.04em; color:var(--ce-dim); }
+.ce-aud-modes { display:inline-flex; gap:6px; }
+.ce-aud-mode { font-size:12px; }
+.ce-aud-mode.ce-on { background:var(--ce-accent); border-color:var(--ce-accent); color:#fff; }
+.ce-aud-pick { display:flex; align-items:center; gap:10px; }
+.ce-aud-list { flex:0 1 320px; }
+.ce-aud-upload-btn { cursor:pointer; }
+.ce-aud-url { flex:1; min-width:120px; font:inherit; font-size:13px; background:#0c0d10; color:var(--ce-text);
+  border:1px solid var(--ce-line); padding:7px 10px; border-radius:6px; }
+.ce-aud-wavewrap { position:relative; height:96px; background:#0c0d10; border:1px solid var(--ce-line);
+  border-radius:8px; overflow:hidden; cursor:pointer; }
+.ce-aud-wave { display:block; width:100%; height:96px; }
+.ce-aud-mark { position:absolute; top:0; bottom:0; left:0; width:0; border-left:2px dashed var(--ce-accent);
+  box-shadow:0 0 4px rgba(196,20,29,.8); pointer-events:none; }
+.ce-aud-head-line { position:absolute; top:0; bottom:0; left:0; width:2px; background:#fff;
+  box-shadow:0 0 4px rgba(0,0,0,.8); pointer-events:none; }
+.ce-aud-controls { display:flex; align-items:center; gap:12px; }
+.ce-aud-play { min-width:84px; font-size:13px; }
+.ce-aud-time { font:600 12px/1 'JetBrains Mono',monospace; color:var(--ce-text); }
+.ce-aud-vol { display:inline-flex; align-items:center; gap:6px; font-size:12px; color:var(--ce-dim); }
+.ce-aud-vol input { width:110px; accent-color:var(--ce-accent); }
+.ce-aud-status { font-size:12px; color:var(--ce-dim); }
 .ce-tr-fill { position:absolute; top:0; bottom:0; left:0; width:100%; background:rgba(196,20,29,.22);
   border-left:2px solid var(--ce-accent); border-right:2px solid var(--ce-accent); cursor:grab; }
 .ce-tr-h { position:absolute; top:50%; width:16px; height:46px;
@@ -215,7 +252,7 @@
 .ce-media-modal .ce-montage-panel { overflow:hidden; }
 .ce-media-modal .ce-mont-bar { flex:0 0 auto; background:var(--ce-panel); z-index:2; }
 .ce-media-modal .ce-mont-strip { flex:0 0 auto; }
-.ce-media-modal .ce-mont-trimmer { flex:0 1 auto; min-height:0; }
+.ce-media-modal .ce-mont-trimmer { flex:1 1 auto; min-height:0; overflow-y:auto; }
 .ce-media-modal .ce-mont-foot { flex:0 0 auto; }
 /* while trimming one clip, hide the strip + transitions bar + foot so the trim view (big
    preview + controls + Done) owns the modal and always fits. ✓ Done brings the strip back. */

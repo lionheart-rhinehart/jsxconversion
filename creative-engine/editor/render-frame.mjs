@@ -18,7 +18,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import os from 'node:os';
 import { spawnSync } from 'node:child_process';
 import puppeteer from 'puppeteer';
-import { buildMontageSource, normalizeMontage } from './montage.mjs';
+import { buildMontageSource, buildMontageAudio, normalizeMontage } from './montage.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, '..', '..');
@@ -72,6 +72,7 @@ export async function expandMontages(overrides, taggedPath, fps = FPS) {
   const out = {};
   const created = [];
   let loop = null;
+  const audioTracks = [];   // built audio files to mux into the final MP4 (one per montage w/ audio)
   for (const key of Object.keys(overrides || {})) {
     const ov = overrides[key];
     if (!ov || typeof ov !== 'object' || !ov.montage) { out[key] = ov; continue; }
@@ -83,12 +84,18 @@ export async function expandMontages(overrides, taggedPath, fps = FPS) {
     const r = await buildMontageSource(clips, fps, concat, { transition: m.transition });
     if (!r.ok) throw new Error('[render-frame] montage build failed for ' + key + ': ' + r.reason);
     created.push(dir);
+    // AUDIO (separate pass — the silent video render carries no sound): build one mixed
+    // audio track (bed + per-clip native/music) and remember it to mux after encode.
+    const apath = path.join(dir, 'audio.m4a');
+    const ar = await buildMontageAudio(ov.montage, fps, apath, { resolveSrc: (s) => resolveClipPath(s, taggedPath) });
+    if (ar.ok) audioTracks.push(ar.path);
     // strip the montage key, keep any sibling overrides (color/pos/etc.), point src at the concat
     const { montage, ...rest } = ov;
     out[key] = { ...rest, src: pathToFileURL(concat).href };
     loop = Math.max(loop || 0, m.totalDuration);   // longest montage drives the render length
   }
-  return { overrides: out, loop, cleanup: () => created.forEach((d) => { try { fs.rmSync(d, { recursive: true, force: true }); } catch (e) {} }) };
+  return { overrides: out, loop, audio: audioTracks[0] || null,
+    cleanup: () => created.forEach((d) => { try { fs.rmSync(d, { recursive: true, force: true }); } catch (e) {} }) };
 }
 
 // Resolve relative asset URLs (assets/vid/…) against the tagged file's own folder so
@@ -156,7 +163,9 @@ export async function renderFrameAt({ taggedPath, overrides, frameId, tMs, outPn
 export async function renderMp4({ taggedPath, overrides, frameId, outMp4, fps = FPS, loop = LOOP }) {
   // D4 — expand any montage to a concat MP4 first; a montage's totalDuration becomes the
   // render length (F4), overriding the default 7s loop. The concat loops via seek modulo.
-  const { overrides: ov, loop: montageLoop, cleanup } = await expandMontages(overrides, taggedPath, fps);
+  // `audio` = a prebuilt mixed audio track (or null); cleanup() removes the montage temp
+  // dirs (concat.mp4 + audio.m4a) — so we mux BEFORE calling it.
+  const { overrides: ov, loop: montageLoop, audio, cleanup } = await expandMontages(overrides, taggedPath, fps);
   if (montageLoop) loop = montageLoop;
   const browser = await puppeteer.launch({ headless: true,
     args: ['--no-sandbox', '--autoplay-policy=no-user-gesture-required', '--mute-audio'] });
@@ -169,11 +178,22 @@ export async function renderMp4({ taggedPath, overrides, frameId, outMp4, fps = 
     for (let i = 0; i < total; i++) {
       await seekAndShot(page, (i / fps) * 1000, path.join(framesDir, `f_${String(i).padStart(5, '0')}.png`));
     }
-  } finally { await browser.close(); cleanup(); }
-  const ff = spawnSync('ffmpeg', ['-y', '-framerate', String(fps), '-i', path.join(framesDir, 'f_%05d.png'),
-    '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', outMp4], { stdio: 'inherit' });
-  fs.rmSync(framesDir, { recursive: true, force: true });
-  if (ff.status !== 0) throw new Error('ffmpeg failed (is it on PATH?)');
+  } finally { await browser.close(); }
+  try {
+    const ff = spawnSync('ffmpeg', ['-y', '-framerate', String(fps), '-i', path.join(framesDir, 'f_%05d.png'),
+      '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', outMp4], { stdio: 'inherit' });
+    fs.rmSync(framesDir, { recursive: true, force: true });
+    if (ff.status !== 0) throw new Error('ffmpeg failed (is it on PATH?)');
+    // AUDIO mux (final pass): copy the silent video, add the AAC track, cut to the shorter.
+    if (audio && fs.existsSync(audio)) {
+      const muxed = outMp4.replace(/\.mp4$/i, '.muxed.mp4');
+      const mx = spawnSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', outMp4, '-i', audio,
+        '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-map', '0:v:0', '-map', '1:a:0', '-shortest',
+        '-movflags', '+faststart', muxed], { encoding: 'utf8' });
+      if (mx.status === 0 && fs.existsSync(muxed)) { fs.rmSync(outMp4, { force: true }); fs.renameSync(muxed, outMp4); }
+      else console.error('[render-frame] audio mux failed (video kept silent):', String(mx.stderr || '').trim().split(/\r?\n/).slice(-2).join(' | '));
+    }
+  } finally { cleanup(); }
   return outMp4;
 }
 

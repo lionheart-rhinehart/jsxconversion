@@ -26,6 +26,7 @@ const TYPES = {
   '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.gif': 'image/gif',
   '.css': 'text/css', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.woff': 'font/woff',
   '.ttf': 'font/ttf',
+  '.mp3': 'audio/mpeg', '.m4a': 'audio/mp4', '.wav': 'audio/wav', '.aac': 'audio/aac', '.ogg': 'audio/ogg',
 };
 
 // Serve one file with Range support. Exported so Phase C's server can fall through to it.
@@ -153,9 +154,51 @@ export function krakenRoutes() {
   };
 }
 
+// ── Audio library routes (local music; Kraken has no audio) ─────────────────
+// /audio/list → tracks in music-library/ + uploaded files. /audio/upload → save a
+// file the user dropped in. The audio files themselves serve via the normal Range path
+// (so <audio> can seek). Degrade-safe: a read error just yields an empty list.
+const AUDIO_EXT = ['.mp3', '.m4a', '.wav', '.aac', '.ogg'];
+const AUDIO_DIRS = ['music-library', 'brand/audio-cache/uploads'].map((d) => path.join(PROJECT_ROOT, d));
+function listAudio() {
+  const seen = new Set(); const items = [];
+  for (const dir of AUDIO_DIRS) {
+    let files = []; try { files = fs.readdirSync(dir); } catch { continue; }
+    for (const f of files.sort()) {
+      if (!AUDIO_EXT.includes(path.extname(f).toLowerCase())) continue;
+      const url = '/' + path.relative(PROJECT_ROOT, path.join(dir, f)).split(path.sep).join('/');
+      if (seen.has(url)) continue; seen.add(url);
+      items.push({ name: f.replace(/\.[^.]+$/, ''), file: f, url });
+    }
+  }
+  return items;
+}
+function readRaw(req) {
+  return new Promise((resolve) => {
+    const chunks = []; req.on('data', (c) => chunks.push(c));
+    req.on('end', () => resolve(Buffer.concat(chunks))); req.on('error', () => resolve(Buffer.alloc(0)));
+  });
+}
+export function audioRoutes() {
+  return {
+    '/audio/list': (req, res) => { try { sendJson(res, { available: true, items: listAudio() }); } catch (e) { sendJson(res, { available: false, items: [], error: String(e.message || e) }); } },
+    '/audio/upload': async (req, res) => {
+      try {
+        let name = (new URL(req.url, 'http://x').searchParams.get('name') || 'upload.mp3').replace(/[^a-z0-9._-]/gi, '_');
+        if (!AUDIO_EXT.includes(path.extname(name).toLowerCase())) name += '.mp3';
+        const buf = await readRaw(req);
+        if (!buf.length) return sendJson(res, { available: false, error: 'empty upload' });
+        const dir = path.join(PROJECT_ROOT, 'brand', 'audio-cache', 'uploads'); fs.mkdirSync(dir, { recursive: true });
+        const dest = path.join(dir, name); fs.writeFileSync(dest, buf);
+        sendJson(res, { available: true, name: name.replace(/\.[^.]+$/, ''), file: name, url: '/' + path.relative(PROJECT_ROOT, dest).split(path.sep).join('/') });
+      } catch (e) { sendJson(res, { available: false, error: String(e.message || e) }); }
+    },
+  };
+}
+
 const isMain = process.argv[1] && process.argv[1].endsWith('serve.mjs');
 if (isMain) {
-  createServer(krakenRoutes()).listen(PORT, () => {
+  createServer({ ...krakenRoutes(), ...audioRoutes() }).listen(PORT, () => {
     console.log(`editor dev host → http://localhost:${PORT}/creative-engine/editor/editor-host.html`);
   });
 }
