@@ -18,10 +18,16 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 
 export const MANIFEST_VERSION = 1;
 
-// 6-hex stable id from a source key (kraken id, or a relative file path). Same
-// input → same id, forever. Short enough to read; 16.7M space is ample per folder.
-export function makeId(sourceKey) {
-  return createHash("sha1").update(String(sourceKey)).digest("hex").slice(0, 6);
+// Length of the stable id (hex chars). 10 hex = 40 bits ≈ 1.1 trillion values;
+// by the birthday bound the first expected collision sits near ~1.2M assets, so
+// a growing library never realistically collides. (6 was too small — danger zone
+// ~5k assets.) Still short enough to read in slugs/logs.
+export const ID_LEN = 10;
+
+// Stable id from a source key (kraken id, or a relative file path). Same input →
+// same id, forever (deterministic — no AI, no randomness in the spine).
+export function makeId(sourceKey, len = ID_LEN) {
+  return createHash("sha1").update(String(sourceKey)).digest("hex").slice(0, len);
 }
 
 // Break any raw string into lowercase whole-word tokens for matching/slugging.
