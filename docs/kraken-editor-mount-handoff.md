@@ -25,6 +25,18 @@ URL into an `<iframe>` and the design plays. The **same** `<iframe>` can run in 
 
 A single boolean prop flips the mode. Same bundle, same code, in both lanes.
 
+> **⚠️ Two SEPARATE systems — do not conflate (and do not build a new comment system):**
+> - **Commenting / highlighting = Kraken's EXISTING approval-portal feature.** It already exists:
+>   `app/portal/review/[id]/review-client.tsx` + `app/api/portal/approvals/[id]/comments/route.ts`
+>   (W3C annotations). The "view" lane just shows the live design read-only *with this existing UI* —
+>   **reuse it, build nothing new.**
+> - **Editing = the CreativeEngine editor bundle**, and it is **EDIT-ONLY** (retype / swap / drag →
+>   overrides). It has no commenting of its own. Mount it with `permissions:'edit'` for the edit lane;
+>   `permissions:'view'` is just read-only display.
+> So: `permission 'view'` → read-only design + Kraken's existing comment UI; `permission 'edit'` →
+> the bundle in edit mode. The portal is a section of Kraken, so "the approval portal" and "Kraken"
+> are the same app — the commenting lives in that portal.
+
 ---
 
 ## What THIS repo delivers vs. what the Kraken repo builds
