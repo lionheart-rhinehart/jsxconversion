@@ -8,7 +8,7 @@ see where things stand without regenerating it. **Update the box + status line w
 - **Goal:** a finished Claude Design goes in → edit → approve → render once → ship (and fan out to many brands).
 - **Rules:** clean room (no imports from `creative-engine-v1/`), one phase per chat, evidence over assertion.
 
-**STATUS LINE:** Phases 0–3 ✅ · Phase 2 merging · **Phase 4 NEXT (clears once the editor lands).**
+**STATUS LINE:** Phases 0–3 ✅ · editor (Phase 2) landed · **Phase 4 NEXT — CLEARED to start.**
 
 ---
 
@@ -19,21 +19,21 @@ code home, docs updated.
 ## ✅ Phase 1 — Intake + TAG  *(DONE)*
 Deterministic tagger → 791 elements across 36 Westfield designs, 0 silent skips. Kraken handoff doc written.
 
-## ✅ Phase 2 — The one portable editor  *(DONE — merging now)*
+## ✅ Phase 2 — The one portable editor  *(DONE — landed on main)*
 Click-text / swap-media / drag / resize / undo-redo, override model. Pixel-perfect (SSIM 1.00000)
-editor-vs-render.
+editor-vs-render. *Known deferred: a montage-preview flicker — cosmetic only, not a blocker.*
 
 ## ✅ Phase 3 — Media manifest & naming  *(DONE — verified + tested)*
 - [x] 3.1 unique ID + descriptive slug + tags (incl. motion/static)
 - [x] 3.2 query-by-meaning returns the exact asset from a collision folder
 - [x] independent regression test on main (`test/manifest-select.test.mjs`; `npm test` 173/0)
 
-## 👉 Phase 4 — Approval (the portal)  *(NEXT — unblocks the moment Phase 2 finishes merging)*
-- [ ] 4.1 package the editor into an embeddable bundle (view-comment ⟷ edit toggle)  ← *waits on Phase 2*
+## 👉 Phase 4 — Approval (the portal)  *(NEXT — CLEARED; editor has landed)*
+- [ ] 4.1 package the editor into an embeddable bundle (view-comment ⟷ edit toggle)
 - [ ] 4.2 handoff doc + Supabase status-field contract  *(doc mostly written in Phase 1)*
 - [ ] 4.3 define the approval→render trigger (status flips → local poller picks it up)
-> ⚠️ Do not start 4.1 while a chat is live-editing `creative-engine/editor/` — it packages that folder
-> (file collision + packaging a moving target). Start after the editor merges to main.
+> ⚠️ Only caveat left: don't run 4.1 while another chat is *still live-editing* `creative-engine/editor/`
+> (same-folder collision). The editor work has merged, so this is clear unless you reopen editor edits.
 
 ## ⬜ Phase 5 — Render-on-approval + brand fan-out
 - [ ] 5.1 pooled render queue (N-at-a-time, no thrash)
