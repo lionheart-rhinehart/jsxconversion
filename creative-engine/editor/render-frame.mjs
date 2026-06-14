@@ -80,7 +80,7 @@ export async function expandMontages(overrides, taggedPath, fps = FPS) {
     const clips = m.clips.map((c) => ({ src: resolveClipPath(c.src, taggedPath), in: c.in, out: c.out }));
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'ce-montage-'));
     const concat = path.join(dir, 'montage.mp4');
-    const r = await buildMontageSource(clips, fps, concat);
+    const r = await buildMontageSource(clips, fps, concat, { transition: m.transition });
     if (!r.ok) throw new Error('[render-frame] montage build failed for ' + key + ': ' + r.reason);
     created.push(dir);
     // strip the montage key, keep any sibling overrides (color/pos/etc.), point src at the concat

@@ -132,21 +132,105 @@
 .ce-mont-dur { font-size:12px; color:var(--ce-dim); display:inline-flex; align-items:center; gap:5px; }
 .ce-mont-dur input { font:inherit; font-size:12px; background:#0c0d10; color:var(--ce-text);
   border:1px solid var(--ce-line); padding:5px 7px; border-radius:6px; }
-.ce-mont-strip { display:flex; gap:10px; padding:12px; overflow-x:auto; align-items:flex-start; }
+.ce-mont-trans, .ce-mont-fade { font-size:12px; color:var(--ce-dim); display:inline-flex; align-items:center; gap:5px; }
+.ce-mont-fade input, .ce-mont-dur input { font:inherit; font-size:12px; background:#0c0d10; color:var(--ce-text);
+  border:1px solid var(--ce-line); padding:5px 7px; border-radius:6px; }
+.ce-mont-strip { display:flex; gap:12px; padding:12px; overflow-x:auto; align-items:flex-start; flex:0 0 auto; }
 .ce-mont-empty { font-size:13px; color:var(--ce-dim); padding:8px 2px; }
-.ce-mont-clip { flex:0 0 auto; width:128px; background:#0c0d10; border:1px solid var(--ce-line);
-  border-radius:8px; padding:7px; display:flex; flex-direction:column; gap:6px; }
-.ce-mc-head { display:flex; align-items:center; gap:3px; }
-.ce-mc-head .ce-mc-n { font:600 12px/1 'JetBrains Mono',monospace; color:var(--ce-accent); width:16px; }
-.ce-mc-head .ce-btn { padding:3px 6px; font-size:11px; }
+/* clip cards ~2× larger + clickable; the active one gets an accent ring */
+.ce-mont-clip { flex:0 0 auto; width:250px; background:#0c0d10; border:1px solid var(--ce-line);
+  border-radius:9px; padding:9px; display:flex; flex-direction:column; gap:7px; cursor:pointer; }
+.ce-mont-clip:hover { border-color:#3a3f48; }
+.ce-mont-clip.ce-active { border-color:var(--ce-accent); box-shadow:0 0 0 2px rgba(196,20,29,.3); }
+.ce-mc-head { display:flex; align-items:center; gap:4px; }
+.ce-mc-head .ce-mc-n { font:700 13px/1 'JetBrains Mono',monospace; color:var(--ce-accent); width:18px; }
+.ce-mc-head .ce-btn { padding:4px 8px; font-size:12px; }
 .ce-mc-del { margin-left:auto; }
-.ce-mc-thumb { width:100%; height:160px; object-fit:cover; border-radius:5px; background:#000; display:block; }
-.ce-mc-trim { display:flex; flex-direction:column; gap:3px; font-size:11px; color:var(--ce-dim); }
-.ce-mc-trim label { display:flex; align-items:center; gap:4px; }
-.ce-mc-trim input { width:54px; font:inherit; font-size:11px; background:#15171a; color:var(--ce-text);
-  border:1px solid var(--ce-line); padding:3px 5px; border-radius:4px; }
-.ce-mc-len { font:600 11px/1 'JetBrains Mono',monospace; color:var(--ce-text); }
+.ce-mc-thumb { width:100%; height:165px; object-fit:cover; border-radius:6px; background:#000; display:block; }
+.ce-mc-read { font:600 12px/1.2 'JetBrains Mono',monospace; color:var(--ce-text); }
+
+/* visual trim panel for the active clip */
+.ce-mont-trimmer { display:none; flex-direction:column; gap:10px; padding:12px 16px;
+  border-top:1px solid var(--ce-line); background:#0c0d10; }
+.ce-mont-trimmer.ce-on { display:flex; }
+.ce-tr-head { flex:0 0 auto; font-size:12px; color:var(--ce-dim); }
+.ce-tr-hint { color:var(--ce-dim); }
+/* big preview, capped to the viewport so the head + transport/Done controls below it ALWAYS
+   fit inside the modal (no overflow, controls never pushed off-screen). During trimming the
+   strip is hidden (rule below), so the trimmer has the whole panel — preview can be large. */
+.ce-tr-video { width:auto; max-height:min(calc(86vh - 250px),620px); object-fit:contain;
+  background:#000; border-radius:8px; align-self:center; }
+.ce-tr-controls { flex:0 0 auto; display:flex; flex-direction:column; gap:8px; padding-top:8px;
+  background:var(--ce-panel); }
+.ce-tr-transport { display:flex; align-items:center; gap:12px; }
+.ce-tr-play { font-size:13px; min-width:84px; }
+.ce-tr-fullmode { display:inline-flex; align-items:center; gap:5px; cursor:pointer; font-size:12px; color:var(--ce-dim); }
+.ce-tr-time { font:600 12px/1 'JetBrains Mono',monospace; color:var(--ce-text); min-width:42px; }
+.ce-tr-bar { position:relative; height:34px; background:#15171a; border:1px solid var(--ce-line);
+  border-radius:8px; cursor:pointer; }
+/* playback position line (overlays the bar; never intercepts drags) */
+.ce-tr-playhead { position:absolute; top:-3px; bottom:-3px; left:0; width:2px; background:#fff;
+  box-shadow:0 0 5px rgba(0,0,0,.85); pointer-events:none; z-index:4; }
+/* footer: readout on the left, ✓ Done on the bottom-right (closes the trimmer) */
+.ce-tr-foot { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.ce-tr-done { font-size:13px; }
+.ce-tr-fill { position:absolute; top:0; bottom:0; left:0; width:100%; background:rgba(196,20,29,.22);
+  border-left:2px solid var(--ce-accent); border-right:2px solid var(--ce-accent); cursor:grab; }
+.ce-tr-h { position:absolute; top:50%; width:16px; height:46px;
+  margin-top:-23px; background:var(--ce-accent); border-radius:4px; cursor:ew-resize;
+  box-shadow:0 1px 4px rgba(0,0,0,.5); }
+.ce-tr-in { left:0; transform:translateX(-50%); }
+.ce-tr-out { right:0; transform:translateX(50%); }
+.ce-tr-read { font:600 12px/1 'JetBrains Mono',monospace; color:var(--ce-text); }
 .ce-mont-foot { padding:8px 12px; border-top:1px solid var(--ce-line); }
 .ce-mont-info { font:12px/1.3 'JetBrains Mono',monospace; color:var(--ce-dim); }
+
+/* ── media modal (roomy centered overlay — replaces the cramped footer strip) ── */
+.ce-media-backdrop { position:fixed; inset:0; background:rgba(4,5,7,.62); z-index:2147483200; display:none; }
+.ce-media-backdrop.ce-on { display:block; }
+.ce-media-modal { position:fixed; left:50%; top:50%; transform:translate(-50%,-50%);
+  width:min(1100px,92vw); height:min(86vh,920px);
+  background:var(--ce-panel); border:1px solid var(--ce-line); border-radius:14px;
+  box-shadow:0 24px 80px rgba(0,0,0,.6); z-index:2147483300; display:none;
+  flex-direction:column; overflow:hidden; }
+.ce-media-modal.ce-on { display:flex; }
+.ce-mm-head { display:flex; align-items:center; gap:14px; padding:12px 16px; border-bottom:1px solid var(--ce-line); }
+.ce-mm-title { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ce-accent); letter-spacing:.1em; text-transform:uppercase; }
+.ce-mm-tabs { display:inline-flex; gap:6px; }
+.ce-mm-tab.ce-on { background:var(--ce-accent); border-color:var(--ce-accent); color:#fff; }
+.ce-mm-count { opacity:.85; }
+
+/* the two inner panels, re-parented into the modal, become in-flow + fill it (overriding
+   their old floating absolute positioning) */
+.ce-media-modal .ce-kraken-grid,
+.ce-media-modal .ce-montage-panel {
+  position:static; left:auto; right:auto; bottom:auto; top:auto;
+  max-height:none; border:0; border-radius:0; box-shadow:none; z-index:auto;
+  flex:1 1 auto; min-height:0; }
+.ce-media-modal .ce-kraken-grid.ce-on,
+.ce-media-modal .ce-montage-panel.ce-on { display:flex; }
+/* the Arrange panel is a bounded flex column: the transitions bar, the clip strip, and the
+   foot are fixed-height; the TRIMMER takes the remaining space (and its preview flexes to
+   fill it). Nothing overflows the modal, so the trim controls + Done are always on-screen. */
+.ce-media-modal .ce-montage-panel { overflow:hidden; }
+.ce-media-modal .ce-mont-bar { flex:0 0 auto; background:var(--ce-panel); z-index:2; }
+.ce-media-modal .ce-mont-strip { flex:0 0 auto; }
+.ce-media-modal .ce-mont-trimmer { flex:0 1 auto; min-height:0; }
+.ce-media-modal .ce-mont-foot { flex:0 0 auto; }
+/* while trimming one clip, hide the strip + transitions bar + foot so the trim view (big
+   preview + controls + Done) owns the modal and always fits. ✓ Done brings the strip back. */
+.ce-montage-panel.ce-trimming .ce-mont-strip,
+.ce-montage-panel.ce-trimming .ce-mont-bar,
+.ce-montage-panel.ce-trimming .ce-mont-foot { display:none; }
+/* the action bar (paste-URL + static thumbs + reactive primary button) */
+.ce-kgrid-foot .ce-swap-url { flex:0 1 220px; min-width:120px; font:inherit; font-size:13px;
+  background:#0c0d10; color:var(--ce-text); border:1px solid var(--ce-line); padding:7px 10px; border-radius:6px; }
+.ce-kgrid-foot .ce-thumbs { flex:0 1 auto; }
+/* numbered multi-select order badge (top-right circle), distinct from the type badge */
+.ce-ktile-num { position:absolute; top:5px; right:5px; width:22px; height:22px; border-radius:50%;
+  background:var(--ce-accent); color:#fff; font:700 12px/1 'JetBrains Mono',monospace;
+  align-items:center; justify-content:center; box-shadow:0 0 0 2px rgba(0,0,0,.45); }
+/* roomy filmstrip inside the modal */
+.ce-media-modal .ce-mont-strip { flex:1 1 auto; align-items:flex-start; }
 
 /* inside-iframe affordances are injected separately (ce-iframe.css string in editor.js) */

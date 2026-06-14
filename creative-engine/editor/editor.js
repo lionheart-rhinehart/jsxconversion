@@ -98,33 +98,29 @@ export function mountEditor(opts) {
       <div class="ce-overlay"><div class="ce-badge"></div><div class="ce-handle ce-se"></div></div>
     </div>
     <div class="ce-footer">
-      <span class="ce-hint">${editable ? 'Click to select · drag to move · double-click to edit text / swap a photo or clip · corner to resize' : 'View only'}</span>
-      <div class="ce-swapbar">
-        <input type="text" class="ce-swap-url" placeholder="Paste a media URL / path…">
-        <button class="ce-btn ce-swap-apply">Swap</button>
-        <div class="ce-thumbs"></div>
-        <span class="ce-kraken" style="display:none;align-items:center;gap:6px;">
-          <button class="ce-btn ce-kraken-open" title="Browse the live Content Library">⛓ Kraken ▾</button>
-          <select class="ce-select ce-kraken-ws" style="display:none;" title="Workspace"></select>
-          <select class="ce-select ce-kraken-folder" style="display:none;" title="Folder"></select>
+      <span class="ce-hint">${editable ? 'Click to select · drag to move · double-click to edit text, or swap / build a montage on a photo or clip · corner to resize' : 'View only'}</span>
+      <span class="ce-spacer"></span>
+      <button class="ce-btn ce-edit-montage" style="display:none;" title="Swap media or build/arrange a montage on the selected slot">🎬 Edit media…</button>
+    </div>
+    <div class="ce-media-backdrop"></div>
+    <div class="ce-media-modal">
+      <div class="ce-mm-head">
+        <span class="ce-mm-title">// Media</span>
+        <span class="ce-mm-tabs">
+          <button class="ce-btn ce-mm-tab ce-mm-tab-browse ce-on">⛓ Browse library</button>
+          <button class="ce-btn ce-mm-tab ce-mm-tab-arrange">🎬 Arrange montage <span class="ce-mm-count"></span></button>
         </span>
-        <button class="ce-btn ce-montage-open" title="Build a multi-clip montage on this video slot">🎬 Montage…</button>
-        <button class="ce-btn ce-swap-close">Done</button>
+        <span class="ce-spacer"></span>
+        <button class="ce-btn ce-primary ce-swap-close">Done</button>
       </div>
-      <div class="ce-montage-panel">
-        <div class="ce-mont-bar">
-          <span class="ce-mont-title">Montage — multiple clips, hard cuts</span>
-          <span class="ce-mont-spacer"></span>
-          <label class="ce-mont-dur">Total <input type="number" class="ce-mont-total" min="1" max="30" step="0.5" style="width:62px;"> s</label>
-          <button class="ce-btn ce-mont-add" title="Add a clip from the Content Library">＋ Add clip</button>
-          <button class="ce-btn ce-mont-clear" title="Clear the montage (revert to a single clip)">Clear</button>
-          <button class="ce-btn ce-mont-close">Done</button>
-        </div>
-        <div class="ce-mont-strip"></div>
-        <div class="ce-mont-foot"><span class="ce-mont-info"></span></div>
-      </div>
+
       <div class="ce-kraken-grid">
         <div class="ce-kgrid-bar">
+          <span class="ce-kraken" style="display:none;align-items:center;gap:6px;">
+            <button class="ce-btn ce-kraken-open" title="Open the live Content Library">⛓ Library ▾</button>
+            <select class="ce-select ce-kraken-ws" style="display:none;" title="Workspace"></select>
+            <select class="ce-select ce-kraken-folder" style="display:none;" title="Folder"></select>
+          </span>
           <span class="ce-kgrid-title"></span>
           <span class="ce-kgrid-filter">
             <button class="ce-btn ce-kf ce-on" data-f="all">All</button>
@@ -148,9 +144,33 @@ export function mountEditor(opts) {
         </div>
         <div class="ce-kgrid-tiles"></div>
         <div class="ce-kgrid-foot">
-          <span class="ce-kgrid-sel">Click a clip to preview · then “Use this”.</span>
-          <button class="ce-btn ce-primary ce-kraken-use" disabled>Use this media</button>
+          <input type="text" class="ce-swap-url" placeholder="…or paste a media URL / path">
+          <button class="ce-btn ce-swap-apply">Use URL</button>
+          <div class="ce-thumbs"></div>
+          <span class="ce-kgrid-spacer"></span>
+          <span class="ce-kgrid-sel">Click a clip to select · Ctrl-click to pick several · then use the button →</span>
+          <button class="ce-btn ce-primary ce-kraken-use" disabled>Use this clip</button>
         </div>
+      </div>
+
+      <div class="ce-montage-panel">
+        <div class="ce-mont-bar">
+          <span class="ce-mont-title">Clips play in order — click a clip to trim</span>
+          <span class="ce-mont-spacer"></span>
+          <label class="ce-mont-trans">Between clips
+            <select class="ce-select ce-mont-trans-type">
+              <option value="cut">Cut</option>
+              <option value="crossfade">Crossfade</option>
+            </select>
+          </label>
+          <label class="ce-mont-fade" style="display:none;">Fade <input type="number" class="ce-mont-fade-dur" min="0.1" max="2" step="0.1" style="width:54px;"> s</label>
+          <label class="ce-mont-dur">Total <input type="number" class="ce-mont-total" min="1" max="30" step="0.5" style="width:62px;"> s</label>
+          <button class="ce-btn ce-primary ce-mont-add" title="Browse the library to add more clips">＋ Add clips</button>
+          <button class="ce-btn ce-mont-clear" title="Clear the montage (revert to a single clip)">Clear</button>
+        </div>
+        <div class="ce-mont-strip"></div>
+        <div class="ce-mont-trimmer"></div>
+        <div class="ce-mont-foot"><span class="ce-mont-info"></span></div>
       </div>
     </div>`;
   container.appendChild(rootEl);
@@ -172,18 +192,25 @@ export function mountEditor(opts) {
     groupBtn: rootEl.querySelector('.ce-group'),
     ungroupBtn: rootEl.querySelector('.ce-ungroup'),
     selCount: rootEl.querySelector('.ce-selcount'),
-    swapbar: rootEl.querySelector('.ce-swapbar'),
+    editMontage: rootEl.querySelector('.ce-edit-montage'),
+    mediaModal: rootEl.querySelector('.ce-media-modal'),
+    mediaBackdrop: rootEl.querySelector('.ce-media-backdrop'),
+    mmTabBrowse: rootEl.querySelector('.ce-mm-tab-browse'),
+    mmTabArrange: rootEl.querySelector('.ce-mm-tab-arrange'),
+    mmCount: rootEl.querySelector('.ce-mm-count'),
     swapUrl: rootEl.querySelector('.ce-swap-url'),
     swapApply: rootEl.querySelector('.ce-swap-apply'),
     swapClose: rootEl.querySelector('.ce-swap-close'),
     thumbs: rootEl.querySelector('.ce-thumbs'),
-    montageOpen: rootEl.querySelector('.ce-montage-open'),
     montPanel: rootEl.querySelector('.ce-montage-panel'),
     montStrip: rootEl.querySelector('.ce-mont-strip'),
+    montTrimmer: rootEl.querySelector('.ce-mont-trimmer'),
     montTotal: rootEl.querySelector('.ce-mont-total'),
+    montTransType: rootEl.querySelector('.ce-mont-trans-type'),
+    montFade: rootEl.querySelector('.ce-mont-fade'),
+    montFadeDur: rootEl.querySelector('.ce-mont-fade-dur'),
     montAdd: rootEl.querySelector('.ce-mont-add'),
     montClear: rootEl.querySelector('.ce-mont-clear'),
-    montClose: rootEl.querySelector('.ce-mont-close'),
     montInfo: rootEl.querySelector('.ce-mont-info'),
     kraken: rootEl.querySelector('.ce-kraken'),
     krakenOpen: rootEl.querySelector('.ce-kraken-open'),
@@ -441,7 +468,7 @@ export function mountEditor(opts) {
     els.props.style.display = 'none';
     els.groupCtl.style.display = 'none';
     els.multi.innerHTML = '';
-    closeSwap();
+    closeMediaModal();
   }
 
   // Replace the whole selection. `keys` is normalized: invalid keys dropped, groups
@@ -494,6 +521,10 @@ export function mountEditor(opts) {
     })();
     els.groupBtn.style.display = wholeGroupSelected ? 'none' : '';
     els.ungroupBtn.style.display = wholeGroupSelected ? '' : 'none';
+    // a single MEDIA slot selected → offer the "Edit media…" entry (swap / build montage)
+    const soloEl = (n === 1 && selectedKey) ? elForKey(selectedKey) : null;
+    const isMedia = !!(soloEl && soloEl.hasAttribute('data-edit-media') && !soloEl.hasAttribute('data-edit-brandkit'));
+    els.editMontage.style.display = (editable && isMedia) ? 'inline-flex' : 'none';
   }
 
   // map an iframe element's rect into stage (chrome) coordinates
@@ -597,7 +628,7 @@ export function mountEditor(opts) {
     // move the filter to grab the video." Pure selection → opens the existing swap bar.
     if (e.altKey) {
       const m = mediaUnderPoint(e);
-      if (m) { e.preventDefault(); e.stopPropagation(); commitTextEdit(); select(m); openSwap(m); return; }
+      if (m) { e.preventDefault(); e.stopPropagation(); commitTextEdit(); select(m); openMediaModal(m); return; }
     }
     const el = resolveTarget(e);
     if (!el) { commitTextEdit(); clearSelection(); return; }
@@ -605,11 +636,10 @@ export function mountEditor(opts) {
     commitTextEdit();            // clicking elsewhere commits any open edit
     if (e.shiftKey) { toggleInSelection(keyForEl(el)); }  // multi-select
     else { select(el); }         // single click only selects (so you can drag to move)
-    closeSwap();
   }
 
-  // Double-click = change content: text → edit it; media → open the swap bar. Consistent
-  // and drag-proof (a single click + tiny movement no longer accidentally opens the bar).
+  // Double-click = change content: text → edit it; media → open the media modal (Browse,
+  // or Arrange if the slot already carries a montage). Consistent + drag-proof.
   function onDblClick(e) {
     if (!editable) return;
     const el = resolveTarget(e);
@@ -617,7 +647,7 @@ export function mountEditor(opts) {
     e.preventDefault(); e.stopPropagation();
     select(el);
     if (el.hasAttribute('data-edit-text')) startTextEdit(el);
-    else if (el.hasAttribute('data-edit-media')) openSwap(el);
+    else if (el.hasAttribute('data-edit-media')) openMediaModal(el);
   }
 
   // dragging (move) — TRUE free 2D float via the individual `translate` property. It
@@ -866,12 +896,19 @@ export function mountEditor(opts) {
     syncOverlay();
   }
 
-  // ── media swap bar ────────────────────────────────────────────────────────
+  // ── media modal (Browse ⟷ Arrange) ────────────────────────────────────────
+  // ONE roomy centered overlay replaces the old cramped footer strip. It holds two
+  // sections — the Kraken Browse grid and the montage Arrange filmstrip — toggled by the
+  // header tabs. Double-clicking a media slot opens it (Arrange if the slot already has a
+  // montage, else Browse). The interaction model: pick clips in Browse (Ctrl-click for
+  // several) → 1 clip swaps, 2+ build a montage → Arrange opens to reorder/trim.
   let swapTarget = null;
-  function openSwap(el) {
-    if (el.hasAttribute('data-edit-brandkit')) { /* brand-kit asset: not swappable */ closeSwap(); return; }
-    swapTarget = el;
-    els.swapbar.classList.add('ce-on');
+  function hasMontage(el) {
+    if (!el) return false;
+    const m = (overrides[keyForEl(el)] || {}).montage;
+    return !!(m && Array.isArray(m.clips) && m.clips.length);
+  }
+  function populateThumbs() {
     els.thumbs.innerHTML = '';
     mediaLibrary.forEach((m) => {
       const t = m.type === 'video' ? document.createElement('video') : document.createElement('img');
@@ -880,33 +917,73 @@ export function mountEditor(opts) {
       t.addEventListener('click', () => applySwap(m.src));
       els.thumbs.appendChild(t);
     });
-    // C2 — the live-Kraken button appears ONLY after we've confirmed the bridge is
-    // actually reachable (server up + creds present). Hidden by default; the probe
-    // reveals it. This avoids a button that appears and then collapses on click when
-    // the routes aren't wired (stale server) or creds are missing.
-    els.kraken.style.display = 'none';
-    if (remoteBrowse) ensureKrakenProbe();
   }
+  function openMediaModal(el, section) {
+    el = el || swapTarget;
+    if (!el || !el.hasAttribute('data-edit-media') || el.hasAttribute('data-edit-brandkit')) return;
+    swapTarget = el;
+    els.mediaModal.classList.add('ce-on');
+    els.mediaBackdrop.classList.add('ce-on');
+    populateThumbs();
+    els.kraken.style.display = 'none';
+    // NOTE: don't probe Kraken here — showSection() probes only in Browse. Probing while
+    // opening straight to Arrange would autoOpenPin() the Kraken grid behind the trim view
+    // and break the layout (the grid steals panel height).
+    showSection(section || (hasMontage(el) ? 'arrange' : 'browse'), el);
+  }
+  // toggle Browse ⟷ Arrange. Reuses the inner panels' existing `.ce-on` (now in-flow
+  // inside the modal). Arrange seeds/shows the filmstrip via openMontage.
+  function showSection(section, el) {
+    const arrange = section === 'arrange';
+    els.montPanel.classList.toggle('ce-on', arrange);
+    els.krakenGrid.classList.toggle('ce-on', !arrange);
+    els.mmTabArrange.classList.toggle('ce-on', arrange);
+    els.mmTabBrowse.classList.toggle('ce-on', !arrange);
+    if (arrange) openMontage(el || swapTarget || montageTarget);
+    else if (remoteBrowse) ensureKrakenProbe();
+    updateMmCount();
+  }
+  function updateMmCount() {
+    const m = montageState || ((swapTarget && (overrides[keyForEl(swapTarget)] || {}).montage));
+    const n = m && m.clips ? m.clips.length : 0;
+    els.mmCount.textContent = n ? `(${n})` : '';
+  }
+  // a plain SWAP: replace the slot's media with one clip. Driver-clobber fix — a montage
+  // running on this node would rewrite video.src every rAF frame, so stop it + drop the
+  // montage override first, or the swap silently reverts.
   function applySwap(src) {
     if (!src) return;
-    // when the montage panel is in "add" mode, picking media appends a clip instead of
-    // replacing the slot (one gate covers the static thumbs, the paste box, AND Kraken).
-    if (montageAddMode) { addMontageClip(src); return; }
-    if (!swapTarget) return;
-    const key = keyForEl(swapTarget);
-    setOverride(key, { src });
-    // reflect live
-    const w = iwin(); w.CEApply.applyOverrides(idoc(), { [key]: { src } });
+    const target = swapTarget || montageTarget;
+    // in "add" mode (the montage ＋ Add flow), any pick APPENDS a clip instead of replacing.
+    if (montageAddMode) {
+      ensureMontageStarted(target);
+      montageState.clips.push({ src, in: 0, out: 3 });
+      commitMontage(); montageAddMode = false; showSection('arrange', target);
+      return;
+    }
+    if (!target) return;
+    const key = keyForEl(target);
+    stopMontageDriver(target); target.__ceMontage = null;        // driver-clobber fix
+    pushHistory();
+    const next = Object.assign({}, overrides[key], { src });
+    delete next.montage;                                          // a plain swap replaces any montage
+    overrides[key] = next;
+    commit();
+    const w = iwin(); if (w && w.CEApply) w.CEApply.applyOverrides(idoc(), { [key]: { src } });
     syncOverlay();
   }
-  function closeSwap() {
-    els.swapbar.classList.remove('ce-on'); swapTarget = null;
-    els.krakenGrid.classList.remove('ce-on'); if (els.kgridTiles) els.kgridTiles.innerHTML = '';
+  function closeMediaModal() {
+    stopTrimPlay();
+    els.mediaModal.classList.remove('ce-on');
+    els.mediaBackdrop.classList.remove('ce-on');
+    els.krakenGrid.classList.remove('ce-on'); els.montPanel.classList.remove('ce-on');
+    if (els.kgridTiles) els.kgridTiles.innerHTML = '';
     els.krakenWs.style.display = 'none'; els.krakenFolder.style.display = 'none';
     if (playingMedia) { try { playingMedia.pause(); } catch (e) {} playingMedia = null; }
-    selectedRow = null; selectedTileEl = null;
+    selectedRows = [];
     if (els.krakenUse) els.krakenUse.disabled = true;
-    closeMontage();
+    swapTarget = null;
+    montageAddMode = false; montageTarget = null; montageKey = null; montageState = null;
   }
 
   // ── montage filmstrip (Phase D1) ──────────────────────────────────────────
@@ -916,50 +993,89 @@ export function mountEditor(opts) {
   // apply-overrides.js re-tags the <video> and the rAF driver restarts).
   let montageTarget = null, montageKey = null, montageAddMode = false, montageState = null;
   let montageUserTotal = false;   // has the user typed an explicit total? (else auto = cycle)
+  let activeClip = -1;            // which clip's trim panel is open (index into clips), -1 = none
+  function ensureTransition() {   // every working montage carries a transition (default cut)
+    if (montageState && !montageState.transition) montageState.transition = { type: 'cut', duration: 0.4 };
+  }
+  // trim-panel playback (the active clip's preview). Lives at module scope so a trimmer
+  // rebuild / clip switch / modal close can stop any in-flight loop.
+  let trimPlay = null;            // { video, raf } | null
+  function stopTrimPlay() {
+    if (!trimPlay) return;
+    try { cancelAnimationFrame(trimPlay.raf); } catch (e) {}
+    try { trimPlay.video.pause(); } catch (e) {}
+    trimPlay = null;
+  }
   function currentMediaSrc(el) {
     const ov = overrides[keyForEl(el)] || {};
     return ov.src || el.getAttribute('src') || (el.currentSrc || '');
   }
-  function openMontage(el) {
-    el = el || swapTarget;
-    if (!el || !el.hasAttribute('data-edit-media')) return;
-    montageTarget = el; montageKey = keyForEl(el); montageAddMode = false;
-    const existing = (overrides[montageKey] || {}).montage;
-    montageUserTotal = !!(existing && existing.clips && existing.clips.length); // loaded → respect its total
+  // initialize the working montage for `el` WITHOUT seeding a clip (used when building from
+  // a multi-selection — the montage = exactly the clips the user picks).
+  function ensureMontageStarted(el) {
+    if (!el) return;
+    const key = keyForEl(el);
+    if (montageState && montageKey === key) return;   // already building this slot
+    montageTarget = el; montageKey = key;
+    const existing = (overrides[key] || {}).montage;
+    montageUserTotal = !!(existing && existing.clips && existing.clips.length);
     montageState = (existing && Array.isArray(existing.clips) && existing.clips.length)
-      ? clone(existing)
-      : { clips: (currentMediaSrc(el) ? [{ src: currentMediaSrc(el), in: 0, out: 3 }] : []), totalDuration: 3 };
-    els.swapbar.classList.add('ce-on');
-    els.montPanel.classList.add('ce-on');
-    els.krakenGrid.classList.remove('ce-on');
-    els.montTotal.value = montageState.totalDuration;
-    renderFilmstrip(montageState);
+      ? clone(existing) : { clips: [], totalDuration: 3 };
+    ensureTransition();
   }
-  function closeMontage() {
-    els.montPanel.classList.remove('ce-on');
-    montageAddMode = false; montageTarget = null; montageKey = null; montageState = null;
+  // open the Arrange filmstrip for `el`. If the slot has no montage yet, seed it with the
+  // slot's current media as clip 1 (a sensible starting point for hand-building).
+  function openMontage(el) {
+    el = el || swapTarget || montageTarget;
+    if (!el || !el.hasAttribute('data-edit-media')) return;
+    const key = keyForEl(el);
+    const sameSlot = montageState && montageKey === key;
+    if (!sameSlot) {
+      montageTarget = el; montageKey = key;
+      const existing = (overrides[key] || {}).montage;
+      montageUserTotal = !!(existing && existing.clips && existing.clips.length);
+      montageState = (existing && Array.isArray(existing.clips) && existing.clips.length)
+        ? clone(existing)
+        : { clips: (currentMediaSrc(el) ? [{ src: currentMediaSrc(el), in: 0, out: 3 }] : []), totalDuration: 3 };
+    }
+    ensureTransition();
+    // Entering Arrange shows the strip with NO trimmer open (so reorder/delete are fully
+    // usable); the trimmer opens only when the user clicks a clip card. Keep an existing
+    // selection if we're re-opening the same slot; otherwise start closed.
+    if (!sameSlot) activeClip = -1;
+    else if (activeClip >= montageState.clips.length) activeClip = -1;
+    els.montTotal.value = montageState.totalDuration;
+    refreshArrange();
+  }
+  // re-render the whole Arrange view (strip + trimmer + transition controls + info)
+  function refreshArrange() {
+    renderFilmstrip(montageState);
+    renderTrimmer();
+    syncTransUI();
   }
   // commit the working montage → bag + live DOM (so the driver picks it up)
   function commitMontage() {
     if (!montageKey || !montageState) return;
+    const trans = montageState.transition;     // preserve the working transition across normalize
     // until the user types a total, it tracks the natural cycle length (so every added
     // clip actually plays once; the cap still applies inside normalizeMontage).
     if (!montageUserTotal && montageState.clips.length) {
       montageState.totalDuration = Math.max(1, cycleDurationMs(montageState.clips, 30) / 1000);
       els.montTotal.value = Math.round(montageState.totalDuration * 10) / 10;
     }
-    const norm = normalizeMontage(montageState, 30);
+    const norm = normalizeMontage(Object.assign({}, montageState, { transition: trans }), 30);
     montageState = clone(norm);
     setOverride(montageKey, { montage: norm });
     const w = iwin(); if (w && w.CEApply) w.CEApply.applyOverrides(idoc(), { [montageKey]: overrides[montageKey] });
-    renderFilmstrip(montageState);
+    refreshArrange();
+    updateMmCount();
   }
   function addMontageClip(src) {
     if (!montageState) return;
     montageState.clips.push({ src, in: 0, out: 3 });
     commitMontage();
   }
-  function deleteClip(i) { if (!montageState) return; montageState.clips.splice(i, 1); commitMontage(); }
+  function deleteClip(i) { if (!montageState) return; montageState.clips.splice(i, 1); if (activeClip >= montageState.clips.length) activeClip = montageState.clips.length - 1; commitMontage(); }
   function moveClip(i, dir) {
     if (!montageState) return;
     const j = i + dir; if (j < 0 || j >= montageState.clips.length) return;
@@ -981,19 +1097,25 @@ export function mountEditor(opts) {
     pushHistory();
     if (Object.keys(cur).length) overrides[montageKey] = cur; else delete overrides[montageKey];
     commit();
-    if (montageTarget) {
-      stopMontageDriver(montageTarget); montageTarget.__ceMontage = null;
+    const tgt = montageTarget;
+    if (tgt) {
+      stopMontageDriver(tgt); tgt.__ceMontage = null;
       const w = iwin(); if (w && w.CEApply) w.CEApply.applyOverrides(idoc(), { [montageKey]: cur });
     }
-    closeMontage();
+    // back to Browse so the user can pick a fresh clip/montage for this slot
+    montageState = null; montageKey = null; montageUserTotal = false;
+    swapTarget = tgt; showSection('browse', tgt);
   }
+  // Filmstrip = big, clickable cards (no more number steppers). Clicking a card opens its
+  // visual trim panel below. Order badge + reorder ◀▶ + delete ✕ stay on the card.
   function renderFilmstrip(m) {
     els.montStrip.innerHTML = '';
     if (!m.clips.length) {
-      els.montStrip.innerHTML = '<span class="ce-mont-empty">No clips yet — click “＋ Add clip”.</span>';
+      els.montStrip.innerHTML = '<span class="ce-mont-empty">No clips yet — click “＋ Add clips” to browse the library.</span>';
     }
     m.clips.forEach((c, i) => {
-      const item = document.createElement('div'); item.className = 'ce-mont-clip';
+      const item = document.createElement('div');
+      item.className = 'ce-mont-clip' + (i === activeClip ? ' ce-active' : '');
       const len = Math.max(0, (Number(c.out) || 0) - (Number(c.in) || 0)).toFixed(1);
       item.innerHTML =
         `<div class="ce-mc-head"><span class="ce-mc-n">${i + 1}</span>
@@ -1001,23 +1123,156 @@ export function mountEditor(opts) {
           <button class="ce-btn ce-mc-dn"${i === m.clips.length - 1 ? ' disabled' : ''} title="Move later">▶</button>
           <button class="ce-btn ce-mc-del" title="Remove clip">✕</button></div>
         <video class="ce-mc-thumb" muted playsinline preload="metadata"></video>
-        <div class="ce-mc-trim">
-          <label>in <input type="number" class="ce-mc-in" min="0" step="0.1" value="${c.in}"></label>
-          <label>out <input type="number" class="ce-mc-out" min="0" step="0.1" value="${c.out}"></label>
-          <span class="ce-mc-len">${len}s</span>
-        </div>`;
+        <div class="ce-mc-read">in ${(+c.in).toFixed(1)} – out ${(+c.out).toFixed(1)} · ${len}s</div>`;
       item.querySelector('.ce-mc-thumb').src = c.src;
-      item.querySelector('.ce-mc-up').addEventListener('click', () => moveClip(i, -1));
-      item.querySelector('.ce-mc-dn').addEventListener('click', () => moveClip(i, 1));
-      item.querySelector('.ce-mc-del').addEventListener('click', () => deleteClip(i));
-      item.querySelector('.ce-mc-in').addEventListener('change', (e) => updateClip(i, { in: Number(e.target.value) || 0 }));
-      item.querySelector('.ce-mc-out').addEventListener('change', (e) => updateClip(i, { out: Number(e.target.value) || 0 }));
+      // click the card (not its buttons) → make it the active clip + open the trim panel
+      item.addEventListener('click', (e) => { if (e.target.closest('.ce-btn')) return; activeClip = i; renderFilmstrip(montageState); renderTrimmer(); });
+      item.querySelector('.ce-mc-up').addEventListener('click', (e) => { e.stopPropagation(); moveClip(i, -1); });
+      item.querySelector('.ce-mc-dn').addEventListener('click', (e) => { e.stopPropagation(); moveClip(i, 1); });
+      item.querySelector('.ce-mc-del').addEventListener('click', (e) => { e.stopPropagation(); deleteClip(i); });
       els.montStrip.appendChild(item);
     });
     const fr = clipFrames(m.clips, 30);
+    const tr = m.transition && m.transition.type === 'crossfade' ? ` · crossfade ${m.transition.duration}s (applies in export)` : '';
     els.montInfo.textContent = m.clips.length
-      ? `${m.clips.length} clip(s) · cycle ${(cycleDurationMs(m.clips, 30) / 1000).toFixed(1)}s · loops to fill ${m.totalDuration}s · frames/clip [${fr.join(', ')}]`
+      ? `${m.clips.length} clip(s) · cycle ${(cycleDurationMs(m.clips, 30) / 1000).toFixed(1)}s · loops to fill ${m.totalDuration}s${tr}`
       : '';
+  }
+
+  // ── visual trim panel (the active clip) ───────────────────────────────────
+  // A bar spanning [0 … source duration] with draggable in/out handles + a draggable
+  // middle (slide the window). Dragging scrubs the preview video to that edge; release
+  // commits in/out via updateClip → commitMontage (one undo step per drag).
+  function renderTrimmer() {
+    const host = els.montTrimmer; if (!host) return;
+    stopTrimPlay();                 // kill any playback from the previous render before rebuilding
+    host.innerHTML = '';
+    if (!montageState || activeClip < 0 || !montageState.clips[activeClip]) {
+      host.classList.remove('ce-on');
+      els.montPanel.classList.remove('ce-trimming');   // show the strip again
+      return;
+    }
+    host.classList.add('ce-on');
+    els.montPanel.classList.add('ce-trimming');         // focused trim view (strip hidden)
+    const clip = montageState.clips[activeClip];
+    host.innerHTML =
+      `<div class="ce-tr-head"><span class="ce-tr-hint">Clip ${activeClip + 1} — drag the ends to trim · drag the middle to slide · click the bar to scrub</span></div>
+       <video class="ce-tr-video" muted playsinline preload="auto"></video>
+       <div class="ce-tr-controls">
+         <div class="ce-tr-transport">
+           <button class="ce-btn ce-tr-play" title="Play">▶ Play</button>
+           <label class="ce-tr-fullmode"><input type="checkbox"> Play full clip</label>
+           <span class="ce-tr-time">0.0s</span>
+         </div>
+         <div class="ce-tr-bar"><div class="ce-tr-fill"><span class="ce-tr-h ce-tr-in" title="Start"></span><span class="ce-tr-h ce-tr-out" title="End"></span></div><div class="ce-tr-playhead"></div></div>
+         <div class="ce-tr-foot"><span class="ce-tr-read">loading…</span><button class="ce-btn ce-primary ce-tr-done" title="Close the trimmer — your trim is already saved">✓ Done</button></div>
+       </div>`;
+    const video = host.querySelector('.ce-tr-video');
+    const bar = host.querySelector('.ce-tr-bar');
+    const fill = host.querySelector('.ce-tr-fill');
+    const read = host.querySelector('.ce-tr-read');
+    const playBtn = host.querySelector('.ce-tr-play');
+    const fullChk = host.querySelector('.ce-tr-fullmode input');
+    const timeEl = host.querySelector('.ce-tr-time');
+    const playhead = host.querySelector('.ce-tr-playhead');
+    let dur = 0;
+    const setPlayhead = (t) => { if (dur) playhead.style.left = Math.max(0, Math.min(100, (t / dur) * 100)) + '%'; };
+    const layout = () => {
+      if (!dur) return;
+      const L = Math.max(0, Math.min(100, (clip.in / dur) * 100));
+      const R = Math.max(0, Math.min(100, (clip.out / dur) * 100));
+      fill.style.left = L + '%'; fill.style.width = Math.max(0, R - L) + '%';
+      read.textContent = `in ${clip.in.toFixed(1)}s · out ${clip.out.toFixed(1)}s · length ${(clip.out - clip.in).toFixed(1)}s · source ${dur.toFixed(1)}s`;
+    };
+    const onMeta = () => {
+      dur = video.duration || 0;
+      if (dur && clip.out > dur) clip.out = dur;
+      layout();
+      try { video.currentTime = clip.in; } catch (e) {}
+      setPlayhead(clip.in);
+    };
+    // attach BEFORE setting src (a cached/fast metadata load would otherwise fire before
+    // the listener exists, leaving the bar stuck on "loading…"); also cover already-loaded.
+    video.addEventListener('loadedmetadata', onMeta, { once: true });
+    video.src = clip.src;
+    if (video.readyState >= 1 && video.duration) onMeta();
+    const scrub = (t) => { try { video.currentTime = Math.max(0, Math.min(dur || t, t)); } catch (e) {} setPlayhead(video.currentTime); };
+
+    // ── playback (rAF loop; modeled on the montage driver) ─────────────────────
+    // Selection mode loops [clip.in, clip.out]; "Play full clip" loops [0, dur].
+    const rangeStart = () => (fullChk.checked ? 0 : clip.in);
+    const rangeEnd = () => (fullChk.checked ? (dur || clip.out) : clip.out);
+    function tick() {
+      if (!trimPlay || trimPlay.video !== video || !video.isConnected) { stopTrimPlay(); resetPlayBtn(); return; }
+      const t = video.currentTime;
+      if (t >= rangeEnd() - 0.02 || t < rangeStart() - 0.05) { try { video.currentTime = rangeStart(); } catch (e) {} }
+      setPlayhead(video.currentTime);
+      if (timeEl) timeEl.textContent = video.currentTime.toFixed(1) + 's';
+      trimPlay.raf = requestAnimationFrame(tick);
+    }
+    function resetPlayBtn() { if (playBtn) playBtn.textContent = '▶ Play'; }
+    function startPlay() {
+      if (!dur) return;
+      stopTrimPlay();
+      try { if (video.currentTime < rangeStart() || video.currentTime >= rangeEnd() - 0.02) video.currentTime = rangeStart(); } catch (e) {}
+      const p = video.play(); if (p && p.catch) p.catch(() => {});
+      trimPlay = { video, raf: requestAnimationFrame(tick) };
+      playBtn.textContent = '⏸ Pause';
+    }
+    function pausePlay() { stopTrimPlay(); resetPlayBtn(); }
+    const isPlaying = () => !!(trimPlay && trimPlay.video === video && !video.paused);
+    playBtn.addEventListener('click', () => { isPlaying() ? pausePlay() : startPlay(); });
+    fullChk.addEventListener('change', () => { if (isPlaying()) startPlay(); });   // restart in the new mode
+
+    // ── click the bar to scrub (unless the click ended a drag or hit a handle) ──
+    let justDragged = false;
+    bar.addEventListener('click', (e) => {
+      if (justDragged) { justDragged = false; return; }
+      if (e.target.classList.contains('ce-tr-h')) return;
+      if (!dur) return;
+      const rect = bar.getBoundingClientRect();
+      pausePlay();
+      scrub(((e.clientX - rect.left) / rect.width) * dur);
+    });
+
+    function startDrag(mode, e) {
+      if (!dur) return;
+      e.preventDefault(); e.stopPropagation();
+      pausePlay();                 // trimming pauses playback
+      const rect = bar.getBoundingClientRect();
+      const startX = e.clientX, inRec = clip.in, outRec = clip.out, len = outRec - inRec;
+      let moved = false;
+      const move = (ev) => {
+        if (Math.abs(ev.clientX - startX) > 2) moved = true;
+        const dx = ((ev.clientX - startX) / rect.width) * dur;
+        if (mode === 'in') { clip.in = Math.min(Math.max(0, inRec + dx), clip.out - 0.1); scrub(clip.in); }
+        else if (mode === 'out') { clip.out = Math.max(Math.min(dur, outRec + dx), clip.in + 0.1); scrub(clip.out); }
+        else { let ni = Math.min(Math.max(0, inRec + dx), dur - len); clip.in = ni; clip.out = ni + len; scrub(clip.in); }
+        layout();
+      };
+      const up = () => {
+        document.removeEventListener('mousemove', move, true);
+        document.removeEventListener('mouseup', up, true);
+        if (moved) justDragged = true;   // suppress the click-to-scrub that follows a drag
+        updateClip(activeClip, { in: Math.round(clip.in * 10) / 10, out: Math.round(clip.out * 10) / 10 });
+      };
+      document.addEventListener('mousemove', move, true);
+      document.addEventListener('mouseup', up, true);
+    }
+    host.querySelector('.ce-tr-in').addEventListener('mousedown', (e) => startDrag('in', e));
+    host.querySelector('.ce-tr-out').addEventListener('mousedown', (e) => startDrag('out', e));
+    fill.addEventListener('mousedown', (e) => { if (e.target.classList.contains('ce-tr-h')) return; startDrag('move', e); });
+    // ✓ Done — trim already auto-saved on each drag; this just closes the trimmer and
+    // returns to the full strip (activeClip < 0 makes renderTrimmer hide the panel).
+    host.querySelector('.ce-tr-done').addEventListener('click', () => { stopTrimPlay(); activeClip = -1; refreshArrange(); });
+  }
+
+  // reflect the working transition onto the bar controls (and show the fade field for crossfade)
+  function syncTransUI() {
+    const t = (montageState && montageState.transition) || { type: 'cut', duration: 0.4 };
+    els.montTransType.value = t.type;
+    els.montFade.style.display = (t.type === 'crossfade') ? 'inline-flex' : 'none';
+    els.montFadeDur.value = t.duration;
   }
 
   // ── live Kraken browser (Phase C3) ────────────────────────────────────────
@@ -1043,10 +1298,12 @@ export function mountEditor(opts) {
     return krakenProbe;
   }
 
+  // Kraken unavailable: hide the live-library controls but KEEP the Browse section open —
+  // the static thumbnails + paste-URL still work (degraded, never a dead editor).
   function hideKraken(why) {
     els.kraken.style.display = 'none';
     els.krakenWs.style.display = 'none'; els.krakenFolder.style.display = 'none';
-    els.krakenGrid.classList.remove('ce-on'); if (els.kgridTiles) els.kgridTiles.innerHTML = '';
+    if (els.kgridTiles) els.kgridTiles.innerHTML = '<span class="ce-kgrid-msg">Live library unavailable — use the thumbnails or paste a path below.</span>';
     if (why) console.info('[editor] Kraken browser unavailable —', why);
   }
   function fillSelect(sel, items, valueOf, labelOf, placeholder) {
@@ -1057,22 +1314,20 @@ export function mountEditor(opts) {
   // Clicking ⛓ Kraken: if a folder is LOCKED, drop straight into it (no manual ws/folder
   // clicking — that's the whole point of the lock). Otherwise open the workspace picker
   // for manual browsing. Clicking again while open closes it.
+  // Open the live library inside the Browse section: jump straight to a locked folder, or
+  // show the workspace picker for manual browsing. (No close-toggle — the modal tab owns
+  // visibility now; this just loads content into the always-present Browse grid.)
   async function openKraken() {
     if (!remoteBrowse) return hideKraken('no provider');
-    const isOpen = els.krakenGrid.classList.contains('ce-on') || els.krakenWs.style.display !== 'none';
-    if (isOpen) {
-      els.krakenWs.style.display = 'none'; els.krakenFolder.style.display = 'none';
-      els.krakenGrid.classList.remove('ce-on'); if (els.kgridTiles) els.kgridTiles.innerHTML = ''; return;
-    }
     const ok = await ensureKrakenProbe();
     if (!ok) return hideKraken('probe failed');
     await ensurePinLoaded();
     if (pinnedState && pinnedState.wsId) { await openToPin(); return; }   // jump straight to the locked folder
     fillSelect(els.krakenWs, krakenWsCache || [], (w) => w.id, (w) => w.label || w.name, 'Workspace…');
-    els.krakenFolder.style.display = 'none'; els.krakenGrid.classList.remove('ce-on'); if (els.kgridTiles) els.kgridTiles.innerHTML = '';
+    els.krakenFolder.style.display = 'none';
   }
   async function loadKrakenFolders(wsId) {
-    els.krakenGrid.classList.remove('ce-on'); if (els.kgridTiles) els.kgridTiles.innerHTML = '';
+    if (els.kgridTiles) els.kgridTiles.innerHTML = '';
     if (!wsId) { els.krakenFolder.style.display = 'none'; return; }
     try {
       const res = await remoteBrowse.folders(wsId);
@@ -1090,13 +1345,14 @@ export function mountEditor(opts) {
   let krakenFilter = 'all';      // all | video | image
   let krakenSort = 'recent';     // recent | oldest | name | namez
   let krakenWsId = null;         // current workspace (for pull)
-  let selectedRow = null, selectedTileEl = null, playingMedia = null;
+  let selectedRows = [];         // ORDERED multi-selection (row objects); index+1 = badge number
+  let playingMedia = null;
 
   async function loadKrakenFiles(wsId, folderId) {
     krakenWsId = wsId;
     els.krakenGrid.classList.add('ce-on');
     els.kgridTiles.innerHTML = '<span class="ce-kgrid-msg">Loading…</span>';
-    setKrakenSelection(null);
+    selectedRows = []; updateKrakenSelectionUI();
     try {
       const res = await remoteBrowse.files(wsId, folderId);
       if (!res || res.available === false) { els.kgridTiles.innerHTML = ''; return hideKraken(res && res.error); }
@@ -1128,19 +1384,24 @@ export function mountEditor(opts) {
     rows.forEach((row) => {
       const tile = document.createElement('div');
       tile.className = 'ce-ktile';
+      tile.dataset.kid = row.id;
       const media = row.type === 'video' ? document.createElement('video') : document.createElement('img');
       media.src = row.url;
       if (row.type === 'video') { media.muted = true; media.loop = true; media.preload = 'metadata'; media.playsInline = true; }
       const badge = document.createElement('span');
       badge.className = 'ce-ktile-badge';
       badge.textContent = row.type === 'video' ? '▶ VIDEO' : 'IMG';
-      tile.append(media, badge);
+      const num = document.createElement('span');     // multi-select order badge (1,2,3…)
+      num.className = 'ce-ktile-num'; num.style.display = 'none';
+      tile.append(media, badge, num);
       tile.title = row.title || row.id;
-      tile.addEventListener('click', () => previewKrakenTile(row, tile, media));
+      // plain click = select THIS one (+ preview); Ctrl/⌘-click = toggle into the multi-selection
+      tile.addEventListener('click', (e) => previewKrakenTile(row, tile, media, e.ctrlKey || e.metaKey));
       tile.addEventListener('dblclick', () => useSelectedKraken());
       els.kgridTiles.appendChild(tile);
     });
     applyTileZoom();
+    updateKrakenSelectionUI();   // restore badges after a re-render (filter/sort/zoom)
   }
 
   // Tile-size slider: value = how many tiles fit ACROSS (1 = one full-width tile … 10 =
@@ -1150,33 +1411,80 @@ export function mountEditor(opts) {
     els.kgridTiles.style.setProperty('--ce-cols', Number(els.kzRange.value) || 5);
   }
 
-  // PREVIEW only: highlight + play the video; never pulls.
-  function previewKrakenTile(row, tile, media) {
-    setKrakenSelection(row, tile);
+  // Click a tile: plain = select just this one (+ preview); Ctrl/⌘ = toggle it in/out of the
+  // ordered multi-selection. Previewing (inline play) is decoupled — it always plays the
+  // clicked clip; selection is what the primary button acts on.
+  function selIndex(id) { return selectedRows.findIndex((r) => r.id === id); }
+  function previewKrakenTile(row, tile, media, additive) {
+    if (additive) {
+      const i = selIndex(row.id);
+      if (i >= 0) selectedRows.splice(i, 1); else selectedRows.push(row);
+    } else {
+      selectedRows = [row];
+    }
     if (playingMedia && playingMedia !== media) { try { playingMedia.pause(); } catch (e) {} }
     if (media && media.tagName === 'VIDEO') { try { media.currentTime = 0; media.play(); playingMedia = media; } catch (e) {} }
+    updateKrakenSelectionUI();
   }
-  function setKrakenSelection(row, tile) {
-    selectedRow = row; selectedTileEl = tile || null;
-    Array.from(els.kgridTiles.querySelectorAll('.ce-ktile.ce-sel')).forEach((t) => t.classList.remove('ce-sel'));
-    if (tile) tile.classList.add('ce-sel');
-    els.krakenUse.disabled = !row;
-    els.kgridSel.textContent = row ? `Selected: ${row.title || row.id}  (${row.type})` : 'Click a clip to preview · then “Use this”.';
+  // Reflect selectedRows onto the tiles (outline + numbered order badge) and the reactive
+  // primary button. 0 = disabled; 1 (and not building) = "Use this clip"; otherwise
+  // "Add N clips → montage" (2+, or add-mode, or the slot already has a montage).
+  function updateKrakenSelectionUI() {
+    // prune phantom selections: keep only rows that have a tile in the CURRENT grid (a
+    // filter/sort/folder change can drop a selected tile — it shouldn't keep counting).
+    const ids = new Set(Array.from(els.kgridTiles.querySelectorAll('.ce-ktile')).map((t) => t.dataset.kid));
+    selectedRows = selectedRows.filter((r) => ids.has(String(r.id)));
+    Array.from(els.kgridTiles.querySelectorAll('.ce-ktile')).forEach((t) => {
+      const idx = selIndex(t.dataset.kid);
+      t.classList.toggle('ce-sel', idx >= 0);
+      const num = t.querySelector('.ce-ktile-num');
+      if (num) { if (idx >= 0) { num.textContent = String(idx + 1); num.style.display = 'flex'; } else num.style.display = 'none'; }
+    });
+    const n = selectedRows.length;
+    const target = swapTarget || montageTarget;
+    const building = n >= 2 || montageAddMode || hasMontage(target);
+    els.krakenUse.disabled = n === 0;
+    els.krakenUse.textContent = (n >= 1 && building) ? `Add ${n} clip${n === 1 ? '' : 's'} → montage`
+      : (n === 1 ? 'Use this clip' : 'Use this clip');
+    els.kgridSel.textContent = n === 0
+      ? 'Click a clip to select · Ctrl-click to pick several · then use the button →'
+      : `${n} selected${n >= 2 ? ' — builds a montage in this order' : ''}`;
   }
-  // USE: download the selected file to the cache + swap it in (the heavy step).
+  // USE/ADD: pull every selected clip to the cache (sequential — pulls are independent),
+  // then dispatch: a single clip on a plain slot swaps; multiple (or add-mode / an existing
+  // montage) build/extend a montage and open Arrange.
   async function useSelectedKraken() {
-    if (!selectedRow || !krakenWsId) return;
+    if (!selectedRows.length || !krakenWsId) return;
+    const rows = selectedRows.slice();
     els.krakenUse.disabled = true;
-    const prev = els.krakenUse.textContent; els.krakenUse.textContent = 'Pulling…';
-    if (selectedTileEl) selectedTileEl.classList.add('ce-ktile-busy');
+    const prev = els.krakenUse.textContent;
+    const paths = [];
     try {
-      const res = await remoteBrowse.pull({ ws: krakenWsId, row: selectedRow });
-      if (!res || res.available === false || !res.path) { els.kgridSel.textContent = 'Pull failed: ' + ((res && res.error) || 'unknown'); return; }
-      applySwap(res.path);   // PROJECT_ROOT-rooted "/brand/kraken-cache/…" URL
-      els.kgridSel.textContent = 'Swapped in ✓  ' + (selectedRow.title || '');
-    } catch (e) { els.kgridSel.textContent = 'Pull error: ' + (e && e.message); }
-    finally { els.krakenUse.textContent = prev; els.krakenUse.disabled = false;
-      if (selectedTileEl) selectedTileEl.classList.remove('ce-ktile-busy'); }
+      for (let i = 0; i < rows.length; i++) {
+        els.krakenUse.textContent = `Pulling ${i + 1}/${rows.length}…`;
+        const tile = els.kgridTiles.querySelector(`.ce-ktile[data-kid="${rows[i].id}"]`);
+        if (tile) tile.classList.add('ce-ktile-busy');
+        const res = await remoteBrowse.pull({ ws: krakenWsId, row: rows[i] });
+        if (tile) tile.classList.remove('ce-ktile-busy');
+        if (!res || res.available === false || !res.path) { els.kgridSel.textContent = 'Pull failed: ' + ((res && res.error) || 'unknown'); return; }
+        paths.push(res.path);
+      }
+    } catch (e) { els.kgridSel.textContent = 'Pull error: ' + (e && e.message); return; }
+    finally { els.krakenUse.textContent = prev; els.krakenUse.disabled = false; }
+    dispatchPicked(paths);
+  }
+  // route pulled clips: plain single swap, or build/extend the montage + open Arrange.
+  function dispatchPicked(paths) {
+    if (!paths.length) return;
+    const target = swapTarget || montageTarget;
+    const building = paths.length >= 2 || montageAddMode || hasMontage(target);
+    if (!building && paths.length === 1) { applySwap(paths[0]); closeMediaModal(); return; }
+    ensureMontageStarted(target);
+    paths.forEach((p) => montageState.clips.push({ src: p, in: 0, out: 3 }));
+    commitMontage();
+    montageAddMode = false;
+    selectedRows = [];
+    showSection('arrange', target);
   }
 
   // ── lock/pin the current workspace+folder as this project's default (C-polish) ──
@@ -1231,10 +1539,13 @@ export function mountEditor(opts) {
     updateLockBtn();
     return true;
   }
-  // on EVERY swap-open (after the probe): if a folder is locked, open straight to it.
+  // on EVERY modal-open (after the probe): jump to the locked folder if one is pinned;
+  // otherwise show the workspace picker so the user can start browsing immediately.
   async function autoOpenPin() {
+    if (els.montPanel.classList.contains('ce-on')) return;   // in Arrange — don't open the grid over it
     await ensurePinLoaded();
     if (pinnedState && pinnedState.wsId) openToPin();
+    else fillSelect(els.krakenWs, krakenWsCache || [], (w) => w.id, (w) => w.label || w.name, 'Workspace…');
   }
 
   els.krakenOpen.addEventListener('click', openKraken);
@@ -1262,27 +1573,42 @@ export function mountEditor(opts) {
   els.redo.addEventListener('click', redo);
   els.save.addEventListener('click', () => onChange(clone(overrides), { save: true }));
   els.swapApply.addEventListener('click', () => applySwap(els.swapUrl.value.trim()));
-  els.swapClose.addEventListener('click', closeSwap);
+  els.swapClose.addEventListener('click', closeMediaModal);
+  els.mediaBackdrop.addEventListener('click', closeMediaModal);
+
+  // media-modal entry + tabs
+  els.editMontage.addEventListener('click', () => {
+    const el = selectedKey ? elForKey(selectedKey) : null;
+    if (el) openMediaModal(el);
+  });
+  els.mmTabBrowse.addEventListener('click', () => showSection('browse', swapTarget || montageTarget));
+  els.mmTabArrange.addEventListener('click', () => showSection('arrange', swapTarget || montageTarget));
 
   // montage controls (Phase D1)
-  els.montageOpen.addEventListener('click', () => openMontage(swapTarget));
-  els.montClose.addEventListener('click', closeMontage);
   els.montClear.addEventListener('click', clearMontage);
   els.montAdd.addEventListener('click', () => {
-    // ARM "add" mode: the next media pick (a thumbnail in the strip, the paste box, or a
-    // Kraken "Use this") APPENDS a clip instead of replacing the slot. We don't auto-open
-    // the Kraken grid here — it floats over the filmstrip; the user opens it if they want.
-    montageAddMode = !montageAddMode;
-    els.montAdd.classList.toggle('ce-on', montageAddMode);
-    els.montInfo.textContent = montageAddMode
-      ? 'Add mode ON — click a thumbnail below, or open Kraken and “Use this”, to APPEND a clip.'
-      : (montageState ? '' : '');
-    if (!montageAddMode && montageState) renderFilmstrip(montageState);
+    // ＋ Add clips: arm add-mode and flip to Browse so the next pick(s) APPEND to the montage.
+    montageAddMode = true;
+    showSection('browse', montageTarget || swapTarget);
   });
   els.montTotal.addEventListener('change', () => {
     if (!montageState) return;
     montageUserTotal = true;          // explicit override; stop auto-tracking the cycle
     montageState.totalDuration = Number(els.montTotal.value) || montageState.totalDuration;
+    commitMontage();
+  });
+  // transition controls (Phase D v2)
+  els.montTransType.addEventListener('change', () => {
+    if (!montageState) return;
+    ensureTransition();
+    montageState.transition.type = els.montTransType.value === 'crossfade' ? 'crossfade' : 'cut';
+    els.montFade.style.display = (montageState.transition.type === 'crossfade') ? 'inline-flex' : 'none';
+    commitMontage();
+  });
+  els.montFadeDur.addEventListener('change', () => {
+    if (!montageState) return;
+    ensureTransition();
+    montageState.transition.duration = Number(els.montFadeDur.value) || 0.4;
     commitMontage();
   });
 

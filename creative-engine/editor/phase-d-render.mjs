@@ -106,4 +106,26 @@ log(`  rendered ${fullDur.toFixed(2)}s (expected ${TOTAL}s, NOT the 7s auto-loop
 assert(Math.abs(fullDur - TOTAL) < 0.3, `rendered MP4 is totalDuration long (${fullDur.toFixed(2)}s ≈ ${TOTAL}s)`);
 assert(Math.abs(fullDur - 7) > 1, 'render length did NOT fall back to the 7s default loop');
 
+// ── CROSSFADE: cycle shortens by (N-1)·D AND a mid-transition frame is a BLEND ──
+log('\nTransitions — crossfade: concat shortens by (N-1)·fade + mid-transition frame is a blend');
+const D = 0.4;                              // fade seconds
+const xfConcat = path.join(OUT, 'd-montage-xfade.mp4');
+const xbuilt = await buildMontageSource(clips, FPS, xfConcat, { transition: { type: 'crossfade', duration: D } });
+assert(xbuilt.ok && xbuilt.crossfaded, 'buildMontageSource produced a CROSSFADED concat');
+const expXfDur = cycleS - (clips.length - 1) * D;     // 3.0 - 2*0.4 = 2.2s
+const xfDur = ffDuration(xfConcat);
+log(`  crossfade concat: ${xfDur.toFixed(3)}s (expected Σdur−(N−1)·D = ${expXfDur.toFixed(3)}s)`);
+assert(Math.abs(xfDur - expXfDur) < 0.2, `crossfade shortened the cycle by (N−1)·fade (${xfDur.toFixed(3)}s ≈ ${expXfDur.toFixed(3)}s)`);
+
+// the first transition spans [segDur0−D , segDur0] = [0.6, 1.0]; at its midpoint (0.8s) the
+// frame blends clip0@~0.8 with clip1@~0.2. Its color must sit BETWEEN the two source frames.
+const tMid = (clips[0].out - clips[0].in) - D / 2;    // 0.8s
+const fpA = meanRGB(clips[0].src, clips[0].in + tMid);          // clip0 around its tail
+const fpB = meanRGB(clips[1].src, clips[1].in + (tMid - (1 - D)));// clip1 around its head
+const avg = [(fpA[0] + fpB[0]) / 2, (fpA[1] + fpB[1]) / 2, (fpA[2] + fpB[2]) / 2];
+const sample = meanRGB(xfConcat, tMid);
+const dAvg = dist(sample, avg), dA = dist(sample, fpA), dB = dist(sample, fpB);
+log(`  mid-transition sample dist → blend-avg ${dAvg.toFixed(1)} · clip0 ${dA.toFixed(1)} · clip1 ${dB.toFixed(1)}`);
+assert(dAvg < dA && dAvg < dB, 'mid-transition frame is a BLEND (closer to the two-clip average than to either clip alone)');
+
 log('\n' + (process.exitCode ? '=== PHASE D RENDER: FAIL ===' : '=== PHASE D RENDER: PASS ==='));

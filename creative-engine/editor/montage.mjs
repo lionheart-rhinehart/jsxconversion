@@ -68,6 +68,19 @@ export function montageAt(clips, fps, tMs) {
   return { clipIndex: last, frameInClip: frames[last] - 1, localOffsetMs: (frames[last] - 1) / f * 1000, clip: clips[last] };
 }
 
+// clamp/normalize the global transition. A crossfade can't exceed the shortest clip (or 2s);
+// cut is the default. Shape stays tiny + portable: {type:'cut'|'crossfade', duration:<seconds>}.
+export function normalizeTransition(t, clips) {
+  const type = (t && t.type === 'crossfade') ? 'crossfade' : 'cut';
+  let dur = Number(t && t.duration);
+  if (!isFinite(dur) || dur <= 0) dur = 0.4;
+  const durs = (clips || []).map((c) => Math.max(0, (Number(c.out) || 0) - (Number(c.in) || 0)));
+  const shortest = durs.length ? Math.min(...durs) : 1;
+  dur = Math.min(dur, 2, Math.max(0.1, shortest - 0.1));   // < shortest clip, ≤ 2s
+  dur = Math.max(0.1, dur);
+  return { type, duration: Math.round(dur * 100) / 100 };
+}
+
 // clamp/normalize a montage override bag value to a safe, portable shape
 export function normalizeMontage(m, fps) {
   const f = Number(fps) || 30;
@@ -82,7 +95,7 @@ export function normalizeMontage(m, fps) {
   let total = Number(m && m.totalDuration);
   if (!isFinite(total) || total <= 0) total = Math.min(MAX_TOTAL, Math.max(MIN_TOTAL, cycleDurationMs(clips, f) / 1000));
   total = Math.min(MAX_TOTAL, Math.max(MIN_TOTAL, total));
-  return { clips, totalDuration: total, fps: f };
+  return { clips, totalDuration: total, fps: f, transition: normalizeTransition(m && m.transition, clips) };
 }
 
 // ── RENDER (Node only — dynamic imports keep the top level browser-safe) ──────
@@ -125,24 +138,48 @@ export async function buildMontageSource(clips, fps, outPath, opts = {}) {
     segFiles.push(seg);
   }
 
-  // 2) concat with the concat FILTER (re-encode → hard cuts; works on mismatched
-  //    sources because step 1 already normalized them). NOT `-c copy`.
+  // 2) combine the normalized segments into ONE cycle. Two modes:
+  //    • cut       → concat FILTER (re-encode, hard cuts) — frame-exact, total = Σ frames.
+  //    • crossfade → xfade filter CHAIN (each transition overlaps D seconds, so the cycle
+  //                  SHORTENS by (N-1)·D). Render-only — the live preview keeps hard cuts.
+  const trans = normalizeTransition(opts.transition, list);
+  const segDur = frames.map((n) => n / f);          // seconds per segment (frame-exact)
   const inputs = [];
   segFiles.forEach((s) => { inputs.push('-i', s); });
-  const filter = segFiles.map((_, i) => `[${i}:v]`).join('') + `concat=n=${segFiles.length}:v=1:a=0[v]`;
+
+  let filter, totalFrames = frames.reduce((a, b) => a + b, 0);
+  const fadeOk = trans.type === 'crossfade' && segFiles.length >= 2 && segDur.every((d) => d > trans.duration + 1e-3);
+  if (trans.type === 'crossfade' && !fadeOk) {
+    console.warn('[montage] crossfade skipped (need ≥2 clips each longer than the fade) — using hard cuts');
+  }
+  if (fadeOk) {
+    const D = trans.duration;
+    let acc = segDur[0], prev = '[0:v]', chain = [];
+    for (let i = 1; i < segFiles.length; i++) {
+      const offset = Math.max(0, acc - D);
+      const out = (i === segFiles.length - 1) ? '[v]' : `[x${i}]`;
+      chain.push(`${prev}[${i}:v]xfade=transition=fade:duration=${D.toFixed(4)}:offset=${offset.toFixed(4)}${out}`);
+      prev = out; acc = acc + segDur[i] - D;
+    }
+    filter = chain.join(';');
+    totalFrames = Math.round(acc * f);              // cycle frames after overlaps
+  } else {
+    filter = segFiles.map((_, i) => `[${i}:v]`).join('') + `concat=n=${segFiles.length}:v=1:a=0[v]`;
+  }
+
   const cc = spawnSync('ffmpeg', ['-y', '-loglevel', 'error', ...inputs,
     '-filter_complex', filter, '-map', '[v]', '-fps_mode', 'cfr', '-r', String(f),
     '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', outPath], { encoding: 'utf8' });
   fs.rmSync(tmpDir, { recursive: true, force: true });
   if (cc.status !== 0 || !fs.existsSync(outPath)) {
     const tail = String(cc.stderr || cc.error?.message || '').trim().split(/\r?\n/).filter(Boolean).slice(-2).join(' | ');
-    return { ok: false, reason: 'concat failed: ' + (tail || 'ffmpeg') };
+    return { ok: false, reason: (fadeOk ? 'xfade' : 'concat') + ' failed: ' + (tail || 'ffmpeg') };
   }
-  return { ok: true, path: outPath, frames: frames.reduce((a, b) => a + b, 0) };
+  return { ok: true, path: outPath, frames: totalFrames, crossfaded: fadeOk };
 }
 
 // Expose the PURE math to classic-script consumers (seek.js is injected as a plain
 // <script>, not a module, so it can't `import` — it reads window.CEMontage instead).
 if (typeof window !== 'undefined') {
-  window.CEMontage = { clipFrames, cycleFrames, cycleDurationMs, montageAt, normalizeMontage };
+  window.CEMontage = { clipFrames, cycleFrames, cycleDurationMs, montageAt, normalizeMontage, normalizeTransition };
 }
