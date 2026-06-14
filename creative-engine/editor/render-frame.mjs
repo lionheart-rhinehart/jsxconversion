@@ -15,8 +15,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import os from 'node:os';
 import { spawnSync } from 'node:child_process';
 import puppeteer from 'puppeteer';
+import { buildMontageSource, normalizeMontage } from './montage.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, '..', '..');
@@ -45,6 +47,48 @@ export function resolveSwapSrcs(overrides, url) {
     }
   }
   return out;
+}
+
+// Resolve a montage clip `src` to an absolute filesystem PATH (or pass an http(s) URL
+// through, which ffmpeg can read directly). Mirrors resolveSwapSrcs's rules: a leading
+// "/brand/…" is PROJECT_ROOT-rooted; a file:// URL is decoded; everything else is
+// campaign-relative to the tagged file's own folder (assets/vid/…).
+function resolveClipPath(src, taggedPath) {
+  if (/^https?:/i.test(src)) return src;
+  if (/^file:/i.test(src)) return fileURLToPath(src);
+  if (/^\/(?!\/)/.test(src)) return path.join(PROJECT_ROOT, src.replace(/^\/+/, ''));
+  const baseDir = /^https?:|^file:/.test(taggedPath) ? PROJECT_ROOT : path.dirname(taggedPath);
+  return path.resolve(baseDir, src);
+}
+
+// D4 — montage expansion. BEFORE the page opens, find any `montage:{clips,totalDuration}`
+// override, ffmpeg-build a single concat MP4 (one cycle, hard cuts, frame-exact via
+// montage.mjs), and REWRITE that key to a plain `{src:<file://concat.mp4>}` so the normal
+// faithful render path runs unchanged. The concat loops via `t % video.duration` (seek.js
+// already wraps), and the OUTPUT LENGTH is forced to `totalDuration` (F4) — overriding the
+// auto-detected 7s CSS loop. The saved bag stays portable `montage{…}`; only the renderer
+// expands it. Returns { overrides, loop|null, cleanup() }.
+export async function expandMontages(overrides, taggedPath, fps = FPS) {
+  const out = {};
+  const created = [];
+  let loop = null;
+  for (const key of Object.keys(overrides || {})) {
+    const ov = overrides[key];
+    if (!ov || typeof ov !== 'object' || !ov.montage) { out[key] = ov; continue; }
+    const m = normalizeMontage(ov.montage, fps);
+    if (!m.clips.length) { out[key] = ov; continue; }
+    const clips = m.clips.map((c) => ({ src: resolveClipPath(c.src, taggedPath), in: c.in, out: c.out }));
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'ce-montage-'));
+    const concat = path.join(dir, 'montage.mp4');
+    const r = await buildMontageSource(clips, fps, concat);
+    if (!r.ok) throw new Error('[render-frame] montage build failed for ' + key + ': ' + r.reason);
+    created.push(dir);
+    // strip the montage key, keep any sibling overrides (color/pos/etc.), point src at the concat
+    const { montage, ...rest } = ov;
+    out[key] = { ...rest, src: pathToFileURL(concat).href };
+    loop = Math.max(loop || 0, m.totalDuration);   // longest montage drives the render length
+  }
+  return { overrides: out, loop, cleanup: () => created.forEach((d) => { try { fs.rmSync(d, { recursive: true, force: true }); } catch (e) {} }) };
 }
 
 // Resolve relative asset URLs (assets/vid/…) against the tagged file's own folder so
@@ -98,29 +142,34 @@ export async function seekAndShot(page, tMs, outPng) {
 
 // one frame at a timestamp (the evidence path)
 export async function renderFrameAt({ taggedPath, overrides, frameId, tMs, outPng }) {
+  const { overrides: ov, cleanup } = await expandMontages(overrides, taggedPath);   // D4
   const browser = await puppeteer.launch({ headless: true,
     args: ['--no-sandbox', '--autoplay-policy=no-user-gesture-required', '--mute-audio'] });
   try {
-    const page = await openTagged(browser, taggedPath, overrides);
+    const page = await openTagged(browser, taggedPath, ov);
     await isolateFrame(page, frameId);
     return await seekAndShot(page, tMs, outPng);
-  } finally { await browser.close(); }
+  } finally { await browser.close(); cleanup(); }
 }
 
 // full MP4 of one creative (fidelity eyeball, 2.5)
 export async function renderMp4({ taggedPath, overrides, frameId, outMp4, fps = FPS, loop = LOOP }) {
+  // D4 — expand any montage to a concat MP4 first; a montage's totalDuration becomes the
+  // render length (F4), overriding the default 7s loop. The concat loops via seek modulo.
+  const { overrides: ov, loop: montageLoop, cleanup } = await expandMontages(overrides, taggedPath, fps);
+  if (montageLoop) loop = montageLoop;
   const browser = await puppeteer.launch({ headless: true,
     args: ['--no-sandbox', '--autoplay-policy=no-user-gesture-required', '--mute-audio'] });
   const framesDir = path.join(path.dirname(outMp4), '.frames-' + frameId);
   fs.rmSync(framesDir, { recursive: true, force: true }); fs.mkdirSync(framesDir, { recursive: true });
   try {
-    const page = await openTagged(browser, taggedPath, overrides);
+    const page = await openTagged(browser, taggedPath, ov);
     await isolateFrame(page, frameId);
     const total = Math.round(fps * loop);
     for (let i = 0; i < total; i++) {
       await seekAndShot(page, (i / fps) * 1000, path.join(framesDir, `f_${String(i).padStart(5, '0')}.png`));
     }
-  } finally { await browser.close(); }
+  } finally { await browser.close(); cleanup(); }
   const ff = spawnSync('ffmpeg', ['-y', '-framerate', String(fps), '-i', path.join(framesDir, 'f_%05d.png'),
     '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', outMp4], { stdio: 'inherit' });
   fs.rmSync(framesDir, { recursive: true, force: true });

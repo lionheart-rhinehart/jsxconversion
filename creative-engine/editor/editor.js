@@ -21,6 +21,11 @@
 // this module, and is also injected INTO the iframe document. We reference the
 // iframe's copy at apply time.
 
+// Phase D — shared FRAME-EXACT montage math. The SAME functions drive the live preview
+// (the rAF driver below) and the renderer (render-frame.mjs imports them), so a clip
+// boundary cuts at the identical instant in both (F2). Pure math: browser-safe import.
+import { clipFrames, montageAt, cycleDurationMs, normalizeMontage } from './montage.mjs';
+
 const IFRAME_CSS = `
   html,body{margin:0!important;background:#0a0b0d!important;}
   body>*{display:none!important;}
@@ -103,7 +108,20 @@ export function mountEditor(opts) {
           <select class="ce-select ce-kraken-ws" style="display:none;" title="Workspace"></select>
           <select class="ce-select ce-kraken-folder" style="display:none;" title="Folder"></select>
         </span>
+        <button class="ce-btn ce-montage-open" title="Build a multi-clip montage on this video slot">🎬 Montage…</button>
         <button class="ce-btn ce-swap-close">Done</button>
+      </div>
+      <div class="ce-montage-panel">
+        <div class="ce-mont-bar">
+          <span class="ce-mont-title">Montage — multiple clips, hard cuts</span>
+          <span class="ce-mont-spacer"></span>
+          <label class="ce-mont-dur">Total <input type="number" class="ce-mont-total" min="1" max="30" step="0.5" style="width:62px;"> s</label>
+          <button class="ce-btn ce-mont-add" title="Add a clip from the Content Library">＋ Add clip</button>
+          <button class="ce-btn ce-mont-clear" title="Clear the montage (revert to a single clip)">Clear</button>
+          <button class="ce-btn ce-mont-close">Done</button>
+        </div>
+        <div class="ce-mont-strip"></div>
+        <div class="ce-mont-foot"><span class="ce-mont-info"></span></div>
       </div>
       <div class="ce-kraken-grid">
         <div class="ce-kgrid-bar">
@@ -159,6 +177,14 @@ export function mountEditor(opts) {
     swapApply: rootEl.querySelector('.ce-swap-apply'),
     swapClose: rootEl.querySelector('.ce-swap-close'),
     thumbs: rootEl.querySelector('.ce-thumbs'),
+    montageOpen: rootEl.querySelector('.ce-montage-open'),
+    montPanel: rootEl.querySelector('.ce-montage-panel'),
+    montStrip: rootEl.querySelector('.ce-mont-strip'),
+    montTotal: rootEl.querySelector('.ce-mont-total'),
+    montAdd: rootEl.querySelector('.ce-mont-add'),
+    montClear: rootEl.querySelector('.ce-mont-clear'),
+    montClose: rootEl.querySelector('.ce-mont-close'),
+    montInfo: rootEl.querySelector('.ce-mont-info'),
     kraken: rootEl.querySelector('.ce-kraken'),
     krakenOpen: rootEl.querySelector('.ce-kraken-open'),
     krakenWs: rootEl.querySelector('.ce-kraken-ws'),
@@ -269,14 +295,92 @@ export function mountEditor(opts) {
   function applyAll() {
     const w = iwin();
     if (w && w.CEApply) w.CEApply.applyOverrides(idoc(), overrides);
+    syncMontageDrivers();
+  }
+
+  // ── montage live preview driver (Phase D3) ────────────────────────────────
+  // apply-overrides.js tags the <video> with `el.__ceMontage = {clips,totalDuration,fps}`
+  // (the SAME node — metadata, never a layer model). A rAF loop uses the shared
+  // montageAt() to pick the on-screen clip + offset and swaps `video.src` at each cut.
+  // To smooth the reload flash at cuts (F5), every distinct clip src is preloaded into a
+  // hidden buffer <video> so the swap hits cache. The RENDER is seamless regardless (it's
+  // a pre-built concat) — this driver only powers the editor's live preview.
+  const montageDrivers = new Map();   // el → {raf, buffers, stopped}
+  function stopMontageDriver(el) {
+    const dr = montageDrivers.get(el); if (!dr) return;
+    dr.stopped = true;
+    try { iwin().cancelAnimationFrame(dr.raf); } catch (e) {}
+    Object.keys(dr.buffers || {}).forEach((s) => { try { dr.buffers[s].remove(); } catch (e) {} });
+    montageDrivers.delete(el);
+  }
+  function startMontageDriver(el) {
+    stopMontageDriver(el);
+    const mont = el.__ceMontage;
+    if (!mont || !Array.isArray(mont.clips) || !mont.clips.length) return;
+    const fps = mont.fps || 30, win = iwin(), d = idoc();
+    const totalMs = Math.max(1, (Number(mont.totalDuration) || 1) * 1000);
+    // hidden preload buffers — one per distinct src (F5)
+    const buffers = {};
+    mont.clips.forEach((c) => {
+      if (buffers[c.src]) return;
+      const b = d.createElement('video');
+      b.src = c.src; b.muted = true; b.preload = 'auto'; b.playsInline = true;
+      b.style.cssText = 'position:absolute;left:-9999px;top:0;width:2px;height:2px;opacity:0;pointer-events:none;';
+      d.body.appendChild(b); buffers[c.src] = b;
+    });
+    try { el.pause(); } catch (e) {}
+    el.loop = false; el.autoplay = false; el.muted = true;
+    let curSrc = null, t0 = null;
+    const driver = { raf: 0, buffers, stopped: false };
+    function step(now) {
+      if (driver.stopped || el.__ceMontage !== mont) return;
+      if (t0 == null) t0 = now;
+      const tMs = (now - t0) % totalMs;
+      const at = montageAt(mont.clips, fps, tMs);
+      if (at.clipIndex >= 0 && at.clip) {
+        const want = at.clip.src, localT = (Number(at.clip.in) || 0) + at.localOffsetMs / 1000;
+        if (want !== curSrc) {
+          curSrc = want;
+          el.setAttribute('src', want);
+          try { el.load && el.load(); } catch (e) {}
+          el.addEventListener('loadeddata', function once() {
+            try { el.currentTime = localT; el.play(); } catch (e) {}
+          }, { once: true });
+        } else if (el.readyState >= 2 && Math.abs(el.currentTime - localT) > 0.3) {
+          try { el.currentTime = localT; } catch (e) {}     // drift-correct (clip just looped)
+        } else { try { if (el.paused) el.play(); } catch (e) {} }
+      }
+      driver.raf = win.requestAnimationFrame(step);
+    }
+    driver.raf = win.requestAnimationFrame(step);
+    montageDrivers.set(el, driver);
+  }
+  // start/stop drivers to match the current __ceMontage tags in the live DOM
+  function syncMontageDrivers() {
+    const d = idoc(); if (!d) return;
+    Array.from(d.querySelectorAll('video')).forEach((v) => {
+      if (v.__ceMontage && v.__ceMontage.clips && v.__ceMontage.clips.length) {
+        if (!montageDrivers.has(v)) startMontageDriver(v);
+      } else if (montageDrivers.has(v)) { stopMontageDriver(v); }
+    });
+  }
+  // expose the shared math + a change-hook INTO the iframe window: apply-overrides.js
+  // calls win.__ceMontageChanged(el) whenever a montage override is (re)applied — incl.
+  // undo's pristine replay — so the driver always tracks the live tag. seek.js reads
+  // win.CEMontage.montageAt for deterministic freezes.
+  function installIframeMontageHooks() {
+    const w = iwin(); if (!w) return;
+    w.CEMontage = { clipFrames, montageAt, cycleDurationMs, normalizeMontage };
+    w.__ceMontageChanged = (el) => { if (el.__ceMontage && el.__ceMontage.clips && el.__ceMontage.clips.length) startMontageDriver(el); else stopMontageDriver(el); };
   }
 
   // re-render a given override state from the pristine baseline (used by undo/redo).
   // loadIframe() swaps in a FRESH iframe document, so every per-document listener must be
   // re-bound or the editor goes dead after an undo (select/drag/dblclick + shortcuts).
   async function rerenderPristine() {
+    montageDrivers.clear();      // the old iframe document is gone; its drivers died with it
     await loadIframe();
-    wireIframe(); wireIframeMouse(); wireIframeKeys();
+    wireIframe(); wireIframeMouse(); wireIframeKeys(); installIframeMontageHooks();
     showFrame(curFrame);
   }
 
@@ -784,7 +888,11 @@ export function mountEditor(opts) {
     if (remoteBrowse) ensureKrakenProbe();
   }
   function applySwap(src) {
-    if (!swapTarget || !src) return;
+    if (!src) return;
+    // when the montage panel is in "add" mode, picking media appends a clip instead of
+    // replacing the slot (one gate covers the static thumbs, the paste box, AND Kraken).
+    if (montageAddMode) { addMontageClip(src); return; }
+    if (!swapTarget) return;
     const key = keyForEl(swapTarget);
     setOverride(key, { src });
     // reflect live
@@ -798,6 +906,118 @@ export function mountEditor(opts) {
     if (playingMedia) { try { playingMedia.pause(); } catch (e) {} playingMedia = null; }
     selectedRow = null; selectedTileEl = null;
     if (els.krakenUse) els.krakenUse.disabled = true;
+    closeMontage();
+  }
+
+  // ── montage filmstrip (Phase D1) ──────────────────────────────────────────
+  // Builds the portable `montage:{clips:[{src,in,out}], totalDuration}` override on ONE
+  // media slot. The working copy lives in `montageState`; every edit commits it through
+  // the normal override path (so undo works) AND re-applies it to the iframe (so
+  // apply-overrides.js re-tags the <video> and the rAF driver restarts).
+  let montageTarget = null, montageKey = null, montageAddMode = false, montageState = null;
+  let montageUserTotal = false;   // has the user typed an explicit total? (else auto = cycle)
+  function currentMediaSrc(el) {
+    const ov = overrides[keyForEl(el)] || {};
+    return ov.src || el.getAttribute('src') || (el.currentSrc || '');
+  }
+  function openMontage(el) {
+    el = el || swapTarget;
+    if (!el || !el.hasAttribute('data-edit-media')) return;
+    montageTarget = el; montageKey = keyForEl(el); montageAddMode = false;
+    const existing = (overrides[montageKey] || {}).montage;
+    montageUserTotal = !!(existing && existing.clips && existing.clips.length); // loaded → respect its total
+    montageState = (existing && Array.isArray(existing.clips) && existing.clips.length)
+      ? clone(existing)
+      : { clips: (currentMediaSrc(el) ? [{ src: currentMediaSrc(el), in: 0, out: 3 }] : []), totalDuration: 3 };
+    els.swapbar.classList.add('ce-on');
+    els.montPanel.classList.add('ce-on');
+    els.krakenGrid.classList.remove('ce-on');
+    els.montTotal.value = montageState.totalDuration;
+    renderFilmstrip(montageState);
+  }
+  function closeMontage() {
+    els.montPanel.classList.remove('ce-on');
+    montageAddMode = false; montageTarget = null; montageKey = null; montageState = null;
+  }
+  // commit the working montage → bag + live DOM (so the driver picks it up)
+  function commitMontage() {
+    if (!montageKey || !montageState) return;
+    // until the user types a total, it tracks the natural cycle length (so every added
+    // clip actually plays once; the cap still applies inside normalizeMontage).
+    if (!montageUserTotal && montageState.clips.length) {
+      montageState.totalDuration = Math.max(1, cycleDurationMs(montageState.clips, 30) / 1000);
+      els.montTotal.value = Math.round(montageState.totalDuration * 10) / 10;
+    }
+    const norm = normalizeMontage(montageState, 30);
+    montageState = clone(norm);
+    setOverride(montageKey, { montage: norm });
+    const w = iwin(); if (w && w.CEApply) w.CEApply.applyOverrides(idoc(), { [montageKey]: overrides[montageKey] });
+    renderFilmstrip(montageState);
+  }
+  function addMontageClip(src) {
+    if (!montageState) return;
+    montageState.clips.push({ src, in: 0, out: 3 });
+    commitMontage();
+  }
+  function deleteClip(i) { if (!montageState) return; montageState.clips.splice(i, 1); commitMontage(); }
+  function moveClip(i, dir) {
+    if (!montageState) return;
+    const j = i + dir; if (j < 0 || j >= montageState.clips.length) return;
+    const a = montageState.clips; const t = a[i]; a[i] = a[j]; a[j] = t; commitMontage();
+  }
+  function updateClip(i, patch) {
+    if (!montageState || !montageState.clips[i]) return;
+    Object.assign(montageState.clips[i], patch);
+    const c = montageState.clips[i];
+    if (!(c.out > c.in)) c.out = c.in + 0.1;      // keep a positive trim window
+    commitMontage();
+  }
+  function clearMontage() {
+    if (!montageKey) return;
+    const cur = clone(overrides[montageKey] || {});
+    const firstSrc = montageState && montageState.clips[0] ? montageState.clips[0].src : null;
+    delete cur.montage;
+    if (firstSrc) cur.src = firstSrc;
+    pushHistory();
+    if (Object.keys(cur).length) overrides[montageKey] = cur; else delete overrides[montageKey];
+    commit();
+    if (montageTarget) {
+      stopMontageDriver(montageTarget); montageTarget.__ceMontage = null;
+      const w = iwin(); if (w && w.CEApply) w.CEApply.applyOverrides(idoc(), { [montageKey]: cur });
+    }
+    closeMontage();
+  }
+  function renderFilmstrip(m) {
+    els.montStrip.innerHTML = '';
+    if (!m.clips.length) {
+      els.montStrip.innerHTML = '<span class="ce-mont-empty">No clips yet — click “＋ Add clip”.</span>';
+    }
+    m.clips.forEach((c, i) => {
+      const item = document.createElement('div'); item.className = 'ce-mont-clip';
+      const len = Math.max(0, (Number(c.out) || 0) - (Number(c.in) || 0)).toFixed(1);
+      item.innerHTML =
+        `<div class="ce-mc-head"><span class="ce-mc-n">${i + 1}</span>
+          <button class="ce-btn ce-mc-up"${i === 0 ? ' disabled' : ''} title="Move earlier">◀</button>
+          <button class="ce-btn ce-mc-dn"${i === m.clips.length - 1 ? ' disabled' : ''} title="Move later">▶</button>
+          <button class="ce-btn ce-mc-del" title="Remove clip">✕</button></div>
+        <video class="ce-mc-thumb" muted playsinline preload="metadata"></video>
+        <div class="ce-mc-trim">
+          <label>in <input type="number" class="ce-mc-in" min="0" step="0.1" value="${c.in}"></label>
+          <label>out <input type="number" class="ce-mc-out" min="0" step="0.1" value="${c.out}"></label>
+          <span class="ce-mc-len">${len}s</span>
+        </div>`;
+      item.querySelector('.ce-mc-thumb').src = c.src;
+      item.querySelector('.ce-mc-up').addEventListener('click', () => moveClip(i, -1));
+      item.querySelector('.ce-mc-dn').addEventListener('click', () => moveClip(i, 1));
+      item.querySelector('.ce-mc-del').addEventListener('click', () => deleteClip(i));
+      item.querySelector('.ce-mc-in').addEventListener('change', (e) => updateClip(i, { in: Number(e.target.value) || 0 }));
+      item.querySelector('.ce-mc-out').addEventListener('change', (e) => updateClip(i, { out: Number(e.target.value) || 0 }));
+      els.montStrip.appendChild(item);
+    });
+    const fr = clipFrames(m.clips, 30);
+    els.montInfo.textContent = m.clips.length
+      ? `${m.clips.length} clip(s) · cycle ${(cycleDurationMs(m.clips, 30) / 1000).toFixed(1)}s · loops to fill ${m.totalDuration}s · frames/clip [${fr.join(', ')}]`
+      : '';
   }
 
   // ── live Kraken browser (Phase C3) ────────────────────────────────────────
@@ -1044,6 +1264,28 @@ export function mountEditor(opts) {
   els.swapApply.addEventListener('click', () => applySwap(els.swapUrl.value.trim()));
   els.swapClose.addEventListener('click', closeSwap);
 
+  // montage controls (Phase D1)
+  els.montageOpen.addEventListener('click', () => openMontage(swapTarget));
+  els.montClose.addEventListener('click', closeMontage);
+  els.montClear.addEventListener('click', clearMontage);
+  els.montAdd.addEventListener('click', () => {
+    // ARM "add" mode: the next media pick (a thumbnail in the strip, the paste box, or a
+    // Kraken "Use this") APPENDS a clip instead of replacing the slot. We don't auto-open
+    // the Kraken grid here — it floats over the filmstrip; the user opens it if they want.
+    montageAddMode = !montageAddMode;
+    els.montAdd.classList.toggle('ce-on', montageAddMode);
+    els.montInfo.textContent = montageAddMode
+      ? 'Add mode ON — click a thumbnail below, or open Kraken and “Use this”, to APPEND a clip.'
+      : (montageState ? '' : '');
+    if (!montageAddMode && montageState) renderFilmstrip(montageState);
+  });
+  els.montTotal.addEventListener('change', () => {
+    if (!montageState) return;
+    montageUserTotal = true;          // explicit override; stop auto-tracking the cycle
+    montageState.totalDuration = Number(els.montTotal.value) || montageState.totalDuration;
+    commitMontage();
+  });
+
   // text property controls (color / font-size / rotate) — set the override + live-apply
   function applyProp(patch) {
     if (!selectedKey) return;
@@ -1094,7 +1336,7 @@ export function mountEditor(opts) {
   // ── boot ──────────────────────────────────────────────────────────────────
   (async function boot() {
     await loadIframe();
-    wireIframe(); wireIframeMouse(); wireIframeKeys();
+    wireIframe(); wireIframeMouse(); wireIframeKeys(); installIframeMontageHooks();
     showFrame(curFrame);
     syncButtons();
   })();

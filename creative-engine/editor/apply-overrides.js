@@ -115,10 +115,23 @@
 
   function px(v) { return (typeof v === 'number') ? v + 'px' : String(v); }
 
+  // MONTAGE (Phase D, LIVE only): tag a single <video> with its portable montage bag
+  // (clips + totalDuration). The actual clip-cycling is driven by a rAF loop in editor.js
+  // (the headless RENDERER never sees `montage` — render-frame.mjs expands it to a concat
+  // {src} before this runs). We only attach metadata here so the driver can find it; the
+  // driver itself lives in the editor, off the shared/headless path.
+  function setMontage(el, montage) {
+    el.__ceMontage = montage || null;
+    // surface to a host-installed driver hook so applying a bag (incl. undo replay) restarts it
+    var doc = el.ownerDocument, win = doc && doc.defaultView;
+    if (win && typeof win.__ceMontageChanged === 'function') { try { win.__ceMontageChanged(el); } catch (e) {} }
+  }
+
   function applyOne(el, ov) {
     if (!el || !ov) return;
     if (ov.text != null) setText(el, ov.text);
     if (ov.src != null) setSrc(el, ov.src);
+    if (ov.montage != null) setMontage(el, ov.montage);
     if (ov.pos != null) setPos(el, ov.pos);
     if (ov.color != null) el.style.color = ov.color;
     if (ov.fontSize != null) el.style.fontSize = px(ov.fontSize);

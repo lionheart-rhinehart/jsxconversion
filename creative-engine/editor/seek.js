@@ -28,11 +28,7 @@
     });
   }
 
-  async function seekVideo(v, tMs) {
-    try { v.pause(); v.loop = false; v.autoplay = false; } catch (e) {}
-    await ready(v);
-    if (!v.duration || !isFinite(v.duration) || v.duration <= 0) return;
-    const target = (tMs / 1000) % v.duration;
+  async function seekTo(v, target) {
     for (let attempt = 0; attempt < 4; attempt++) {
       await new Promise((res) => {
         let done = false; const fin = () => { if (!done) { done = true; res(); } };
@@ -48,6 +44,31 @@
       if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(() => fin());
       setTimeout(fin, 250);
     });
+  }
+
+  async function seekVideo(v, tMs) {
+    try { v.pause(); v.loop = false; v.autoplay = false; } catch (e) {}
+    // MONTAGE branch (Phase D): a <video> tagged with __ceMontage is driven, not looped.
+    // Pick the on-screen clip + offset with the SAME frame-exact math the renderer used
+    // (window.CEMontage.montageAt), swap to that clip's src, and seek to in+localOffset.
+    // No `% duration` here — montageAt already wrapped the cycle. If the math helper isn't
+    // loaded (e.g. a non-editor context), fall through to the plain loop below.
+    var mont = v.__ceMontage;
+    if (mont && root.CEMontage && Array.isArray(mont.clips) && mont.clips.length) {
+      const fps = mont.fps || 30;
+      const at = root.CEMontage.montageAt(mont.clips, fps, tMs);
+      if (at.clipIndex >= 0 && at.clip && at.clip.src) {
+        const cur = v.currentSrc || v.getAttribute('src') || '';
+        if (cur.indexOf(at.clip.src) < 0) { v.setAttribute('src', at.clip.src); try { v.load && v.load(); } catch (e) {} }
+        await ready(v);
+        if (!v.duration || !isFinite(v.duration) || v.duration <= 0) return;
+        await seekTo(v, Math.min(v.duration - 1e-3, (Number(at.clip.in) || 0) + at.localOffsetMs / 1000));
+        return;
+      }
+    }
+    await ready(v);
+    if (!v.duration || !isFinite(v.duration) || v.duration <= 0) return;
+    await seekTo(v, (tMs / 1000) % v.duration);
   }
 
   // root = the element/document to freeze; tMs = timeline position in ms

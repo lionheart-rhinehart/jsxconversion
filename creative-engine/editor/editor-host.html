@@ -33,11 +33,14 @@
   // the design's own folder — so its relative asset paths resolve inside the iframe
   const baseHref = new URL(htmlPath, location.href).href.replace(/[^/]*$/, '');
 
-  // demo media library (Phase-3 manifest will feed this for real)
+  // demo media library (Phase-3 manifest will feed this for real). Paths are ORIGIN-
+  // ABSOLUTE ("/campaigns/…") so they resolve correctly both in the host page AND when
+  // the driver/swap sets them on a <video> INSIDE the iframe (whose <base> is the
+  // campaign folder — a host-relative "../../" path would resolve wrong there).
   const mediaLibrary = [
-    { src: '../../campaigns/westfield-100-off/assets/vid/ad1.mp4', type: 'video', label: 'ad1 footage' },
-    { src: '../../campaigns/westfield-100-off/assets/vid/ad2.mp4', type: 'video', label: 'ad2 footage' },
-    { src: '../../campaigns/westfield-100-off/assets/vid/ad3.mp4', type: 'video', label: 'ad3 footage' },
+    { src: '/campaigns/westfield-100-off/assets/vid/ad1.mp4', type: 'video', label: 'ad1 footage' },
+    { src: '/campaigns/westfield-100-off/assets/vid/ad2.mp4', type: 'video', label: 'ad2 footage' },
+    { src: '/campaigns/westfield-100-off/assets/vid/ad3.mp4', type: 'video', label: 'ad3 footage' },
   ];
 
   // LIVE Kraken bridge (Phase C). These hit the serve.mjs /kraken/* routes on the same
