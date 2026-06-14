@@ -43,6 +43,12 @@ import puppeteer from "puppeteer";
 
 const PROJECT_ROOT = process.cwd();
 
+// Supersample factor: capture each frame at SS× the logical size (deviceScaleFactor),
+// then ffmpeg downscales to the logical 1080×1920. This is supersampling anti-aliasing —
+// it matches the crispness of the in-browser editor (which renders on a high-DPI display)
+// instead of the softer edges a 1× screenshot produces. Costs ~2× render time + memory.
+const SS = 2;
+
 // ---------------------------------------------------------------------------
 //  Arg parsing (tiny, no deps)
 // ---------------------------------------------------------------------------
@@ -161,55 +167,110 @@ function creativesIn(exportDir) {
 }
 
 function discoverCampaigns(workdir) {
-  return findExportDirs(workdir).map((exportDir, i) => ({
-    index: i + 1,
+  return findExportDirs(workdir).map((exportDir) => ({
+    kind: "export",
     exportDir,
     name: projectNameFor(exportDir),
     title: titleFromIndex(exportDir),
     creatives: creativesIn(exportDir),
-  })).sort((a, b) => a.exportDir.localeCompare(b.exportDir))
-    .map((c, i) => ({ ...c, index: i + 1 }));
+  })).sort((a, b) => a.exportDir.localeCompare(b.exportDir));
 }
 
 // ---------------------------------------------------------------------------
-//  Render one creative HTML -> MP4
+//  Review-gallery discovery
+//   A "deck" = an .html that builds its creatives live (loads review.js +
+//   campaign-b.js into #gallery) rather than shipping loose per-creative HTML.
+//   Each deck is one location; the fixed SELECT set lives in its sibling
+//   review.js. We render only those preselected creatives.
 // ---------------------------------------------------------------------------
-async function renderCreative(browser, htmlPath, outPath, cli) {
-  const page = await browser.newPage();
-  const framesDir = outPath.replace(/\.mp4$/i, "") + ".frames";
-  rmSync(framesDir, { recursive: true, force: true });
-  mkdirSync(framesDir, { recursive: true });
+function walkFiles(root, fn, depth = 0) {
+  if (depth > 8) return;
+  let entries;
+  try { entries = readdirSync(root, { withFileTypes: true }); } catch { return; }
+  for (const e of entries) {
+    if (e.name.startsWith(".") || e.name === "node_modules") continue;
+    const full = join(root, e.name);
+    if (e.isDirectory()) walkFiles(full, fn, depth + 1);
+    else fn(full);
+  }
+}
 
-  // Pass-through rAF counter installed BEFORE the page's own scripts run.
-  // Real rAF still fires (load never hangs); we only learn whether rAF is used.
+function parseSelectIds(reviewPath) {
+  try {
+    const js = readFileSync(reviewPath, "utf8");
+    const m = js.match(/const\s+SELECT\s*=\s*\[([\s\S]*?)\]/);
+    if (!m) return [];
+    return Array.from(m[1].matchAll(/["']([^"']+)["']/g)).map((x) => x[1]);
+  } catch { return []; }
+}
+
+function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
+
+function discoverGalleryDecks(workdir) {
+  const decks = [];
+  walkFiles(workdir, (file) => {
+    if (!/\.html?$/i.test(file)) return;
+    let html;
+    try { html = readFileSync(file, "utf8"); } catch { return; }
+    if (!/review\.js/.test(html) || !/id=["']gallery["']/.test(html)) return;
+    const dir = dirname(file);
+    const selectIds = parseSelectIds(join(dir, "review.js"));
+    if (!selectIds.length) return;
+    const city = (html.match(/AA_REVIEW_CITY\s*=\s*["']([^"']+)["']/) || [])[1] || basename(dir);
+    decks.push({
+      kind: "gallery",
+      deckHtml: file,
+      name: slug(city),
+      city,
+      citySlug: slug(city),
+      title: `${city} — review set`,
+      selectIds,
+      creatives: selectIds,
+    });
+  });
+  return decks.sort((a, b) => a.deckHtml.localeCompare(b.deckHtml));
+}
+
+// ---------------------------------------------------------------------------
+//  rAF pass-through counter — installed BEFORE the page's own scripts run.
+//  Real rAF still fires (load never hangs); we only learn whether rAF is used.
+// ---------------------------------------------------------------------------
+async function installRafCounter(page) {
   await page.evaluateOnNewDocument(() => {
     window.__rafCount = 0;
     const real = window.requestAnimationFrame.bind(window);
     window.requestAnimationFrame = (cb) => { window.__rafCount++; return real(cb); };
   });
+}
+
+// ---------------------------------------------------------------------------
+//  Capture the element tagged [data-j2m-root="1"] on an already-prepared page,
+//  frame-step it deterministically, and encode -> MP4. Shared by both the
+//  standalone-export path and the review-gallery path.
+//    opts.rafBenign — suppress the rAF warning (e.g. gallery count-ups that we
+//      intentionally let settle to their final value before capture).
+// ---------------------------------------------------------------------------
+async function captureAndEncode(page, outPath, cli, opts = {}) {
+  const framesDir = outPath.replace(/\.mp4$/i, "") + ".frames";
+  rmSync(framesDir, { recursive: true, force: true });
+  mkdirSync(framesDir, { recursive: true });
 
   let used = { width: 1080, height: 1920, fps: cli.fps || 30, seconds: 0 };
   try {
-    await page.setViewport({ width: 1080, height: 1920, deviceScaleFactor: 1 });
-    // 'load' (not networkidle0): looping autoplay media can keep the network
-    // busy forever. We wait for fonts + video metadata explicitly below.
-    await page.goto(pathToFileURL(htmlPath).href, { waitUntil: "load", timeout: 120000 });
-    await page.evaluate(async () => { try { await document.fonts.ready; } catch { /*noop*/ } });
-
     const meta = await page.evaluate(() => {
-      const root =
-        document.querySelector(".stage") ||
-        document.querySelector("[data-creative-root]") ||
-        document.body.firstElementChild ||
-        document.documentElement;
-      root.setAttribute("data-j2m-root", "1");
-      root.style.position = "fixed"; root.style.top = "0"; root.style.left = "0"; root.style.margin = "0";
+      const root = document.querySelector('[data-j2m-root="1"]');
       const r = root.getBoundingClientRect();
       const w = Math.round(r.width || root.offsetWidth || 1080);
       const h = Math.round(r.height || root.offsetHeight || 1920);
 
       const vids = Array.from(root.querySelectorAll("video"));
-      vids.forEach((v) => { try { v.pause(); v.loop = false; } catch { /*noop*/ } });
+      // Keep loop=true: if a per-frame seek lands on the clip's exact end, a
+      // loop=false element enters the 'ended' state and then SILENTLY IGNORES
+      // every backward seek — freezing the footage on its last frame for the
+      // rest of the render. loop=true never ends, so wrap-around seeks work.
+      vids.forEach((v) => { try { v.pause(); v.loop = true; } catch { /*noop*/ } });
+      let maxVideoDur = 0;
+      for (const v of vids) { const d = Number(v.duration); if (isFinite(d) && d > maxVideoDur) maxVideoDur = d; }
 
       // loop length = most common duration among infinite-iteration animations
       const counts = new Map();
@@ -224,20 +285,26 @@ async function renderCreative(browser, htmlPath, outPath, cli) {
       let loopSec = null, best = -1;
       for (const [sec, n] of counts) if (n > best) { best = n; loopSec = sec; }
       const attr = parseFloat(root.getAttribute("data-loop-seconds"));
-      return { w, h, loopSec: isFinite(attr) ? attr : loopSec, hasVideo: vids.length > 0, rafCount: window.__rafCount || 0 };
+      return {
+        w, h, loopSec: isFinite(attr) ? attr : loopSec,
+        hasVideo: vids.length > 0, maxVideoDur, rafCount: window.__rafCount || 0,
+      };
     });
 
     used.width = meta.w;
     used.height = meta.h;
     used.fps = cli.fps || 30;
-    used.seconds = cli.seconds || meta.loopSec || 8;
+    // Prefer an explicit loop; else a looping CSS animation's period; else the
+    // footage's own duration (so a clip loops seamlessly); else 8s.
+    used.seconds = cli.seconds || meta.loopSec ||
+      (meta.hasVideo && meta.maxVideoDur ? Math.min(meta.maxVideoDur, 15) : 8);
 
-    if (meta.rafCount > 0) {
-      console.error(`  [warn] ${basename(htmlPath)} uses requestAnimationFrame (${meta.rafCount} calls). ` +
+    if (meta.rafCount > 0 && !opts.rafBenign) {
+      console.error(`  [warn] ${basename(outPath)} uses requestAnimationFrame (${meta.rafCount} calls). ` +
         `CSS/video are rendered deterministically; rAF count-ups/typewriters are best-effort — eyeball this one.`);
     }
 
-    await page.setViewport({ width: used.width, height: used.height, deviceScaleFactor: 1 });
+    await page.setViewport({ width: used.width, height: used.height, deviceScaleFactor: SS });
     if (meta.hasVideo) {
       await page.evaluate(() => Promise.all(
         Array.from(document.querySelectorAll('[data-j2m-root="1"] video')).map((v) =>
@@ -261,7 +328,11 @@ async function renderCreative(browser, htmlPath, outPath, cli) {
         await Promise.all(vids.map((v) => {
           const d = v.duration;
           if (!isFinite(d) || d <= 0) return Promise.resolve();
-          const target = (t / 1000) % d;
+          let target = (t / 1000) % d;
+          // Never land exactly on the end — a seek to duration trips 'ended'
+          // and pins the element. Clamp just shy of the last frame (<=50ms).
+          const cap = d - Math.min(0.05, d / 2);
+          if (target > cap) target = cap;
           if (Math.abs(v.currentTime - target) < 1e-3) return Promise.resolve();
           return new Promise((res) => {
             let done = false;
@@ -275,9 +346,7 @@ async function renderCreative(browser, htmlPath, outPath, cli) {
       const buf = await root.screenshot({ type: "png" });
       writeFileSync(join(framesDir, `f_${String(i).padStart(6, "0")}.png`), buf);
     }
-    await page.close();
   } catch (err) {
-    try { await page.close(); } catch { /*noop*/ }
     rmSync(framesDir, { recursive: true, force: true });
     throw err;
   }
@@ -287,13 +356,127 @@ async function renderCreative(browser, htmlPath, outPath, cli) {
   return used;
 }
 
+// ---------------------------------------------------------------------------
+//  Render one standalone-export creative HTML -> MP4
+// ---------------------------------------------------------------------------
+async function renderCreative(browser, htmlPath, outPath, cli) {
+  const page = await browser.newPage();
+  await installRafCounter(page);
+  try {
+    await page.setViewport({ width: 1080, height: 1920, deviceScaleFactor: SS });
+    // 'load' (not networkidle0): looping autoplay media can keep the network
+    // busy forever. We wait for fonts + video metadata explicitly below.
+    await page.goto(pathToFileURL(htmlPath).href, { waitUntil: "load", timeout: 120000 });
+    await page.evaluate(async () => { try { await document.fonts.ready; } catch { /*noop*/ } });
+    await page.evaluate(() => {
+      const root =
+        document.querySelector(".stage") ||
+        document.querySelector("[data-creative-root]") ||
+        document.body.firstElementChild ||
+        document.documentElement;
+      root.setAttribute("data-j2m-root", "1");
+      root.style.position = "fixed"; root.style.top = "0"; root.style.left = "0"; root.style.margin = "0";
+    });
+    const used = await captureAndEncode(page, outPath, cli);
+    await page.close();
+    return used;
+  } catch (err) {
+    try { await page.close(); } catch { /*noop*/ }
+    throw err;
+  }
+}
+
+// ---------------------------------------------------------------------------
+//  Render a review-gallery deck -> one MP4 per preselected creative.
+//
+//  The deck (e.g. "…Campaign B - Carmel.html") doesn't ship loose per-creative
+//  HTML — it builds each creative live via window.CB.buildStory(c, a). review.js
+//  picks a fixed SELECT set and applies the location's call-out text. We reuse
+//  that exact pipeline: for each id we rebuild the creative full-size (scale 1),
+//  copy the location call-out the page already rendered, let the count-ups
+//  settle, then frame-step + encode through the shared capture path.
+// ---------------------------------------------------------------------------
+async function renderGalleryDeck(browser, deck, outDir, cli, receipt) {
+  const page = await browser.newPage();
+  await installRafCounter(page);
+  try {
+    await page.setViewport({ width: 1080, height: 1920, deviceScaleFactor: SS });
+    await page.goto(pathToFileURL(deck.deckHtml).href, { waitUntil: "load", timeout: 120000 });
+    await page.waitForFunction(
+      () => window.CB && window.CB.buildStory && Array.isArray(window.CB.FLAT),
+      { timeout: 30000 });
+    await page.evaluate(async () => { try { await document.fonts.ready; } catch { /*noop*/ } });
+
+    for (const id of deck.selectIds) {
+      const outPath = join(outDir, `${deck.citySlug}-${id}.mp4`);
+      process.stdout.write(`  • ${deck.city} ${id} … `);
+      try {
+        const built = await page.evaluate((cid) => {
+          const { buildStory, tickCounters, entranceA, FLAT } = window.CB;
+          const it = FLAT.find((f) => f.c.id === cid);
+          if (!it) return { ok: false, err: `creative id "${cid}" not found in this deck` };
+          const prev = document.getElementById("__j2m_host");
+          if (prev) prev.remove();
+          const host = document.createElement("div");
+          host.id = "__j2m_host";
+          host.setAttribute("style",
+            "position:fixed;top:0;left:0;margin:0;padding:0;z-index:2147483647;background:#000;");
+          const frame = document.createElement("div");
+          frame.className = "frame";
+          frame.style.setProperty("--scale", "1");
+          const story = buildStory(it.c, it.a);
+          frame.appendChild(story);
+          host.appendChild(frame);
+          document.body.appendChild(host);
+          // Copy the location-specific call-out review.js already applied to the
+          // gallery (buildStory hardcodes the deck's default city otherwise).
+          const sample = document.querySelector("#gallery .s-callout");
+          const cityText = sample ? sample.textContent
+            : (window.AA_REVIEW_CITY ? window.AA_REVIEW_CITY + " Sport Parents" : null);
+          if (cityText) story.querySelectorAll(".s-callout").forEach((el) => { el.textContent = cityText; });
+          story.setAttribute("data-j2m-root", "1");
+          tickCounters(story);
+          entranceA(story);
+          if (window.AAReel) window.AAReel.scan(story);
+          story.querySelectorAll("video").forEach((v) => {
+            try { v.loop = true; v.muted = true; v.currentTime = 0; v.play().catch(() => {}); } catch { /*noop*/ }
+          });
+          return { ok: true };
+        }, id);
+        if (!built.ok) throw new Error(built.err);
+
+        // Let count-ups (1700ms + 250ms delay) finish + footage buffer before capture.
+        await new Promise((r) => setTimeout(r, 2300));
+        const used = await captureAndEncode(page, outPath, cli, { rafBenign: true });
+        await page.evaluate(() => { const h = document.getElementById("__j2m_host"); if (h) h.remove(); });
+
+        const sizeMB = (statSync(outPath).size / 1e6).toFixed(1);
+        console.log(`${used.width}x${used.height} @${used.fps}fps ${used.seconds}s -> ${basename(outPath)} (${sizeMB} MB)`);
+        receipt.push({ file: `${deck.city} ${id}`, ok: true, outPath, ...used, sizeMB });
+      } catch (err) {
+        console.log(`FAILED — ${err.message}`);
+        receipt.push({ file: `${deck.city} ${id}`, ok: false, error: err.message });
+      }
+    }
+    await page.close();
+  } catch (err) {
+    try { await page.close(); } catch { /*noop*/ }
+    throw err;
+  }
+}
+
 function encodeFrames(framesDir, used, outPath) {
+  // Frames were captured at SS× (e.g. 2160×3840). Downscale to the logical target
+  // (1080×1920) with Lanczos = supersampling anti-aliasing → crisp edges/text.
+  const W = Math.round(used.width / 2) * 2;   // even dims (yuv420p requirement)
+  const H = Math.round(used.height / 2) * 2;
   const args = [
     "-y", "-hide_banner", "-loglevel", "error",
     "-framerate", String(used.fps),                 // BEFORE -i = input rate
     "-i", join(framesDir, "f_%06d.png"),
-    "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2",      // yuv420p needs even dims
-    "-c:v", "libx264", "-pix_fmt", "yuv420p", "-preset", "medium", "-crf", "18",
+    "-vf", `scale=${W}:${H}:flags=lanczos`,          // SS× → target, high-quality downscale
+    "-c:v", "libx264", "-pix_fmt", "yuv420p", "-preset", "slow", "-crf", "16",
+    "-tune", "film",                                 // preserve grain/detail, less smoothing
     "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709",
     "-movflags", "+faststart",
     outPath,
@@ -328,9 +511,10 @@ async function main() {
     }
   }
 
-  const campaigns = discoverCampaigns(workdir);
+  const campaigns = [...discoverCampaigns(workdir), ...discoverGalleryDecks(workdir)]
+    .map((c, i) => ({ ...c, index: i + 1 }));
   if (campaigns.length === 0) {
-    throw new Error(`No campaigns found under ${workdir} (looked for a folder named 'export' with index.html + creatives).`);
+    throw new Error(`No campaigns found under ${workdir} (looked for an 'export' folder with index.html + creatives, or a review-gallery deck loading review.js).`);
   }
 
   // ---- LIST MODE ---------------------------------------------------------
@@ -361,18 +545,22 @@ async function main() {
 
   const receipt = [];
   try {
-    for (const file of pick.creatives) {
-      const htmlPath = join(pick.exportDir, file);
-      const outPath = join(outDir, basename(file).replace(/\.html?$/i, "") + ".mp4");
-      process.stdout.write(`  • ${file} … `);
-      try {
-        const used = await renderCreative(browser, htmlPath, outPath, args);
-        const sizeMB = (statSync(outPath).size / 1e6).toFixed(1);
-        console.log(`${used.width}x${used.height} @${used.fps}fps ${used.seconds}s -> ${basename(outPath)} (${sizeMB} MB)`);
-        receipt.push({ file, ok: true, outPath, ...used, sizeMB });
-      } catch (err) {
-        console.log(`FAILED — ${err.message}`);
-        receipt.push({ file, ok: false, error: err.message });
+    if (pick.kind === "gallery") {
+      await renderGalleryDeck(browser, pick, outDir, args, receipt);
+    } else {
+      for (const file of pick.creatives) {
+        const htmlPath = join(pick.exportDir, file);
+        const outPath = join(outDir, basename(file).replace(/\.html?$/i, "") + ".mp4");
+        process.stdout.write(`  • ${file} … `);
+        try {
+          const used = await renderCreative(browser, htmlPath, outPath, args);
+          const sizeMB = (statSync(outPath).size / 1e6).toFixed(1);
+          console.log(`${used.width}x${used.height} @${used.fps}fps ${used.seconds}s -> ${basename(outPath)} (${sizeMB} MB)`);
+          receipt.push({ file, ok: true, outPath, ...used, sizeMB });
+        } catch (err) {
+          console.log(`FAILED — ${err.message}`);
+          receipt.push({ file, ok: false, error: err.message });
+        }
       }
     }
   } finally {
