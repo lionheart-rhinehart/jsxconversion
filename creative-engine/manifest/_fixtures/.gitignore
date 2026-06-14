@@ -1,0 +1,4 @@
+# Reproducible from make-collision-fixture.mjs + tag-media.mjs — don't commit.
+collision/
+real-picker-manifest.json
+media-manifest.json
