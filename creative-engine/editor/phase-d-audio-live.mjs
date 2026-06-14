@@ -141,7 +141,7 @@ try {
   await page.waitForFunction(() => (window.__CE_EDITOR__.getOverrides()['f0:e0'].montage.audio || {}).src, { timeout: 4000 });
   await clickEl('.ce-tr-play');
   await sleep(1100);
-  const msync = await page.evaluate(() => { const v = document.querySelector('.ce-tr-video'); const a = document.querySelector('.ce-aud-el'); return { vPaused: v ? v.paused : true, aHas: !!a, aPaused: a ? a.paused : true, aT: a ? a.currentTime : 0 }; });
+  const msync = await page.evaluate(() => { const v = document.querySelector('.ce-tr-stage .ce-tr-vid.ce-on') || document.querySelector('.ce-tr-vid'); const a = document.querySelector('.ce-aud-el'); return { vPaused: v ? v.paused : true, aHas: !!a, aPaused: a ? a.paused : true, aT: a ? a.currentTime : 0 }; });
   log('  ' + JSON.stringify(msync));
   assert(msync.vPaused === false && msync.aHas && msync.aPaused === false && msync.aT > 0.1, 'montage preview video + music play together');
   await clickEl('.ce-tr-play');

@@ -1063,6 +1063,9 @@ export function mountEditor(opts) {
     if (!trimPlay) return;
     try { cancelAnimationFrame(trimPlay.raf); } catch (e) {}
     try { trimPlay.video.pause(); } catch (e) {}
+    // ▸ Preview stacks <video>s in a stage div (trimPlay.video is the div, not a media element),
+    // so pause them explicitly too.
+    if (els.montTrimmer) els.montTrimmer.querySelectorAll('.ce-tr-vid').forEach((v) => { try { v.pause(); } catch (e) {} });
     trimPlay = null;
     audioStop();                 // the single Play drives the <audio> too — stop it together
   }
@@ -1252,7 +1255,7 @@ export function mountEditor(opts) {
       : `Clip ${activeClip + 1} — drag the ends to trim · drag the middle to slide · click the bar to scrub`;
     host.innerHTML =
       `<div class="ce-tr-head"><span class="ce-tr-hint">${headTxt}</span></div>
-       <video class="ce-tr-video" muted playsinline preload="auto"></video>
+       ${montMode ? '<div class="ce-tr-stage"></div>' : '<video class="ce-tr-video" muted playsinline preload="auto"></video>'}
        <div class="ce-tr-controls">
          <div class="ce-tr-transport">
            <button class="ce-btn ce-tr-play" title="Play">▶ Play</button>
@@ -1285,43 +1288,64 @@ export function mountEditor(opts) {
     const isPlaying = () => !!(trimPlay && trimPlay.video === video && !video.paused);
 
     if (montMode) {
-      // ── montage-wide music: the preview plays the WHOLE montage (rAF driver modeled on
-      // startMontageDriver, using the shared montageAt math), the <audio> plays the picked
-      // track — both started by the one Play button. No per-clip trim bar. ──────────────
+      // ── ▸ Preview: play the WHOLE montage smoothly. One <video> per distinct clip src is stacked
+      // in the stage and ALL play continuously (muted), each looping its own [in,out] segment — so
+      // every clip always has a live frame. Switching clips is then a pure OPACITY flip with nothing
+      // to "wake up": no reload, no seek-on-show, no blank-frame flash. The <audio> rides Play. ──
+      const stage = host.querySelector('.ce-tr-stage');
       const clips = (montageState && montageState.clips) || [], fps = 30;
-      // read total live each frame so the length slider takes effect mid-preview
       const totalMsNow = () => Math.max(1, (Number(montageState && montageState.totalDuration) || 1) * 1000);
-      if (clips[0]) video.src = clips[0].src;
-      let curSrc = null, t0 = null, lastTMs = 0;
+      // one <video> per DISTINCT src, with its trimmed segment (first clip that uses it)
+      const segs = new Map();
+      clips.forEach((c) => {
+        if (segs.has(c.src)) return;
+        const v = document.createElement('video');
+        v.className = 'ce-tr-vid'; v.muted = true; v.playsInline = true; v.preload = 'auto'; v.loop = false; v.src = c.src;
+        const seg = { el: v, in: Math.max(0, Number(c.in) || 0), out: Number(c.out) || (Number(c.in) || 0) + 1 };
+        v.addEventListener('loadedmetadata', () => { try { v.currentTime = seg.in; } catch (e) {} }, { once: true });
+        try { v.load(); } catch (e) {}
+        stage.appendChild(v); segs.set(c.src, seg);
+      });
+      let shown = null, t0 = null, lastTMs = 0;
+      const montIsPlaying = () => !!(trimPlay && trimPlay.video === stage && shown && !shown.paused);
+      function warmAndLoop() {            // keep every clip playing inside its own [in,out] segment
+        segs.forEach((seg) => {
+          const v = seg.el;
+          if (v.readyState >= 2 && (v.currentTime >= seg.out - 0.02 || v.currentTime < seg.in - 0.05)) {
+            try { v.currentTime = seg.in; } catch (e) {}
+          }
+          if (v.paused) { try { v.play(); } catch (e) {} }
+        });
+      }
+      function show(src) {                // opacity-flip to the (already-playing) clip — instant, no seek
+        const seg = segs.get(src); if (!seg) return; const v = seg.el;
+        if (shown && shown !== v) { shown.classList.remove('ce-on'); shown.muted = true; }
+        if (shown !== v) { v.classList.add('ce-on'); shown = v; }
+        v.muted = !wantNative();
+      }
       function montStep(now) {
-        if (!trimPlay || trimPlay.video !== video || !video.isConnected) { stopTrimPlay(); resetPlayBtn(); return; }
+        if (!trimPlay || trimPlay.video !== stage || !stage.isConnected) { stopTrimPlay(); resetPlayBtn(); return; }
         if (t0 == null) t0 = now;
         const totalMs = totalMsNow();
         const tMs = (now - t0) % totalMs;
         if (tMs < lastTMs) audioRewind();   // wrapped past the total → loop the music back to its start
         lastTMs = tMs;
+        warmAndLoop();
         const at = montageAt(clips, fps, tMs);
-        if (at && at.clip) {
-          const want = at.clip.src, localT = (Number(at.clip.in) || 0) + at.localOffsetMs / 1000;
-          if (want !== curSrc) {
-            curSrc = want; video.setAttribute('src', want);
-            try { video.load && video.load(); } catch (e) {}
-            video.addEventListener('loadeddata', function once() { try { video.currentTime = localT; video.play(); } catch (e) {} }, { once: true });
-          } else if (video.readyState >= 2 && Math.abs(video.currentTime - localT) > 0.3) { try { video.currentTime = localT; } catch (e) {} }
-          else { try { if (video.paused) video.play(); } catch (e) {} }
-        }
+        if (at && at.clip) show(at.clip.src);
         if (timeEl) timeEl.textContent = (tMs / 1000).toFixed(1) + 's';
         setHeadLine();
         trimPlay.raf = requestAnimationFrame(montStep);
       }
       function startPlay() {
         stopTrimPlay();
-        curSrc = null; t0 = null; lastTMs = 0; setVideoMute();
-        trimPlay = { video, raf: requestAnimationFrame(montStep) };
+        t0 = null; lastTMs = 0; shown = null;
+        trimPlay = { video: stage, raf: requestAnimationFrame(montStep) };
+        warmAndLoop();
         audioStart();
         playBtn.textContent = '⏸ Pause';
       }
-      playBtn.addEventListener('click', () => { isPlaying() ? pausePlay() : startPlay(); });
+      playBtn.addEventListener('click', () => { montIsPlaying() ? pausePlay() : startPlay(); });
       // in-preview length slider (bound to the same total; commitMontage floors at the cycle)
       const trRange = host.querySelector('.ce-tr-total-range');
       const trRead = host.querySelector('.ce-tr-total-read');

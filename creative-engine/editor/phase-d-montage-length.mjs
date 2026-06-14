@@ -65,15 +65,41 @@ try {
   // ▸ Preview → Play → the video must cycle through ALL three clip sources
   await clickEl('.ce-mont-music');
   await page.waitForFunction(() => document.querySelector('.ce-mont-trimmer.ce-on'), { timeout: 6000 });
+  // STACKED model: one preloaded <video> per distinct src — switched by opacity, never reloaded
+  await page.waitForFunction(() => document.querySelectorAll('.ce-tr-stage .ce-tr-vid').length === 3, { timeout: 6000 });
+  assert(true, '3 stacked .ce-tr-vid elements (one preloaded clip per src)');
+  // snapshot each stage video's src so we can prove none ever reloads
+  const srcs0 = await page.evaluate(() => [...document.querySelectorAll('.ce-tr-vid')].map((v) => v.getAttribute('src')));
   await clickEl('.ce-tr-play');
   const seen = new Set();
+  let onCountBad = false, srcReassigned = false, readyDropped = false, notAllWarm = false;
+  let warmSamples = 0;
   for (let i = 0; i < 32; i++) {   // ~8s of sampling (> one 6s cycle)
-    const src = await page.evaluate(() => { const v = document.querySelector('.ce-tr-video'); return v ? (v.currentSrc || v.src || '') : ''; });
-    [1, 2, 3].forEach((n) => { if (src.includes(`ad${n}.mp4`)) seen.add(n); });
+    const snap = await page.evaluate(() => {
+      const vids = [...document.querySelectorAll('.ce-tr-vid')];
+      const on = vids.filter((v) => v.classList.contains('ce-on'));
+      const visible = on[0];
+      return {
+        onCount: on.length,
+        visibleSrc: visible ? (visible.currentSrc || visible.src || '') : '',
+        srcs: vids.map((v) => v.getAttribute('src')),
+        anyColdReload: vids.some((v) => v.readyState === 0 || v.networkState === 3),  // HAVE_NOTHING / NO_SOURCE = reload
+        allWarm: vids.length > 0 && vids.every((v) => !v.paused),                     // every clip kept playing
+      };
+    });
+    [1, 2, 3].forEach((n) => { if (snap.visibleSrc.includes(`ad${n}.mp4`)) seen.add(n); });
+    if (snap.onCount > 1) onCountBad = true;                     // never two clips visible at once
+    if (JSON.stringify(snap.srcs) !== JSON.stringify(srcs0)) srcReassigned = true;  // no element reloaded
+    if (snap.anyColdReload) readyDropped = true;                 // visible clip never decodes from cold
+    if (i >= 4) { if (snap.allWarm) warmSamples++; else notAllWarm = true; }   // after warm-up, all stay playing
     await sleep(250);
   }
-  log(`  clip sources seen during preview: ${[...seen].sort().join(', ')}`);
+  log(`  clip sources seen during preview: ${[...seen].sort().join(', ')}; warm samples ${warmSamples}`);
   assert(seen.has(1) && seen.has(2) && seen.has(3), 'preview cycled through ALL three clips (not stuck on clip 1)');
+  assert(!onCountBad, 'exactly one clip visible at a time (clean opacity switch)');
+  assert(!srcReassigned, 'NO stage <video> ever had its src reassigned (no reload = no glitch)');
+  assert(!readyDropped, 'no stage clip ever hit HAVE_NOTHING/NO_SOURCE (nothing reloads from cold)');
+  assert(!notAllWarm && warmSamples > 0, 'ALL stacked clips stayed playing (warm) — the incoming clip never wakes from pause, so no blank-frame flash on a cut');
   await page.screenshot({ path: path.join(OUT, 'd-length-preview.png') });
   await clickEl('.ce-tr-play');   // pause
 
