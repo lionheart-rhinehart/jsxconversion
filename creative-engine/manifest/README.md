@@ -15,7 +15,7 @@ is impossible**. The cure: stop selecting by name. Give every asset a stable ide
 | File | Role |
 |---|---|
 | `vocab.mjs` | Controlled vocabulary — maps raw words → canonical facet values (sport, drill, age, brand, gender) + the mime→motion/static rule. The dictionary, extend freely. |
-| `manifest.mjs` | Library core — stable 6-hex `id` (deterministic hash of source identity), descriptive `slug` (tags + `-id`, collision-proof), load/save/upsert, human-tag preservation. |
+| `manifest.mjs` | Library core — stable 10-hex `id` (deterministic hash of source identity; ~1.1T space, no realistic collision until ~1.2M assets), descriptive `slug` (tags + `-id`, collision-proof), load/save/upsert, human-tag preservation. |
 | `tag-media.mjs` | The builder/CLI — scans a media folder, derives tags from **hard signal only** (filename, folder, optional `<file>.meta.json` sidecar, extension). Anything too thin to select by gets **flagged `needsReview`** — never silently guessed, never dropped (Phase-1 discipline). |
 | `select.mjs` | The query engine/CLI — `select(manifest, {sport,drill,age,brand,kind,text})` → ranked matches. Facet hits score high; a facet the row *contradicts* is a hard miss (excluded); free-text is a tiebreaker. |
 
@@ -23,8 +23,8 @@ is impossible**. The cure: stop selecting by name. Give every asset a stable ide
 
 ```jsonc
 {
-  "id": "aba3ed",
-  "slug": "soccer-agility-ladder-quick-feet-u12-aba3ed",   // descriptive + id → unique
+  "id": "aba3ed3e8f",
+  "slug": "soccer-agility-ladder-quick-feet-u12-aba3ed3e8f",   // descriptive + id → unique
   "file": "agility-drill.mp4",                              // raw name COLLIDES with 4 others
   "kind": "motion",
   "tags": { "sport": ["soccer"], "drill": ["agility","ladder","quick-feet"],
