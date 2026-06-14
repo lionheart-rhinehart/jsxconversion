@@ -129,15 +129,45 @@ Nothing renders until a human approves — the safety net that makes hands-off m
 
 ---
 
+## The view+comment lane — it already exists in Kraken (verified 2026-06-14)
+
+This was checked against the live Kraken repo so the contract is exact, not assumed. **The
+"comment" half of the toggle needs NOTHING from this repo's bundle** — Kraken already owns it:
+
+| Kraken piece (verified) | What it already does |
+|---|---|
+| `components/approvals/edit-comment-mode-toggle.tsx` | The segmented toggle itself — `export type ReviewMode = 'edit' \| 'comment'`. Used in both client + admin review screens. |
+| `app/portal/review/[id]/review-client.tsx` | **Already renders HTML content in an `<iframe>`** (`iframeUrl`, "render iframe directly") with a **separate annotation iframe**, and even injects CSS into the iframe to fix `100vh` viewport units. The mount target already exists. |
+| `components/approvals/annotation-overlay.tsx` + `lib/feedback-widget/src/AnnotationTool.ts` | The comment layer is a **coordinate-based SVG overlaid ON TOP of the surface** (normalized `{x,y,width,height}` against a `canvasDimensions` reference; the tool draws on its own SVG via `getBoundingClientRect` scaling). It does **not** hook into DOM elements inside the content — so it overlays an iframe exactly as it overlays an `<img>`. |
+
+**The mapping Kraken wires (the only integration work):**
+
+- `ReviewMode === 'comment'` → mount the bundle with **`permissions: 'view'`** (read-only) and let
+  the existing annotation overlay sit on top. The bundle's view mode does not capture pointer events
+  for editing (verified: `body` lacks `ce-edit`, dblclick is inert), so the overlay receives the draw
+  events cleanly.
+- `ReviewMode === 'edit'` → mount with **`permissions: 'edit'`** (the surgical editor). Note: this
+  REPLACES Kraken's legacy copy/media-replace "edit" with the real design editor for `embed` rows.
+
+**⚠️ One real gotcha — the annotation canvas is landscape by default.**
+`AnnotationOverlay` defaults `canvasDimensions = { width: 1920, height: 1080 }`. Our creatives are
+**vertical 1080×1920**. A comment drawn near the top of a vertical ad will land in the wrong place
+unless Kraken passes `canvasDimensions={{ width: 1080, height: 1920 }}` (or reads the design's real
+frame size) when overlaying an `embed`. Document/handle this on the Kraken side.
+
+---
+
 ## The three things to build in the Kraken repo
 
 1. **Embed render path** — given a content row of kind `embed`, `<iframe src={liveHtmlUrl}>` instead of an
    `<img>`. Poster PNG stays as the fallback/thumbnail.
 2. **Permission toggle** — `import { mountEditor }` from the Phase-4.1 bundle
    (`creative-engine/editor/dist/creative-engine-editor.bundle.js`) and pass `permissions: 'view' | 'edit'`
-   (exact mount contract: `creative-engine/editor/dist/README.md`). `'view'` reuses the existing W3C
-   comment/highlight UI; `'edit'` unlocks click-to-retype / swap / drag. The same bundle serves both
-   lanes — verified by `dist/embed-evidence.mjs` (the flag toggles view⟷edit, state + behavior, 10/10).
+   (exact mount contract: `creative-engine/editor/dist/README.md`). Map Kraken's existing
+   `ReviewMode` to it: **`'comment'` → `permissions:'view'`** (the annotation overlay rides on top —
+   see "The view+comment lane" above), **`'edit'` → `permissions:'edit'`** (click-to-retype / swap /
+   drag). The same bundle serves both lanes — verified by `dist/embed-evidence.mjs` (the flag toggles
+   view⟷edit, state + behavior, 10/10). Mind the vertical `canvasDimensions` gotcha noted above.
 3. **Persist overrides + set status** — on save, write the override bag (`overrides jsonb`, per above) and
    set `client_edited`/`client_media_replaced`; on approve, set `status='approved'`. That's the entire
    render trigger — the poller in this repo does the rest.

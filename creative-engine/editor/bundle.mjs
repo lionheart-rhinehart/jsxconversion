@@ -36,10 +36,15 @@ const applySrc = read('apply-overrides.js');
 let montage = read('montage.mjs');
 let editor = read('editor.js');
 
-// 1) montage.mjs → module-local: drop the `export ` keyword so its functions live at
-//    the bundle's module scope (that's exactly what editor.js's import expected). It
-//    imports nothing at the top level, so it inlines verbatim otherwise.
-montage = montage.replace(/^export\s+(function|const|let|var)\s/gm, '$1 ');
+// 1) montage.mjs → module-local: drop EVERY leading `export ` so its decls live at the
+//    bundle's module scope (that's exactly what editor.js's import expected). Strip ALL
+//    of them, incl. `export async function` — leaving the node-only render helpers
+//    (buildMontageSource/buildMontageAudio, which dynamic-import node:child_process)
+//    EXPORTED would make a browser bundler (Kraken's Next.js webpack/turbopack) try to
+//    resolve node builtins for a browser target → build warning/error. They stay as
+//    unexported module-local fns: present but never reachable, never re-exported.
+//    montage.mjs imports nothing at the top level, so it inlines verbatim otherwise.
+montage = montage.replace(/^export\s+/gm, '');
 
 // 2) editor.js → remove the now-satisfied montage import (names are in scope above).
 const importLine = "import { clipFrames, montageAt, cycleDurationMs, normalizeMontage, normalizeAudio } from './montage.mjs';";

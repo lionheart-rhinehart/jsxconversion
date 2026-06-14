@@ -150,7 +150,7 @@ function normalizeMontage(m, fps) {
 // resolves /brand/… and campaign-relative srcs first). fps fixed. Writes ONE concat
 // mp4 to outPath (one cycle); the renderer loops it via t % duration to fill total.
 // Returns { ok, path, frames, reason }.
-export async function buildMontageSource(clips, fps, outPath, opts = {}) {
+async function buildMontageSource(clips, fps, outPath, opts = {}) {
   const { spawnSync } = await import('node:child_process');
   const fs = await import('node:fs');
   const path = await import('node:path');
@@ -236,7 +236,7 @@ export async function buildMontageSource(clips, fps, outPath, opts = {}) {
 // crossfade overlaps included). Returns { ok, path } or { ok:false } when there's no audio
 // at all (caller leaves the render silent). The VIDEO path is untouched — this is a
 // separate pass the renderer muxes in.
-export async function buildMontageAudio(montage, fps, outPath, opts = {}) {
+async function buildMontageAudio(montage, fps, outPath, opts = {}) {
   const { spawnSync } = await import('node:child_process');
   const fs = await import('node:fs');
   const resolveSrc = opts.resolveSrc || ((s) => s);
