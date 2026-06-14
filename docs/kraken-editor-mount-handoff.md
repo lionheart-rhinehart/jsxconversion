@@ -32,8 +32,8 @@ A single boolean prop flips the mode. Same bundle, same code, in both lanes.
 | Piece | Lives in | Status |
 |---|---|---|
 | Deterministic intake/TAG (stable `data-edit-*` ids on the real HTML) | this repo — `creative-engine/intake/tag-design.mjs` | **built (Phase 1)** |
-| The one portable editor bundle (consumes tagged HTML → emits overrides) | this repo — `creative-engine/editor/` | Phase 2 |
-| Embeddable editor + `permission` flag | this repo (bundle) | Phase 4 |
+| The one portable editor bundle (consumes tagged HTML → emits overrides) | this repo — `creative-engine/editor/` | **built (Phase 2)** |
+| Embeddable editor + `permission` flag | this repo — `creative-engine/editor/dist/creative-engine-editor.bundle.js` | **built (Phase 4.1)** — single self-contained ESM; mount contract in `creative-engine/editor/dist/README.md`; proof `dist/embed-evidence.mjs` (10/10 PASS) |
 | Local render poller (watches Supabase, renders approved rows) | this repo | Phase 5 |
 | **The Next.js mount** (`<iframe>` the bundle, wire the permission toggle, persist overrides) | **Kraken repo** | **your task** |
 
@@ -68,12 +68,24 @@ never calls the laptop.
 
 ### Verified `approvals` table fields (from `lib/database.types.ts`, table `approvals`)
 
+> **Re-verified 2026-06-14 (Phase 4) against the live Kraken repo (`D:\Claude CODE\The Kraken`):**
+> - **Fields confirmed present** in `lib/database.types.ts` `approvals.Row` (lines 268–307): `id`, `status`,
+>   `content_output_id`, `responded_at`, `approved_by_type`, `client_edited`/`client_edited_at`,
+>   `client_media_replaced`/`client_media_replaced_at`, `updated_at`, `workspace_id`, `batch_id`.
+> - **Render trigger confirmed in code**: `app/api/portal/approvals/[id]/approve/route.ts` (lines 134–147)
+>   gates on `approval.status === 'pending'`, then writes `{ status: 'approved', responded_at: <now>,
+>   approved_by_type: 'client' }` — exactly the contract below.
+> - **Status values confirmed** (`components/approvals/approval-status-badge.tsx:15`):
+>   `'pending' | 'approved' | 'revisions_needed' | 'denied'`.
+> - **Confirmed ABSENT** (so the two design decisions below stand): no `rendered_at` column, no
+>   structured-`overrides` column on `approvals.Row`.
+
 The render contract uses fields that **already exist** — no new columns required on the Kraken side:
 
 | Field | Type | Role in the contract |
 |---|---|---|
 | `id` | uuid | the approval row identity the poller keys on |
-| `status` | text | `'draft' \| 'pending' \| 'approved' \| 'revisions_needed'` — **`'approved'` is the render trigger** |
+| `status` | text | `'pending' \| 'approved' \| 'revisions_needed' \| 'denied'` — **`'approved'` is the render trigger** |
 | `content_output_id` | uuid \| null | links the approval to the content/output row to render |
 | `responded_at` | timestamptz \| null | when the client/agency acted (poller orders by this) |
 | `approved_by_type` | text \| null | `client` vs `agency` lane — both lanes trigger render |
@@ -121,9 +133,11 @@ Nothing renders until a human approves — the safety net that makes hands-off m
 
 1. **Embed render path** — given a content row of kind `embed`, `<iframe src={liveHtmlUrl}>` instead of an
    `<img>`. Poster PNG stays as the fallback/thumbnail.
-2. **Permission toggle** — pass `permission: 'view' | 'edit'` into the mounted editor bundle (a window
-   global or `postMessage` handshake — Phase-4 bundle will document the exact prop). View reuses the
-   existing W3C comment/highlight UI; edit unlocks click-to-retype / swap / drag.
+2. **Permission toggle** — `import { mountEditor }` from the Phase-4.1 bundle
+   (`creative-engine/editor/dist/creative-engine-editor.bundle.js`) and pass `permissions: 'view' | 'edit'`
+   (exact mount contract: `creative-engine/editor/dist/README.md`). `'view'` reuses the existing W3C
+   comment/highlight UI; `'edit'` unlocks click-to-retype / swap / drag. The same bundle serves both
+   lanes — verified by `dist/embed-evidence.mjs` (the flag toggles view⟷edit, state + behavior, 10/10).
 3. **Persist overrides + set status** — on save, write the override bag (`overrides jsonb`, per above) and
    set `client_edited`/`client_media_replaced`; on approve, set `status='approved'`. That's the entire
    render trigger — the poller in this repo does the rest.
