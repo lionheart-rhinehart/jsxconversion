@@ -17,7 +17,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Ledger } from './ledger.mjs';
 import { runPool } from './pool.mjs';
-import { buildJobFromApproval, fetchToFile, isServedLive } from './approvals.mjs';
+import { buildJobFromApproval, fetchToFile, isServedLive, isRemotePackage, materializeRemotePackage } from './approvals.mjs';
+import { PROJECT_ROOT } from '../editor/serve.mjs';
 import { createServer } from '../editor/serve.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -38,6 +39,8 @@ export async function pollOnce(opts = {}) {
   const ledger = opts.ledger || new Ledger();
   const outDir = opts.outDir || path.join(__dirname, '_out', 'rendered');
   const cacheDir = opts.cacheDir || path.join(__dirname, '_state', 'tagged-cache');
+  const remoteCacheDir = opts.remoteCacheDir || path.join(__dirname, '_state', 'remote-cache');
+  const projectRoot = opts.projectRoot || PROJECT_ROOT;
   const fetchTagged = opts.fetchTagged || fetchToFile;
   const kind = opts.kind || 'mp4';
   const log = opts.log || (() => {});
@@ -78,9 +81,19 @@ export async function pollOnce(opts = {}) {
   try {
     const jobs = [];
     const rowByJobId = {};
-    for (const { row, co } of resolved) {
+    for (const { row, co: co0 } of resolved) {
       try {
-        const meta = co.metadata || {};
+        let co = co0;
+        let meta = co.metadata || {};
+        // REMOTE package (published to Storage): download-and-serve it into a local
+        // cache so headless Chrome never loads Storage's text/plain-downgraded HTML.
+        // The localized clone makes the existing isServedLive/deriveLiveUrl resolve it
+        // against the poller's own server (no Storage content-type / nosniff issue).
+        if (isRemotePackage(meta)) {
+          meta = await materializeRemotePackage(meta, { cacheRoot: remoteCacheDir, projectRoot });
+          co = { ...co, metadata: meta };
+          log(`  ↓ ${row.id}: pulled remote package → ${path.relative(projectRoot, meta._remote_cached)}`);
+        }
         const taggedUrl = meta.tagged_url || meta.live_url || co.content;
         if (!taggedUrl) throw new Error(`no tagged_url/live_url in content_output ${co.id} metadata`);
         // Live exports are served in place (no local cache); static rows fetch+cache as before.

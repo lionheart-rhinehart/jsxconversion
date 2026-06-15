@@ -55,6 +55,56 @@ export async function fetchToFile(url, destDir, { assetBase } = {}) {
   return dest;
 }
 
+// A REMOTE package is one published to Supabase Storage (publish-package.mjs): BOTH its
+// metadata.tagged_url (the entry HTML) AND asset_base (the folder) are ABSOLUTE http(s)
+// Storage URLs. Three cases this must separate:
+//   - Storage publish  → tagged_url http + asset_base http        → REMOTE (download)
+//   - localhost-served → tagged_url http + asset_base "/creative…" → not remote (serve in place)
+//   - legacy static    → tagged_url file:// + asset_base http(dummy) → not remote (pre-tagged file)
+// Requiring BOTH http (and tagged_url not file://) is what excludes the static fixture,
+// whose asset_base is a throwaway http string but whose tagged_url is a file:// artifact.
+export function isRemotePackage(meta) {
+  if (!meta || meta.render !== 'live-html') return false;
+  const tagged = meta.tagged_url || '';
+  if (/^file:/i.test(tagged)) return false;
+  return /^https?:\/\//i.test(tagged) && /^https?:\/\//i.test(meta.asset_base || '');
+}
+
+// Download a remote (Storage-published) package into a local served cache so headless
+// Chrome never loads Storage's text/plain-downgraded entry HTML. Reads the package's
+// files.json (written by publish-package.mjs) to know exactly what to pull — no HTML
+// parsing. Skips files already cached (idempotent across poll cycles). Returns a
+// LOCALIZED metadata clone whose asset_base/tagged_url point at the local cache, so the
+// existing isServedLive + deriveLiveUrl logic resolves it to the poller's own server.
+export async function materializeRemotePackage(meta, { cacheRoot, projectRoot }) {
+  const base = String(meta.asset_base).replace(/\/+$/, '') + '/';     // ensure trailing slash
+  const enc = (rel) => rel.split('/').map(encodeURIComponent).join('/');
+  const filesRes = await fetch(base + 'files.json', { cache: 'no-store' });
+  if (!filesRes.ok) throw new Error(`remote files.json ${filesRes.status} at ${base}files.json`);
+  const fm = JSON.parse(await filesRes.text());
+  const slug = fm.slug || meta.slug || 'pkg';
+  const entry = fm.entry;
+  if (!entry) throw new Error(`remote files.json has no "entry"`);
+  const pkgCache = path.join(cacheRoot, slug);
+  fs.mkdirSync(pkgCache, { recursive: true });
+
+  for (const rel of fm.files) {
+    const dest = path.join(pkgCache, rel.split('/').join(path.sep));
+    if (fs.existsSync(dest) && fs.statSync(dest).size > 0) continue;     // already cached
+    fs.mkdirSync(path.dirname(dest), { recursive: true });
+    const r = await fetch(base + enc(rel), { cache: 'no-store' });
+    if (!r.ok) throw new Error(`remote asset ${r.status}: ${rel}`);
+    const buf = Buffer.from(await r.arrayBuffer());
+    const part = dest + '.part';
+    fs.writeFileSync(part, buf);
+    fs.renameSync(part, dest);                                           // atomic: never leave a truncated file
+  }
+
+  // repo-root-relative served path (serve.mjs serves projectRoot); leading + trailing slash
+  const localAssetBase = '/' + path.relative(projectRoot, pkgCache).split(path.sep).join('/') + '/';
+  return { ...meta, asset_base: localAssetBase, tagged_url: entry, live_url: undefined, _remote_cached: pkgCache };
+}
+
 // Should this approval render through the ZERO-LOSS live path (render-live, served over HTTP)
 // vs the legacy static path (render-frame, pre-tagged file)? A `live-html` row whose tagged_url
 // is a `file://` artifact (the Westfield fixture) is a PRE-TAGGED local file → static path. A

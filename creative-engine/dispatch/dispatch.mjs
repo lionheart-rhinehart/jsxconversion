@@ -8,6 +8,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { loadManifest, loadRegistry, joinJobs } from './lib/dispatch-jobs.mjs';
 import { dispatchBatch } from './content-library.mjs';
@@ -37,6 +38,25 @@ export async function dispatchToLibrary(manifestPath, opts = {}) {
   const out = path.join(OUT_DIR, `dispatch-library-${batchId}.json`);
   fs.writeFileSync(out, JSON.stringify(report, null, 2));
   return { reportPath: out, ...report };
+}
+
+// Remote publish lane — make an intake package reachable off-laptop (upload its tree to
+// Storage + register one content_outputs + approvals row per frame). Thin wrapper so
+// publish rides the dispatch orchestrator; the real work + the human-authorized DRY-RUN
+// default live in publish-package.mjs. Spawned (not imported) so its process-arg CLI runs
+// unchanged. opts: { workspace, folder, email, live, replace, limit, portalBase }.
+export function dispatchPublishPackage(pkg, opts = {}) {
+  const script = path.join(HERE, 'publish-package.mjs');
+  const args = ['--pkg', String(pkg)];
+  if (opts.workspace) args.push('--workspace', String(opts.workspace));
+  if (opts.folder) args.push('--folder', String(opts.folder));
+  if (opts.email) args.push('--email', String(opts.email));
+  if (opts.portalBase) args.push('--portal-base', String(opts.portalBase));
+  if (opts.limit) args.push('--limit', String(opts.limit));
+  if (opts.replace) args.push('--replace');
+  if (opts.live) args.push('--live');
+  const r = spawnSync(process.execPath, [script, ...args], { stdio: 'inherit' });
+  return { ok: r.status === 0, status: r.status, args };
 }
 
 // 6.2 — Meta queue lane (always staged; never fires live).
