@@ -410,6 +410,32 @@ export async function findExistingByDesign(workspaceId, campaign, theme, designN
   return rows[0] || null;
 }
 
+// ── approvals (render poller, Phase 5) ────────────────────────────────────────
+// READ-ONLY here. The poller in creative-engine/render/ watches these. Kraken owns
+// all WRITES to status (one-directional transport — a web app can't reach the laptop).
+//
+// List approval rows currently flagged for render. The contract trigger is
+// status='approved' (verified in The Kraken approve route). Ordered by responded_at
+// so the poller renders in the order reviewers acted. `overrides` is a jsonb bag the
+// mounted editor persisted (may be absent until the Kraken migration lands → {}).
+export async function listApprovedApprovals({ limit = 200 } = {}) {
+  const rows = await restGet(
+    `approvals?status=eq.approved&select=id,status,content_output_id,responded_at,` +
+      `approved_by_type,updated_at,workspace_id,batch_id,overrides&order=responded_at.asc.nullslast&limit=${limit}`,
+  );
+  return rows || [];
+}
+
+// Fetch one content_outputs row by id (the embed-row the approval points at). The
+// tagged-HTML URL + asset base live in its `metadata` (embed contract, Kraken chat).
+export async function getContentOutput(id) {
+  if (!id) return null;
+  const rows = await restGet(
+    `content_outputs?id=eq.${id}&select=id,type,title,content,thumbnail_url,metadata&limit=1`,
+  );
+  return rows[0] || null;
+}
+
 // ── self-test ─────────────────────────────────────────────────────────────────
 // node scripts/lib/kraken.mjs --selftest --workspace <name|uuid>
 async function selftest() {
