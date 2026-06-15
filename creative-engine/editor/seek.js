@@ -71,8 +71,14 @@
     await seekTo(v, (tMs / 1000) % v.duration);
   }
 
-  // root = the element/document to freeze; tMs = timeline position in ms
-  async function seekFrame(root, tMs) {
+  // root = the element/document to freeze; tMs = timeline position in ms.
+  // opts.noRaf: skip the rAF paint-settle. The renderer drives the design's rAF with an
+  //   injected JS clock (creative-engine/shared/raf-clock.js) that only ticks when the
+  //   renderer advances it — so page requestAnimationFrame won't fire on its own and
+  //   awaiting raf2() would hang. We still pin WAAPI/CSS (the JS clock doesn't drive the
+  //   document timeline) and seek <video> (real-time decode/events).
+  async function seekFrame(root, tMs, opts) {
+    opts = opts || {};
     const doc = root.ownerDocument || root;
     await (doc.fonts ? doc.fonts.ready : Promise.resolve());
     // pin every CSS keyframe timeline
@@ -82,7 +88,7 @@
     await Promise.all(vids.map((v) => seekVideo(v, tMs)));
     // re-pin animations once more (in case a swap/seek nudged the clock) + settle paint
     doc.getAnimations({ subtree: true }).forEach((a) => { try { a.pause(); a.currentTime = tMs; } catch (e) {} });
-    await raf2();
+    if (!opts.noRaf) await raf2();
   }
 
   root.CESeek = seekFrame;

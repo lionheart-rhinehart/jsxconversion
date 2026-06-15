@@ -70,6 +70,9 @@ campaigns/**/*.dc.html
 # creative-engine generated intake artifacts
 *.tagged.html
 creative-engine/intake/_out/
+# Real Claude Design test exports dropped in for renderer evidence (180MB+ of clips/fonts;
+# machine-local test input, not source — like _out/). Re-drop locally to re-run evidence.
+creative-engine/intake/_in/
 # Phase-2 editor evidence artifacts (reproducible via creative-engine/editor/evidence.mjs)
 creative-engine/editor/_out/
 # Phase-5 render artifacts: reproducible test outputs, machine-local poller state, fixtures
