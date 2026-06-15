@@ -8,7 +8,22 @@ see where things stand without regenerating it. **Update the box + status line w
 - **Goal:** a finished Claude Design goes in → edit → approve → render once → ship (and fan out to many brands).
 - **Rules:** clean room (no imports from `creative-engine-v1/`), one phase per chat, evidence over assertion.
 
-**STATUS LINE:** Phases 0–6 ✅ + Intake Packager (#2) ✅ + Editor runtime-retag wiring (#5/#9) ✅ + Render-on-approval wired to zero-loss render-live ✅ (this repo's part) · **pipeline complete** (drop any export → intake → edit → approve → render LIVE → fan-out → dispatch). *Remaining: remote-publish step + the Kraken-repo editor mount / embed-row creation → the fully-organic live round-trip; + scheduling.*
+**STATUS LINE:** Phases 0–6 ✅ + Intake Packager (#2) ✅ + Editor runtime-retag wiring (#5/#9) ✅ + Render-on-approval → render-live ✅ + **Remote-publish (off-laptop) ✅ + `/creative-engine` skill wired into an executable runbook ✅** · **pipeline complete AND drivable from the slash command** (drop any export → intake → edit → approve/publish → portal approve → render LIVE → fan-out → dispatch). *Remaining: the single HUMAN-driven prod round-trip (acceptance test) + scheduling (deferred).* `npm test` 190/190.
+
+## ✅ Remote-publish + `/creative-engine` runbook — the loop runs off-laptop, drivable from the slash command  *(DONE 2026-06-15)*
+`creative-engine/dispatch/publish-package.mjs` uploads a package's whole tree to the `content-bundles`
+Storage bucket + registers one `content_outputs`(embed)+`approvals`(token,pending) row per frame at public
+URLs (DRY-RUN default, `--live`, deduped on slug+frame_id). The poller gained a download-and-serve branch
+(`render/poller.mjs`+`approvals.mjs`: `isRemotePackage` → `materializeRemotePackage` pulls via `files.json`
+into `render/_state/remote-cache/`, sidestepping Storage's text/plain HTML downgrade). Spike proved only the
+entry HTML is downgraded (peer JS/CSS/fonts keep type) so `asset_base` = the absolute Storage folder URL
+(Kraken view route injects `<base href>`). PROVEN off-laptop: publish carmel f0 → prod portal served it as
+text/html → simulated edit+approve → poller pulled from Storage + rendered a 1080×1920/30fps/7s/1.39MB MP4
+with the edit, **no localhost**. Commit `3744abd`; `test/remote-package-gate.test.mjs`. Then the
+`.claude/skills/creative-engine/SKILL.md` runbook was wired so each step runs its real script (`approve` →
+publish-package, `render` → scoped poller), making the whole pipeline drivable from `/creative-engine`.
+Pre-test hardening: intake friendly lock error + `_packages/` cleanup sweep. `npm test` 190/190. Lesson:
+`lessons-learned/2026-06-15__remote-publish-download-and-serve.md`.
 
 ## ✅ Render-on-approval wired to render-live (local-but-real round-trip)  *(DONE 2026-06-15)*
 The poller/pool/fan-out were built (Phase 5) against the OLD static `render-frame` (freezes JS-driven

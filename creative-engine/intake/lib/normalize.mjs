@@ -42,6 +42,14 @@ export function slugFor(sourcePathForName, absSourcePath) {
   return `${kebab(base)}-${hash}`;
 }
 
+// Is this a filesystem LOCK error (someone holds the package folder open)? On Windows the
+// editor previewing a package keeps its files locked, so the wipe-and-copy below EPERMs.
+// Exported so it's unit-testable without simulating a real OS lock cross-platform.
+const LOCK_CODES = new Set(['EPERM', 'EBUSY', 'EACCES', 'ENOTEMPTY', 'EISDIR']);
+export function isLockError(err) {
+  return !!err && LOCK_CODES.has(err.code);
+}
+
 // normalize({ srcRoot, entryRel, sourceName, sourceAbs }) →
 //   { slug, pkgDir, entryHtmlAbs, entryRel, asset_base }
 //   pkgDir       = _packages/<slug>/  (the copied tree root)
@@ -53,10 +61,23 @@ export function normalize({ srcRoot, entryRel, sourceName, sourceAbs }) {
   const slug = slugFor(sourceName, sourceAbs);
   const pkgDir = path.join(PACKAGES_DIR, slug);
 
-  // idempotent: wipe any prior copy so a re-run is a clean, byte-faithful mirror
-  fs.rmSync(pkgDir, { recursive: true, force: true });
-  fs.mkdirSync(PACKAGES_DIR, { recursive: true });
-  fs.cpSync(srcRoot, pkgDir, { recursive: true });
+  // idempotent: wipe any prior copy so a re-run is a clean, byte-faithful mirror.
+  // A lock error here almost always means the package is open in the editor (Windows
+  // holds its files locked) — turn the raw EPERM into a plain-language fix instruction.
+  try {
+    fs.rmSync(pkgDir, { recursive: true, force: true });
+    fs.mkdirSync(PACKAGES_DIR, { recursive: true });
+    fs.cpSync(srcRoot, pkgDir, { recursive: true });
+  } catch (err) {
+    if (isLockError(err)) {
+      throw new Error(
+        `Cannot replace package "${slug}" — it looks like it's open in the editor ` +
+        `(or another process has a file locked). Close that package in the editor, then re-run. ` +
+        `(file lock: ${err.code})`,
+      );
+    }
+    throw err;
+  }
 
   const entryHtmlAbs = path.join(pkgDir, entryRel);
   if (!fs.existsSync(entryHtmlAbs)) {

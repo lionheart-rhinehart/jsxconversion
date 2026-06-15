@@ -418,11 +418,15 @@ export async function findExistingByDesign(workspaceId, campaign, theme, designN
 // status='approved' (verified in The Kraken approve route). Ordered by responded_at
 // so the poller renders in the order reviewers acted. `overrides` is a jsonb bag the
 // mounted editor persisted (may be absent until the Kraken migration lands → {}).
-export async function listApprovedApprovals({ limit = 200 } = {}) {
-  const rows = await restGet(
-    `approvals?status=eq.approved&select=id,status,content_output_id,responded_at,` +
-      `approved_by_type,updated_at,workspace_id,batch_id,overrides&order=responded_at.asc.nullslast&limit=${limit}`,
-  );
+// Optional scoping (for a clean test / single-workspace operation): pass `workspaceId`
+// to limit to one workspace, and/or `approvalId` to a single row. Default (no args) is
+// the full workspace-wide list — unchanged behavior.
+export async function listApprovedApprovals({ limit = 200, workspaceId = null, approvalId = null } = {}) {
+  let q = `approvals?status=eq.approved&select=id,status,content_output_id,responded_at,` +
+    `approved_by_type,updated_at,workspace_id,batch_id,overrides&order=responded_at.asc.nullslast&limit=${limit}`;
+  if (workspaceId) q += `&workspace_id=eq.${encodeURIComponent(workspaceId)}`;
+  if (approvalId) q += `&id=eq.${encodeURIComponent(approvalId)}`;
+  const rows = await restGet(q);
   return rows || [];
 }
 

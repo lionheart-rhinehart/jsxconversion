@@ -13,9 +13,10 @@ drop any export → INTAKE (#2 packager) → EDIT (one portable editor) → APPR
    → RENDER (zero-loss render-live, on approval) → brand FAN-OUT → DISPATCH (Content Library / Meta-staged)
 ```
 
-`npm test` → **181/181**. All of Phases 0–6 plus the zero-loss rebuild (runtime re-tag + `render-live`),
-the intake packager (#2), the editor runtime-retag wiring (#5/#9), and the render-on-approval→render-live
-wiring are built and proven with real artifacts (see the roadmap rows for commit + receipt per item).
+`npm test` → **190/190**. All of Phases 0–6 plus the zero-loss rebuild (runtime re-tag + `render-live`),
+the intake packager (#2), the editor runtime-retag wiring (#5/#9), the render-on-approval→render-live
+wiring, **and remote-publish (off-laptop) + the wired `/creative-engine` runbook** are built and proven
+with real artifacts (see the roadmap rows for commit + receipt per item).
 
 Key code homes (all clean room, zero imports from `creative-engine-v1/`):
 `creative-engine/intake/` (packager + manifest), `creative-engine/editor/` (the one editor + `render-live.mjs`
@@ -24,17 +25,21 @@ Key code homes (all clean room, zero imports from `creative-engine-v1/`):
 
 ## What's NOT done yet (the only remaining work)
 
-1. **The organic live round-trip — needs the OTHER repo (`D:\Claude CODE\The Kraken`).** Our half is proven
-   locally (a real approved package renders → fans out → dispatches; see
-   `creative-engine/render/test-live-roundtrip.mjs`). But live Kraken has **zero** v2 `embed`/`live-html`
-   rows, because the Kraken-side piece isn't built: mount our editor in the approval portal by iframe URL,
-   persist the override bag, create the `embed` content rows, and flip `status='approved'`.
-   **Full build spec + verified Kraken file paths:** `docs/kraken-editor-mount-handoff.md` (read it first).
-2. **Remote-publish step (this repo):** upload a packaged export → Kraken Storage → a public `tagged_url` /
-   `asset_base`, so the poller can render a *remotely*-approved design (today only local serving works).
-3. **Scheduling** — the calendar leg of dispatch. Deferred by design.
-4. **Minor hardening:** intake's friendly error when a package is open in the editor (Windows `EPERM`); a
-   `_packages/` cleanup/TTL sweep; SVG `<text>` multi-line `<br>` editing (`creative-engine/editor/apply-overrides.js:62`).
+> **Remote-publish (this repo) and the Kraken-side editor mount / embed-row creation / override
+> persistence are BOTH DONE + verified (2026-06-15).** Remote-publish shipped in commit `3744abd`
+> (`creative-engine/dispatch/publish-package.mjs` + the poller's download-and-serve branch) and was proven
+> end-to-end off-laptop. The Kraken side is built + verified per the Kraken repo's own status
+> (`project_creative-engine-kraken-loop-verified`). The `/creative-engine` skill is now a wired runbook so
+> the whole flow is drivable from the slash command.
+
+1. **The single uninterrupted HUMAN-driven prod round-trip** — both halves are proven independently and the
+   simulated round-trip renders an edited MP4 from Storage with no `localhost`. What remains is one clean
+   pass where a real person opens the portal, edits, and clicks Approve. (This is a verification run, not
+   unbuilt code — it's the active acceptance test.)
+2. **Scheduling** — the calendar leg of dispatch. Deferred by design.
+3. **Minor hardening:** **DONE** — intake friendly lock error (`normalize.mjs`) + a `_packages/` cleanup
+   sweep (`creative-engine/intake/cleanup-packages.mjs`). **Still deferred:** SVG `<text>` multi-line
+   editing (`creative-engine/editor/apply-overrides.js:62`) — no real design uses multi-line SVG text.
 
 **Out of scope (NOT todos — separate future projects):** the creation/from-scratch engine, a "regenerate this
 design" AI button, the cross-project asset-tracking pattern.

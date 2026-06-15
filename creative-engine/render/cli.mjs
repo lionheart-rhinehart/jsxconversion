@@ -6,8 +6,12 @@
 //       → print the recommended pool size for this machine.
 //
 //   node creative-engine/render/cli.mjs poll [--once] [--interval 15000] [--png] [--pool N]
+//         [--workspace <slug|uuid>] [--approval <uuid>]
 //       → start the local render poller (watches Supabase approvals='approved').
 //         --once runs a single cycle and exits; otherwise loops until Ctrl-C.
+//         --workspace / --approval SCOPE the poll to one workspace / one approval row
+//         (default = all approved rows workspace-wide). Use a scope for a clean test run
+//         so the poller doesn't churn unrelated approved rows.
 //
 //   node creative-engine/render/cli.mjs fanout --master ov.json --binding bind.json \
 //         --tagged design.tagged.html --frame f0 [--brands id,id] [--png] [--pool N]
@@ -35,6 +39,21 @@ if (cmd === 'probe') {
     intervalMs: flag('--interval') ? Number(flag('--interval')) : undefined,
     log: (m) => console.log(`[poller ${new Date().toISOString()}] ${m}`),
   };
+  // Optional scoping: --workspace (slug/uuid) and/or --approval (uuid) build a scoped
+  // live source so a test run only renders the intended row(s). pollOnce/pollLoop honor
+  // an injected `source` (the same seam the fixtures use); omit it → default live source.
+  const wsArg = flag('--workspace');
+  const approvalId = flag('--approval');
+  if (wsArg || approvalId) {
+    const k = await import('../../scripts/lib/kraken.mjs');
+    const workspaceId = wsArg ? k.resolveWorkspaceId(wsArg) : null;
+    if (wsArg && !workspaceId) { console.error(`poll: could not resolve --workspace "${wsArg}"`); process.exit(1); }
+    opts.source = {
+      listApproved: () => k.listApprovedApprovals({ workspaceId, approvalId }),
+      getContentOutput: (id) => k.getContentOutput(id),
+    };
+    console.log(`[poller] scoped to${workspaceId ? ` workspace ${wsArg}` : ''}${approvalId ? ` approval ${approvalId}` : ''}`);
+  }
   if (has('--once')) { const r = await pollOnce(opts); console.log(JSON.stringify(r, null, 2)); }
   else await pollLoop(opts);
 } else if (cmd === 'fanout') {
