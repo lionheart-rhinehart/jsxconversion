@@ -22,13 +22,40 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import {
-  resolveWorkspaceId, loadWorkspaces, resolveFolder, createFolder, listFolders,
+  resolveWorkspaceId, loadWorkspaces, listWorkspacesLive, resolveFolder, createFolder, listFolders,
   mimeForExt, bucketForMime, uploadToStorage, ingestContent, setFolder,
   findExistingByMeta, softDeleteContent,
 } from '../../scripts/lib/kraken.mjs';
 
 const slug = (s) => String(s).replace(/[^\w.-]+/g, '-');
 const TMP_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '_out', '.tmp');
+
+// Resolve a workspace handle to its id against the CANONICAL LIVE DB, not just the
+// static nickname file. The nickname file (loadWorkspaces) is incomplete — e.g.
+// "castille-academy" exists live but has no nickname, and a brand slug may differ
+// from the live slug. Order: static nicknames (offline-friendly) → live exact
+// slug/name → live fuzzy (normalized substring, both directions). Live list is
+// cached per process. Returns null only if nothing matches (then it's a real,
+// loudly-flagged miss — never a silent drop).
+let _liveCache = null;
+async function liveWorkspaces() {
+  if (_liveCache) return _liveCache;
+  try { _liveCache = await listWorkspacesLive(); } catch { _liveCache = []; }
+  return _liveCache;
+}
+const normWs = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '-');
+async function resolveWorkspaceLive(handle) {
+  const stat = resolveWorkspaceId(handle);
+  if (stat) return stat;
+  const want = normWs(handle);
+  if (!want) return null;
+  const live = await liveWorkspaces();
+  const cand = live.map((w) => ({ id: w.id, keys: [normWs(w.slug), normWs(w.name), normWs(w.label)].filter(Boolean) }));
+  const exact = cand.find((w) => w.keys.includes(want));
+  if (exact) return exact.id;
+  const fuzzy = cand.find((w) => w.keys.some((k) => k.includes(want) || want.includes(k)));
+  return fuzzy ? fuzzy.id : null;
+}
 
 // The dispatch idempotency key — analogous to kraken-export's (campaign,angle,asset)
 // triple, but a fan-out output is keyed on (source=creative-engine-dispatch, batch,
@@ -56,8 +83,11 @@ export async function dispatchJob(job, opts = {}) {
     if (!job.destFolder) throw new Error('no destination folder (pass --folder or set brand.libraryFolder/dest)');
     if (!fs.existsSync(job.file)) throw new Error(`render file missing: ${job.file}`);
 
-    const wsId = resolveWorkspaceId(job.workspace);
-    if (!wsId) throw new Error(`unknown workspace "${job.workspace}" (known: ${Object.keys(loadWorkspaces()).join(', ')})`);
+    const wsId = await resolveWorkspaceLive(job.workspace);
+    if (!wsId) {
+      const liveNames = (await liveWorkspaces()).map((w) => w.name).join(', ');
+      throw new Error(`unknown workspace "${job.workspace}" (live: ${liveNames || Object.keys(loadWorkspaces()).join(', ')})`);
+    }
 
     const ext = path.extname(job.file).toLowerCase();
     const mime = mimeForExt(ext);

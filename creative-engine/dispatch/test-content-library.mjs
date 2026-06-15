@@ -30,6 +30,9 @@ assert.ok(r.results.every((x) => x.dryRun === true), 'no result may be a live wr
 assert.ok(r.results.every((x) => x.action === 'dry-run' || x.action === 'error'), 'dry-run yields only would-push or flagged-error');
 const would = r.results.filter((x) => x.action === 'dry-run');
 const flagged = r.results.filter((x) => x.action === 'error');
-assert.ok(would.length >= 1, 'at least one brand resolves to a would-push');
-console.log(`PASS — dry-run: ${would.length} would-push, ${flagged.length} flagged (no silent drop), report → ${r.reportPath}`);
-for (const f of flagged) console.log(`  ⚠ ${f.id}: ${f.error}`);
+// All 6 brand workspaces resolve against the LIVE Kraken DB (castille via live
+// lookup; ideal via its real isp-zach-decant slug). 0 flagged is the corrected
+// state — a regression here means a registry slug or the live resolver broke.
+assert.strictEqual(would.length, 6, `expected 6 would-push, got ${would.length}`);
+assert.strictEqual(flagged.length, 0, `expected 0 flagged, got ${flagged.length}: ${flagged.map((f) => f.id + ':' + f.error).join('; ')}`);
+console.log(`PASS — dry-run: ${would.length} would-push, ${flagged.length} flagged (all workspaces resolve live), report → ${r.reportPath}`);
