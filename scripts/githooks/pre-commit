@@ -12,3 +12,18 @@ node scripts/validate-templates.mjs || {
   echo "fix it, or re-run validation: node scripts/validate-templates.mjs" >&2
   exit 1
 }
+
+# Editor regression guards (2026-06-15). These two fast tests lock in fixes that have
+# bitten before and would otherwise silently rot:
+#   - media INTERCHANGEABILITY: any media swaps into any slot (img<->video element swap)
+#   - Kraken 🔒 Lock button must never be clipped off the media toolbar's right edge
+# Set CE_SKIP_EDITOR_TESTS=1 to bypass (e.g. an env without a Chromium for puppeteer).
+if [ -z "$CE_SKIP_EDITOR_TESTS" ]; then
+  node --test test/apply-overrides-media-interchange.test.mjs test/editor-lock-visibility.test.mjs || {
+    echo "" >&2
+    echo "commit blocked: an editor regression test failed (media-swap interchange or lock-button visibility)." >&2
+    echo "re-run: node --test test/apply-overrides-media-interchange.test.mjs test/editor-lock-visibility.test.mjs" >&2
+    echo "(bypass only if intentional: CE_SKIP_EDITOR_TESTS=1 git commit …)" >&2
+    exit 1
+  }
+fi

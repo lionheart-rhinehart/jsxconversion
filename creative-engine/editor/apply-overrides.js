@@ -84,20 +84,77 @@
     for (var i = 1; i < textNodes.length; i++) textNodes[i].textContent = '';
   }
 
+  // Classify a media URL by its file extension. Any media must be swappable into any
+  // slot regardless of what was there originally (a static <img> slot must accept a
+  // video, and a <video> slot must accept a photo) — so we key off the INCOMING src's
+  // type, not the live element's tag. Query string / hash are stripped before testing.
+  var VIDEO_EXT = /\.(mp4|webm|mov|m4v|mkv|avi|ogv)(?:[?#]|$)/i;
+  var IMAGE_EXT = /\.(jpe?g|png|gif|webp|avif|svg)(?:[?#]|$)/i;
+  function mediaKindOf(src) {
+    var s = String(src || '');
+    if (VIDEO_EXT.test(s)) return 'video';
+    if (IMAGE_EXT.test(s)) return 'image';
+    return ''; // unknown — caller keeps the current element type
+  }
+
+  // Make `el` behave like the original background footage when it's a <video>.
+  function asBgVideo(el) {
+    try { el.muted = true; el.loop = true; el.autoplay = true; el.playsInline = true; el.setAttribute('playsinline', ''); el.load && el.load(); } catch (e) {}
+  }
+
+  // Replace a media element with a NEW element of `newTag`, carrying over every
+  // attribute that keeps it findable + styled (data-edit-* ids, class, inline style
+  // incl. the translate/rotate/width/height set by setPos). The src and media-kind
+  // stamp are overwritten with the incoming media. Returns the new element.
+  function replaceMediaEl(el, newTag, src, newKind) {
+    var doc = el.ownerDocument;
+    var next = doc.createElement(newTag);
+    var attrs = el.attributes;
+    for (var i = 0; i < attrs.length; i++) {
+      var a = attrs[i];
+      var n = a.name.toLowerCase();
+      if (n === 'src' || n === 'poster' || n === 'srcset') continue; // media-specific, reset below
+      try { next.setAttribute(a.name, a.value); } catch (e) {}
+    }
+    next.setAttribute('data-edit-media-kind', newKind);
+    next.setAttribute('src', src);
+    if (newTag === 'video') asBgVideo(next);
+    el.replaceWith(next);
+    return next;
+  }
+
   function setSrc(el, src) {
     var tag = (el.tagName || '').toLowerCase();
     var kind = el.getAttribute('data-edit-media-kind') || '';
+    var incoming = mediaKindOf(src); // 'video' | 'image' | '' (unknown)
+
+    // CSS-background slot. An image swap rewrites the url(); a VIDEO swap can't live in
+    // a background, so replace the bg element with a cover <video> (same box/attrs).
     if (kind === 'css-bg' || /background(?:-image)?\s*:[^;]*url\(/i.test(el.getAttribute('style') || '')) {
+      if (incoming === 'video') {
+        var v = replaceMediaEl(el, 'video', src, 'video');
+        // strip the now-meaningless background-image url() and make it fill its box
+        var st = (v.getAttribute('style') || '').replace(/background(?:-image)?\s*:[^;]*url\([^)]*\)\s*;?/i, '');
+        if (!/object-fit/i.test(st)) st += (st.trim().endsWith(';') || !st.trim() ? '' : ';') + 'object-fit:cover;';
+        v.setAttribute('style', st);
+        return;
+      }
       var style = el.getAttribute('style') || '';
       var next = style.replace(/url\(\s*['"]?[^'")]*['"]?\s*\)/i, "url('" + src + "')");
       if (next === style) next = style + (style.trim().endsWith(';') ? '' : ';') + "background-image:url('" + src + "');";
       el.setAttribute('style', next);
       return;
     }
+
+    // Type-CHANGING swaps: the element's tag can't carry the incoming media, so swap the
+    // element itself. <img> ← video → become a <video>; <video> ← image → become an <img>.
+    if (tag === 'img' && incoming === 'video') { replaceMediaEl(el, 'video', src, 'video'); return; }
+    if (tag === 'video' && incoming === 'image') { replaceMediaEl(el, 'img', src, 'image'); return; }
+
+    // Same-type (or unknown-type) swap: set src in place.
     if (tag === 'video') {
       el.setAttribute('src', src);
-      // a swapped clip: keep it behaving like the original bg footage
-      try { el.muted = true; el.loop = true; el.autoplay = true; el.load && el.load(); } catch (e) {}
+      asBgVideo(el); // a swapped clip: keep it behaving like the original bg footage
       return;
     }
     // img / picture-source / default

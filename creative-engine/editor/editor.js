@@ -439,12 +439,17 @@ export function mountEditor(opts) {
   // To smooth the reload flash at cuts (F5), every distinct clip src is preloaded into a
   // hidden buffer <video> so the swap hits cache. The RENDER is seamless regardless (it's
   // a pre-built concat) — this driver only powers the editor's live preview.
-  const montageDrivers = new Map();   // el → {raf, buffers, stopped}
+  const montageDrivers = new Map();   // el → {raf, buffers, stopped, imgOv}
+  // a montage can MIX photos + videos. Classify a clip src so the driver shows an image
+  // clip via an <img> overlay (a <video> can't paint a still) and only video-buffers videos.
+  const MONT_IMG_EXT = /\.(jpe?g|png|gif|webp|avif|bmp|tiff?)(?:[?#]|$)/i;
+  function isImgClip(src) { return MONT_IMG_EXT.test(String(src || '')); }
   function stopMontageDriver(el) {
     const dr = montageDrivers.get(el); if (!dr) return;
     dr.stopped = true;
     try { iwin().cancelAnimationFrame(dr.raf); } catch (e) {}
     Object.keys(dr.buffers || {}).forEach((s) => { try { dr.buffers[s].remove(); } catch (e) {} });
+    try { if (dr.imgOv) dr.imgOv.remove(); } catch (e) {}
     montageDrivers.delete(el);
   }
   function startMontageDriver(el) {
@@ -453,19 +458,25 @@ export function mountEditor(opts) {
     if (!mont || !Array.isArray(mont.clips) || !mont.clips.length) return;
     const fps = mont.fps || 30, win = iwin(), d = idoc();
     const totalMs = Math.max(1, (Number(mont.totalDuration) || 1) * 1000);
-    // hidden preload buffers — one per distinct src (F5)
+    // hidden preload buffers — one per distinct VIDEO src (F5). Image clips are painted by
+    // the overlay below, so they don't get a <video> buffer.
     const buffers = {};
     mont.clips.forEach((c) => {
-      if (buffers[c.src]) return;
+      if (isImgClip(c.src) || buffers[c.src]) return;
       const b = d.createElement('video');
       b.src = c.src; b.muted = true; b.preload = 'auto'; b.playsInline = true;
       b.style.cssText = 'position:absolute;left:-9999px;top:0;width:2px;height:2px;opacity:0;pointer-events:none;';
       d.body.appendChild(b); buffers[c.src] = b;
     });
+    // overlay <img> for image clips — positioned (position:fixed → iframe-viewport coords)
+    // over el's post-transform box each frame, so it tracks any scale/transform on el.
+    const imgOv = d.createElement('img');
+    imgOv.style.cssText = 'position:fixed;object-fit:cover;z-index:2147483646;pointer-events:none;display:none;';
+    d.body.appendChild(imgOv);
     try { el.pause(); } catch (e) {}
     el.loop = false; el.autoplay = false; el.muted = true;
     let curSrc = null, t0 = null;
-    const driver = { raf: 0, buffers, stopped: false };
+    const driver = { raf: 0, buffers, stopped: false, imgOv };
     function step(now) {
       if (driver.stopped || el.__ceMontage !== mont) return;
       if (t0 == null) t0 = now;
@@ -473,16 +484,28 @@ export function mountEditor(opts) {
       const at = montageAt(mont.clips, fps, tMs);
       if (at.clipIndex >= 0 && at.clip) {
         const want = at.clip.src, localT = (Number(at.clip.in) || 0) + at.localOffsetMs / 1000;
-        if (want !== curSrc) {
-          curSrc = want;
-          el.setAttribute('src', want);
-          try { el.load && el.load(); } catch (e) {}
-          el.addEventListener('loadeddata', function once() {
-            try { el.currentTime = localT; el.play(); } catch (e) {}
-          }, { once: true });
-        } else if (el.readyState >= 2 && Math.abs(el.currentTime - localT) > 0.3) {
-          try { el.currentTime = localT; } catch (e) {}     // drift-correct (clip just looped)
-        } else { try { if (el.paused) el.play(); } catch (e) {} }
+        if (isImgClip(want)) {
+          // image clip: cover el's box with the overlay; keep the <video> paused underneath
+          if (want !== curSrc) { curSrc = want; imgOv.src = want; try { el.pause(); } catch (e) {} }
+          try {
+            const r = el.getBoundingClientRect();
+            imgOv.style.left = r.left + 'px'; imgOv.style.top = r.top + 'px';
+            imgOv.style.width = r.width + 'px'; imgOv.style.height = r.height + 'px';
+            imgOv.style.display = 'block';
+          } catch (e) {}
+        } else {
+          if (imgOv.style.display !== 'none') imgOv.style.display = 'none';
+          if (want !== curSrc) {
+            curSrc = want;
+            el.setAttribute('src', want);
+            try { el.load && el.load(); } catch (e) {}
+            el.addEventListener('loadeddata', function once() {
+              try { el.currentTime = localT; el.play(); } catch (e) {}
+            }, { once: true });
+          } else if (el.readyState >= 2 && Math.abs(el.currentTime - localT) > 0.3) {
+            try { el.currentTime = localT; } catch (e) {}     // drift-correct (clip just looped)
+          } else { try { if (el.paused) el.play(); } catch (e) {} }
+        }
       }
       driver.raf = win.requestAnimationFrame(step);
     }
@@ -1305,7 +1328,7 @@ export function mountEditor(opts) {
           <button class="ce-btn ce-mc-up"${i === 0 ? ' disabled' : ''} title="Move earlier">◀</button>
           <button class="ce-btn ce-mc-dn"${i === m.clips.length - 1 ? ' disabled' : ''} title="Move later">▶</button>
           <button class="ce-btn ce-mc-del" title="Remove clip">✕</button></div>
-        <video class="ce-mc-thumb" muted playsinline preload="metadata"></video>
+        ${isImgClip(c.src) ? '<img class="ce-mc-thumb">' : '<video class="ce-mc-thumb" muted playsinline preload="metadata"></video>'}
         <div class="ce-mc-read">in ${(+c.in).toFixed(1)} – out ${(+c.out).toFixed(1)} · ${len}s</div>`;
       item.querySelector('.ce-mc-thumb').src = c.src;
       // click the card (not its buttons) → make it the active clip + open the trim panel
@@ -1348,7 +1371,7 @@ export function mountEditor(opts) {
       : `Clip ${activeClip + 1} — drag the ends to trim · drag the middle to slide · click the bar to scrub`;
     host.innerHTML =
       `<div class="ce-tr-head"><span class="ce-tr-hint">${headTxt}</span></div>
-       ${montMode ? '<div class="ce-tr-stage"></div>' : '<video class="ce-tr-video" muted playsinline preload="auto"></video>'}
+       ${montMode ? '<div class="ce-tr-stage"></div>' : (isImgClip(clip.src) ? '<img class="ce-tr-video">' : '<video class="ce-tr-video" muted playsinline preload="auto"></video>')}
        <div class="ce-tr-controls">
          <div class="ce-tr-transport">
            <button class="ce-btn ce-tr-play" title="Play">▶ Play</button>
@@ -1392,17 +1415,25 @@ export function mountEditor(opts) {
       const segs = new Map();
       clips.forEach((c) => {
         if (segs.has(c.src)) return;
-        const v = document.createElement('video');
-        v.className = 'ce-tr-vid'; v.muted = true; v.playsInline = true; v.preload = 'auto'; v.loop = false; v.src = c.src;
-        const seg = { el: v, in: Math.max(0, Number(c.in) || 0), out: Number(c.out) || (Number(c.in) || 0) + 1 };
-        v.addEventListener('loadedmetadata', () => { try { v.currentTime = seg.in; } catch (e) {} }, { once: true });
-        try { v.load(); } catch (e) {}
+        let v, seg;
+        if (isImgClip(c.src)) {            // still image clip — a stacked <img>, no playback/seek
+          v = document.createElement('img');
+          v.className = 'ce-tr-vid'; v.src = c.src;
+          seg = { el: v, in: 0, out: Number(c.out) || 1, img: true };
+        } else {
+          v = document.createElement('video');
+          v.className = 'ce-tr-vid'; v.muted = true; v.playsInline = true; v.preload = 'auto'; v.loop = false; v.src = c.src;
+          seg = { el: v, in: Math.max(0, Number(c.in) || 0), out: Number(c.out) || (Number(c.in) || 0) + 1 };
+          v.addEventListener('loadedmetadata', () => { try { v.currentTime = seg.in; } catch (e) {} }, { once: true });
+          try { v.load(); } catch (e) {}
+        }
         stage.appendChild(v); segs.set(c.src, seg);
       });
       let shown = null, t0 = null, lastTMs = 0;
       const montIsPlaying = () => !!(trimPlay && trimPlay.video === stage && shown && !shown.paused);
       function warmAndLoop() {            // keep every clip playing inside its own [in,out] segment
         segs.forEach((seg) => {
+          if (seg.img) return;            // a still image has nothing to warm/loop
           const v = seg.el;
           if (v.readyState >= 2 && (v.currentTime >= seg.out - 0.02 || v.currentTime < seg.in - 0.05)) {
             try { v.currentTime = seg.in; } catch (e) {}
@@ -1448,6 +1479,35 @@ export function mountEditor(opts) {
       }
       syncTotalUI();   // seed the slider/readout from the current total
       host.querySelector('.ce-tr-done').addEventListener('click', () => { stopTrimPlay(); montMode = false; activeClip = -1; refreshArrange(); });
+      return;
+    }
+
+    // ── still IMAGE clip: no source timeline to scrub. Show the image; the only editable
+    //    dimension is how long it displays (out − in, with in pinned at 0). The right handle
+    //    sets that length against a synthetic timeline. ──────────────────────────────────
+    if (clip && isImgClip(clip.src)) {
+      video.src = clip.src;
+      if (playBtn) { playBtn.disabled = true; playBtn.style.display = 'none'; }
+      const inH = host.querySelector('.ce-tr-in'); if (inH) inH.style.display = 'none';
+      if (playhead) playhead.style.display = 'none';
+      clip.in = 0;
+      const synthDur = () => Math.max(10, (clip.out || 1) + 5);   // room to drag the length out
+      const layoutImg = () => {
+        const d = synthDur();
+        const R = Math.max(0, Math.min(100, (clip.out / d) * 100));
+        fill.style.left = '0%'; fill.style.width = R + '%';
+        read.textContent = `still image · shows for ${(clip.out - clip.in).toFixed(1)}s — drag the right edge to change its length`;
+      };
+      layoutImg();
+      const startOutDrag = (e) => {
+        e.preventDefault(); e.stopPropagation();
+        const rect = bar.getBoundingClientRect(); const startX = e.clientX, outRec = clip.out, d = synthDur();
+        const move = (ev) => { const dx = ((ev.clientX - startX) / rect.width) * d; clip.out = Math.max(0.2, Math.min(d, outRec + dx)); layoutImg(); };
+        const up = () => { document.removeEventListener('mousemove', move, true); document.removeEventListener('mouseup', up, true); updateClip(activeClip, { in: 0, out: Math.round(clip.out * 10) / 10 }); };
+        document.addEventListener('mousemove', move, true); document.addEventListener('mouseup', up, true);
+      };
+      const outH = host.querySelector('.ce-tr-out'); if (outH) outH.addEventListener('mousedown', startOutDrag);
+      host.querySelector('.ce-tr-done').addEventListener('click', () => { stopTrimPlay(); activeClip = -1; refreshArrange(); });
       return;
     }
 

@@ -84,14 +84,21 @@
   background:var(--ce-panel); border:1px solid var(--ce-line); border-radius:10px;
   box-shadow:0 -14px 40px rgba(0,0,0,.5); z-index:30; overflow:hidden; }
 .ce-kraken-grid.ce-on { display:flex; }
-.ce-kgrid-bar { display:flex; align-items:center; gap:10px; padding:9px 12px;
-  border-bottom:1px solid var(--ce-line); }
+/* flex-WRAP so the toolbar can never clip its right-most control (the 🔒 Lock) off the
+   panel edge. With room everything stays on one row (lock at far right, unchanged); when
+   the bar is wider than the panel (long workspace/folder names + all the filters) the
+   spacer+lock wrap to a second row instead of overflowing past `overflow:hidden`. The lock
+   keeps flex-shrink:0 so it always renders at full size, and the search may shrink first. */
+.ce-kgrid-bar { display:flex; flex-wrap:wrap; align-items:center; gap:10px; row-gap:8px;
+  padding:9px 12px; border-bottom:1px solid var(--ce-line); }
 .ce-kgrid-title { font-size:12px; color:var(--ce-dim); white-space:nowrap; }
 .ce-kgrid-filter { display:inline-flex; gap:4px; }
 .ce-ksearch { font:inherit; font-size:12px; background:#0c0d10; color:var(--ce-text);
-  border:1px solid var(--ce-line); padding:5px 9px; border-radius:6px; width:150px; }
+  border:1px solid var(--ce-line); padding:5px 9px; border-radius:6px;
+  flex:0 1 150px; min-width:90px; }
 .ce-ksort { font-size:12px; }
 .ce-kgrid-spacer { flex:1; }
+.ce-kraken-lock { flex-shrink:0; }
 .ce-kf.ce-on, .ce-kraken-lock.ce-on, .ce-mont-add.ce-on { background:var(--ce-accent); border-color:var(--ce-accent); color:#fff; }
 /* CSS grid with N equal stretch columns (--ce-cols, set by the size slider). 1fr columns
    ALWAYS span the full width — no leftover gap on the right at any size (the flex-wrap

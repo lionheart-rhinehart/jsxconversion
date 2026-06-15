@@ -144,12 +144,20 @@ export async function buildMontageSource(clips, fps, outPath, opts = {}) {
   //    and force EXACTLY frames[i] frames so the segment length matches montageAt().
   const vf = `scale=${STAGE_W}:${STAGE_H}:force_original_aspect_ratio=increase,` +
              `crop=${STAGE_W}:${STAGE_H},fps=${f},setsar=1`;
+  // a montage may MIX photos + videos. A video clip is trimmed [in,out]; an image clip
+  // is a still held for its window (`-loop 1 … -t dur`, no `-ss`). Both are normalized to
+  // the stage box and forced to EXACTLY frames[i] frames so montageAt()'s math still holds.
+  const IMG_EXT = /\.(jpe?g|png|gif|webp|avif|bmp|tiff?)(?:[?#]|$)/i;
   for (let i = 0; i < list.length; i++) {
     const c = list[i];
     const dur = Math.max(1 / f, (Number(c.out) || 0) - (Number(c.in) || 0));
     const seg = path.join(tmpDir, `seg_${String(i).padStart(3, '0')}.mp4`);
+    const isImage = IMG_EXT.test(String(c.src || ''));
+    const input = isImage
+      ? ['-loop', '1', '-framerate', String(f), '-t', String(dur), '-i', c.src]
+      : ['-ss', String(Number(c.in) || 0), '-i', c.src, '-t', String(dur)];
     const args = ['-y', '-loglevel', 'error',
-      '-ss', String(Number(c.in) || 0), '-i', c.src, '-t', String(dur),
+      ...input,
       '-an', '-vf', vf, '-frames:v', String(frames[i]),
       '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-r', String(f), seg];
     const r = spawnSync('ffmpeg', args, { encoding: 'utf8' });
