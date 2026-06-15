@@ -25,18 +25,33 @@ export function firstFrameId(taggedHtml) {
   return m ? m[1] : null;
 }
 
-// Default render transport: fetch a URL to a local temp file (poller caches tagged HTML
-// locally before render-frame opens it). Injectable so the fixture can pass a local file.
-export async function fetchToFile(url, destDir) {
-  fs.mkdirSync(destDir, { recursive: true });
-  // file:// or bare local path → just return it (fixture path; fileURLToPath is
-  // Windows-correct: handles the drive letter + %20-encoded spaces)
+// Inject `<base href="…">` into a tagged HTML string so its RELATIVE asset refs
+// (assets/vid/ad1.mp4, _ds/…css, fonts) resolve against the design's public asset
+// prefix once we've copied the HTML off its origin. No-op if the doc already has a
+// <base>. This is what makes the contract's `asset_base` actually do its job.
+export function injectBase(html, assetBase) {
+  if (!assetBase || /<base\b/i.test(html)) return html;
+  const tag = `<base href="${assetBase.replace(/"/g, '&quot;')}">`;
+  if (/<head[^>]*>/i.test(html)) return html.replace(/<head[^>]*>/i, (m) => m + tag);
+  if (/<html[^>]*>/i.test(html)) return html.replace(/<html[^>]*>/i, (m) => m + tag);
+  return tag + html;
+}
+
+// Default render transport: fetch a tagged-HTML URL to a local file (the poller caches
+// it before render-frame opens it). Injectable so the fixture can pass a local file.
+// For a REMOTE url we inject `<base href=assetBase>` so relative assets still resolve
+// once the HTML lives locally; a local file:// fixture keeps its co-located assets, so
+// it passes through untouched. fileURLToPath is Windows-correct (drive letter + %20).
+export async function fetchToFile(url, destDir, { assetBase } = {}) {
   if (/^file:/i.test(url)) return fileURLToPath(url);
   if (!/^https?:/i.test(url)) return path.resolve(url);
+  fs.mkdirSync(destDir, { recursive: true });
   const r = await fetch(url);
   if (!r.ok) throw new Error(`fetch tagged ${r.status}: ${url}`);
+  const baseHref = assetBase || url;   // default to the HTML's own URL dir if none given
+  const html = injectBase(Buffer.from(await r.arrayBuffer()).toString('utf8'), baseHref);
   const dest = path.join(destDir, `tagged-${Date.now()}.html`);
-  fs.writeFileSync(dest, Buffer.from(await r.arrayBuffer()));
+  fs.writeFileSync(dest, html);
   return dest;
 }
 

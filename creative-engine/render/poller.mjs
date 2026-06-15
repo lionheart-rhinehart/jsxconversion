@@ -54,7 +54,9 @@ export async function pollOnce(opts = {}) {
       const meta = co.metadata || {};
       const taggedUrl = meta.tagged_url || meta.live_url || co.content;
       if (!taggedUrl) throw new Error(`no tagged_url/live_url in content_output ${co.id} metadata`);
-      const taggedPath = await fetchTagged(taggedUrl, cacheDir);
+      // honor the contract's asset_base so a remote design's relative media/fonts
+      // still resolve after we cache the HTML locally (no-op for a local fixture).
+      const taggedPath = await fetchTagged(taggedUrl, cacheDir, { assetBase: meta.asset_base });
       const job = buildJobFromApproval({ approval: row, contentOutput: co, taggedPath, outDir, kind });
       jobs.push(job);
       rowByJobId[job.id] = row;

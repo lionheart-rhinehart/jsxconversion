@@ -19,7 +19,7 @@ import { Ledger } from './ledger.mjs';
 import { pollOnce } from './poller.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const FIX = path.join(__dirname, '_fixture', 'westfield.tagged.html');
+const FIX = path.resolve(__dirname, '..', '..', 'campaigns', 'westfield-100-off', 'index.tagged.html');
 const OUT = path.join(__dirname, '_out', 'poller');
 const STATE = path.join(__dirname, '_out', 'poller-state');
 fs.rmSync(OUT, { recursive: true, force: true });
