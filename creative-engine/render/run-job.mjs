@@ -16,13 +16,20 @@ import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const RENDER_FRAME = path.resolve(__dirname, '..', 'editor', 'render-frame.mjs');
+const RENDER_FRAME = path.resolve(__dirname, '..', 'editor', 'render-frame.mjs');   // STATIC: tagged file + seek
+const RENDER_LIVE = path.resolve(__dirname, '..', 'editor', 'render-live.mjs');     // ZERO-LOSS: http url + JS clock
 
 export const DEFAULT_TIMEOUT_MS = 5 * 60 * 1000;   // 5 min/render — headless Chrome + ffmpeg
 
-// Build the render-frame.mjs argv for a job. PNG (single frame at atMs) or MP4.
+// Build the renderer argv for a job. Two renderers, ONE flag grammar:
+//   live  (job.live)  → render-live.mjs <http-url>  <frameId>  (JS-driven exports; <video> seeks over HTTP)
+//   static            → render-frame.mjs <tagged-file> <frameId>  (pre-tagged file, current behavior)
+// Only the executable + first positional differ; --overrides / --at / --mp4 are identical for both
+// (render-live.mjs:166-179, render-frame.mjs CLI). PNG (single frame at atMs) or MP4.
 function buildArgs(job, ovPath) {
-  const args = [RENDER_FRAME, job.taggedPath, job.frameId];
+  const args = job.live
+    ? [RENDER_LIVE, job.url, job.frameId]
+    : [RENDER_FRAME, job.taggedPath, job.frameId];
   if (ovPath) args.push('--overrides', ovPath);
   if (job.kind === 'png') {
     args.push('--at', String(job.atMs ?? 0), job.out);

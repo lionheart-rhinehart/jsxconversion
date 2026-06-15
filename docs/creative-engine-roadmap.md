@@ -8,7 +8,18 @@ see where things stand without regenerating it. **Update the box + status line w
 - **Goal:** a finished Claude Design goes in → edit → approve → render once → ship (and fan out to many brands).
 - **Rules:** clean room (no imports from `creative-engine-v1/`), one phase per chat, evidence over assertion.
 
-**STATUS LINE:** Phases 0–6 ✅ + Intake Packager (#2) ✅ + Editor runtime-retag wiring (#5/#9) ✅ (this repo's part) · **pipeline complete** (drop any export → intake → edit → approve → render → dispatch). *Live cross-repo round-trip + scheduling remain — both need the Kraken repo.*
+**STATUS LINE:** Phases 0–6 ✅ + Intake Packager (#2) ✅ + Editor runtime-retag wiring (#5/#9) ✅ + Render-on-approval wired to zero-loss render-live ✅ (this repo's part) · **pipeline complete** (drop any export → intake → edit → approve → render LIVE → fan-out → dispatch). *Remaining: remote-publish step + the Kraken-repo editor mount / embed-row creation → the fully-organic live round-trip; + scheduling.*
+
+## ✅ Render-on-approval wired to render-live (local-but-real round-trip)  *(DONE 2026-06-15)*
+The poller/pool/fan-out were built (Phase 5) against the OLD static `render-frame` (freezes JS-driven
+animations). Wired them to the zero-loss `render-live` via two job fields (`job.live`+`job.url`) and one
+liveness gate (`render:'live-html' && !file://` → keeps the Westfield static fixture + all tests green).
+The poller owns ONE HTTP server per cycle (serve.mjs, frame-map pattern) so `<video>` Range-seeks; closed
+in `finally` after `runPool`. `creative-engine/render/test-live-roundtrip.mjs`: real Carmel → PNG 526KB +
+**MP4 1.42MB** (210 frames, MOTION CONFIRMED via ffprobe frame-diff) → fan-out 2 brands → dispatch DRY-RUN
+routed → 0 live Kraken writes (10/10). `test/render-live-path.test.mjs` (bare-checkout safe). npm test
+181/181. Live recon: Kraken has 0 v2 embed/live-html rows → organic round-trip blocked on the Kraken repo.
+Lesson: `lessons-learned/2026-06-15__render-on-approval-wired-to-render-live.md`.
 
 ## ✅ Intake Packager (#2) — the front door  *(DONE 2026-06-15)*
 `creative-engine/intake/package-export.mjs <path>` (.zip/folder/.dc.html) → detect → normalize-copy into

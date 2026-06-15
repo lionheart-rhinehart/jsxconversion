@@ -55,13 +55,36 @@ export async function fetchToFile(url, destDir, { assetBase } = {}) {
   return dest;
 }
 
-// Build a render job from an approval + its content_output. `taggedPath` is the
-// already-fetched local tagged HTML. Returns a job for the pool (run-job/run-pool).
-export function buildJobFromApproval({ approval, contentOutput, taggedPath, outDir, kind = 'mp4' }) {
+// Should this approval render through the ZERO-LOSS live path (render-live, served over HTTP)
+// vs the legacy static path (render-frame, pre-tagged file)? A `live-html` row whose tagged_url
+// is a `file://` artifact (the Westfield fixture) is a PRE-TAGGED local file → static path. A
+// `live-html` row pointing at a relative/http packaged export → live path (its JS rebuilds the
+// frames at load, so it must be served + runtime re-tagged). Requires a baseUrl to serve against.
+export function isServedLive(meta, baseUrl) {
+  return !!baseUrl && meta.render === 'live-html' && !/^file:/i.test(meta.tagged_url || '');
+}
+
+// The ONE rule for the http URL render-live loads. Matches how intake builds its own loadable
+// URL (package-export.mjs pkgRelUrl + frame-map.mjs host): an already-absolute http tagged_url
+// passes through; otherwise baseUrl + asset_base (repo-rooted, leading+trailing slash) + the
+// entry's basename. Exported so the round-trip test asserts the exact same derivation.
+export function deriveLiveUrl(meta, baseUrl) {
+  const tagged = meta.tagged_url || '';
+  if (/^https?:/i.test(tagged)) return tagged;
+  const base = String(baseUrl || '').replace(/\/+$/, '');           // no trailing slash
+  const entry = tagged.split('/').pop();                            // basename of the entry
+  return `${base}${meta.asset_base}${entry}`.replace(/([^:])\/\/+/g, '$1/');
+}
+
+// Build a render job from an approval + its content_output. `taggedPath` is the already-fetched
+// local tagged HTML (static path); for the live path pass `baseUrl` (and taggedPath may be null)
+// — the design is served in place, not cached. Returns a job for the pool (run-job/run-pool).
+export function buildJobFromApproval({ approval, contentOutput, taggedPath, outDir, kind = 'mp4', baseUrl = null }) {
   const meta = (contentOutput && contentOutput.metadata) || {};
   if (meta.render && meta.render !== 'live-html') {
     throw new Error(`unexpected metadata.render="${meta.render}" (contract expects "live-html") — flagging, not guessing`);
   }
+  const servedLive = isServedLive(meta, baseUrl);
   // FRAME-ID CONTRACT (v2): a live-html export is JS-driven, so its HTML carries NO static
   // data-edit-frame tags (they're stamped at render time by the shared runtime re-tagger).
   // firstFrameId() would therefore find nothing and we'd guess wrong. The intake packager's
@@ -81,7 +104,10 @@ export function buildJobFromApproval({ approval, contentOutput, taggedPath, outD
   const out = path.join(outDir, `${approval.id}.${ext}`);
   return {
     id: approval.id,
-    taggedPath,
+    // live path → render-live loads job.url over HTTP (no local cache); static → taggedPath file.
+    live: servedLive,
+    url: servedLive ? deriveLiveUrl(meta, baseUrl) : null,
+    taggedPath: servedLive ? null : taggedPath,
     frameId,
     overrides,
     kind,

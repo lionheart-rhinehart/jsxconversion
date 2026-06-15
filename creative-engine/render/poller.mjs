@@ -17,7 +17,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Ledger } from './ledger.mjs';
 import { runPool } from './pool.mjs';
-import { buildJobFromApproval, fetchToFile } from './approvals.mjs';
+import { buildJobFromApproval, fetchToFile, isServedLive } from './approvals.mjs';
+import { createServer } from '../editor/serve.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -45,51 +46,84 @@ export async function pollOnce(opts = {}) {
   const needed = rows.filter((r) => ledger.needsRender(r));
   log(`poll: ${rows.length} approved, ${needed.length} need render`);
 
-  const jobs = [];
-  const rowByJobId = {};
+  // Resolve each needed row's content_output FIRST, so we know whether any of them are
+  // ZERO-LOSS live exports — those must be SERVED over HTTP (render-live loads a URL, not a
+  // file). If ≥1 is, start ONE local server for the whole cycle (reuse the editor's serve.mjs,
+  // the same pattern intake/lib/frame-map.mjs uses) and hand each live job a baseUrl. The
+  // server outlives every child render because runPool is awaited before the finally that
+  // closes it.
+  const resolved = [];
   for (const row of needed) {
     try {
       const co = await source.getContentOutput(row.content_output_id);
       if (!co) throw new Error(`content_output ${row.content_output_id} not found`);
-      const meta = co.metadata || {};
-      const taggedUrl = meta.tagged_url || meta.live_url || co.content;
-      if (!taggedUrl) throw new Error(`no tagged_url/live_url in content_output ${co.id} metadata`);
-      // honor the contract's asset_base so a remote design's relative media/fonts
-      // still resolve after we cache the HTML locally (no-op for a local fixture).
-      const taggedPath = await fetchTagged(taggedUrl, cacheDir, { assetBase: meta.asset_base });
-      const job = buildJobFromApproval({ approval: row, contentOutput: co, taggedPath, outDir, kind });
-      jobs.push(job);
-      rowByJobId[job.id] = row;
+      resolved.push({ row, co });
     } catch (e) {
       log(`  ✗ ${row.id} skipped (will retry next tick): ${e.message}`);
     }
   }
+  const anyLive = resolved.some(({ co }) => isServedLive(co.metadata || {}, 'http://x'));
 
-  if (!jobs.length) return { picked: needed.length, rendered: 0, failed: 0, skipped: needed.length - jobs.length, results: [] };
+  let server = null, baseUrl = null;
+  if (anyLive) {
+    const started = await new Promise((resolve, reject) => {
+      const s = createServer();
+      s.on('error', reject);
+      s.listen(0, '127.0.0.1', () => resolve({ s, port: s.address().port }));
+    });
+    server = started.s; baseUrl = `http://127.0.0.1:${started.port}`;
+    log(`  live exports present → serving repo root at ${baseUrl}`);
+  }
 
-  const manifest = await runPool(jobs, {
-    size: opts.poolSize,
-    batchId: `poll-${Date.now()}`,
-    manifestPath: path.join(outDir, 'poll-manifest.json'),
-    onResult: (r) => {
-      if (r.ok) {
-        const row = rowByJobId[r.id];
-        ledger.record(row.id, row.updated_at, { out: r.out });   // only record SUCCESS → failures retry next tick
-        log(`  ✓ rendered ${r.id} → ${r.out}`);
-      } else {
-        log(`  ✗ render failed ${r.id}: ${r.error.split('\n')[0]} (left un-recorded → retries)`);
+  try {
+    const jobs = [];
+    const rowByJobId = {};
+    for (const { row, co } of resolved) {
+      try {
+        const meta = co.metadata || {};
+        const taggedUrl = meta.tagged_url || meta.live_url || co.content;
+        if (!taggedUrl) throw new Error(`no tagged_url/live_url in content_output ${co.id} metadata`);
+        // Live exports are served in place (no local cache); static rows fetch+cache as before.
+        // honor asset_base so a remote static design's relative media/fonts still resolve.
+        const taggedPath = isServedLive(meta, baseUrl)
+          ? null
+          : await fetchTagged(taggedUrl, cacheDir, { assetBase: meta.asset_base });
+        const job = buildJobFromApproval({ approval: row, contentOutput: co, taggedPath, outDir, kind, baseUrl });
+        jobs.push(job);
+        rowByJobId[job.id] = row;
+      } catch (e) {
+        log(`  ✗ ${row.id} skipped (will retry next tick): ${e.message}`);
       }
-    },
-  });
+    }
 
-  const rendered = manifest.jobs.filter((j) => j.ok).length;
-  return {
-    picked: needed.length,
-    rendered,
-    failed: manifest.jobs.length - rendered,
-    skipped: needed.length - jobs.length,
-    results: manifest.jobs,
-  };
+    if (!jobs.length) return { picked: needed.length, rendered: 0, failed: 0, skipped: needed.length - jobs.length, results: [] };
+
+    const manifest = await runPool(jobs, {
+      size: opts.poolSize,
+      batchId: `poll-${Date.now()}`,
+      manifestPath: path.join(outDir, 'poll-manifest.json'),
+      onResult: (r) => {
+        if (r.ok) {
+          const row = rowByJobId[r.id];
+          ledger.record(row.id, row.updated_at, { out: r.out });   // only record SUCCESS → failures retry next tick
+          log(`  ✓ rendered ${r.id} → ${r.out}`);
+        } else {
+          log(`  ✗ render failed ${r.id}: ${r.error.split('\n')[0]} (left un-recorded → retries)`);
+        }
+      },
+    });
+
+    const rendered = manifest.jobs.filter((j) => j.ok).length;
+    return {
+      picked: needed.length,
+      rendered,
+      failed: manifest.jobs.length - rendered,
+      skipped: needed.length - jobs.length,
+      results: manifest.jobs,
+    };
+  } finally {
+    if (server) await new Promise((r) => server.close(r));
+  }
 }
 
 // Long-running loop. Ctrl-C to stop. intervalMs between cycles.

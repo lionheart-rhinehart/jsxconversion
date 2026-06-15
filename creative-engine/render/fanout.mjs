@@ -38,7 +38,11 @@ export function diffOverrides(master, brand) {
 }
 
 // Build the per-brand jobs (no render). Returns [{ brand, overrides, job, changed }].
-export function planFanout({ master, binding, brands, taggedPath, frameId, kind = 'mp4' }) {
+// `live`+`url` route brand renders through the ZERO-LOSS renderer (render-live, served over
+// HTTP) — every brand shares the same source design (fan-out swaps overrides only), so they
+// all use the same url/taggedPath. The caller owns the HTTP server (planFanout/runFanout stay
+// composable); see test-live-roundtrip.mjs.
+export function planFanout({ master, binding, brands, taggedPath, frameId, kind = 'mp4', live = false, url = null }) {
   const allowed = boundKeys(binding);
   return brands.map((brand) => {
     const overrides = cloneForBrand(master, binding, brand);
@@ -50,15 +54,15 @@ export function planFanout({ master, binding, brands, taggedPath, frameId, kind 
       changed,
       // any changed key NOT in the allowed (bound) set is a leak — the proof catches it
       leaked: changed.filter((c) => !allowed.has(c)),
-      job: { id: brand.id, taggedPath, frameId, overrides, kind, out, dest: brand.dest },
+      job: { id: brand.id, live, url: live ? url : null, taggedPath: live ? null : taggedPath, frameId, overrides, kind, out, dest: brand.dest },
     };
   });
 }
 
 // Full fan-out: plan → pooled render → manifest. opts mostly forwarded to runPool.
-export async function runFanout({ master, binding, brandIds, taggedPath, frameId, kind = 'mp4', poolSize, manifestPath, registryFile, log = () => {} }) {
+export async function runFanout({ master, binding, brandIds, taggedPath, frameId, kind = 'mp4', live = false, url = null, poolSize, manifestPath, registryFile, log = () => {} }) {
   const brands = getBrands(brandIds, registryFile);
-  const planned = planFanout({ master, binding, brands, taggedPath, frameId, kind });
+  const planned = planFanout({ master, binding, brands, taggedPath, frameId, kind, live, url });
   for (const p of planned) {
     if (p.leaked.length) throw new Error(`brand ${p.brand.id}: override leak beyond the 5 vars: ${p.leaked.join(', ')}`);
     log(`  ${p.brand.id}: swaps ${p.changed.length} field(s) → ${p.job.out}`);
