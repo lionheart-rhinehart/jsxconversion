@@ -8,7 +8,7 @@ see where things stand without regenerating it. **Update the box + status line w
 - **Goal:** a finished Claude Design goes in → edit → approve → render once → ship (and fan out to many brands).
 - **Rules:** clean room (no imports from `creative-engine-v1/`), one phase per chat, evidence over assertion.
 
-**STATUS LINE:** Phases 0–5 ✅ (this repo's part) · **Phase 6 NEXT** (dispatch / final screen).
+**STATUS LINE:** Phases 0–6 ✅ (this repo's part) · **pipeline complete** (intake → edit → approve → render → dispatch). *Scheduling is a deliberate later add-on.*
 
 ---
 
@@ -49,10 +49,20 @@ Clean room at `creative-engine/render/` (zero v1 imports; wraps `editor/render-f
 - [x] 5.4 brand fan-out (`brands.mjs` + `brands/registry.json` + `fanout.mjs`) — 1 master → 6 brands; `diffOverrides()` proves only name/color/logo/eyebrow/media changed; routed to dest folders.
 > Live cross-repo round-trip (Kraken approves → poller renders) = FINAL verification with the Kraken chat; proven here against a local fixture.
 
-## ⬜ Phase 6 — Dispatch (final screen)
-- [ ] 6.1 Content Library → pick folder  *(build first)*
-- [ ] 6.2 Meta / Facebook queue
-- [ ] (schedule — later)
+## ✅ Phase 6 — Dispatch (final screen)  *(DONE 2026-06-14)*
+Clean room at `creative-engine/dispatch/` (zero v1 imports; reuses `scripts/lib/kraken.mjs`; reads
+Phase-5 manifests as data).
+- [x] 6.1 Content Library dispatch + brand fan-out auto-route (`content-library.mjs` + `lib/dispatch-jobs.mjs`) —
+      DRY-RUN default, `--live` push. LIVE PROOF: AA fixture → ingested → filed into folder
+      `creative-engine-dispatch-test` in AA's own workspace (content id `3ac74364`), read back from
+      that folder; re-run = `deduped` (idempotent). 6-brand fan-out auto-routes each to its own
+      workspace+folder; 2 unresolved registry workspaces flagged (no silent drop).
+- [x] 6.2 Meta / Facebook queue (`meta-queue.mjs`) — STAGED publish-plan only; `liveFired=false`,
+      `published=0`, `publishCall=null`. third-eye-ads is read-only insights (no publish tool exists).
+- [ ] (schedule — later, deliberately out of scope)
+> Known registry gap surfaced (not a dispatch bug): `castille-academy` / `ideal-sports-performance`
+> brand `workspace` slugs don't resolve to a Kraken workspace (ideal → `isp`/`isp-fort-worth`). Fix in
+> the Phase-5 registry, not here — dispatch correctly flags it loudly.
 
 ---
 
