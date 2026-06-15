@@ -15,7 +15,7 @@ import { runFanout } from './fanout.mjs';
 import { loadRegistry } from './brands.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const FIX = path.join(__dirname, '_fixture', 'westfield.tagged.html');
+const FIX = path.resolve(__dirname, '..', '..', 'campaigns', 'westfield-100-off', 'index.tagged.html');
 
 // The approved MASTER's override set (what came out of the editor for the master design).
 // Empty-ish baseline; fan-out swaps the 5 vars onto it. A real master could carry edits;

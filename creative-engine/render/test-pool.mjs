@@ -18,12 +18,12 @@ import { fileURLToPath } from 'node:url';
 import { runPool, summarize } from './pool.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const FIX = path.join(__dirname, '_fixture', 'westfield.tagged.html');
+const FIX = path.resolve(__dirname, '..', '..', 'campaigns', 'westfield-100-off', 'index.tagged.html');
 const OUT = path.join(__dirname, '_out');
 fs.mkdirSync(OUT, { recursive: true });
 
 if (!fs.existsSync(FIX)) {
-  console.error('fixture missing — run: node creative-engine/intake/tag-design.mjs campaigns/westfield-100-off/index.html --out creative-engine/render/_fixture/westfield.tagged.html');
+  console.error('fixture missing — run: node creative-engine/intake/tag-design.mjs campaigns/westfield-100-off/index.html --out campaigns/westfield-100-off/index.tagged.html');
   process.exit(1);
 }
 

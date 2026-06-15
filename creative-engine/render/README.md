@@ -46,8 +46,10 @@ node creative-engine/render/cli.mjs fanout --master ov.json --binding bind.json 
 ## Evidence (reproducible; `_out/`, `_state/`, `_fixture/` are gitignored)
 
 ```bash
+# build the fixture IN PLACE beside the campaign's assets/ so media actually loads
+# (a tagged copy in an isolated dir renders with broken images — verified the hard way):
 node creative-engine/intake/tag-design.mjs campaigns/westfield-100-off/index.html \
-     --out creative-engine/render/_fixture/westfield.tagged.html   # build the fixture first
+     --out campaigns/westfield-100-off/index.tagged.html
 node creative-engine/render/test-pool.mjs      # 5.1 N-at-a-time + 5.2 isolation/manifest
 node creative-engine/render/test-poller.mjs    # 5.3 pickup / skip / re-render on bumped updated_at
 node creative-engine/render/test-fanout.mjs    # 5.4 1 master → 6 brands, only-5-vars diff proof
@@ -63,6 +65,15 @@ authored from the design's `data-edit-*` roles): `name`→`text`, `eyebrow`→`t
 `logo`→`src`, `media`→`src`, `color`→`color`. The registry holds the values; everything
 else stays byte-identical. `diffOverrides()` proves only those fields changed.
 
+## Asset resolution (`asset_base`)
+
+A tagged design references its media/fonts **relatively** (`assets/vid/ad1.mp4`, `_ds/…css`).
+When the poller caches a REMOTE `tagged_url` to a local file, those relative refs would break,
+so `approvals.fetchToFile()` injects `<base href="${asset_base}">` (the contract field) into the
+fetched HTML — `asset_base` is what makes the design's assets resolve after the copy. A local
+fixture keeps its co-located `assets/` and passes through untouched. (This is why the fixture is
+tagged **in place** beside `campaigns/westfield-100-off/assets/`, not in an isolated dir.)
+
 ## Known boundaries (flagged, not silently assumed)
 
 - **Frame id** isn't in the embed contract → poller defaults to the first `.cr-frame`,
@@ -70,3 +81,11 @@ else stays byte-identical. `diffOverrides()` proves only those fields changed.
   should add `frame_id` to `content_outputs.metadata` (contract addition — flag, don't guess).
 - Output is **MP4/PNG** now; **SVG later** (per plan).
 - `approvals.overrides jsonb` is read if present; absent → renders the design as-tagged.
+- **Fan-out binding is per-design and authored, not inferred.** The 5-var swap only recolors/
+  re-logos correctly if the binding targets the right element+field. Two design-dependent notes:
+  (a) `color` writes `el.style.color` (text); a design that carries its brand color as a
+  *background* needs the binding to point `color` at that background element — the swap MECHANISM
+  is proven (diff), the visual result depends on a correct binding. (b) `media` in a kit is a
+  Kraken **source** (folder/workspace); picking the concrete per-brand asset is the Phase-3
+  manifest's job, wired at dispatch — in the offline fixture the media swap is symbolic, the
+  logo swap is a real resolvable file.
