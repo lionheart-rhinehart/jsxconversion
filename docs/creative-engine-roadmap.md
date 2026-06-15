@@ -8,7 +8,16 @@ see where things stand without regenerating it. **Update the box + status line w
 - **Goal:** a finished Claude Design goes in → edit → approve → render once → ship (and fan out to many brands).
 - **Rules:** clean room (no imports from `creative-engine-v1/`), one phase per chat, evidence over assertion.
 
-**STATUS LINE:** Phases 0–6 ✅ (this repo's part) · **pipeline complete** (intake → edit → approve → render → dispatch). *Scheduling is a deliberate later add-on.*
+**STATUS LINE:** Phases 0–6 ✅ + Intake Packager (#2) ✅ + Editor runtime-retag wiring (#5/#9) ✅ (this repo's part) · **pipeline complete** (drop any export → intake → edit → approve → render → dispatch). *Live cross-repo round-trip + scheduling remain — both need the Kraken repo.*
+
+## ✅ Intake Packager (#2) — the front door  *(DONE 2026-06-15)*
+`creative-engine/intake/package-export.mjs <path>` (.zip/folder/.dc.html) → detect → normalize-copy into
+`_packages/<slug>/` → headless frame map via render-live `openLive` (SAME eyes as renderer) → `intake.json`
+(entryHtml, asset_base, kind, frames[], counts, flagged, brokenAssets, ok) + 1 poster/frame. Never silent:
+0 frames→exit 2; broken assets→flag+exit 3 but still write. `editor-host.html?pkg=<slug>` loads from the
+manifest; frame_id crack closed (manifest sets `metadata.frame_id`; `approvals.mjs` throws on live-html
+without it). Receipts: Carmel campaign-b 10/ok, Westfield cr-frame 36, AA .dc.html 20, neg→2, broken→3.
+`test/intake-package.test.mjs`; npm test 179/179. Lesson: `lessons-learned/2026-06-15__intake-packager-front-door.md`.
 
 ---
 

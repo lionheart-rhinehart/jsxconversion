@@ -62,9 +62,20 @@ export function buildJobFromApproval({ approval, contentOutput, taggedPath, outD
   if (meta.render && meta.render !== 'live-html') {
     throw new Error(`unexpected metadata.render="${meta.render}" (contract expects "live-html") — flagging, not guessing`);
   }
-  const taggedHtml = fs.readFileSync(taggedPath, 'utf8');
-  const frameId = meta.frame_id || firstFrameId(taggedHtml);
-  if (!frameId) throw new Error(`no .cr-frame found in tagged HTML for approval ${approval.id}`);
+  // FRAME-ID CONTRACT (v2): a live-html export is JS-driven, so its HTML carries NO static
+  // data-edit-frame tags (they're stamped at render time by the shared runtime re-tagger).
+  // firstFrameId() would therefore find nothing and we'd guess wrong. The intake packager's
+  // manifest carries an EXPLICIT frame id per frame (one row per frame for contact sheets) —
+  // the content row MUST set metadata.frame_id from it. So for live-html we REQUIRE it; only
+  // legacy statically-tagged HTML falls back to scanning the file.
+  const isLive = meta.render === 'live-html';
+  let frameId = meta.frame_id;
+  if (!frameId && !isLive) frameId = firstFrameId(fs.readFileSync(taggedPath, 'utf8'));
+  if (!frameId) {
+    throw new Error(isLive
+      ? `live-html approval ${approval.id} has no metadata.frame_id — the content row must set it from the intake manifest (intake/lib/manifest.mjs manifestToMetadataRows). NOT guessing.`
+      : `no data-edit-frame found in tagged HTML for approval ${approval.id}`);
+  }
   const overrides = approval.overrides || {};
   const ext = kind === 'png' ? 'png' : 'mp4';
   const out = path.join(outDir, `${approval.id}.${ext}`);

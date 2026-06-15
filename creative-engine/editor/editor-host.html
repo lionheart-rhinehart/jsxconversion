@@ -17,9 +17,23 @@
   import { mountEditor } from './editor.js';
 
   // the design to edit + the media library for the swap bar are passed by the host.
-  // ?html= overrides the default tagged design path.
+  // ?html=  overrides the default tagged design path (raw file).
+  // ?pkg=<slug>  loads a packaged export: fetch its intake.json (written by the intake
+  //   packager, #2) and use the manifest's entryHtml + asset_base. This is the "drop any
+  //   export in and go" front door — the manifest is the single source of truth for WHERE
+  //   the design lives and WHAT its asset base is, shared with the renderer + Kraken.
   const params = new URLSearchParams(location.search);
-  const htmlPath = params.get('html') || '../../campaigns/westfield-100-off/index.tagged.html';
+  let htmlPath = params.get('html') || '../../campaigns/westfield-100-off/index.tagged.html';
+  let pkgBaseHref = null;
+  const pkg = params.get('pkg');
+  if (pkg) {
+    const manifestUrl = '/creative-engine/intake/_packages/' + encodeURIComponent(pkg) + '/intake.json';
+    const manifest = await (await fetch(manifestUrl)).json();
+    // asset_base is repo-rooted + origin-absolute ("/creative-engine/intake/_packages/<slug>/<dir>/").
+    // entryHtml is relative to the package root; join it onto asset_base's package root.
+    pkgBaseHref = manifest.asset_base;
+    htmlPath = pkgBaseHref + manifest.entryHtml.split('/').pop();
+  }
 
   // apply-overrides.js is the SHARED replay function. The host loads its source once
   // and hands it to the editor, which injects the very same source into the design
@@ -40,8 +54,10 @@
   window.__CE_RETAG_SRC__ = await (await fetch('../shared/runtime-retag.js')).text();
 
   const html = await (await fetch(htmlPath)).text();
-  // the design's own folder — so its relative asset paths resolve inside the iframe
-  const baseHref = new URL(htmlPath, location.href).href.replace(/[^/]*$/, '');
+  // the design's own folder — so its relative asset paths resolve inside the iframe. For a
+  // packaged export this is the manifest's asset_base verbatim (repo-rooted, origin-absolute);
+  // otherwise derive it from the html path's folder.
+  const baseHref = pkgBaseHref || new URL(htmlPath, location.href).href.replace(/[^/]*$/, '');
 
   // demo media library (Phase-3 manifest will feed this for real). Paths are ORIGIN-
   // ABSOLUTE ("/campaigns/…") so they resolve correctly both in the host page AND when

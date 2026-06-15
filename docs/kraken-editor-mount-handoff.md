@@ -77,6 +77,25 @@ The editor reads these ids; overrides are keyed to them: `{ "f3:e12": { text? , 
 ids are stamped by a script (not an AI), the same design tags the same way every time — so an override set
 stays valid across re-intake.
 
+### v2 update — live exports are tagged at RUNTIME, so `metadata.frame_id` is REQUIRED
+
+Real Claude Design exports are **JS-driven**: the design's own JS builds (and on every load rebuilds) the
+frames, wiping any static `data-edit-*` tags. So v2 does **not** statically tag — the editor and the
+renderer stamp ids on the **live** DOM after build (shared `frame-detect.js` + `runtime-retag.js`). The
+HTML on disk therefore carries **no** `data-edit-frame` tags to scan.
+
+Consequence for the render contract: `render/approvals.mjs` used to default the frame to the *first*
+`data-edit-frame` it could regex out of the (statically tagged) file (`firstFrameId`). For a live-html
+export that regex finds nothing. **So the content row MUST set `metadata.frame_id` explicitly.** The intake
+packager (#2) writes one row per frame from its manifest — use
+`creative-engine/intake/lib/manifest.mjs → manifestToMetadataRows(manifest, { tagged_url })`, which emits
+`{ render:'live-html', tagged_url, asset_base, frame_id, poster, label }` per frame (the contact-sheet case
+becomes N rows). `buildJobFromApproval` now **throws** if a `render:'live-html'` approval arrives without a
+`frame_id` (loud, never a silent wrong guess); `firstFrameId` is used only for legacy statically-tagged HTML.
+
+The packager's manifest (`_packages/<slug>/intake.json`) is the source of truth for `entryHtml`,
+`asset_base`, and the per-frame `frame_id`s — the editor host loads it via `editor-host.html?pkg=<slug>`.
+
 ---
 
 ## The render trigger — Supabase status-field contract (the gap `/ultrathink` caught)
