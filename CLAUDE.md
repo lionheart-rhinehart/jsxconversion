@@ -50,11 +50,13 @@ These four are binding for every chat on this repo. They exist because each one 
 
 5. **Multi-chat work — keep the status ledger honest.** Big efforts span many chats and context resets, and
    the truth of *what's actually built* gets lost (it did — the generation-quality layer was "designed" in
-   one chat and looked done for days). **`docs/creative-engine-status.md` is the single source of truth.**
-   Read it before resuming creative-engine work. When you build a ledger item, update its row with the
-   **commit hash + the test that proves it** *before you wrap up* — a phase is "done" ONLY with commit+test
-   cited; "designed in a chat" never counts. If the ledger looks wrong, rebuild it from `list_sessions` +
-   `search_session_transcripts` + `git log` (recovery routine is in the file).
+   one chat and looked done for days). **For the v2 rebuild, `docs/creative-engine-roadmap.md` is the single
+   source of truth** (the live phase ledger). *(The older `docs/creative-engine-status.md` is the RETIRED v1
+   generation-quality ledger — historical reference only, not the active design.)* Read the roadmap before
+   resuming creative-engine work. When you build a ledger item, update its row with the **commit hash + the
+   test that proves it** *before you wrap up* — a phase is "done" ONLY with commit+test cited; "designed in a
+   chat" never counts. If the ledger looks wrong, rebuild it from `list_sessions` +
+   `search_session_transcripts` + `git log`.
 
 ---
 
@@ -68,7 +70,7 @@ campaigns/     One folder per campaign: brief + ad-copy + microscripts + creativ
 data/          Shared JSON tier: brand.* / location.* / campaign.* / rules.*  (the cascade)
 templates/     Static JSX bank (multi-sport-foundations/cluster-*.jsx) + per-template assets
 scripts/       Pipeline CLIs (run-campaign, kraken-*, fill-template…) + scripts/lib/ shared modules
-docs/          PROCESS.md (canonical), MAP.md (this map), creative-engine-status.md (BUILT-vs-designed ledger), creative-playbook, copy-role-schema, parallel-chats
+docs/          PROCESS.md (canonical), MAP.md (this map), creative-engine-roadmap.md (v2 LIVE ledger), kraken-editor-mount-handoff.md (Kraken next step), creative-engine-status.md (RETIRED v1 ledger), creative-playbook, copy-role-schema, parallel-chats
 lessons-learned/  Dated gotchas (YYYY-MM-DD__slug.md) — new ones land here on every deploy
 fonts/         Font binaries for the renderer's preflight
 out/           Rendered creatives — gitignored (machine-local)

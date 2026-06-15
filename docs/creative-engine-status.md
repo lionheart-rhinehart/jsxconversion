@@ -1,4 +1,9 @@
-# Creative-engine — STATUS LEDGER (single source of truth)
+# Creative-engine — STATUS LEDGER (⛔ RETIRED v1 — historical reference only)
+
+> ⛔ **SUPERSEDED (2026-06-11+).** This ledger tracks the OLD v1 generation-quality / "bulletproofing"
+> effort, which was retired when the clean-room **v2 rebuild** began. The ACTIVE single source of truth is
+> **`docs/creative-engine-roadmap.md`**; current state is in `HANDOFF.md` + memory
+> `project-creative-engine-v2-rebuild`. Keep this file for history; do NOT treat it as the live ledger.
 
 **This file is the status of record for the creative-engine "bulletproofing" effort.** It exists because
 the work spans many chats + a separate editor track + context compactions, and there was no shared record of
