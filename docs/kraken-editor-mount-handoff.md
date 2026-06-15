@@ -23,19 +23,19 @@ URL into an `<iframe>` and the design plays. The **same** `<iframe>` can run in 
   original HTML — the design is *never re-drawn*. (This is the whole point of the v2 rebuild: no lossy
   rebuilds.)
 
-A single boolean prop flips the mode. Same bundle, same code, in both lanes.
+A single URL param flips the mode (`editor-host.html?view=1` vs no param) — same editor page, both lanes.
 
 > **⚠️ Two SEPARATE systems — do not conflate (and do not build a new comment system):**
 > - **Commenting / highlighting = Kraken's EXISTING approval-portal feature.** It already exists:
 >   `app/portal/review/[id]/review-client.tsx` + `app/api/portal/approvals/[id]/comments/route.ts`
 >   (W3C annotations). The "view" lane just shows the live design read-only *with this existing UI* —
 >   **reuse it, build nothing new.**
-> - **Editing = the CreativeEngine editor bundle**, and it is **EDIT-ONLY** (retype / swap / drag →
->   overrides). It has no commenting of its own. Mount it with `permissions:'edit'` for the edit lane;
->   `permissions:'view'` is just read-only display.
-> So: `permission 'view'` → read-only design + Kraken's existing comment UI; `permission 'edit'` →
-> the bundle in edit mode. The portal is a section of Kraken, so "the approval portal" and "Kraken"
-> are the same app — the commenting lives in that portal.
+> - **Editing = the CreativeEngine editor (iframed by URL)**, and it is **EDIT-ONLY** (retype / swap /
+>   drag → overrides). It has no commenting of its own. Iframe `editor-host.html` (no param) for the
+>   edit lane; `editor-host.html?view=1` is just read-only display.
+> So: `?view=1` → read-only design + Kraken's existing comment UI; no param → the editor in edit mode.
+> The portal is a section of Kraken, so "the approval portal" and "Kraken" are the same app — the
+> commenting lives in that portal.
 
 ---
 
@@ -44,12 +44,19 @@ A single boolean prop flips the mode. Same bundle, same code, in both lanes.
 | Piece | Lives in | Status |
 |---|---|---|
 | Deterministic intake/TAG (stable `data-edit-*` ids on the real HTML) | this repo — `creative-engine/intake/tag-design.mjs` | **built (Phase 1)** |
-| The one portable editor bundle (consumes tagged HTML → emits overrides) | this repo — `creative-engine/editor/` | **built (Phase 2)** |
-| Embeddable editor + `permission` flag | this repo — `creative-engine/editor/dist/creative-engine-editor.bundle.js` | **built (Phase 4.1)** — single self-contained ESM; mount contract in `creative-engine/editor/dist/README.md`; proof `dist/embed-evidence.mjs` (10/10 PASS) |
+| The one portable editor (consumes tagged HTML → emits overrides) | this repo — `creative-engine/editor/` | **built (Phase 2)** |
+| Hostable editor URL + `permission` flag | this repo — `creative-engine/editor/editor-host.html` (`?view=1` = view; no param = edit) | **built (Phase 2/4)** — this IS the page Kraken iframes; no bundle, no code import |
 | Local render poller (watches Supabase, renders approved rows) | this repo | Phase 5 |
-| **The Next.js mount** (`<iframe>` the bundle, wire the permission toggle, persist overrides) | **Kraken repo** | **your task** |
+| **The Next.js mount** (`<iframe src=…>` the editor URL, wire the permission toggle, persist overrides) | **Kraken repo** | **your task** |
 
-The editor is **the only thing that travels into Kraken.** The render engine stays here.
+> **Integration model (locked 2026-06-14): iframe-by-URL.** Kraken embeds the editor exactly the
+> way it already embeds previews — point an `<iframe src>` at the editor's hosted URL. Kraken does
+> **not** import our editor code (verified: a repo-wide grep for `mountEditor`/`creative-engine`/
+> `CreativeEngine` in Kraken returns zero; Kraken renders all content via iframes). There is no
+> "editor bundle" to import — the deliverable is the **URL** + this contract.
+
+The editor is **the only thing that travels into Kraken** (as a URL in an iframe). The render
+engine stays here.
 
 ---
 
@@ -144,7 +151,7 @@ Nothing renders until a human approves — the safety net that makes hands-off m
 ## The view+comment lane — it already exists in Kraken (verified 2026-06-14)
 
 This was checked against the live Kraken repo so the contract is exact, not assumed. **The
-"comment" half of the toggle needs NOTHING from this repo's bundle** — Kraken already owns it:
+"comment" half of the toggle needs NOTHING from this repo** — Kraken already owns it:
 
 | Kraken piece (verified) | What it already does |
 |---|---|
@@ -154,11 +161,10 @@ This was checked against the live Kraken repo so the contract is exact, not assu
 
 **The mapping Kraken wires (the only integration work):**
 
-- `ReviewMode === 'comment'` → mount the bundle with **`permissions: 'view'`** (read-only) and let
-  the existing annotation overlay sit on top. The bundle's view mode does not capture pointer events
-  for editing (verified: `body` lacks `ce-edit`, dblclick is inert), so the overlay receives the draw
-  events cleanly.
-- `ReviewMode === 'edit'` → mount with **`permissions: 'edit'`** (the surgical editor). Note: this
+- `ReviewMode === 'comment'` → iframe **`editor-host.html?view=1`** (read-only) and let the existing
+  annotation overlay sit on top. The editor's view mode does not capture pointer events for editing
+  (`body` lacks `ce-edit`, dblclick is inert), so the overlay receives the draw events cleanly.
+- `ReviewMode === 'edit'` → iframe **`editor-host.html`** (no param — the surgical editor). Note: this
   REPLACES Kraken's legacy copy/media-replace "edit" with the real design editor for `embed` rows.
 
 **⚠️ One real gotcha — the annotation canvas is landscape by default.**
@@ -171,18 +177,20 @@ frame size) when overlaying an `embed`. Document/handle this on the Kraken side.
 
 ## The three things to build in the Kraken repo
 
-1. **Embed render path** — given a content row of kind `embed`, `<iframe src={liveHtmlUrl}>` instead of an
-   `<img>`. Poster PNG stays as the fallback/thumbnail.
-2. **Permission toggle** — `import { mountEditor }` from the Phase-4.1 bundle
-   (`creative-engine/editor/dist/creative-engine-editor.bundle.js`) and pass `permissions: 'view' | 'edit'`
-   (exact mount contract: `creative-engine/editor/dist/README.md`). Map Kraken's existing
-   `ReviewMode` to it: **`'comment'` → `permissions:'view'`** (the annotation overlay rides on top —
-   see "The view+comment lane" above), **`'edit'` → `permissions:'edit'`** (click-to-retype / swap /
-   drag). The same bundle serves both lanes — verified by `dist/embed-evidence.mjs` (the flag toggles
-   view⟷edit, state + behavior, 10/10). Mind the vertical `canvasDimensions` gotcha noted above.
-3. **Persist overrides + set status** — on save, write the override bag (`overrides jsonb`, per above) and
-   set `client_edited`/`client_media_replaced`; on approve, set `status='approved'`. That's the entire
-   render trigger — the poller in this repo does the rest.
+1. **Embed render path** — given a content row of kind `embed`, `<iframe src={editorUrl}>` instead of an
+   `<img>`. Poster PNG stays as the fallback/thumbnail. (Kraken already iframes `html-preview`/`website`
+   rows today — reuse that path; the `src` is the editor's hosted URL.)
+2. **Permission toggle (no code import)** — set the iframe `src` per `ReviewMode`:
+   **`'comment'` → `editor-host.html?view=1`** (the annotation overlay rides on top — see "The
+   view+comment lane" above), **`'edit'` → `editor-host.html`** (click-to-retype / swap / drag).
+   Same page, both lanes. Mind the vertical `canvasDimensions` gotcha noted above.
+3. **Persist overrides + set status (the edit lane's transport)** — the edit lane runs cross-origin
+   inside the iframe, so it hands its changes OUT via `postMessage`. The editor host posts
+   `{ type: 'ce-overrides', overrides, meta }` to `window.parent` on every change (it only fires when
+   iframed). Kraken: `window.addEventListener('message', …)` (pin `event.origin` to the editor's host),
+   write `overrides` to the approval row (`overrides jsonb`, per above) + set `client_edited`; on
+   approve set `status='approved'`. That's the entire render trigger — the poller in this repo does
+   the rest. (View+comment+approve need none of this — that loop works on the editor as-is.)
 
 ---
 

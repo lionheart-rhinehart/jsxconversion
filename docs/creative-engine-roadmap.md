@@ -8,7 +8,7 @@ see where things stand without regenerating it. **Update the box + status line w
 - **Goal:** a finished Claude Design goes in → edit → approve → render once → ship (and fan out to many brands).
 - **Rules:** clean room (no imports from `creative-engine-v1/`), one phase per chat, evidence over assertion.
 
-**STATUS LINE:** Phases 0–3 ✅ · editor (Phase 2) landed · **Phase 4 NEXT — CLEARED to start.**
+**STATUS LINE:** Phases 0–4 ✅ (this repo's part) · **Phase 5 NEXT** (render-on-approval + brand fan-out).
 
 ---
 
@@ -28,12 +28,18 @@ editor-vs-render. *Known deferred: a montage-preview flicker — cosmetic only, 
 - [x] 3.2 query-by-meaning returns the exact asset from a collision folder
 - [x] independent regression test on main (`test/manifest-select.test.mjs`; `npm test` 173/0)
 
-## 👉 Phase 4 — Approval (the portal)  *(NEXT — CLEARED; editor has landed)*
-- [ ] 4.1 package the editor into an embeddable bundle (view-comment ⟷ edit toggle)
-- [ ] 4.2 handoff doc + Supabase status-field contract  *(doc mostly written in Phase 1)*
-- [ ] 4.3 define the approval→render trigger (status flips → local poller picks it up)
-> ⚠️ Only caveat left: don't run 4.1 while another chat is *still live-editing* `creative-engine/editor/`
-> (same-folder collision). The editor work has merged, so this is clear unless you reopen editor edits.
+## ✅ Phase 4 — Approval (this repo's part: editor URL + contract)  *(DONE 2026-06-14)*
+- [x] 4.1 editor is iframe-mountable by URL with a permission flag: `editor-host.html?view=1` = view+comment
+      lane (Kraken's annotation overlay on top), no param = edit lane. **Integration = iframe-by-URL, NOT
+      a code-imported bundle** (verified: Kraken iframes all content + has no editor-import path). The
+      earlier importable bundle was deleted as the wrong artifact.
+- [x] 4.2 handoff doc + Supabase status-field contract — `docs/kraken-editor-mount-handoff.md`; approvals
+      fields re-verified against The Kraken (`status='approved'` trigger, no `rendered_at`/`overrides` cols).
+- [x] 4.3 approval→render trigger documented — Kraken writes `status='approved'`; a local poller (Phase 5)
+      picks it up (option-B rendered-ledger). Edit-lane overrides leave the iframe via `postMessage`
+      (`{type:'ce-overrides'}` → parent); editor emitter added + verified.
+> Scope note: the actual Kraken `<iframe>` + message-listener + client-editor mount is the **Kraken repo's**
+> task (separate chat) — per the master plan, not gated here. This repo ships the URL + the contract.
 
 ## ⬜ Phase 5 — Render-on-approval + brand fan-out
 - [ ] 5.1 pooled render queue (N-at-a-time, no thrash)

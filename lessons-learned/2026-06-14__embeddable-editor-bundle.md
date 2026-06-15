@@ -4,6 +4,16 @@ date: 2026-06-14
 branch: main
 ---
 
+> ⛔ **SUPERSEDED same day (2026-06-14).** The bundle below was built for an *import-the-code*
+> integration. We then verified Kraken embeds everything by **iframing a URL** and has no
+> code-import path — so the bundle was the wrong artifact and was **deleted**. The real Phase-4
+> deliverable is the existing editor page (`editor-host.html`) iframed by URL (`?view=1` = view,
+> no param = edit) + the handoff contract (`docs/kraken-editor-mount-handoff.md`). The bigger
+> lesson: **verify how the consumer actually consumes before packaging for it** (the iframe-vs-
+> import question) — I packaged ahead of a verified need. The technical notes below are kept as
+> reference (the SSR-safe mount-time injection, the node-export-in-a-browser-bundle risk, and
+> "exercise the real edit path, not just a CSS class, when proving a toggle" all still hold).
+
 ## The problem
 
 The Phase-2 editor mounts as **four cooperating files**: `editor.js` (imports

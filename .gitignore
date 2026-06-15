@@ -72,8 +72,6 @@ campaigns/**/*.dc.html
 creative-engine/intake/_out/
 # Phase-2 editor evidence artifacts (reproducible via creative-engine/editor/evidence.mjs)
 creative-engine/editor/_out/
-# Phase-4 embed-bundle evidence artifacts (reproducible via dist/embed-evidence.mjs)
-creative-engine/editor/dist/_out/
 # Phase-C runtime state: per-machine Kraken folder pins + the machine-local creds-path config
 creative-engine/editor/kraken-pins.json
 .claude/skills/creative-engine/config.json

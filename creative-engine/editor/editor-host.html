@@ -80,6 +80,14 @@
     audioProvider,
     onChange(overrides, meta) {
       window.__CE_OVERRIDES__ = overrides;            // exposed for the evidence harness
+      // EDIT-LANE TRANSPORT (Phase 4, iframe-by-URL): when this page is iframed by Kraken's
+      // approval portal, hand every change OUT to the parent so Kraken can persist the override
+      // bag to the approval row (see docs/kraken-editor-mount-handoff.md → "Persist overrides").
+      // Fires ONLY when actually embedded; standalone use (window.parent === window) is unaffected.
+      if (window.parent && window.parent !== window) {
+        // origin '*' here; Kraken pins event.origin to the editor's host on its side.
+        window.parent.postMessage({ type: 'ce-overrides', overrides, meta: meta || null }, '*');
+      }
       if (meta && meta.save) {
         const blob = new Blob([JSON.stringify(overrides, null, 2)], { type: 'application/json' });
         const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
