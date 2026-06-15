@@ -29,7 +29,12 @@
   'use strict';
 
   function frameEl(doc, frameId) {
-    return doc.querySelector('.cr-frame[data-edit-frame="' + cssEscape(frameId) + '"]');
+    // Match by the data-edit-frame stamp ALONE — never the legacy `.cr-frame` class. A
+    // JS-driven export's frames (Campaign B `.story`, .dc.html wrappers) are found by
+    // frame-detect.js and stamped data-edit-frame WITHOUT a .cr-frame class; requiring
+    // that class made every override resolve to null on those designs. The static
+    // .cr-frame convention still carries the same stamp, so this matches both.
+    return doc.querySelector('[data-edit-frame="' + cssEscape(frameId) + '"]');
   }
 
   function targetEl(doc, key) {

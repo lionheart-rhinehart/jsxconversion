@@ -29,6 +29,16 @@
   // also evaluate it here so window.CEApply exists in the host (not strictly needed)
   new Function(applySrc)();
 
+  // RUNTIME RE-TAG tools (zero-loss v2). A real Claude Design export is JS-driven: the
+  // design's own scripts BUILD (and on reload REBUILD) the frames at runtime, wiping any
+  // static tags. So the editor stamps data-edit-* ids on the LIVE DOM *after* the build,
+  // using the SAME shared modules the renderer injects → identical ids → an edit lands on
+  // the same element in the editor preview and the rendered MP4. raf-clock.js is the
+  // renderer's deterministic freeze clock and is DELIBERATELY NOT loaded here — the live
+  // editor must animate freely.
+  window.__CE_FRAME_DETECT_SRC__ = await (await fetch('../shared/frame-detect.js')).text();
+  window.__CE_RETAG_SRC__ = await (await fetch('../shared/runtime-retag.js')).text();
+
   const html = await (await fetch(htmlPath)).text();
   // the design's own folder — so its relative asset paths resolve inside the iframe
   const baseHref = new URL(htmlPath, location.href).href.replace(/[^/]*$/, '');

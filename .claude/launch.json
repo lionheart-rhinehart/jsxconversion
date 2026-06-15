@@ -2,6 +2,13 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "ce-editor",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["creative-engine/editor/serve.mjs"],
+      "port": 5300,
+      "autoPort": false
+    },
+    {
       "name": "editor-server",
       "runtimeExecutable": "node",
       "runtimeArgs": ["scripts/editor-server.mjs"],

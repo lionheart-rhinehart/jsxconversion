@@ -32,7 +32,7 @@ const IFRAME_CSS = `
   #ce-canvas{display:flex!important;position:fixed!important;inset:0!important;
     align-items:center;justify-content:center;background:#0a0b0d;overflow:hidden;}
   #ce-fit{position:relative;}
-  #ce-fit>.cr-frame{transform-origin:top left!important;}
+  #ce-fit>[data-edit-frame]{transform-origin:top left!important;}
   [data-edit-id]{outline:0;}
   body.ce-edit [data-edit-id]:hover{outline:1px dashed rgba(196,20,29,.7);outline-offset:1px;cursor:pointer;}
   body.ce-edit [data-edit-text].ce-editing{outline:2px solid #c4141d;cursor:text;}
@@ -297,29 +297,81 @@ export function mountEditor(opts) {
     return new Promise((resolve) => {
       els.iframe.addEventListener('load', function onload() {
         els.iframe.removeEventListener('load', onload);
-        injectIframeRuntime();
-        resolve();
+        resolve();   // tagging is async (waits for the design's JS to build) — see tagLive()
       });
-      // inject our apply-overrides + a marker style INTO the document. A <base href>
-      // makes the design's relative asset paths (assets/vid/…) resolve against the
-      // design's real folder even though we mount it via srcdoc (host-agnostic).
+      // Inject the SHARED browser modules + a marker style INTO the document. A <base href>
+      // makes the design's relative asset paths (assets/vid/…) resolve against the design's
+      // real folder even though we mount it via srcdoc (host-agnostic) AND lets its external
+      // <script src> load + run, so the design ANIMATES LIVE.
+      //   • frame-detect.js  → window.CEFrames  ("which elements are the creative frames")
+      //   • runtime-retag.js → window.CEReTag   ("stamp data-edit-* ids on the LIVE DOM")
+      //   • apply-overrides.js → window.CEApply ("replay the override bag" — same fn the renderer uses)
+      // These are the EXACT modules the renderer injects, so the ids match by construction.
+      // raf-clock.js is POINTEDLY omitted — it's the renderer's deterministic freeze clock;
+      // the live editor must animate freely.
       const applySrc = window.__CE_APPLY_SRC__ || '';
+      const frameDetectSrc = window.__CE_FRAME_DETECT_SRC__ || '';
+      const retagSrc = window.__CE_RETAG_SRC__ || '';
       const baseTag = baseHref ? `<base href="${baseHref}">` : '';
+      const tools = [frameDetectSrc, retagSrc, applySrc]
+        .filter(Boolean).map((s) => `<script>${s}</script>`).join('');
       const injected = html
         .replace(/<head([^>]*)>/i, `<head$1>${baseTag}`)
         .replace(/<\/head>/i, `<style id="ce-iframe-css">${IFRAME_CSS}</style></head>`)
-        .replace(/<\/body>/i, `<script>${applySrc}</script></body>`);
+        .replace(/<\/body>/i, `${tools}</body>`);
       els.iframe.srcdoc = injected;
     });
   }
 
-  function injectIframeRuntime() {
+  // ── RUNTIME RE-TAG (zero-loss v2) ─────────────────────────────────────────
+  // A real Claude Design export is JS-driven: the design's own scripts BUILD the frames
+  // at runtime AFTER the iframe's load event (and REBUILD them on reload/interaction),
+  // wiping any static tag. So we wait for the build to settle, then stamp data-edit-* ids
+  // on the LIVE DOM with the SHARED window.CEReTag — the EXACT module the renderer injects.
+  // Identical code + a deterministic document-order walk → identical ids → an override
+  // keyed "fN:eM" hits the same element in the editor preview and the rendered MP4.
+
+  // wait for the design's motor to finish building: fonts ready, then poll CEFrames.detect
+  // until it finds frames (a few rAFs of headroom for rAF/DOMContentLoaded-driven builds),
+  // bounded so a structurally-unrecognized design FAILS LOUDLY instead of hanging.
+  function nextFrame() { return new Promise((r) => { const w = iwin(); (w ? w.requestAnimationFrame : requestAnimationFrame)(() => r()); }); }
+  async function waitForBuild() {
+    const w = iwin(), d = idoc();
+    try { if (w && w.document.fonts) await w.document.fonts.ready; } catch (e) {}
+    for (let attempt = 0; attempt < 60; attempt++) {           // ≈60 rAFs ≈ 1s ceiling
+      const found = (w && w.CEFrames) ? w.CEFrames.detect(d, {}) : [];
+      if (found && found.length) return found.length;
+      await nextFrame();
+    }
+    return 0;
+  }
+
+  // tagLive() — stamp the live DOM + (re)build the frame dropdown. Returns the CEReTag
+  // report. Used at boot, after undo/redo's reload, and by the rebuild watcher.
+  async function tagLive() {
+    const w = iwin(), d = idoc();
+    if (!w || !w.CEReTag || !w.CEFrames) {
+      throw new Error('[editor] CEReTag/CEFrames not injected into the iframe — host must hand __CE_RETAG_SRC__ + __CE_FRAME_DETECT_SRC__');
+    }
+    const n = await waitForBuild();
+    if (!n) {
+      // NEVER silent — same discipline as the renderer (render-live.mjs throws on 0 frames).
+      throw new Error('[editor] runtime re-tag found ZERO frames — the design built no recognizable 1080×1920 frames (structure unrecognized, NOT silently skipped).');
+    }
+    const report = w.CEReTag.tag(d, {});   // stamps data-edit-frame / -id / -text / -media …
+    indexFrames();
+    return report;
+  }
+
+  // build frameIds + the dropdown from the DETECTED frames (CEReTag stamps data-edit-frame
+  // on every frame it finds, whether or not it carries the legacy .cr-frame class).
+  function indexFrames() {
     const d = idoc();
-    const frames = Array.from(d.querySelectorAll('.cr-frame[data-edit-frame]'));
+    const frames = Array.from(d.querySelectorAll('[data-edit-frame]'));
     frameIds = frames.map((f) => f.getAttribute('data-edit-frame'));
     const total = frames.length;
-    // label each creative by its human name (the design tags figures with data-label,
-    // e.g. "1A · Live Gap HUD") rather than the internal frame id.
+    // label each creative by its human name when the design tags figures with data-label
+    // (e.g. "1A · Live Gap HUD"); otherwise fall back to a positional name.
     els.frames.innerHTML = frames.map((f, i) => {
       const fig = f.closest('[data-label]');
       const label = fig ? fig.getAttribute('data-label').split('·')[0].trim() : '';
@@ -342,7 +394,7 @@ export function mountEditor(opts) {
     }
     const old = d.getElementById('ce-canvas'); if (old) old.remove();
 
-    const frame = d.querySelector('.cr-frame[data-edit-frame="' + fid + '"]');
+    const frame = d.querySelector('[data-edit-frame="' + fid + '"]');
     if (!frame) return;
     curFrame = fid;
     els.frames.value = fid;
@@ -460,11 +512,52 @@ export function mountEditor(opts) {
   // loadIframe() swaps in a FRESH iframe document, so every per-document listener must be
   // re-bound or the editor goes dead after an undo (select/drag/dblclick + shortcuts).
   async function rerenderPristine() {
+    stopRebuildWatch();          // the watcher is bound to the OLD document
     montageDrivers.clear();      // the old iframe document is gone; its drivers died with it
     await loadIframe();
+    await tagLive();             // the fresh document's JS rebuilt the DOM → re-stamp ids
     wireIframe(); wireIframeMouse(); wireIframeKeys(); installIframeMontageHooks();
-    showFrame(curFrame);
+    showFrame(curFrame);         // relocates the frame + applyAll() replays the override bag
+    startRebuildWatch();
   }
+
+  // ── rebuild watch (#9 — "tags survive a live DOM rebuild") ────────────────
+  // A JS-driven design can rebuild its own DOM at runtime (a reload, an internal re-render),
+  // which wipes our data-edit-* stamps AND the #ce-canvas relocation. When that happens we
+  // re-stamp (deterministic ids → same fN:eM) and re-apply the current override bag, so a
+  // text edit / media swap / drag is never lost. We watch only for the CATASTROPHE — the
+  // relocated frame detaching or #ce-canvas vanishing — NOT every attribute tweak, so the
+  // editor's own edits (translate, contenteditable, applyOverrides) don't trigger it. A
+  // suspend flag fences our own re-stamp so the observer can't loop on itself.
+  let rebuildObserver = null, suspendWatch = false, rebuildPending = false;
+  function rebuildHappened() {
+    const d = idoc(); if (!d) return false;
+    const frame = curFrame && d.querySelector('[data-edit-frame="' + curFrame + '"]');
+    return !frame || !frame.isConnected || !d.getElementById('ce-canvas');
+  }
+  async function reTagAndReapply() {
+    suspendWatch = true;
+    // the design rebuilt its own DOM, so our previous relocation is gone — drop the stale
+    // bookkeeping so showFrame() relocates the freshly-rebuilt frame cleanly (no ghost node).
+    frameHome = null;
+    montageDrivers.clear();
+    try { await tagLive(); showFrame(curFrame); }   // re-stamp ids → showFrame → applyAll() replays the bag
+    catch (e) { console.error('[editor] re-tag after rebuild failed (surfaced, not silent):', e.message); }
+    finally { suspendWatch = false; }
+  }
+  function startRebuildWatch() {
+    stopRebuildWatch();
+    const d = idoc(); const w = iwin(); if (!d || !w || typeof w.MutationObserver !== 'function') return;
+    rebuildObserver = new w.MutationObserver(() => {
+      if (suspendWatch || rebuildPending) return;
+      if (!rebuildHappened()) return;
+      rebuildPending = true;
+      // coalesce a burst of mutations into one re-stamp on the next tick
+      setTimeout(() => { rebuildPending = false; if (rebuildHappened()) reTagAndReapply(); }, 0);
+    });
+    rebuildObserver.observe(d.documentElement, { childList: true, subtree: true });
+  }
+  function stopRebuildWatch() { if (rebuildObserver) { try { rebuildObserver.disconnect(); } catch (e) {} rebuildObserver = null; } }
 
   // ── selection + overlay ───────────────────────────────────────────────────
   function elForKey(key) {
@@ -472,7 +565,7 @@ export function mountEditor(opts) {
     return w && w.CEApply ? w.CEApply._targetEl(idoc(), key) : null;
   }
   function keyForEl(el) {
-    const frame = el.closest('.cr-frame[data-edit-frame]');
+    const frame = el.closest('[data-edit-frame]');
     if (!frame) return null;
     return frame.getAttribute('data-edit-frame') + ':' + el.getAttribute('data-edit-id');
   }
@@ -805,7 +898,7 @@ export function mountEditor(opts) {
   function selectInMarquee(mq) {
     const rx0 = Math.min(mq.x0, mq.x1), ry0 = Math.min(mq.y0, mq.y1);
     const rx1 = Math.max(mq.x0, mq.x1), ry1 = Math.max(mq.y0, mq.y1);
-    const frame = idoc().querySelector('.cr-frame[data-edit-frame="' + curFrame + '"]');
+    const frame = idoc().querySelector('[data-edit-frame="' + curFrame + '"]');
     if (!frame) return;
     const enclosed = [];
     frame.querySelectorAll('[data-edit-id]').forEach((el) => {
@@ -837,7 +930,7 @@ export function mountEditor(opts) {
     if (!primary) { clearGuides(); return null; }
     const pr = primary.getBoundingClientRect();        // iframe-viewport coords (post-move)
     const moving = {}; Object.keys(members).forEach((k) => { moving[k] = 1; });
-    const frame = idoc().querySelector('.cr-frame[data-edit-frame="' + curFrame + '"]');
+    const frame = idoc().querySelector('[data-edit-frame="' + curFrame + '"]');
     if (!frame) { clearGuides(); return null; }
 
     // x guides at primary L / CX / R ; y guides at T / CY / B
@@ -2002,8 +2095,10 @@ export function mountEditor(opts) {
   // ── boot ──────────────────────────────────────────────────────────────────
   (async function boot() {
     await loadIframe();
+    await tagLive();             // wait for the design's JS to build, then stamp live ids
     wireIframe(); wireIframeMouse(); wireIframeKeys(); installIframeMontageHooks();
     showFrame(curFrame);
+    startRebuildWatch();         // survive a later self-rebuild by the design's own JS
     syncButtons();
   })();
 
