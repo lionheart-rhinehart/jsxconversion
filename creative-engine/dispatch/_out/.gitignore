@@ -1,0 +1,3 @@
+# Generated dispatch artifacts (reports + publish-plans). Keep the folder, ignore output.
+*
+!.gitignore
