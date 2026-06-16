@@ -233,9 +233,148 @@ export function overridesRoutes() {
   };
 }
 
+// ── Pipeline routes — drive the editor → approval → render → library chain from
+// BUTTONS instead of CLIs. Each reuses an existing core (publishPackage / pollOnce /
+// dispatchToLibrary). Live/outward writes happen ONLY when the request says confirm:true
+// (the button's confirm step IS the human authorization). Lazy-imports degrade safe (F6).
+const RENDER_OUT = path.join(PROJECT_ROOT, 'creative-engine', 'render', '_out', 'rendered');
+function manifestForPkg(dir) {
+  try { return JSON.parse(fs.readFileSync(path.join(dir, 'intake.json'), 'utf8')); } catch { return null; }
+}
+function receiptForSlug(slug) {
+  try { return JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, 'creative-engine', 'dispatch', '_out', `publish-${slug}.json`), 'utf8')); } catch { return null; }
+}
+export function pipelineRoutes() {
+  return {
+    // POST { pkg, scope:'this'|'batch', frameId?, wsId, workspace?, folderName?, emails?, confirm }
+    // confirm falsy → DRY-RUN (plan only). confirm true → live publish.
+    '/package/publish': async (req, res) => {
+      try {
+        if (req.method !== 'POST') return sendJson(res, { ok: false, error: 'POST only' });
+        const body = await readBody(req);
+        const dir = pkgDirFor(body.pkg);
+        if (!dir) return sendJson(res, { ok: false, error: 'unknown or invalid pkg' });
+        const wsId = body.wsId || null;
+        if (!wsId) return sendJson(res, { ok: false, needWorkspace: true, error: 'no destination workspace — pin a folder (🔒) or pass wsId' });
+        // selection: explicit frameIds[] (multi-select) > scope 'this'+frameId (one) > else all
+        const frameIds = Array.isArray(body.frameIds) && body.frameIds.length ? body.frameIds
+          : ((body.scope === 'this' && body.frameId) ? [body.frameId] : null);
+        const emails = Array.isArray(body.emails) ? body.emails : (body.emails ? [body.emails] : []);
+        const lines = [];
+        let core;
+        try { core = await import('../dispatch/publish-core.mjs'); }
+        catch (e) { return sendJson(res, { ok: false, error: 'publish-core unavailable: ' + (e.message || e) }); }
+        const result = await core.publishPackage({
+          pkgDir: dir, wsId, workspace: body.workspace || null, folderName: body.folderName || null,
+          emails, live: !!body.confirm, replace: !!body.replace, frameIds,
+          log: (...m) => lines.push(m.join(' ')),
+        });
+        return sendJson(res, { ok: true, ...result, log: lines });
+      } catch (e) { sendJson(res, { ok: false, error: String(e.message || e) }); }
+    },
+
+    // GET ?pkg= → per-frame pipeline state for the status panel.
+    '/package/status': async (req, res) => {
+      try {
+        const slug = new URL(req.url, 'http://x').searchParams.get('pkg');
+        const dir = pkgDirFor(slug);
+        if (!dir) return sendJson(res, { ok: false, error: 'unknown or invalid pkg' });
+        const manifest = manifestForPkg(dir);
+        if (!manifest) return sendJson(res, { ok: false, error: 'no intake.json' });
+        const receipt = receiptForSlug(manifest.slug || path.basename(dir));
+        const sentByFrame = {};
+        if (receipt && Array.isArray(receipt.rows)) for (const r of receipt.rows) sentByFrame[r.frame_id] = r;
+
+        // saved editor edits per frame (so the panel can show an "Edited" flag + default-select them)
+        let savedOv = {};
+        try { savedOv = JSON.parse(fs.readFileSync(path.join(dir, 'overrides.json'), 'utf8')) || {}; } catch {}
+        const editsFor = (fid) => Object.keys(savedOv).filter((k) => k.indexOf('__') !== 0 && k.indexOf(fid + ':') === 0).length;
+        const assetBase = manifest.asset_base || ('/creative-engine/intake/_packages/' + path.basename(dir) + '/');
+
+        // one query for the whole workspace's approved set, then match by approvalId (cheap)
+        let approvedIds = new Set();
+        if (receipt && receipt.wsId) {
+          try {
+            const k = await import('../../scripts/lib/kraken.mjs');
+            const approved = await k.listApprovedApprovals({ workspaceId: receipt.wsId, limit: 500 });
+            approvedIds = new Set((approved || []).map((a) => a.id));
+          } catch { /* creds missing → leave approved=false; panel still renders */ }
+        }
+        const frames = manifest.frames.map((f) => {
+          const sent = sentByFrame[f.id] || null;
+          const approvalId = sent && sent.approvalId ? sent.approvalId : null;
+          const approved = approvalId ? approvedIds.has(approvalId) : false;
+          const rendered = approvalId ? fs.existsSync(path.join(RENDER_OUT, `${approvalId}.mp4`)) : false;
+          return { id: f.id, label: f.label, poster: f.poster ? (assetBase + f.poster) : null, edits: editsFor(f.id), sent: !!sent, approvalId, reviewUrl: sent ? sent.reviewUrl : null, approved, rendered };
+        });
+        return sendJson(res, { ok: true, slug: manifest.slug || path.basename(dir), wsId: receipt ? receipt.wsId : null, frames });
+      } catch (e) { sendJson(res, { ok: false, error: String(e.message || e) }); }
+    },
+
+    // POST { pkg, approvalId?|all } → render the APPROVED row(s) to MP4 (local compute; pulls
+    // from Storage, writes render/_out/rendered/<approvalId>.mp4). No outward write → no confirm gate.
+    '/package/render': async (req, res) => {
+      try {
+        if (req.method !== 'POST') return sendJson(res, { ok: false, error: 'POST only' });
+        const body = await readBody(req);
+        const dir = pkgDirFor(body.pkg);
+        if (!dir) return sendJson(res, { ok: false, error: 'unknown or invalid pkg' });
+        const receipt = receiptForSlug((manifestForPkg(dir) || {}).slug || path.basename(dir));
+        const wsId = receipt && receipt.wsId;
+        if (!wsId) return sendJson(res, { ok: false, error: 'package not published yet (no receipt)' });
+        const lines = [];
+        let k, poller;
+        try { k = await import('../../scripts/lib/kraken.mjs'); poller = await import('../render/poller.mjs'); }
+        catch (e) { return sendJson(res, { ok: false, error: 'render core unavailable: ' + (e.message || e) }); }
+        const approvalId = body.approvalId || null;   // null + all → render every approved row in the ws
+        const source = {
+          listApproved: () => k.listApprovedApprovals({ workspaceId: wsId, approvalId }),
+          getContentOutput: (id) => k.getContentOutput(id),
+        };
+        const result = await poller.pollOnce({ source, kind: body.png ? 'png' : 'mp4', log: (m) => lines.push(m) });
+        // build a dispatch manifest from whatever rendered (scan output dir for the approval mp4s)
+        const approved = await k.listApprovedApprovals({ workspaceId: wsId, approvalId, limit: 500 });
+        const jobs = (approved || []).map((a) => {
+          const out = path.join(RENDER_OUT, `${a.id}.mp4`);
+          return { id: a.id, out: '/' + path.relative(PROJECT_ROOT, out).split(path.sep).join('/'), ok: fs.existsSync(out) };
+        }).filter((j) => j.ok);
+        const slug = (manifestForPkg(dir) || {}).slug || path.basename(dir);
+        const manPath = path.join(PROJECT_ROOT, 'creative-engine', 'render', '_out', `pipeline-${slug}.json`);
+        fs.mkdirSync(path.dirname(manPath), { recursive: true });
+        fs.writeFileSync(manPath, JSON.stringify({ slug, wsId, jobs }, null, 2));
+        return sendJson(res, { ok: true, rendered: jobs, manifest: path.relative(PROJECT_ROOT, manPath), result, log: lines });
+      } catch (e) { sendJson(res, { ok: false, error: String(e.message || e) }); }
+    },
+
+    // POST { pkg, folder?, confirm } → file rendered MP4(s) into the Content Library. DRY-RUN
+    // unless confirm:true (outward write to live Supabase = human-authorized).
+    '/package/dispatch': async (req, res) => {
+      try {
+        if (req.method !== 'POST') return sendJson(res, { ok: false, error: 'POST only' });
+        const body = await readBody(req);
+        const dir = pkgDirFor(body.pkg);
+        if (!dir) return sendJson(res, { ok: false, error: 'unknown or invalid pkg' });
+        const slug = (manifestForPkg(dir) || {}).slug || path.basename(dir);
+        const receipt = receiptForSlug(slug);
+        const manPath = path.join(PROJECT_ROOT, 'creative-engine', 'render', '_out', `pipeline-${slug}.json`);
+        if (!fs.existsSync(manPath)) return sendJson(res, { ok: false, error: 'nothing rendered yet (render first)' });
+        let disp;
+        try { disp = await import('../dispatch/dispatch.mjs'); }
+        catch (e) { return sendJson(res, { ok: false, error: 'dispatch core unavailable: ' + (e.message || e) }); }
+        const result = await disp.dispatchToLibrary(manPath, {
+          workspace: body.workspace || (receipt && receipt.workspace) || null,
+          folder: body.folder || null,
+          live: !!body.confirm,
+        });
+        return sendJson(res, { ok: true, live: !!body.confirm, ...result });
+      } catch (e) { sendJson(res, { ok: false, error: String(e.message || e) }); }
+    },
+  };
+}
+
 const isMain = process.argv[1] && process.argv[1].endsWith('serve.mjs');
 if (isMain) {
-  createServer({ ...krakenRoutes(), ...audioRoutes(), ...overridesRoutes() }).listen(PORT, () => {
+  createServer({ ...krakenRoutes(), ...audioRoutes(), ...overridesRoutes(), ...pipelineRoutes() }).listen(PORT, () => {
     console.log(`editor dev host → http://localhost:${PORT}/creative-engine/editor/editor-host.html`);
   });
 }

@@ -211,6 +211,21 @@ frame size) when overlaying an `embed`. Document/handle this on the Kraken side.
    approve set `status='approved'`. That's the entire render trigger — the poller in this repo does
    the rest. (View+comment+approve need none of this — that loop works on the editor as-is.)
 
+4. **Email the approver on review creation (Kraken owns ALL notification).** When the engine publishes a
+   package it creates one `approvals` row per frame with `status='pending'` and the approver address(es)
+   on **`client_email`** (first) + **`client_emails`** (array). It also mints the portal link as
+   `{portalBase}/portal?token={approval_token}`. **This repo sends NO email — there is no mailer here by
+   design (decided 2026-06-16).** Kraken must, on insert of a `pending` approval that carries
+   `client_emails`, send the review link to those addresses (the same notification you already do for
+   client-review rows). Without this, a published creative is reachable only by whoever has the printed
+   link. Engine side is done (the addresses + token are on the row); the send is yours.
+
+   > Engine on-ramp for the buttons: this repo now drives publish/render/dispatch from the **local
+   > editor's Pipeline page** (`creative-engine/editor/pipeline.html`) via `serve.mjs` routes
+   > (`/package/publish|status|render|dispatch`) — reusing the same `publish-core`/`poller`/`dispatch`
+   > cores as the CLIs. That covers the *local* on-ramp; editing/approving **inside** the Kraken portal
+   > (items 1–3 above) + this email send (item 4) remain the Kraken repo's tasks.
+
 ---
 
 ## Cross-references

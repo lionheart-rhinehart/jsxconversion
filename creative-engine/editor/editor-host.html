@@ -13,6 +13,12 @@
 </head>
 <body>
 <div id="host" style="position:fixed;inset:0;"></div>
+<!-- one-click on-ramp to the approval→render→library pipeline (only in package mode).
+     Top-LEFT so it never covers the editor's top-right toolbar (Undo/Redo/Save). It SAVES
+     the current edits first, then opens the pipeline page — so "send" can never ship stale work. -->
+<button id="ce-pipeline-btn" style="display:none;position:fixed;top:10px;left:12px;z-index:99998;
+   background:#c4141d;color:#fff;border:none;cursor:pointer;font:600 13px system-ui,sans-serif;
+   padding:8px 14px;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.45);">💾 Save &amp; Send to approval ▸</button>
 <script type="module">
   import { mountEditor } from './editor.js';
 
@@ -145,6 +151,29 @@
       }
     },
   });
+
+  // Pipeline on-ramp: in package mode, reveal the button. Clicking it SAVES the current
+  // edits (the exact same persist the Save button does) and THEN opens the pipeline page —
+  // so the design you send is always the design you just edited (no stale/unsaved gap).
+  if (pkg) {
+    const pb = document.getElementById('ce-pipeline-btn');
+    if (pb) {
+      pb.style.display = 'block';
+      pb.addEventListener('click', async () => {
+        pb.disabled = true; const label = pb.textContent;
+        try {
+          const ov = (window.__CE_EDITOR__ && window.__CE_EDITOR__.getOverrides) ? window.__CE_EDITOR__.getOverrides() : (window.__CE_OVERRIDES__ || {});
+          const r = await fetch('/package/overrides?pkg=' + encodeURIComponent(pkg), {
+            method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ overrides: ov }),
+          }).then((x) => x.json());
+          if (!r || !r.ok) { toast('Save failed: ' + ((r && r.error) || '?')); pb.disabled = false; pb.textContent = label; return; }
+          toast('✓ Saved — opening the pipeline…');
+          window.open('pipeline.html?pkg=' + encodeURIComponent(pkg), '_blank');
+        } catch (e) { toast('Save failed: ' + e.message); }
+        pb.disabled = false; pb.textContent = label;
+      });
+    }
+  }
 
   // tiny transient confirmation toast (bottom-center) — so Save gives visible feedback.
   function toast(msg) {

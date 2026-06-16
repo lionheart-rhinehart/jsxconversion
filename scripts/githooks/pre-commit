@@ -19,7 +19,7 @@ node scripts/validate-templates.mjs || {
 #   - Kraken 🔒 Lock button must never be clipped off the media toolbar's right edge
 # Set CE_SKIP_EDITOR_TESTS=1 to bypass (e.g. an env without a Chromium for puppeteer).
 if [ -z "$CE_SKIP_EDITOR_TESTS" ]; then
-  node --test test/apply-overrides-media-interchange.test.mjs test/editor-lock-visibility.test.mjs test/apply-overrides-move-inline.test.mjs test/apply-overrides-montage-img.test.mjs test/publish-overrides-split.test.mjs test/serve-package-overrides.test.mjs || {
+  node --test test/apply-overrides-media-interchange.test.mjs test/editor-lock-visibility.test.mjs test/apply-overrides-move-inline.test.mjs test/apply-overrides-montage-img.test.mjs test/publish-overrides-split.test.mjs test/serve-package-overrides.test.mjs test/serve-pipeline.test.mjs || {
     echo "" >&2
     echo "commit blocked: an editor regression test failed (media-swap interchange or lock-button visibility)." >&2
     echo "re-run: node --test test/apply-overrides-media-interchange.test.mjs test/editor-lock-visibility.test.mjs" >&2
