@@ -32,6 +32,42 @@ async function liveSource() {
   };
 }
 
+// Default WRITE-BACK: after a render, upload the MP4 into Kraken and file it in the
+// SAME workspace+folder as the source embed, then stamp video_url on the approval so
+// Kraken can show the finished result. Runs only against the LIVE Kraken (skipped when
+// the caller injected a fake source — i.e. tests). { row } is the approval row (carries
+// workspace_id, task_name); { co } is the content_output (carries folder_id, thumbnail_url).
+async function defaultWriteBack({ row, co, out }, { log = () => {} } = {}) {
+  if (!row || !row.workspace_id) { log(`    ⚠ no workspace_id on ${row && row.id} — skipping write-back`); return; }
+  const k = await import('../../scripts/lib/kraken.mjs');
+  const mime = 'video/mp4';
+  const bucket = k.bucketForMime(mime); // → 'content-videos'
+  const stamp = String(row.updated_at || row.responded_at || '').replace(/[^0-9]/g, '').slice(0, 14) || 'render';
+  const storagePath = `render-poller/${row.workspace_id}/${row.id}-${stamp}.mp4`;
+  const { url } = await k.uploadToStorage(out, bucket, storagePath, mime);
+  const ingested = await k.ingestContent({
+    workspace_id: row.workspace_id,
+    type: 'video',
+    title: row.task_name || `Rendered ${row.id}`,
+    content: url,
+    thumbnail_url: (co && co.thumbnail_url) || null,
+    metadata: {
+      source: 'render-poller',
+      approval_id: row.id,
+      content_output_id: row.content_output_id || (co && co.id) || null,
+      storage_url: url, storage_bucket: bucket, storage_path: storagePath, mime_type: mime,
+      rendered_at: new Date().toISOString(),
+    },
+  });
+  if (co && co.folder_id && ingested && ingested.id) {
+    try { await k.setFolder(ingested.id, co.folder_id); }
+    catch (e) { log(`    ⚠ setFolder failed: ${e.message}`); }
+  }
+  try { await k.setApprovalVideoUrl(row.id, url); }
+  catch (e) { log(`    ⚠ video_url patch failed: ${e.message}`); }
+  log(`    ↑ delivered video → ${url}${co && co.folder_id ? ` (folder ${co.folder_id})` : ' (no folder)'}`);
+}
+
 // Run ONE poll cycle. Returns { picked, rendered, failed, skipped, results }.
 // opts: { source, ledger, outDir, cacheDir, poolSize, kind, fetchTagged, log }
 export async function pollOnce(opts = {}) {
@@ -81,6 +117,7 @@ export async function pollOnce(opts = {}) {
   try {
     const jobs = [];
     const rowByJobId = {};
+    const contentOutputByJobId = {};
     for (const { row, co: co0 } of resolved) {
       try {
         let co = co0;
@@ -104,6 +141,7 @@ export async function pollOnce(opts = {}) {
         const job = buildJobFromApproval({ approval: row, contentOutput: co, taggedPath, outDir, kind, baseUrl });
         jobs.push(job);
         rowByJobId[job.id] = row;
+        contentOutputByJobId[job.id] = co;
       } catch (e) {
         log(`  ✗ ${row.id} skipped (will retry next tick): ${e.message}`);
       }
@@ -111,14 +149,21 @@ export async function pollOnce(opts = {}) {
 
     if (!jobs.length) return { picked: needed.length, rendered: 0, failed: 0, skipped: needed.length - jobs.length, results: [] };
 
+    // Write-back is ON by default (live + scoped-live runs both deliver the MP4 to
+    // Kraken). Tests opt OUT explicitly by passing writeBack: null (a falsy override),
+    // so a fixture run never touches the real Kraken.
+    const writeBack = opts.writeBack !== undefined ? opts.writeBack : defaultWriteBack;
+    const renderedItems = [];
+
     const manifest = await runPool(jobs, {
       size: opts.poolSize,
       batchId: `poll-${Date.now()}`,
       manifestPath: path.join(outDir, 'poll-manifest.json'),
       onResult: (r) => {
         if (r.ok) {
-          const row = rowByJobId[r.id];
-          ledger.record(row.id, row.updated_at, { out: r.out });   // only record SUCCESS → failures retry next tick
+          // Defer ledger.record until AFTER write-back so a failed upload re-renders
+          // next tick instead of stranding the video locally.
+          renderedItems.push({ row: rowByJobId[r.id], co: contentOutputByJobId[r.id], out: r.out });
           log(`  ✓ rendered ${r.id} → ${r.out}`);
         } else {
           log(`  ✗ render failed ${r.id}: ${r.error.split('\n')[0]} (left un-recorded → retries)`);
@@ -126,11 +171,22 @@ export async function pollOnce(opts = {}) {
       },
     });
 
-    const rendered = manifest.jobs.filter((j) => j.ok).length;
+    let delivered = 0;
+    for (const item of renderedItems) {
+      try {
+        if (writeBack) await writeBack(item, { log });
+        ledger.record(item.row.id, item.row.updated_at, { out: item.out }); // record only after the video lands in Kraken
+        delivered += 1;
+      } catch (e) {
+        log(`  ⚠ write-back failed ${item.row.id} (render OK; left un-recorded → retries next tick): ${e.message}`);
+      }
+    }
+
     return {
       picked: needed.length,
-      rendered,
-      failed: manifest.jobs.length - rendered,
+      rendered: renderedItems.length,
+      delivered,
+      failed: manifest.jobs.length - renderedItems.length,
       skipped: needed.length - jobs.length,
       results: manifest.jobs,
     };

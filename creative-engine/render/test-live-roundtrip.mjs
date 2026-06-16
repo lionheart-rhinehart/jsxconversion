@@ -71,7 +71,7 @@ const makeSource = () => {
 // ── 2. pollOnce → PNG (fast) ────────────────────────────────────────────────────
 console.log('[2] pollOnce → render-live PNG…');
 const pngOut = path.join(OUT, 'png');
-const rPng = await pollOnce({ source: makeSource(), ledger: new Ledger(path.join(STATE, 'png.json')), outDir: pngOut, cacheDir: path.join(STATE, 'cache'), kind: 'png', poolSize: 1, log: (x) => console.log('   ' + x) });
+const rPng = await pollOnce({ source: makeSource(), writeBack: null, ledger: new Ledger(path.join(STATE, 'png.json')), outDir: pngOut, cacheDir: path.join(STATE, 'cache'), kind: 'png', poolSize: 1, log: (x) => console.log('   ' + x) });
 const pngFile = path.join(pngOut, 'rt-appr.png');
 check(rPng.rendered === 1, `png rendered=${rPng.rendered} (expect 1)`);
 check(bytes(pngFile) > 0, `png bytes=${bytes(pngFile)} (>0)`);
@@ -82,7 +82,7 @@ console.log('[3] pollOnce → render-live MP4 (animations play LIVE)…');
 const mp4Out = path.join(OUT, 'mp4');
 let mp4Bytes = 0;
 try {
-  const rMp4 = await pollOnce({ source: makeSource(), ledger: new Ledger(path.join(STATE, 'mp4.json')), outDir: mp4Out, cacheDir: path.join(STATE, 'cache'), kind: 'mp4', poolSize: 1, log: (x) => console.log('   ' + x) });
+  const rMp4 = await pollOnce({ source: makeSource(), writeBack: null, ledger: new Ledger(path.join(STATE, 'mp4.json')), outDir: mp4Out, cacheDir: path.join(STATE, 'cache'), kind: 'mp4', poolSize: 1, log: (x) => console.log('   ' + x) });
   mp4Bytes = bytes(path.join(mp4Out, 'rt-appr.mp4'));
   check(rMp4.rendered === 1 && mp4Bytes > 0, `mp4 rendered=${rMp4.rendered} bytes=${mp4Bytes} (>0)`);
   console.log(`    MP4 → ${mp4Bytes} bytes`);

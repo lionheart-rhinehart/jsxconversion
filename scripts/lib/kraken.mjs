@@ -456,8 +456,11 @@ export async function findExistingByDesign(workspaceId, campaign, theme, designN
 // to limit to one workspace, and/or `approvalId` to a single row. Default (no args) is
 // the full workspace-wide list — unchanged behavior.
 export async function listApprovedApprovals({ limit = 200, workspaceId = null, approvalId = null } = {}) {
-  let q = `approvals?status=eq.approved&select=id,status,content_output_id,responded_at,` +
-    `approved_by_type,updated_at,workspace_id,batch_id,overrides&order=responded_at.asc.nullslast&limit=${limit}`;
+  // Only embed approvals are renderable (they carry tagged_url/live_url). Scoping the
+  // query here keeps the always-on poller from re-fetching non-embed approved rows
+  // (images / social / copy) every tick.
+  let q = `approvals?status=eq.approved&content_type=eq.embed&select=id,status,content_output_id,responded_at,` +
+    `approved_by_type,updated_at,workspace_id,batch_id,overrides,task_name&order=responded_at.asc.nullslast&limit=${limit}`;
   if (workspaceId) q += `&workspace_id=eq.${encodeURIComponent(workspaceId)}`;
   if (approvalId) q += `&id=eq.${encodeURIComponent(approvalId)}`;
   const rows = await restGet(q);
@@ -469,8 +472,17 @@ export async function listApprovedApprovals({ limit = 200, workspaceId = null, a
 export async function getContentOutput(id) {
   if (!id) return null;
   const rows = await restGet(
-    `content_outputs?id=eq.${id}&select=id,type,title,content,thumbnail_url,metadata&limit=1`,
+    `content_outputs?id=eq.${id}&select=id,type,title,content,thumbnail_url,metadata,workspace_id,folder_id&limit=1`,
   );
+  return rows[0] || null;
+}
+
+// Write the rendered video's public URL back onto the approval row so The Kraken
+// can surface the finished result. Best-effort caller responsibility; throws on
+// REST error so the poller can log it.
+export async function setApprovalVideoUrl(approvalId, videoUrl) {
+  if (!approvalId || !videoUrl) return null;
+  const rows = await restPatch(`approvals?id=eq.${approvalId}`, { video_url: videoUrl });
   return rows[0] || null;
 }
 

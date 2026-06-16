@@ -15,7 +15,7 @@
   label.fld { display:flex; align-items:center; gap:6px; color:var(--dim); font-size:12px; }
   select,input,button { font:inherit; }
   select,input { background:#0c0d10; color:var(--text); border:1px solid var(--line); border-radius:7px; padding:7px 10px; }
-  input.email { width:240px; } input.folder { width:150px; }
+  input.email { width:240px; } .folder { width:180px; }
   button { background:#1d2027; color:var(--text); border:1px solid var(--line); border-radius:7px; padding:7px 12px; cursor:pointer; }
   button:hover:not(:disabled) { border-color:#3a3f4a; }
   button.primary { background:var(--accent); border-color:var(--accent); color:#fff; font-weight:600; }
@@ -50,7 +50,7 @@
 <div class="wrap">
   <div class="bar">
     <label class="fld">Destination workspace <select id="ws"><option value="">— pick —</option></select></label>
-    <label class="fld">Folder <input class="folder" id="folder" placeholder="(optional)"></label>
+    <label class="fld">Folder <select class="folder" id="folder"><option value="">— no folder —</option></select></label>
     <label class="fld">Approver email <input class="email" id="email" placeholder="client@example.com"></label>
   </div>
   <div class="bar">
@@ -84,6 +84,18 @@
     try { const r = await jget('/kraken/workspaces');
       if (r && r.items) for (const w of r.items) { const o = document.createElement('option'); o.value = w.id; o.textContent = w.label || w.name; $('#ws').appendChild(o); }
     } catch {}
+  }
+  // Load the chosen workspace's folders into the Folder dropdown so a real
+  // destination can be picked (fixes "the folder option never pulled up").
+  async function loadFolders(wsId) {
+    const sel = $('#folder');
+    sel.innerHTML = '<option value="">— no folder —</option>';
+    if (!wsId) return;
+    try {
+      const r = await jget('/kraken/folders?ws=' + encodeURIComponent(wsId));
+      for (const f of (r && r.items) || []) { const o = document.createElement('option'); o.value = f.id; o.textContent = f.name; sel.appendChild(o); }
+    } catch {}
+    const nu = document.createElement('option'); nu.value = '__new__'; nu.textContent = '+ New folder…'; sel.appendChild(nu);
   }
   const dest = () => ({ wsId: $('#ws').value || null, folder: $('#folder').value.trim() || null, emails: $('#email').value.trim() ? [$('#email').value.trim()] : [] });
   const checked = () => [...document.querySelectorAll('.rowsel:checked')].map((c) => c.dataset.frame);
@@ -165,6 +177,17 @@
   $('#renderAll').addEventListener('click', () => render(null));
   $('#libAll').addEventListener('click', () => toLibrary());
   $('#refresh').addEventListener('click', refresh);
+  // When a workspace is picked, pull up its folders.
+  $('#ws').addEventListener('change', () => loadFolders($('#ws').value));
+  // "+ New folder…" → type a name; it's passed as folderName (created on publish, idempotent).
+  $('#folder').addEventListener('change', (e) => {
+    if (e.target.value !== '__new__') return;
+    const name = (prompt('New folder name:') || '').trim();
+    if (!name) { e.target.value = ''; return; }
+    const o = document.createElement('option'); o.value = name; o.textContent = name + ' (new)';
+    e.target.insertBefore(o, e.target.querySelector('option[value="__new__"]'));
+    e.target.value = name;
+  });
 
   await loadWorkspaces();
   await refresh();

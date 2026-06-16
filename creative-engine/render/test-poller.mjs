@@ -54,6 +54,7 @@ const source = {
 
 const ledger = new Ledger(path.join(STATE, 'ledger.json'));
 const common = { source, ledger, outDir: OUT, cacheDir: path.join(STATE, 'cache'), kind: 'png', poolSize: 2,
+  writeBack: null, // fixture run — never touch the real Kraken
   log: (m) => console.log('   ' + m) };
 
 console.log('--- POLL 1: fresh approved row ---');
