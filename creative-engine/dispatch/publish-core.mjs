@@ -21,6 +21,7 @@ import {
 } from '../../scripts/lib/kraken.mjs';
 import { manifestToMetadataRows } from '../intake/lib/manifest.mjs';
 import { frameOverrides, countEdits } from './overrides-split.mjs';
+import { portableizeOverrides } from './portableize-overrides.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const PROJECT_ROOT = path.resolve(HERE, '..', '..');
@@ -251,8 +252,12 @@ export async function publishPackage(opts = {}) {
     if (folderId) { try { await setFolder(co.id, folderId); } catch (e) { warn(`setFolder ${co.id}: ${e.message}`); } }
 
     const token = generateApprovalToken();
-    const frameOv = overridesForFrame(row.frame_id);
-    const hasOv = countEdits(frameOv) > 0;
+    const localOv = overridesForFrame(row.frame_id);
+    const hasOv = countEdits(localOv) > 0;
+    // Make the override media portable: upload any local swapped-in clips/music to
+    // Kraken storage + rewrite srcs to public URLs, so the PORTAL preview can play
+    // them (engine-local paths 404 from Kraken). The local render still reads the URLs.
+    const frameOv = hasOv ? await portableizeOverrides(localOv, { wsId, log: (m) => log(m) }) : localOv;
     const approval = await insertApproval({
       workspace_id: wsId,
       task_id: `ce-publish-${slug}-${row.frame_id}`,

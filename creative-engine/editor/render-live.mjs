@@ -27,10 +27,16 @@
 // creative-engine-v1. Serve the export over HTTP (Range) so <video> can seek.
 
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import puppeteer from 'puppeteer';
+// Audio is the SAME builder the static path uses (render-frame.mjs → buildMontageAudio).
+// The live path captures video silently (browser is --mute-audio), so the montage's
+// music must be built separately and muxed into the MP4 — otherwise the final render
+// is silent. Clip/music srcs are http(s) (portableized) or local; ffmpeg reads both.
+import { buildMontageAudio } from './montage.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SHARED = path.resolve(__dirname, '..', 'shared');
@@ -44,6 +50,17 @@ const SEEK_SRC = fs.readFileSync(path.join(__dirname, 'seek.js'), 'utf8');
 const INJECT = [RAF_CLOCK_SRC, FRAME_DETECT_SRC, RETAG_SRC, APPLY_SRC, SEEK_SRC];
 
 const STAGE_W = 1080, STAGE_H = 1920, FPS = 30, LOOP = 7;
+
+// Find the first montage in an override bag that carries non-mute music — the live
+// render captures it silently, so we build + mux its audio. Returns the montage or null.
+function montageWithAudio(overrides) {
+  for (const k of Object.keys(overrides || {})) {
+    const m = overrides[k] && overrides[k].montage;
+    const a = m && m.audio;
+    if (m && Array.isArray(m.clips) && m.clips.length && a && a.mode && a.mode !== 'mute') return m;
+  }
+  return null;
+}
 
 // Launch flags that make Page.captureScreenshot DETERMINISTIC. Without
 // --run-all-compositor-stages-before-draw, captureScreenshot can wait for a natural
@@ -160,6 +177,30 @@ export async function renderMp4({ url, overrides, frameId, outMp4, fps = FPS, lo
     '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', outMp4], { stdio: 'inherit' });
   fs.rmSync(framesDir, { recursive: true, force: true });
   if (ff.status !== 0) throw new Error('ffmpeg failed (is it on PATH?)');
+
+  // AUDIO (mirror of render-frame.mjs): build the montage's mixed track and mux it into
+  // the silent video. srcs are passed through (http(s) after portableize, or local) —
+  // ffmpeg/ffprobe read both. Never throws on audio failure: a silent video still ships.
+  const mont = montageWithAudio(overrides);
+  if (mont) {
+    const adir = fs.mkdtempSync(path.join(os.tmpdir(), 'ce-live-audio-'));
+    try {
+      const apath = path.join(adir, 'audio.m4a');
+      const ar = await buildMontageAudio(mont, fps, apath, { resolveSrc: (s) => s });
+      if (ar.ok && fs.existsSync(ar.path)) {
+        const muxed = outMp4.replace(/\.mp4$/i, '.muxed.mp4');
+        const mx = spawnSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', outMp4, '-i', ar.path,
+          '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-map', '0:v:0', '-map', '1:a:0', '-shortest',
+          '-movflags', '+faststart', muxed], { encoding: 'utf8' });
+        if (mx.status === 0 && fs.existsSync(muxed)) { fs.rmSync(outMp4, { force: true }); fs.renameSync(muxed, outMp4); }
+        else console.error('[render-live] audio mux failed (video kept silent):', String(mx.stderr || '').trim().split(/\r?\n/).slice(-2).join(' | '));
+      } else {
+        console.error('[render-live] montage audio not built (video kept silent):', ar && ar.reason);
+      }
+    } catch (e) {
+      console.error('[render-live] audio step threw (video kept silent):', e.message);
+    } finally { try { fs.rmSync(adir, { recursive: true, force: true }); } catch (e) {} }
+  }
   return outMp4;
 }
 
