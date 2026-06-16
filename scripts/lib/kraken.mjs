@@ -108,8 +108,42 @@ export function loadCreds() {
   if (!anonKey) {
     throw new Error(`NEXT_PUBLIC_SUPABASE_ANON_KEY missing in ${envPath}`);
   }
-  _creds = { host: cfg.host, serviceKey, anonKey };
+  // cronSecret guards The Kraken's internal approval-email endpoint in production.
+  // Optional: if absent, sendApprovalEmails() falls back to the service key, which
+  // that route also accepts.
+  const cronSecret = env.CRON_SECRET || null;
+  _creds = { host: cfg.host, serviceKey, anonKey, cronSecret };
   return _creds;
+}
+
+// The Kraken web app base URL (NOT the Supabase host). Internal API routes live here.
+const KRAKEN_APP_BASE = "https://thekraken.vercel.app";
+
+// Trigger the "ACTION NEEDED" review email for freshly-inserted pending approvals.
+// Best-effort by design: the publish already succeeded and Kraken's cron backstop
+// (/api/cron/send-approval-emails) re-sends any approval still un-emailed. So a
+// failure here is logged, never thrown.
+export async function sendApprovalEmails(approvalIds) {
+  const ids = (approvalIds || []).filter(Boolean);
+  if (ids.length === 0) return { ok: true, skipped: true };
+  try {
+    const { cronSecret, serviceKey } = loadCreds();
+    const bearer = cronSecret || serviceKey;
+    const r = await fetch(`${KRAKEN_APP_BASE}/api/internal/approval-email`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${bearer}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ approvalIds: ids }),
+    });
+    const text = await r.text();
+    if (!r.ok) {
+      process.stderr.write(`[kraken] approval-email POST ${r.status}: ${text.slice(0, 300)}\n`);
+      return { ok: false, status: r.status };
+    }
+    return { ok: true, body: text };
+  } catch (e) {
+    process.stderr.write(`[kraken] approval-email request failed (cron backstop will recover): ${e.message}\n`);
+    return { ok: false, error: e.message };
+  }
 }
 
 // Mask a JWT for safe logging: keep the first 8 chars, hide the rest.

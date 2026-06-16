@@ -17,7 +17,7 @@ import path from 'node:path';
 import { randomBytes } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import {
-  uploadToStorage, ingestContent, setFolder, resolveFolder, createFolder, loadCreds,
+  uploadToStorage, ingestContent, setFolder, resolveFolder, createFolder, loadCreds, sendApprovalEmails,
 } from '../../scripts/lib/kraken.mjs';
 import { manifestToMetadataRows } from '../intake/lib/manifest.mjs';
 import { frameOverrides, countEdits } from './overrides-split.mjs';
@@ -269,6 +269,14 @@ export async function publishPackage(opts = {}) {
     log(`  + frame ${row.frame_id} → content ${co.id} / approval ${approval.id}`);
     log(`      review: ${reviewUrl}`);
     created.push({ frame_id: row.frame_id, contentId: co.id, approvalId: approval.id, token, reviewUrl, posterUrl });
+  }
+
+  // Notify the approver(s) — Kraken sends the "ACTION NEEDED" review email per frame.
+  // Best-effort: never throws; Kraken's cron backstop re-sends any that don't go out.
+  if (emails.length && created.length) {
+    const res = await sendApprovalEmails(created.map((r) => r.approvalId));
+    if (res && res.ok === false) log(`  ! review emails not confirmed (cron backstop will retry)`);
+    else log(`  ✉ requested review email(s) for ${created.length} approval(s)`);
   }
 
   const receipt = { slug, wsId, workspace, storagePrefix, entryUrl, assetBaseUrl, emails, publishedAt: stamp, rows: created };
