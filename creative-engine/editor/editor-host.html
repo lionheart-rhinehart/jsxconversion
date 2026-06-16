@@ -35,6 +35,16 @@
     htmlPath = pkgBaseHref + manifest.entryHtml.split('/').pop();
   }
 
+  // B2 — restore previously-saved edits: a package may carry overrides.json (written by a
+  // prior Save). Load it so reopening the package shows your edits instead of a blank slate.
+  let initialOverrides = {};
+  if (pkg) {
+    try {
+      const saved = await (await fetch(pkgBaseHref + 'overrides.json', { cache: 'no-store' })).json();
+      if (saved && typeof saved === 'object') initialOverrides = saved;
+    } catch { /* no saved edits yet — fine */ }
+  }
+
   // apply-overrides.js is the SHARED replay function. The host loads its source once
   // and hands it to the editor, which injects the very same source into the design
   // iframe (and the renderer injects the very same file headless) → preview == MP4.
@@ -104,6 +114,7 @@
     permissions: params.get('view') ? 'view' : 'edit',
     mediaProvider: { staticLibrary: mediaLibrary, remoteBrowse },
     audioProvider,
+    overrides: initialOverrides,                      // B2 — restore prior Save
     onChange(overrides, meta) {
       window.__CE_OVERRIDES__ = overrides;            // exposed for the evidence harness
       // EDIT-LANE TRANSPORT (Phase 4, iframe-by-URL): when this page is iframed by Kraken's
@@ -114,13 +125,40 @@
         // origin '*' here; Kraken pins event.origin to the editor's host on its side.
         window.parent.postMessage({ type: 'ce-overrides', overrides, meta: meta || null }, '*');
       }
+      // B1 — Save PERSISTS the bag into the package (overrides.json) so it survives reloads
+      // AND publish can carry it downstream. NO render happens here — this is pure data save.
+      // When there's no package/server (file://), fall back to the old JSON download.
       if (meta && meta.save) {
-        const blob = new Blob([JSON.stringify(overrides, null, 2)], { type: 'application/json' });
-        const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-        a.download = 'overrides.json'; a.click();
+        if (pkg) {
+          fetch('/package/overrides?pkg=' + encodeURIComponent(pkg), {
+            method: 'POST', headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ overrides }),
+          }).then((r) => r.json()).then((r) => {
+            toast(r && r.ok ? '✓ Saved' : ('Save failed: ' + ((r && r.error) || '?')));
+          }).catch((e) => toast('Save failed: ' + e.message));
+        } else {
+          const blob = new Blob([JSON.stringify(overrides, null, 2)], { type: 'application/json' });
+          const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+          a.download = 'overrides.json'; a.click();
+          toast('Downloaded overrides.json');
+        }
       }
     },
   });
+
+  // tiny transient confirmation toast (bottom-center) — so Save gives visible feedback.
+  function toast(msg) {
+    let t = document.getElementById('ce-host-toast');
+    if (!t) {
+      t = document.createElement('div'); t.id = 'ce-host-toast';
+      t.style.cssText = 'position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:99999;' +
+        'background:#0c0d10;color:#fff;border:1px solid #2a2c31;border-radius:8px;padding:8px 14px;' +
+        'font:13px/1.2 system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.5);opacity:0;transition:opacity .15s;';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg; t.style.opacity = '1';
+    clearTimeout(t._h); t._h = setTimeout(() => { t.style.opacity = '0'; }, 2200);
+  }
   window.__CE_EDITOR__ = ed;
 </script>
 </body>

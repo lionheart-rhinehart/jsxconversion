@@ -161,16 +161,40 @@
     el.setAttribute('src', src);
   }
 
-  // MOVE via the individual `translate` property (NOT margins, NOT the `transform`
-  // shorthand). It's a separate property that COMPOSES with the keyframe `transform`,
-  // so it (a) moves freely in 2D — no margin-collapse vertical lock, (b) causes NO
-  // reflow — moving one element never shifts its siblings, and (c) keeps the animation
-  // playing. RESIZE stays width/height. Proven by the 2026-06-12 spike.
+  // Is this element TRANSFORMABLE — i.e. does the CSS `translate`/`transform` property
+  // actually move it? Per spec, transforms have NO effect on non-replaced INLINE boxes
+  // (a plain display:inline <span> — which is exactly how kicker/headline/subhead text is
+  // marked up). Replaced elements (img/video/svg…) are transformable even when inline.
+  function isTransformable(el) {
+    var tag = (el.tagName || '').toLowerCase();
+    if (/^(img|video|svg|canvas|input|button|select|textarea|object|iframe|embed|picture)$/.test(tag)) return true;
+    var win = el.ownerDocument && el.ownerDocument.defaultView;
+    var disp = win ? win.getComputedStyle(el).display : 'block';
+    return disp !== 'inline';   // inline-block / inline-flex / block / flex … are all transformable
+  }
+
+  // MOVE by (tx,ty) design px. The override shape is ALWAYS {tx,ty}; only the application
+  // CHANNEL differs by element type so the same bag moves both the editor preview and the
+  // render identically:
+  //   • transformable → individual `translate` property: composes with the keyframe
+  //     `transform` (animation keeps playing), no reflow, no axis lock (the 2026-06-12 spike).
+  //   • inline text (NOT transformable) → `translate` is silently ignored, so use
+  //     position:relative + left/top, which DOES offset an inline box and also causes no
+  //     reflow of siblings. (Fixes "the blue selects but the text won't move.")
+  function applyOffset(el, tx, ty) {
+    tx = Number(tx) || 0; ty = Number(ty) || 0;
+    if (isTransformable(el)) {
+      el.style.translate = tx + 'px ' + ty + 'px';
+    } else {
+      var win = el.ownerDocument && el.ownerDocument.defaultView;
+      if (win && win.getComputedStyle(el).position === 'static') el.style.position = 'relative';
+      el.style.left = tx + 'px'; el.style.top = ty + 'px';
+    }
+  }
+
   function setPos(el, pos) {
     if (!pos) return;
-    if (pos.tx != null || pos.ty != null) {
-      el.style.translate = (Number(pos.tx) || 0) + 'px ' + (Number(pos.ty) || 0) + 'px';
-    }
+    if (pos.tx != null || pos.ty != null) applyOffset(el, pos.tx, pos.ty);
     if (pos.w != null) el.style.width = px(pos.w);
     if (pos.h != null) el.style.height = px(pos.h);
   }
@@ -183,6 +207,14 @@
   // {src} before this runs). We only attach metadata here so the driver can find it; the
   // driver itself lives in the editor, off the shared/headless path.
   function setMontage(el, montage) {
+    // A montage plays THROUGH a <video> (the driver swaps the element's src per clip). If the
+    // slot is an <img> (an image-origin slot like a static design's photo), the driver would set
+    // <img>.src to an .mp4 → the slot goes BLACK (an <img> can't play video). So when applying a
+    // real montage to a non-<video>, convert the element first — same fix as the single-swap path.
+    if (montage && montage.clips && montage.clips.length && (el.tagName || '').toLowerCase() !== 'video') {
+      var first = (montage.clips[0] && montage.clips[0].src) || '';
+      el = replaceMediaEl(el, 'video', first, 'video');
+    }
     el.__ceMontage = montage || null;
     // surface to a host-installed driver hook so applying a bag (incl. undo replay) restarts it
     var doc = el.ownerDocument, win = doc && doc.defaultView;
@@ -219,7 +251,7 @@
     return { applied: applied, missing: missing };
   }
 
-  var api = { applyOverrides: applyOverrides, _targetEl: targetEl, _setPos: setPos };
+  var api = { applyOverrides: applyOverrides, _targetEl: targetEl, _setPos: setPos, applyOffset: applyOffset };
   // export both as a callable (legacy) and as a namespace
   root.CEApplyOverrides = applyOverrides;
   root.CEApply = api;

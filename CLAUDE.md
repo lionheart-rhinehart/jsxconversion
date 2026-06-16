@@ -58,6 +58,22 @@ These four are binding for every chat on this repo. They exist because each one 
    chat" never counts. If the ledger looks wrong, rebuild it from `list_sessions` +
    `search_session_transcripts` + `git log`.
 
+6. **Check dependencies before changing code, and verify EVERYTHING after — not just what you touched.**
+   (This one cost us hours: the same "image swapped to video goes black" bug came back *three times*
+   because each fix patched one path and ignored the others that shared the dependency.)
+   - **Before you change anything:** find every place that depends on the thing you're about to touch.
+     If you change how media is applied, trace *all* paths that consume it — single swap, montage,
+     the live editor preview, AND the headless renderer (`apply-overrides.js` is shared by preview and
+     render — a change there hits both). One path fixed while a sibling path silently breaks is the
+     exact trap. Grep for the symbol; read its callers; don't assume the path in front of you is the only one.
+   - **After you change anything:** re-verify the *whole* feature, not the single line. Run the full
+     test suite (`npm test`) **and** the live browser harnesses (`creative-engine/editor/phase-*-live.mjs`),
+     and reproduce the user's *actual* workflow — not a stand-in. (Swapping a *local* test file is NOT
+     proof that swapping a *Kraken-pulled* clip works; verify the real path.)
+   - **Lock every fix with a regression test that FAILS without the fix**, wired into
+     `scripts/githooks/pre-commit`, so a sibling path can never silently reintroduce it. A green test
+     you haven't watched go red is not yet a guard.
+
 ---
 
 ## The map (where things live)

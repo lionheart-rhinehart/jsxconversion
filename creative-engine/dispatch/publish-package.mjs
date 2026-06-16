@@ -52,6 +52,7 @@ import {
   resolveFolder, createFolder, loadCreds,
 } from '../../scripts/lib/kraken.mjs';
 import { manifestToMetadataRows } from '../intake/lib/manifest.mjs';
+import { frameOverrides, countEdits } from './overrides-split.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(HERE, '..', '..');
@@ -142,6 +143,17 @@ const generateApprovalToken = () => randomBytes(32).toString('hex');
   const pkgDir = locatePkg(pkgArg);
   const manifest = JSON.parse(readFileSync(path.join(pkgDir, 'intake.json'), 'utf8'));
   const slug = manifest.slug || path.basename(pkgDir);
+
+  // CARRY LOCAL EDITS: a package may carry overrides.json (written by the editor's Save). We
+  // attach each frame's slice of the bag to that frame's approval row so the rendered/delivered
+  // creative reflects the edits. Keys are "fN:eM" → a frame gets the keys starting "<frame_id>:".
+  // (Nothing renders here; the render poller reads approvals.overrides later.)
+  let savedOverrides = {};
+  const ovPath = path.join(pkgDir, 'overrides.json');
+  if (existsSync(ovPath)) {
+    try { savedOverrides = JSON.parse(readFileSync(ovPath, 'utf8')) || {}; } catch (e) { warn(`overrides.json unreadable: ${e.message}`); }
+  }
+  const overridesForFrame = (frameId) => frameOverrides(savedOverrides, frameId);
   const entryRel = manifest.entryHtml;
   if (!entryRel) die(`intake.json has no entryHtml`);
   if (!existsSync(path.join(pkgDir, entryRel))) die(`entry HTML missing on disk: ${entryRel}`);
@@ -166,9 +178,12 @@ const generateApprovalToken = () => randomBytes(32).toString('hex');
     log('');
     log('DRY-RUN (no --live): would upload the tree above and ingest these rows:');
     for (const f of manifest.frames) {
-      log(`  - frame ${f.id} (${f.label})  poster=${f.poster || 'none'}`);
+      const nEdits = countEdits(overridesForFrame(f.id));
+      log(`  - frame ${f.id} (${f.label})  poster=${f.poster || 'none'}${nEdits ? `  · ${nEdits} saved edit(s) → approval.overrides` : ''}`);
     }
+    const totalEdits = countEdits(savedOverrides);
     log('');
+    if (totalEdits) log(`overrides.json present: ${totalEdits} saved edit(s) will be carried onto the approval rows (NO render here).`);
     log('Re-run with --live to upload + ingest + mint a portal review link.');
     return;
   }
@@ -267,6 +282,8 @@ const generateApprovalToken = () => randomBytes(32).toString('hex');
 
     // paired approval row (mirrors Kraken's send-to-approval insert: token, embed type, pending).
     const token = generateApprovalToken();
+    const frameOv = overridesForFrame(row.frame_id);
+    const hasOv = countEdits(frameOv) > 0;  // real edits, not just metadata
     const approval = await insertApproval({
       workspace_id: wsId,
       task_id: `ce-publish-${slug}-${row.frame_id}`,
@@ -278,7 +295,9 @@ const generateApprovalToken = () => randomBytes(32).toString('hex');
       client_email: emails[0] || null,
       client_emails: emails.length ? emails : null,
       image_url: posterUrl,
+      ...(hasOv ? { overrides: frameOv } : {}),   // carry the editor's saved edits for this frame
     });
+    if (hasOv) log(`      ↳ carried ${countEdits(frameOv)} saved edit(s) onto the approval`);
 
     const reviewUrl = `${portalBase}/portal?token=${token}`;
     log(`  + frame ${row.frame_id} → content ${co.id} / approval ${approval.id}`);

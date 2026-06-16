@@ -853,6 +853,16 @@ export function mountEditor(opts) {
     drag = { members, primaryKey: selectedKey, startX: e.clientX, startY: e.clientY, moved: false };
   }
 
+  // Apply a live (tx,ty) offset to an iframe element through the SHARED apply-overrides
+  // channel logic (CEApply.applyOffset): `translate` for transformable elements, but
+  // position:relative+left/top for non-transformable INLINE text (where translate is a
+  // no-op). Using the same function the renderer uses keeps the drag preview == the MP4.
+  function moveEl(el, tx, ty) {
+    const w = iwin();
+    if (w && w.CEApply && w.CEApply.applyOffset) w.CEApply.applyOffset(el, tx, ty);
+    else el.style.translate = (Number(tx) || 0) + 'px ' + (Number(ty) || 0) + 'px';
+  }
+
   // MOVE via the individual `translate` property — free 2D, no reflow, composes with the
   // keyframe transform (proven by the 2026-06-12 spike). Delta is in design px (÷ scale).
   // The whole selection moves by the same delta; alignment guides snap the PRIMARY element
@@ -869,7 +879,7 @@ export function mountEditor(opts) {
     // first place every member at the tentative delta…
     Object.keys(drag.members).forEach((k) => {
       const m = drag.members[k];
-      m.el.style.translate = (m.baseTx + dx) + 'px ' + (m.baseTy + dy) + 'px';
+      moveEl(m.el, m.baseTx + dx, m.baseTy + dy);
     });
     // …then compute snap on the primary and re-apply the corrected delta to everyone
     const snap = computeGuides(drag.members, drag.primaryKey);
@@ -877,7 +887,7 @@ export function mountEditor(opts) {
       dx += snap.adjX / scale; dy += snap.adjY / scale;
       Object.keys(drag.members).forEach((k) => {
         const m = drag.members[k];
-        m.el.style.translate = (m.baseTx + dx) + 'px ' + (m.baseTy + dy) + 'px';
+        moveEl(m.el, m.baseTx + dx, m.baseTy + dy);
       });
     }
     Object.keys(drag.members).forEach((k) => { const m = drag.members[k]; m.tx = m.baseTx + dx; m.ty = m.baseTy + dy; });

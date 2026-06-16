@@ -196,9 +196,46 @@ export function audioRoutes() {
   };
 }
 
+// ── Package overrides routes — make local "Save" PERSIST the edit bag ─────────
+// The editor's Save posts the override bag here; we write it to the package as
+// overrides.json (the editor reloads it on open, and publish-package reads it to carry
+// the edits into the approval row). This is pure DATA persistence — nothing renders here.
+// Guarded to the _packages/ tree; slug sanitized.
+const PKG_ROOT = path.join(PROJECT_ROOT, 'creative-engine', 'intake', '_packages');
+function pkgDirFor(slug) {
+  const safe = String(slug || '').replace(/[^a-z0-9._-]/gi, '');
+  if (!safe) return null;
+  const dir = path.resolve(PKG_ROOT, safe);
+  if (dir !== PKG_ROOT && !dir.startsWith(PKG_ROOT + path.sep)) return null; // traversal guard
+  if (!fs.existsSync(dir)) return null;
+  return dir;
+}
+export function overridesRoutes() {
+  return {
+    '/package/overrides': async (req, res) => {
+      try {
+        const slug = new URL(req.url, 'http://x').searchParams.get('pkg');
+        const dir = pkgDirFor(slug);
+        if (!dir) return sendJson(res, { ok: false, error: 'unknown or invalid pkg' });
+        const file = path.join(dir, 'overrides.json');
+        if (req.method === 'POST') {
+          const body = await readBody(req);
+          const bag = (body && body.overrides) || {};
+          fs.writeFileSync(file, JSON.stringify(bag, null, 2));
+          return sendJson(res, { ok: true, saved: '/creative-engine/intake/_packages/' + path.basename(dir) + '/overrides.json', keys: Object.keys(bag).length });
+        }
+        // GET → current saved bag (or {} if none yet)
+        let bag = {};
+        try { bag = JSON.parse(fs.readFileSync(file, 'utf8')); } catch {}
+        return sendJson(res, { ok: true, overrides: bag });
+      } catch (e) { sendJson(res, { ok: false, error: String(e.message || e) }); }
+    },
+  };
+}
+
 const isMain = process.argv[1] && process.argv[1].endsWith('serve.mjs');
 if (isMain) {
-  createServer({ ...krakenRoutes(), ...audioRoutes() }).listen(PORT, () => {
+  createServer({ ...krakenRoutes(), ...audioRoutes(), ...overridesRoutes() }).listen(PORT, () => {
     console.log(`editor dev host → http://localhost:${PORT}/creative-engine/editor/editor-host.html`);
   });
 }
