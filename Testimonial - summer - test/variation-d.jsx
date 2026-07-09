@@ -91,9 +91,6 @@ function VDChrome() {
           }}/>
           REC · Live
         </div>
-        <div style={{ color: VD_INK }}>
-          AA · Case Nº 01
-        </div>
       </div>
 
       {/* bottom progress ticker */}
@@ -112,7 +109,7 @@ function VDChrome() {
         <div style={{ flex: 1, height: 2, background: 'rgba(244,241,236,0.15)', position: 'relative' }}>
           <div style={{
             position: 'absolute', left: 0, top: 0, bottom: 0,
-            width: `${(t / 10) * 100}%`, background: VD_RED,
+            width: `${(t / 20) * 100}%`, background: VD_RED,
           }}/>
         </div>
         <div style={{ color: VD_RED }}>{`T+${t.toFixed(1)}s`.padStart(7, ' ')}</div>
@@ -128,7 +125,7 @@ function VDChrome() {
 function VDHeader() {
   const t = useTime();
   const startT = 0.4;
-  const exitT = 8.6;
+  const exitT = 13.5;
   const p = clamp((t - startT) / 0.7, 0, 1);
   const e = Easing.easeOutCubic(p);
   const exitP = clamp((t - exitT) / 0.4, 0, 1);
@@ -197,7 +194,7 @@ function VDStat({ label, value, startT, fillEnd, color = VD_RED, burst = false, 
   const counter = Math.floor(barE * value);
 
   // Exit (only for non-burst stats — strength and speed fade out before confidence finale)
-  const exitT = burst ? 9.6 : 4.0; // burst holds till outro; non-burst exits when next stat starts
+  const exitT = burst ? 13.5 : 8.0; // burst exits when hero takes over; non-burst exits when confidence enters
   const exitP = clamp((t - exitT) / 0.5, 0, 1);
   const exitE = Easing.easeInQuad(exitP);
 
@@ -299,8 +296,8 @@ function VDStat({ label, value, startT, fillEnd, color = VD_RED, burst = false, 
 // Final big hero — "OFF THE CHARTS." takes over
 function VDHero() {
   const t = useTime();
-  const startT = 7.0;
-  const exitT = 9.3;
+  const startT = 14.0;
+  const exitT = 19.3;
   const p = clamp((t - startT) / 0.55, 0, 1);
   const e = Easing.easeOutBack(p);
   const exitP = clamp((t - exitT) / 0.4, 0, 1);
@@ -315,32 +312,53 @@ function VDHero() {
   return (
     <div style={{
       position: 'absolute',
-      left: 0, right: 0, top: 1320,
-      textAlign: 'center',
+      inset: 0,
+      display: 'flex', flexDirection: 'column',
+      alignItems: 'center', justifyContent: 'center',
+      paddingTop: 200, paddingBottom: 200,
       opacity: e * (1 - exitP),
-      transform: `translateY(${(1 - e) * 30}px) translate(${shx}px, ${shy}px)`,
+      transform: `translate(${shx}px, ${shy}px)`,
+      textAlign: 'center',
     }}>
-      <div style={{
-        fontFamily: 'JetBrains Mono, monospace',
-        fontSize: 30,
-        color: VD_INK,
-        letterSpacing: '0.42em',
-        textTransform: 'uppercase',
-        marginBottom: 22,
-        fontWeight: 600,
-      }}>
-        His confidence is
-      </div>
-      <div style={{
-        fontFamily: 'Anton, sans-serif',
-        fontSize: 200,
-        color: VD_RED,
-        letterSpacing: '-0.01em',
-        lineHeight: 0.9,
-        textTransform: 'uppercase',
-        textShadow: `0 0 60px ${VD_RED}aa, 0 0 120px ${VD_RED}55`,
-      }}>
-        Off the<br/>Charts.
+      <div style={{ transform: `translateY(${(1 - e) * 30}px)` }}>
+        {/* Lead-in — the actual testimonial setup */}
+        <div style={{
+          fontFamily: 'JetBrains Mono, monospace',
+          fontSize: 32,
+          color: VD_INK,
+          letterSpacing: '0.18em',
+          lineHeight: 1.5,
+          marginBottom: 36,
+          fontWeight: 500,
+          padding: '0 100px',
+        }}>
+          “He’s not only gained speed and power,
+          <br/>but his confidence is…
+        </div>
+        {/* Big hero quote */}
+        <div style={{
+          fontFamily: 'Anton, sans-serif',
+          fontSize: 200,
+          color: VD_RED,
+          letterSpacing: '-0.01em',
+          lineHeight: 0.9,
+          textTransform: 'uppercase',
+          textShadow: `0 0 60px ${VD_RED}aa, 0 0 120px ${VD_RED}55`,
+        }}>
+          Off the<br/>Charts.”
+        </div>
+        {/* Attribution */}
+        <div style={{
+          fontFamily: 'JetBrains Mono, monospace',
+          fontSize: 28,
+          color: VD_DIM,
+          letterSpacing: '0.34em',
+          textTransform: 'uppercase',
+          marginTop: 56,
+          fontWeight: 600,
+        }}>
+          — Satisfied Parent
+        </div>
       </div>
     </div>
   );
@@ -349,7 +367,7 @@ function VDHero() {
 // Outro
 function VDOutro() {
   const t = useTime();
-  const startT = 9.0;
+  const startT = 19.0;
   const p = clamp((t - startT) / 0.7, 0, 1);
   const e = Easing.easeOutCubic(p);
   if (p === 0) return null;
@@ -385,15 +403,15 @@ function VDOutro() {
 
 function VariationD() {
   return (
-    <Stage width={VD_W} height={VD_H} duration={10} background="#0a0707" persistKey="aa-vd">
+    <Stage width={VD_W} height={VD_H} duration={20} background="#0a0707" persistKey="aa-vd">
       <VDBg/>
       <VDChrome/>
       <VDHeader/>
 
       {/* Three stacked stat bars */}
-      <VDStat label="Strength" value={38} startT={2.0} fillEnd={78} y={720}/>
-      <VDStat label="Speed"    value={42} startT={3.4} fillEnd={82} y={870}/>
-      <VDStat label="Confidence" value={99} startT={5.0} fillEnd={100} burst y={1020}/>
+      <VDStat label="Strength" value={38} startT={3.0} fillEnd={78} y={720}/>
+      <VDStat label="Speed"    value={42} startT={5.0} fillEnd={82} y={870}/>
+      <VDStat label="Confidence" value={99} startT={8.0} fillEnd={100} burst y={1020}/>
 
       <VDHero/>
       <VDOutro/>
